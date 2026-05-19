@@ -1,8 +1,8 @@
 /datum/emote/larva/whimper
 	key = "whimper"
 
-	message_1p = "Вы хнычите."
-	message_3p = "грустно хнычет."
+	message_1p = "Вы скулите."
+	message_3p = "жалобно скулит."
 
 	message_muzzled = "сильно извивается, издавая едва слышимый звук."
 
@@ -14,8 +14,8 @@
 /datum/emote/larva/roar
 	key = "roar"
 
-	message_1p = "Вы рычите."
-	message_3p = "рычит как маленький хищник."
+	message_1p = "Вы ревёте."
+	message_3p = "ревёт, как маленький хищник."
 
 	message_muzzled = "сильно извивается, издавая едва слышимый звук."
 
@@ -40,8 +40,8 @@
 /datum/emote/larva/growl
 	key = "growl"
 
-	message_1p = "Вы угрожающе рычите."
-	message_3p = "тихо угрожающе рычит."
+	message_1p = "Вы рычите."
+	message_3p = "тихо рычит."
 
 	message_muzzled = "сильно извивается, издавая едва слышимый звук."
 
