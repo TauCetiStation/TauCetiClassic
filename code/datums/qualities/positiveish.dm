@@ -372,19 +372,16 @@
 	jobs_required = list("Cargo Technician")
 
 /datum/quality/positiveish/psc/add_effect(mob/living/carbon/human/H)
-	if(H.has_quirk(/datum/quirk/fatness))
-		to_chat(H, "<span class = 'warning'>Ваша физическая комплектация не подходит для работы в ЧОП.</span>")
-		return
-	if(!H.has_quirk(/datum/quirk/fatness))
-		H.equipOutfit("Cargo Guard")
-		H.equip_or_collect(new /obj/item/clothing/suit/armor/vest(H), SLOT_WEAR_SUIT)
-		if(is_species(H, TAJARAN))
-			H.equip_or_collect(new /obj/item/device/flash(H), SLOT_IN_BACKPACK)
-		else
-			H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec(H), SLOT_S_STORE)
-			H.equip_or_collect(new /obj/item/ammo_box/magazine/glock/extended/rubber(H), SLOT_IN_BACKPACK)
-			H.equip_or_collect(new /obj/item/ammo_box/magazine/glock/extended/rubber(H), SLOT_IN_BACKPACK)
-		H.equip_or_collect(new /obj/item/weapon/paper/psc(H), SLOT_IN_BACKPACK)
+	H.equipOutfit("Cargo Guard")
+	H.equip_or_collect(new /obj/item/clothing/suit/armor/vest(H), SLOT_WEAR_SUIT)
+	if(is_species(H, TAJARAN))
+		H.equip_or_collect(new /obj/item/device/flash(H), SLOT_IN_BACKPACK)
+	else
+		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec(H), SLOT_S_STORE)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/glock/extended/rubber(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/glock/extended/rubber(H), SLOT_IN_BACKPACK)
+	H.equip_or_collect(new /obj/item/weapon/paper/psc(H), SLOT_IN_BACKPACK)
+
 
 
 /datum/quality/positiveish/selfdefense
