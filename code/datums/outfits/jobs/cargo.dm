@@ -19,17 +19,20 @@
 	l_ear = /obj/item/device/radio/headset/headset_cargo
 	belt = /obj/item/device/pda/cargo
 
-// CARGO GUARD OUTFIT
-
+// CARGOGUARD OUTFIT
+/datum/outfit/job/cargo_guard
 	name = OUTFIT_JOB_NAME("Cargo Guard")
 
 	head = /obj/item/clothing/head/beret/centcomofficer/cargoguard
 	uniform = /obj/item/clothing/under/rank/cargoguard
+	suit = /obj/item/clothing/suit/armor/vest
 	shoes = /obj/item/clothing/shoes/boots
 
 	l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc/cargo
 	gloves = /obj/item/clothing/gloves/security
 	belt = /obj/item/device/pda/cargo
+
+	backpack_contents = list(/obj/item/weapon/paper/psc)
 
 
 // MINER OUTFIT
