@@ -3,7 +3,6 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "heart-on"
 	item_state_world = "heart-on_world"
-	base_icon_state = "heart"
 	cases = list("сердце", "сердца", "сердцу", "сердце", "сердцем", "сердце")
 	organ_tag = O_HEART
 	parent_bodypart = BP_CHEST
