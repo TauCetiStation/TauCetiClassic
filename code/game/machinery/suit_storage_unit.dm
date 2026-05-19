@@ -649,6 +649,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	req_access = list(access_research)
 	suit_type = /obj/item/clothing/suit/space/rig/science
 	mask_type = /obj/item/clothing/mask/gas/coloured
+	tank_type = /obj/item/weapon/tank/jetpack/carbondioxide
 
 	overlay_color = COLOR_VIOLET
 
@@ -738,6 +739,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	req_access = list(access_research)
 	suit_type = /obj/item/clothing/suit/space/globose/science
 	helmet_type = /obj/item/clothing/head/helmet/space/globose/science
+	tank_type = /obj/item/weapon/tank/oxygen
 
 	overlay_color = COLOR_PINK
 
@@ -749,6 +751,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	req_access = list(access_mining)
 	suit_type = /obj/item/clothing/suit/space/globose/mining
 	helmet_type = /obj/item/clothing/head/helmet/space/globose/mining
+	tank_type = /obj/item/weapon/tank/oxygen
 
 	overlay_color = COLOR_BROWN
 

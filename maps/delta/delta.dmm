@@ -22973,11 +22973,15 @@
 /area/station/engineering/chiefs_office)
 "bVQ" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/jetpack/carbondioxide,
-/obj/item/weapon/tank/jetpack/carbondioxide,
-/obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
+	},
+/obj/item/weapon/tank/jetpack/carbondioxide{
+	pixel_x = -5
+	},
+/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/weapon/tank/jetpack/carbondioxide{
+	pixel_x = 5
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"

@@ -18456,7 +18456,10 @@
 /area/station/civilian/fitness)
 "aGb" = (
 /obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
+/obj/item/clothing/shoes/magboots{
+	pixel_x = -4;
+	pixel_y = 3
+	},
 /obj/item/device/suit_cooling_unit,
 /obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/effect/decal/turf_decal/alpha/gray{
