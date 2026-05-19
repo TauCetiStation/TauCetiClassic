@@ -7,7 +7,7 @@
 	message_impaired_production = "беззвучно смеётся."
 
 	message_miming = "сотрясается в беззвучном хохоте."
-	message_muzzled = "глухо хихикает."
+	message_muzzled = "глухо посмеивается."
 
 	message_type = SHOWMSG_AUDIO
 

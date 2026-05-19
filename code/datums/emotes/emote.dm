@@ -71,7 +71,7 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 
 /datum/emote/proc/get_emote_message_3p(mob/user)
 	var/msg = message_3p
-	if(message_miming && HAS_TRAIT(src, TRAIT_MIMING))
+	if(message_miming && HAS_TRAIT(user, TRAIT_MIMING))
 		msg = message_miming
 	else if(message_muzzled && istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 		msg = message_muzzled
