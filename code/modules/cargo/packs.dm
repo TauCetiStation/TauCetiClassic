@@ -335,11 +335,24 @@ var/global/list/all_supply_groups = list("Bureaucracy / Arts", "Security", "Huma
 					/obj/item/weapon/storage/belt/security/tactical,
 					/obj/item/clothing/shoes/boots,
 					/obj/item/weapon/storage/backpack/dufflebag/marinad,
-					/obj/item/weapon/gun/projectile/shotgun,
 					/obj/item/weapon/storage/firstaid/small_firstaid_kit/combat)
 	additional_costs = 450
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Marines Armor crate"
+	access = access_armory
+	group = "Security"
+
+/datum/supply_pack/ballistic
+	name = "Ballistic gear crate"
+	contains = list(/obj/item/clothing/suit/storage/flak/bulletproof,
+					/obj/item/clothing/suit/storage/flak/bulletproof,
+					/obj/item/clothing/head/helmet/bulletproof,
+					/obj/item/clothing/head/helmet/bulletproof,
+					/obj/item/weapon/gun/projectile/shotgun,
+					/obj/item/weapon/gun/projectile/shotgun)
+	additional_costs = 460
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "Ballistic gear crate"
 	access = access_armory
 	group = "Security"
 
