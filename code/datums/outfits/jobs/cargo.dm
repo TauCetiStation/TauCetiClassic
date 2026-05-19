@@ -21,7 +21,7 @@
 
 // CARGO GUARD OUTFIT
 
-	name = "Cargo Guard"
+	name = OUTFIT_JOB_NAME("Cargo Guard")
 
 	head = /obj/item/clothing/head/beret/centcomofficer/cargoguard
 	uniform = /obj/item/clothing/under/rank/cargoguard
