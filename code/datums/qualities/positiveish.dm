@@ -372,7 +372,7 @@
 	jobs_required = list("Cargo Technician")
 
 /datum/quality/positiveish/psc/add_effect(mob/living/carbon/human/H)
-	H.equipOutfit("Cargo Guard")
+	H.equipOutfit(/datum/outfit/job/cargo_guard)
 	if(is_species(H, TAJARAN))
 		H.equip_or_collect(new /obj/item/device/flash(H), SLOT_IN_BACKPACK)
 	else
