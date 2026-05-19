@@ -30,6 +30,10 @@
 	desc = "A black beret adorned with the shield silver kite shield with an engraved sword of the NanoTrasen security forces, announcing to the world that the wearer is a defender of NanoTrasen."
 	icon_state = "centcomofficerberet"
 
+/obj/item/clothing/head/beret/centcomofficer/cargoguard
+	name = "cargo PSC's beret"
+	desc = "A black beret adorned with the shield silver kite shield with an a Cargo Industries logo."
+
 /obj/item/clothing/head/beret/centcomcaptain
 	name = "captains beret"
 	desc = "A white beret adorned with the shield cobalt kite shield with an engraved sword of the NanoTrasen security forces, worn only by those captaining a vessel of the NanoTrasen Navy."

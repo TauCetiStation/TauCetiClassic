@@ -367,18 +367,23 @@
 
 /datum/quality/positiveish/psc
 	name = "Private Security Company"
-	desc = "Акции Карго растут в цене, и завхозу пришлось прибегнуть к услугам ЧОП."
-	requirement = "Карготех."
+	desc = "Акции Карго растут в цене, и завхозу пришлось прибегнуть к услугам ЧОП..."
+	requirement = "Карготех. Не быть жирным."
 	jobs_required = list("Cargo Technician")
 
 /datum/quality/positiveish/psc/add_effect(mob/living/carbon/human/H)
+	if(HAS_TRAIT(H, TRAIT_FAT))
+		to_chat(H, "<span class = 'warning'>Ваша физическая комплектация не подходит для работы в ЧОП.</span>")
+		return
+	else
+	H.equipOutfit("Cargo Guard")
 	H.equip_or_collect(new /obj/item/clothing/suit/armor/vest(H), SLOT_WEAR_SUIT)
 	if(is_species(H, TAJARAN))
 		H.equip_or_collect(new /obj/item/device/flash(H), SLOT_IN_BACKPACK)
 	else
-		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/pistol/wjpp(H), SLOT_S_STORE)
-		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
-		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec(H), SLOT_S_STORE)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/glock/extended/rubber(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/glock/extended/rubber(H), SLOT_IN_BACKPACK)
 	H.equip_or_collect(new /obj/item/weapon/paper/psc(H), SLOT_IN_BACKPACK)
 
 

@@ -168,6 +168,10 @@
 /obj/item/device/radio/headset/headset_sec/nt_pmc/hos
 	ks2type = /obj/item/device/encryptionkey/heads/hos
 
+/obj/item/device/radio/headset/headset_sec/nt_pmc/cargo
+	name = "Cargo PSC Radio Headset"
+	ks2type = /obj/item/device/encryptionkey/headset_cargo
+
 /obj/item/device/radio/headset/headset_sec/marinad
 	name = "marine headset"
 	icon_state = "marinad"

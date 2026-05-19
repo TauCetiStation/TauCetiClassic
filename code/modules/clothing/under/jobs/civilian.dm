@@ -40,6 +40,14 @@
 	flags = ONESIZEFITSALL|HEAR_TALK
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
+/obj/item/clothing/under/rank/cargoguard
+	name = "cargo PSC jumpsuit"
+	desc = "Uniform of a mercenary from one of the most famous space private security companies."
+	icon_state = "cargoguard"
+	item_state = "cargoguard"
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
+	siemens_coefficient = 0.9
+
 /obj/item/clothing/under/rank/recycler
 	name = "recycler's jumpsuit"
 	desc = "Stinks."
