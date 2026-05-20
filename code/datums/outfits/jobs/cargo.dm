@@ -35,11 +35,6 @@
 
 	backpack_contents = list(/obj/item/weapon/paper/psc, /obj/item/ammo_box/magazine/glock/extended/rubber, /obj/item/ammo_box/magazine/glock/extended/rubber)
 
-/datum/outfit/job/cargo_guard/tajaran_equip()
-	l_pocket = /obj/item/device/flash
-	backpack_contents = list(/obj/item/weapon/paper/psc)
-	suit_store = /obj/item/weapon/gun/energy/taser
-
 // MINER OUTFIT
 /datum/outfit/job/mining
 	name = OUTFIT_JOB_NAME("Shaft Miner")
