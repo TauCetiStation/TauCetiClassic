@@ -26,7 +26,7 @@
 
 /obj/structure/largecrate/Destroy()
 	var/turf/T = get_turf(src)
-	if(cargo_ordered && T)
+	if(T)
 		new /obj/effect/abstract/particle_holder(T, /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
 	return ..()
 
