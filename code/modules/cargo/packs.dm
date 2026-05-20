@@ -71,6 +71,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 	fill(C)
 
+	if(ispath(crate_type, /obj/structure/closet))
+		C.cargo_ordered = TRUE
+
 	return C
 
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)

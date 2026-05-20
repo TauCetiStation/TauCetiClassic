@@ -24,5 +24,9 @@
 	else
 		return attack_hand(user)
 
+/obj/structure/largecrate/Destroy()
+	new /obj/effect/abstract/particle_holder(get_turf(src), /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	return ..()
+
 /obj/structure/largecrate/mule
 	icon_state = "mulecrate"

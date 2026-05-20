@@ -24,6 +24,8 @@
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
+	var/cargo_ordered = FALSE
+
 /obj/structure/closet/atom_init(mapload)
 	. = ..()
 	closet_list += src
@@ -39,6 +41,9 @@
 
 /obj/structure/closet/Destroy()
 	closet_list -= src
+
+	if(cargo_ordered)
+		new /obj/effect/abstract/particle_holder(get_turf(src), /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
 	return ..()
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
@@ -121,6 +126,11 @@
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	density = FALSE
 	SSdemo.mark_dirty(src)
+
+	if(cargo_ordered)
+		new /obj/effect/abstract/particle_holder(get_turf(src), /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
+		cargo_ordered = FALSE
+
 	return 1
 
 /obj/structure/closet/proc/close()

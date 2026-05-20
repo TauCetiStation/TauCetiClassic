@@ -40,6 +40,10 @@
 	if(climbable)
 		structure_shaken()
 
+	if(cargo_ordered)
+		new /obj/effect/abstract/particle_holder(get_turf(src), /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
+		cargo_ordered = FALSE
+
 	return 1
 
 /obj/structure/closet/crate/close()
