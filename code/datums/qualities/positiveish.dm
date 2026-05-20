@@ -373,12 +373,6 @@
 
 /datum/quality/positiveish/psc/add_effect(mob/living/carbon/human/H)
 	H.equipOutfit(/datum/outfit/job/cargo_guard)
-	if(is_species(H, TAJARAN))
-		H.equip_or_collect(new /obj/item/device/flash(H), SLOT_IN_BACKPACK)
-	else
-		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec(H), SLOT_S_STORE)
-		H.equip_or_collect(new /obj/item/ammo_box/magazine/glock/extended/rubber(H), SLOT_IN_BACKPACK)
-		H.equip_or_collect(new /obj/item/ammo_box/magazine/glock/extended/rubber(H), SLOT_IN_BACKPACK)
 
 /datum/quality/positiveish/selfdefense
 	name = "Self Defense"

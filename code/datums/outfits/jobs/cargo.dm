@@ -26,14 +26,19 @@
 	head = /obj/item/clothing/head/beret/centcomofficer/cargoguard
 	uniform = /obj/item/clothing/under/rank/cargoguard
 	suit = /obj/item/clothing/suit/armor/vest
+	suit_store = /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec
 	shoes = /obj/item/clothing/shoes/boots
 
 	l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc/cargo
 	gloves = /obj/item/clothing/gloves/security
 	belt = /obj/item/device/pda/cargo
 
-	backpack_contents = list(/obj/item/weapon/paper/psc)
+	backpack_contents = list(/obj/item/weapon/paper/psc, /obj/item/ammo_box/magazine/glock/extended/rubber, /obj/item/ammo_box/magazine/glock/extended/rubber)
 
+/datum/outfit/job/cargo_guard/tajaran_equip()
+	l_pocket = /obj/item/device/flash
+	backpack_contents = list(/obj/item/weapon/paper/psc)
+	suit_store = /obj/item/weapon/melee/baton
 
 // MINER OUTFIT
 /datum/outfit/job/mining
