@@ -27,7 +27,7 @@
 /obj/structure/largecrate/Destroy()
 	var/turf/T = get_turf(src)
 	if(cargo_ordered && T)
-		new /obj/effect/abstract/particle_holder(get_turf(src), /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
+		new /obj/effect/abstract/particle_holder(T, /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
 	return ..()
 
 /obj/structure/largecrate/mule
