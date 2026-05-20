@@ -50530,18 +50530,6 @@
 	icon_state = "purple"
 	},
 /area/station/hallway/primary/starboard)
-"bLr" = (
-/obj/machinery/suit_storage_unit/medical/paramedic{
-	fulled = 1
-	},
-/obj/machinery/suit_storage_unit/medical/paramedic{
-	fulled = 1
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/storage)
 "bLs" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
@@ -124805,7 +124793,7 @@ aRS
 bNw
 bvv
 bIb
-bLr
+chi
 chi
 bQg
 bTs
