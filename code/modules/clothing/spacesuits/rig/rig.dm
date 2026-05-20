@@ -15,6 +15,8 @@
 	var/obj/item/clothing/suit/space/rig/rig_connect
 	can_be_modded = TRUE
 
+	unacidable = TRUE //all helmets on rigs can be acidable
+
 	//Species-specific stuff.
 	species_restricted = list("exclude", UNATHI, TAJARAN, SKRELL, DIONA, VOX)
 	species_restricted_locked = TRUE
@@ -1040,7 +1042,6 @@
 	desc = "Anyone wearing this should not be considered human."
 	icon_state = "rig0-hazmat"
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
-	unacidable = TRUE
 	combat_armor = list(melee = 55, bullet = 60, laser = 50, energy = 55, bomb = 100, bio = 100, rad = 100)
 	space_armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
 	glowtype = "terrohazmat"
