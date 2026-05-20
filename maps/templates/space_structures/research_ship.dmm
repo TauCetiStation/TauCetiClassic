@@ -259,10 +259,12 @@
 "us" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
-/obj/machinery/suit_storage_unit/science,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -22
+	},
+/obj/machinery/suit_storage_unit/science{
+	fulled = 1
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
@@ -336,7 +338,6 @@
 /obj/structure/alien/weeds,
 /obj/structure/alien/weeds/node,
 /obj/item/weapon/pickaxe/drill,
-/obj/item/clothing/head/helmet/space/rig/science,
 /obj/item/weapon/tank/oxygen,
 /obj/item/weapon/pickaxe,
 /turf/simulated/shuttle/floor/vox,
@@ -390,11 +391,11 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "alien_der_inner";
 	locked = 1;
-	name = "Research Ship External Access";
-	dir = 4
+	name = "Research Ship External Access"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -462,10 +463,12 @@
 "Hd" = (
 /obj/structure/alien/weeds,
 /obj/machinery/light_construct/small,
-/obj/machinery/suit_storage_unit/science,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_y = -32
+	},
+/obj/machinery/suit_storage_unit/science{
+	fulled = 1
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
@@ -678,11 +681,11 @@
 /area/space)
 "Xw" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "alien_der_outer";
 	locked = 1;
-	name = "Research Ship External Access";
-	dir = 4
+	name = "Research Ship External Access"
 	},
 /obj/structure/cable{
 	d2 = 8;

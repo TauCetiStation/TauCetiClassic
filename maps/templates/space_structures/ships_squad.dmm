@@ -8,8 +8,8 @@
 /area/space_structures/nt_fighter_skeora)
 "ai" = (
 /turf/simulated/floor/airless{
-	icon_state = "darkbluecorners";
-	dir = 8
+	dir = 8;
+	icon_state = "darkbluecorners"
 	},
 /area/space_structures/nt_troopship)
 "aA" = (
@@ -123,8 +123,8 @@
 	dir = 4
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkblue";
-	dir = 10
+	dir = 10;
+	icon_state = "darkblue"
 	},
 /area/space_structures/nt_troopship)
 "hP" = (
@@ -214,8 +214,8 @@
 	pixel_x = -27
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkblue";
-	dir = 8
+	dir = 8;
+	icon_state = "darkblue"
 	},
 /area/space_structures/nt_troopship)
 "mI" = (
@@ -239,8 +239,8 @@
 	dir = 4
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkblue";
-	dir = 8
+	dir = 8;
+	icon_state = "darkblue"
 	},
 /area/space_structures/nt_troopship)
 "oN" = (
@@ -348,8 +348,8 @@
 /area/space_structures/nt_fighter_blaton)
 "wq" = (
 /turf/simulated/floor/airless{
-	icon_state = "darkbluefull";
-	dir = 1
+	dir = 1;
+	icon_state = "darkbluefull"
 	},
 /area/space_structures/nt_troopship)
 "wD" = (
@@ -363,8 +363,8 @@
 	use_power = 1
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkblue";
-	dir = 6
+	dir = 6;
+	icon_state = "darkblue"
 	},
 /area/space_structures/nt_troopship)
 "wJ" = (
@@ -479,8 +479,8 @@
 	pixel_x = 37
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkblue";
-	dir = 4
+	dir = 4;
+	icon_state = "darkblue"
 	},
 /area/space_structures/nt_troopship)
 "Di" = (
@@ -696,8 +696,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "darkblue";
-	dir = 4
+	dir = 4;
+	icon_state = "darkblue"
 	},
 /area/space_structures/nt_troopship)
 "Qk" = (
@@ -748,8 +748,8 @@
 	use_power = 1
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkblue";
-	dir = 8
+	dir = 8;
+	icon_state = "darkblue"
 	},
 /area/space_structures/nt_troopship)
 "Sv" = (
@@ -763,8 +763,8 @@
 	dir = 8
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkblue";
-	dir = 4
+	dir = 4;
+	icon_state = "darkblue"
 	},
 /area/space_structures/nt_troopship)
 "Sz" = (
@@ -874,12 +874,12 @@
 	},
 /area/space_structures/nt_fighter_blaton)
 "WV" = (
-/obj/structure/rack,
 /obj/machinery/recharger/wallcharger{
 	pixel_y = 30
 	},
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/head/helmet/space/rig/security,
+/obj/machinery/suit_storage_unit/security{
+	fulled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "darkbluefull"
 	},

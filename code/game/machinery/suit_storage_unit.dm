@@ -7,6 +7,7 @@
 	icon = 'icons/obj/suitstorage.dmi'
 	icon_state = "suitholder"
 	damage_deflection = 25
+	idle_power_usage = 10
 	var/build_type = SUIT_STORAGE_BUILD_DEFAULT
 	anchored = TRUE
 	density = TRUE
@@ -153,6 +154,18 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		suit_storage_overlays += mutable_appearance(icon_state = "panel_open")
 	add_overlay(suit_storage_overlays)
 
+/obj/machinery/suit_storage_unit/power_change()
+	if(stat & BROKEN)
+		return
+	else if(powered())
+		stat &= ~NOPOWER
+		update_power_use()
+	else
+		stat |= NOPOWER
+		locked = FALSE
+		update_icon()
+
+	update_power_use()
 
 /obj/machinery/suit_storage_unit/Destroy()
 	. = ..()
@@ -363,6 +376,9 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		return
 	visible_message("[user] starts squeezing into the suit storage unit!", 3)
 	if(do_after(user, 5 SECOND, target = src))
+		if(occupant || HELMET || SUIT || TANK || BOOTS)
+			to_chat(user, "<span class ='danger'>It's too cluttered inside for you to fit in!</span>")
+			return
 		mobToMove.stop_pulling()
 		mobToMove.forceMove(src)
 		occupant = mobToMove
@@ -391,7 +407,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 /obj/machinery/suit_storage_unit/CtrlClick(mob/user)
 	add_fingerprint(user)
-	if(stat & (BROKEN|NOPOWER))
+	if(stat & BROKEN)
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
 	if(UV)
@@ -402,7 +418,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/attack_hand(mob/user)
 	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
-	if(stat & (BROKEN|NOPOWER))
+	if(stat & BROKEN)
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
 	if(UV)
@@ -442,7 +458,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 			update_icon()
 			return
 
-	if(!locked)
+	if(!locked && !(stat & BROKEN))
 		opened ? close() : open(user)
 		update_icon()
 		return
@@ -450,7 +466,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user)
 	if(UV)
 		return
-	if(stat & (BROKEN|NOPOWER))
+	if(stat & BROKEN)
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
 
@@ -472,8 +488,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 				return
 			var/mob/M = G.affecting
 			move_into_unit(M, user, G)
-			return
-		if(isspacesuit(I) || isspacehelmet(I) || isbreathmask(I) || ismagboots(I) || istank(I))
+		else if(isspacesuit(I) || isspacehelmet(I) || isbreathmask(I) || ismagboots(I) || istank(I))
 			load_something(I, user)
 	update_icon()
 	return
@@ -591,6 +606,10 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 //Syndicate
 /obj/machinery/suit_storage_unit/syndicate_unit
 	name = "Suit Storega Unit"
+	suit_type = /obj/item/clothing/suit/space/syndicate
+	mask_type = /obj/item/clothing/mask/gas/syndicate
+	helmet_type = /obj/item/clothing/head/helmet/space/syndicate
+	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 	req_access = list(access_syndicate)
 	build_type =  SUIT_STORAGE_BUILD_SYNDIE
 	emagged = TRUE
@@ -602,19 +621,16 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	build_type =  SUIT_STORAGE_BUILD_NONE
 	suit_type = /obj/item/clothing/suit/space/rig/syndi
 	mask_type = /obj/item/clothing/mask/gas/syndicate
-	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 
 /obj/machinery/suit_storage_unit/syndicate_unit/light/heavy
 	name = "Syndicate Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/heavy
 	mask_type = /obj/item/clothing/mask/gas/syndicate
-	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 
 /obj/machinery/suit_storage_unit/syndicate_unit/light/chem
 	name = "Hazmat Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/hazmat
 	mask_type = /obj/item/clothing/mask/gas/syndicate
-	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 
 /obj/machinery/suit_storage_unit/syndicate_unit/striker
 	name = "Syndicate Striker Suit Storage Unit"
@@ -622,7 +638,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	suit_type = /obj/item/clothing/suit/space/syndicate/elite
 	helmet_type = /obj/item/clothing/suit/space/syndicate/elite
 	mask_type = /obj/item/clothing/mask/gas/syndicate
-	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
 /obj/machinery/suit_storage_unit/syndicate_unit/elite
@@ -631,7 +646,6 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/elite
 	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/elite
 	mask_type = /obj/item/clothing/mask/gas/syndicate
-	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
 /obj/machinery/suit_storage_unit/syndicate_unit/elite/comander
