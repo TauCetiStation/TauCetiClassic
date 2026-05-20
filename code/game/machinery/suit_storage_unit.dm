@@ -517,7 +517,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	if(istank(something))
 		var/obj/item/weapon/tank/T = something
 		if(TANK)
-			to_chat(user, "<span class ='succsess'>The unit already contains a mask.</span>")
+			to_chat(user, "<span class ='succsess'>The unit already contains a tank.</span>")
 			return
 		to_chat(user, "You load the [T.name] into the storage compartment.")
 		user.drop_from_inventory(T, src)
