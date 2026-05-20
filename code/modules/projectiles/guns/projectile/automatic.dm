@@ -84,6 +84,7 @@
 	icon_state = "c20r"
 	item_state = "c20r"
 	w_class = SIZE_SMALL
+	flags_2 = CANT_BE_INSERTED
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	initial_mag = /obj/item/ammo_box/magazine/c20r
 	suitable_mags = list(/obj/item/ammo_box/magazine/c20r, /obj/item/ammo_box/magazine/c20r/hp, /obj/item/ammo_box/magazine/c20r/hv, /obj/item/ammo_box/magazine/c20r/imp)
@@ -167,6 +168,7 @@
 	icon_state = "l13"
 	item_state = "l13"
 	w_class = SIZE_SMALL
+	flags_2 = CANT_BE_INSERTED
 	origin_tech = "combat=4;materials=2"
 	initial_mag = /obj/item/ammo_box/magazine/l13
 	suitable_mags = list(/obj/item/ammo_box/magazine/l13, /obj/item/ammo_box/magazine/l13/lethal)
@@ -290,14 +292,14 @@
 	desc = "Stradi and Practican Maid Bai Spess soviets corporation, bazed he original design of 20 centuriyu fin about baars and vodka vile patrimonial it, saunds of balalaika place minvile, yuzes 7.74 caliber"
 	initial_mag = /obj/item/ammo_box/magazine/a74
 	suitable_mags = list(/obj/item/ammo_box/magazine/a74, /obj/item/ammo_box/magazine/a74/krinkov)
-	w_class = SIZE_SMALL
+	w_class = SIZE_NORMAL
 	two_hand_weapon = DESIRABLE_TWOHAND
 	icon_state = "a74"
 	item_state = "a74"
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	fire_sound = 'sound/weapons/guns/gunshot_ak74.ogg'
-	fire_delay = 2.5
-	spread_increase = 0.5
+	fire_delay = 1.75
+	spread_increase = 0.25
 	spread_max = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/a74/atom_init()
@@ -309,6 +311,11 @@
 	desc = "Маленький и смертоносный A74U легче своего старшего брата, но, тем не менее, обладает серьезной мощью."
 	initial_mag = /obj/item/ammo_box/magazine/a74/krinkov
 	two_hand_weapon = FALSE
+	w_class = SIZE_SMALL
+	flags_2 = CANT_BE_INSERTED
+	fire_delay = 2
+	fire_delay = 2
+	spread_increase = 0.5
 	icon_state = "krinkov"
 	item_state = "krinkov"
 
@@ -319,7 +326,7 @@
 	icon_state = "drozd"
 	item_state = "drozd"
 	initial_mag = /obj/item/ammo_box/magazine/drozd
-	w_class = SIZE_SMALL
+	w_class = SIZE_NORMAL
 	two_hand_weapon = DESIRABLE_TWOHAND
 	fire_sound = 'sound/weapons/guns/gunshot_drozd.ogg'
 	fire_delay = 7
@@ -385,7 +392,7 @@
 	item_state = "pulserifle"
 	fire_sound = 'sound/weapons/guns/gunshot_m41.ogg'
 	initial_mag = /obj/item/ammo_box/magazine/m41a
-	w_class = SIZE_SMALL
+	w_class = SIZE_NORMAL
 	two_hand_weapon = DESIRABLE_TWOHAND
 	recoil = LOW_RECOIL
 	fire_delay = 3

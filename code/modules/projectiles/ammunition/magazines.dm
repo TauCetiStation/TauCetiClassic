@@ -358,7 +358,7 @@
 	origin_tech = "combat=1"
 	ammo_type = /obj/item/ammo_casing/c38
 	caliber = "38"
-	max_ammo = 20
+	max_ammo = 30
 	multiple_sprites = TWO_STATES
 	overlay = "l13-mag"
 
@@ -584,7 +584,7 @@
 	origin_tech = "combat=3"
 	ammo_type = /obj/item/ammo_casing/drozd127
 	caliber = "12.7mm"
-	max_ammo = 12
+	max_ammo = 20
 	multiple_sprites = TWO_STATES
 	overlay = "drozd-mag"
 
