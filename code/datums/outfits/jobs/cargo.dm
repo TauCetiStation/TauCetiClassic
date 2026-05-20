@@ -38,7 +38,7 @@
 /datum/outfit/job/cargo_guard/tajaran_equip()
 	l_pocket = /obj/item/device/flash
 	backpack_contents = list(/obj/item/weapon/paper/psc)
-	suit_store = /obj/item/weapon/melee/baton
+	suit_store = /obj/item/weapon/gun/energy/taser
 
 // MINER OUTFIT
 /datum/outfit/job/mining
