@@ -29,8 +29,7 @@
 
 Admin Observer
 
-Trial Admin		+ADMIN +BAN
-Admin Candidate	+@ +LOG
+Admin Candidate	+ADMIN +BAN +LOG
 Admin 			+@ +VAREDIT +REJUVINATE +SERVER +SPAWN +STEALTH
 Game Admin		+@ +SOUND +POSSESS +BUILDMODE +EVENT +FUN
 Game Master		+EVERYTHING
@@ -40,6 +39,5 @@ Inactive Admin	+ADMIN +STEALTH
 Host			+EVERYTHING
 
 Developer		+ADMIN +SERVER +DEBUG +SPAWN +VAREDIT +LOG
-Dev Mod			+@ +MOD
 
 Xenovisor		+ADMIN +WHITELIST +LOG
