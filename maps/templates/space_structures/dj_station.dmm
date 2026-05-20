@@ -112,7 +112,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/djstation)
 "av" = (
-/obj/machinery/suit_storage_unit/syndicate_unit,
+/obj/machinery/suit_storage_unit/syndicate_unit{
+	fulled = 1
+	},
 /turf/simulated/floor/plating,
 /area/space_structures/djstation)
 "aw" = (
