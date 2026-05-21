@@ -185,6 +185,7 @@
 	return TRUE
 
 /obj/item/clothing/suit/space/rig/Topic(href,href_list)
+	..()
 	var/mob/living/carbon/human/user = usr
 	if(offline || !istype(user) || user.wear_suit != src)
 		return FALSE
