@@ -2151,4 +2151,3 @@ var/global/list/all_supply_groups = list("Bureaucracy / Arts", "Security", "Huma
 	additional_costs = 2000
 	group = "Bureaucracy / Arts"
 
-
