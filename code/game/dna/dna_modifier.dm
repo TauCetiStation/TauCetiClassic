@@ -387,16 +387,7 @@
 
 	data["hasDisk"] = !isnull(disk)
 
-	var/diskData[0]
-	if (!disk || !disk.buf)
-		diskData["data"] = null
-		diskData["owner"] = null
-		diskData["label"] = null
-		diskData["type"] = null
-		diskData["ue"] = null
-	else
-		diskData = disk.buf.GetData()
-	data["disk"] = diskData
+	data["disk"] = (!disk || !disk.buf) ? disk.buf.GetData() : null
 
 	var/list/new_buffers = list()
 	for(var/datum/dna2/record/buf in buffers)
@@ -414,43 +405,29 @@
 	data["selectedUITarget"] = selected_ui_target
 	data["selectedUITargetHex"] = selected_ui_target_hex
 
-	var/occupantData[0]
-	if (!connected.occupant || !connected.occupant.dna)
-		occupantData["name"] = null
-		occupantData["stat"] = null
-		occupantData["isViableSubject"] = null
-		occupantData["health"] = null
-		occupantData["maxHealth"] = null
-		occupantData["minHealth"] = null
-		occupantData["uniqueEnzymes"] = null
-		occupantData["uniqueIdentity"] = null
-		occupantData["structuralEnzymes"] = null
-		occupantData["radiationLevel"] = null
-	else
-		occupantData["name"] = connected.occupant.name
-		occupantData["stat"] = connected.occupant.stat
-		occupantData["isViableSubject"] = TRUE
-		if (!connected.occupant.dna || (NOCLONE in connected.occupant.mutations) || (connected.scan_level == 3))
-			occupantData["isViableSubject"] = FALSE
-		occupantData["health"] = connected.occupant.health
-		occupantData["maxHealth"] = connected.occupant.maxHealth
-		occupantData["minHealth"] = config.health_threshold_dead
-		occupantData["uniqueEnzymes"] = connected.occupant.dna.unique_enzymes
-		occupantData["uniqueIdentity"] = connected.occupant.dna.uni_identity
-		occupantData["structuralEnzymes"] = connected.occupant.dna.struc_enzymes
-		occupantData["radiationLevel"] = connected.occupant.radiation
-	data["occupant"] = occupantData
+	data["occupant"] = null
+	if (connected.occupant && connected.occupant.dna)
+		data["occupant"] = list(
+			"name" = connected.occupant.name,
+			"stat" = connected.occupant.stat,
+			"isViableSubject" = connected.occupant.dna && !(NOCLONE in connected.occupant.mutations) && connected.scan_level != 3,
+			"health" = connected.occupant.health,
+			"maxHealth" = connected.occupant.maxHealth,
+			"minHealth" = config.health_threshold_dead,
+			"uniqueEnzymes" = connected.occupant.dna.unique_enzymes,
+			"uniqueIdentity" = connected.occupant.dna.uni_identity,
+			"structuralEnzymes" = connected.occupant.dna.struc_enzymes,
+			"radiationLevel" = connected.occupant.radiation
+		)
 
-	data["isBeakerLoaded"] = connected.beaker ? TRUE : FALSE
-	data["beakerLabel"] = null
-	data["beakerVolume"] = 0
-	data["injectAmount"] = connected.inject_amount
+	data["beaker"] = null
 	if(connected.beaker)
-		data["beakerLabel"] = connected.beaker.label_text
-		data["beakerMaxVolume"] = connected.beaker.volume
-		if (connected.beaker.reagents && connected.beaker.reagents.reagent_list.len)
-			for(var/datum/reagent/R in connected.beaker.reagents.reagent_list)
-				data["beakerVolume"] += R.volume
+		data["beaker"] = list(
+			"label" = connected.beaker.label_text,
+			"volume" = max(connected.beaker.reagents?.total_volume, 0),
+			"maxVolume" = connected.beaker.volume
+		)
+	data["injectAmount"] = connected.inject_amount
 
 	return data
 

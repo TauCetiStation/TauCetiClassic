@@ -554,8 +554,7 @@ const DataDiskSection = (props) => {
 
 const ChemicalsScreen = (props, context) => {
   const { act, data } = useBackend(context);
-  const { occupant, beakerLabel, beakerVolume, beakerMaxVolume, injectAmount } =
-    data;
+  const { occupant, beaker, injectAmount } = data;
   return (
     <Section
       fill
@@ -563,21 +562,21 @@ const ChemicalsScreen = (props, context) => {
       buttons={
         <Button
           icon="eject"
-          disabled={!beakerMaxVolume}
+          disabled={!beaker}
           onClick={() => act('ejectBeaker')}>
           Eject beaker
         </Button>
       }>
-      {!beakerMaxVolume ? (
+      {!beaker ? (
         <Box color="average">No beaker detected</Box>
       ) : (
         <LabeledList>
-          <LabeledList.Item label={beakerLabel || 'Beaker'}>
+          <LabeledList.Item label={beaker.label || 'Beaker'}>
             <ProgressBar
-              value={beakerVolume}
-              maxValue={beakerMaxVolume}
+              value={beaker.volume}
+              maxValue={beaker.maxVolume}
               maxWidth={20}>
-              {beakerVolume}/{beakerMaxVolume}
+              {beaker.volume}/{beaker.maxVolume}
             </ProgressBar>
           </LabeledList.Item>
           <LabeledList.Item label="Inject">
@@ -585,7 +584,7 @@ const ChemicalsScreen = (props, context) => {
               inline
               value={injectAmount}
               minValue={0}
-              maxValue={beakerVolume}
+              maxValue={beaker.volume}
               onChange={(e, value) => act('injectAmount', { amount: value })}
             />
             <Button
