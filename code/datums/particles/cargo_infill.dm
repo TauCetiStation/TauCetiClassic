@@ -1,6 +1,6 @@
 /particles/cargo_infill
 	icon = 'icons/effects/particles/cargo_infill.dmi'
-	icon_state = list("infill1", "infill2", "infill3", "infill4")
+	icon_state = list("infill1" = 30, "infill2" = 10, "infill3" = 10, "infill4" = 50)
 
 	width = 100
 	height = 100
@@ -16,7 +16,7 @@
 	velocity = generator("box", list(-5, 3, 0), list(5, 7, 0), "UNIFORM_RAND")
 
 	gravity = list(0, -0.85, 0)
-	friction = 0.1
+	friction = 0.25
 	spin = generator("num", -30, 30, "SQUARE_RAND")
 
 	scale = generator("num", 0.75, 1, "SQUARE_RAND")
