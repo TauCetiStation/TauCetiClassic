@@ -327,6 +327,5 @@
 	var/turf/T = get_turf(src)
 	if(cargo_ordered && T)
 		var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(T, /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
-		var/particles/part = Holder.get_particle()
-		part.position = generator("box", list(infill_position[1], infill_position[2], 0), list(infill_position[3], infill_position[4], 0))
+		Holder.modify_particles_value("position", generator("box", list(infill_position[1], infill_position[2], 0), list(infill_position[3], infill_position[4], 0)))
 		cargo_ordered = FALSE
