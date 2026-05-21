@@ -35,6 +35,8 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	var/obj/item/clothing/mask/MASK = null
 	var/obj/item/clothing/shoes/magboots/BOOTS = null
 	var/obj/item/weapon/tank/oxygen/TANK = null
+
+//overlay connectors stuff
 	var/obj/machinery/suit_storage_unit/ssu_left = null
 	var/obj/machinery/suit_storage_unit/ssu_right = null
 
@@ -300,32 +302,20 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		addtimer(CALLBACK(src, PROC_REF(UV_cleaning)), 5 SECONDS)
 	else
 		if(!superUV)
-			if(HELMET)
-				HELMET.clean_blood()
-			if(SUIT)
-				SUIT.clean_blood()
-			if(MASK)
-				MASK.clean_blood()
-			if(TANK)
-				TANK.clean_blood()
-			if(BOOTS)
-				BOOTS.clean_blood()
-		else
-			if(occupant)
-				occupant.dust()
-				occupant = null
-			else
-				if(HELMET)
-					HELMET = null
-				if(SUIT)
-					SUIT   = null
-				if(MASK)
-					MASK   = null
-				if(TANK)
-					TANK   = null
-				if(BOOTS)
-					BOOTS  = null
-			stat &= ~BROKEN
+			if(!length(contents))
+				return
+			for(var/obj/item/target in contents)
+				target.clean_blood()
+				target.decontaminate()
+		else if(length(contents))
+			QDEL_NULL(occupant)
+			QDEL_NULL(HELMET)
+			QDEL_NULL(SUIT)
+			QDEL_NULL(MASK)
+			QDEL_NULL(TANK)
+			QDEL_NULL(BOOTS)
+			playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
+			stat |= BROKEN
 			visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
 
 		opened = TRUE
@@ -389,14 +379,23 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 
 /obj/machinery/suit_storage_unit/MouseDrop_T(atom/dropping, mob/user)
 	add_fingerprint(user)
-	if(opened)
-		if(dropping != user)
-			return
-		move_into_unit(dropping, user)
+	if(stat & BROKEN)
+		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
+	if(opened)
+		if(isitem(dropping))
+			if(isspacesuit(dropping) || isspacehelmet(dropping) || isbreathmask(dropping) || ismagboots(dropping) || istank(dropping))
+				load_something(dropping, user)
+				return
+		if(dropping == user)
+			move_into_unit(dropping, user)
+			return
 
 /obj/machinery/suit_storage_unit/AltClick(mob/user)
 	add_fingerprint(user)
+	if(stat & (BROKEN | NOPOWER))
+		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
+		return
 	if(UV)
 		return
 	if(!allowed(user))
@@ -418,12 +417,11 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/attack_hand(mob/user)
 	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
+	if(UV)
+		return
 	if(stat & BROKEN)
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
-	if(UV)
-		return
-
 	if(opened)
 		var/list/suit_storage = list()
 		if(!occupant)
@@ -607,8 +605,8 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/syndicate_unit
 	name = "Suit Storega Unit"
 	suit_type = /obj/item/clothing/suit/space/syndicate
-	mask_type = /obj/item/clothing/mask/gas/syndicate
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate
+	mask_type = /obj/item/clothing/mask/gas/syndicate
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 	req_access = list(access_syndicate)
 	build_type =  SUIT_STORAGE_BUILD_SYNDIE
