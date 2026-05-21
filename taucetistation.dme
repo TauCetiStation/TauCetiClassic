@@ -2537,6 +2537,7 @@
 #include "code\modules\surgery\ribcage.dm"
 #include "code\modules\surgery\surgery.dm"
 #include "code\modules\surgery\tissue.dm"
+#include "code\modules\surgery\organs\autosurgeon.dm"
 #include "code\modules\surgery\organs\blood.dm"
 #include "code\modules\surgery\organs\brain.dm"
 #include "code\modules\surgery\organs\eyes.dm"

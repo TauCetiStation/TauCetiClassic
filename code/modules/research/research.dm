@@ -1363,7 +1363,7 @@ The tech datums are the actual "tech trees" that you improve through researching
 	required_tech_levels = list()
 	cost = 1000
 
-	unlocks_designs = list("mechacontrol", "mechapower", "mechfab", "robocontrol", "dronecontrol", "mmi_radio", "intellicard", "paicard", "posibrain")
+	unlocks_designs = list("mechacontrol", "mechapower", "mechfab", "robocontrol", "dronecontrol", "mmi_radio", "intellicard", "paicard", "posibrain", "advanced_cybernetic_kidneys", "advanced_cybernetic_liver", "advanced_cybernetic_lungs", "advanced_cybernetic_heart")
 
 /datum/technology/artificial_intelligence
 	name = "Artificial intelligence"

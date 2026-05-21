@@ -225,8 +225,9 @@
 
 /obj/item/organ/internal/heart/proc/heart_fibrillate()
 	heart_status = HEART_FIBR
+	var/fail_time = failing_interval
 	if(HAS_TRAIT(owner, TRAIT_FAT))
-		failing_interval = 30 SECONDS
+		fail_time *= 0.5
 	fibrillation_timer_id = addtimer(CALLBACK(src, PROC_REF(heart_stop)), failing_interval, TIMER_UNIQUE|TIMER_STOPPABLE)
 	heart_metabolism_mod.ModAdditive(-0.5, "Bad Heart") // slows down metabolism, can be balanced by life assist machinery
 
@@ -266,6 +267,72 @@
 /obj/item/organ/internal/heart/cybernetic/voxc
 	parent_bodypart = BP_GROIN
 	compability = list(VOX)
+
+/obj/item/organ/internal/heart/cybernetic/advanced
+	name = "advanced cybernetic heart"
+	desc = "An electronic device designed to mimic the functions of an organic human heart. Advanced version. It has a built-in coagulator that slows bleeding, arterial cuts and tries to stabilize patient."
+	bloodlose_multiplier = 0.5
+	durability = 0.6
+	failing_interval = 2 MINUTES
+	color = COLOR_WHEAT
+	COOLDOWN_DECLARE(inaprovaline_inject)
+	COOLDOWN_DECLARE(defibrillate)
+
+/obj/item/organ/internal/heart/cybernetic/advanced/heart_stop()
+	to_chat(owner, "<span class='userdanger'> [bicon(src)] ВНИМАНИЕ! Зафиксирована угроза остановки сердца!</span>")
+	if(!owner.reagents.has_reagent("inaprovaline") && owner.stat != DEAD && COOLDOWN_FINISHED(src, inaprovaline_inject))
+		if(is_broken())
+			to_chat(owner, "<span class='userdanger'> [bicon(src)] О#иБ%к-к4...</span>")
+			return ..()
+		owner.reagents.add_reagent("inaprovaline", 15)
+		to_chat(owner, "<span class='userdanger'> [bicon(src)] Произведена экстренная инъекция инапровалина!</span>")
+		playsound(owner, 'sound/effects/hypospray.ogg', VOL_EFFECTS_MASTER, 25)
+		COOLDOWN_START(src, inaprovaline_inject, 10 MINUTES)
+	. = ..()
+
+/obj/item/organ/internal/heart/cybernetic/advanced/heart_fibrillate()
+	. = ..()
+	to_chat(owner, "<span class='userdanger'> [bicon(src)] ВНИМАНИЕ! Обнаружена фибрилляция модуля предсердий! Попытка нормализации ритмов...</span>")
+	if(COOLDOWN_FINISHED(src, defibrillate))
+		if(is_broken())
+			to_chat(owner, "<span class='userdanger'> [bicon(src)] О#иБ%к-к4...</span>")
+			return
+		to_chat(owner, "<span class='userdanger'> 10...9...8...</span>")
+		addtimer(CALLBACK(src, PROC_REF(heart_normalize)), 10 SECONDS, TIMER_STOPPABLE)
+		COOLDOWN_START(src, defibrillate, 10 MINUTES)
+	else
+		to_chat(owner, "<span class='userdanger'> ОШИБКА! Восстановление ритма не увенчалось успехом, необходима срочная медицинская помощь!</span>")
+
+/obj/item/organ/internal/heart/cybernetic/advanced/military
+	name = "military-grade cybernetic heart"
+	desc = "Mimics the functions of an organic heart. Military version. Handles blood loss problems. No artery cuts, hardy bones and also has EMP shielding."
+	bloodlose_multiplier = 0.5
+	durability = 0.4
+	failing_interval = 3 MINUTES
+	color = COLOR_RED_GRAY
+
+/obj/item/organ/internal/heart/cybernetic/advanced/military/emp_act(severity)
+	return
+
+/obj/item/organ/internal/heart/cybernetic/advanced/military/insert_organ(mob/living/carbon/M)
+	. = ..()
+	if(is_broken())
+		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			if(BP.is_artery_cut())
+				BP.status &= ~ORGAN_ARTERY_CUT
+			BP.min_broken_damage *= 1.5
+	ADD_TRAIT(M, TRAIT_HEMOCOAGULATION, REF(src))
+
+/obj/item/organ/internal/heart/cybernetic/advanced/military/remove(mob/living/carbon/M)
+	. = ..()
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			BP.min_broken_damage /= 1.5
+	REMOVE_TRAIT(M, TRAIT_HEMOCOAGULATION, REF(src))
 
 /obj/item/organ/internal/heart/ipc
 	name = "cooling pump"

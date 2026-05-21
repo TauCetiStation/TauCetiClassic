@@ -17,7 +17,7 @@
 	var/last_int_pressure
 	var/last_ext_pressure
 	var/max_pressure_diff = 60
-	var/breath_fail_ratio // How badly they failed a breath. Higher is worse.
+	var/breath_fail_ratio = 1 // How badly they failed a breath. Higher is worse.
 	var/poison_type = "phoron"
 	var/last_successful_breath
 	var/breathing = FALSE
@@ -63,7 +63,6 @@
 		return TRUE
 
 	if(!breath || (max_damage <= 0))
-		breath_fail_ratio = 1
 		handle_failed_breath()
 		return TRUE
 
@@ -71,7 +70,6 @@
 	last_ext_pressure = environment && environment.return_pressure()
 	last_int_pressure = breath_pressure
 	if(breath.total_moles == 0)
-		breath_fail_ratio = 1
 		handle_failed_breath()
 		return TRUE
 
@@ -345,3 +343,39 @@
 		refrigerant += volume
 		if(refrigerant > refrigerant_max)
 			refrigerant = refrigerant_max
+
+/obj/item/organ/internal/lungs/cybernetic/advanced
+	name = "advanced cybernetic lungs"
+	desc = "A cybernetic version of the lungs. Advanced version. Durable, allows breathing almost in vacuum or in hazardous environment."
+	durability = 0.6
+	has_gills = TRUE
+	min_breath_pressure = 5
+	breath_fail_ratio = 0.7
+	poison_type = null
+	color = COLOR_WHEAT
+	var/nutrition_level = NUTRITION_LEVEL_HUNGRY
+
+/obj/item/organ/internal/lungs/cybernetic/advanced/process()
+	. = ..()
+	if(is_broken())
+		return
+	if(owner.nutrition < nutrition_level)
+		owner.nutrition = nutrition_level + 100
+
+/obj/item/organ/internal/lungs/cybernetic/advanced/military
+	name = "military-grade cybernetic lungs"
+	desc = "A cybernetic version of the lungs. Military version. Durable, allows breathing almost in vacuum and provides better oxygenization, has painkilling effect. Breaks down air molecules, effectively negating user's nutrition need. EMP-proof."
+	durability = 0.4
+	breath_fail_ratio = 0.5
+	color = COLOR_RED_GRAY
+	nutrition_level = NUTRITION_LEVEL_NORMAL
+
+/obj/item/organ/internal/lungs/cybernetic/advanced/military/process()
+	. = ..()
+	if(is_broken())
+		return
+	if(!owner.reagents.has_reagent("endorphine"))
+		owner.reagents.add_reagent("endorphine", 1)
+
+/obj/item/organ/internal/lungs/cybernetic/advanced/military/emp_act(severity)
+	return

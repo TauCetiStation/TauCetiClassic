@@ -1024,3 +1024,41 @@
 	construction_time = 50
 	starts_unlocked = TRUE
 	category = list("Organs")
+
+/datum/design/advanced_cybernetic_lungs
+	name = "Advanced cybernetic lungs"
+	id = "advanced_cybernetic_lungs"
+	build_type = MECHFAB
+	build_path = /obj/item/organ/internal/lungs/cybernetic/advanced
+	materials = list(MAT_METAL=2000, MAT_GLASS=500, MAT_GOLD=1000, MAT_DIAMOND=500)
+	construction_time = 100
+	starts_unlocked = TRUE
+	category = list("Organs")
+
+/datum/design/advanced_cybernetic_liver
+	name = "Advanced cybernetic liver"
+	id = "advanced_cybernetic_liver"
+	build_type = MECHFAB
+	build_path = /obj/item/organ/internal/liver/cybernetic/advanced
+	materials = list(MAT_METAL=2000, MAT_GLASS=500, MAT_PHORON=1000, MAT_URANIUM=1500)
+	construction_time = 100
+	category = list("Organs")
+
+/datum/design/advanced_cybernetic_kidneys
+	name = "Advanced cybernetic kidneys"
+	id = "advanced_cybernetic_kidneys"
+	build_type = MECHFAB
+	build_path = /obj/item/organ/internal/kidneys/cybernetic/advanced
+	materials = list(MAT_METAL=2000, MAT_GLASS=500, MAT_PHORON=1500, MAT_DIAMOND=500)
+	construction_time = 100
+	category = list("Organs")
+
+/datum/design/advanced_cybernetic_heart
+	name = "Advanced cybernetic heart"
+	id = "advanced_cybernetic_heart"
+	build_type = MECHFAB
+	build_path = /obj/item/organ/internal/heart/cybernetic/advanced
+	materials = list(MAT_METAL=2000, MAT_GLASS=500, MAT_GOLD=3500, MAT_URANIUM=3000)
+	construction_time = 100
+	category = list("Organs")
+

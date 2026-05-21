@@ -111,3 +111,35 @@
 
 	if(damage_report != "")
 		to_chat(owner, damage_report)
+
+/obj/item/organ/internal/kidneys/cybernetic/advanced
+	name = "advanced cybernetic kidneys"
+	desc = "An electronic device designed to mimic the functions of human kidneys. Advanced version. More durable, clears toxins and restores blood."
+	durability = 0.6
+	color = COLOR_WHEAT
+
+/obj/item/organ/internal/kidneys/cybernetic/advanced/process()
+	. = ..()
+	if(is_broken())
+		return
+
+	owner.adjustToxLoss(-0.5)
+
+	if(owner.blood_amount() < BLOOD_VOLUME_NORMAL) //Technically, that's true - kidneys can produce some hormones
+		owner.blood_add(min(BLOOD_VOLUME_NORMAL - owner.blood_amount(), 5))
+
+/obj/item/organ/internal/kidneys/cybernetic/advanced/military
+	name = "military-grade cybernetic kidneys"
+	desc = "Mimics the functions of kidneys. Military version. Clears toxins, restores blood, supplies owner with tricordrazine and EMP-proof."
+	durability = 0.4
+	color = COLOR_RED_GRAY
+
+/obj/item/organ/internal/kidneys/cybernetic/advanced/military/process()
+	. = ..()
+	if(is_broken())
+		return
+	if(!owner.reagents.has_reagent("tricordrazine"))
+		owner.reagents.add_reagent("tricordrazine", REAGENTS_METABOLISM)
+
+/obj/item/organ/internal/kidneys/cybernetic/advanced/military/emp_act(severity)
+	return

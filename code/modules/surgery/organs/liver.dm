@@ -212,3 +212,42 @@
 	if(owner.nutrition > (C.maxcharge * 1.2))
 		explosion(T, 0, 1, 2)
 		C.ex_act(EXPLODE_DEVASTATE)
+
+/obj/item/organ/internal/liver/cybernetic/advanced
+	name = "advanced cybernetic liver"
+	desc = "An electronic device designed to mimic the functions of a human liver. Advanced version. It has better resistance to toxins compared to organic liver."
+	durability = 0.6
+	toxins_threshold = 100
+	alcohol_intensity = 0.2
+	process_accuracy = 8
+	min_bruised_damage = 35
+	min_broken_damage = 55
+	color = COLOR_WHEAT
+
+/obj/item/organ/internal/liver/cybernetic/advanced/military
+	name = "military-grade cybernetic liver"
+	desc = "Mimics the functions of a liver. Military version. It has resistance to toxins and can patch up all user's organs at the cost of blood and nutriments. EMP-proof."
+	durability = 0.4
+	color = COLOR_RED_GRAY
+
+/obj/item/organ/internal/liver/cybernetic/advanced/military/emp_act(severity)
+	return
+
+/obj/item/organ/internal/liver/cybernetic/advanced/military/process()
+	. = ..()
+	if(is_broken())
+		return
+	var/damaged_organs = list()
+	for(var/obj/item/organ/internal/IO in owner.organs)
+		if(IO.damage > 0)
+			damaged_organs += IO
+
+	if(!length(damaged_organs))
+		return
+	if(owner.nutrition < NUTRITION_LEVEL_NORMAL && owner.blood_amount() < BLOOD_VOLUME_SAFE)
+		return
+	owner.nutrition -= 20
+	owner.blood_remove(5)
+	for(var/obj/item/organ/internal/IO in damaged_organs)
+		IO.damage = max(IO.damage - 2, 0)
+		break

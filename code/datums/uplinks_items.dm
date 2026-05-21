@@ -1082,6 +1082,34 @@
 	item = /obj/item/weapon/implanter/explosive
 	cost = 3
 
+/datum/uplink_item/implants/heart
+	name = "Military-grade cybernetic heart"
+	desc = "Mimics the functions of an organic heart. Military version. Handles blood loss problems. No artery cuts, hardy bones and also has EMP shielding."
+	item = /obj/item/autosurgeon/syndicate/heart
+	cost = 8
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
+
+/datum/uplink_item/implants/lungs
+	name = "Military-grade cybernetic lungs"
+	desc = "A cybernetic version of the lungs. Military version. Durable, allows breathing almost in vacuum and provides better oxygenization, has painkiller's effect. Breaks down air molecules, effectively negating user's nutrition need. EMP-proof."
+	item = /obj/item/autosurgeon/syndicate/lungs
+	cost = 8
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
+
+/datum/uplink_item/implants/liver
+	name = "Military-grade cybernetic liver"
+	desc = "Mimics the functions of a liver. Military version. It has resistance to toxins and can patch up all user's organs at the cost of blood and nutriments. EMP-proof."
+	item = /obj/item/autosurgeon/syndicate/liver
+	cost = 8
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
+
+/datum/uplink_item/implants/kidneys
+	name = "Military-grade cybernetic kidneys"
+	desc = "Mimics the functions of kidneys. Military version. Clears toxins, restores blood, supplies owner with tricordrazine and EMP-proof."
+	item = /obj/item/autosurgeon/syndicate/kidneys
+	cost = 8
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
+
 // TELECRYSTALS
 
 /datum/uplink_item/telecrystals
