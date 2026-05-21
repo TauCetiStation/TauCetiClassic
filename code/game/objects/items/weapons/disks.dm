@@ -150,11 +150,6 @@
 	desc = "That disk contains design of basic HUD upgrade and advanced HUD blueprint"
 	stored_technology = new /datum/technology/tier1_hud_upgrade()
 
-/obj/item/weapon/disk/tech_disk/organs
-	name = "Military-grade cybernetics tech disk"
-	desc = "That disk contains designs of military-grade cybernetics"
-	stored_technology = new /datum/technology/standalone_cybernetics
-
 /obj/item/weapon/disk/tech_disk/spec_ops
 	name = "Spec Ops tech disk"
 	desc = "That disc contains designs and blueprints of Special Operation Forces equipment and ammunition"
