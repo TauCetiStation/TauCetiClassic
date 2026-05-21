@@ -114,6 +114,19 @@
 	UnregisterSignal(mob, list(COMSIG_PARENT_QDELETING, COMSIG_LOGIN, COMSIG_MOB_DIED))
 	mob.transfer_personality(spectator.client)
 
+/datum/spawner/living/spider
+	name = "Паук"
+	desc = "Вы становитесь очередным паучьим отпрыском."
+	cooldown = 3 MINUTES
+	time_for_registration = 10 SECONDS
+
+	ranks = list(ROLE_ALIEN)
+
+/datum/spawner/living/spider/spawn_body(mob/dead/spectator)
+	. = ..()
+	var/datum/faction/spiders/F = create_uniq_faction(/datum/faction/spiders)
+	add_faction_member(F, mob, FALSE)
+
 /*
  * Robots
 */

@@ -200,3 +200,13 @@ var/global/list/deconverted_roles = list()
 var/global/list/reagents_list = typecacheof(/datum/reagent)
 
 var/global/list/virus_types_by_pool
+
+var/global/list/typecache_general_bad_attack_targets = typecacheof(list(
+	/obj/machinery/alarm,
+	/obj/machinery/atmospherics,
+	/obj/machinery/portable_atmospherics/canister,
+	/obj/structure/reagent_dispensers,
+	/obj/machinery/power,
+	/obj/machinery/field_generator,
+	/obj/structure/cable
+))

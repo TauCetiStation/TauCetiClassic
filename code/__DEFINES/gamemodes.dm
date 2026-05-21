@@ -32,6 +32,7 @@
 #define F_SMART_REPLICATORS  "Replicator Hivemind vs Aliens"
 #define F_MALF_DRONES		 "Malf Drones"
 #define F_SPACE_TRADERS      "Space Traders"
+#define F_SPIDERS            "Spiders"
 
 // Role IDs
 #define ABDUCTOR_AGENT "Abductor Agent"
@@ -80,6 +81,7 @@
 #define MALF_DRONE "Malf Drone"
 #define SPACE_TRADER "Space Trader"
 #define THIEF "Thief"
+#define SPIDER "Spider"
 #define ZOMBIE "Zombie"
 
 ////////////////////// GREETS /////////////////////////
