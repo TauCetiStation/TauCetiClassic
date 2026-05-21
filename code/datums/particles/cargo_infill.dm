@@ -1,6 +1,6 @@
 /particles/cargo_infill
 	icon = 'icons/effects/particles/cargo_infill.dmi'
-	icon_state = list("infill1" = 20, "infill2" = 10, "infill3" = 10, "infill4" = 60)
+	icon_state = "infill4"
 
 	width = 100
 	height = 100
