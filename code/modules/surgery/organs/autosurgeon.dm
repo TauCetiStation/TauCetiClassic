@@ -163,7 +163,8 @@
 /obj/item/autosurgeon/debug
 	name = "Debug autosurgeon"
 	desc = "A device that automatically inserts an implant, skillchip or organ into the user without the hassle of extensive surgery. \
+		It has a slot to insert implants or organs and a screwdriver slot for removing accidentally added items. This one can insert any organ as many times as needed"
+	organ_whitelist = list(/obj/item/organ)
+	color = COLOR_NAVY_BLUE
 
-/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset
-	starting_organ = /obj/item/organ/internal/cyberimp/arm/surgery/emagged
-*/
+
