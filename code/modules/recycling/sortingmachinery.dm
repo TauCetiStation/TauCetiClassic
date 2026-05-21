@@ -9,6 +9,8 @@
 	var/image/lot_lock_image
 	var/mutable_appearance/texture_overlay
 	var/mutable_appearance/details
+	var/texture_color
+
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -28,6 +30,13 @@
 	if(lot_number)
 		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
 		qdel(Lot)
+
+	var/turf/T = get_turf(src)
+	if(T)
+		var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(T, /particles/package_wrap, PARTICLE_FADEOUT|PARTICLE_FLICK)
+		var/particles/part = Holder.get_particle()
+		part.color = texture_color
+
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
@@ -75,6 +84,9 @@
 
 		add_overlay(texture_overlay)
 
+		var/icon/I = icon(icon, new_texture)
+		texture_color = I.GetPixel(rand(1, I.Width()), rand(1, I.Height()))
+
 
 	cut_overlay(details)
 
@@ -94,6 +106,7 @@
 	var/texture_name = "cardboard"
 	var/mutable_appearance/texture_overlay
 	var/mutable_appearance/details
+	var/texture_color
 
 	max_integrity = 5
 	damage_deflection = 0
@@ -114,6 +127,13 @@
 	if(lot_number)
 		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
 		qdel(Lot)
+
+	var/turf/T = get_turf(src)
+	if(T)
+		var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(T, /particles/package_wrap, PARTICLE_FADEOUT|PARTICLE_FLICK)
+		var/particles/part = Holder.get_particle()
+		part.color = texture_color
+
 	return ..()
 
 /obj/item/smallDelivery/attack_self(mob/user)
@@ -164,6 +184,9 @@
 		texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
 
 		add_overlay(texture_overlay)
+
+		var/icon/I = icon(icon, new_texture)
+		texture_color = I.GetPixel(rand(1, I.Width()), rand(1, I.Height()))
 
 
 	cut_overlay(details)
