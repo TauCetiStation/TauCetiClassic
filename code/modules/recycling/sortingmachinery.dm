@@ -35,7 +35,7 @@
 	if(T)
 		var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(T, /particles/package_wrap, PARTICLE_FADEOUT|PARTICLE_FLICK)
 		var/particles/part = Holder.get_particle()
-		part.color = texture_color
+		part.color = color ? color : texture_color ? texture_color : "#ffffff"
 
 	return ..()
 
@@ -132,7 +132,7 @@
 	if(T)
 		var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(T, /particles/package_wrap, PARTICLE_FADEOUT|PARTICLE_FLICK)
 		var/particles/part = Holder.get_particle()
-		part.color = texture_color
+		part.color = color ? color : texture_color ? texture_color : "#ffffff"
 
 	return ..()
 
