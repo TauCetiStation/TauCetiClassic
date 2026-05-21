@@ -25,6 +25,7 @@
 							  //then open it in a populated area to crash clients.
 
 	var/cargo_ordered = FALSE
+	var/list/infill_position = list(-5, -13, 5, 7)
 
 /obj/structure/closet/atom_init(mapload)
 	. = ..()
@@ -42,9 +43,8 @@
 /obj/structure/closet/Destroy()
 	closet_list -= src
 
-	var/turf/T = get_turf(src)
-	if(cargo_ordered && T)
-		new /obj/effect/abstract/particle_holder(T, /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	if(cargo_ordered)
+		spawn_infill_particle()
 	return ..()
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
@@ -129,8 +129,7 @@
 	SSdemo.mark_dirty(src)
 
 	if(cargo_ordered)
-		new /obj/effect/abstract/particle_holder(get_turf(src), /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
-		cargo_ordered = FALSE
+		spawn_infill_particle()
 
 	return 1
 
@@ -323,3 +322,11 @@
 	forceMove(P)
 
 	return P
+
+/obj/structure/closet/proc/spawn_infill_particle()
+	var/turf/T = get_turf(src)
+	if(cargo_ordered && T)
+		var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(T, /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
+		var/particles/part = Holder.get_particle()
+		part.position = generator("box", list(infill_position[1], infill_position[2], 0), list(infill_position[3], infill_position[4], 0))
+		cargo_ordered = FALSE

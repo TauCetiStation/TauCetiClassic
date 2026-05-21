@@ -1,6 +1,6 @@
 /particles/cargo_infill
 	icon = 'icons/effects/particles/cargo_infill.dmi'
-	icon_state = list("infill1" = 30, "infill2" = 10, "infill3" = 10, "infill4" = 50)
+	icon_state = list("infill1" = 20, "infill2" = 10, "infill3" = 10, "infill4" = 60)
 
 	width = 100
 	height = 100
@@ -21,6 +21,6 @@
 
 	scale = generator("num", 0.75, 1, "SQUARE_RAND")
 
-/particles/cargo_infill/New(usageDir)
+/particles/cargo_infill/New()
 	..()
 	color = pick("#ffffff", "#ffccff", "#ffcccc", "#ffffcc", "#ccffcc", "#ccffff", "#ccecff")

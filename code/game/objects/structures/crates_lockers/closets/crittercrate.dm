@@ -4,6 +4,9 @@
 	icon_state = "critter"
 	icon_opened = "critteropen"
 	icon_closed = "critter"
+
+	infill_position = list(-10, -13, 10, 0)
+
 	var/already_opened = 0
 	var/content_mob = null
 

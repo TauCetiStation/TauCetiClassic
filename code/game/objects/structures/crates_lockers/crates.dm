@@ -6,6 +6,8 @@
 	icon_opened = "crateopen"
 	icon_closed = "crate"
 	climbable = TRUE
+
+	infill_position = list(-12, -9, 12, 0)
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
 
@@ -41,8 +43,7 @@
 		structure_shaken()
 
 	if(cargo_ordered)
-		new /obj/effect/abstract/particle_holder(get_turf(src), /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
-		cargo_ordered = FALSE
+		spawn_infill_particle()
 
 	return 1
 
@@ -480,6 +481,8 @@
 	icon_opened = "largemetalopen"
 	icon_closed = "largemetal"
 
+	infill_position = list(-10, -13, 10, -1)
+
 /obj/structure/closet/crate/large/close()
 	. = ..()
 	if (.)//we can hold up to one large item
@@ -507,6 +510,8 @@
 	icon_closed = "largemetal"
 	redlight = "largemetalr"
 	greenlight = "largemetalg"
+
+	infill_position = list(-10, -13, 10, -1)
 
 /obj/structure/closet/crate/secure/large/close()
 	. = ..()
