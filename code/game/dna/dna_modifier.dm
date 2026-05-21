@@ -306,6 +306,7 @@
 			user.drop_from_inventory(I, src)
 			disk = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
+			SStgui.update_uis(src)
 		return FALSE
 	return ..()
 
@@ -332,7 +333,7 @@
 		arr += "[i]: [EncodeDNABlock(buffer[i])]"
 	return arr
 
-/obj/machinery/computer/scan_consolenew/proc/do_irradiate(duration, datum/tgui/ui)
+/obj/machinery/computer/scan_consolenew/proc/do_irradiate(duration)
 	irradiating = duration
 	var/lock_state = connected.locked
 	connected.locked = TRUE
@@ -362,6 +363,13 @@
 	if(!ui)
 		ui = new(user, src, "DnaModifier", name)
 		ui.open()
+
+/obj/machinery/computer/scan_consolenew/tgui_static_data(mob/user)
+	var/list/data = list()
+	data["maxRadiationIntensity"] = MAX_RAD_INTENSITY
+	data["maxRadiationDuration"] = MAX_RAD_DURATION
+	data["dnaBlockSize"] = DNA_BLOCK_SIZE
+	return data
 
 /obj/machinery/computer/scan_consolenew/tgui_data(mob/user)
 	var/list/data = list()
@@ -393,18 +401,16 @@
 	var/list/new_buffers = list()
 	for(var/datum/dna2/record/buf in buffers)
 		new_buffers += list(buf.GetData())
-	data["buffers"]=new_buffers
+	data["buffers"] = new_buffers
 
-	data["maxRadiationIntensity"] = MAX_RAD_INTENSITY
-	data["maxRadiationDuration"] = MAX_RAD_DURATION
 	data["radiationIntensity"] = radiation_intensity
 	data["radiationDuration"] = radiation_duration
 
-	data["dnaBlockSize"] = DNA_BLOCK_SIZE
 	data["selectedUIBlock"] = selected_ui_block
 	data["selectedUISubBlock"] = selected_ui_subblock
 	data["selectedSEBlock"] = selected_se_block
 	data["selectedSESubBlock"] = selected_se_subblock
+
 	data["selectedUITarget"] = selected_ui_target
 	data["selectedUITargetHex"] = selected_ui_target_hex
 
@@ -433,7 +439,7 @@
 		occupantData["uniqueIdentity"] = connected.occupant.dna.uni_identity
 		occupantData["structuralEnzymes"] = connected.occupant.dna.struc_enzymes
 		occupantData["radiationLevel"] = connected.occupant.radiation
-	data["occupant"] = occupantData;
+	data["occupant"] = occupantData
 
 	data["isBeakerLoaded"] = connected.beaker ? TRUE : FALSE
 	data["beakerLabel"] = null
@@ -757,7 +763,6 @@
 				disk.buf = buf
 				disk.name = "data disk - '[buf.dna.real_name]'"
 				//temphtml = "Data saved."
-	SStgui.update_uis(src)
 
 /////////////////////////// DNA MACHINES
 
