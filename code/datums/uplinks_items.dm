@@ -1236,12 +1236,12 @@
 	name = "Mosin-Nagant Rifle"
 	desc = "A simple yet powerful bolt-action rifle chambered in 7.74."
 	item = /obj/item/weapon/gun/projectile/shotgun/bolt_action
-	cost = 4
+	cost = 2
 
 /datum/uplink_item/revolution/mosin_ammo
-	name = "Mosin-Nagant Clip"
-	desc = "A simple clip of 7.74 ammo for a simple rifle."
-	item = /obj/item/ammo_box/magazine/a774clip
+	name = "Mosin-Nagant Ammo Box"
+	desc = "A box containing several 5-round stripper clips of 7.74mm ammunition for the Mosin-Nagant bolt-action rifle."
+	item = /obj/item/weapon/storage/box/a774clip
 	cost = 1
 
 /datum/uplink_item/revolution/stechkin

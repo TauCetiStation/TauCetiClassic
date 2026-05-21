@@ -381,16 +381,15 @@
 					chassis.use_power(energy_drain*2)
 		if(2)
 			if(isfloorturf(target))
-				occupant_message("Building Airlock...")
+				occupant_message("Building Airlock Assembly...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
 					if(disabled) return
 					chassis.spark_system.start()
-					var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock(target)
-					T.autoclose = 1
-					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
-					playsound(target, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
-					chassis.use_power(energy_drain*2)
+					var/obj/structure/door_assembly/DA = new /obj/structure/door_assembly(target)
+					DA.anchored = TRUE
+					DA.state = ASSEMBLY_WIRED
+					DA.update_state()
 	return
 
 
