@@ -168,6 +168,8 @@ var/global/online_shop_referrer_revenue = 0.50
 		return FALSE
 
 	Lot.sold = TRUE
+	if(Lot == SScargoshop.get_advertisement_lot())
+		SScargoshop.update_advertisement_lot()
 
 	for(var/i in 1 to 3)
 		if(global.online_shop_lots_latest[i] == Lot)
@@ -357,20 +359,8 @@ ADD_TO_GLOBAL_LIST(/obj/random_shop_item, random_onlineshop_items)
 
 	qdel(src)
 
-/proc/get_random_unique_onlineshop_lot()
-	if(!global.online_shop_lots_hashed?.len)
-		return null
-
-	var/random_lot_hash = pick(global.online_shop_lots_hashed)
-
-	var/list/hashed_lots = global.online_shop_lots_hashed[random_lot_hash]
-	if(!hashed_lots.len)
-		return null
-
-	return pick(hashed_lots)
-
 /proc/get_onlineshop_advertisement(atom/source, referrer_account = null, no_link = FALSE)
-	var/datum/shop_lot/lot = get_random_unique_onlineshop_lot()
+	var/datum/shop_lot/lot = SScargoshop.get_advertisement_lot()
 	if(!lot)
 		return
 

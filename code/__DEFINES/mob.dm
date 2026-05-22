@@ -275,3 +275,6 @@
 #define BLOOD_VOLUME_OKAY_P    70
 #define BLOOD_VOLUME_BAD_P     60
 #define BLOOD_VOLUME_SURVIVE_P 30
+
+//The percentage of protection required to prevent organ damage
+#define PROTECTION_REQUIRED_FOR_ORGANS 25
