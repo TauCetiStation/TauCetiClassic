@@ -50,7 +50,8 @@
 	icon_state = "bombsuit"
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH
 	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 100, bio = 0, rad = 0)
+	flags_pressure = STOPS_LOWPRESSUREDMAGE
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	body_parts_covered = HEAD|FACE|EYES
 	siemens_coefficient = 0.2
@@ -65,7 +66,8 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	slowdown = 0.2
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 100, bio = 0, rad = 0)
+	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 100, bio = 0, rad = 0)
+	flags_pressure = STOPS_LOWPRESSUREDMAGE
 	flags_inv = HIDEJUMPSUIT
 	render_flags = parent_type::render_flags | HIDE_TAIL
 	heat_protection = UPPER_TORSO|LOWER_TORSO

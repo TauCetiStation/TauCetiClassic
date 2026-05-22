@@ -1,0 +1,92 @@
+'Map Edit':
+- changed-files:
+  - any-glob-to-any-file:
+    - 'maps/**/*'
+    - '**/*.dmm'
+
+'Sprites':
+- changed-files:
+  - any-glob-to-any-file:
+    - 'icons/**/*'
+    - '**/*.dmi'
+
+'Sound':
+- changed-files:
+  - any-glob-to-any-file:
+    - 'sound/**/*'
+    - '**/*.aif'
+    - '**/*.aiff'
+    - '**/*.it'
+    - '**/*.mid'
+    - '**/*.midi'
+    - '**/*.mod'
+    - '**/*.mp3'
+    - '**/*.ogg'
+    - '**/*.oxm'
+    - '**/*.raw'
+    - '**/*.s3m'
+    - '**/*.wma'
+    - '**/*.wav'
+    - '**/*.xm'
+
+'Database':
+- changed-files:
+  - any-glob-to-any-file:
+    - 'SQL/**/*'
+
+'Preferences Update':
+- changed-files:
+  - any-glob-to-any-file:
+    - 'code/modules/client/preferences_savefile.dm'
+
+'UI':
+- changed-files:
+  - any-glob-to-any-file:
+    - 'tgui/**/*'
+    - 'html/**/*'
+    - 'nano/**/*'
+
+'Config Update':
+- changed-files:
+  - any-glob-to-any-file:
+    - 'config/**/*'
+    - 'maps/**/*.json'
+    - 'code/controllers/configuration.dm'
+
+#'DM-Code':
+#- changed-files:
+#  - any-glob-to-any-file:
+#    - '**/*.dm'
+
+#'JS-code':
+#- changed-files:
+#  - any-glob-to-any-file:
+#    - '**/*.js'
+#    - '**/*.tsx'
+
+'Maintainability Improvements':
+- changed-files:
+  - any-glob-to-any-file:
+    - '.*/**/*'
+    - 'docs/**/*'
+    - 'scripts/**/*'
+    - 'test/**/*'
+    - '*'
+    - 'code/_compile_options.dm'
+
+'Tools':
+- changed-files:
+  - any-glob-to-any-file:
+    - 'tools/**/*'
+
+'Unit Tests':
+- changed-files:
+  - any-glob-to-any-file:
+    - 'test/**/*'
+    - 'code/unit_tests/**/*'
+
+'Translation/Localization':
+- changed-files:
+  - any-glob-to-any-file:
+     - 'code/__DEFINES/_translation.dm'
+     - '.github/wiki/TRANSLATION.md'
