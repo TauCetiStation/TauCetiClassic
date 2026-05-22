@@ -2318,11 +2318,11 @@
 		return
 	return md5(dna.uni_identity)
 
-/mob/living/carbon/human/try_wrap_up(texture_name = "cardboard", details_name = null)
+/mob/living/carbon/human/try_wrap_up(wrap_type)
 	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
 	P.icon_state = "deliveryhuman"
 
-	P.add_texture(texture_name, details_name)
+	P.add_texture(wrap_type)
 
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
