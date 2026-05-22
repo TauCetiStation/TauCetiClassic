@@ -323,10 +323,9 @@
 	return P
 
 /obj/structure/closet/proc/spawn_infill_particle(min_x = -5, min_y = -13, max_x = 5, max_y = 7)
-	var/turf/T = get_turf(src)
-	if(!T)
+	if(!isturf(loc))
 		return
 
-	var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(T, /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(get_turf(src), /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
 	Holder.modify_particles_value("position", generator("box", list(min_x, min_y, 0), list(max_x, max_y, 0)))
 	spawn_filling = FALSE
