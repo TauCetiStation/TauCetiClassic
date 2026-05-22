@@ -332,6 +332,7 @@
 		return
 
 	new /obj/effect/abstract/particle_holder(T, leaves_hit_particle_type, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	shake_act(1)
 
 /obj/structure/flora/tree/jungle/small
 	pixel_y = 0
