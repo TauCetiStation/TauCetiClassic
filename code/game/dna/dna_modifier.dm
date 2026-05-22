@@ -443,7 +443,7 @@
 
 	switch(action)
 		if ("selectMenuKey")
-			selected_menu_key = params["menu"]
+			selected_menu_key = sanitize_integer(params["menu"], 1, 4, selected_menu_key)
 
 		if ("toggleLock")
 			if(connected)
@@ -455,8 +455,8 @@
 		if ("pulseRadiation")
 			var/lock_state = do_irradiate(radiation_duration, ui)
 
-			if (!connected.occupant)
-				connected.locked = lock_state
+			connected?.locked = lock_state
+			if (!connected?.occupant)
 				return
 
 			if (prob(95))
@@ -471,7 +471,6 @@
 					randmuti(connected.occupant)
 
 			connected.occupant.radiation += ((radiation_intensity * 3) + radiation_duration * 3)
-			connected.locked = lock_state
 
 		if ("radiationDuration")
 			radiation_duration = clamp(params["duration"], 1, MAX_RAD_DURATION)
@@ -518,8 +517,8 @@
 
 			var/lock_state = do_irradiate(radiation_duration, ui)
 
-			if (!connected.occupant)
-				connected.locked = lock_state
+			connected?.locked = lock_state
+			if (!connected?.occupant)
 				return
 
 			if (prob(80 + connected.precision_coeff + radiation_duration / 2))
@@ -535,7 +534,6 @@
 					randmuti(connected.occupant)
 					connected.occupant.UpdateAppearance()
 				connected.occupant.radiation += radiation_intensity * 2 + radiation_duration + connected.precision_coeff
-			connected.locked = lock_state
 
 		////////////////////////////////////////////////////////
 
@@ -568,19 +566,18 @@
 
 			var/lock_state = do_irradiate(radiation_duration, ui)
 
-			if(!connected)
-				connected?.locked = lock_state
+			connected?.locked = lock_state
+			if(!connected?.occupant)
 				return FALSE
 
-			if(connected.occupant)
-				if (prob(80 + connected.precision_coeff + radiation_duration / 2))
-					var/real_SE_block = selected_se_block
-					block = miniscramble(block, radiation_intensity, radiation_duration)
-					if(prob(20 - connected.scan_level ** 2))
-						if (selected_se_block > 1 && selected_se_block < DNA_SE_LENGTH / 2)
-							real_SE_block++
-						else if (selected_se_block > DNA_SE_LENGTH / 2 && selected_se_block < DNA_SE_LENGTH)
-							real_SE_block--
+			if (prob(80 + connected.precision_coeff + radiation_duration / 2))
+				var/real_SE_block = selected_se_block
+				block = miniscramble(block, radiation_intensity, radiation_duration)
+				if(prob(20 - connected.scan_level ** 2))
+					if (selected_se_block > 1 && selected_se_block < DNA_SE_LENGTH / 2)
+						real_SE_block++
+					else if (selected_se_block > DNA_SE_LENGTH / 2 && selected_se_block < DNA_SE_LENGTH)
+						real_SE_block--
 
 					connected.occupant.dna.SetSESubBlock(real_SE_block,selected_se_subblock,block)
 					connected.occupant.radiation += (radiation_intensity + radiation_duration) / connected.damage_coeff
@@ -593,7 +590,6 @@
 					else
 						randmuti(connected.occupant)
 						connected.occupant.UpdateAppearance()
-			connected.locked = lock_state
 
 		if("ejectBeaker")
 			if(connected.beaker)
