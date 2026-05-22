@@ -4,7 +4,6 @@
 	icon_state = "critter"
 	icon_opened = "critteropen"
 	icon_closed = "critter"
-
 	var/already_opened = 0
 	var/content_mob = null
 
