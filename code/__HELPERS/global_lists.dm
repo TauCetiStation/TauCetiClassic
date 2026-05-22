@@ -308,7 +308,7 @@
 		global.ringtones_by_names["[initial(Ring.name)]"] = new Ring
 
 	global.package_wrap_by_type = list()
-	for(var/package_wrap_type as anything in subtypesof(/datum/package_wrap))
+	for(var/package_wrap_type as anything in typesof(/datum/package_wrap))
 		global.package_wrap_by_type[package_wrap_type] = new package_wrap_type
 
 	init_washing_items_list()
