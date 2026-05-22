@@ -311,6 +311,7 @@
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	pixel_x = -48
 	pixel_y = -20
+	var/obj/effect/abstract/particle_holder/leaves_particle
 
 /obj/structure/flora/tree/jungle/get_seethrough_map()
 	return SEE_THROUGH_MAP_THREE_X_THREE
@@ -319,10 +320,18 @@
 	. = ..()
 	icon_state = pick(icon_states(icon))
 
+	leaves_particle = new /obj/effect/abstract/particle_holder(src, /particles/leaves, PARTICLE_FADEOUT)
+
 /obj/structure/flora/tree/jungle/small
 	pixel_y = 0
 	pixel_x = -32
 	icon = 'icons/obj/flora/jungletreesmall.dmi'
+
+/obj/structure/flora/tree/jungle/small/atom_init()
+	. = ..()
+
+	leaves_particle.modify_particles_value("position", generator("box", list(0, 96, 0), list(96, 32, 0), "SQUARE_RAND"))
+	leaves_particle.modify_particles_value("lifespan", 50)
 
 /obj/structure/flora/tree/jungle/small/get_seethrough_map()
 	return SEE_THROUGH_MAP_THREE_X_TWO
