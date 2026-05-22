@@ -5,8 +5,6 @@
 	icon_opened = "critteropen"
 	icon_closed = "critter"
 
-	infill_position = list(-10, -13, 10, 0)
-
 	var/already_opened = 0
 	var/content_mob = null
 
@@ -49,6 +47,9 @@
 	else
 		locked = 0
 		toggle()
+
+/obj/structure/closet/critter/spawn_infill_particle(min_x = -10, min_y = -13, max_x = 10, max_y = 0)
+	. = ..()
 
 /obj/structure/closet/critter/corgi
 	name = "corgi crate"

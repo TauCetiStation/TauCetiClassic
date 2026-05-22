@@ -24,8 +24,7 @@
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
-	var/cargo_ordered = FALSE
-	var/list/infill_position = list(-5, -13, 5, 7)
+	var/spawn_filling = FALSE
 
 /obj/structure/closet/atom_init(mapload)
 	. = ..()
@@ -43,7 +42,7 @@
 /obj/structure/closet/Destroy()
 	closet_list -= src
 
-	if(cargo_ordered)
+	if(spawn_filling)
 		spawn_infill_particle()
 	return ..()
 
@@ -128,7 +127,7 @@
 	density = FALSE
 	SSdemo.mark_dirty(src)
 
-	if(cargo_ordered)
+	if(spawn_filling)
 		spawn_infill_particle()
 
 	return 1
@@ -323,9 +322,11 @@
 
 	return P
 
-/obj/structure/closet/proc/spawn_infill_particle()
+/obj/structure/closet/proc/spawn_infill_particle(min_x = -5, min_y = -13, max_x = 5, max_y = 7)
 	var/turf/T = get_turf(src)
-	if(cargo_ordered && T)
-		var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(T, /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
-		Holder.modify_particles_value("position", generator("box", list(infill_position[1], infill_position[2], 0), list(infill_position[3], infill_position[4], 0)))
-		cargo_ordered = FALSE
+	if(!T)
+		return
+
+	var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(T, /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	Holder.modify_particles_value("position", generator("box", list(min_x, min_y, 0), list(max_x, max_y, 0)))
+	spawn_filling = FALSE

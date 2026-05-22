@@ -72,7 +72,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	fill(C)
 
 	if(ispath(crate_type, /obj/structure/closet))
-		C.cargo_ordered = TRUE
+		C.spawn_filling = TRUE
 
 	return C
 

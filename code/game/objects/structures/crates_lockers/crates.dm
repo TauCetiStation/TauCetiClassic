@@ -7,7 +7,6 @@
 	icon_closed = "crate"
 	climbable = TRUE
 
-	infill_position = list(-12, -9, 12, 0)
 //	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
 	var/rigged = 0
 
@@ -42,7 +41,7 @@
 	if(climbable)
 		structure_shaken()
 
-	if(cargo_ordered)
+	if(spawn_filling)
 		spawn_infill_particle()
 
 	return 1
@@ -481,8 +480,6 @@
 	icon_opened = "largemetalopen"
 	icon_closed = "largemetal"
 
-	infill_position = list(-10, -13, 10, -1)
-
 /obj/structure/closet/crate/large/close()
 	. = ..()
 	if (.)//we can hold up to one large item
@@ -501,6 +498,9 @@
 					break
 	return
 
+/obj/structure/closet/crate/large/spawn_infill_particle(min_x = -10, min_y = -13, max_x = 10, max_y = -1)
+	. = ..()
+
 /obj/structure/closet/crate/secure/large
 	name = "large crate"
 	desc = "A hefty metal crate with an electronic locking system."
@@ -510,8 +510,6 @@
 	icon_closed = "largemetal"
 	redlight = "largemetalr"
 	greenlight = "largemetalg"
-
-	infill_position = list(-10, -13, 10, -1)
 
 /obj/structure/closet/crate/secure/large/close()
 	. = ..()
@@ -530,6 +528,9 @@
 					M.forceMove(src)
 					break
 	return
+
+/obj/structure/closet/crate/secure/large/spawn_infill_particle(min_x = -10, min_y = -13, max_x = 10, max_y = -1)
+	. = ..()
 
 //fluff variant
 /obj/structure/closet/crate/secure/large/reinforced
@@ -632,3 +633,6 @@
 	forceMove(P)
 
 	return P
+
+/obj/structure/closet/crate/spawn_infill_particle(min_x = -12, min_y = -9, max_x = 12, max_y = 0)
+	. = ..()
