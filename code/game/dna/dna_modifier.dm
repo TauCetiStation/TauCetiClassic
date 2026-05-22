@@ -406,7 +406,7 @@
 	data["selectedUITargetHex"] = selected_ui_target_hex
 
 	data["occupant"] = null
-	if(connected.occupant && connected.occupant.dna)
+	if(connected.occupant?.dna)
 		data["occupant"] = list(
 			"name" = connected.occupant.name,
 			"stat" = connected.occupant.stat,
@@ -636,7 +636,7 @@
 
 				switch(choice)
 					if("Subject U.I.")
-						if(connected.occupant && connected.occupant.dna)
+						if(connected.occupant?.dna)
 							var/datum/dna2/record/databuf = new
 							databuf.types = DNA2_BUF_UI
 							databuf.dna = connected.occupant.dna.Clone()
@@ -645,7 +645,7 @@
 							databuf.name = "Unique identifier"
 							buffers[bufferId] = databuf
 					if("Subject U.I. + U.E.")
-						if(connected.occupant && connected.occupant.dna)
+						if(connected.occupant?.dna)
 							var/datum/dna2/record/databuf = new
 							databuf.types = DNA2_BUF_UI|DNA2_BUF_UE
 							databuf.dna = connected.occupant.dna.Clone()
@@ -654,7 +654,7 @@
 							databuf.name = "Unique identifier + unique enzymes"
 							buffers[bufferId] = databuf
 					if("Subject S.E.")
-						if(connected.occupant && connected.occupant.dna)
+						if(connected.occupant?.dna)
 							var/datum/dna2/record/databuf = new
 							databuf.types = DNA2_BUF_SE
 							databuf.dna = connected.occupant.dna.Clone()
