@@ -10,19 +10,19 @@
 //list("data" = null, "owner" = null, "label" = null, "type" = null, "ue" = 0),
 /datum/dna2/record
 	var/datum/dna/dna = null
-	var/types=0
-	var/name="Empty"
+	var/types = 0
+	var/name = "Empty"
 
 	// Stuff for cloners
-	var/id=null
-	var/implant=null
-	var/ckey=null
-	var/mind=null
-	var/languages=null
+	var/id = null
+	var/implant = null
+	var/ckey = null
+	var/mind = null
+	var/languages = null
 	var/list/quirks
 
 /datum/dna2/record/proc/GetData()
-	var/list/ser=list("data" = null, "owner" = null, "label" = null, "type" = null, "ue" = 0)
+	var/list/ser = list("data" = null, "owner" = null, "label" = null, "type" = null, "ue" = 0)
 	if(dna)
 		ser["ue"] = (types & DNA2_BUF_UE) == DNA2_BUF_UE
 		if(types & DNA2_BUF_SE)
@@ -82,7 +82,7 @@
 		else if(istype(P, /obj/item/weapon/stock_parts/micro_laser))
 			damage_coeff = P.rating ** 2
 
-/obj/machinery/dna_scannernew/proc/toggle_open(mob/user=usr)
+/obj/machinery/dna_scannernew/proc/toggle_open(mob/user = usr)
 	if(!user)
 		return
 	if(open)
@@ -101,7 +101,7 @@
 	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>")
 	user.visible_message("<span class='warning'>You hear a metallic creaking from [src]!</span>")
 
-	if(do_after(user,(breakout_time*60*10),target=src)) //minutes * 60seconds * 10deciseconds
+	if(do_after(user,(breakout_time*60*10),target = src)) //minutes * 60seconds * 10deciseconds
 		if(!user || user.incapacitated() || user.loc != src || open || !locked)
 			return
 
@@ -293,7 +293,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 400
-	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
+	var/waiting_for_user_input = 0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
 
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_TRAINED)
 
@@ -312,8 +312,8 @@
 
 /obj/machinery/computer/scan_consolenew/atom_init()
 	..()
-	for(var/i=0;i<3;i++)
-		buffers[i+1]=new /datum/dna2/record
+	for(var/i = 0; i < 3; i++)
+		buffers[i+1] = new /datum/dna2/record
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/scan_consolenew/atom_init_late()
@@ -641,7 +641,7 @@
 							databuf.types = DNA2_BUF_UI
 							databuf.dna = connected.occupant.dna.Clone()
 							if(ishuman(connected.occupant))
-								databuf.dna.real_name=connected.occupant.name
+								databuf.dna.real_name = connected.occupant.name
 							databuf.name = "Unique identifier"
 							buffers[bufferId] = databuf
 					if("Subject U.I. + U.E.")
@@ -650,7 +650,7 @@
 							databuf.types = DNA2_BUF_UI|DNA2_BUF_UE
 							databuf.dna = connected.occupant.dna.Clone()
 							if(ishuman(connected.occupant))
-								databuf.dna.real_name=connected.occupant.name
+								databuf.dna.real_name = connected.occupant.name
 							databuf.name = "Unique identifier + unique enzymes"
 							buffers[bufferId] = databuf
 					if("Subject S.E.")
@@ -659,7 +659,7 @@
 							databuf.types = DNA2_BUF_SE
 							databuf.dna = connected.occupant.dna.Clone()
 							if(ishuman(connected.occupant))
-								databuf.dna.real_name=connected.occupant.name
+								databuf.dna.real_name = connected.occupant.name
 							databuf.name = "Structural enzymes"
 							buffers[bufferId] = databuf
 					if("Disk")
@@ -705,9 +705,9 @@
 						waiting_for_user_input = TRUE
 						var/list/selectedbuf
 						if(buf.types & DNA2_BUF_SE)
-							selectedbuf=buf.dna.SE
+							selectedbuf = buf.dna.SE
 						else
-							selectedbuf=buf.dna.UI
+							selectedbuf = buf.dna.UI
 						//var/blk = input(usr,"Select Block","Block") as null|anything in all_dna_blocks(selectedbuf)
 						var/blk = tgui_input_list(ui.user, "Select block", "Block injector", all_dna_blocks(selectedbuf))
 						success = setInjectorBlock(I,blk,buf)
