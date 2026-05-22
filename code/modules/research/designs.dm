@@ -1970,12 +1970,12 @@ other types of metals and chemistry for reagents).
 	category = list("Weapons")
 
 /datum/design/laserrifle
-	name = "Laser Rifle"
+	name = "Extended-Capacity Laser Rifle"
 	desc = "An energy weapon with concentrated energy bolts."
 	id = "laserrifle"
 	build_type = PROTOLATHE
 	materials = list (MAT_METAL = 8000, MAT_GLASS = 1000, MAT_URANIUM = 200)
-	build_path = /obj/item/weapon/gun/energy/laser
+	build_path = /obj/item/weapon/gun/energy/laser/big
 	category = list("Weapons")
 
 /datum/design/laserpractice
