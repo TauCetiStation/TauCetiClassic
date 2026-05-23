@@ -12651,10 +12651,11 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel)
 "avn" = (
-/obj/machinery/hologram/holopad,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid3"
+/obj/structure/sink/puddle,
+/obj/structure/flora/ausbushes/reedbush{
+	pixel_y = 6
 	},
+/turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "avo" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -26097,11 +26098,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "aUc" = (
-/obj/structure/flora/junglebush/b,
 /obj/effect/decal/turf_decal/wood{
 	dir = 1;
 	icon_state = "spline_fancy"
 	},
+/obj/structure/fence/wood{
+	dir = 1
+	},
+/obj/structure/flora/ausbushes/ywflowers,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "aUd" = (
@@ -28199,10 +28203,13 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/mixing)
 "aXG" = (
-/obj/structure/flora/rock/jungle,
+/obj/structure/flora/tree/jungle,
 /obj/effect/decal/turf_decal/wood{
-	dir = 4;
-	icon_state = "spline_fancy"
+	icon_state = "spline_fancy_corner"
+	},
+/obj/effect/decal/turf_decal/wood{
+	dir = 1;
+	icon_state = "spline_fancy_corner"
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -28254,15 +28261,8 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel/office)
 "aXM" = (
-/obj/effect/decal/turf_decal/wood{
-	dir = 8;
-	icon_state = "spline_fancy"
-	},
-/obj/machinery/light/smart{
-	dir = 4
-	},
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor/grass,
+/obj/structure/mangal,
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "aXN" = (
 /obj/item/weapon/flora/random,
@@ -29774,6 +29774,7 @@
 /obj/effect/decal/turf_decal/wood{
 	icon_state = "spline_fancy"
 	},
+/obj/structure/fence/wood,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "bat" = (
@@ -29875,10 +29876,10 @@
 /turf/simulated/floor,
 /area/station/cargo/lobby)
 "baC" = (
-/obj/structure/flora/ausbushes/reedbush,
 /obj/effect/decal/turf_decal/wood{
 	icon_state = "spline_fancy"
 	},
+/obj/structure/fence/wood,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "baD" = (
@@ -30004,15 +30005,25 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "baN" = (
+/obj/structure/flora/rock/jungle,
 /obj/effect/decal/turf_decal/wood{
-	dir = 8;
+	dir = 1;
 	icon_state = "spline_fancy"
 	},
-/obj/machinery/camera{
-	c_tag = "Garden East";
-	dir = 9
+/obj/effect/decal/turf_decal/wood{
+	icon_state = "spline_fancy"
 	},
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/fence/wood{
+	dir = 1
+	},
+/obj/structure/fence/wood,
+/obj/structure/fence/wood{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal/wood{
+	dir = 4;
+	icon_state = "spline_fancy"
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "baO" = (
@@ -30251,10 +30262,13 @@
 /area/station/medical/chemistry)
 "bbj" = (
 /obj/effect/decal/turf_decal/wood{
-	dir = 8;
+	dir = 1;
 	icon_state = "spline_fancy"
 	},
-/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/fence/wood{
+	dir = 1
+	},
+/obj/structure/flora/ausbushes/lavendergrass,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "bbk" = (
@@ -68203,9 +68217,14 @@
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cHi" = (
+/obj/structure/flora/ausbushes/lavendergrass,
 /obj/effect/decal/turf_decal/wood{
 	dir = 6;
 	icon_state = "spline_fancy"
+	},
+/obj/structure/fence/wood,
+/obj/structure/fence/wood{
+	dir = 4
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -71491,6 +71510,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
+"eCh" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 8;
+	icon_state = "spline_fancy"
+	},
+/obj/machinery/camera{
+	c_tag = "Garden East";
+	dir = 9
+	},
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/fence/wood{
+	dir = 8
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "eCz" = (
 /obj/machinery/alarm{
 	pixel_y = 24
@@ -72003,6 +72037,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/cmo)
+"flv" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/simulated/floor/garden,
+/area/station/civilian/garden)
 "fmb" = (
 /turf/simulated/floor{
 	icon_state = "redcorner"
@@ -73444,12 +73482,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "gHG" = (
-/obj/effect/decal/turf_decal/wood{
-	dir = 8;
-	icon_state = "spline_fancy"
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid7"
 	},
-/obj/structure/flora/junglebush/b,
-/turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "gIb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -73532,6 +73568,14 @@
 	icon_state = "cafeteria"
 	},
 /area/station/civilian/kitchen)
+"gLD" = (
+/obj/structure/flora/ausbushes/ywflowers,
+/obj/effect/decal/turf_decal/wood{
+	icon_state = "spline_fancy"
+	},
+/obj/structure/fence/wood,
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "gMb" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/thin/reinforced{
@@ -74218,12 +74262,26 @@
 	icon_state = "4-3"
 	},
 /area/shuttle/mining/station)
+"hsp" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/decal/turf_decal/wood{
+	icon_state = "spline_fancy"
+	},
+/obj/structure/fence/wood,
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "htg" = (
 /obj/effect/decal/turf_decal/wood{
 	dir = 10;
 	icon_state = "spline_fancy"
 	},
-/obj/structure/flora/ausbushes/ywflowers,
+/obj/structure/fence/wood,
+/obj/structure/fence/wood{
+	dir = 8
+	},
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "huy" = (
@@ -74238,6 +74296,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"hvj" = (
+/obj/effect/decal/turf_decal/wood{
+	icon_state = "spline_fancy"
+	},
+/obj/structure/fence/wood,
+/obj/structure/flora/ausbushes/brflowers,
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "hvE" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -74543,6 +74609,17 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
+"hOF" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 1;
+	icon_state = "spline_fancy"
+	},
+/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/fence/wood{
+	dir = 1
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "hOV" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -76833,6 +76910,17 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"jXS" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 8;
+	icon_state = "spline_fancy"
+	},
+/obj/structure/flora/rock/jungle,
+/obj/structure/fence/wood{
+	dir = 8
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "jYb" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
@@ -79704,6 +79792,19 @@
 /obj/item/stack/rods,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
+"mOE" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 5;
+	icon_state = "spline_fancy"
+	},
+/obj/structure/fence/wood{
+	dir = 1
+	},
+/obj/structure/fence/wood{
+	dir = 4
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "mPb" = (
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
@@ -80470,12 +80571,25 @@
 	icon_state = "spline_fancy"
 	},
 /obj/structure/flora/ausbushes/brflowers,
+/obj/structure/fence/wood{
+	dir = 8
+	},
+/obj/structure/fence/wood{
+	dir = 1
+	},
+/obj/machinery/light/smart,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "nIb" = (
 /obj/structure/mineral_door/wood,
 /turf/simulated/floor/wood,
 /area/station/maintenance/engineering)
+"nIz" = (
+/obj/structure/stool/bed/chair/park{
+	dir = 8
+	},
+/turf/simulated/floor/garden,
+/area/station/civilian/garden)
 "nJb" = (
 /obj/structure/disposalpipe/segment,
 /turf/simulated/wall,
@@ -81112,6 +81226,17 @@
 	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/altar)
+"osF" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 1;
+	icon_state = "spline_fancy"
+	},
+/obj/structure/flora/junglebush/c,
+/obj/structure/fence/wood{
+	dir = 1
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "osP" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -81689,6 +81814,15 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
+"phR" = (
+/obj/structure/park_table,
+/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle{
+	pixel_y = 8
+	},
+/turf/simulated/floor/garden{
+	icon_state = "asteroid6"
+	},
+/area/station/civilian/garden)
 "pib" = (
 /obj/item/seeds/tomatoseed,
 /turf/simulated/floor/plating,
@@ -81876,6 +82010,20 @@
 /obj/structure/sign/warning/mail_delivery,
 /turf/simulated/wall,
 /area/station/cargo/lobby)
+"pwg" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 8;
+	icon_state = "spline_fancy"
+	},
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/fence/wood{
+	dir = 8
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "pwt" = (
 /obj/machinery/power/emitter{
 	anchored = 1;
@@ -84422,6 +84570,17 @@
 	icon_state = "brown"
 	},
 /area/station/cargo/storage)
+"sbw" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 8;
+	icon_state = "spline_fancy"
+	},
+/obj/structure/flora/ausbushes/sunnybush,
+/obj/structure/fence/wood{
+	dir = 8
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "scb" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -85488,6 +85647,12 @@
 /obj/structure/window/thin/reinforced,
 /turf/environment/space,
 /area/space)
+"sXX" = (
+/obj/structure/park_table,
+/turf/simulated/floor/garden{
+	icon_state = "asteroid2"
+	},
+/area/station/civilian/garden)
 "sZb" = (
 /obj/structure/window/thin/reinforced{
 	dir = 8
@@ -85613,10 +85778,12 @@
 /area/station/maintenance/engineering)
 "tfZ" = (
 /obj/effect/decal/turf_decal/wood{
-	dir = 8;
+	dir = 1;
 	icon_state = "spline_fancy"
 	},
-/obj/structure/flora/rock/jungle,
+/obj/structure/fence/wood{
+	dir = 1
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "tgb" = (
@@ -86211,6 +86378,17 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
+"ueI" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 8;
+	icon_state = "spline_fancy"
+	},
+/obj/structure/flora/junglebush/b,
+/obj/structure/fence/wood{
+	dir = 8
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "ueK" = (
 /obj/machinery/camera{
 	c_tag = "Starboard Primary Hallway 5";
@@ -86432,6 +86610,17 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
+"uth" = (
+/obj/effect/decal/turf_decal/wood{
+	dir = 1;
+	icon_state = "spline_fancy"
+	},
+/obj/structure/fence/wood{
+	dir = 1
+	},
+/obj/structure/flora/junglebush/large,
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "uul" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -86900,6 +87089,14 @@
 	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
+"vyf" = (
+/obj/effect/decal/turf_decal/wood{
+	icon_state = "spline_fancy"
+	},
+/obj/structure/fence/wood,
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "vyg" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,0"
@@ -87868,6 +88065,12 @@
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
+"xnR" = (
+/obj/structure/stool/bed/chair/park{
+	dir = 4
+	},
+/turf/simulated/floor/garden,
+/area/station/civilian/garden)
 "xoA" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal{
 	dir = 4
@@ -137380,9 +137583,9 @@ ccX
 cdn
 cvq
 cpE
-cxp
+tfZ
 cdb
-aRK
+hsp
 cuE
 cCt
 bdn
@@ -137894,9 +138097,9 @@ cdc
 aRK
 cvq
 cxl
-cxp
-cdd
-cdn
+tfZ
+avn
+hvj
 cuE
 cCt
 aUM
@@ -138151,8 +138354,8 @@ cdd
 aRO
 uYg
 cpE
-aUc
-cdc
+osF
+ccX
 baC
 cxu
 cCJ
@@ -138408,9 +138611,9 @@ ctL
 aTf
 cxu
 cpE
-cxp
-cdb
-aRK
+hOF
+cdd
+hsp
 cuE
 cCt
 cMn
@@ -138665,7 +138868,7 @@ aQb
 cla
 cuE
 cpE
-aUM
+mOE
 aXG
 cHi
 cuE
@@ -138922,9 +139125,9 @@ aQl
 clb
 cuE
 cpE
-cxs
-cxs
-cxs
+flv
+baN
+cuE
 cxu
 cuE
 bdw
@@ -139180,7 +139383,7 @@ clU
 cwV
 cxz
 cuE
-avn
+cxs
 cuE
 cuN
 cuE
@@ -139435,11 +139638,11 @@ bWu
 aTX
 bWu
 htg
-cuN
-cxu
+xnR
 cuE
+gHG
 cuE
-cuE
+xnR
 nHY
 bWu
 aTX
@@ -139690,15 +139893,15 @@ aaa
 aaa
 aaa
 aaa
-bWu
-bWu
-gHG
-tfZ
-aXM
-baN
-bbj
-bWu
-bWu
+aTX
+gLD
+phR
+cuE
+cuE
+cuE
+sXX
+uth
+aTX
 aaa
 aaa
 aah
@@ -139947,15 +140150,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-bWu
 aTX
+vyf
+nIz
+cuE
+aXM
+cxs
+nIz
+bbj
 aTX
-aTX
-aTX
-aTX
-bWu
-aaa
 aaa
 aaa
 aaa
@@ -140204,15 +140407,15 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bWu
+bWu
+ueI
+jXS
+pwg
+eCh
+sbw
+bWu
+bWu
 aaa
 aaa
 aaa
@@ -140462,13 +140665,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+bWu
+aTX
+aTX
+aTX
+aTX
+aTX
+bWu
 aaa
 aaa
 aaa
@@ -141237,7 +141440,7 @@ aaa
 aaa
 aaa
 aaa
-aag
+aaa
 aaa
 aaa
 aaa
@@ -142008,7 +142211,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aag
 aaa
 aaa
 aaa

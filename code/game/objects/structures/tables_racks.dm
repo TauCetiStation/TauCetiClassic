@@ -894,3 +894,202 @@
 
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return FALSE
+
+
+/obj/structure/mangal
+	name = "mangal"
+	cases = list("мангал", "мангала", "мангалу", "мангал", "мангалом", "мангале")
+	desc = "Сборный мангал из листов металла."
+	gender = MALE
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "mangal_empty"
+	density = TRUE
+	anchored = TRUE
+	layer = CONTAINER_STRUCTURE_LAYER
+	throwpass = 1	//You can throw objects over this, despite it's density.")
+	climbable = TRUE
+
+	max_integrity = 25
+	resistance_flags = CAN_BE_HIT
+
+	hit_particle_type = /particles/tool/digging/metal
+
+	light_color = LIGHT_COLOR_FIRE
+
+	var/coal_amount = 0
+	var/coal_max = 25
+	var/lit = FALSE
+
+	var/last_burn_time = 0
+	var/coal_consumption_time = 1 MINUTE
+
+/obj/structure/mangal/atom_init(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/clickplace)
+
+	if(mapload)
+		coal_amount = rand(10, coal_max)
+		update_icon()
+
+/obj/structure/mangal/airlock_crush_act()
+	deconstruct(TRUE)
+
+/obj/structure/mangal/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	var/obj/item/weapon/mangal_parts/parts = new (loc)
+	if(coal_amount > 0)
+		for(var/i in 1 to coal_amount)
+			new /obj/item/weapon/ore/coal (loc)
+
+	if(disassembled)
+		transfer_fingerprints_to(parts)
+	else
+		parts.deconstruct(FALSE)
+	..()
+
+/obj/structure/mangal/attackby(obj/item/weapon/W, mob/user)
+	if(iswrenching(W))
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+		deconstruct(TRUE)
+		return
+
+	if(istype(W, /obj/item/weapon/ore/coal) && (coal_amount < coal_max))
+		qdel(W)
+		coal_amount++
+		visible_message("<span class='notice'>[user] добавляет [CASE(W, ACCUSATIVE_CASE)] в мангал</span>")
+		update_icon()
+		return
+
+	if(W.get_current_temperature() && (coal_amount > 0))
+		visible_message("<span class='notice'>[user] поджигает [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)].</span>")
+		StartBurning()
+		return
+
+	if(W.is_open_container() && W.reagents && W.reagents.remove_reagent("water", 1))
+		visible_message("<span class='notice'>[user] тушит [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)].</span>")
+		extinguish()
+		return
+
+	. = ..()
+
+/obj/structure/mangal/update_icon()
+	if(!coal_amount)
+		icon_state = "mangal_empty"
+		return
+
+	if(lit)
+		icon_state = "mangal_lit"
+		return
+
+	icon_state = "mangal_coal"
+
+/obj/structure/mangal/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	StartBurning()
+
+/obj/structure/mangal/water_act()
+	extinguish()
+
+/obj/structure/mangal/get_current_temperature()
+	if(lit)
+		return 1000
+	return 0
+
+/obj/structure/mangal/process()
+	if(!CheckOxygen())
+		extinguish()
+		return
+
+	if(world.time - last_burn_time > coal_consumption_time)
+		coal_amount--
+		last_burn_time = world.time
+		if(coal_amount <= 0)
+			coal_amount = 0
+			extinguish()
+			return
+
+	Burn()
+
+/obj/structure/mangal/proc/Burn()
+	var/turf/current_location = get_turf(src)
+	current_location.hotspot_expose(1000, 500)
+	for(var/A in current_location)
+		if(A == src)
+			continue
+		if(isobj(A))
+			var/obj/O = A
+			O.fire_act(1000, 500)
+		else if(isliving(A))
+			var/mob/living/L = A
+			if(prob(20))
+				L.emote("scream")
+			L.adjust_fire_stacks(3)
+			L.IgniteMob()
+
+/obj/structure/mangal/proc/StartBurning()
+	if(lit || !CheckOxygen())
+		return
+
+	lit = TRUE
+	START_PROCESSING(SSobj, src)
+	update_icon()
+	set_light(3)
+
+/obj/structure/mangal/proc/extinguish()
+	if(!lit)
+		return
+
+	lit = FALSE
+	set_light(0)
+	STOP_PROCESSING(SSobj, src)
+	update_icon()
+
+/obj/structure/mangal/proc/CheckOxygen()
+	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
+	if(G.get_by_flag(XGM_GAS_OXIDIZER) > 1)
+		return 1
+	return 0
+
+
+/obj/structure/park_table
+	name = "park table"
+	cases = list("парковый столик", "паркового столика", "парковому столику", "парковый столик", "парковым столиком", "парковом столике")
+	desc = "Простой дощатый стол."
+	gender = MALE
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "table_park"
+	density = TRUE
+	anchored = TRUE
+	layer = CONTAINER_STRUCTURE_LAYER
+	throwpass = 1	//You can throw objects over this, despite it's density.")
+	climbable = TRUE
+
+	max_integrity = 75
+	resistance_flags = CAN_BE_HIT
+
+	hit_particle_type = /particles/tool/digging/wood
+
+/obj/structure/park_table/atom_init(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/clickplace)
+
+/obj/structure/park_table/airlock_crush_act()
+	deconstruct(TRUE)
+
+/obj/structure/park_table/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	new /obj/item/stack/sheet/wood(loc, 3)
+
+	..()
+
+/obj/structure/park_table/attackby(obj/item/weapon/W, mob/user)
+	if(iswrenching(W))
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+		deconstruct(TRUE)
+		return
+
+	. = ..()
