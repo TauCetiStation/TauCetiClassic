@@ -44,7 +44,8 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	new/datum/stack_recipe("plastic knife", /obj/item/weapon/kitchenknife/plastic, 1, build_outline = TRUE), \
 	new/datum/stack_recipe("plastic bag", /obj/item/weapon/storage/bag/plasticbag, 3, build_outline = TRUE), \
 	new/datum/stack_recipe("plastic noticeboard", /obj/item/noticeboard_frame/plastic, 10, time = 20, build_outline = TRUE), \
-	new/datum/stack_recipe("sign backing", /obj/item/sign_backing, 4, build_outline = TRUE)
+	new/datum/stack_recipe("sign backing", /obj/item/sign_backing, 4, build_outline = TRUE),
+	new/datum/stack_recipe("fence", /obj/structure/fence/plastic, 2, time = 25, max_per_place = 1, build_outline = TRUE),
 	)
 
 var/global/list/datum/stack_recipe/gold_recipes = list ( \

@@ -62,9 +62,9 @@
 /obj/structure/fence/CanPass(atom/movable/mover, turf/target, height=0)
 	if(fence_cover_chance && istype(mover,/obj/item/projectile))
 		return (check_cover(mover,target))
-	if(istype(mover) && mover.checkpass(PASSTABLE))
+	if(istype(mover) && !fence_full && mover.checkpass(PASSTABLE))
 		return TRUE
-	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
+	if(istype(mover) && !fence_full && HAS_TRAIT(mover, TRAIT_ARIBORN))
 		return TRUE
 	if(get_dir(loc, target) & dir)
 		if(!screwed && prob(10)) //10% chance that it won't stop us from going through.
@@ -78,9 +78,9 @@
 	return (dir != to_dir)
 
 /obj/structure/fence/CheckExit(atom/movable/O, turf/target)
-	if(istype(O) && O.checkpass(PASSTABLE))
+	if(istype(O) && !fence_full && O.checkpass(PASSTABLE))
 		return TRUE
-	if(istype(O) && HAS_TRAIT(O, TRAIT_ARIBORN))
+	if(istype(O) && !fence_full && HAS_TRAIT(O, TRAIT_ARIBORN))
 		return TRUE
 	if(get_dir(O.loc, target) == dir)
 		if(!screwed && prob(10)) //10% chance that it won't stop us from going through.
@@ -237,3 +237,83 @@
 	icon_state = "sandbags_green"
 
 	disassemble_type = /obj/item/stack/sheet/sandbag_green
+
+
+obj/structure/fence/plastic
+	name = "plastic barrier"
+	desc = "Пластиковая перегородка."
+
+	icon_state = "fence_plastic"
+
+	max_integrity = 15
+	resistance_flags = FIRE_PROOF | CAN_BE_HIT
+
+	fence_full = TRUE
+	fence_cover_chance = 75
+
+	can_be_screwed = TRUE
+
+	var/mutable_appearance/Plate
+
+/obj/structure/fence/plastic/atom_init()
+	. = ..()
+
+	if(color)
+		change_color(color)
+	color = null
+
+/obj/structure/fence/plastic/proc/change_color(new_color)
+	cut_overlay(Plate)
+
+	if(!Plate)
+		Plate = mutable_appearance(icon, "fence_plastic_color")
+
+	Plate.color = new_color
+	add_overlay(Plate)
+
+/obj/structure/fence/plastic/proc/change_paintjob(obj/item/weapon/airlock_painter/W, mob/user)
+	if(!istype(W))
+		return
+
+	if(!W.can_use(user, 1))
+		return
+
+	var/new_color = input(user, "Выберите цвет!") as color|null
+
+	if(!new_color)
+		return
+
+	if(W.use_tool(src, user, 50, 1))
+		change_color(new_color)
+
+/obj/structure/fence/plastic/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/airlock_painter))
+		change_paintjob(W, user)
+		return
+
+	return ..()
+
+/obj/structure/fence/plastic/deconstruct(disassembled)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/mineral/plastic(loc, 2)
+	..()
+
+
+/obj/structure/fence/mesh
+	name = "mesh fence"
+	desc = "Сетка рабица."
+
+	icon_state = "fence_mesh"
+
+	max_integrity = 5
+	resistance_flags = FIRE_PROOF | CAN_BE_HIT
+
+	fence_full = TRUE
+	fence_cover_chance = 0
+
+	can_be_screwed = TRUE
+
+/obj/structure/fence/mesh/deconstruct(disassembled)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/rods(loc, 2)
+	..()

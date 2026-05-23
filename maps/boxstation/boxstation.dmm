@@ -17585,6 +17585,14 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_y = 32
 	},
+/obj/structure/fence/plastic{
+	dir = 1;
+	color = "#a62228"
+	},
+/obj/structure/fence/plastic{
+	dir = 8;
+	color = "#a62228"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "redcorner"
@@ -18069,6 +18077,14 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/fence/plastic{
+	dir = 4;
+	color = "#a62228"
+	},
+/obj/structure/fence/plastic{
+	dir = 1;
+	color = "#a62228"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -21341,6 +21357,10 @@
 /obj/structure/table,
 /obj/item/device/flash,
 /obj/item/weapon/handcuffs,
+/obj/structure/fence/plastic{
+	dir = 4;
+	color = "#a62228"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -27640,6 +27660,14 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/photocopier,
+/obj/structure/fence/plastic{
+	dir = 4;
+	color = "#a62228"
+	},
+/obj/structure/fence/plastic{
+	dir = 2;
+	color = "#a62228"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -31068,6 +31096,12 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/structure/fence/plastic{
+	dir = 1
+	},
+/obj/structure/fence/plastic{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bcG" = (
@@ -33122,11 +33156,11 @@
 /area/station/medical/medbreak)
 "bge" = (
 /obj/structure/flora/ausbushes/lavendergrass,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /mob/living/carbon/monkey/unathi{
 	name = "Eric"
+	},
+/obj/structure/fence/mesh{
+	dir = 8
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
@@ -34270,6 +34304,9 @@
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
+/obj/structure/fence/plastic{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bim" = (
@@ -35238,6 +35275,14 @@
 	pixel_x = 5;
 	pixel_y = 10
 	},
+/obj/structure/fence/plastic{
+	dir = 4;
+	color = "#a62228"
+	},
+/obj/structure/fence/plastic{
+	dir = 1;
+	color = "#a62228"
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bks" = (
@@ -35261,6 +35306,9 @@
 /area/station/storage/emergency3)
 "bku" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/obj/structure/fence/plastic{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
@@ -36264,6 +36312,10 @@
 	pixel_x = -7;
 	pixel_y = 14
 	},
+/obj/structure/fence/plastic{
+	dir = 4
+	},
+/obj/structure/fence/plastic,
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "blW" = (
@@ -36695,6 +36747,10 @@
 /obj/item/device/flashlight/lamp/small{
 	pixel_x = -10
 	},
+/obj/structure/fence/plastic{
+	dir = 8;
+	color = "#a62228"
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bmE" = (
@@ -36743,6 +36799,10 @@
 /area/station/rnd/robotics)
 "bmJ" = (
 /obj/machinery/microscope,
+/obj/structure/fence/plastic{
+	dir = 8;
+	color = "#a62228"
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bmK" = (
@@ -36752,6 +36812,14 @@
 /obj/item/weapon/storage/box/swabs,
 /obj/item/weapon/forensic_sample_kit,
 /obj/item/weapon/forensic_sample_kit/powder,
+/obj/structure/fence/plastic{
+	dir = 8;
+	color = "#a62228"
+	},
+/obj/structure/fence/plastic{
+	dir = 2;
+	color = "#a62228"
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bmL" = (
@@ -36875,6 +36943,10 @@
 /obj/structure/table/woodentable,
 /obj/item/device/taperecorder,
 /obj/item/device/tagger/shop,
+/obj/structure/fence/plastic,
+/obj/structure/fence/plastic{
+	dir = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "bmX" = (
@@ -51049,13 +51121,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bMq" = (
-/obj/structure/window/thin/reinforced{
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/fence/mesh{
 	dir = 8
 	},
-/obj/structure/window/thin/reinforced{
+/obj/structure/fence/mesh{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/sparsegrass,
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
 "bMr" = (
@@ -72861,11 +72933,11 @@
 /area/station/medical/reception)
 "gcb" = (
 /obj/structure/stool/bed/roller,
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
 /mob/living/carbon/monkey{
 	name = "Stanley"
+	},
+/obj/structure/fence/mesh{
+	dir = 1
 	},
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
@@ -73831,6 +73903,10 @@
 	},
 /obj/item/weapon/stickers{
 	pixel_x = -9
+	},
+/obj/structure/fence/plastic{
+	dir = 4;
+	color = "#a62228"
 	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
@@ -78308,18 +78384,22 @@
 	},
 /area/station/engineering/engine)
 "lyb" = (
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/brflowers,
-/obj/structure/window/thin/reinforced,
+/obj/structure/fence/mesh{
+	dir = 8
+	},
+/obj/structure/fence/mesh,
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
 "lyx" = (
 /obj/structure/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/structure/fence/plastic{
+	dir = 2;
+	color = "#a62228"
 	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
@@ -80377,11 +80457,11 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "nDb" = (
-/obj/structure/window/thin/reinforced,
 /obj/structure/stool/bed/roller,
 /mob/living/carbon/monkey{
 	name = "Butters"
 	},
+/obj/structure/fence/mesh,
 /turf/simulated/floor/grass,
 /area/station/medical/genetics)
 "nDR" = (
@@ -88179,6 +88259,10 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/structure/fence/plastic{
+	dir = 2;
+	color = "#a62228"
 	},
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
