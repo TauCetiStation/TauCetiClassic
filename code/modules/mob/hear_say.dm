@@ -115,7 +115,8 @@
 				for(var/i in 1 to sounds)
 					playsound_local(speaker, instrumental_sound, VOL_EFFECTS_MASTER, 80)
 					sleep(3)
-			playsound_local(speaker, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
+			else
+				playsound_local(speaker, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
 
 	. = TRUE
 
