@@ -462,6 +462,7 @@
 	var/obj/item/weapon/card/id/id = H.get_idcard()
 	if(id)
 		id.access |= list(access_engineering_lobby, access_medical, access_research, access_mailsorting)
+
 /datum/quality/positiveish/prodavan
 	name = "Greetings, I'm from the NanoFlame company"
 	desc = "Послушав советы тренера по личностному росту, ты потратил все свои сбережения на товары компании НаноФлейм, теперь придётся кому-то их сбагрить..."
