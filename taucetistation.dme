@@ -462,6 +462,7 @@
 #include "code\datums\outfits\misc\survivalists.dm"
 #include "code\datums\particles\cargo_infill.dm"
 #include "code\datums\particles\fire.dm"
+#include "code\datums\particles\leaves.dm"
 #include "code\datums\particles\package_wrap.dm"
 #include "code\datums\particles\tool_usage.dm"
 #include "code\datums\qualities\holiday.dm"
