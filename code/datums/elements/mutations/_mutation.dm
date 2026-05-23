@@ -7,6 +7,7 @@
 
 /datum/element/mutation
 	var/list/traits = list()
+	element_flags = ELEMENT_DETACH
 
 /datum/element/mutation/Attach(datum/target)
 	. = ..()

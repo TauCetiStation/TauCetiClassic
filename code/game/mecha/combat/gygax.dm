@@ -36,11 +36,32 @@
 
 /obj/mecha/combat/gygax/security/atom_init() //for aspect
 	. = ..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang(src)
+	var/obj/item/mecha_parts/mecha_equipment/ME
+
+	var/obj/item/mecha_parts/mecha_equipment/main_weapon = pick(
+		/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive,
+		/obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse,
+		/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy,
+	)
+	ME = new main_weapon(src)
 	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser(src)
+
+	var/obj/item/mecha_parts/mecha_equipment/side_weapon = pick(
+		/obj/item/mecha_parts/mecha_equipment/weapon/energy/laser,
+		/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine,
+		/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot,
+		/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg,
+	)
+	ME = new side_weapon(src)
 	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/repair_droid(src)
+
+	var/obj/item/mecha_parts/mecha_equipment/support_equipment = pick(
+		/obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
+		/obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
+		/obj/item/mecha_parts/mecha_equipment/repair_droid,
+		/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
+	)
+	ME = new support_equipment(src)
 	ME.attach(src)
 
 /obj/mecha/combat/gygax/ultra
@@ -58,15 +79,6 @@
 /obj/mecha/combat/gygax/ultra/atom_init()
 	. = ..()
 	AddComponent(/datum/component/examine_research, DEFAULT_SCIENCE_CONSOLE_ID, 4600, list(DIAGNOSTIC_EXTRA_CHECK, VIEW_EXTRA_CHECK))
-
-/obj/mecha/combat/gygax/ultra/security/atom_init() //for aspect
-	. = ..()
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser(src)
-	ME.attach(src)
-	ME = new /obj/item/mecha_parts/mecha_equipment/repair_droid(src)
-	ME.attach(src)
 
 /obj/mecha/combat/gygax/ultra/ert
 	dna_lockable = TRUE

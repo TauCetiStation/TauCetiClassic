@@ -598,7 +598,7 @@
 	else if(hudtype == "medical")
 		A = huds[DATA_HUD_MEDICAL]
 
-	if(M in A.hudusers)
+	if(A.hudusers[M])
 		return TRUE
 
 	return FALSE

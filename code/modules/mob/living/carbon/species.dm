@@ -82,9 +82,9 @@
 	var/heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 40	// Heat damage level 2 above this point.
 	var/heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 640	// Heat damage level 3 above this point.
 
-	var/breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 15
-	var/breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 30
-	var/breath_cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 45
+	var/breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
+	var/breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
+	var/breath_cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 85
 
 	var/body_temperature = BODYTEMP_NORMAL	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
 	var/synth_temp_gain = 0					//IS_SYNTHETIC species will gain this much temperature every second
@@ -439,6 +439,17 @@
 	,IS_SOCIAL = TRUE
 	)
 
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head
+		,BP_L_ARM  = /obj/item/organ/external/l_arm
+		,BP_R_ARM  = /obj/item/organ/external/r_arm
+		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		,BP_EARS   = /obj/item/organ/external/ears
+	)
+
 	min_age = 25
 	max_age = 85
 
@@ -606,10 +617,6 @@
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
-
-	breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
-	breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
-	breath_cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
 
 	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 20
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
@@ -897,6 +904,7 @@
 		TRAIT_NO_PAIN,
 		TRAIT_NO_BLOOD,
 		TRAIT_NEVER_FAT,
+		TRAIT_VIRUS_IMMUNE,
 	)
 
 	flags = list(
@@ -1336,6 +1344,9 @@
 	I.override = 1
 	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "IPC_xeno", I, null, null, NONE)
 	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "IPC_zombie", I, null, null, NONE)
+
+/datum/species/machine/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return O.ipc_equip(H)
 
 /datum/species/machine/on_loose(mob/living/carbon/human/H, new_species)
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
@@ -1797,6 +1808,7 @@
 		TRAIT_INCOMPATIBLE_DNA,
 		TRAIT_NO_MINORCUTS,
 		TRAIT_NEVER_FAT,
+		TRAIT_VIRUS_IMMUNE,
 	)
 
 	flags = list(
@@ -1858,13 +1870,12 @@
 	..()
 	H.real_name = pick(global.serpentid_names)
 	H.name = H.real_name
-	var/list/color_variables = list("#003300",
-									"#333300",
-									"#663300",
-									"#800000",
-									"#000066",
-									"#660033",
-									"#003366")
+	H.r_eyes = 90
+	var/list/color_variables = list(
+									"#59cf93",
+									"#42bfe8",
+									"#f8f644",
+									"#fca570",)
 	var/color_gain = pick(color_variables)
 	H.r_skin = hex2num(copytext(color_gain, 2, 4))
 	H.g_skin = hex2num(copytext(color_gain, 4, 6))

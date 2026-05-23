@@ -791,6 +791,9 @@
 		if(buckled && buckled.buckle_require_restraints)
 			buckled.unbuckle_mob()
 
+	else if(W == neck)
+		neck = null
+
 	else if (W == legcuffed)
 		legcuffed = null
 
@@ -1188,6 +1191,8 @@
 		see_invisible = SEE_INVISIBLE_MINIMUM
 		set_EyesVision("greyscale")
 		return FALSE
+
+	set_EyesVision(null)
 
 	sight = initial(sight)
 	var/new_lighting_alpha = initial(lighting_alpha)

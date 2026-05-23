@@ -561,7 +561,8 @@ var/global/list/intents = list(INTENT_HELP, INTENT_PUSH, INTENT_GRAB, INTENT_HAR
 			playsound(ghost, ghost_sound, VOL_EFFECTS_MASTER, notify_volume)
 		if(!source)
 			continue
-		var/atom/movable/screen/alert/notify_action/alert = ghost.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action, new_master=source)
+		// Don't pass new_master when we have a custom overlay — throw_alert would add source as overlay (showing its icon, e.g. blue X for landmarks)
+		var/atom/movable/screen/alert/notify_action/alert = ghost.throw_alert("[REF(source)]_notify_action", /atom/movable/screen/alert/notify_action, new_master = alert_overlay ? null : source)
 		if(!alert)
 			continue
 		if (header)

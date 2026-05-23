@@ -12,7 +12,7 @@
 	return 0
 
 // Bones just fly away if damage is too high. They also don't care about lasers
-/datum/bodypart_controller/skeleton/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null, impact_direction = null)
+/datum/bodypart_controller/skeleton/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null, impact_direction = null, protection = 0)
 	if(!BP.owner)
 		return
 	brute = round(brute * BP.owner.mob_brute_mod.Get(), 0.1)
@@ -152,7 +152,18 @@
 	min_broken_damage = 10
 	controller_type = /datum/bodypart_controller/skeleton
 
+/obj/item/organ/external/ears/skeleton
+	name = "skeleton ears"
+	leaves_stump = FALSE
+	force = 8
+	min_broken_damage = 10
+	controller_type = /datum/bodypart_controller/skeleton
+
 /obj/item/organ/external/tail/skeleton/skeleton/attack(mob/living/M, mob/living/user, def_zone)
+	if(!skeleton_insert_bodypart(M, src, def_zone))
+		. = ..()
+
+/obj/item/organ/external/ears/skeleton/skeleton/attack(mob/living/M, mob/living/user, def_zone)
 	if(!skeleton_insert_bodypart(M, src, def_zone))
 		. = ..()
 

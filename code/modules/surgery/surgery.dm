@@ -63,6 +63,18 @@
 /datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return null
 
+/// Outputs a consolidated warning about necrotic organs that can't be treated by "fix" step.
+/datum/surgery_step/proc/necrotic_organs_warning(mob/living/user, mob/living/carbon/human/target, list/dead_organs)
+	if(!length(dead_organs))
+		return
+	var/list/organ_names = list()
+	for(var/obj/item/organ/internal/IO as anything in dead_organs)
+		organ_names += IO.name
+	if(organ_names.len == 1)
+		to_chat(user, "<span class='warning'>[target]'s [organ_names[1]] is necrotic and can't be treated this way.</span>")
+	else
+		to_chat(user, "<span class='warning'>[target]'s [get_english_list(organ_names)] are necrotic and can't be treated this way.</span>")
+
 /proc/spread_germs_to_organ(obj/item/organ/external/BP, mob/living/carbon/human/user, obj/item/tool)
 	if(!istype(user) || !istype(BP))
 		return
@@ -112,6 +124,22 @@
 	for(var/obj/item/I in list(T.wear_suit, T.w_uniform, T.gloves, T.glasses, T.head, T.wear_mask, T.shoes))
 		if(I && I.body_parts_covered & covered)
 			return TRUE
+	return FALSE
+
+/proc/get_clothing_by_covered_bodypart(mob/living/carbon/human/T, covered)
+	var/static/list/zone_by_clothing_part = list(
+		BP_CHEST = UPPER_TORSO,
+		BP_GROIN = LOWER_TORSO,
+		BP_L_LEG = LEG_LEFT,
+		BP_R_LEG = LEG_RIGHT,
+		BP_L_ARM = ARM_LEFT,
+		BP_R_ARM = ARM_RIGHT,
+		BP_HEAD = HEAD,
+	)
+	var/zone = zone_by_clothing_part[covered]
+	for(var/obj/item/clothing/I in list(T.wear_suit, T.w_uniform, T.gloves, T.glasses, T.head, T.wear_mask, T.shoes))
+		if(I && (I.body_parts_covered & zone))
+			return I
 	return FALSE
 
 /proc/check_human_covering(mob/living/carbon/human/T, mob/living/user, covered)

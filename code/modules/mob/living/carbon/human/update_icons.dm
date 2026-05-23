@@ -188,6 +188,8 @@ Please contact me on #coderbus IRC. ~Carn x
 		update_body(BP_WINGS)
 	if(render_flags & (HIDE_TOP_HAIR | HIDE_FACIAL_HAIR))
 		update_body(BP_HEAD)
+	if(render_flags & HIDE_EARS)
+		update_body(BP_EARS)
 	//if(render_flags & HIDE_UNIFORM) // update_inv_w_uniform should be called by equip anyway
 	//	update_inv_w_uniform()
 

@@ -1,0 +1,20 @@
+name: "Pull Request Labeler"
+
+
+on:
+  push:
+    branches:
+      - main
+  pull_request_target:
+
+jobs:
+  labeler:
+    permissions:
+      contents: read # may be required due to overwrite/add ambiguity
+      pull-requests: write # required to apply labels to PRs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Apply labels based on changed files
+        uses: actions/labeler@v6
+        with:
+          configuration-path: .github/LABELER.yml
