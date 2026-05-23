@@ -14,27 +14,19 @@
 		"ancestor_name" = list("field_type" = "string", "max_length" = 150, "can_be_null" = TRUE),
 		"ancestor_chain" = list("field_type" = "int", "min_num" = 1),
 		"relic_mask" = list("field_type" = "string", "max_length" = 150, "can_be_null" = TRUE),
-	))
+	), list(COMSIG_MOB_DIED), CALLBACK(src, PROC_REF(Write_Death)))
+
+	name = pick(pet_monkey_names)
+	gender = pick(MALE, FEMALE)
+
 	. = ..()
 
-/mob/living/carbon/monkey/punpun/death(gibbed)
-	if(gibbed)
-		SEND_SIGNAL(src, COMSIG_CONTINUITY_SAVE, TRUE, gibbed)
-	..()
-
 /mob/living/carbon/monkey/punpun/proc/Read_Memory(save_data)
+	ancestor_name = save_data["ancestor_name"]
+	ancestor_chain = save_data["ancestor_chain"]
 
-	var/list/ancestor_list = save_data["ancestor_name"]
-	if(ancestor_list.len)
-		ancestor_name = ancestor_list[1]
-
-	var/ancestor_num = save_data["ancestor_chain"][1]
-	if(ancestor_num >= 1)
-		ancestor_chain = ancestor_num
-
-	var/list/mask_list = save_data["relic_mask"]
-	if(mask_list.len)
-		var/mask_type = text2path(mask_list[1])
+	var/mask_type = text2path(save_data["relic_mask"])
+	if(mask_type)
 		var/obj/item/mask = new mask_type
 		equip_to_slot_or_del(mask, SLOT_WEAR_MASK)
 
@@ -49,17 +41,18 @@
 			name = pick(pet_monkey_names)
 		gender = pick(MALE, FEMALE)
 
+/mob/living/carbon/monkey/punpun/proc/Write_Death(gibbed)
+	return Write_Memory(TRUE, gibbed)
+
 /mob/living/carbon/monkey/punpun/proc/Write_Memory(dead, gibbed)
 	var/list/data = list(
-		"ancestor_name" = "",
+		"ancestor_name" = null,
 		"ancestor_chain" = ancestor_chain,
-		"relic_mask" = "",
+		"relic_mask" = null,
 	)
 
 	if(gibbed)
-		data["ancestor_name"] = null
 		data["ancestor_chain"] = 1
-		data["relic_mask"] = null
 		return data
 
 	if(dead && istext(ancestor_name) && isnum(ancestor_chain))

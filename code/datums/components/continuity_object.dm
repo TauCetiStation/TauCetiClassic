@@ -1,13 +1,19 @@
+#define RUNTIME_SENTINEL "THE PROC HAS RUNTIMED WHAT ARE YOU GOING ON ABOUT"
+
+#define RUNTIMED(proc_output) proc_output == RUNTIME_SENTINEL
+
+
 /datum/component/continuity_object
 	var/save_path = ""
 
 	var/datum/callback/saveproc
 	var/datum/callback/loadproc
+	var/datum/callback/preemptiveproc
 
 	var/alist/fields
 
-/datum/component/continuity_object/Initialize(datum/callback/_saveproc = null, datum/callback/_loadproc = null, file_path = null, _fields = null, special_id = "no_id")
-	if(!_saveproc || !_loadproc || !_fields)
+/datum/component/continuity_object/Initialize(datum/callback/_saveproc = null, datum/callback/_loadproc = null, file_path = null, _fields = null, list/signals_list = null, _preemptiveproc = null)
+	if(!_saveproc || !_loadproc || !_fields || !file_path)
 		qdel(src)
 		return
 
@@ -22,21 +28,26 @@
 
 	fields = _fields
 
-	if(file_path)
-		save_path = "[file_path]"
-	else
-		save_path = replacetext("[parent.type]", "/", "_")
-
-	save_path += "/[special_id]"
+	save_path = "[file_path]"
 
 	SScontinuity.add_object(src, save_path)
 
 	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), PROC_REF(on_destroyed))
-	RegisterSignal(parent, list(COMSIG_CONTINUITY_SAVE), PROC_REF(preemptive_save))
+	if(signals_list && signals_list.len)
+		if(_preemptiveproc)
+			preemptiveproc = _preemptiveproc
+		else
+			preemptiveproc = _saveproc
+
+		RegisterSignal(parent, signals_list, PROC_REF(preemptive_save))
 
 /datum/component/continuity_object/proc/save()
 	var/list/data_to_save = saveproc.Invoke()
 	data_to_save = sanitize_data(data_to_save)
+	if(RUNTIMED(data_to_save))
+		stack_trace("Tried saving [parent]. Aborted.")
+		return
+
 	return data_to_save
 
 /datum/component/continuity_object/proc/load(data)
@@ -47,7 +58,7 @@
 		data_to_load = data
 
 	data_to_load = sanitize_data(data_to_load)
-	if(isnull(data_to_load))
+	if(RUNTIMED(data_to_load))
 		stack_trace("Tried loading [parent]. JSON is invalid.")
 		return
 
@@ -61,12 +72,16 @@
 	qdel(src)
 
 /datum/component/continuity_object/proc/preemptive_save(...)
-	SScontinuity.add_object(saveproc.Invoke(arglist(args)), save_path)
+	var/list/arguments = args.Copy(2)
+	SScontinuity.add_object(preemptiveproc.Invoke(arglist(arguments)), save_path)
 	on_destroyed()
 
 /* --------continuity field types--------
 
 fields = alist(...)
+
+//list/alist
+"varname" = list("field_type" = "list/alist", "can_be_null" = TRUE, "key_config" = list(...), "entry_type" = "string/int", "entry_config" = list(...))
 
 //string
 "varname" = list("field_type" = "string", "max_length" = 999, "can_be_null" = TRUE, "in_list" = list(), "allowed_characters" = list())
@@ -76,91 +91,179 @@ fields = alist(...)
 
 */
 
-/datum/component/continuity_object/proc/sanitize_string(list/field_data, list/params)
-	var/list/newdata = list()
-	for(var/field in field_data)
-		if(isnull(field) || length(field) == 0)
-			if("can_be_null" in params)
-				continue
+/datum/component/continuity_object/proc/sanitize_list(list/field, list/params)
+	if(!(params["entry_type"] && params["entry_config"]))
+		stack_trace("Tried saving [field] for [parent]. Invalid configuration.")
+		return RUNTIME_SENTINEL
 
-			stack_trace("Tried saving [field] for [parent]. Is null")
-			return null
+	if((params["field_type"] == "alist") && !params["key_config"])
+		stack_trace("Tried saving [field] for [parent]. Invalid alist configuration.")
+		return RUNTIME_SENTINEL
 
-		if(!istext(field))
-			stack_trace("Tried saving [field] for [parent]. Not a text")
-			return null
+	if(isnull(field) || !field.len)
+		if("can_be_null" in params)
+			return field
 
-		if(!("max_length" in params))
-			stack_trace("Tried saving [field] for [parent]. No max_length param")
-			return null
+		stack_trace("Tried saving [field] for [parent]. Is null")
+		return RUNTIME_SENTINEL
 
-		if((length(field) > params["max_length"]))
-			stack_trace("Tried saving [field] for [parent]. Text is longer than it should be")
-			return null
+	var/list/sanitized_list = list()
 
-		if(("allowed_characters" in params))
-			var/char = ""
-			for(var/i = 1, i <= length(field), i += length(char))
-				char = field[i]
+	switch(params["field_type"])
+		if("list")
+			for(var/entry in field)
+				switch(params["entry_type"])
+					if("list")
+						var/newdata = sanitize_list(entry, params["entry_config"])
+						if(RUNTIMED(newdata))
+							return RUNTIME_SENTINEL
 
-				if(!(char in params["allowed_characters"]))
-					stack_trace("Tried saving [field] for [parent]. Text contains bad characters")
-					return null
+						sanitized_list += list(newdata)
 
-		if(("in_list" in params) && !(field in params["in_list"]))
-			stack_trace("Tried saving [field] for [parent]. Not an allowed string")
-			return null
+					if("string")
+						var/newdata = sanitize_string(entry, params["entry_config"])
+						if(RUNTIMED(newdata))
+							return RUNTIME_SENTINEL
 
-		newdata += sanitize(field)
+						sanitized_list += list(newdata)
 
-	return newdata
+					if("int")
+						var/newdata = sanitize_int(entry, params["entry_config"])
+						if(RUNTIMED(newdata))
+							return RUNTIME_SENTINEL
 
-/datum/component/continuity_object/proc/sanitize_int(list/field_data, list/params)
-	for(var/field in field_data)
-		if(!("can_be_null" in params) && isnull(field))
-			if("can_be_null" in params)
-				return field_data
+						sanitized_list += list(newdata)
 
-			stack_trace("Tried saving [field] for [parent]. Is null")
-			return null
+		if("alist")
+			for(var/entry_name in field)
+				var/valid_name = sanitize_string(entry_name, params["key_config"])
+				if(RUNTIMED(valid_name))
+					return RUNTIME_SENTINEL
 
-		if(!isnum(field))
-			stack_trace("Tried saving [field] for [parent]. Not a number")
-			return null
+				var/entry = field[entry_name]
+				switch(params["entry_type"])
+					if("list")
+						var/newdata = sanitize_list(entry, params["entry_config"])
+						if(RUNTIMED(newdata))
+							return RUNTIME_SENTINEL
 
-		if(("max_num" in params) && (field > params["max_num"]))
-			stack_trace("Tried saving [field] for [parent]. Number is bigger than it should be")
-			return null
+						sanitized_list[entry_name] = newdata
 
-		if(("min_num" in params) && (field < params["min_num"]))
-			stack_trace("Tried saving [field] for [parent]. Number is smaller than it should be")
-			return null
+					if("string")
+						var/newdata = sanitize_string(entry, params["entry_config"])
+						if(RUNTIMED(newdata))
+							return RUNTIME_SENTINEL
 
-	return field_data
+						sanitized_list[entry_name] = newdata
+
+					if("int")
+						var/newdata = sanitize_int(entry, params["entry_config"])
+						if(RUNTIMED(newdata))
+							return RUNTIME_SENTINEL
+
+						sanitized_list[entry_name] = newdata
+		else
+			return RUNTIME_SENTINEL
+
+	return sanitized_list
+
+/datum/component/continuity_object/proc/sanitize_string(field, list/params)
+	if(isnull(field) || length(field) == 0)
+		if("can_be_null" in params)
+			return field
+
+		stack_trace("Tried saving [field] for [parent]. Is null")
+		return RUNTIME_SENTINEL
+
+	if(!istext(field))
+		stack_trace("Tried saving [field] for [parent]. Not a text")
+		return RUNTIME_SENTINEL
+
+	if(("in_list" in params))
+		if(field in params["in_list"])
+			return field
+
+		stack_trace("Tried saving [field] for [parent]. Not an allowed string")
+		return RUNTIME_SENTINEL
+
+	if(!("max_length" in params))
+		stack_trace("Tried saving [field] for [parent]. No max_length param")
+		return RUNTIME_SENTINEL
+
+	if((length(field) > params["max_length"]))
+		stack_trace("Tried saving [field] for [parent]. Text is longer than it should be")
+		return RUNTIME_SENTINEL
+
+	if(("allowed_characters" in params))
+		var/char = ""
+		for(var/i = 1, i <= length(field), i += length(char))
+			char = field[i]
+
+			if(!(char in params["allowed_characters"]))
+				stack_trace("Tried saving [field] for [parent]. Text contains bad characters")
+				return RUNTIME_SENTINEL
+
+	return field
+
+/datum/component/continuity_object/proc/sanitize_int(field, list/params)
+	if(isnull(field))
+		if("can_be_null" in params)
+			return field
+
+		stack_trace("Tried saving [field] for [parent]. Is null")
+		return RUNTIME_SENTINEL
+
+	if(!isnum(field))
+		stack_trace("Tried saving [field] for [parent]. Not a number")
+		return RUNTIME_SENTINEL
+
+	if(("max_num" in params) && (field > params["max_num"]))
+		stack_trace("Tried saving [field] for [parent]. Number is bigger than it should be")
+		return RUNTIME_SENTINEL
+
+	if(("min_num" in params) && (field < params["min_num"]))
+		stack_trace("Tried saving [field] for [parent]. Number is smaller than it should be")
+		return RUNTIME_SENTINEL
+
+	return field
 
 /datum/component/continuity_object/proc/sanitize_data(list/data)
 	for(var/field_name in data)
 		if(!(field_name in src.fields))
 			stack_trace("Tried saving invalid [field_name] for [parent]")
-			return null
+			return RUNTIME_SENTINEL
+
+		if(RUNTIMED(sanitize_string(field_name, list("field_type" = "string", "max_length" = 100))))
+			return RUNTIME_SENTINEL
 
 		var/field_data = data[field_name]
-		if(!islist(field_data))
-			field_data = list(field_data)
 
 		switch(src.fields[field_name]["field_type"])
+			if("list")
+				var/newdata = sanitize_list(field_data, src.fields[field_name])
+				if(RUNTIMED(newdata))
+					return RUNTIME_SENTINEL
+
+				data[field_name] = newdata
+
 			if("string")
 				var/newdata = sanitize_string(field_data, src.fields[field_name])
-				if(isnull(newdata))
-					return null
+				if(RUNTIMED(newdata))
+					return RUNTIME_SENTINEL
 
 				data[field_name] = newdata
 
 			if("int")
 				var/newdata = sanitize_int(field_data, src.fields[field_name])
-				if(isnull(newdata))
-					return null
+				if(RUNTIMED(newdata))
+					return RUNTIME_SENTINEL
 
 				data[field_name] = newdata
 
+			else
+				return RUNTIME_SENTINEL
+
 	return data
+
+#undef RUNTIMED
+#undef RUNTIME_SENTINEL

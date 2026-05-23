@@ -24,8 +24,8 @@ SUBSYSTEM_DEF(continuity)
 		var/list/datalist = list()
 
 		for(var/thing in objects_list)
-			if(istext(thing))
-				datalist += thing
+			if(islist(thing))
+				datalist += list(thing)
 				continue
 
 			var/datum/component/continuity_object/object = thing
