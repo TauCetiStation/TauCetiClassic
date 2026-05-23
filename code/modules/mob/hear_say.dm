@@ -107,9 +107,15 @@
 				H.remove_language(L.name)
 
 	if(!(sdisabilities & DEAF) && !ear_deaf)
-		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
-			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
-			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
+		if((HAS_TRAIT(speaker, TRAIT_MELODIUS_VOICE) || speech_sound) && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
+			if(HAS_TRAIT(speaker, TRAIT_MELODIUS_VOICE) && ishuman(speaker))
+				var/mob/living/carbon/human/H = speaker
+				var/instrumental_sound = get_sound_by_voice(H, H.species.instrumental_voice_male, H.species.instrumental_voice_female)
+				var/sounds = clamp(round(length_char(message)/10), 1, 5)
+				for(var/i in 1 to sounds)
+					playsound_local(speaker, instrumental_sound, VOL_EFFECTS_MASTER, 80)
+					sleep(3)
+			playsound_local(speaker, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
 
 	. = TRUE
 
