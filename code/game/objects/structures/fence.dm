@@ -239,7 +239,7 @@
 	disassemble_type = /obj/item/stack/sheet/sandbag_green
 
 
-obj/structure/fence/plastic
+/obj/structure/fence/plastic
 	name = "plastic barrier"
 	desc = "Пластиковая перегородка."
 
