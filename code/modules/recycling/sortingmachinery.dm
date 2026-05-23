@@ -199,10 +199,6 @@
 
 	var/package_wrap_type = /datum/package_wrap/cardboard
 
-	var/texture_name = "cardboard"
-	var/details_name = null
-
-
 /obj/item/weapon/packageWrap/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
 	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
