@@ -25,9 +25,8 @@
 		return attack_hand(user)
 
 /obj/structure/largecrate/Destroy()
-	var/turf/T = get_turf(src)
-	if(T)
-		new /obj/effect/abstract/particle_holder(T, /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	if(isturf(loc))
+		new /obj/effect/abstract/particle_holder(loc, /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
 	return ..()
 
 /obj/structure/largecrate/mule
