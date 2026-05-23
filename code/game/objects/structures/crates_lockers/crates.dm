@@ -40,6 +40,9 @@
 	if(climbable)
 		structure_shaken()
 
+	if(spawn_filling)
+		spawn_infill_particle()
+
 	return 1
 
 /obj/structure/closet/crate/close()
@@ -494,6 +497,9 @@
 					break
 	return
 
+/obj/structure/closet/crate/large/spawn_infill_particle(min_x = -10, min_y = -13, max_x = 10, max_y = -1)
+	. = ..()
+
 /obj/structure/closet/crate/secure/large
 	name = "large crate"
 	desc = "A hefty metal crate with an electronic locking system."
@@ -521,6 +527,9 @@
 					M.forceMove(src)
 					break
 	return
+
+/obj/structure/closet/crate/secure/large/spawn_infill_particle(min_x = -10, min_y = -13, max_x = 10, max_y = -1)
+	. = ..()
 
 //fluff variant
 /obj/structure/closet/crate/secure/large/reinforced
@@ -623,3 +632,6 @@
 	forceMove(P)
 
 	return P
+
+/obj/structure/closet/crate/spawn_infill_particle(min_x = -12, min_y = -9, max_x = 12, max_y = 0)
+	. = ..()
