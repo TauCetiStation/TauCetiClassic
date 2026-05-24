@@ -2566,6 +2566,7 @@
 #include "code\modules\telesci\telesci_computer.dm"
 #include "code\modules\tgchat\message.dm"
 #include "code\modules\tgchat\to_chat.dm"
+#include "code\modules\tgui\alert.dm"
 #include "code\modules\tgui\external.dm"
 #include "code\modules\tgui\states.dm"
 #include "code\modules\tgui\tgui.dm"
