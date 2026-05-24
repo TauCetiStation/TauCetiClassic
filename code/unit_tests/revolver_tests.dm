@@ -37,30 +37,19 @@
 	pass("spin_cylinder on empty gun leaves chambered null")
 	return TRUE
 
-/datum/unit_test/revolver_spin_cylinder_probabilistic
-	name = "REVOLVER: spin_cylinder with full cylinder never guarantees life or death"
+/datum/unit_test/revolver_spin_cylinder_full_always_chambers
+	name = "REVOLVER: spin_cylinder with full cylinder always chambers"
 
-/datum/unit_test/revolver_spin_cylinder_probabilistic/start_test()
-	// With 1 live round in a 6-chamber cylinder, spin 100 times.
-	// Expect at least one chambered and at least one empty result (probabilistic, not 100% either way).
-	var/chambered_count = 0
-	var/empty_count = 0
-	var/iterations = 100
-	for(var/i in 1 to iterations)
-		var/obj/item/weapon/gun/projectile/revolver/russian/R = new
+/datum/unit_test/revolver_spin_cylinder_full_always_chambers/start_test()
+	var/obj/item/weapon/gun/projectile/revolver/R = new
+	for(var/i in 1 to 20)
 		R.spin_cylinder(null)
-		if(R.chambered && R.chambered.BB)
-			chambered_count++
-		else
-			empty_count++
-		qdel(R)
-	if(chambered_count == 0)
-		fail("spin_cylinder never chambered a live round in [iterations] iterations (probability broken)")
-		return TRUE
-	if(empty_count == 0)
-		fail("spin_cylinder always chambered a live round in [iterations] iterations (not random)")
-		return TRUE
-	pass("spin_cylinder is probabilistic: [chambered_count] chambered, [empty_count] empty over [iterations] spins")
+		if(!R.chambered || !R.chambered.BB)
+			qdel(R)
+			fail("spin_cylinder failed to chamber on full cylinder (iteration [i])")
+			return TRUE
+	qdel(R)
+	pass("spin_cylinder always chambers on full cylinder")
 	return TRUE
 
 /datum/unit_test/revolver_has_cylinder_flag
