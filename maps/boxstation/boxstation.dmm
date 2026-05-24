@@ -12651,7 +12651,13 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel)
 "avn" = (
-/obj/structure/sink/puddle,
+/obj/structure/sink/puddle{
+	pixel_x = -4
+	},
+/obj/effect/decal/turf_decal/wood{
+	dir = 4;
+	icon_state = "spline_fancy"
+	},
 /obj/structure/flora/ausbushes/reedbush{
 	pixel_y = 6
 	},
@@ -23904,6 +23910,7 @@
 /obj/effect/decal/turf_decal/wood{
 	icon_state = "spline_fancy"
 	},
+/obj/structure/fence/wood,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "aQm" = (
@@ -24799,9 +24806,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aRK" = (
-/obj/structure/flora/ausbushes/fullgrass,
 /obj/effect/decal/turf_decal/wood{
 	icon_state = "spline_fancy"
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner"
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 8
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -24831,10 +24844,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "aRO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/turf_decal/wood{
 	icon_state = "spline_fancy"
 	},
+/obj/structure/fence/wood,
+/obj/structure/flora/ausbushes/fullgrass,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "aRP" = (
@@ -25559,12 +25573,14 @@
 	},
 /area/station/bridge)
 "aTf" = (
-/obj/structure/flora/ausbushes/lavendergrass,
-/obj/effect/decal/turf_decal/wood{
-	dir = 6;
-	icon_state = "spline_fancy"
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner"
 	},
-/turf/simulated/floor/grass,
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 8
+	},
+/turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "aTg" = (
 /obj/machinery/door/poddoor{
@@ -26496,6 +26512,12 @@
 /obj/effect/decal/turf_decal/wood{
 	dir = 5;
 	icon_state = "spline_fancy"
+	},
+/obj/structure/fence/wood{
+	dir = 4
+	},
+/obj/structure/fence/wood{
+	dir = 1
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -28210,6 +28232,13 @@
 /obj/effect/decal/turf_decal/wood{
 	dir = 1;
 	icon_state = "spline_fancy_corner"
+	},
+/obj/structure/fence/wood{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal/wood{
+	dir = 4;
+	icon_state = "spline_fancy"
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -30005,26 +30034,13 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "baN" = (
-/obj/structure/flora/rock/jungle,
-/obj/effect/decal/turf_decal/wood{
-	dir = 1;
-	icon_state = "spline_fancy"
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line";
+	dir = 8
 	},
-/obj/effect/decal/turf_decal/wood{
-	icon_state = "spline_fancy"
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
 	},
-/obj/structure/fence/wood{
-	dir = 1
-	},
-/obj/structure/fence/wood,
-/obj/structure/fence/wood{
-	dir = 4
-	},
-/obj/effect/decal/turf_decal/wood{
-	dir = 4;
-	icon_state = "spline_fancy"
-	},
-/turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "baO" = (
 /obj/structure/extinguisher_cabinet{
@@ -30264,9 +30280,6 @@
 /obj/effect/decal/turf_decal/wood{
 	dir = 1;
 	icon_state = "spline_fancy"
-	},
-/obj/structure/fence/wood{
-	dir = 1
 	},
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/simulated/floor/grass,
@@ -31435,6 +31448,9 @@
 	dir = 1;
 	icon_state = "spline_fancy"
 	},
+/obj/structure/fence/wood{
+	dir = 1
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "bdo" = (
@@ -31445,12 +31461,15 @@
 	},
 /area/station/hallway/primary/port)
 "bdq" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 1
-	},
 /obj/effect/decal/turf_decal/wood{
 	dir = 9;
 	icon_state = "spline_fancy"
+	},
+/obj/structure/fence/wood{
+	dir = 1
+	},
+/obj/structure/fence/wood{
+	dir = 8
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -31482,10 +31501,17 @@
 	},
 /area/station/hallway/primary/port)
 "bdw" = (
-/obj/structure/flora/rock/jungle,
 /obj/effect/decal/turf_decal/wood{
 	dir = 1;
 	icon_state = "spline_fancy"
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 4
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -32602,6 +32628,9 @@
 /obj/effect/decal/turf_decal/wood{
 	dir = 1;
 	icon_state = "spline_fancy"
+	},
+/obj/structure/fence/wood{
+	dir = 1
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -56666,6 +56695,7 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
+/obj/structure/flora/ausbushes/fullgrass,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "bZm" = (
@@ -57616,10 +57646,13 @@
 /turf/simulated/wall,
 /area/station/maintenance/engineering)
 "cdn" = (
-/obj/effect/decal/turf_decal/wood{
-	icon_state = "spline_fancy"
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 1
 	},
-/turf/simulated/floor/grass,
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
 /area/station/civilian/garden)
 "cdr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
@@ -60207,13 +60240,21 @@
 /area/station/civilian/garden)
 "cla" = (
 /obj/structure/stool/bed/bench,
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line"
+	},
 /turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "clb" = (
 /obj/structure/stool/bed/bench{
 	icon_state = "bench_2"
 	},
-/turf/simulated/floor/garden,
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line"
+	},
+/turf/simulated/floor/garden{
+	icon_state = "asteroid6"
+	},
 /area/station/civilian/garden)
 "clc" = (
 /obj/item/weapon/cigbutt,
@@ -60588,6 +60629,9 @@
 "clU" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line"
+	},
 /turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "clZ" = (
@@ -61979,7 +62023,16 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/garden,
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner"
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
 /area/station/civilian/garden)
 "cpF" = (
 /obj/structure/cable{
@@ -64187,8 +64240,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/starboard)
 "cuN" = (
-/turf/simulated/floor/garden{
-	icon_state = "asteroid6"
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
 	},
 /area/station/civilian/garden)
 "cuP" = (
@@ -64411,7 +64467,17 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/garden,
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
 /area/station/civilian/garden)
 "cvx" = (
 /obj/item/weapon/flora/random,
@@ -64749,16 +64815,24 @@
 /area/station/maintenance/starboardsolar)
 "cwV" = (
 /obj/structure/disposalpipe/segment,
-/turf/simulated/floor/garden{
-	icon_state = "asteroid7"
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line";
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
 	},
 /area/station/civilian/garden)
 "cwW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid3"
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line";
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
 	},
 /area/station/civilian/garden)
 "cwX" = (
@@ -64878,8 +64952,11 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid7"
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
 	},
 /area/station/civilian/garden)
 "cxm" = (
@@ -64903,11 +64980,16 @@
 	},
 /area/station/civilian/garden)
 "cxp" = (
-/obj/effect/decal/turf_decal/wood{
-	dir = 1;
-	icon_state = "spline_fancy"
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
-/turf/simulated/floor/grass,
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
 /area/station/civilian/garden)
 "cxs" = (
 /turf/simulated/floor/garden{
@@ -64958,7 +65040,13 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/garden,
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
 /area/station/civilian/garden)
 "cxA" = (
 /obj/effect/decal/cleanable/blood/oil,
@@ -66779,7 +66867,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/garden,
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
 /area/station/civilian/garden)
 "cCu" = (
 /turf/simulated/floor{
@@ -66906,15 +66999,24 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid7"
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
 	},
 /area/station/civilian/garden)
 "cCK" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
-/turf/simulated/floor/garden,
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
 /area/station/civilian/garden)
 "cCL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -69449,6 +69551,10 @@
 	dir = 1;
 	icon_state = "bench_2"
 	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line";
+	dir = 1
+	},
 /turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "cLS" = (
@@ -69581,7 +69687,13 @@
 /obj/structure/stool/bed/bench{
 	dir = 1
 	},
-/turf/simulated/floor/garden,
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line";
+	dir = 1
+	},
+/turf/simulated/floor/garden{
+	icon_state = "asteroid2"
+	},
 /area/station/civilian/garden)
 "cMo" = (
 /obj/item/clothing/suit/justice,
@@ -71520,9 +71632,6 @@
 	dir = 9
 	},
 /obj/structure/flora/ausbushes/ywflowers,
-/obj/structure/fence/wood{
-	dir = 8
-	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "eCz" = (
@@ -71945,6 +72054,19 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
+"faj" = (
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line";
+	dir = 8
+	},
+/obj/structure/sink/drinking_fountain{
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
+/area/station/civilian/garden)
 "fbb" = (
 /obj/machinery/light/smart{
 	dir = 1
@@ -72038,8 +72160,17 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cmo)
 "flv" = (
-/obj/structure/flora/ausbushes/fullgrass,
-/turf/simulated/floor/garden,
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
 /area/station/civilian/garden)
 "fmb" = (
 /turf/simulated/floor{
@@ -72976,6 +73107,18 @@
 	icon_state = "dark"
 	},
 /area/station/medical/morgue)
+"ghv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line";
+	dir = 1
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
+/area/station/civilian/garden)
 "ghX" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/box,
@@ -73196,6 +73339,17 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/chiefs_office)
+"gsH" = (
+/obj/structure/fence/wood{
+	dir = 1
+	},
+/obj/structure/flora/junglebush/c,
+/obj/effect/decal/turf_decal/wood{
+	dir = 5;
+	icon_state = "spline_fancy"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "gtb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
@@ -73482,7 +73636,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "gHG" = (
-/obj/machinery/hologram/holopad,
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line";
+	dir = 8
+	},
 /turf/simulated/floor/garden{
 	icon_state = "asteroid7"
 	},
@@ -73573,7 +73730,6 @@
 /obj/effect/decal/turf_decal/wood{
 	icon_state = "spline_fancy"
 	},
-/obj/structure/fence/wood,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "gMb" = (
@@ -74275,7 +74431,6 @@
 	dir = 10;
 	icon_state = "spline_fancy"
 	},
-/obj/structure/fence/wood,
 /obj/structure/fence/wood{
 	dir = 8
 	},
@@ -74297,11 +74452,12 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "hvj" = (
-/obj/effect/decal/turf_decal/wood{
-	icon_state = "spline_fancy"
-	},
 /obj/structure/fence/wood,
 /obj/structure/flora/ausbushes/brflowers,
+/obj/effect/decal/turf_decal/wood{
+	dir = 6;
+	icon_state = "spline_fancy"
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "hvE" = (
@@ -74610,13 +74766,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "hOF" = (
-/obj/effect/decal/turf_decal/wood{
-	dir = 1;
-	icon_state = "spline_fancy"
-	},
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/fence/wood{
 	dir = 1
+	},
+/obj/effect/decal/turf_decal/wood{
+	dir = 9;
+	icon_state = "spline_fancy"
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -75751,6 +75907,12 @@
 	},
 /turf/simulated/floor,
 /area/station/bridge)
+"iQn" = (
+/obj/machinery/hologram/holopad,
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
+/area/station/civilian/garden)
 "iRb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -76669,6 +76831,13 @@
 	icon_state = "red"
 	},
 /area/station/medical/reception)
+"jJE" = (
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line";
+	dir = 8
+	},
+/turf/simulated/floor/garden,
+/area/station/civilian/garden)
 "jKb" = (
 /obj/structure/table,
 /obj/item/ashtray/glass,
@@ -76916,9 +77085,6 @@
 	icon_state = "spline_fancy"
 	},
 /obj/structure/flora/rock/jungle,
-/obj/structure/fence/wood{
-	dir = 8
-	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "jYb" = (
@@ -77821,7 +77987,10 @@
 	dir = 1;
 	icon_state = "spline_fancy"
 	},
-/obj/structure/flora/ausbushes/brflowers,
+/obj/structure/fence/wood{
+	dir = 1
+	},
+/obj/structure/flora/rock/jungle,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "kQm" = (
@@ -78901,6 +79070,14 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
+"lUS" = (
+/obj/structure/flora/junglebush/large,
+/obj/effect/decal/turf_decal/wood{
+	dir = 8;
+	icon_state = "spline_fancy"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "lVb" = (
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = -28
@@ -79803,6 +79980,7 @@
 /obj/structure/fence/wood{
 	dir = 4
 	},
+/obj/structure/flora/ausbushes/fullgrass,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "mPb" = (
@@ -80574,9 +80752,6 @@
 /obj/structure/fence/wood{
 	dir = 8
 	},
-/obj/structure/fence/wood{
-	dir = 1
-	},
 /obj/machinery/light/smart,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -81227,15 +81402,17 @@
 	},
 /area/station/civilian/chapel/altar)
 "osF" = (
-/obj/effect/decal/turf_decal/wood{
-	dir = 1;
-	icon_state = "spline_fancy"
-	},
-/obj/structure/flora/junglebush/c,
-/obj/structure/fence/wood{
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
 	dir = 1
 	},
-/turf/simulated/floor/grass,
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 4
+	},
+/turf/simulated/floor/garden{
+	icon_state = "asteroid7"
+	},
 /area/station/civilian/garden)
 "osP" = (
 /turf/simulated/floor{
@@ -81428,6 +81605,17 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"oCc" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
+/area/station/civilian/garden)
 "oCv" = (
 /obj/effect/decal/turf_decal{
 	dir = 10;
@@ -81862,6 +82050,11 @@
 	icon_state = "wood_stairs2"
 	},
 /area/station/civilian/chapel)
+"pkv" = (
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
+/area/station/civilian/garden)
 "plH" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -82019,9 +82212,6 @@
 	dir = 4
 	},
 /obj/structure/flora/ausbushes/fullgrass,
-/obj/structure/fence/wood{
-	dir = 8
-	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "pwt" = (
@@ -83525,6 +83715,15 @@
 	icon_state = "whitebluefull"
 	},
 /area/station/medical/reception)
+"qZd" = (
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line";
+	dir = 6
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
+/area/station/civilian/garden)
 "rbb" = (
 /obj/structure/table/glass,
 /obj/item/weapon/game_kit/orange,
@@ -84576,9 +84775,6 @@
 	icon_state = "spline_fancy"
 	},
 /obj/structure/flora/ausbushes/sunnybush,
-/obj/structure/fence/wood{
-	dir = 8
-	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "scb" = (
@@ -86002,6 +86198,18 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"tBf" = (
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner"
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
+/area/station/civilian/garden)
 "tBm" = (
 /obj/effect/decal/turf_decal{
 	dir = 8;
@@ -86274,6 +86482,21 @@
 	},
 /turf/environment/space,
 /area/shuttle/supply/station)
+"tZB" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner";
+	dir = 8
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_new_corner"
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
+	},
+/area/station/civilian/garden)
 "uab" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -86384,9 +86607,6 @@
 	icon_state = "spline_fancy"
 	},
 /obj/structure/flora/junglebush/b,
-/obj/structure/fence/wood{
-	dir = 8
-	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "ueK" = (
@@ -86555,6 +86775,19 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/bar)
+"uor" = (
+/obj/structure/stool/bed/chair/park{
+	dir = 4
+	},
+/obj/structure/fence/wood{
+	dir = 8
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line";
+	dir = 8
+	},
+/turf/simulated/floor/garden,
+/area/station/civilian/garden)
 "uoD" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance,
@@ -86614,9 +86847,6 @@
 /obj/effect/decal/turf_decal/wood{
 	dir = 1;
 	icon_state = "spline_fancy"
-	},
-/obj/structure/fence/wood{
-	dir = 1
 	},
 /obj/structure/flora/junglebush/large,
 /turf/simulated/floor/grass,
@@ -86902,11 +87132,12 @@
 	},
 /area/station/security/armoury)
 "uYg" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line";
+	dir = 1
 	},
-/turf/simulated/floor/garden{
-	icon_state = "asteroid6"
+/turf/simulated/floor{
+	icon_state = "freezerfloor11"
 	},
 /area/station/civilian/garden)
 "uZG" = (
@@ -86952,6 +87183,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
+"vch" = (
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/structure/fence/wood,
+/obj/effect/decal/turf_decal/wood{
+	dir = 10;
+	icon_state = "spline_fancy"
+	},
+/turf/simulated/floor/grass,
+/area/station/civilian/garden)
 "vcK" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
@@ -87093,7 +87333,6 @@
 /obj/effect/decal/turf_decal/wood{
 	icon_state = "spline_fancy"
 	},
-/obj/structure/fence/wood,
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -88069,7 +88308,16 @@
 /obj/structure/stool/bed/chair/park{
 	dir = 4
 	},
-/turf/simulated/floor/garden,
+/obj/structure/fence/wood{
+	dir = 8
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_wideplating_line";
+	dir = 8
+	},
+/turf/simulated/floor/garden{
+	icon_state = "asteroid6"
+	},
 /area/station/civilian/garden)
 "xoA" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal{
@@ -137580,13 +137828,13 @@ bOw
 bWu
 bZc
 ccX
-cdn
-cvq
-cpE
+baC
+cwW
+cxl
 tfZ
 cdb
 hsp
-cuE
+uYg
 cCt
 bdn
 bZb
@@ -137837,15 +138085,15 @@ aaa
 bWu
 bZb
 cdb
-aRK
+hsp
 cwW
-cpE
+cxl
 aUc
-ccX
+bZc
 bas
-cxs
-cCt
-cxp
+uYg
+tZB
+bdw
 cdb
 bZp
 bFo
@@ -138093,14 +138341,14 @@ aaa
 aaa
 bWu
 bZd
-cdc
+bZb
 aRK
 cvq
 cxl
-tfZ
+gsH
 avn
 hvj
-cuE
+uYg
 cCt
 aUM
 rXE
@@ -138352,12 +138600,12 @@ bWu
 bZk
 cdd
 aRO
-uYg
+cwW
 cpE
 osF
-ccX
-baC
-cxu
+cxs
+aTf
+flv
 cCJ
 cLR
 bfj
@@ -138608,16 +138856,16 @@ aaa
 bWu
 bZn
 ctL
-aTf
-cxu
-cpE
+cHi
+ghv
+cxl
 hOF
-cdd
-hsp
-cuE
-cCt
+lUS
+vch
+uYg
+oCc
 cMn
-cxp
+tfZ
 bZn
 bFo
 aCK
@@ -138866,12 +139114,12 @@ bWu
 bZp
 aQb
 cla
-cuE
-cpE
+cdn
+cxl
 mOE
 aXG
 cHi
-cuE
+uYg
 cCK
 bdq
 cuh
@@ -139123,13 +139371,13 @@ bWu
 bWu
 aQl
 clb
-cuE
-cpE
-flv
+pkv
+cxp
 baN
-cuE
-cxu
-cuE
+faj
+baN
+pkv
+tBf
 bdw
 bZp
 rfW
@@ -139378,15 +139626,15 @@ aaa
 aaa
 aaa
 eQF
-cdn
+baC
 clU
 cwV
 cxz
-cuE
-cxs
-cuE
+pkv
+iQn
+pkv
 cuN
-cuE
+qZd
 kQj
 cdd
 bWu
@@ -139638,10 +139886,10 @@ bWu
 aTX
 bWu
 htg
-xnR
-cuE
+uor
+jJE
 gHG
-cuE
+jJE
 xnR
 nHY
 bWu
@@ -139896,7 +140144,7 @@ aaa
 aTX
 gLD
 phR
-cuE
+cxu
 cuE
 cuE
 sXX
