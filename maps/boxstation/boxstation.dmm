@@ -12659,7 +12659,8 @@
 	icon_state = "spline_fancy"
 	},
 /obj/structure/flora/ausbushes/reedbush{
-	pixel_y = 6
+	pixel_y = 6;
+	layer = 3.01
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -60241,16 +60242,14 @@
 "cla" = (
 /obj/structure/stool/bed/bench,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line"
+	icon_state = "siding_wideplating_new_corner";
+	dir = 8
 	},
 /turf/simulated/floor/garden,
 /area/station/civilian/garden)
 "clb" = (
 /obj/structure/stool/bed/bench{
 	icon_state = "bench_2"
-	},
-/obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/floor/garden{
 	icon_state = "asteroid6"
@@ -60630,7 +60629,7 @@
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line"
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor/garden,
 /area/station/civilian/garden)
@@ -69552,7 +69551,7 @@
 	icon_state = "bench_2"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line";
+	icon_state = "siding_wideplating_new_corner";
 	dir = 1
 	},
 /turf/simulated/floor/garden,
@@ -69688,8 +69687,8 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line";
-	dir = 1
+	icon_state = "siding_wideplating_new_corner";
+	dir = 4
 	},
 /turf/simulated/floor/garden{
 	icon_state = "asteroid2"
