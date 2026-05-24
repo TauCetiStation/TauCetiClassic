@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(continuity)
 /datum/controller/subsystem/continuity/proc/continuity_save_things()
 	for(var/save_path in continuity_objects)
 		var/list/objects_list = continuity_objects[save_path]
-		var/File = file("[PERSISTENT_CACHE_FOLDER]/[save_path].json")
+		var/file = file("[PERSISTENT_CACHE_FOLDER]/[save_path].json")
 
 		var/list/datalist = list()
 
@@ -37,14 +37,14 @@ SUBSYSTEM_DEF(continuity)
 		if(!datalist.len)
 			continue
 
-		fdel(File)
-		WRITE_FILE(File, json_encode(datalist))
+		fdel(file)
+		WRITE_FILE(file, json_encode(datalist))
 
 /datum/controller/subsystem/continuity/proc/continuity_load_things()
 	for(var/save_path in continuity_objects)
 		var/list/objects_list = continuity_objects[save_path]
-		var/File = file("[PERSISTENT_CACHE_FOLDER]/[save_path].json")
-		var/filetext = file2text(File)
+		var/file = file("[PERSISTENT_CACHE_FOLDER]/[save_path].json")
+		var/filetext = file2text(file)
 		if(!filetext)
 			continue
 		var/list/datalist = json_decode(filetext)

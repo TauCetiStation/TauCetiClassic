@@ -45,7 +45,6 @@
 	var/list/data_to_save = saveproc.Invoke()
 	data_to_save = sanitize_data(data_to_save)
 	if(RUNTIMED(data_to_save))
-		stack_trace("Tried saving [parent]. Aborted.")
 		return
 
 	return data_to_save
@@ -80,8 +79,11 @@
 
 fields = alist(...)
 
-//list/alist
-"varname" = list("field_type" = "list/alist", "can_be_null" = TRUE, "key_config" = list(...), "entry_type" = "string/int", "entry_config" = list(...))
+//list
+"varname" = list("field_type" = "list", "can_be_null" = TRUE, "entry_type" = "string/int", "entry_config" = list(...))
+
+//alist
+"varname" = list("field_type" = "alist", "can_be_null" = TRUE, "key_config" = list(...), "entry_type" = "string/int", "entry_config" = list(...))
 
 //string
 "varname" = list("field_type" = "string", "max_length" = 999, "can_be_null" = TRUE, "in_list" = list(), "allowed_characters" = list())
@@ -91,13 +93,17 @@ fields = alist(...)
 
 */
 
-/datum/component/continuity_object/proc/sanitize_list(list/field, list/params)
-	if(!(params["entry_type"] && params["entry_config"]))
-		stack_trace("Tried saving [field] for [parent]. Invalid configuration.")
+/datum/component/continuity_object/proc/sanitize_alist(list/field, list/params)
+	if(!params["entry_type"])
+		stack_trace("Tried saving [field] for [parent]. No entry type.")
 		return RUNTIME_SENTINEL
 
-	if((params["field_type"] == "alist") && !params["key_config"])
-		stack_trace("Tried saving [field] for [parent]. Invalid alist configuration.")
+	if(!params["entry_config"])
+		stack_trace("Tried saving [field] for [parent]. No entry config.")
+		return RUNTIME_SENTINEL
+
+	if(!params["key_config"])
+		stack_trace("Tried saving [field] for [parent]. No key config.")
 		return RUNTIME_SENTINEL
 
 	if(isnull(field) || !field.len)
@@ -108,62 +114,89 @@ fields = alist(...)
 		return RUNTIME_SENTINEL
 
 	var/list/sanitized_list = list()
+	for(var/entry_name in field)
+		var/valid_name = sanitize_string(entry_name, params["key_config"])
+		if(RUNTIMED(valid_name))
+			return RUNTIME_SENTINEL
 
-	switch(params["field_type"])
-		if("list")
-			for(var/entry in field)
-				switch(params["entry_type"])
-					if("list")
-						var/newdata = sanitize_list(entry, params["entry_config"])
-						if(RUNTIMED(newdata))
-							return RUNTIME_SENTINEL
-
-						sanitized_list += list(newdata)
-
-					if("string")
-						var/newdata = sanitize_string(entry, params["entry_config"])
-						if(RUNTIMED(newdata))
-							return RUNTIME_SENTINEL
-
-						sanitized_list += list(newdata)
-
-					if("int")
-						var/newdata = sanitize_int(entry, params["entry_config"])
-						if(RUNTIMED(newdata))
-							return RUNTIME_SENTINEL
-
-						sanitized_list += list(newdata)
-
-		if("alist")
-			for(var/entry_name in field)
-				var/valid_name = sanitize_string(entry_name, params["key_config"])
-				if(RUNTIMED(valid_name))
+		var/entry = field[entry_name]
+		switch(params["entry_type"])
+			if("list")
+				var/newdata = sanitize_list(entry, params["entry_config"])
+				if(RUNTIMED(newdata))
 					return RUNTIME_SENTINEL
 
-				var/entry = field[entry_name]
-				switch(params["entry_type"])
-					if("list")
-						var/newdata = sanitize_list(entry, params["entry_config"])
-						if(RUNTIMED(newdata))
-							return RUNTIME_SENTINEL
+				sanitized_list[entry_name] = newdata
 
-						sanitized_list[entry_name] = newdata
+			if("alist")
+				var/newdata = sanitize_alist(entry, params["entry_config"])
+				if(RUNTIMED(newdata))
+					return RUNTIME_SENTINEL
 
-					if("string")
-						var/newdata = sanitize_string(entry, params["entry_config"])
-						if(RUNTIMED(newdata))
-							return RUNTIME_SENTINEL
+				sanitized_list[entry_name] = newdata
 
-						sanitized_list[entry_name] = newdata
+			if("string")
+				var/newdata = sanitize_string(entry, params["entry_config"])
+				if(RUNTIMED(newdata))
+					return RUNTIME_SENTINEL
 
-					if("int")
-						var/newdata = sanitize_int(entry, params["entry_config"])
-						if(RUNTIMED(newdata))
-							return RUNTIME_SENTINEL
+				sanitized_list[entry_name] = newdata
 
-						sanitized_list[entry_name] = newdata
-		else
-			return RUNTIME_SENTINEL
+			if("int")
+				var/newdata = sanitize_int(entry, params["entry_config"])
+				if(RUNTIMED(newdata))
+					return RUNTIME_SENTINEL
+
+				sanitized_list[entry_name] = newdata
+
+	return sanitized_list
+
+/datum/component/continuity_object/proc/sanitize_list(list/field, list/params)
+	if(!params["entry_type"])
+		stack_trace("Tried saving [field] for [parent]. No entry type.")
+		return RUNTIME_SENTINEL
+
+	if(!params["entry_config"])
+		stack_trace("Tried saving [field] for [parent]. No entry config.")
+		return RUNTIME_SENTINEL
+
+	if(isnull(field) || !field.len)
+		if("can_be_null" in params)
+			return field
+
+		stack_trace("Tried saving [field] for [parent]. Is null")
+		return RUNTIME_SENTINEL
+
+	var/list/sanitized_list = list()
+	for(var/entry in field)
+		switch(params["entry_type"])
+			if("list")
+				var/newdata = sanitize_list(entry, params["entry_config"])
+				if(RUNTIMED(newdata))
+					return RUNTIME_SENTINEL
+
+				sanitized_list += list(newdata)
+
+			if("alist")
+				var/newdata = sanitize_alist(entry, params["entry_config"])
+				if(RUNTIMED(newdata))
+					return RUNTIME_SENTINEL
+
+				sanitized_list[entry_name] = newdata
+
+			if("string")
+				var/newdata = sanitize_string(entry, params["entry_config"])
+				if(RUNTIMED(newdata))
+					return RUNTIME_SENTINEL
+
+				sanitized_list += list(newdata)
+
+			if("int")
+				var/newdata = sanitize_int(entry, params["entry_config"])
+				if(RUNTIMED(newdata))
+					return RUNTIME_SENTINEL
+
+				sanitized_list += list(newdata)
 
 	return sanitized_list
 
@@ -241,6 +274,13 @@ fields = alist(...)
 		switch(src.fields[field_name]["field_type"])
 			if("list")
 				var/newdata = sanitize_list(field_data, src.fields[field_name])
+				if(RUNTIMED(newdata))
+					return RUNTIME_SENTINEL
+
+				data[field_name] = newdata
+
+			if("alist")
+				var/newdata = sanitize_alist(field_data, src.fields[field_name])
 				if(RUNTIMED(newdata))
 					return RUNTIME_SENTINEL
 
