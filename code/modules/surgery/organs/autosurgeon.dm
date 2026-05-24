@@ -1,6 +1,6 @@
 /obj/item/autosurgeon
 	name = "autosurgeon"
-	desc = "A device that automatically inserts an implant, skillchip or organ into the user without the hassle of extensive surgery. \
+	desc = "A device that automatically inserts an organ into the user without the hassle of extensive surgery. \
 		It has a slot to insert implants or organs and a screwdriver slot for removing accidentally added items."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "autosurgeon"
@@ -8,7 +8,7 @@
 
 	/// How many times you can use the autosurgeon before it becomes useless
 	var/uses = INFINITY
-	/// What organ will the autosurgeon sub-type will start with. ie, CMO autosurgeon start with a medi-hud.
+	/// What organ will the autosurgeon sub-type will start with.
 	var/starting_organ
 	/// The organ currently loaded in the autosurgeon, ready to be implanted.
 	var/obj/item/organ/stored_organ
@@ -74,19 +74,19 @@
 
 	if(implant_time)
 		user.visible_message(
-			"<span class='notice'>[user] prepares to use [src] on [target].",
-			"<span class='notice'>You begin to prepare to use [src] on [target].",
+			"<span class='notice'>[user] prepares to use [src] on [target].</span>",
+			"<span class='notice'>You begin to prepare to use [src] on [target].</span>",
 		)
-		if(!do_after(user, (implant_time * surgery_speed), target))
+		if(user.is_busy() || !do_after(user, (implant_time * surgery_speed), TRUE, target))
 			return
 
 	if(target != user)
 		user.log_combat(user, "autosurgeon implanted [stored_organ] into", "[src]", "in [AREACOORD(target)]")
-		user.visible_message("<span class='notice'>[user] presses a button on [src] as it plunges into [target]'s body.", "<span class='notice'>You press a button on [src] as it plunges into [target]'s body.</span>")
+		user.visible_message("<span class='notice'>[user] presses a button on [src] as it plunges into [target]'s body.</span>", "<span class='notice'>You press a button on [src] as it plunges into [target]'s body.</span>")
 	else
 		user.visible_message(
-			"<span class='notice'>[user] pressses a button on [src] as it plunges into their body.",
-			"<span class='notice'>You press a button on [src] as it plunges into your body.",
+			"<span class='notice'>[user] pressses a button on [src] as it plunges into their body.</span>",
+			"<span class='notice'>You press a button on [src] as it plunges into your body.</span>",
 		)
 
 	stored_organ.insert_organ(target, TRUE)//insert stored organ into the user
@@ -162,9 +162,9 @@
 
 /obj/item/autosurgeon/debug
 	name = "Debug autosurgeon"
-	desc = "A device that automatically inserts an implant, skillchip or organ into the user without the hassle of extensive surgery. \
+	desc = "A device that automatically inserts an organ into the user without the hassle of extensive surgery. \
 		It has a slot to insert implants or organs and a screwdriver slot for removing accidentally added items. This one can insert any organ as many times as needed"
 	organ_whitelist = list(/obj/item/organ)
-	color = COLOR_NAVY_BLUE
+	color = COLOR_SEAWEED
 
 
