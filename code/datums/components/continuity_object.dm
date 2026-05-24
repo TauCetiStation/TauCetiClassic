@@ -182,7 +182,7 @@ fields = alist(...)
 				if(RUNTIMED(newdata))
 					return RUNTIME_SENTINEL
 
-				sanitized_list[entry_name] = newdata
+				sanitized_list += list(newdata)
 
 			if("string")
 				var/newdata = sanitize_string(entry, params["entry_config"])
