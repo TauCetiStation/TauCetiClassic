@@ -1044,6 +1044,7 @@
 	cases = list("гриб толстошлемник", "гриба толстошлемника", "грибу толстошлемнику", "гриб толстошлемник", "грибом толстошлемником", "грибе толстошлемнике")
 	desc = "<I>Плюмус Хельмус</I>: Пухленькая, мягкая и такая привлекательная~"
 	icon_state = "plumphelmet"
+	potency = 30
 	filling_color = "#f714be"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet/atom_init()
@@ -1085,6 +1086,7 @@
 	cases = list("гроздь лисичек", "грозди лисичек", "грозди лисичек", "гроздь лисичек", "гроздью лисичек", "грозди лисичек")
 	desc = "<I>Лисичка обыкновенная</I>: Эти веселые желтые грибочки выглядят очень вкусно!"
 	icon_state = "chanterelle"
+	potency = 15
 	filling_color = "#ffe991"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle/atom_init()

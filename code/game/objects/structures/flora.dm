@@ -318,13 +318,45 @@
 /obj/structure/flora/tree/jungle/get_seethrough_map()
 	return SEE_THROUGH_MAP_THREE_X_THREE
 
-/obj/structure/flora/tree/jungle/atom_init()
+/obj/structure/flora/tree/jungle/atom_init(mapload)
 	. = ..()
 	icon_state = pick(icon_states(icon))
 
 	new /obj/effect/abstract/particle_holder(src, leaves_particle_type, PARTICLE_FADEOUT)
 
 	RegisterSignal(src, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(fall_leaves))
+
+	if(mapload)
+		generate_subplants()
+
+/obj/structure/flora/tree/jungle/proc/generate_subplants()
+	var/list/subplants = list(
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi = 10,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita = 5,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap = 2,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet = 7,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle = 10,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/mtear = 20,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/harebell = 25,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/shand = 20,
+	)
+
+	var/list/possible_turfs = list()
+	for(var/turf_dir in alldirs)
+		var/turf/T = get_step(src, turf_dir)
+		if(T.is_grass_floor())
+			possible_turfs += T
+
+	if(!possible_turfs.len)
+		return
+
+	for(var/i in 1 to rand(1, 2))
+		var/turf/T = pick(possible_turfs)
+		var/itemtype = pickweight(subplants)
+		var/obj/item/item = new itemtype(T)
+		item.pixel_x = rand(-10, 10)
+		item.pixel_y = rand(-10, 10)
 
 /obj/structure/flora/tree/jungle/proc/fall_leaves()
 	var/turf/T = get_turf(src)
