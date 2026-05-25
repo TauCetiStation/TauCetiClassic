@@ -3346,7 +3346,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/security{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/station/security/armoury)
@@ -6015,7 +6015,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/security/hos{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7959,7 +7959,7 @@
 	dir = 6
 	},
 /obj/machinery/suit_storage_unit/nasa{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
@@ -15834,7 +15834,7 @@
 	pixel_x = -28
 	},
 /obj/machinery/suit_storage_unit/engine/chief{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -17186,7 +17186,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/medical{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -17274,7 +17274,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/security{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -18402,7 +18402,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/engine{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -18413,7 +18413,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/engine/atmos{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -19043,7 +19043,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/skrell/black{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -20308,7 +20308,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/unathi/nt{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -20319,7 +20319,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/skrell/white{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -24015,7 +24015,7 @@
 	pixel_y = 26
 	},
 /obj/machinery/suit_storage_unit/science/rd{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -28606,7 +28606,7 @@
 	pixel_y = 28
 	},
 /obj/machinery/suit_storage_unit/nasa{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
@@ -37359,7 +37359,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/suit_storage_unit/captain{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -38003,7 +38003,7 @@
 	pixel_y = 28
 	},
 /obj/machinery/suit_storage_unit/science{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -39439,7 +39439,7 @@
 	pixel_y = -27
 	},
 /obj/machinery/suit_storage_unit/globose/science{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -58913,7 +58913,7 @@
 /area/station/engineering/break_room)
 "chi" = (
 /obj/machinery/suit_storage_unit/medical/paramedic{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -66044,7 +66044,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/engine/atmos{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
@@ -82031,7 +82031,7 @@
 	pixel_y = 23
 	},
 /obj/machinery/suit_storage_unit/medical/cmo{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 8;

@@ -1651,7 +1651,7 @@
 /area/asteroid/mine/eva)
 "do" = (
 /obj/machinery/suit_storage_unit/wizard{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
@@ -3688,7 +3688,7 @@
 /area/asteroid/mine/abandoned)
 "jL" = (
 /obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
-	fulled = 1
+	filled = 1
 	},
 /obj/machinery/light/smart,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -4228,7 +4228,7 @@
 	icon_state = "delivery"
 	},
 /obj/machinery/suit_storage_unit/globose/mining{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -6181,7 +6181,7 @@
 "rA" = (
 /obj/structure/alien/weeds/node,
 /obj/machinery/suit_storage_unit/abandoned{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor/airless{
 	dir = 10;
@@ -8262,7 +8262,7 @@
 	icon_state = "delivery"
 	},
 /obj/machinery/suit_storage_unit/globose/mining{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -11280,7 +11280,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
@@ -12251,7 +12251,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)
@@ -12600,7 +12600,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/science{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/gearstore)

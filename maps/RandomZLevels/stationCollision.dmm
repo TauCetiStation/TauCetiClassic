@@ -31,7 +31,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/suit_storage_unit/medical{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
@@ -3846,7 +3846,7 @@
 /area/awaymission/stationcollision/southblock)
 "le" = (
 /obj/machinery/suit_storage_unit/abandoned{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/northblock)
@@ -3873,7 +3873,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/suit_storage_unit/security{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
@@ -3910,7 +3910,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/suit_storage_unit/engine{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
@@ -3920,7 +3920,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/suit_storage_unit/security{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
@@ -3975,7 +3975,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/suit_storage_unit/engine/atmos{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
@@ -3985,7 +3985,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/suit_storage_unit/medical{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)

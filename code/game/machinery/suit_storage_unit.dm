@@ -25,7 +25,7 @@
 	var/super_ultra_violet = FALSE
 	var/cycletime_left = null
 
-	var/fulled = FALSE // For map placeing suit storages, when false, create empty suit storage
+	var/filled = FALSE // For map placeing suit storages, when false, create empty suit storage
 
 	var/helmet_type = null
 	var/mask_type   = null
@@ -56,7 +56,7 @@
 	component_parts += new /obj/item/stack/cable_coil/red(null, 3)
 
 	RefreshParts()
-	fulled ? make_full() : FALSE
+	filled ? make_full() : FALSE
 	set_power_use(IDLE_POWER_USE)
 	update_icon()						//in update icon, we add src connectors icons and search neardy Suit Storage Units
 	ssu_left?.update_connectors() 			//to add connector sprites for neardy staying Suit Storage Units
@@ -264,8 +264,7 @@
 	to_chat(user, "You start the Unit's cauterisation cycle.")
 	if(opened)
 		close()
-	if(!locked)
-		toggle_lock()
+	locked = TRUE
 	ultra_violet = TRUE
 	if(!super_ultra_violet)
 		cycletime_left = 1
@@ -493,7 +492,7 @@
 	build_type =  SUIT_STORAGE_BUILD_NONE
 
 /obj/machinery/suit_storage_unit/abandoned/atom_init()
-	if(!fulled)
+	if(!filled)
 		return ..()
 
 	if(prob(50))

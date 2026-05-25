@@ -704,7 +704,7 @@
 /area/space_structures/abandoned_ship)
 "bU" = (
 /obj/machinery/suit_storage_unit/syndicate_unit{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "brownfull"

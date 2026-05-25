@@ -878,7 +878,7 @@
 	pixel_y = 30
 	},
 /obj/machinery/suit_storage_unit/security{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "darkbluefull"

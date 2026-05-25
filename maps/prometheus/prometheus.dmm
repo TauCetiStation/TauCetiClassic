@@ -166,7 +166,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/suit_storage_unit/nasa{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -19199,7 +19199,7 @@
 /area/station/security/interrogation)
 "ehN" = (
 /obj/machinery/suit_storage_unit/engine/atmos{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -20978,7 +20978,7 @@
 /area/station/medical/virology)
 "eCc" = (
 /obj/machinery/suit_storage_unit/medical{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -33853,7 +33853,7 @@
 /area/station/civilian/cafeteria)
 "hyp" = (
 /obj/machinery/suit_storage_unit/engine/atmos{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -46240,7 +46240,7 @@
 	pixel_y = 22
 	},
 /obj/machinery/suit_storage_unit/nasa{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -52286,7 +52286,7 @@
 /area/station/rnd/scibreak)
 "mfd" = (
 /obj/machinery/suit_storage_unit/engine/atmos{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -57082,7 +57082,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/suit_storage_unit/engine{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -57511,7 +57511,7 @@
 	network = list("SS13","Engineering")
 	},
 /obj/machinery/suit_storage_unit/engine/chief{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -58114,7 +58114,7 @@
 /area/station/maintenance/medbay)
 "nBd" = (
 /obj/machinery/suit_storage_unit/engine{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -63810,7 +63810,7 @@
 	pixel_y = -22
 	},
 /obj/machinery/suit_storage_unit/medical/cmo{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -65035,7 +65035,7 @@
 	dir = 8
 	},
 /obj/machinery/suit_storage_unit/medical/paramedic{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -65825,7 +65825,7 @@
 /area/station/maintenance/engineering)
 "pAv" = (
 /obj/machinery/suit_storage_unit/security{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -67271,7 +67271,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/security/hos{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -73073,7 +73073,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/suit_storage_unit/captain{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -75238,7 +75238,7 @@
 	network = list("SS13","Research")
 	},
 /obj/machinery/suit_storage_unit/science{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "darkpurple"
@@ -81193,7 +81193,7 @@
 	pixel_y = -22
 	},
 /obj/machinery/suit_storage_unit/globose/science{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "darkpurple"
@@ -81862,7 +81862,7 @@
 	dir = 4
 	},
 /obj/machinery/suit_storage_unit/skrell/white{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -86023,7 +86023,7 @@
 	})
 "uEG" = (
 /obj/machinery/suit_storage_unit/skrell/black{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -93066,7 +93066,7 @@
 	pixel_x = -27
 	},
 /obj/machinery/suit_storage_unit/security{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -93973,7 +93973,7 @@
 /area/station/hallway/primary/port)
 "wzu" = (
 /obj/machinery/suit_storage_unit/medical/paramedic{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -98249,7 +98249,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/suit_storage_unit/engine{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -99613,7 +99613,7 @@
 	dir = 1
 	},
 /obj/machinery/suit_storage_unit/unathi/nt{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -100630,7 +100630,7 @@
 	pixel_x = -27
 	},
 /obj/machinery/suit_storage_unit/science/rd{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 9;

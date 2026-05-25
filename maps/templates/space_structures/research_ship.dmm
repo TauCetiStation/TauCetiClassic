@@ -264,7 +264,7 @@
 	pixel_y = -22
 	},
 /obj/machinery/suit_storage_unit/science{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)
@@ -468,7 +468,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/suit_storage_unit/science{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/space_structures/research_ship)

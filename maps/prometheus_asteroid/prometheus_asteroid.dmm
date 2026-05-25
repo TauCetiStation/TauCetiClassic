@@ -142,7 +142,7 @@
 "as" = (
 /obj/structure/alien/weeds,
 /obj/machinery/suit_storage_unit/abandoned{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -6913,7 +6913,7 @@
 	pixel_x = 27
 	},
 /obj/machinery/suit_storage_unit/globose/mining{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -10103,7 +10103,7 @@
 	pixel_x = -28
 	},
 /obj/machinery/suit_storage_unit/science{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -10215,7 +10215,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -11255,7 +11255,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/globose/mining{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -11504,7 +11504,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

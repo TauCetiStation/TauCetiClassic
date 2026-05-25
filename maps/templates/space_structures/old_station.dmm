@@ -737,7 +737,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/suit_storage_unit/syndicate_unit/elite/comander{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7663,7 +7663,7 @@
 /area/space_structures/carp_space)
 "Tt" = (
 /obj/machinery/suit_storage_unit/engine{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;

@@ -3,7 +3,7 @@
 
 /datum/unit_test/suit_storage_unit_test_full/start_test()
 	var/obj/machinery/suit_storage_unit/test_unit/ssu = new
-	ssu.fulled = TRUE
+	ssu.filled = TRUE
 	ssu.make_full()
 
 	if(!ssu.contents.len)

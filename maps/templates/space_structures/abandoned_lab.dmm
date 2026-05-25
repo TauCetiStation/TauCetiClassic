@@ -826,7 +826,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/suit_storage_unit/science{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -834,7 +834,7 @@
 /area/space_structures/derelict_lab)
 "cn" = (
 /obj/machinery/suit_storage_unit/science{
-	fulled = 1
+	filled = 1
 	},
 /obj/machinery/light_construct/small{
 	dir = 1
@@ -860,13 +860,13 @@
 	dir = 1
 	},
 /obj/machinery/suit_storage_unit/engine{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict_lab)
 "cq" = (
 /obj/machinery/suit_storage_unit/engine{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/space_structures/derelict_lab)

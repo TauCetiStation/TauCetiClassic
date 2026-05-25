@@ -264,7 +264,7 @@
 	icon_state = "delivery"
 	},
 /obj/machinery/suit_storage_unit/engine/atmos{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/station/engineering/equip)
@@ -6113,7 +6113,7 @@
 /area/station/maintenance/auxsolarport)
 "Cw" = (
 /obj/machinery/suit_storage_unit/engine/chief{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7145,7 +7145,7 @@
 	icon_state = "delivery"
 	},
 /obj/machinery/suit_storage_unit/engine{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/station/engineering/equip)

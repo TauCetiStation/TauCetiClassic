@@ -132,7 +132,7 @@
 "ay" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/suit_storage_unit/globose{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/space_structures/iss)

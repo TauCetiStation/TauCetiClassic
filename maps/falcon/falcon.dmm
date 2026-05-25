@@ -1961,7 +1961,7 @@
 	pixel_y = 27
 	},
 /obj/machinery/suit_storage_unit/science/rd{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -2307,7 +2307,7 @@
 	pixel_x = -28
 	},
 /obj/machinery/suit_storage_unit/nasa{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -4043,7 +4043,7 @@
 	pixel_y = 28
 	},
 /obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -7661,7 +7661,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/suit_storage_unit/science{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -9312,7 +9312,7 @@
 	pixel_x = 21
 	},
 /obj/machinery/suit_storage_unit/globose/mining{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -9350,7 +9350,7 @@
 	pixel_x = 22
 	},
 /obj/machinery/suit_storage_unit/globose/mining{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -13142,7 +13142,7 @@
 /area/station/maintenance/dormitory)
 "dws" = (
 /obj/machinery/suit_storage_unit/medical{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -13248,7 +13248,7 @@
 	dir = 4
 	},
 /obj/machinery/suit_storage_unit/engine/atmos{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -16540,7 +16540,7 @@
 /area/station/hallway/primary/central)
 "gLI" = (
 /obj/machinery/suit_storage_unit/security/hos{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -20781,7 +20781,7 @@
 	pixel_y = -28
 	},
 /obj/machinery/suit_storage_unit/engine/chief{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "darkyellow"
@@ -24360,7 +24360,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/suit_storage_unit/security{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -27693,7 +27693,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/suit_storage_unit/captain{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -33356,7 +33356,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/suit_storage_unit/engine{
-	fulled = 1
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
