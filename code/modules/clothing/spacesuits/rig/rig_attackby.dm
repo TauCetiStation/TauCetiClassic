@@ -8,27 +8,7 @@
 		if(H.wear_suit == src)
 			is_wearing = TRUE
 
-	if(istype(I, /obj/item/clothing/head/helmet/space/rig))
-		if(is_wearing)
-			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
-			return
-
-		//Installing a component into or modifying the contents of the helmet.
-		if(!attached_helmet)
-			to_chat(user, "\The [src] does not have a helmet mount.")
-			return
-
-		if(helmet)
-			to_chat(user, "\The [src] already has a helmet installed.")
-		else
-			to_chat(user, "You attach \the [I] to \the [src]'s helmet mount.")
-			user.drop_from_inventory(I, src)
-			helmet = I
-			var/obj/item/clothing/head/helmet/space/rig/R = I
-			R.rig_connect = src
-		return
-
-	else if(istype(I, /obj/item/clothing/shoes/magboots))
+	if(istype(I, /obj/item/clothing/shoes/magboots))
 		if(is_wearing)
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
@@ -111,9 +91,6 @@
 				detach_boots(user)
 			if("Modules")
 				detach_module(user, installed_modules)
-			if("Helmet")
-				detach_helmet(user)
-
 		return
 
 	// If we've gotten this far, all we have left to do before we pass off to root procs

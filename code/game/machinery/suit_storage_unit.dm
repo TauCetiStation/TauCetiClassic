@@ -1,40 +1,38 @@
-//////////////////////////////////////
-// SUIT STORAGE UNIT /////////////////
-//////////////////////////////////////
+
+#define POSSIBLE_TO_LOAD(something) something && (istype(something, /obj/item/weapon/grab) || isspacesuit(something)||(isspacehelmet(something) && !ishardhelmet(something))||isbreathmask(something)||ismagboots(something)||istank(something)||iscarbon(something))
+
 /obj/machinery/suit_storage_unit
 	name = "Suit Storage Unit"
-	desc = "An industrial U-Stor-It Storage unit designed to accomodate all kinds of space suits. Its on-board equipment also allows the user to decontaminate the contents through a UV-ray purging cycle. There's a warning label dangling from the control pad, reading \"STRICTLY NO BIOLOGICALS IN THE CONFINES OF THE UNIT\"."
+	desc = "An industrial U-Stor-It Storage unit designed to accomodate all kinds of space suits. Its on-board equipment also allows the user to decontaminate the contents through a ultra_violet-ray purging cycle. There's a warning label dangling from the control pad, reading \"STRICTLY NO BIOLOGICALS IN THE CONFINES OF THE UNIT\"."
 	icon = 'icons/obj/suitstorage.dmi'
 	icon_state = "suitholder"
 	damage_deflection = 25
 	idle_power_usage = 10
-	var/build_type = SUIT_STORAGE_BUILD_DEFAULT
 	anchored = TRUE
 	density = TRUE
+
+	var/build_type = SUIT_STORAGE_BUILD_DEFAULT
 	var/opened = FALSE
 	var/locked = TRUE
+
 	var/overlay_color = null
+
 	var/list/connectors_overlays = list()
 	var/list/suit_storage_overlays = list()
+
 //ultra violet stat
-	var/UV = FALSE
-	var/superUV = FALSE
+	var/ultra_violet = FALSE
+	var/super_ultra_violet = FALSE
 	var/cycletime_left = null
 
 	var/fulled = FALSE // For map placeing suit storages, when false, create empty suit storage
+
 	var/helmet_type = null
 	var/mask_type   = null
 	var/suit_type   = null
 	var/boot_type   = null
 	var/tank_type   = null
-/*
-All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
-*/
-	var/obj/item/clothing/suit/space/SUIT = null
-	var/obj/item/clothing/head/helmet/space/HELMET = null
-	var/obj/item/clothing/mask/MASK = null
-	var/obj/item/clothing/shoes/magboots/BOOTS = null
-	var/obj/item/weapon/tank/oxygen/TANK = null
+	var/obj/item/weapon/circuitboard/suit_storage/ssu_type = null
 
 //overlay connectors stuff
 	var/obj/machinery/suit_storage_unit/ssu_left = null
@@ -43,7 +41,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/atom_init()
 	. = ..()
 
-	var/obj/item/weapon/circuitboard/suit_storage/ssu_type = new /obj/item/weapon/circuitboard/suit_storage(null)
+	ssu_type = new /obj/item/weapon/circuitboard/suit_storage(null)
 	ssu_type.update_circut(type)
 
 	component_parts = list()
@@ -58,22 +56,54 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	component_parts += new /obj/item/stack/cable_coil/red(null, 3)
 
 	RefreshParts()
-
-	if(fulled)
-		if(suit_type)
-			SUIT   = new suit_type(src)
-		if(helmet_type)
-			HELMET = new helmet_type(src)
-		if(mask_type)
-			MASK   = new mask_type(src)
-		if(boot_type)
-			BOOTS  = new boot_type(src)
-		if(tank_type)
-			TANK   = new tank_type(src)
+	fulled ? make_full() : FALSE
 	set_power_use(IDLE_POWER_USE)
 	update_icon()						//in update icon, we add src connectors icons and search neardy Suit Storage Units
 	ssu_left?.update_connectors() 			//to add connector sprites for neardy staying Suit Storage Units
 	ssu_right?.update_connectors()
+
+/obj/machinery/suit_storage_unit/proc/make_full()
+	if(!contents?.len)
+		if(suit_type)
+			new suit_type(src)
+		if(helmet_type)
+			new helmet_type(src)
+		if(mask_type)
+			new mask_type(src)
+		if(boot_type)
+			new boot_type(src)
+		if(tank_type)
+			new tank_type(src)
+
+/obj/machinery/suit_storage_unit/place_occupant(mob/living/target, mob/user, obj/grab = null)
+	if(user != target)
+		if(do_after(user, 3 SECOND, target = src))
+			..()
+	else
+		..()
+
+	if(target.loc != src)
+		return
+	if(!(contents?.len - 1)) // - 1 тк в родителе мы помещаем хумана внутрь шкафа и он тоже считается в контентс
+		to_chat(target, "<span class ='danger'>There are nothing here for you.</span>")
+	if(emagged)
+		start_ultra_violet(user)
+	update_icon()
+
+/obj/machinery/suit_storage_unit/proc/fast_equip(mob/living/target)
+	for(var/obj/item/something in contents)
+		switch(something.slot_flags)
+			if(SLOT_FLAGS_MASK)
+				target?.equip_to_slot_if_possible(something, SLOT_WEAR_MASK, disable_warning = TRUE)
+			if(SLOT_FLAGS_FEET)
+				target?.equip_to_slot_if_possible(something, SLOT_SHOES, disable_warning = TRUE)
+			if(SLOT_FLAGS_BACK)
+				if(!target?.equip_to_slot_if_possible(something, SLOT_S_STORE, disable_warning = TRUE))
+					target?.equip_to_slot_if_possible(something, SLOT_BACK)
+			if(SLOT_FLAGS_OCLOTHING)
+				target?.equip_to_slot_if_possible(something, SLOT_WEAR_SUIT, disable_warning = TRUE)
+			if(SLOT_FLAGS_HEAD)
+				target?.equip_to_slot_if_possible(something, SLOT_HEAD, disable_warning = TRUE)
 
 /obj/machinery/suit_storage_unit/proc/update_connectors()
 	if(length(connectors_overlays))
@@ -104,25 +134,20 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		cut_overlay(suit_storage_overlays)
 		LAZYCLEARLIST(suit_storage_overlays)
 	update_connectors(suit_storage_overlays)
-	if(!ishardsuit(SUIT))
-		if(SUIT)
-			suit_storage_overlays += mutable_appearance(icon_state = "suit")
-		if(HELMET)
-			suit_storage_overlays += mutable_appearance(icon_state = "helmet")
-		if(BOOTS)
-			suit_storage_overlays += mutable_appearance(icon_state = "boots")
-
-	else
-		var/obj/item/clothing/suit/space/rig/RIG_SUIT = SUIT
-		if(RIG_SUIT?.helmet)
-			suit_storage_overlays += mutable_appearance(icon_state = "suit&helmet")
-		else
-			if(SUIT)
-				suit_storage_overlays += mutable_appearance(icon_state = "suit")
-			if(HELMET)
+	if(contents?.len)
+		for(var/atom/target in contents)
+			if(ishardsuit(target))
+				var/obj/item/clothing/suit/space/rig/rig_suit = target
+				if(rig_suit?.helmet)
+					suit_storage_overlays += mutable_appearance(icon_state = "suit&helmet")
+				if(rig_suit?.boots)
+					suit_storage_overlays += mutable_appearance(icon_state = "boots")
+			else if(ismagboots(target))
+				suit_storage_overlays += mutable_appearance(icon_state = "boots")
+			else if(isspacehelmet(target))
 				suit_storage_overlays += mutable_appearance(icon_state = "helmet")
-		if(RIG_SUIT?.boots || BOOTS)
-			suit_storage_overlays += mutable_appearance(icon_state = "boots")
+			else if(isspacesuit(target))
+				suit_storage_overlays += mutable_appearance(icon_state = "suit")
 
 	var/mutable_appearance/door_I = mutable_appearance(icon_state = "[opened ? "door_open" : "door_closed"]")
 	var/mutable_appearance/unit_color = mutable_appearance(icon_state = "[stat & BROKEN ? "suitholder_broken_color" : "suitholder_color"]")
@@ -132,7 +157,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		suit_storage_overlays += unit_color
 	if(!opened && !(stat & BROKEN))
 		suit_storage_overlays += door_I
-		if(locked && !emagged && !UV)
+		if(locked && !emagged && !ultra_violet)
 			suit_storage_overlays += mutable_appearance(icon_state = "lock_closed")
 		else
 			suit_storage_overlays += mutable_appearance(icon_state = "lock_open")
@@ -140,13 +165,13 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		suit_storage_overlays += door_I
 	if(stat & BROKEN)
 		icon_state = "suitholder_broken"
-	if(UV && !superUV)
+	if(ultra_violet && !super_ultra_violet)
 		suit_storage_overlays += door_I
 		suit_storage_overlays += mutable_appearance(icon_state = "lock_closed")
 		suit_storage_overlays += mutable_appearance(icon_state = "termalclean")
 		add_overlay(suit_storage_overlays)
 		return
-	else if(UV && superUV)
+	else if(ultra_violet && super_ultra_violet)
 		suit_storage_overlays += door_I
 		suit_storage_overlays += mutable_appearance(icon_state = "lock_closed")
 		suit_storage_overlays += mutable_appearance(icon_state = "termalclean_emag")
@@ -170,76 +195,30 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	update_power_use()
 
 /obj/machinery/suit_storage_unit/Destroy()
-	. = ..()
+	QDEL_NULL(occupant)
+	QDEL_LIST(contents)
+	QDEL_NULL(ssu_type)
 	ssu_left?.update_connectors()
 	ssu_left = null
 	ssu_right?.update_connectors()
 	ssu_right = null
+	..()
 
 /obj/machinery/suit_storage_unit/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			if(prob(50))
-				dump_everything() //So suits dont survive all the time
+				drop_from_contents() //So suits dont survive all the time
 			qdel(src)
 		if(EXPLODE_HEAVY)
 			if(prob(50))
-				dump_everything()
+				drop_from_contents()
 				qdel(src)
-
-/obj/machinery/suit_storage_unit/proc/dispense_helmet()
-	if(!HELMET)
-		return
-	else
-		HELMET.forceMove(get_turf(src))
-		HELMET = null
-		return
-
-/obj/machinery/suit_storage_unit/proc/dispense_suit()
-	if(!SUIT)
-		return
-	else
-		SUIT.forceMove(get_turf(src))
-		SUIT = null
-		return
-
-/obj/machinery/suit_storage_unit/proc/dispense_boots()
-	if(!BOOTS)
-		return
-	else
-		BOOTS.forceMove(get_turf(src))
-		BOOTS = null
-		return
-
-/obj/machinery/suit_storage_unit/proc/dispense_mask()
-	if(!MASK)
-		return
-	else
-		MASK.forceMove(get_turf(src))
-		MASK = null
-		return
-
-/obj/machinery/suit_storage_unit/proc/dispense_tank()
-	if(!TANK)
-		return
-	else
-		TANK.forceMove(get_turf(src))
-		TANK = null
-		return
-
-/obj/machinery/suit_storage_unit/proc/dump_everything()
-	dispense_suit()
-	dispense_boots()
-	dispense_helmet()
-	dispense_tank()
-	dispense_mask()
-	eject_occupant(occupant)
-	return
 
 /obj/machinery/suit_storage_unit/proc/open(mob/user)
 	if(opened)
 		return
-	if(locked || UV)
+	if(locked || ultra_violet)
 		to_chat(user, "<span class ='danger'>Unable to opened unit.</span>")
 		return
 	opened = TRUE
@@ -247,7 +226,7 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	update_icon()
 	return
 
-/obj/machinery/suit_storage_unit/proc/close()
+/obj/machinery/suit_storage_unit/proc/close(mob/user)
 	if(!opened)
 		return
 	opened = FALSE
@@ -256,86 +235,77 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	return
 
 /obj/machinery/suit_storage_unit/proc/toggle_lock(mob/user)
-	if(occupant && !superUV)
-		to_chat(user, "<span class ='danger'>The Unit's safety protocols disallow locking when a biological form is detected inside its compartments.</span>")
-		return
-	if(stat & BROKEN)
-		to_chat(user, "<span class='warning'>The [src] appears to be stat & BROKEN.</span>")
-		return
+	if(opened)
+		return FALSE
+	if(super_ultra_violet)
+		return FALSE
+	if(!allowed(user))
+		to_chat(user, "<span class='notice'>Access Denied</span>")
+		return FALSE
+	if(stat & (NOPOWER))
+		to_chat(user, "<span class='warning'>The [src] appears to be broken.</span>")
+		return FALSE
 	if(user.loc == src)
 		to_chat(user, "<span class='notice'>You can't reach the lock from inside.</span>")
-		return
-	if(allowed(user))
-		locked = !locked
-		visible_message("<span class='notice'>The [src] been [locked ? null : "un"]locked by [user].</span>")
-		update_icon()
-	else
-		to_chat(user, "<span class='notice'>Access Denied</span>")
-	return
+		return FALSE
 
-/obj/machinery/suit_storage_unit/proc/start_UV(mob/user)
-	if(occupant && !superUV)
+	locked = !locked
+	visible_message("<span class='notice'>The [src] been [locked ? null : "un"]locked by [user].</span>")
+	update_icon()
+	return TRUE
+
+/obj/machinery/suit_storage_unit/proc/start_ultra_violet(mob/user)
+	if(occupant && !super_ultra_violet)
 		to_chat(user, "<span class = 'danger'><B>WARNING:</B> Biological entity detected in the confines of the Unit's storage. Cannot initiate cycle.</span>")
 		return
-	if(!HELMET && !MASK && !SUIT && !BOOTS && !TANK && !occupant)
+	if(!contents?.len)
 		to_chat(user, "<span class ='danger'>Unit storage bays empty. Nothing to disinfect -- Aborting.</span>")
 		return
 	to_chat(user, "You start the Unit's cauterisation cycle.")
 	if(opened)
-		opened = FALSE
+		close()
 	if(!locked)
-		locked = TRUE
-	UV = TRUE
-	if(!superUV)
+		toggle_lock()
+	ultra_violet = TRUE
+	if(!super_ultra_violet)
 		cycletime_left = 1
 	else
 		cycletime_left = 5
 	update_icon()
-	UV_cleaning()
+	ultra_violet_cleaning()
 
-/obj/machinery/suit_storage_unit/proc/UV_cleaning()
+/obj/machinery/suit_storage_unit/proc/ultra_violet_cleaning()
 	if(cycletime_left)
 		cycletime_left--
 		if(occupant)
-			if(superUV)
+			if(super_ultra_violet)
 				occupant.adjustFireLoss(rand(15, 30))
-		addtimer(CALLBACK(src, PROC_REF(UV_cleaning)), 5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(ultra_violet_cleaning)), 5 SECONDS)
 	else
-		if(!superUV)
-			if(!length(contents))
-				return
-			for(var/obj/item/target in contents)
-				target.clean_blood()
-				target.decontaminate()
-		else if(length(contents))
-			QDEL_NULL(occupant)
-			QDEL_NULL(HELMET)
-			QDEL_NULL(SUIT)
-			QDEL_NULL(MASK)
-			QDEL_NULL(TANK)
-			QDEL_NULL(BOOTS)
-			playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
-			stat |= BROKEN
-			visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
+		if(!super_ultra_violet)
+			default_ultra_violet_cleaning()
+		else
+			super_ultra_violet_cleaning()
 
-		opened = TRUE
-		locked = FALSE
-		UV = FALSE //Cycle ends
+		locked ? toggle_lock() : FALSE // anyway it may be unlocked
+		open()
+		ultra_violet = FALSE //Cycle ends
 		update_icon()
-		return
+		return TRUE
 
-/obj/machinery/suit_storage_unit/proc/eject_occupant()
-	if(locked)
-		return
-	if(!occupant)
-		return
-	occupant.forceMove(get_turf(src))
-	occupant = null
-	if(!opened)
-		opened = TRUE
-		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
-	update_icon()
-	return
+/obj/machinery/suit_storage_unit/proc/default_ultra_violet_cleaning()
+	if(contents?.len)
+		for(var/obj/item/target in contents) // we cand ultra_violeting only items
+			target.clean_blood()
+			target.decontaminate()
+
+/obj/machinery/suit_storage_unit/proc/super_ultra_violet_cleaning()
+	if(contents?.len)
+		for(var/atom/target as anything in contents)
+			QDEL_NULL(target)
+	playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
+	stat |= BROKEN
+	visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
 
 /obj/machinery/suit_storage_unit/container_resist()
 	var/mob/living/user = usr
@@ -347,69 +317,46 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		to_chat(user, "<span class='notice'>You start kicking against the doors to escape!</span>")
 		visible_message("You see [user] kicking against the doors of the [src]!")
 		if(do_after(user, 2 MINUTE, target = src))
-			opened = TRUE
-			locked = FALSE
 			visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
+	locked ? toggle_lock() : FALSE // anyway it may be unlocked
+	open()
 	eject_occupant(user)
 	add_fingerprint(user)
 	update_icon()
 	return
 
-/obj/machinery/suit_storage_unit/proc/move_into_unit(mob/mobToMove, mob/user, obj/item/G)
-	if(!opened)
-		to_chat(user, "<span class ='danger'>The unit's doors are shut.</span>")
-		return
-	if(occupant || HELMET || SUIT || TANK || BOOTS)
-		to_chat(user, "<span class ='danger'>It's too cluttered inside for you to fit in!</span>")
-		return
-	if(user.is_busy())
-		return
-	visible_message("[user] starts squeezing into the suit storage unit!", 3)
-	if(do_after(user, 5 SECOND, target = src))
-		if(occupant || HELMET || SUIT || TANK || BOOTS)
-			to_chat(user, "<span class ='danger'>It's too cluttered inside for you to fit in!</span>")
-			return
-		mobToMove.stop_pulling()
-		mobToMove.forceMove(src)
-		occupant = mobToMove
-		QDEL_NULL(G)
-		add_fingerprint(user)
-		update_icon()
-		return
-
-/obj/machinery/suit_storage_unit/MouseDrop_T(atom/dropping, mob/user)
+/obj/machinery/suit_storage_unit/MouseDrop_T(atom/something, mob/user)
 	add_fingerprint(user)
 	if(stat & BROKEN)
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
-		return
+		return FALSE
 	if(opened)
-		if(isitem(dropping))
-			if(isspacesuit(dropping) || isspacehelmet(dropping) || isbreathmask(dropping) || ismagboots(dropping) || istank(dropping))
-				load_something(dropping, user)
-				return
-		if(dropping == user)
-			move_into_unit(dropping, user)
-			return
+		if(POSSIBLE_TO_LOAD(something))
+			if(!ishuman(something))
+				load_something(something, user)
+			else
+				place_occupant(something, user)
+			return TRUE
 
 /obj/machinery/suit_storage_unit/AltClick(mob/user)
 	add_fingerprint(user)
 	if(stat & (BROKEN | NOPOWER))
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
-	if(UV)
+	if(ultra_violet)
 		return
 	if(!allowed(user))
 		to_chat(user, "<span class='notice'>Access Denied</span>")
 		return
 	if((!opened && !locked) || emagged)
-		start_UV(user)
+		start_ultra_violet(user)
 
 /obj/machinery/suit_storage_unit/CtrlClick(mob/user)
 	add_fingerprint(user)
 	if(stat & BROKEN)
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
-	if(UV)
+	if(ultra_violet)
 		return
 	opened ? close() : open(user)
 	update_icon()
@@ -417,44 +364,40 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 /obj/machinery/suit_storage_unit/attack_hand(mob/user)
 	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
-	if(UV)
-		return
+	if(ultra_violet)
+		return FALSE
 	if(stat & BROKEN)
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
-	if(opened)
-		var/list/suit_storage = list()
-		if(!occupant)
-			if(HELMET)
-				suit_storage += list("Helmet" = image(icon = HELMET.icon, icon_state = HELMET.icon_state))
-			if(SUIT)
-				suit_storage += list("Suit" = image(icon = SUIT.icon, icon_state = SUIT.icon_state))
-			if(BOOTS)
-				suit_storage += list("Boots" = image(icon = BOOTS.icon, icon_state = BOOTS.icon_state))
-			if(TANK)
-				suit_storage += list("Tank" = image(icon = TANK.icon, icon_state = TANK.icon_state))
-			if(MASK)
-				suit_storage += list("Mask" = image(icon = MASK.icon, icon_state = MASK.icon_state))
+	if(user.loc == src && ishuman(user))
+		var/list/options = list()
+		if(!(contents?.len - 1))
+			options += "Fast Uneqip"
 		else
-			suit_storage += list("Somebody" = image(getFlatIcon(occupant)))
-
-		var/to_dispense = show_radial_menu(user, src, suit_storage, require_near = TRUE, tooltips = TRUE)
-		if(to_dispense)
-			switch(to_dispense)
-				if("Helmet")
-					dispense_helmet()
-				if("Suit")
-					dispense_suit()
-				if("Boots")
-					dispense_boots()
-				if("Tank")
-					dispense_tank()
-				if("Mask")
-					dispense_mask()
-				if("Somebody")
-					eject_occupant()
-			update_icon()
+			options += "Fast Eqip"
+		if(length(options))
+			var/choosen_option = show_radial_menu(user, src, options, require_near = TRUE, tooltips = TRUE)
+			switch(choosen_option)
+				if("Fast Uneqip")
+					for(var/obj/item/something in user.contents)
+						load_something(something, user)
+				if("Fast Eqip")
+					fast_equip(user)
+					for(var/atom/movable/something in contents)
+						dispense(something)
+					update_icon()
 			return
+	if(!opened)
+		toggle_lock(user)
+	else if(contents?.len)
+		var/list/suit_storage = list()
+		for(var/atom/movable/target in contents)
+			suit_storage[target] = image(getFlatIcon(target))
+		var/atom/movable/to_dispense = show_radial_menu(user, src, suit_storage, require_near = TRUE, tooltips = TRUE)
+		if(to_dispense)
+			dispense(to_dispense)
+			update_icon()
+		return
 
 	if(!locked && !(stat & BROKEN))
 		opened ? close() : open(user)
@@ -462,107 +405,64 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 		return
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user)
-	if(UV)
-		return
+	if(user.loc == src || ultra_violet)
+		return FALSE
 	if(stat & BROKEN)
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
-		return
+		return FALSE
 
-	if(opened && !occupant)
+	if(!opened)
+		toggle_lock(user)
+	else if(POSSIBLE_TO_LOAD(I))
+		if(istype(I, /obj/item/weapon/grab))
+			var/obj/item/weapon/grab/grab = I
+			if(!ismob(grab.affecting) || grab.state < GRAB_AGGRESSIVE)
+				return
+			var/mob/M = grab.affecting
+			place_occupant(M, user, grab)
+		else
+			load_something(I, user)
+	else if(opened && !occupant)
 		if(isscrewing(I))
 			if(default_deconstruction_screwdriver(user, "suitholder_o", "suitholder", I))
-				return
+				return TRUE
 		if(isprying(I))
 			if(default_deconstruction_crowbar(I))
-				return
-	if(!opened)
-		if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
-			if(allowed(usr))
-				toggle_lock(user)
-	if(opened)
-		if(istype(I, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = I
-			if(!ismob(G.affecting) || G.state < GRAB_AGGRESSIVE)
-				return
-			var/mob/M = G.affecting
-			move_into_unit(M, user, G)
-		else if(isspacesuit(I) || isspacehelmet(I) || isbreathmask(I) || ismagboots(I) || istank(I))
-			load_something(I, user)
+				return TRUE
 	update_icon()
 	return
 
-/obj/machinery/suit_storage_unit/proc/load_something(obj/something, mob/user)
-	if(occupant)
-		to_chat(usr, "<span class ='danger'>It's too cluttered inside for add something else!</span>")
-		return
-	if(isspacesuit(something))
-		var/obj/item/clothing/suit/space/S = something
-		if(SUIT)
-			to_chat(user, "<span class ='succsess'>The unit already contains a suit.</span>")
-			return
-		to_chat(user, "You load the [S.name] into the storage compartment.")
-		user.drop_from_inventory(S, src)
-		SUIT = S
-	if(isspacehelmet(something))
-		var/obj/item/clothing/head/helmet/H = something
-		if(HELMET)
-			to_chat(user, "<span class ='succsess'>The unit already contains a helmet.</span>")
-			return
-		to_chat(user, "You load the [H.name] into the storage compartment.")
-		user.drop_from_inventory(H, src)
-		HELMET = H
-	if(isbreathmask(something))
-		var/obj/item/clothing/mask/M = something
-		if(MASK)
-			to_chat(user, "<span class ='succsess'>The unit already contains a mask.</span>")
-			return
-		to_chat(user, "You load the [M.name] into the storage compartment.")
-		user.drop_from_inventory(M, src)
-		MASK = M
-	if(ismagboots(something))
-		var/obj/item/clothing/shoes/magboots/B = something
-		if(BOOTS)
-			to_chat(user, "<span class ='succsess'>The unit already contains a magboots.</span>")
-			return
-		to_chat(user, "You load the [B.name] into the storage compartment.")
-		user.drop_from_inventory(B, src)
-		BOOTS = B
-	if(istank(something))
-		var/obj/item/weapon/tank/T = something
-		if(TANK)
-			to_chat(user, "<span class ='succsess'>The unit already contains a tank.</span>")
-			return
-		to_chat(user, "You load the [T.name] into the storage compartment.")
-		user.drop_from_inventory(T, src)
-		TANK = T
+/obj/machinery/suit_storage_unit/proc/load_something(atom/movable/something, mob/user, obj/grab = null)
+	if(contents?.len)
+		for(var/atom/target in contents)
+			if(istype(something, target))
+				to_chat(user, "<span class ='warning'>The unit already contains something like [something.name].</span>")
+				return FALSE
+
+	if(POSSIBLE_TO_LOAD(something))
+		to_chat(user, "You load the [something.name] into the storage compartment.")
+		user.drop_from_inventory(something, src)
 	update_icon()
-	return
+	return TRUE
+
+/obj/machinery/suit_storage_unit/proc/dispense(atom/movable/selected)
+	if(!contents?.len)
+		return FALSE
+	for(var/atom/movable/target in contents)
+		if(target == selected)
+			if(!iscarbon(selected))
+				selected.forceMove(get_turf(src))
+			else
+				eject_occupant(target)
+	return TRUE
 
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
-	if(flags & NODECONSTRUCT)
-		return ..()
-	if(HELMET)
-		HELMET.forceMove(loc)
-		HELMET = null
-	if(SUIT)
-		SUIT.forceMove(loc)
-		SUIT = null
-	if(MASK)
-		MASK.forceMove(loc)
-		MASK = null
-	if(BOOTS)
-		BOOTS.forceMove(loc)
-		BOOTS = null
-	if(TANK)
-		TANK.forceMove(loc)
-		TANK = null
-	eject_occupant(occupant)
-
+	drop_from_contents()
 	..()
 
 /obj/machinery/suit_storage_unit/attack_paw(mob/user)
 	to_chat(user, "<span class='info'>The console controls are far too complicated for your tiny brain!</span>")
-	return
+	return ..()
 
 /obj/machinery/suit_storage_unit/emag_act(mob/user)
 	if(emagged)
@@ -571,12 +471,22 @@ All the stuff that's gonna be stored insiiiiiiiiiiiiiiiiiiide, nyoro~n
 	s.set_up(5, 1, src)
 	s.start()
 	emagged = TRUE
-	superUV = TRUE
+	super_ultra_violet = TRUE
 	locked = FALSE
 	update_icon()
 	return TRUE
 
 //The units themselves
+//unit for unit tests
+/obj/machinery/suit_storage_unit/test_unit
+	name = "Test Storage Unit"
+	build_type =  SUIT_STORAGE_BUILD_NONE
+	suit_type = /obj/item/clothing/suit/space
+	helmet_type = /obj/item/clothing/head/helmet/space
+	mask_type = /obj/item/clothing/mask
+	tank_type = /obj/item/weapon/tank
+	boot_type = /obj/item/clothing/shoes/magboots
+
 //Abandoned
 /obj/machinery/suit_storage_unit/abandoned
 	name = "Abandoned Storage Unit"

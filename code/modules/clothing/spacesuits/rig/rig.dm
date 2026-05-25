@@ -402,7 +402,8 @@
 		wearer = H
 		update_overlays(wearer)
 		give_actions(wearer)
-		toggle_helmet()
+		if(helmet)
+			toggle_helmet()
 
 		if(!offline) // so rigs without cell are slow
 			slowdown = initial(slowdown)
@@ -633,12 +634,6 @@
 	to_chat(user, "You detatch \the [boots] from \the [src]'s boot mounts.")
 	user.put_in_hands(boots)
 	boots = null
-
-/obj/item/clothing/suit/space/rig/proc/detach_helmet(mob/user)
-	to_chat(user, "You detatch \the [helmet] from \the [src]'s helmet mount.")
-	user.put_in_hands(helmet)
-	helmet.rig_connect = null
-	helmet = null
 
 /obj/item/clothing/suit/space/rig/proc/detach_module(mob/user, list/current_mounts_modules, atom/anchor)
 	var/list/modules = list()

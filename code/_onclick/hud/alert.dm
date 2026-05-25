@@ -492,6 +492,23 @@
 	R.acquire_array_upgrade()
 
 //OBJECT-BASED
+/atom/movable/screen/alert/inside
+	name = "Внутри"
+	desc = "Вы внутри чего-то и не можете двинуться. \
+			Нажмите на предупреждение, чтобы вылезти, если на вас не надеты наручники."
+	icon_state = "inside"
+
+/atom/movable/screen/alert/inside/Click()
+	if(!mob_viewer)
+		return
+	if(mob_viewer.restrained())
+		to_chat(mob_viewer, "Вы в наручниках! Сначала разберитесь с ними!")
+		return
+	if(mob_viewer.incapacitated() || mob_viewer.is_busy())
+		return
+	var/obj/machinery/machine = master
+	machine.container_resist()
+	machine.update_icon()
 
 /atom/movable/screen/alert/buckled
 	name = "Пристёгнут"
