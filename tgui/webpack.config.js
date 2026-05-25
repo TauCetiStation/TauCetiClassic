@@ -45,7 +45,9 @@ module.exports = (env = {}, argv) => {
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
-      alias: {},
+      alias: {
+        'custom-fonts': path.resolve(__dirname, '../html/custom-fonts'),
+      },
     },
     module: {
       rules: [
@@ -71,15 +73,6 @@ module.exports = (env = {}, argv) => {
               loader: require.resolve('css-loader'),
               options: {
                 esModule: false,
-                url: {
-                  filter: (url, resourcePath) => {
-                    // Ignore font files so webpack doesn't try to load them
-                    if (/\.(woff|woff2|eot|ttf|otf)$/i.test(url)) {
-                      return false;
-                    }
-                    return true;
-                  },
-                },
               },
             },
             {
@@ -90,6 +83,15 @@ module.exports = (env = {}, argv) => {
         {
           test: /\.(png|jpg|svg|gif)$/,
           type: 'asset/inline',
+        },
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/,
+          issuer: /\.scss$/,
+          type: 'asset/resource',
+          generator: {
+            filename: '[name][ext]',
+            emit: false,
+          },
         },
       ],
     },
