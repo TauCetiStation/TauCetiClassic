@@ -138,6 +138,11 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 			to_chat(user, "<span class='notice'>You can't emote so much, give it a rest.</span>")
 		return FALSE
 
+	if(user.status_flags & FAKEDEATH)
+		if(intentional)
+			to_chat(user, "<span class='notice'>You can't emote in this state.</span>")
+		return FALSE
+
 	if(!isnull(required_stat) && user.stat > required_stat)
 		if(intentional)
 			to_chat(user, "<span class='notice'>You can't emote in this state.</span>")
