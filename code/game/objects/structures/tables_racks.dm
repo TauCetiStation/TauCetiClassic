@@ -1082,6 +1082,6 @@
 	if(flags & NODECONSTRUCT)
 		return ..()
 
-	new /obj/item/stack/sheet/wood(loc, 3)
+	new /obj/item/stack/sheet/wood(loc, 4)
 
 	..()
