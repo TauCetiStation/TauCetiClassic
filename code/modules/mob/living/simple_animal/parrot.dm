@@ -723,7 +723,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 		speak += pick("...я жив?", "Это не птичий ррай!", "Я живу, умирраю, и снова живу!", "Пустота исчезает!")
 
 	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/poly", list(
-		"phrases" = list("field_type" = "list", "can_be_null" = TRUE, "entry_type" = "string", "entry_config" = list("field_type" = "string", "max_length" = 150, "can_be_null" = TRUE)),
+		"phrases" = list("field_type" = "list", "can_be_null" = TRUE, "entry_config" = list("field_type" = "string", "max_length" = 150, "can_be_null" = TRUE)),
 		"roundssurvived" = list("field_type" = "int", "min_num" = 0),
 		"longestsurvival" = list("field_type" = "int", "min_num" = 0),
 		"longestdeathstreak" = list("field_type" = "int", "min_num" = 0),
