@@ -27,7 +27,7 @@
 	for(var/turf_dir in alldirs)
 		var/turf/T = get_step(src, turf_dir)
 		if(T.is_grass_floor())
-			possible_turfs[T] = reverse_dir(turf_dir)
+			possible_turfs[T] = reverse_dir[turf_dir]
 
 	if(!possible_turfs.len)
 		return
