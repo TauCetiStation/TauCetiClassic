@@ -25,7 +25,7 @@
 	ancestor_name = save_data["ancestor_name"]
 	ancestor_chain = save_data["ancestor_chain"]
 
-	var/mask_type = text2path(save_data["relic_mask"])
+	var/mask_type = save_data["relic_mask"]
 	if(mask_type)
 		var/obj/item/mask = new mask_type
 		equip_to_slot_or_del(mask, SLOT_WEAR_MASK)
@@ -61,7 +61,7 @@
 	if(!ancestor_name && istext(name))	//new monkey name this round
 		data["ancestor_name"] = name
 	if(wear_mask && isitem(wear_mask))
-		data["relic_mask"] = "[wear_mask.type]"
+		data["relic_mask"] = wear_mask.type
 	else
 		data["relic_mask"] = null
 
