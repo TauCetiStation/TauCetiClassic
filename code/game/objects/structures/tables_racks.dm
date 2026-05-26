@@ -1059,11 +1059,7 @@
 	gender = MALE
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "table_park"
-	density = TRUE
-	anchored = TRUE
-	layer = CONTAINER_STRUCTURE_LAYER
-	throwpass = 1	//You can throw objects over this, despite it's density.")
-	climbable = TRUE
+	smooth = FALSE
 
 	max_integrity = 75
 	resistance_flags = CAN_BE_HIT

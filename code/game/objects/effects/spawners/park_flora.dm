@@ -27,14 +27,15 @@
 	for(var/turf_dir in alldirs)
 		var/turf/T = get_step(src, turf_dir)
 		if(T.is_grass_floor())
-			possible_turfs[turf_dir] = T
+			possible_turfs[T] = turf_dir
 
 	if(!possible_turfs.len)
 		return
 
 	for(var/i in 1 to rand(1, 2))
-		var/turf_dir = pick(possible_turfs)
-		var/turf/T = possible_turfs[turf_dir]
+		var/turf/T = pick(possible_turfs)
+		var/turf_dir = possible_turfs[T]
+
 		var/itemtype = pickweight(subplants)
 		var/obj/item/item = new itemtype(T)
 
