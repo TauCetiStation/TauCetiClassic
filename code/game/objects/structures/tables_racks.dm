@@ -1085,11 +1085,3 @@
 	new /obj/item/stack/sheet/wood(loc, 3)
 
 	..()
-
-/obj/structure/table/park_table/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
-		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-		deconstruct(TRUE)
-		return
-
-	. = ..()
