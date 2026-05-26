@@ -72,7 +72,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IN_STORAGE             (1<<5)
 #define CANT_BE_INSERTED       (1<<6)   // Prohibits putting an item in a containers
 
-#define NO_CONTINUITY          (1<<7)   //Item can't be saved in continuity machines.
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)
 #define AA_MATCH_TARGET_OVERLAYS (1<<1)

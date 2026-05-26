@@ -722,12 +722,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	else
 		speak += pick("...я жив?", "Это не птичий ррай!", "Я живу, умирраю, и снова живу!", "Пустота исчезает!")
 
-	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/poly", list(
-		"phrases" = list("field_type" = "list", "can_be_null" = TRUE, "entry_config" = list("field_type" = "string", "max_length" = 150, "can_be_null" = TRUE)),
-		"roundssurvived" = list("field_type" = "int", "min_num" = 0),
-		"longestsurvival" = list("field_type" = "int", "min_num" = 0),
-		"longestdeathstreak" = list("field_type" = "int", "min_num" = 0),
-	), list(COMSIG_MOB_DIED))
+	if(type == /mob/living/simple_animal/parrot/Poly)
+		AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/poly", list(
+			"phrases" = list("field_type" = "list", "can_be_null" = TRUE, "entry_config" = list("field_type" = "string", "max_length" = 150, "can_be_null" = TRUE)),
+			"roundssurvived" = list("field_type" = "int", "min_num" = 0),
+			"longestsurvival" = list("field_type" = "int", "min_num" = 0),
+			"longestdeathstreak" = list("field_type" = "int", "min_num" = 0),
+		), list(COMSIG_MOB_DIED))
 
 	. = ..()
 
@@ -784,8 +785,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	speak_chance = 20
 	incorporeal_move = 1
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/ectoplasm = 1)
-
-	flags_2 = NO_CONTINUITY
 
 /mob/living/simple_animal/parrot/Poly/ghost/atom_init()
 	. = ..()

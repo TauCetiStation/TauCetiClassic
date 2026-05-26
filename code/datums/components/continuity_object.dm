@@ -17,12 +17,6 @@
 		qdel(src)
 		return
 
-	if(isatom(parent))
-		var/atom/A = parent
-		if(A.flags_2 & NO_CONTINUITY)
-			qdel(src)
-			return
-
 	saveproc = _saveproc
 	loadproc = _loadproc
 
@@ -293,6 +287,9 @@ fields = alist(...)
 	return field
 
 /datum/component/continuity_object/proc/sanitize_type(field, list/params)
+	if(istext(field)) //JSON saves paths as strings, sadly.
+		field = text2path(field)
+
 	if(("in_list" in params))
 		if(field in params["in_list"])
 			return field
