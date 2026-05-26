@@ -330,7 +330,7 @@
 		generate_subplants()
 
 /obj/structure/flora/tree/jungle/proc/generate_subplants()
-	var/list/subplants = list(
+	var/static/list/subplants = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi = 10,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita = 5,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel = 2,
