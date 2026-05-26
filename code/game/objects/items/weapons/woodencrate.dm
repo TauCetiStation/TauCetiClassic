@@ -83,7 +83,9 @@
 		if(I.item_state_world)
 			picture_icon.icon = I.icon
 			picture_icon.icon_state = I.item_state_world
-			picture_icon.transform = matrix()
+			var/matrix/M = matrix()
+			M.Scale(0.75)
+			picture_icon.transform = M
 		else
 			picture_icon.icon = I.icon
 			picture_icon.icon_state = I.icon_state
