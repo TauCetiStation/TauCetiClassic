@@ -59,6 +59,8 @@
 	var/has_head = FALSE
 	var/has_arm = FALSE
 	var/has_leg = FALSE
+	var/edible_nutriment = 0
+	var/edible_protein = 0
 
 	can_point = FALSE
 
