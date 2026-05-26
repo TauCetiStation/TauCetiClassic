@@ -297,7 +297,7 @@ fields = alist(...)
 		if(field in params["in_list"])
 			return field
 
-		stack_trace("Tried saving [field] for [parent]. Not an allowed string")
+		stack_trace("Tried saving [field] for [parent]. Not an allowed type")
 		return RUNTIME_SENTINEL
 
 	if(isnull(field))

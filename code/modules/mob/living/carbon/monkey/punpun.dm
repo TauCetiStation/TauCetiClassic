@@ -13,7 +13,7 @@
 	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/punpun", list(
 		"ancestor_name" = list("field_type" = "string", "max_length" = 150, "can_be_null" = TRUE),
 		"ancestor_chain" = list("field_type" = "int", "min_num" = 1),
-		"relic_mask" = list("field_type" = "type", "in_list" = subtypesof(/obj/item/clothing/mask), "can_be_null" = TRUE),
+		"relic_mask" = list("field_type" = "type", "in_list" = subtypesof(/obj/item/clothing/mask) + null, "can_be_null" = TRUE),
 	), list(COMSIG_MOB_DIED), CALLBACK(src, PROC_REF(Write_Death)))
 
 	name = pick(pet_monkey_names)
