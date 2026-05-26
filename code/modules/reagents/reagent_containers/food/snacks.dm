@@ -2589,12 +2589,12 @@
 		return
 	return ..()
 
-/obj/item/pizzabox/try_wrap_up(texture_name = "cardboard", details_name = null)
+/obj/item/pizzabox/try_wrap_up(wrap_type)
 	var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(loc))	//Aaannd wrap it up!
 	P.w_class = w_class
 	P.icon_state = "deliverypizza[length(boxes)]"
 
-	P.add_texture(texture_name, details_name)
+	P.add_texture(wrap_type)
 
 	forceMove(P)
 

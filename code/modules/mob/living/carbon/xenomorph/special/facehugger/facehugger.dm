@@ -321,6 +321,9 @@
 			new_embryo.baby = new_xeno
 			new_embryo.controlled_by_ai = FALSE
 			new_xeno.key = FH.key
+			var/datum/action/embryo_kick/kick_action = new(new_embryo)
+			new_embryo.kick_action_ref = WEAKREF(kick_action)
+			kick_action.Grant(new_xeno)
 			qdel(current_hugger)
 		target.unEquip(src)
 		target.add_status_flags(XENO_HOST)
