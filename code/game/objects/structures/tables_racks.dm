@@ -1070,15 +1070,15 @@
 	flipable = FALSE
 	canconnect = FALSE
 
-/obj/structure/park_table/atom_init(mapload)
+/obj/structure/table/park_table/atom_init(mapload)
 	. = ..()
 
 	AddComponent(/datum/component/clickplace)
 
-/obj/structure/park_table/airlock_crush_act()
+/obj/structure/table/park_table/airlock_crush_act()
 	deconstruct(TRUE)
 
-/obj/structure/park_table/deconstruct(disassembled)
+/obj/structure/table/park_table/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
 		return ..()
 
@@ -1086,7 +1086,7 @@
 
 	..()
 
-/obj/structure/park_table/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/table/park_table/attackby(obj/item/weapon/W, mob/user)
 	if(iswrenching(W))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		deconstruct(TRUE)
