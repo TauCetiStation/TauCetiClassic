@@ -30,8 +30,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	var/connected_account_number = 0
 	var/paid = TRUE
 
-	var/credits_per_kwh = 250
-	var/new_credits_per_kwh = 250
+	var/credits_per_kwh = 100
+	var/new_credits_per_kwh = 100
 
 	var/actual_load = 0
 
@@ -150,7 +150,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		return
 
 	//anchoring
-	if(iswelding(I) && !panel_open)
+	if(iswelding(I))
+		if(terminal)
+			to_chat(user, "<span class='notice'>Cut terminal first!</span>")
+			return
 		if(I.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
 			if(anchored)
 				anchored = FALSE
@@ -321,8 +324,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		icon_state = "[initial(icon_state)]_w"
 	else if(panel_open)
 		icon_state = "[initial(icon_state)][anchored ? "" : "_notanchored"]-o"
+	else if(!anchored)
+		icon_state = "[initial(icon_state)]_notanchored"
 	else
-		icon_state = "[initial(icon_state)][anchored ? "" : "_notanchored"]"
+		icon_state = "[initial(icon_state)][paid ? "" : "_fail"]"
 
 	if(!holoprice)
 		holoprice = image('icons/effects/32x32.dmi', "blank")
@@ -344,5 +349,5 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	cut_overlay(holoprice)
 	holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Small Fonts';text-align:center;-dm-text-outline: 1px black;" valign="top">[round(powerused KWH * credits_per_kwh)]$</div>"}
 	holoprice.icon = 'icons/obj/device.dmi'
-	holoprice.icon_state = "holo_overlay_[min(length(num2text(powerused KWH * credits_per_kwh)), 3)]"
+	holoprice.icon_state = "holo_overlay_[min(length(num2text(round(powerused KWH * credits_per_kwh))), 3)]"
 	add_overlay(holoprice)

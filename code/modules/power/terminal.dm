@@ -35,6 +35,11 @@
 	if(panel_open)
 		. = 1
 
+/obj/machinery/power/meter/can_terminal_dismantle()
+	. = FALSE
+	if(panel_open)
+		. = TRUE
+
 
 /obj/machinery/power/terminal/proc/dismantle(mob/living/user)
 	if(istype(loc, /turf/simulated))

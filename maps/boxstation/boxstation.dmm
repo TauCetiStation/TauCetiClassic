@@ -87007,7 +87007,7 @@
 "uyE" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Cargo Bay Maintenance";
-	req_access = list(31)
+	req_one_access = list(31, 10)
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
