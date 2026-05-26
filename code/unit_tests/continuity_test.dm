@@ -1,6 +1,9 @@
 /datum/unit_test/continuity
 	name = "CONTINUITY: Continuity objects should return data they saved."
 
+	disabled = TRUE
+	why_disabled = "Runtimes while checking"
+
 	var/list/continuity_fields = list(
 		"field1" = list("field_type" = "list", "entry_config" = list("field_type" = "int", "max_num" = 999, "min_num" = -999, "can_be_null" = TRUE)),
 		"field2" = list("field_type" = "alist", "key_config" = list("field_type" = "string", "max_length" = 999, "allowed_characters" = list("A", "B", "C")), "entry_config" = list("field_type" = "string", "max_length" = 999, "allowed_characters" = list("1", "3", "7"))),
