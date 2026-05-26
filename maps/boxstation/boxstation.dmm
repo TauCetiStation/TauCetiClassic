@@ -23827,6 +23827,7 @@
 /obj/effect/decal/turf_decal/wood{
 	icon_state = "spline_fancy"
 	},
+/obj/effect/spawner/parkflora,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "aQd" = (
@@ -28241,6 +28242,7 @@
 	dir = 4;
 	icon_state = "spline_fancy"
 	},
+/obj/effect/spawner/parkflora,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "aXH" = (
@@ -32633,6 +32635,7 @@
 /obj/structure/fence/wood{
 	dir = 1
 	},
+/obj/effect/spawner/parkflora,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "bfk" = (
@@ -57575,6 +57578,7 @@
 /area/station/maintenance/disposal)
 "ccQ" = (
 /obj/structure/flora/tree/jungle/small,
+/obj/effect/spawner/parkflora,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "ccR" = (
@@ -57623,6 +57627,7 @@
 /area/station/civilian/garden)
 "cdb" = (
 /obj/structure/flora/tree/jungle,
+/obj/effect/spawner/parkflora,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "cdc" = (
@@ -57631,6 +57636,7 @@
 /area/station/civilian/garden)
 "cdd" = (
 /obj/structure/flora/junglebush/large,
+/obj/effect/spawner/parkflora,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "cde" = (
@@ -64006,6 +64012,7 @@
 	dir = 4;
 	icon_state = "spline_fancy_corner"
 	},
+/obj/effect/spawner/parkflora,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "cui" = (
@@ -79075,6 +79082,7 @@
 	dir = 8;
 	icon_state = "spline_fancy"
 	},
+/obj/effect/spawner/parkflora,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "lVb" = (
@@ -82002,10 +82010,10 @@
 	},
 /area/station/hallway/secondary/entry)
 "phR" = (
-/obj/structure/park_table,
 /obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle{
 	pixel_y = 8
 	},
+/obj/structure/table/park_table,
 /turf/simulated/floor/garden{
 	icon_state = "asteroid6"
 	},
@@ -85843,7 +85851,7 @@
 /turf/environment/space,
 /area/space)
 "sXX" = (
-/obj/structure/park_table,
+/obj/structure/table/park_table,
 /turf/simulated/floor/garden{
 	icon_state = "asteroid2"
 	},
@@ -86848,6 +86856,7 @@
 	icon_state = "spline_fancy"
 	},
 /obj/structure/flora/junglebush/large,
+/obj/effect/spawner/parkflora,
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "uul" = (

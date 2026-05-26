@@ -244,6 +244,9 @@
 /obj/structure/table/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
 		return ..()
+	if(!parts)
+		return ..()
+
 	var/obj/item/weapon/table_parts/t_parts = new parts(loc)
 	if(disassembled)
 		transfer_fingerprints_to(t_parts)
@@ -920,7 +923,7 @@
 	var/coal_max = 25
 	var/lit = FALSE
 
-	var/last_burn_time = 0
+	COOLDOWN_DECLARE(last_burn_time)
 	var/coal_consumption_time = 1 MINUTE
 
 /obj/structure/mangal/atom_init(mapload)
@@ -993,7 +996,7 @@
 
 /obj/structure/mangal/get_current_temperature()
 	if(lit)
-		return 1000
+		return 500
 	return 0
 
 /obj/structure/mangal/process()
@@ -1001,9 +1004,9 @@
 		extinguish()
 		return
 
-	if(world.time - last_burn_time > coal_consumption_time)
+	if(COOLDOWN_FINISHED(src, last_burn_time))
+		COOLDOWN_START(src, last_burn_time, coal_consumption_time)
 		coal_amount--
-		last_burn_time = world.time
 		if(coal_amount <= 0)
 			coal_amount = 0
 			extinguish()
@@ -1013,19 +1016,16 @@
 
 /obj/structure/mangal/proc/Burn()
 	var/turf/current_location = get_turf(src)
-	current_location.hotspot_expose(1000, 500)
+	current_location.hotspot_expose(500, 250)
 	for(var/A in current_location)
 		if(A == src)
 			continue
 		if(isobj(A))
 			var/obj/O = A
-			O.fire_act(1000, 500)
-		else if(isliving(A))
-			var/mob/living/L = A
-			if(prob(20))
-				L.emote("scream")
-			L.adjust_fire_stacks(3)
-			L.IgniteMob()
+			O.fire_act(500, 250)
+		else if(ismob(A))
+			var/mob/M = A
+			M.fire_act(500, 250)
 
 /obj/structure/mangal/proc/StartBurning()
 	if(lit || !CheckOxygen())
@@ -1052,7 +1052,7 @@
 	return 0
 
 
-/obj/structure/park_table
+/obj/structure/table/park_table
 	name = "park table"
 	cases = list("парковый столик", "паркового столика", "парковому столику", "парковый столик", "парковым столиком", "парковом столике")
 	desc = "Простой дощатый стол."
@@ -1069,6 +1069,10 @@
 	resistance_flags = CAN_BE_HIT
 
 	hit_particle_type = /particles/tool/digging/wood
+
+	parts = null
+	flipable = FALSE
+	canconnect = FALSE
 
 /obj/structure/park_table/atom_init(mapload)
 	. = ..()
