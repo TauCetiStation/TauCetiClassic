@@ -12,9 +12,9 @@
 	hit_particle_type = /particles/tool/digging/wood
 
 	var/mutable_appearance/insides
-	var/icon/insides_mask
+	var/mutable_appearance/picture
+	var/mutable_appearance/picture_icon
 	var/list/insides_boundaries = list(list(-7, 0), list(7, 6))
-	var/icon/picture
 
 	var/open = TRUE
 
@@ -47,11 +47,14 @@
 
 /obj/item/weapon/woodencrate/proc/generate_icons()
 	insides = mutable_appearance('icons/effects/32x32.dmi', "blank")
-	insides_mask = icon(icon, "woodencrate_mask")
 	insides.add_filter("insides_mask", 1, alpha_mask_filter(icon = icon(icon, "woodencrate_mask"), y = 14))
 	insides.appearance_flags = KEEP_TOGETHER | RESET_COLOR
 
-	picture = icon(icon, "woodencrate_paper")
+	picture = mutable_appearance(icon, "woodencrate_paper")
+	picture.appearance_flags = KEEP_TOGETHER | RESET_COLOR
+	picture.add_overlay(picture_icon)
+
+	picture_icon = mutable_appearance('icons/effects/32x32.dmi', "blank")
 
 	update_icon()
 
@@ -74,18 +77,24 @@
 		if(!contents.len)
 			return
 
-		picture = icon(icon, "woodencrate_paper")
+		picture.cut_overlays()
 
 		var/obj/item/I = contents[1]
-		var/icon/iconthing
 		if(I.item_state_world)
-			iconthing = icon(I.icon, I.item_state_world)
-			picture.Blend(iconthing, ICON_OVERLAY, 1, 3)
+			picture_icon.icon = I.icon
+			picture_icon.icon_state = I.item_state_world
+			picture_icon.transform = matrix()
 		else
-			iconthing = icon(I.icon, I.icon_state)
-			iconthing.Scale(12, 12)
-			picture.Blend(iconthing, ICON_OVERLAY, 11, 13)
+			picture_icon.icon = I.icon
+			picture_icon.icon_state = I.icon_state
+			var/matrix/M = matrix()
+			M.Scale(0.375)
+			picture_icon.transform = M
 
+		picture_icon.pixel_x = 0
+		picture_icon.pixel_y = 3
+
+		picture.add_overlay(picture_icon)
 		add_overlay(picture)
 
 /obj/item/weapon/woodencrate/proc/can_be_inserted(obj/item/W)
@@ -207,4 +216,10 @@
 	icon_state = "woodencrate_closed"
 	open = FALSE
 	starttype = /obj/item/weapon/reagent_containers/food/snacks/grown/banana
+	startamount = 15
+
+/obj/item/weapon/woodencrate/mandarin
+	icon_state = "woodencrate_closed"
+	open = FALSE
+	starttype = /obj/item/weapon/reagent_containers/food/snacks/grown/mandarin
 	startamount = 15
