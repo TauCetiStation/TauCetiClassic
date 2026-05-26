@@ -91,6 +91,7 @@
 	cases = list("вишня", "вишни", "вишне", "вишню", "вишней", "вишне")
 	desc = "Лучшее украшение для торта!" // Адаптация вместо "Хороша для топпингов"
 	icon_state = "cherry"
+	potency = 1
 	filling_color = "#ff0000"
 	gender = PLURAL
 
@@ -188,6 +189,7 @@
 	cases = list("виноград", "винограда", "винограду", "виноград", "виноградом", "винограде")
 	desc = "Сладкий и крайне питательный. Из него традиционно делают красные вина Шардоне, Совиньон-блан и другие."
 	icon_state = "grapes"
+	potency = 1
 	filling_color = "#a332ad"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/grapes/atom_init()
@@ -247,6 +249,7 @@
 	cases = list("гроздь ягод", "грозди ягод", "грозди ягод", "гроздь ягод", "гроздью ягод", "грозди ягод")
 	desc = "Гроздь кисленьких ягод."
 	icon_state = "berrypile"
+	potency = 1
 	filling_color = "#c2c9ff"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/berries/atom_init()
@@ -260,6 +263,7 @@
 	cases = list("пластеллий", "пластеллия", "пластеллию", "пластеллий", "пластеллием", "пластеллие")
 	desc = "Хм, кажется, он нуждается в переработке."
 	icon_state = "plastellium"
+	potency = 1
 	filling_color = "#c4c4c4"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/plastellium/atom_init()
@@ -274,6 +278,7 @@
 	cases = list("лист Длани С'рендарра", "листа Длани С'рендарра", "листу Длани С'рендарра", "лист Длани С'рендарра", "листом Длани С'рендарра", "листе Длани С'рендарра")
 	desc = "Образец листа кустарника из низменных зарослей, в котором часто прячутся хищники и их добыча, чтобы заживить раны и скрыть запах. Это позволяет растению распространяться далеко по его родному Адомаю. Сильно пахнет воском."
 	icon_state = "shand"
+	potency = 1
 	filling_color = "#70c470"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/shand/atom_init()
@@ -287,6 +292,7 @@
 	cases = list("ветвь Слезы Мессы", "ветви Слезы Мессы", "ветви Слезы Мессы", "ветвь Слезы Мессы", "ветвью Слезы Мессы", "ветви Слезы Мессы")
 	desc = "Растение, произрастающее в горном климате, с мягкими, холодными синими цветками. Известное тем, что в его цветках содержится большое количество химических веществ, полезных для лечения ожогов. Вредно для людей, страдающих аллергией на пыльцу."
 	icon_state = "mtear"
+	potency = 1
 	filling_color = "#70c470"
 	slot_flags = SLOT_FLAGS_HEAD
 
@@ -323,6 +329,7 @@
 	desc = "Гроздь питательных ягод. Слабо светится в темноте."
 	var/light_on = 1
 	var/brightness_on = 2 //luminosity when on
+	potency = 1
 	filling_color = "#d3ff9e"
 	icon_state = "glowberrypile"
 
@@ -676,6 +683,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "banana"
 	item_state = "banana"
+	potency = 10
 	filling_color = "#fcf695"
 	can_be_holstered = TRUE
 	trash = /obj/item/weapon/bananapeel
@@ -695,6 +703,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "h-banana"
 	item_state = "h-banana"
+	potency = 10
 	filling_color = "#fcf695"
 	can_be_holstered = TRUE
 	trash = /obj/item/weapon/bananapeel/honk
@@ -712,6 +721,7 @@
 	cases = list("перец чили", "перца чили", "перцу чили", "перец чили", "перцем чили", "перце чили")
 	desc = "Безумно острый! Лучше запастись молоком!"
 	icon_state = "chilipepper"
+	potency = 10
 	filling_color = "#ff0000"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili/atom_init()
@@ -733,6 +743,7 @@
 	cases = list("баклажан", "баклажана", "баклажану", "баклажан", "баклажаном", "баклажане")
 	desc = "Приложи к фотографии лучшего друга."
 	icon_state = "eggplant"
+	potency = 10
 	filling_color = "#550f5c"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant/atom_init()
@@ -746,6 +757,7 @@
 	cases = list("соевые бобы", "соевых бобов", "соевым бобам", "соевые бобы", "соевыми бобами", "соевых бобах")
 	desc = "Довольно пресные, но сколько открывают возможностей..."
 	gender = PLURAL
+	potency = 10
 	filling_color = "#e6e8b7"
 	icon_state = "soybeans"
 
@@ -872,6 +884,7 @@
 	desc = "Курочка будет благодарна."
 	gender = PLURAL
 	icon_state = "wheat"
+	potency = 10
 	filling_color = "#f7e186"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/wheat/atom_init()
@@ -886,6 +899,7 @@
 	desc = "Добро пожаловать на рисовые поля!"
 	gender = PLURAL
 	icon_state = "ricestalk"
+	potency = 10
 	filling_color = "#fff8db"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk/atom_init()
@@ -899,6 +913,7 @@
 	cases = list("стручок кудзу", "стручка кудзу", "стручку кудзу", "стручок кудзу", "стручком кудзу", "стручке кудзу")
 	desc = "<I>Пуэрария Вирусная</I>: Инвазивный вид лозы с лианами, которые быстро ползут и обвивают все, с чем соприкасаются."
 	icon_state = "kudzupod"
+	potency = 1
 	filling_color = "#59691b"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/kudzupod/atom_init()
@@ -1044,6 +1059,7 @@
 	cases = list("гриб толстошлемник", "гриба толстошлемника", "грибу толстошлемнику", "гриб толстошлемник", "грибом толстошлемником", "грибе толстошлемнике")
 	desc = "<I>Плюмус Хельмус</I>: Пухленькая, мягкая и такая привлекательная~"
 	icon_state = "plumphelmet"
+	potency = 1
 	filling_color = "#f714be"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet/atom_init()
@@ -1085,6 +1101,7 @@
 	cases = list("гроздь лисичек", "грозди лисичек", "грозди лисичек", "гроздь лисичек", "гроздью лисичек", "грозди лисичек")
 	desc = "<I>Лисичка обыкновенная</I>: Эти веселые желтые грибочки выглядят очень вкусно!"
 	icon_state = "chanterelle"
+	potency = 10
 	filling_color = "#ffe991"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/chanterelle/atom_init()
@@ -1344,6 +1361,7 @@
 	cases = list("юпитерская чашечка", "юпитерской чашечки", "юпитерской чашечке", "юпитерская чашечка", "юпитерской чашечкой", "юпитерской чашечке")
 	desc = "Странный красный гриб, его поверхность влажная и скользкая. Интересно, сколько маленьких червячков встретили свою судьбу внутри?"
 	icon_state = "jupitercup"
+	potency = 10
 	filling_color = "#97ee63"
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/jupitercup/atom_init()
@@ -1357,6 +1375,7 @@
 	cases = list("чайная астра", "чайной астры", "чайной астре", "чайную астру", "чайной астрой", "чайной астре")
 	desc = "Как насчет травяного чая по уникальному бабушкиному рецепту?"
 	icon_state = "tea_astra_leaves"
+	potency = 10
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/tea/astra/atom_init()
 	. = ..()

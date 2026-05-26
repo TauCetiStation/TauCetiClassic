@@ -590,22 +590,27 @@
 	flags = ABSTRACT
 
 	var/obj/structure/table/table_attached_to
-	var/obj/item/held_Item
+	var/obj/item/held_item
 
 /obj/lot_holder/atom_init(mapload, obj/item/Item, obj/structure/table/Table)
 	. = ..()
 
 	table_attached_to = Table
 	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), PROC_REF(destroy_lot_holder))
-	RegisterSignal(held_Item, list(COMSIG_PARENT_QDELETING), PROC_REF(destroy_lot_holder))
+	RegisterSignal(held_item, list(COMSIG_PARENT_QDELETING), PROC_REF(destroy_lot_holder))
 
-	held_Item = Item
+	held_item = Item
 	Item.forceMove(src)
 
 	add_overlay(Item)
 	name = Item.name
 	var/list/pricetag = Item.price_tag
 	if(pricetag)
+		if(istype(Item, /obj/item/weapon/woodencrate))
+			var/obj/item/weapon/woodencrate/crate = Item
+			if(crate.open && crate.contents.len)
+				var/obj/item/selling_item = crate.contents[1]
+				name = selling_item.name
 		name = "[name] ([pricetag["price"]]$)"
 
 	var/old_invisibility = invisibility
@@ -613,11 +618,11 @@
 	VARSET_IN(src, invisibility, old_invisibility, PUTDOWN_ANIMATION_DURATION)
 
 /obj/lot_holder/examine(mob/user)
-	held_Item.examine(user)
+	held_item.examine(user)
 
 /obj/lot_holder/Destroy()
-	held_Item.forceMove(table_attached_to.loc)
-	held_Item = null
+	held_item.forceMove(table_attached_to.loc)
+	held_item = null
 
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(table_attached_to.loc)
@@ -632,18 +637,18 @@
 	qdel(src)
 
 /obj/lot_holder/attack_hand(mob/user)
-	if(ishuman(user) && istype(held_Item, /obj/item/smallDelivery))
+	if(ishuman(user) && istype(held_item, /obj/item/smallDelivery))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/weapon/card/id/ID = H.get_idcard()
 		if(ID && (global.access_cargo in ID.GetAccess()))
-			var/obj/item/I = held_Item
+			var/obj/item/I = held_item
 			qdel(src)
 			user.put_in_hands(I)
 			return
 	return ..()
 
 /obj/lot_holder/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(held_Item, /obj/item/smallDelivery))
+	if(istype(held_item, /obj/item/smallDelivery))
 		return
 
 	if(W.price_tag)
@@ -677,24 +682,47 @@
 		table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Оплачивающий аккаунт заблокирован.</span>")
 		return
 
-	var/datum/money_account/Seller = get_account(held_Item.price_tag["account"])
-	var/cost = held_Item.price_tag["price"]
+	var/datum/money_account/Seller = get_account(held_item.price_tag["account"])
+	var/cost = held_item.price_tag["price"]
 
 	if(cost > 0 && Seller && Buyer != Seller)
+		var/obj/item/selling_item = held_item
+		if(istype(held_item, /obj/item/weapon/woodencrate))
+			var/obj/item/weapon/woodencrate/crate = held_item
+			if(crate.open)
+				if(!crate.contents.len)
+					table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Ящик пуст.</span>")
+					return
+
+				selling_item = crate.contents[rand(1, crate.contents.len)]
+
 		if(Seller.suspended)
 			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Подключённый аккаунт заблокирован.</span>")
 			return
 
 		if(cost <= Buyer.money)
-			charge_to_account(Buyer.account_number, Seller.owner_name, "Покупка [held_Item.name]", "Прилавок", -cost)
-			charge_to_account(Seller.account_number, Buyer.owner_name, "Прибыль за продажу [held_Item.name]", "Прилавок", cost)
+			charge_to_account(Buyer.account_number, Seller.owner_name, "Покупка [selling_item.name]", "Прилавок", -cost)
+			charge_to_account(Seller.account_number, Buyer.owner_name, "Прибыль за продажу [selling_item.name]", "Прилавок", cost)
 
 		else
 			table_attached_to.visible_message("[bicon(table_attached_to)]<span class='warning'>Недостаточно средств!</span>")
 			return
 
-	held_Item.remove_price_tag()
+		if(held_item != selling_item)
+			selling_item.forceMove(get_turf(src))
+			update_icon()
+			return
+
+	held_item.remove_price_tag()
 	qdel(src)
+
+/obj/lot_holder/update_icon()
+	cut_overlay(held_item)
+	if(istype(held_item, /obj/item/weapon/woodencrate))
+		var/obj/item/weapon/woodencrate/crate = held_item
+		crate.update_icon()
+
+	add_overlay(held_item)
 
 /obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
 	var/datum/money_account/Buyer = attempt_account_access_with_user_input(Card.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, user)
