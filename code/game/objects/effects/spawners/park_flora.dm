@@ -18,7 +18,8 @@
 /obj/effect/spawner/parkflora/atom_init()
 	..()
 
-	spawn_flora()
+	if(prob(50))
+		spawn_flora()
 
 	return INITIALIZE_HINT_QDEL
 
