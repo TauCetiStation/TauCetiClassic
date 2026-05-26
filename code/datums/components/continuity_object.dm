@@ -220,7 +220,7 @@ fields = alist(...)
 		return RUNTIME_SENTINEL
 
 	if(!("max_length" in params))
-		stack_trace("Tried saving [field] for [parent]. No max_length param")
+		stack_trace("Tried saving [field] for [parent]. No max_length param specified, but is required.")
 		return RUNTIME_SENTINEL
 
 	if((length(field) > params["max_length"]))
