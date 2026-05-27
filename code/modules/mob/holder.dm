@@ -101,40 +101,37 @@
 	icon_state = "cat"
 	flags = HEAR_PASS_SAY
 
-/obj/item/weapon/holder/mouse
-	name = "mouse"
-	desc = "It's a small rodent."
-	icon_state = "mouse_gray"
+/obj/item/weapon/holder/edible_animal
 	w_class = SIZE_MINUSCULE
 	flags = HEAR_PASS_SAY
 	var/bitesize = 3
 
-/obj/item/weapon/holder/mouse/atom_init()
+/obj/item/weapon/holder/edible_animal/atom_init()
 	. = ..()
 	create_reagents(6)
 
-/obj/item/weapon/holder/mouse/pickup(mob/living/user)
+/obj/item/weapon/holder/edible_animal/pickup(mob/living/user)
 	. = ..()
-	sync_reagents_from_mouse()
+	sync_reagents_from_animal()
 
-/obj/item/weapon/holder/mouse/dropped(mob/living/carbon/user)
-	sync_reagents_to_mouse()
+/obj/item/weapon/holder/edible_animal/dropped(mob/living/carbon/user)
+	sync_reagents_to_animal()
 	return ..()
 
-/obj/item/weapon/holder/mouse/process()
+/obj/item/weapon/holder/edible_animal/process()
 	if(istype(loc,/turf) || !(contents.len))
-		sync_reagents_to_mouse()
+		sync_reagents_to_animal()
 	return ..()
 
-/obj/item/weapon/holder/mouse/attack_self(mob/user)
+/obj/item/weapon/holder/edible_animal/attack_self(mob/user)
 	if(isliving(user))
 		return attack(user, user)
 	return ..()
 
-/obj/item/weapon/holder/mouse/proc/get_held_edible_animal()
-	return locate(/mob/living/simple_animal/mouse) in contents
+/obj/item/weapon/holder/edible_animal/proc/get_held_edible_animal()
+	return locate(/mob/living/simple_animal) in contents
 
-/obj/item/weapon/holder/mouse/proc/sync_reagents_from_mouse()
+/obj/item/weapon/holder/edible_animal/proc/sync_reagents_from_animal()
 	var/mob/living/simple_animal/M = get_held_edible_animal()
 	if(!M || !reagents)
 		return
@@ -144,14 +141,14 @@
 	if(M.edible_protein > 0)
 		reagents.add_reagent("protein", M.edible_protein)
 
-/obj/item/weapon/holder/mouse/proc/sync_reagents_to_mouse()
+/obj/item/weapon/holder/edible_animal/proc/sync_reagents_to_animal()
 	var/mob/living/simple_animal/M = get_held_edible_animal()
 	if(!M || !reagents)
 		return
 	M.edible_nutriment = reagents.get_reagent_amount("nutriment")
 	M.edible_protein = reagents.get_reagent_amount("protein")
 
-/obj/item/weapon/holder/mouse/proc/reagent_list_text()
+/obj/item/weapon/holder/edible_animal/proc/reagent_list_text()
 	if(reagents?.reagent_list?.len)
 		var/data
 		for(var/datum/reagent/R in reagents.reagent_list)
@@ -159,12 +156,12 @@
 		return data
 	return "No reagents"
 
-/obj/item/weapon/holder/mouse/attack(mob/living/M, mob/user, def_zone, silent = FALSE)
+/obj/item/weapon/holder/edible_animal/attack(mob/living/M, mob/user, def_zone, silent = FALSE)
 	if(!istype(M))
 		return FALSE
 
 	var/mob/living/carbon/human/H = M
-	if(!istype(H) || !(H.species.name in list(TAJARAN, UNATHI, VOX)))
+	if(!istype(H) || !HAS_TRAIT(H, TRAIT_RAW_MEAT_EATER))
 		if(M == user)
 			to_chat(user, "<span class='warning'>Вам противно есть \the [src].</span>")
 		else
@@ -207,7 +204,7 @@
 
 	playsound(H, 'sound/items/eatfood.ogg', VOL_EFFECTS_MASTER, rand(20, 50))
 	reagents.trans_to_ingest(H, min(bitesize, reagents.total_volume))
-	sync_reagents_to_mouse()
+	sync_reagents_to_animal()
 	SEND_SIGNAL(H, COMSIG_HUMAN_ON_CONSUME, src)
 
 	if(!reagents.total_volume)
@@ -221,6 +218,15 @@
 		user.drop_from_inventory(src)
 		qdel(src)
 	return TRUE
+
+/obj/item/weapon/holder/mouse
+	parent_type = /obj/item/weapon/holder/edible_animal
+	name = "mouse"
+	desc = "It's a small rodent."
+	icon_state = "mouse_gray"
+
+/obj/item/weapon/holder/mouse/get_held_edible_animal()
+	return locate(/mob/living/simple_animal/mouse) in contents
 
 /obj/item/weapon/holder/mouse/gray
 	icon_state = "mouse_gray"
@@ -239,7 +245,7 @@
 	flags = HEAR_PASS_SAY
 
 /obj/item/weapon/holder/lizard
-	parent_type = /obj/item/weapon/holder/mouse
+	parent_type = /obj/item/weapon/holder/edible_animal
 	name = "lizard"
 	desc = "A cute tiny lizard."
 	icon_state = "lizard"
