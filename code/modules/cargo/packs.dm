@@ -729,6 +729,20 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Party equipment"
 	group = "Hospitality"
 
+/datum/supply_pack/shashlik
+	name = "BBQ equipment"
+	contains = list(/obj/item/weapon/mangal_parts,
+					/obj/item/weapon/storage/bag/plasticbag/coal,
+					/obj/item/weapon/storage/bag/plasticbag/coal,
+					/obj/item/clothing/suit/chef_classic,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer)
+	additional_costs = 500
+	crate_type = /obj/structure/closet/crate
+	crate_name = "BBQ equipment"
+	group = "Hospitality"
+
 /datum/supply_pack/ramens
 	name = "Ramens supply crate"
 	contains = list(/obj/random/foods/ramens,
