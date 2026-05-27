@@ -192,7 +192,7 @@
 		else if(fullness > NUTRITION_LEVEL_HUNGRY)
 			to_chat(H, "<span class='notice'>Изголодавшись, вы начинаете есть [CASE(src, ACCUSATIVE_CASE)].</span>")
 		else
-			to_chat(H, "<span class='rose'>Вы жадно пожираете \the [src]!</span>")
+			to_chat(H, "<span class='rose'>Вы с жадностью начинаете есть [CASE(src, ACCUSATIVE_CASE)].</span>")
 	else
 		if(fullness > (NUTRITION_LEVEL_FAT * (1 + H.overeatduration / 2000) + 100))
 			user.visible_message("<span class='rose'>[user] не может заставить [H] проглотить ещё немного [src].</span>")
