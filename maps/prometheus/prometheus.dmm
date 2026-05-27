@@ -2760,6 +2760,15 @@
 	icon_state = "dark"
 	},
 /area/station/engineering/atmos)
+"aeA" = (
+/obj/machinery/suit_storage_unit/medical/paramedic{
+	filled = 1;
+	pixel_y = 22
+	},
+/turf/simulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/station/medical/storage)
 "aeB" = (
 /obj/machinery/disposal,
 /obj/machinery/alarm{
@@ -123518,7 +123527,7 @@ tXj
 dIw
 xXq
 eSb
-faa
+aeA
 cKl
 sJf
 fvU
