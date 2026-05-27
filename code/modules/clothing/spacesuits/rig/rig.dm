@@ -411,10 +411,10 @@
 
 /obj/item/clothing/suit/space/rig/dropped(mob/user)
 	..()
-	var/old_wearer = wearer
+	var/mob/living/carbon/human/old_wearer = wearer
 	wearer = null
 
-	if(helmet && old_wearer)
+	if(helmet && old_wearer?.head == helmet)
 		move_helmet(old_wearer)
 
 	if(boots)
