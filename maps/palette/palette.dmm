@@ -863,8 +863,7 @@
 /area/space)
 "ck" = (
 /obj/machinery/suit_storage_unit/globose/mining{
-	filled = 1;
-	pixel_y = -
+	filled = 1
 	},
 /turf/simulated/floor/airless{
 	icon_state = "brownfull"
