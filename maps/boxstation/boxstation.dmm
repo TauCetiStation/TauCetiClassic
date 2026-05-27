@@ -72356,13 +72356,6 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
-"faz" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/light_switch{
-	pixel_x = -22
-	},
-/turf/simulated/floor,
-/area/station/cargo/office)
 "faj" = (
 /obj/effect/decal/turf_decal/white{
 	icon_state = "siding_wideplating_line";
@@ -72376,6 +72369,13 @@
 	icon_state = "freezerfloor11"
 	},
 /area/station/civilian/garden)
+"faz" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/light_switch{
+	pixel_x = -22
+	},
+/turf/simulated/floor,
+/area/station/cargo/office)
 "fbb" = (
 /obj/machinery/light/smart{
 	dir = 1
