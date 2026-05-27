@@ -1022,10 +1022,10 @@
 			continue
 		if(isobj(A))
 			var/obj/O = A
-			O.fire_act(500, 250)
+			O.fire_act(exposed_temperature = 1000, exposed_volume = 250)
 		else if(ismob(A))
 			var/mob/M = A
-			M.fire_act(500, 250)
+			M.fire_act(exposed_temperature = 1000, exposed_volume = 250)
 
 /obj/structure/mangal/proc/StartBurning()
 	if(lit || !CheckOxygen())
