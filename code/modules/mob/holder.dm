@@ -168,7 +168,7 @@
 		if(M == user)
 			to_chat(user, "<span class='warning'>Вам противно есть [CASE(src, GENITIVE_CASE)].</span>")
 		else
-			to_chat(user, "<span class='warning'>[M] не выглядит заинтересованным в поедании \the [src].</span>")
+			to_chat(user, "<span class='warning'>[M] не выглядит заинтересованным в поедании [CASE(src, GENITIVE_CASE)].</span>")
 		return FALSE
 
 	if(!reagents || !reagents.total_volume)
