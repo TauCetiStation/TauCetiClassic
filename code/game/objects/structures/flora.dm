@@ -318,11 +318,11 @@
 /obj/structure/flora/tree/jungle/get_seethrough_map()
 	return SEE_THROUGH_MAP_THREE_X_THREE
 
-/obj/structure/flora/tree/jungle/atom_init()
+/obj/structure/flora/tree/jungle/atom_init(mapload)
 	. = ..()
 	icon_state = pick(icon_states(icon))
 
-	new /obj/effect/abstract/particle_holder(src, leaves_particle_type, PARTICLE_FADEOUT)
+	add_shared_particles(leaves_particle_type, particle_flags = PARTICLE_FADEOUT, pool_size = 5)
 
 	RegisterSignal(src, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(fall_leaves))
 
