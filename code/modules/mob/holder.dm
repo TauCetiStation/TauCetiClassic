@@ -195,7 +195,7 @@
 			to_chat(H, "<span class='rose'>Вы с жадностью начинаете есть [CASE(src, ACCUSATIVE_CASE)].</span>")
 	else
 		if(fullness > (NUTRITION_LEVEL_FAT * (1 + H.overeatduration / 2000) + 100))
-			user.visible_message("<span class='rose'>[user] не может заставить [H] проглотить ещё немного [src].</span>")
+			user.visible_message("<span class='rose'>[user] пытается скормить [H] ещё немного [CASE(src, GENITIVE_CASE)], но внутрь больше не лезет.</span>")
 			return FALSE
 		H.visible_message("<span class='rose'>[user] пытается скормить [H] [CASE(src, ACCUSATIVE_CASE)].</span>", \
 			"<span class='warning'><B>[user]</B> пытается скормить вам <B>[CASE(src, ACCUSATIVE_CASE)]</B>.</span>")
