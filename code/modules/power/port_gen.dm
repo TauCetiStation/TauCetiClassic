@@ -306,7 +306,7 @@
 	if(env.get_thermal_energy_change(T0C + heat) <=  0)
 		return
 
-	var/try_remove_heat = min(heat, rand(0, 4))
+	var/try_remove_heat = round(min(heat, rand(0, 2 * seconds_per_tick)))
 	if(try_remove_heat <= 0)
 		return
 
