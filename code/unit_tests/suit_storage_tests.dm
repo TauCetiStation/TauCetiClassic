@@ -23,6 +23,7 @@
 	var/error_list = list()
 
 	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
+		var/new_path = typepath::type
 		var/obj/machinery/suit_storage_unit/test_unit/ssu = new typepath::type
 		ssu.Destroy()
 		if(ssu)
@@ -87,5 +88,3 @@
 			fail("SSU contents somethink like: [target], but must didn`t")
 
 	pass("SSU successfully use items in his contents")
-
-
