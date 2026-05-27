@@ -67,7 +67,7 @@
 	var/sheet_path = /obj/item/stack/sheet/mineral/phoron
 	var/board_path = /obj/item/weapon/circuitboard/pacman
 	var/sheet_left = 0 // How much is left of the sheet
-	var/time_per_sheet = 40
+	var/seconds_per_sheet = 80
 	var/heat = 0
 	var/capacity_scale_with_upgrades = TRUE
 
@@ -132,7 +132,7 @@
 			return FALSE
 		if(env.get_gas(consumed_gas) < consumed_moles_per_sheet)
 			return FALSE
-	if(sheets >= 1 / (time_per_sheet / power_output) - sheet_left)
+	if(sheets >= 1 / (seconds_per_sheet / power_output) - sheet_left)
 		return TRUE
 	return FALSE
 
@@ -147,7 +147,7 @@
 			sheets -= amount
 
 /obj/machinery/power/port_gen/pacman/UseFuel(seconds_per_tick)
-	var/needed_sheets = 1 / (time_per_sheet * consumption / power_output)
+	var/needed_sheets = seconds_per_tick / (seconds_per_sheet * consumption / power_output)
 	var/temp = min(needed_sheets, sheet_left)
 	needed_sheets -= temp
 	sheet_left -= temp
@@ -195,14 +195,17 @@
 	// The fact that all heat margins have the safety_heat_margin - 10 means that even at max no one factor can cause a kaboom.
 	var/heat_bound = round(PORT_GEN_HEAT_OVERHEAT_EXPLOSION - safety_heat_margin + power_output_heat_margin + malfunctions_heat_margin + surplus_load_heat_margin)
 
-	heat = max(0, heat + rand(-7 + heat_increase_bias, 7 + heat_increase_bias))
+	var/minimal_heat_increase = (-3.5 + heat_increase_bias * 0.5) * seconds_per_tick
+	var/maximal_heat_increase = (3.5 + heat_increase_bias * 0.5) * seconds_per_tick
+
+	heat = round(max(0, heat + rand(minimal_heat_increase, maximal_heat_increase)))
 	if(heat >= heat_bound)
 		heat = heat_bound
 		if(SPT_PROB(malfunction_prob_per_second, seconds_per_tick))
 			add_malfunction()
 
 	if(heat > PORT_GEN_HEAT_OVERHEAT_EXPLOSION)
-		kaboom_prob_per_second += 1
+		kaboom_prob_per_second += seconds_per_tick
 	else
 		kaboom_prob_per_second = 0
 
@@ -432,7 +435,7 @@
 	sheet_name = "uranium"
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 	power_gen = 15000
-	time_per_sheet = 65
+	seconds_per_sheet = 130
 	board_path = /obj/item/weapon/circuitboard/pacman/super
 	emitted_gas = null
 
@@ -446,7 +449,7 @@
 	sheet_name = "tritium"
 	sheet_path = /obj/item/stack/sheet/mineral/tritium
 	power_gen = 40000
-	time_per_sheet = 80
+	seconds_per_sheet = 160
 	board_path = /obj/item/weapon/circuitboard/pacman/mrs
 	emitted_gas = "hydrogen"
 
@@ -462,7 +465,7 @@
 	sheet_path = /obj/item/weapon/spacecash
 	power_gen = 10000
 	max_sheets = 10000
-	time_per_sheet = 5
+	seconds_per_sheet = 10
 	board_path = /obj/item/weapon/circuitboard/pacman/money
 	capacity_scale_with_upgrades = FALSE
 	emitted_gas = "carbon_dioxide"
