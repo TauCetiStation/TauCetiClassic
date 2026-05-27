@@ -243,17 +243,10 @@
 	return FALSE
 
 /obj/item/clothing/mask/facehugger/proc/unequip_head(obj/item/clothing/I, mob/living/carbon/C)
-
-
 	if(ishardhelmet(I) && ishuman(C))
-		var/mob/living/carbon/human/H = C
 		var/obj/item/clothing/head/helmet/space/rig/helmet = I
 		var/obj/item/clothing/suit/space/rig/rig = helmet.rig_connect
-		helmet.canremove = 1
-		var/dropped_helmet = helmet
-		H.drop_from_inventory(helmet)
-		rig.helmet = dropped_helmet
-		helmet.loc = rig
+		rig.toggle_helmet()
 	else
 		C.unEquip(I)
 

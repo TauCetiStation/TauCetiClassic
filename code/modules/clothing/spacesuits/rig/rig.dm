@@ -51,13 +51,6 @@
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
 
-/obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
-	if(rig_connect)
-		rig_connect.helmet = null
-		rig_connect = null
-		canremove = 1
-	return ..()
-
 /obj/item/clothing/suit/space/rig
 	name = "hardsuit"
 	desc = "A special space suit for environments that might pose hazards beyond just the vacuum of space. Provides more protection than a standard space suit."
@@ -448,28 +441,22 @@
 		to_chat(usr, "There is no helmet installed.")
 		return
 
-	var/mob/living/carbon/human/H = usr
+	if(wearer.incapacitated()) return
+	if(wearer.wear_suit != src) return
 
-	if(!ishuman(H)) return
-	if(H.incapacitated()) return
-	if(H.wear_suit != src) return
+	if(wearer.head == helmet)
+		wearer.drop_from_inventory(helmet, src)
+		helmet.forceMove(src)
+		to_chat(wearer, "<span class='notice'>[src] retract your hardsuit helmet.</span>")
 
-	if(H.head == helmet)
-		helmet.canremove = 1
-		var/dropped_helmet = helmet
-		H.drop_from_inventory(helmet)
-		helmet = dropped_helmet		//attach the helmet back to the suit
-		helmet.loc = src
-		to_chat(H, "<span class='notice'>You retract your hardsuit helmet.</span>")
-
-	else if(H.equip_to_slot_if_possible(helmet, SLOT_HEAD))
+	else if(wearer.equip_to_slot_if_possible(helmet, SLOT_HEAD))
 		helmet.canremove = 0
 		if(helmet.on)
 			helmet.set_light(helmet.brightness_on)
 		else
 			helmet.set_light(0)
 
-		to_chat(H, "<span class='notice'>You deploy your hardsuit helmet, sealing you off from the world.</span>")
+		to_chat(wearer, "<span class='notice'>[src] deploy your hardsuit helmet, sealing you off from the world.</span>")
 		return
 
 /obj/item/clothing/suit/space/rig/verb/toggle_magboots()

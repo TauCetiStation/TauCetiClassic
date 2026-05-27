@@ -84,7 +84,7 @@
 
 	if(target.loc != src)
 		return
-	if(!(length(contents) - 1)) // - 1 тк в родителе мы помещаем хумана внутрь шкафа и он тоже считается в контентс
+	if((length(contents) - 1) <= 0) // - 1 because in content we place human, they couted too in content
 		to_chat(target, "<span class ='danger'>There are nothing here for you.</span>")
 	if(emagged)
 		start_ultra_violet(user)
