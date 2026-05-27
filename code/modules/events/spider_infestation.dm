@@ -14,8 +14,13 @@
 		message_admins("An event attempted to spawn spiders but no suitable vents were found. Shutting down.")
 		return
 
+	var/list/spawned_spiderlings = list()
 	while(spawncount >= 1)
 		var/obj/vent = pick(vents)
-		new /obj/structure/spider/spiderling(vent.loc)
+		spawned_spiderlings += new /obj/structure/spider/spiderling(vent.loc)
 		vents -= vent
 		spawncount--
+
+	if(length(spawned_spiderlings))
+		var/obj/structure/spider/spiderling/S = pick(spawned_spiderlings)
+		notify_ghosts("Spider infestation!", source = S, action = NOTIFY_ORBIT, header = "Spider Infestation")
