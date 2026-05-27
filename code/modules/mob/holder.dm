@@ -186,7 +186,7 @@
 			to_chat(H, "<span class='rose'>Вы больше не в силах съесть даже хвост от [CASE(src, GENITIVE_CASE)].</span>")
 			return FALSE
 		else if(fullness > NUTRITION_LEVEL_NORMAL)
-			to_chat(H, "<span class='notice'>Вы нехотя жуёте \the [src].</span>")
+			to_chat(H, "<span class='notice'>Вы нехотя жуёте [CASE(src, ACCUSATIVE_CASE)].</span>")
 		else if(fullness > NUTRITION_LEVEL_FED)
 			to_chat(H, "<span class='notice'>Вы откусываете кусок от \the [src].</span>")
 		else if(fullness > NUTRITION_LEVEL_HUNGRY)
