@@ -215,7 +215,7 @@
 			eaten_animal.ghostize(bancheck = TRUE)
 			qdel(eaten_animal)
 		if(!silent)
-			H.visible_message("<span class='notice'>[H] доедает \the [src].</span>", "<span class='notice'>Вы доедаете \the [src].</span>")
+			H.visible_message("<span class='notice'>[H] доедает [CASE(src, ACCUSATIVE_CASE)].</span>", "<span class='notice'>Вы доедаете [CASE(src, ACCUSATIVE_CASE)].</span>")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "food_type", /datum/mood_event/natural_food)
 		SSStatistics.score.foodeaten++
 		user.drop_from_inventory(src)
