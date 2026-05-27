@@ -197,7 +197,7 @@
 		if(fullness > (NUTRITION_LEVEL_FAT * (1 + H.overeatduration / 2000) + 100))
 			user.visible_message("<span class='rose'>[user] не может заставить [H] проглотить ещё немного [src].</span>")
 			return FALSE
-		H.visible_message("<span class='rose'>[user] пытается скормить [H] [src].</span>", \
+		H.visible_message("<span class='rose'>[user] пытается скормить [H] [CASE(src, ACCUSATIVE_CASE)].</span>", \
 			"<span class='warning'><B>[user]</B> пытается скормить вам <B>[src]</B>.</span>")
 		if(!do_mob(user, H))
 			return FALSE
