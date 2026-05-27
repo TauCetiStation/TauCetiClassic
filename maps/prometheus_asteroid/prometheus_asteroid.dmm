@@ -142,7 +142,8 @@
 "as" = (
 /obj/structure/alien/weeds,
 /obj/machinery/suit_storage_unit/abandoned{
-	filled = 1
+	filled = 1;
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -3880,7 +3881,6 @@
 	},
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/suit_storage_unit/wizard,
 /obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
@@ -4359,6 +4359,10 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/suit_storage_unit/wizard{
+	filled = 1;
+	pixel_y = 2
+	},
 /turf/simulated/floor,
 /area/asteroid/mine/dwarf)
 "qG" = (

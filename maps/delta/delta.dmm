@@ -2362,7 +2362,7 @@
 	},
 /obj/machinery/suit_storage_unit/security/hos{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -7396,7 +7396,7 @@
 	},
 /obj/machinery/suit_storage_unit/security{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -15314,7 +15314,7 @@
 	},
 /obj/machinery/suit_storage_unit/engine{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -24684,15 +24684,26 @@
 /turf/simulated/floor/engine/airmix,
 /area/station/engineering/atmos)
 "cpL" = (
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "east_science_hazard";
+	name = "Biohazard Shutter";
+	opacity = 0
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /obj/machinery/suit_storage_unit/science{
-	filled = 1;
-	pixel_y = 22
+	filled = 1
 	},
 /turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitepurplecorner"
+	icon_state = "dark"
 	},
-/area/station/rnd/hallway)
+/area/station/rnd/telesci)
 "cpR" = (
 /turf/simulated/wall,
 /area/station/cargo/storage)
@@ -29227,7 +29238,7 @@
 	},
 /obj/machinery/suit_storage_unit/captain{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor,
 /area/station/bridge/captain_quarters)
@@ -32210,7 +32221,7 @@
 	},
 /obj/machinery/suit_storage_unit/medical/cmo{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "neutral"
@@ -32250,6 +32261,9 @@
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/suit_storage_unit/globose/science{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -45000,7 +45014,7 @@
 	},
 /obj/machinery/suit_storage_unit/engine{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -106711,10 +106725,6 @@
 	dir = 1;
 	icon_state = "warn_corner"
 	},
-/obj/machinery/suit_storage_unit/globose/science{
-	filled = 1;
-	pixel_y = 22
-	},
 /turf/simulated/floor{
 	icon_state = "whitechoco"
 	},
@@ -114459,7 +114469,7 @@
 	},
 /obj/machinery/suit_storage_unit/engine{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -144690,7 +144700,7 @@ bOA
 muH
 tVQ
 vHf
-ekl
+cpL
 svQ
 vxf
 kiL
@@ -146490,7 +146500,7 @@ nHE
 prx
 sBT
 iQn
-cpL
+frF
 rzd
 iFV
 gZd

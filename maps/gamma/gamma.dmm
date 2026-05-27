@@ -8200,7 +8200,7 @@
 	},
 /obj/machinery/suit_storage_unit/science/rd{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor/carpet/purple,
 /area/station/rnd/hor)
@@ -13744,7 +13744,7 @@
 	},
 /obj/machinery/suit_storage_unit/medical/paramedic{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -17225,7 +17225,7 @@
 "cHW" = (
 /obj/machinery/suit_storage_unit/medical/paramedic{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -17780,7 +17780,7 @@
 	},
 /obj/machinery/suit_storage_unit/globose/science{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor,
 /area/station/rnd/telesci)
@@ -20809,7 +20809,7 @@
 	},
 /obj/machinery/suit_storage_unit/globose/skrell/black{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -45943,7 +45943,7 @@
 	},
 /obj/machinery/suit_storage_unit/science{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor,
 /area/station/rnd/telesci)
@@ -54597,7 +54597,7 @@
 "jTu" = (
 /obj/machinery/suit_storage_unit/engine/chief{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor/carpet/orange,
 /area/station/engineering/chiefs_office)
@@ -59987,7 +59987,7 @@
 	},
 /obj/machinery/suit_storage_unit/medical/cmo{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood4"
@@ -60456,12 +60456,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
-/obj/machinery/suit_storage_unit/globose/skrell/white{
-	filled = 1;
-	pixel_y = 22
-	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/suit_storage_unit/globose/skrell/white{
+	filled = 1;
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -63352,7 +63352,7 @@
 	},
 /obj/machinery/suit_storage_unit/security/hos{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -85242,7 +85242,7 @@
 "qaQ" = (
 /obj/machinery/suit_storage_unit/engine/atmos{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -91455,12 +91455,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/globose/unathi/nt{
-	filled = 1;
-	pixel_y = 22
-	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/suit_storage_unit/globose/unathi/nt{
+	filled = 1;
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -121293,12 +121293,12 @@
 	},
 /area/station/security/prison)
 "xcK" = (
-/obj/machinery/suit_storage_unit/security{
-	filled = 1;
-	pixel_y = 22
-	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/suit_storage_unit/security{
+	filled = 1;
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

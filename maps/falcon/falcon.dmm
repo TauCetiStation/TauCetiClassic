@@ -3263,7 +3263,7 @@
 	},
 /obj/machinery/suit_storage_unit/science{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -4052,7 +4052,7 @@
 "ahv" = (
 /obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -13010,7 +13010,7 @@
 "dss" = (
 /obj/machinery/suit_storage_unit/medical/cmo{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -13259,7 +13259,7 @@
 	},
 /obj/machinery/suit_storage_unit/engine/atmos{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -24114,16 +24114,6 @@
 /turf/environment/space,
 /area/shuttle/escape_pod1/station)
 "nEs" = (
-/obj/structure/rack,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/rig/wizard{
-	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
-	desc = "Old bizarre gem-encrusted suit that radiates magical energies."
-	},
-/obj/item/clothing/head/helmet/space/rig/wizard{
-	armor = list("melee"=40,"bullet"=5,"laser"=10,"energy"=5,"bomb"=55,"bio"=100,"rad"=20);
-	desc = "Old bizarre gem-encrusted helmet that radiates magical energies."
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -24131,6 +24121,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/suit_storage_unit/wizard{
+	filled = 1
 	},
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
@@ -24355,7 +24348,7 @@
 "nPD" = (
 /obj/machinery/suit_storage_unit/security{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -25905,7 +25898,7 @@
 "pjl" = (
 /obj/machinery/suit_storage_unit/science/rd{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -33351,7 +33344,7 @@
 	},
 /obj/machinery/suit_storage_unit/engine{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -34617,7 +34610,7 @@
 	},
 /obj/machinery/suit_storage_unit/security/hos{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 4;

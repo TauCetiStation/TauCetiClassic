@@ -2421,7 +2421,7 @@
 	},
 /obj/machinery/suit_storage_unit/security{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor,
 /area/station/security/armoury)
@@ -7947,21 +7947,20 @@
 	},
 /area/station/security/brig)
 "amX" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 10
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 10
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
-	dir = 10
-	},
-/obj/machinery/suit_storage_unit/nasa{
+/obj/machinery/suit_storage_unit/engine{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
-/turf/simulated/floor/carpet,
-/area/station/tcommsat/computer)
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellow"
+	},
+/area/station/engineering/engine)
 "amY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/window/brigdoor/northright{
@@ -8142,6 +8141,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/prison)
+"anl" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/cyan{
+	dir = 10
+	},
+/obj/machinery/suit_storage_unit/nasa{
+	filled = 1;
+	pixel_y = 2
+	},
+/turf/simulated/floor/carpet,
+/area/station/tcommsat/computer)
 "anm" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -9051,6 +9066,19 @@
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/auxsolarport)
+"aoL" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 6
+	},
+/obj/machinery/suit_storage_unit/nasa{
+	filled = 1;
+	pixel_y = 2
+	},
+/turf/simulated/floor/carpet,
+/area/station/tcommsat/computer)
 "aoM" = (
 /obj/machinery/door/airlock{
 	id_tag = "toilet115";
@@ -13810,18 +13838,20 @@
 	},
 /area/station/rnd/xenobiology)
 "axr" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 6
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 6
-	},
-/obj/machinery/suit_storage_unit/nasa{
+/obj/machinery/suit_storage_unit/engine{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
-/turf/simulated/floor/carpet,
-/area/station/tcommsat/computer)
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellow"
+	},
+/area/station/engineering/engine)
 "axs" = (
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -13979,7 +14009,7 @@
 	},
 /obj/machinery/suit_storage_unit/science{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -15807,16 +15837,18 @@
 	},
 /area/station/security/lobby)
 "aAZ" = (
-/obj/machinery/atmospherics/components/unary/portables_connector,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/obj/machinery/requests_console/cmo{
+	pixel_x = 32
 	},
-/obj/machinery/suit_storage_unit/engine/atmos{
+/obj/machinery/suit_storage_unit/medical/cmo{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
-/turf/simulated/floor,
-/area/station/engineering/atmos)
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "barber"
+	},
+/area/station/medical/cmo)
 "aBa" = (
 /obj/structure/table,
 /obj/item/device/t_scanner,
@@ -17096,15 +17128,9 @@
 	},
 /area/station/ai_monitored/eva)
 "aDF" = (
+/obj/machinery/atmospherics/components/unary/portables_connector,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
-	},
-/obj/structure/table,
-/obj/item/weapon/wrench,
-/obj/item/stack/sheet/metal{
-	amount = 50;
-	pixel_x = 2;
-	pixel_y = 2
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
@@ -17181,15 +17207,20 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "aDN" = (
-/obj/machinery/suit_storage_unit/engine/chief{
-	filled = 1;
-	pixel_y = 22
+/obj/structure/table,
+/obj/item/clothing/glasses/welding,
+/obj/item/clothing/head/welding{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/stack/sheet/glass{
+	amount = 50
 	},
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "darkyellow"
+	dir = 4;
+	icon_state = "caution"
 	},
-/area/station/engineering/chiefs_office)
+/area/station/engineering/atmos)
 "aDO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -18304,7 +18335,7 @@
 	},
 /obj/machinery/suit_storage_unit/engine{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -18315,8 +18346,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/engine/atmos{
-	filled = 1;
-	pixel_y = 22
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -21676,20 +21706,18 @@
 	},
 /area/station/civilian/chapel/office)
 "aMf" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/structure/table,
+/obj/item/stack/sheet/metal{
+	amount = 50;
+	pixel_x = 2;
+	pixel_y = 2
 	},
-/obj/machinery/suit_storage_unit/engine{
-	filled = 1;
-	pixel_y = 22
-	},
+/obj/item/weapon/wrench,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "yellow"
+	dir = 4;
+	icon_state = "caution"
 	},
-/area/station/engineering/engine)
+/area/station/engineering/atmos)
 "aMg" = (
 /obj/item/device/radio/intercom{
 	dir = 0;
@@ -23937,7 +23965,7 @@
 "aQu" = (
 /obj/machinery/suit_storage_unit/science/rd{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -28856,20 +28884,15 @@
 	},
 /area/station/hallway/secondary/entry)
 "aYV" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/machinery/suit_storage_unit/engine{
+/obj/machinery/suit_storage_unit/engine/chief{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "yellow"
+	icon_state = "darkyellow"
 	},
-/area/station/engineering/engine)
+/area/station/engineering/chiefs_office)
 "aYW" = (
 /obj/structure/stool,
 /obj/structure/cable{
@@ -37321,7 +37344,9 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -32
 	},
-/obj/machinery/photocopier,
+/obj/machinery/suit_storage_unit/captain{
+	filled = 1
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "bnZ" = (
@@ -38018,7 +38043,7 @@
 "bpm" = (
 /obj/machinery/suit_storage_unit/globose/science{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -40073,7 +40098,7 @@
 "bsY" = (
 /obj/machinery/suit_storage_unit/medical/paramedic{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -40788,7 +40813,7 @@
 "bul" = (
 /obj/machinery/suit_storage_unit/medical/paramedic{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -44811,10 +44836,6 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
-	},
-/obj/machinery/suit_storage_unit/captain{
-	filled = 1;
-	pixel_y = 22
 	},
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge/captain_quarters)
@@ -50496,7 +50517,7 @@
 	},
 /obj/machinery/suit_storage_unit/security/hos{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -57711,7 +57732,7 @@
 "cdT" = (
 /obj/machinery/suit_storage_unit/medical{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -58861,7 +58882,7 @@
 "chi" = (
 /obj/machinery/suit_storage_unit/medical{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -59903,7 +59924,7 @@
 "ckw" = (
 /obj/machinery/suit_storage_unit/security{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -66041,14 +66062,8 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/structure/table,
-/obj/item/clothing/glasses/welding,
-/obj/item/clothing/head/welding{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/stack/sheet/glass{
-	amount = 50
+/obj/machinery/suit_storage_unit/engine/atmos{
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
@@ -73896,8 +73911,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/globose/skrell/black{
-	filled = 1;
-	pixel_y = 22
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -82261,18 +82275,19 @@
 	},
 /area/station/civilian/chapel/mass_driver)
 "pCb" = (
-/obj/machinery/requests_console/cmo{
-	pixel_x = 32
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/medical/cmo{
-	filled = 1;
-	pixel_y = 22
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/machinery/suit_storage_unit/globose/skrell/white{
+	filled = 1
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "barber"
+	icon_state = "dark"
 	},
-/area/station/medical/cmo)
+/area/station/ai_monitored/eva)
 "pCu" = (
 /obj/structure/reagent_dispensers/aqueous_foam_tank,
 /obj/machinery/camera{
@@ -88511,12 +88526,11 @@
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "xOo" = (
+/obj/machinery/suit_storage_unit/security{
+	filled = 1
+	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
-	},
-/obj/machinery/suit_storage_unit/globose/skrell/white{
-	filled = 1;
-	pixel_y = 22
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -116163,7 +116177,7 @@ cAR
 nxV
 nxV
 crH
-aMf
+amX
 cuf
 cuf
 czN
@@ -116420,7 +116434,7 @@ cAR
 cff
 cff
 crH
-aMf
+amX
 cuf
 cuf
 czN
@@ -116677,7 +116691,7 @@ cvV
 cxH
 cfK
 crH
-aYV
+axr
 cAN
 cCy
 cHw
@@ -118145,7 +118159,7 @@ aCu
 ckw
 aCv
 aCu
-xOo
+aGb
 aCv
 aCv
 aCv
@@ -118399,13 +118413,13 @@ aqd
 alZ
 aYi
 aCu
-ckw
+xOo
 aCv
 aCu
+aGb
 gWR
+pCb
 aJD
-aGb
-aGb
 aCu
 ibb
 aCj
@@ -118726,7 +118740,7 @@ bIZ
 bNi
 bIZ
 crK
-aDN
+aYV
 akc
 cXC
 gwb
@@ -121538,7 +121552,7 @@ cdV
 bMt
 bRI
 bSV
-aAZ
+aDF
 cKp
 bVU
 bSV
@@ -121795,7 +121809,7 @@ cdF
 cds
 swb
 bSV
-aAZ
+aDF
 caN
 dOS
 bSV
@@ -122316,7 +122330,7 @@ cgH
 bRT
 ajQ
 cAG
-aDF
+cAG
 bVP
 cBw
 bYp
@@ -123084,8 +123098,8 @@ chw
 czX
 bVA
 cfs
-cxJ
-cxJ
+aDN
+aMf
 cxJ
 dOQ
 cgl
@@ -130268,7 +130282,7 @@ bCe
 bGP
 bIr
 bJm
-pCb
+aAZ
 pBb
 pzb
 pyb
@@ -130332,7 +130346,7 @@ cFP
 aaa
 aaa
 cGU
-amX
+anl
 aZa
 tiv
 cFj
@@ -130846,7 +130860,7 @@ cFP
 aaa
 aaa
 cGU
-axr
+aoL
 cIR
 pSU
 cFk

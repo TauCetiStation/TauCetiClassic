@@ -2763,7 +2763,7 @@
 "aeA" = (
 /obj/machinery/suit_storage_unit/medical/paramedic{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -17871,7 +17871,7 @@
 "dNZ" = (
 /obj/machinery/suit_storage_unit/globose/skrell/black{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -21396,9 +21396,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/engine{
+/obj/machinery/suit_storage_unit/engine/atmos{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -23007,7 +23007,7 @@
 	},
 /obj/machinery/suit_storage_unit/medical/paramedic{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -29383,9 +29383,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "gxk" = (
-/obj/machinery/suit_storage_unit/engine/atmos{
+/obj/machinery/suit_storage_unit/engine{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -33800,7 +33800,7 @@
 "hyp" = (
 /obj/machinery/suit_storage_unit/medical{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -33898,7 +33898,7 @@
 "hAh" = (
 /obj/machinery/suit_storage_unit/security{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -34297,7 +34297,7 @@
 "hEx" = (
 /obj/machinery/suit_storage_unit/globose/skrell/white{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -52295,7 +52295,7 @@
 "mfd" = (
 /obj/machinery/suit_storage_unit/engine/atmos{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -64527,7 +64527,7 @@
 	},
 /obj/machinery/suit_storage_unit/medical{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -73076,7 +73076,7 @@
 	},
 /obj/machinery/suit_storage_unit/captain{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -75086,7 +75086,7 @@
 "rRV" = (
 /obj/machinery/suit_storage_unit/engine/chief{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -83982,7 +83982,7 @@
 	},
 /obj/machinery/suit_storage_unit/security{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -86024,7 +86024,7 @@
 "uEG" = (
 /obj/machinery/suit_storage_unit/engine/atmos{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -86897,7 +86897,7 @@
 	},
 /obj/machinery/suit_storage_unit/security{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -96586,7 +96586,7 @@
 "xgC" = (
 /obj/machinery/suit_storage_unit/security/hos{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -99595,7 +99595,7 @@
 "xXi" = (
 /obj/machinery/suit_storage_unit/globose/unathi/nt{
 	filled = 1;
-	pixel_y = 22
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
