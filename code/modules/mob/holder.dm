@@ -163,13 +163,13 @@
 	var/mob/living/carbon/human/H = M
 	if(!istype(H) || !HAS_TRAIT(H, TRAIT_RAW_MEAT_EATER))
 		if(M == user)
-			to_chat(user, "<span class='warning'>Вам противно есть \the [src].</span>")
+			to_chat(user, "<span class='warning'>Вам противно есть [CASE(src, GENITIVE_CASE)].</span>")
 		else
-			to_chat(user, "<span class='warning'>[M] не выглядит заинтересованным в поедании \the [src].</span>")
+			to_chat(user, "<span class='warning'>[M] не выглядит заинтересованным в поедании [CASE(src, GENITIVE_CASE)].</span>")
 		return FALSE
 
 	if(!reagents || !reagents.total_volume)
-		to_chat(user, "<span class='rose'>От [src] Ничего не осталось!</span>")
+		to_chat(user, "<span class='rose'>От [CASE(src, GENITIVE_CASE)] ничего не осталось!</span>")
 		user.drop_from_inventory(src)
 		qdel(src)
 		return FALSE
@@ -180,27 +180,27 @@
 	var/fullness = H.get_satiation()
 	if(H == user)
 		if(fullness > (NUTRITION_LEVEL_FAT * (1 + H.overeatduration / 2000) + 100))
-			to_chat(H, "<span class='rose'>Вы не можете заставить себя проглотить ещё немного [src].</span>")
+			to_chat(H, "<span class='rose'>Вы больше не в силах съесть даже хвост от [CASE(src, GENITIVE_CASE)].</span>")
 			return FALSE
 		else if(fullness > NUTRITION_LEVEL_NORMAL)
-			to_chat(H, "<span class='notice'>Вы нехотя жуёте \the [src].</span>")
+			to_chat(H, "<span class='notice'>Вы нехотя жуёте [CASE(src, ACCUSATIVE_CASE)].</span>")
 		else if(fullness > NUTRITION_LEVEL_FED)
-			to_chat(H, "<span class='notice'>Вы откусываете кусок от \the [src].</span>")
+			to_chat(H, "<span class='notice'>Вы откусываете кусок от [CASE(src, GENITIVE_CASE)].</span>")
 		else if(fullness > NUTRITION_LEVEL_HUNGRY)
-			to_chat(H, "<span class='notice'>Вы голодно начинаете есть \the [src].</span>")
+			to_chat(H, "<span class='notice'>Изголодавшись, вы начинаете есть [CASE(src, ACCUSATIVE_CASE)].</span>")
 		else
-			to_chat(H, "<span class='rose'>Вы жадно пожираете \the [src]!</span>")
+			to_chat(H, "<span class='rose'>Вы с жадностью начинаете есть [CASE(src, ACCUSATIVE_CASE)].</span>")
 	else
 		if(fullness > (NUTRITION_LEVEL_FAT * (1 + H.overeatduration / 2000) + 100))
-			user.visible_message("<span class='rose'>[user] не может заставить [H] проглотить ещё немного [src].</span>")
+			user.visible_message("<span class='rose'>[user] пытается скормить [H] ещё немного [CASE(src, GENITIVE_CASE)], но внутрь больше не лезет.</span>")
 			return FALSE
-		H.visible_message("<span class='rose'>[user] пытается скормить [H] [src].</span>", \
-			"<span class='warning'><B>[user]</B> пытается скормить вам <B>[src]</B>.</span>")
+		H.visible_message("<span class='rose'>[user] пытается скормить [H] [CASE(src, ACCUSATIVE_CASE)].</span>", \
+			"<span class='warning'><B>[user]</B> пытается скормить вам <B>[CASE(src, ACCUSATIVE_CASE)]</B>.</span>")
 		if(!do_mob(user, H))
 			return FALSE
 		H.log_combat(user, "fed [name], reagents: [reagent_list_text()] (INTENT: [uppertext(user.a_intent)])")
-		H.visible_message("<span class='rose'>[user] скармливает [H] [src].</span>", \
-			"<span class='warning'><B>[user]</B> скармливает вам <B>[src]</B>.</span>")
+		H.visible_message("<span class='rose'>[user] скармливает [H] [CASE(src, ACCUSATIVE_CASE)].</span>", \
+			"<span class='warning'><B>[user]</B> скармливает вам <B>[CASE(src, ACCUSATIVE_CASE)]</B>.</span>")
 
 	playsound(H, 'sound/items/eatfood.ogg', VOL_EFFECTS_MASTER, rand(20, 50))
 	reagents.trans_to_ingest(H, min(bitesize, reagents.total_volume))
@@ -212,7 +212,7 @@
 			eaten_animal.ghostize(bancheck = TRUE)
 			qdel(eaten_animal)
 		if(!silent)
-			H.visible_message("<span class='notice'>[H] доедает \the [src].</span>", "<span class='notice'>Вы доедаете \the [src].</span>")
+			H.visible_message("<span class='notice'>[H] доедает [CASE(src, ACCUSATIVE_CASE)].</span>", "<span class='notice'>Вы доедаете [CASE(src, ACCUSATIVE_CASE)].</span>")
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "food_type", /datum/mood_event/natural_food)
 		SSStatistics.score.foodeaten++
 		user.drop_from_inventory(src)
