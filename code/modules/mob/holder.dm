@@ -172,7 +172,7 @@
 		return FALSE
 
 	if(!reagents || !reagents.total_volume)
-		to_chat(user, "<span class='rose'>От [src] Ничего не осталось!</span>")
+		to_chat(user, "<span class='rose'>От [CASE(src, GENITIVE_CASE)] ничего не осталось!</span>")
 		user.drop_from_inventory(src)
 		qdel(src)
 		return FALSE
