@@ -210,10 +210,19 @@
 	if(target.op_stage.ribcage != 2)
 		return FALSE
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
-	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
+	var/list/dead_organs = list()
+	var/has_treatable = FALSE
+	for(var/obj/item/organ/internal/IO as anything in BP.bodypart_organs)
 		if(IO.damage > 0)
-			return TRUE
+			if(IO.status & ORGAN_DEAD)
+				dead_organs += IO
+			else
+				has_treatable = TRUE
+	if(has_treatable)
+		return TRUE
+	necrotic_organs_warning(user, target, dead_organs)
 	return FALSE
+
 
 /datum/surgery_step/ribcage/fix_chest_internal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/tool_name = "\the [tool]"
@@ -225,16 +234,19 @@
 		else
 			tool_name = "the bandaid"
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
+	var/list/dead_organs = list()
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO && IO.damage > 0)
 			if(IO.status & ORGAN_DEAD)
-				user.visible_message("[target]'s [IO.name] is dead.")
+				dead_organs += IO
+				continue
 			if(!IO.is_robotic())
 				user.visible_message("[user] starts treating damage to [target]'s [IO.name] with [tool_name].", \
 				"You start treating damage to [target]'s [IO.name] with [tool_name]." )
 			else
 				user.visible_message("<span class='notice'>[user] attempts to repair [target]'s mechanical [IO.name] with [tool_name]...</span>", \
 				"<span class='notice'>You attempt to repair [target]'s mechanical [IO.name] with [tool_name]...</span>")
+	necrotic_organs_warning(user, target, dead_organs)
 
 	target.custom_pain("The pain in your chest is living hell!",1)
 	..()
@@ -252,7 +264,7 @@
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO && IO.damage > 0)
 			if(IO.status & ORGAN_DEAD)
-				return
+				continue
 			if(!IO.is_robotic())
 				user.visible_message("[user] treats damage to [target]'s [IO.name] with [tool_name].", \
 				"<span class='notice'>You treat damage to [target]'s [IO.name] with [tool_name].</span>" )

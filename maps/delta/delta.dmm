@@ -2964,7 +2964,6 @@
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
@@ -3244,7 +3243,6 @@
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4774,11 +4772,6 @@
 /obj/machinery/light/small/emergency{
 	dir = 1
 	},
-/obj/item/weapon/paper/inventory,
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5985,7 +5978,6 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "recharge_floor"
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -7025,13 +7017,6 @@
 /area/station/security/armoury)
 "alv" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/laser{
-	pixel_y = -3
-	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_y = 3
-	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "delivery"
 	},
@@ -7039,11 +7024,12 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/gun/energy/laser{
-	pixel_y = 3
+/obj/item/weapon/gun/energy/laser/big{
+	pixel_y = 2
 	},
-/obj/item/weapon/gun/energy/laser{
-	pixel_y = 3
+/obj/item/weapon/gun/energy/laser/big,
+/obj/item/weapon/gun/energy/laser/big{
+	pixel_y = -2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7738,7 +7724,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/effect/spawner/aspect/mech/gygax/ultra,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -11280,7 +11265,6 @@
 	},
 /area/station/security/range)
 "asD" = (
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
@@ -11554,6 +11538,7 @@
 	c_tag = "Armory South";
 	network = list("SS13","Security")
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -22414,7 +22399,6 @@
 	dir = 1;
 	icon_state = "box_corners_white"
 	},
-/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -24048,13 +24032,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
-"cin" = (
-/obj/effect/spawner/aspect/mech/gygax,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "red"
-	},
-/area/station/security/main)
 "ciq" = (
 /obj/structure/stool/bed/chair/metal/yellow{
 	dir = 4
@@ -46478,13 +46455,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-"hDb" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel,
-/obj/effect/spawner/aspect/mech/ff_engi,
-/turf/simulated/floor{
-	icon_state = "neutralfull"
-	},
-/area/station/engineering/atmos)
 "hDc" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -57139,7 +57109,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "kcS" = (
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -57393,7 +57362,6 @@
 /obj/effect/landmark{
 	name = "lightsout"
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -68010,7 +67978,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	icon_state = "yellowfull"
 	},
@@ -82077,7 +82044,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	icon_state = "yellowfull"
 	},
@@ -86844,7 +86810,6 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
 	},
@@ -94354,12 +94319,6 @@
 	icon_state = "blackchoco"
 	},
 /area/station/medical/cryo)
-"tge" = (
-/obj/effect/spawner/aspect/mech/ripley_mine,
-/turf/simulated/floor{
-	icon_state = "neutralchoco"
-	},
-/area/station/cargo/miningoffice)
 "tgi" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -102781,19 +102740,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
-"voC" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/spawner/aspect/mech/ripley_engi,
-/turf/simulated/floor{
-	icon_state = "neutralfull"
-	},
-/area/station/engineering/engine)
 "voI" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -108198,13 +108144,6 @@
 "wHE" = (
 /turf/simulated/wall,
 /area/station/security/main)
-"wIa" = (
-/obj/effect/spawner/aspect/mech/medical,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/sleeper)
 "wIf" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -112294,7 +112233,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -138014,7 +137952,7 @@ dup
 dup
 nRV
 bOD
-hDb
+cmG
 xqQ
 bme
 oJD
@@ -140360,9 +140298,9 @@ bau
 nkc
 dij
 qfJ
-voC
+blI
 mGk
-voC
+blI
 qfJ
 blI
 qFo
@@ -155302,7 +155240,7 @@ mMZ
 gMr
 acj
 xBh
-wIa
+wlv
 mMZ
 gMr
 lwH
@@ -155559,7 +155497,7 @@ uhm
 cCo
 mRc
 czh
-wIa
+wlv
 mMZ
 gMr
 lwH
@@ -160631,8 +160569,8 @@ sDB
 twC
 nsI
 vxm
-tge
-tge
+vxm
+vxm
 jWU
 wTB
 lGt
@@ -169113,7 +169051,7 @@ ahy
 amq
 aeR
 aeK
-cin
+ahY
 aik
 afL
 ajC
@@ -172201,7 +172139,7 @@ ahY
 ait
 ajA
 ahY
-cin
+ahY
 wHE
 akx
 akH

@@ -79,6 +79,8 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/snd_admin_vol = 100
 	var/snd_jukebox_vol = 100
 
+	var/snd_jukebox_mediaserver
+
 	//antag preferences
 	var/list/be_role = list()
 	var/uplinklocation = "PDA"

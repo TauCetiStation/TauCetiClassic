@@ -551,3 +551,8 @@
 		/obj/item/weapon/reagent_containers/food/snacks/candy/nougat,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/candy/caramel_nougat
+
+/datum/recipe/candy/khel_tiraza
+	reagents = list("sugar" = 5, "berryjuice" = 5, "toxin" = 5)
+
+	result = /obj/item/weapon/reagent_containers/food/snacks/khel_tiraza

@@ -71,6 +71,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 	fill(C)
 
+	if(ispath(crate_type, /obj/structure/closet))
+		C.spawn_filling = TRUE
+
 	return C
 
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
@@ -164,8 +167,8 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "Weapons crate"
 	contains = list(/obj/item/weapon/melee/baton,
 					/obj/item/weapon/melee/baton,
-					/obj/item/weapon/gun/energy/laser,
-					/obj/item/weapon/gun/energy/laser,
+					/obj/item/weapon/gun/energy/laser/big,
+					/obj/item/weapon/gun/energy/laser/big,
 					/obj/item/weapon/storage/box/flashbangs,
 					/obj/item/weapon/storage/box/flashbangs)
 	additional_costs = 350
@@ -2012,7 +2015,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "Xeno liquidator"
 	contains = list(/obj/item/clothing/suit/space/globose/recycler,
 					/obj/item/clothing/head/helmet/space/globose/recycler,
-					/obj/item/weapon/gun/energy/laser,
+					/obj/item/weapon/gun/energy/laser/big,
 					/obj/item/weapon/shield/buckler,
 					/obj/item/clothing/mask/breath,
 					/obj/item/weapon/tank/oxygen,
@@ -2051,7 +2054,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/shoes/magboots,
 					/obj/item/clothing/mask/breath,
 					/obj/item/weapon/tank/oxygen,
-					/obj/item/weapon/gun/energy/laser,
+					/obj/item/weapon/gun/energy/laser/big,
 					/obj/item/weapon/gun/projectile/automatic/pistol/glock,
 					/obj/item/ammo_box/magazine/glock,
 					/obj/item/ammo_box/magazine/glock,
@@ -2064,9 +2067,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/blob_equipment/group
 	name = "Anti-blob equipment: Group supply"
-	contains = list(/obj/item/weapon/gun/energy/laser,
-					/obj/item/weapon/gun/energy/laser,
-					/obj/item/weapon/gun/energy/laser,
+	contains = list(/obj/item/weapon/gun/energy/laser/big,
+					/obj/item/weapon/gun/energy/laser/big,
+					/obj/item/weapon/gun/energy/laser/big,
 					/obj/machinery/recharger,
 					/obj/machinery/recharger,
 					/obj/machinery/recharger,

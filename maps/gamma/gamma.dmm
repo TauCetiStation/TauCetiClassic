@@ -8249,12 +8249,6 @@
 	pixel_x = -8;
 	pixel_y = 10
 	},
-/obj/item/weapon/paper{
-	info = "4 Deployable Barriers<br>3 Portable Flashers + Wrench <br>3 Sets of Riot Armor <br>3 Bulletproof Vests <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit <br>1 Chemical Implant Kit <br>1 Tracking Implant Kit <br>1 Loyalty Implant Kit <br>1 Death Alarm Implant Kit <br>1 Box of Spare Handcuffs <br>1 Box of flashbangs <br>1 Box of spare R.O.B.U.S.T. cartridges <br>3 Riot shields <br>3 Stun Batons <br>3 Energy Guns <br>3 Laser Rifles <br>2 Ion Rifles <br>6 Security Masks <br>1 Grenade Launcher <br>2 Boxes of teargas grenades";
-	name = "Armory Inventory";
-	pixel_x = -7;
-	pixel_y = 16
-	},
 /obj/item/weapon/folder/blue{
 	pixel_x = 7;
 	pixel_y = 10
@@ -8271,6 +8265,7 @@
 	pixel_x = -8;
 	pixel_y = -7
 	},
+/obj/item/weapon/paper/inventory/brig_armoury,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkredcorners"
@@ -14110,18 +14105,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
-"cdT" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/structure/disposalpipe/segment{
-	dir = 1
-	},
-/obj/effect/spawner/aspect/mech/gygax,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "darkredcorners"
-	},
-/area/station/security/brig)
 "cea" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1
@@ -19574,7 +19557,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -24582,7 +24564,6 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -26047,12 +26028,6 @@
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/outerlabs)
-"eub" = (
-/obj/effect/spawner/aspect/mech/gygax/ultra,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/security/hos)
 "eue" = (
 /obj/machinery/door/window/southright{
 	dir = 8;
@@ -30052,10 +30027,6 @@
 	icon_state = "neutral"
 	},
 /area/station/civilian/dormitories)
-"fky" = (
-/obj/effect/spawner/aspect/mech/ff_engi,
-/turf/simulated/floor,
-/area/station/engineering/atmos)
 "fkz" = (
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 8;
@@ -33959,7 +33930,6 @@
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -36646,7 +36616,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -39806,7 +39775,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -40749,13 +40717,6 @@
 /area/station/engineering/rust)
 "hjy" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/laser{
-	pixel_y = 3
-	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_y = -3
-	},
 /obj/machinery/door/window/brigdoor{
 	name = "Weapons locker"
 	},
@@ -40767,6 +40728,13 @@
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/weapon/gun/energy/laser/big{
+	pixel_y = 2
+	},
+/obj/item/weapon/gun/energy/laser/big,
+/obj/item/weapon/gun/energy/laser/big{
+	pixel_y = -2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -40953,7 +40921,6 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
-/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor/carpet,
 /area/station/cargo/qm)
 "hll" = (
@@ -58188,7 +58155,6 @@
 	},
 /area/station/bridge/captain_quarters)
 "kFL" = (
-/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -59914,13 +59880,6 @@
 	icon_state = "dark"
 	},
 /area/station/medical/hallway)
-"kYI" = (
-/obj/effect/spawner/aspect/mech/ripley_mine,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/station/cargo/storage)
 "kYK" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -71811,7 +71770,6 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -72782,7 +72740,6 @@
 	},
 /area/station/ai_monitored/eva)
 "nBP" = (
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkred"
@@ -77011,7 +76968,6 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -82741,7 +82697,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -83170,7 +83125,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -85189,6 +85143,7 @@
 	name = "Brig left APC";
 	pixel_x = -27
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -87271,13 +87226,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/brig)
-"qtF" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
-	},
-/obj/effect/spawner/aspect/mech/ripley_engi,
-/turf/simulated/floor,
-/area/station/engineering/engine)
 "qtG" = (
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -88183,7 +88131,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 1
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
@@ -94987,7 +94934,6 @@
 	name = "Station Intercom (Medbay)";
 	pixel_y = -32
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -110263,9 +110209,6 @@
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
-	},
-/obj/item/weapon/paper/inventory{
-	pixel_y = -21
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -141154,7 +141097,7 @@ atB
 mun
 eXK
 xLy
-kYI
+hdK
 cbf
 rJq
 rJq
@@ -141411,7 +141354,7 @@ kFL
 qUL
 wrv
 xLy
-kYI
+hdK
 oXL
 azw
 tro
@@ -150837,7 +150780,7 @@ pGN
 pAC
 gvJ
 qEw
-cdT
+lYN
 lYN
 lYN
 wyR
@@ -153914,7 +153857,7 @@ jFJ
 mtX
 tWL
 frM
-eub
+hdc
 box
 hdc
 pQG
@@ -169079,7 +169022,7 @@ poq
 myw
 iZr
 nUG
-qtF
+wCr
 dTy
 bSW
 qxL
@@ -171656,7 +171599,7 @@ uVU
 lXH
 cOs
 vBh
-fky
+qdl
 tYs
 sEX
 tYs
@@ -171913,7 +171856,7 @@ upZ
 eKu
 qdl
 afd
-fky
+qdl
 afd
 eyd
 fXX
@@ -172170,7 +172113,7 @@ pis
 bnT
 ceb
 xEz
-fky
+qdl
 cOs
 jVD
 aAo
