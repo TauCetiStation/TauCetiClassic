@@ -8193,13 +8193,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "aZY" = (
-/obj/machinery/suit_storage_unit/science/rd{
-	pixel_y = 22
-	},
 /obj/machinery/camera{
 	c_tag = "Research Director's Dorm";
 	dir = 5;
 	network = list("SS13","Research")
+	},
+/obj/machinery/suit_storage_unit/science/rd{
+	filled = 1;
+	pixel_y = 22
 	},
 /turf/simulated/floor/carpet/purple,
 /area/station/rnd/hor)

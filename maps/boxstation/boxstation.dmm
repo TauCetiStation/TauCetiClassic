@@ -12674,8 +12674,8 @@
 	icon_state = "spline_fancy"
 	},
 /obj/structure/flora/ausbushes/reedbush{
-	pixel_y = 6;
-	layer = 3.01
+	layer = 3.01;
+	pixel_y = 6
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -23940,6 +23940,7 @@
 /area/station/rnd/hor)
 "aQu" = (
 /obj/machinery/suit_storage_unit/science/rd{
+	filled = 1;
 	pixel_y = 22
 	},
 /turf/simulated/floor{
@@ -24726,8 +24727,8 @@
 	icon_state = "siding_wideplating_new_corner"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -25490,8 +25491,8 @@
 	icon_state = "siding_wideplating_new_corner"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor/garden,
 /area/station/civilian/garden)
@@ -29948,8 +29949,8 @@
 /area/station/hallway/secondary/entry)
 "baN" = (
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor11"
@@ -31419,12 +31420,12 @@
 	icon_state = "spline_fancy"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
@@ -57531,8 +57532,8 @@
 /area/station/maintenance/engineering)
 "cdn" = (
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor11"
@@ -60121,8 +60122,8 @@
 "cla" = (
 /obj/structure/stool/bed/bench,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor/garden,
 /area/station/civilian/garden)
@@ -61905,8 +61906,8 @@
 	icon_state = "siding_wideplating_new_corner"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor11"
@@ -64347,12 +64348,12 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor11"
@@ -64695,8 +64696,8 @@
 "cwV" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor11"
@@ -64707,8 +64708,8 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor11"
@@ -64863,8 +64864,8 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor11"
@@ -64920,8 +64921,8 @@
 	icon_state = "pipe-c"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor11"
@@ -66875,8 +66876,8 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor11"
@@ -69425,8 +69426,8 @@
 	icon_state = "bench_2"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor/garden,
 /area/station/civilian/garden)
@@ -69561,8 +69562,8 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor/garden{
 	icon_state = "asteroid2"
@@ -71929,8 +71930,8 @@
 /area/station/cargo/office)
 "faj" = (
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wideplating_line"
 	},
 /obj/structure/sink/drinking_fountain{
 	pixel_x = -10;
@@ -72034,12 +72035,12 @@
 /area/station/medical/cmo)
 "flv" = (
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor11"
@@ -72985,8 +72986,8 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor11"
@@ -73511,8 +73512,8 @@
 /area/station/maintenance/engineering)
 "gHG" = (
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/floor/garden{
 	icon_state = "asteroid7"
@@ -76722,8 +76723,8 @@
 /area/station/medical/reception)
 "jJE" = (
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/floor/garden,
 /area/station/civilian/garden)
@@ -81293,12 +81294,12 @@
 /area/station/civilian/chapel/altar)
 "osF" = (
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor/garden{
 	icon_state = "asteroid7"
@@ -83590,8 +83591,8 @@
 /area/station/medical/reception)
 "qZd" = (
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line";
-	dir = 6
+	dir = 6;
+	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor11"
@@ -86076,8 +86077,8 @@
 	icon_state = "siding_wideplating_new_corner"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor11"
@@ -86360,8 +86361,8 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_new_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wideplating_new_corner"
 	},
 /obj/effect/decal/turf_decal/white{
 	icon_state = "siding_wideplating_new_corner"
@@ -86656,8 +86657,8 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/floor/garden,
 /area/station/civilian/garden)
@@ -87007,8 +87008,8 @@
 /area/station/security/armoury)
 "uYg" = (
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor11"
@@ -88186,8 +88187,8 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_wideplating_line";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_wideplating_line"
 	},
 /turf/simulated/floor/garden{
 	icon_state = "asteroid6"

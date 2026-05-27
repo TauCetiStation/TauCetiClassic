@@ -253,6 +253,7 @@
 /area/space)
 "aK" = (
 /obj/machinery/suit_storage_unit/science/rd{
+	filled = 1;
 	pixel_y = 22
 	},
 /turf/simulated/floor/airless{
