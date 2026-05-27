@@ -4,7 +4,7 @@
 /datum/unit_test/hardsuit_test_helmet/start_test()
 	var/list/error_list = list()
 	for(var/obj/item/clothing/suit/space/rig/typepath as anything in typesof(/obj/item/clothing/suit/space/rig))
-		var/obj/item/clothing/suit/space/rig/rig = new typepath::type
+		var/obj/item/clothing/suit/space/rig/rig = new typepath.type
 		if(!rig.helmet)
 			error_list += rig::name
 
