@@ -450,7 +450,6 @@
 		to_chat(wearer, "<span class='notice'>[src] retract your hardsuit helmet.</span>")
 
 	else if(wearer.equip_to_slot_if_possible(helmet, SLOT_HEAD))
-		helmet.canremove = 0
 		if(helmet.on)
 			helmet.set_light(helmet.brightness_on)
 		else
