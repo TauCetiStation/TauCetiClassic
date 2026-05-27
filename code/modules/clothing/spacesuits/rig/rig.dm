@@ -447,7 +447,7 @@
 	if(wearer.head == helmet)
 		wearer.drop_from_inventory(helmet, src)
 		helmet.forceMove(src)
-		to_chat(wearer, "<span class='notice'>[src] retract your hardsuit helmet.</span>")
+		to_chat(wearer, "<span class='notice'>[name] retract helmet.</span>")
 
 	else if(wearer.equip_to_slot_if_possible(helmet, SLOT_HEAD))
 		if(helmet.on)
@@ -455,7 +455,7 @@
 		else
 			helmet.set_light(0)
 
-		to_chat(wearer, "<span class='notice'>[src] deploy your hardsuit helmet, sealing you off from the world.</span>")
+		to_chat(wearer, "<span class='notice'>[name] deploy helmet, sealing you off from the world.</span>")
 		return
 
 /obj/item/clothing/suit/space/rig/verb/toggle_magboots()
