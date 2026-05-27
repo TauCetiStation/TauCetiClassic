@@ -79,7 +79,6 @@
 
 		var/to_remove = show_radial_menu(user, src, current_mounts, require_near = TRUE, tooltips = TRUE)
 
-
 		if(!to_remove)
 			return
 		if(!Adjacent(user) || wearer)

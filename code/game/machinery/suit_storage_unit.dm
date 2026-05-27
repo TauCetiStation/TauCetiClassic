@@ -379,22 +379,23 @@
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
 
-	if(opened && ishuman(user))
-		var/list/options = list("Fast Uneqip", "Fast Eqip")
-		var/choosen_option = show_radial_menu(user, src, options, require_near = TRUE, tooltips = TRUE)
-		switch(choosen_option)
-			if("Fast Uneqip")
-				fast_unequip(user)
-			if("Fast Eqip")
-				fast_equip(user)
-			if(null)
-				if(length(contents))
-					var/list/suit_storage = list()
-					for(var/atom/movable/target in contents)
-						suit_storage[target] = target.appearance
-					var/atom/movable/to_dispense = show_radial_menu(user, src, suit_storage, require_near = TRUE, tooltips = TRUE)
-					if(to_dispense)
-						dispense(to_dispense)
+	if(opened)
+		if(ishuman(user))
+			var/list/options = list("Fast Uneqip", "Fast Eqip")
+			var/choosen_option = show_radial_menu(user, src, options, require_near = TRUE, tooltips = TRUE)
+			switch(choosen_option)
+				if("Fast Uneqip")
+					fast_unequip(user)
+				if("Fast Eqip")
+					fast_equip(user)
+
+		if(length(contents))
+			var/list/suit_storage = list()
+			for(var/atom/movable/target in contents)
+				suit_storage[target] = target.appearance
+			var/atom/movable/to_dispense = show_radial_menu(user, src, suit_storage, require_near = TRUE, tooltips = TRUE)
+			if(to_dispense)
+				dispense(to_dispense)
 		return
 
 	if(!locked && !(stat & BROKEN))
@@ -443,7 +444,11 @@
 	if(POSSIBLE_TO_LOAD(something))
 		if(do_after(user, 0.1 SECONDS, FALSE, src))
 			to_chat(user, "You load the [something.name] into the storage compartment.")
-			user.drop_from_inventory(something, src)
+			if(something.loc == user)
+				user.drop_from_inventory(something, src)
+				something.forceMove(src)
+			else
+				something.forceMove(src)
 			playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER, 15)
 	update_icon()
 	return TRUE
@@ -497,8 +502,7 @@
 /obj/machinery/suit_storage_unit/verb/fast_move()
 	set category = "Object"
 	set name = "Fast Equip/Unequip"
-	if(ishuman(usr))
-		set src in view(1)
+	set src in view(1)
 
 	if(opened)
 		length(contents) ? fast_equip(usr) : fast_unequip(usr)

@@ -35,7 +35,6 @@
 	else
 		pass("All units successfuly Destroy() themself")
 
-
 /datum/unit_test/suit_storage_unit_test_duv
 	name = "SUIT STORAGE: TEST DEFAULT UV CLEAR"
 
