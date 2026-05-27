@@ -505,21 +505,23 @@
 	set name = "Toggle Open SSU"
 	set src in view(1)
 
-	opened ? close() : open()
+	if(isliving(usr))
+		opened ? close() : open()
 
 /obj/machinery/suit_storage_unit/verb/toggle_ultra_violet_cylce()
 	set category = "Object"
 	set name = "Toggle SSU Ultra violet Cylce"
 	set src in view(1)
 
-	start_ultra_violet()
+	if(isliving(usr))
+		start_ultra_violet()
 
 /obj/machinery/suit_storage_unit/verb/fast_move()
 	set category = "Object"
 	set name = "Fast Equip/Unequip"
 	set src in view(1)
 
-	if(opened)
+	if(ishuman(usr) && opened)
 		length(contents) ? fast_equip(usr) : fast_unequip(usr)
 
 #undef POSSIBLE_TO_LOAD
