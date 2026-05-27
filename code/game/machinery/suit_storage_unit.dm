@@ -381,9 +381,15 @@
 
 	if(opened)
 		if(ishuman(user))
-			var/list/options = list("Fast Uneqip", "Fast Eqip")
+			var/list/options = list("Procces UV" = mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = emagged ? "radial_kill" : "radial_start"),
+									"Fast Uneqip" = mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_use"),
+									"Fast Eqip" = mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_use")
+									)
 			var/choosen_option = show_radial_menu(user, src, options, require_near = TRUE, tooltips = TRUE)
 			switch(choosen_option)
+				if("Procces UV")
+					start_ultra_violet(user)
+					return
 				if("Fast Uneqip")
 					fast_unequip(user)
 				if("Fast Eqip")
