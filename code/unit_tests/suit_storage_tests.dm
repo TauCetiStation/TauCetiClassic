@@ -4,7 +4,7 @@
 /datum/unit_test/suit_storage_unit_test_full/start_test()
 	var/list/error_list = list()
 	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
-		var/obj/machinery/suit_storage_unit/test_unit/ssu = new typepath
+		var/obj/machinery/suit_storage_unit/test_unit/ssu = new typepath::type
 		ssu.filled = TRUE
 		ssu.make_full()
 		if(!length(ssu.contents))
@@ -23,8 +23,7 @@
 	var/error_list = list()
 
 	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
-		var/new_path = typepath::type
-		var/obj/machinery/suit_storage_unit/test_unit/ssu = new new_path
+		var/obj/machinery/suit_storage_unit/test_unit/ssu = new typepath::type
 		ssu.Destroy()
 		if(ssu)
 			error_list += ssu
