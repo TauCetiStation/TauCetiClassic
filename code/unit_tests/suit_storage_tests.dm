@@ -24,7 +24,7 @@
 
 	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
 		var/new_path = typepath::type
-		var/obj/machinery/suit_storage_unit/test_unit/ssu = new typepath::type
+		var/obj/machinery/suit_storage_unit/test_unit/ssu = new new_path
 		ssu.Destroy()
 		if(ssu)
 			error_list += ssu
