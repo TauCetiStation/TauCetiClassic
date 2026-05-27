@@ -183,7 +183,7 @@
 	var/fullness = H.get_satiation()
 	if(H == user)
 		if(fullness > (NUTRITION_LEVEL_FAT * (1 + H.overeatduration / 2000) + 100))
-			to_chat(H, "<span class='rose'>Вы не можете заставить себя проглотить ещё немного [src].</span>")
+			to_chat(H, "<span class='rose'>Вы больше не в силах съесть даже хвост от [CASE(src, GENITIVE_CASE)].</span>")
 			return FALSE
 		else if(fullness > NUTRITION_LEVEL_NORMAL)
 			to_chat(H, "<span class='notice'>Вы нехотя жуёте \the [src].</span>")
