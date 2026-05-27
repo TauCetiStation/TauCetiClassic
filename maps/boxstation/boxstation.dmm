@@ -14234,7 +14234,9 @@
 /obj/structure/fence/metal{
 	dir = 8
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "ayh" = (
 /obj/decal/boxingrope{
@@ -16150,12 +16152,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/prison/toilet)
-"aBI" = (
-/obj/machinery/door/firedoor{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/ai_monitored/eva)
 "aBJ" = (
 /obj/machinery/hydroponics/constructable,
 /turf/simulated/floor{
@@ -55751,12 +55747,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/break_room)
-"bWM" = (
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "caution"
-	},
-/area/station/engineering/atmos)
 "bWN" = (
 /obj/machinery/atmospherics/pipe/simple/visible/universal{
 	dir = 4
@@ -65030,7 +65020,9 @@
 /obj/structure/fence/metal{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "cyf" = (
 /obj/machinery/door/firedoor,
@@ -117436,8 +117428,8 @@ ayg
 aCu
 ayg
 aIM
-aBI
-aBI
+aIM
+aIM
 aCu
 aOq
 aNU
@@ -122630,9 +122622,9 @@ chw
 czX
 bVA
 cfs
-bWM
-bWM
-bWM
+cxJ
+cxJ
+cxJ
 dOQ
 cgl
 ciq
