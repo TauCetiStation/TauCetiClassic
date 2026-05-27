@@ -70,13 +70,13 @@
 
 // At minimum every mob has a hear_say proc.
 /mob/proc/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
+	var/not_processed_message = message
 	if(!client)
 		if(!remote_hearers)
 			return FALSE
-		var/runechat_message = message
 		message = process_speech(message, verb, language, alt_name, italics, speaker, used_radio, speech_sound, sound_vol)
 		if(message)
-			telepathy_eavesdrop(speaker, message, "has heard", language, runechat_message)
+			telepathy_eavesdrop(speaker, message, "has heard", language, not_processed_message)
 
 		return FALSE
 
@@ -110,11 +110,9 @@
 		if((HAS_TRAIT(speaker, TRAIT_MELODIUS_VOICE) || speech_sound) && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			if(HAS_TRAIT(speaker, TRAIT_MELODIUS_VOICE) && ishuman(speaker))
 				var/mob/living/carbon/human/H = speaker
-				var/instrumental_sound = get_sound_by_voice(H, H.species.instrumental_voice_male, H.species.instrumental_voice_female)
-				var/sounds = clamp(round(length_char(message)/10), 1, 5)
-				for(var/i in 1 to sounds)
-					playsound_local(speaker, instrumental_sound, VOL_EFFECTS_MASTER, 80)
-					sleep(3)
+				var/sounds = clamp(round(length_char(not_processed_message)/3), 1, 5)
+				play_instrumental_voice(H, sounds)
+
 			else
 				playsound_local(speaker, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
 
@@ -134,6 +132,13 @@
 
 	var/mob/living/carbon/human/H = speaker
 	H.handle_socialization(src)
+
+/mob/proc/play_instrumental_voice(mob/living/carbon/human/H, repeats = 1)
+	if(!repeats)
+		return
+	var/instrumental_sound = get_sound_by_voice(H, H.species.instrumental_voice_male, H.species.instrumental_voice_female)
+	playsound_local(H, instrumental_sound, VOL_EFFECTS_MASTER, 80)
+	addtimer(CALLBACK(src, PROC_REF(play_instrumental_voice), H, repeats - 1), 0.2 SECONDS)
 
 /mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 
