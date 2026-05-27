@@ -70,7 +70,8 @@
 
 		var/list/current_mounts = list()
 		if(cell)
-			current_mounts += list("Cell" = image(getFlatIcon(cell)))
+			cell.update_icon()
+			current_mounts += list("Cell" = cell.appearance)
 		if(boots)
 			current_mounts += list("Boots" = image(icon = boots.icon, icon_state = boots.icon_state))
 		if(installed_modules.len)

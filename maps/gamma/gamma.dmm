@@ -7356,11 +7356,16 @@
 	},
 /area/station/storage/tech)
 "aRJ" = (
-/obj/machinery/suit_storage_unit/nasa{
-	filled = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 5
 	},
-/turf/simulated/floor/carpet,
-/area/station/tcommsat/computer)
+/obj/machinery/light_switch{
+	pixel_x = 21;
+	pixel_y = 23
+	},
+/turf/simulated/floor/carpet/blue2,
+/area/station/medical/cmo)
 "aRQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/weapon/cigbutt,
@@ -7491,8 +7496,8 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
-/obj/machinery/suit_storage_unit/nasa{
-	filled = 1
+/obj/machinery/computer/telecomms/monitor{
+	network = list("tcommsat")
 	},
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
@@ -8188,13 +8193,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "aZY" = (
+/obj/machinery/suit_storage_unit/science/rd{
+	pixel_y = 22
+	},
 /obj/machinery/camera{
 	c_tag = "Research Director's Dorm";
-	dir = 6;
+	dir = 5;
 	network = list("SS13","Research")
-	},
-/obj/machinery/suit_storage_unit/science/rd{
-	filled = 1
 	},
 /turf/simulated/floor/carpet/purple,
 /area/station/rnd/hor)
@@ -13737,19 +13742,13 @@
 	},
 /area/station/hallway/primary/bridgehall)
 "caY" = (
-/obj/item/weapon/storage/firstaid/fire{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/fire{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/firstaid/fire,
-/obj/structure/table/glass,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/machinery/suit_storage_unit/medical/paramedic{
+	filled = 1;
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -17240,16 +17239,10 @@
 	},
 /area/station/civilian/garden)
 "cHW" = (
-/obj/item/weapon/storage/firstaid/adv{
-	pixel_x = 4;
-	pixel_y = 4
+/obj/machinery/suit_storage_unit/medical/paramedic{
+	filled = 1;
+	pixel_y = 22
 	},
-/obj/item/weapon/storage/firstaid/adv{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/firstaid/adv,
-/obj/structure/table/glass,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -17802,7 +17795,8 @@
 	pixel_x = 27
 	},
 /obj/machinery/suit_storage_unit/globose/science{
-	filled = 1
+	filled = 1;
+	pixel_y = 22
 	},
 /turf/simulated/floor,
 /area/station/rnd/telesci)
@@ -20830,8 +20824,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/skrell/black{
-	filled = 1
+/obj/machinery/suit_storage_unit/globose/skrell/black{
+	filled = 1;
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -34932,7 +34927,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/light_switch{
-	pixel_x = -26;
+	pixel_x = 24;
 	pixel_y = 26
 	},
 /turf/simulated/floor/carpet/orange,
@@ -35132,20 +35127,18 @@
 	},
 /area/station/rnd/brainstorm_center)
 "gfC" = (
-/obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/o2{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/firstaid/o2,
-/obj/structure/table/glass,
 /obj/item/device/radio/intercom{
 	frequency = 1485;
 	name = "Station Intercom (Medbay)";
 	pixel_x = 25
+	},
+/obj/machinery/camera{
+	c_tag = "Medbay Storage";
+	dir = 8;
+	network = list("SS13","Medical")
+	},
+/obj/machinery/light/smart{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -39147,12 +39140,28 @@
 	},
 /area/station/medical/medbreak)
 "gRo" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/box/flashbangs{
+	pixel_y = 8
+	},
+/obj/item/weapon/storage/box/teargas{
+	pixel_y = 4
+	},
+/obj/item/weapon/storage/box/teargas,
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Weapons locker"
+	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/security{
-	filled = 1
-	},
+/obj/structure/window/thin/reinforced,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -39312,15 +39321,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "gTI" = (
-/obj/structure/closet/secure_closet/CMO,
+/obj/structure/closet/secure_closet/medical3,
+/obj/item/clothing/accessory/stethoscope,
 /obj/machinery/alarm{
-	pixel_x = -28;
-	pixel_y = -6
+	pixel_y = -32
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood4"
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
 	},
-/area/station/medical/cmo)
+/area/station/medical/storage)
 "gTP" = (
 /obj/structure/object_wall/mining{
 	icon_state = "2-9"
@@ -45960,16 +45969,16 @@
 /turf/simulated/floor/plating,
 /area/station/medical/patient_a)
 "ikF" = (
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/unathi/nt{
-	filled = 1
+/obj/machinery/suit_storage_unit/science{
+	filled = 1;
+	pixel_y = 22
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/ai_monitored/eva)
+/turf/simulated/floor,
+/area/station/rnd/telesci)
 "ikG" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for the brig foyer.";
@@ -52884,9 +52893,7 @@
 /turf/simulated/wall,
 /area/station/medical/cryo)
 "jBw" = (
-/obj/machinery/suit_storage_unit/medical/paramedic{
-	filled = 1
-	},
+/obj/structure/stool/bed/chair/wheelchair,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -54621,7 +54628,8 @@
 /area/station/rnd/chargebay)
 "jTu" = (
 /obj/machinery/suit_storage_unit/engine/chief{
-	filled = 1
+	filled = 1;
+	pixel_y = 22
 	},
 /turf/simulated/floor/carpet/orange,
 /area/station/engineering/chiefs_office)
@@ -56039,50 +56047,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
-	},
-/obj/structure/rack,
-/obj/item/weapon/tank/emergency_oxygen/double{
-	pixel_x = -10;
-	pixel_y = 10
-	},
-/obj/item/weapon/tank/emergency_oxygen/double{
-	pixel_x = 10;
-	pixel_y = 10
-	},
-/obj/item/device/sensor_device{
-	pixel_x = -10;
-	pixel_y = 5
-	},
-/obj/item/device/sensor_device{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/clothing/glasses/hud/health{
-	pixel_x = -10
-	},
-/obj/item/clothing/glasses/hud/health{
-	pixel_x = 10
-	},
-/obj/item/weapon/storage/belt/medical{
-	pixel_x = -10;
-	pixel_y = -5
-	},
-/obj/item/weapon/storage/belt/medical{
-	pixel_x = 10;
-	pixel_y = -5
-	},
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/window/eastright{
-	dir = 8;
-	icon_state = "left";
-	name = "Paramedic equipment";
-	req_access = list(70)
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -60057,15 +60021,17 @@
 	},
 /area/station/rnd/storage)
 "kZy" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 5
+/obj/machinery/alarm{
+	pixel_x = -28;
+	pixel_y = -6
 	},
-/obj/machinery/light_switch{
-	pixel_x = -23;
-	pixel_y = 23
+/obj/machinery/suit_storage_unit/medical/cmo{
+	filled = 1;
+	pixel_y = 22
 	},
-/turf/simulated/floor/carpet/blue2,
+/turf/simulated/floor/wood{
+	icon_state = "wood4"
+	},
 /area/station/medical/cmo)
 "kZz" = (
 /obj/item/weapon/storage/toolbox/electrical,
@@ -60527,11 +60493,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
 "ldi" = (
-/obj/machinery/light/smart{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
+	},
+/obj/machinery/suit_storage_unit/globose/skrell/white{
+	filled = 1;
+	pixel_y = 22
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -63416,15 +63386,13 @@
 	},
 /area/station/civilian/hydroponics)
 "lIf" = (
-/obj/machinery/requests_console/hos{
-	pixel_y = 30
-	},
 /obj/machinery/alarm{
 	pixel_x = 29;
 	pixel_y = -6
 	},
 /obj/machinery/suit_storage_unit/security/hos{
-	filled = 1
+	filled = 1;
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -84519,9 +84487,7 @@
 /obj/machinery/light/smart{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/medical/cmo{
-	filled = 1
-	},
+/obj/structure/closet/secure_closet/CMO,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -85319,7 +85285,8 @@
 /area/station/rnd/misc_lab)
 "qaQ" = (
 /obj/machinery/suit_storage_unit/engine/atmos{
-	filled = 1
+	filled = 1;
+	pixel_y = 22
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -90485,6 +90452,9 @@
 /area/station/civilian/dormitories)
 "raD" = (
 /obj/structure/filingcabinet,
+/obj/machinery/requests_console/hos{
+	pixel_x = 30
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -91534,9 +91504,15 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "rmc" = (
-/obj/structure/stool,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
+	},
+/obj/machinery/suit_storage_unit/globose/unathi/nt{
+	filled = 1;
+	pixel_y = 22
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -93109,16 +93085,60 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "rBI" = (
-/obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 4;
-	pixel_y = 4
+/obj/structure/window/thin/reinforced{
+	dir = 1
 	},
-/obj/item/weapon/storage/firstaid/toxin{
-	pixel_x = 2;
-	pixel_y = 2
+/obj/structure/window/thin/reinforced{
+	dir = 8
 	},
-/obj/item/weapon/storage/firstaid/toxin,
-/obj/structure/table/glass,
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = 10;
+	pixel_y = 10
+	},
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/obj/item/device/sensor_device{
+	pixel_x = -10;
+	pixel_y = 5
+	},
+/obj/item/device/sensor_device{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/hud/health{
+	pixel_x = -10
+	},
+/obj/item/clothing/glasses/hud/health{
+	pixel_x = 10
+	},
+/obj/item/weapon/storage/belt/medical{
+	pixel_x = -10;
+	pixel_y = -5
+	},
+/obj/item/weapon/storage/belt/medical{
+	pixel_x = 10;
+	pixel_y = -5
+	},
+/obj/structure/rack,
+/obj/machinery/door/window/eastright{
+	dir = 2;
+	icon_state = "left";
+	name = "Paramedic equipment";
+	req_access = list(70)
+	},
+/obj/item/device/gps/medical{
+	pixel_x = -8;
+	pixel_y = 11
+	},
+/obj/item/device/gps/medical{
+	pixel_x = 8;
+	pixel_y = 11
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -100919,7 +100939,7 @@
 	},
 /obj/item/weapon/storage/box/syringes{
 	pixel_x = -6;
-	pixel_y = 10
+	pixel_y = 11
 	},
 /obj/item/weapon/storage/box/cdeathalarm_kit{
 	pixel_x = 10
@@ -100927,15 +100947,15 @@
 /obj/structure/table/glass,
 /obj/item/weapon/storage/box/bodybags{
 	pixel_x = -6;
-	pixel_y = -1
+	pixel_y = 1
 	},
 /obj/item/weapon/storage/box/masks{
 	pixel_x = -6;
-	pixel_y = -12
+	pixel_y = -9
 	},
 /obj/item/weapon/storage/box/gloves{
 	pixel_x = 10;
-	pixel_y = -12
+	pixel_y = -9
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -103887,11 +103907,8 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
-	},
-/obj/machinery/suit_storage_unit/skrell/white{
-	filled = 1
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -104256,7 +104273,6 @@
 	},
 /area/station/security/checkpoint)
 "tJq" = (
-/obj/structure/stool/bed/chair/wheelchair,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -107239,13 +107255,11 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/hallway)
 "umb" = (
-/obj/structure/closet/secure_closet/medical3,
-/obj/machinery/light/smart,
-/obj/item/clothing/accessory/stethoscope,
-/turf/simulated/floor{
-	icon_state = "whitebluefull"
+/obj/structure/stool/bed/chair/office/dark{
+	dir = 8
 	},
-/area/station/medical/storage)
+/turf/simulated/floor/carpet,
+/area/station/tcommsat/computer)
 "umc" = (
 /obj/machinery/light/smart,
 /obj/effect/decal/turf_decal/metal{
@@ -114212,31 +114226,12 @@
 	},
 /area/station/hallway/primary/bridgehall)
 "vHC" = (
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 2
-	},
-/obj/item/weapon/storage/firstaid/regular,
-/obj/structure/table/glass,
-/obj/machinery/camera{
-	c_tag = "Medbay Storage";
-	network = list("SS13","Medical")
-	},
-/obj/machinery/alarm{
+/obj/machinery/suit_storage_unit/nasa{
+	filled = 1;
 	pixel_y = 22
 	},
-/obj/machinery/light/smart{
-	dir = 1
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/storage)
+/turf/simulated/floor/carpet,
+/area/station/tcommsat/computer)
 "vHF" = (
 /obj/random/vending/snack,
 /turf/simulated/floor{
@@ -121354,22 +121349,9 @@
 	},
 /area/station/security/prison)
 "xcK" = (
-/obj/structure/rack,
-/obj/item/weapon/storage/box/flashbangs{
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/box/teargas{
-	pixel_y = 4
-	},
-/obj/item/weapon/storage/box/teargas,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/machinery/door/window/brigdoor{
-	name = "Weapons locker"
+/obj/machinery/suit_storage_unit/security{
+	filled = 1;
+	pixel_y = 22
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -122296,9 +122278,6 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "xnc" = (
-/obj/structure/stool/bed/chair/office/dark{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 8
 	},
@@ -125109,15 +125088,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "xTj" = (
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
+/obj/machinery/alarm{
+	pixel_y = 22
 	},
-/obj/machinery/suit_storage_unit/science{
-	filled = 1
+/obj/machinery/vending/firstaid,
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
 	},
-/turf/simulated/floor,
-/area/station/rnd/telesci)
+/area/station/medical/storage)
 "xTn" = (
 /obj/structure/window/fulltile{
 	grilled = 1;
@@ -125490,13 +125468,14 @@
 	},
 /area/station/storage/primary)
 "xYw" = (
-/obj/machinery/computer/telecomms/monitor{
-	network = list("tcommsat")
-	},
 /obj/item/device/radio/intercom{
 	freerange = 1;
 	name = "General Listening Channel";
 	pixel_x = -28
+	},
+/obj/machinery/suit_storage_unit/nasa{
+	filled = 1;
+	pixel_y = 22
 	},
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
@@ -157573,7 +157552,7 @@ bMg
 dKv
 drp
 tFR
-ikF
+wYR
 dKv
 frD
 ije
@@ -158411,7 +158390,7 @@ pTI
 vSP
 kFx
 yfW
-gTI
+kZy
 hPM
 lfx
 dtp
@@ -158668,7 +158647,7 @@ nKZ
 uam
 eEL
 sJM
-kZy
+aRJ
 myE
 lGr
 dtp
@@ -164302,7 +164281,7 @@ tJq
 kgG
 sxz
 frG
-adU
+xTj
 wpL
 bts
 pXN
@@ -164555,11 +164534,11 @@ pbx
 ewp
 uIt
 nGQ
-vHC
+tJq
 uCS
 apM
 woi
-umb
+gTI
 yag
 lBt
 tJj
@@ -164811,12 +164790,12 @@ fOg
 nRY
 vnJ
 qdm
-sdI
+nGQ
 cHW
 oKq
 hAw
 cmx
-hbf
+adU
 iBM
 kCT
 dgo
@@ -165073,7 +165052,7 @@ rBI
 kFN
 irf
 xLK
-jBw
+hbf
 iBM
 mrT
 kRm
@@ -169363,7 +169342,7 @@ vnQ
 nKa
 sZp
 bWK
-nvx
+iir
 qaQ
 wHy
 kmg
@@ -169458,7 +169437,7 @@ gNJ
 iCl
 kQE
 aby
-xTj
+ikF
 ryb
 oMk
 tbe
@@ -170228,7 +170207,7 @@ juu
 brf
 qaE
 lsq
-kZV
+aby
 cNa
 ssf
 msB
@@ -180217,7 +180196,7 @@ uef
 uef
 oPY
 aSP
-aRJ
+pZt
 umi
 lXA
 lXA
@@ -180473,8 +180452,8 @@ vZa
 uef
 xYw
 xnc
-teT
-teT
+umb
+umb
 apt
 kKg
 lXA
@@ -180728,7 +180707,7 @@ yce
 tnp
 pNQ
 uef
-pZt
+vHC
 xnc
 vME
 rTV

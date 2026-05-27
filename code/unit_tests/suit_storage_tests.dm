@@ -1,15 +1,40 @@
 /datum/unit_test/suit_storage_unit_test_full
-	name = "SUIT STORAGE: TEST FULL"
+	name = "SUIT STORAGE: TEST ALL FULL"
 
 /datum/unit_test/suit_storage_unit_test_full/start_test()
-	var/obj/machinery/suit_storage_unit/test_unit/ssu = new
-	ssu.filled = TRUE
-	ssu.make_full()
-
-	if(!ssu.contents.len)
-		fail("SSU didn`t make themself full wtf")
+	var/list/error_list = list()
+	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
+		var/obj/machinery/suit_storage_unit/test_unit/ssu = new typepath
+		ssu.filled = TRUE
+		ssu.make_full()
+		if(!length(ssu.contents))
+			error_list += ssu.name
+	if(length(error_list))
+		fail("Total SSU errors: [length(error_list)]")
+		for(var/target in error_list)
+			fail("[target]: didn`t make themself full wtf")
 	else
 		pass("SSU successfully make full themself")
+
+/datum/unit_test/suit_storage_unit_test_dell
+	name = "SUIT STORAGE: TEST ANY UNIT CAN DELETE"
+
+/datum/unit_test/suit_storage_unit_test_dell/start_test()
+	var/error_list = list()
+
+	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
+		var/obj/machinery/suit_storage_unit/test_unit/ssu = new typepath
+		ssu.Destroy()
+		if(ssu)
+			error_list += ssu
+
+	if(length(error_list))
+		fail("TEST ANY UNIT CAN DELETE: TOTAL ERRORS [length(error_list)]")
+		for(var/target in error_list)
+			fail("[target]: didn`t Destroy() themself")
+	else
+		pass("All units successfuly Destroy() themself")
+
 
 /datum/unit_test/suit_storage_unit_test_duv
 	name = "SUIT STORAGE: TEST DEFAULT UV CLEAR"
@@ -41,7 +66,7 @@
 	new /mob/living/carbon/human (ssu)
 
 	ssu.super_ultra_violet_cleaning()
-	if(ssu.contents.len)
+	if(length(ssu.contents))
 		fail("SSU didnt destroy all in contents")
 	else
 		pass("SSU successfully destroy all in contents")

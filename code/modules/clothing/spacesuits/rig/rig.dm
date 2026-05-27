@@ -419,25 +419,12 @@
 	..()
 	var/old_wearer = wearer
 	wearer = null
-	var/mob/living/carbon/human/H
 
 	if(helmet)
-		H = helmet.loc
-		if(istype(H))
-			if(helmet && H.head == helmet)
-				helmet.canremove = 1
-				var/dropped_helmet = helmet
-				H.drop_from_inventory(helmet)
-				helmet = dropped_helmet		//attach the helmet back to the suit
-				helmet.loc = src
+		toggle_helmet()
 
 	if(boots)
-		H = boots.loc
-		if(istype(H))
-			if(boots && H.shoes == boots)
-				boots.canremove = 1
-				H.drop_from_inventory(boots)
-				boots.loc = src
+		toggle_magboots()
 
 	if(old_wearer)
 		update_overlays(old_wearer)
@@ -462,7 +449,7 @@
 
 	var/mob/living/carbon/human/H = usr
 
-	if(!istype(H)) return
+	if(!ishuman(H)) return
 	if(H.incapacitated()) return
 	if(H.wear_suit != src) return
 
@@ -498,7 +485,7 @@
 
 	var/mob/living/carbon/human/H = usr
 
-	if(!istype(H)) return
+	if(!ishuman(H)) return
 	if(H.incapacitated())
 		return
 	if(H.wear_suit != src) return
@@ -626,7 +613,7 @@
 	to_chat(user, "You detach \the [cell] from \the [src]'s battery mount.")
 	for(var/obj/item/rig_module/module in installed_modules)
 		module.deactivate()
-	cell.updateicon()
+	cell.update_icon()
 	user.put_in_hands(cell)
 	cell = null
 

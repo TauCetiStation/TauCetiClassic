@@ -1,15 +1,15 @@
 
-#define POSSIBLE_TO_LOAD(something) something && (istype(something, /obj/item/weapon/grab) || isspacesuit(something)||(isspacehelmet(something) && !ishardhelmet(something))||isbreathmask(something)||ismagboots(something)||istank(something)||iscarbon(something))
+#define POSSIBLE_TO_LOAD(something) something && (isspacesuit(something)||(isspacehelmet(something) && !ishardhelmet(something))||isbreathmask(something)||ismagboots(something)||istank(something)||iscarbon(something))
 
 /obj/machinery/suit_storage_unit
 	name = "Suit Storage Unit"
 	desc = "An industrial U-Stor-It Storage unit designed to accomodate all kinds of space suits. Its on-board equipment also allows the user to decontaminate the contents through a ultra_violet-ray purging cycle. There's a warning label dangling from the control pad, reading \"STRICTLY NO BIOLOGICALS IN THE CONFINES OF THE UNIT\"."
 	icon = 'icons/obj/suitstorage.dmi'
 	icon_state = "suitholder"
+	var/type_icon_state
 	damage_deflection = 25
 	idle_power_usage = 10
 	anchored = TRUE
-	density = TRUE
 
 	var/build_type = SUIT_STORAGE_BUILD_DEFAULT
 	var/opened = FALSE
@@ -63,7 +63,7 @@
 	ssu_right?.update_connectors()
 
 /obj/machinery/suit_storage_unit/proc/make_full()
-	if(!contents?.len)
+	if(!length(contents))
 		if(suit_type)
 			new suit_type(src)
 		if(helmet_type)
@@ -84,7 +84,7 @@
 
 	if(target.loc != src)
 		return
-	if(!(contents?.len - 1)) // - 1 тк в родителе мы помещаем хумана внутрь шкафа и он тоже считается в контентс
+	if(!(length(contents) - 1)) // - 1 тк в родителе мы помещаем хумана внутрь шкафа и он тоже считается в контентс
 		to_chat(target, "<span class ='danger'>There are nothing here for you.</span>")
 	if(emagged)
 		start_ultra_violet(user)
@@ -92,18 +92,33 @@
 
 /obj/machinery/suit_storage_unit/proc/fast_equip(mob/living/target)
 	for(var/obj/item/something in contents)
-		switch(something.slot_flags)
-			if(SLOT_FLAGS_MASK)
-				target?.equip_to_slot_if_possible(something, SLOT_WEAR_MASK, disable_warning = TRUE)
-			if(SLOT_FLAGS_FEET)
-				target?.equip_to_slot_if_possible(something, SLOT_SHOES, disable_warning = TRUE)
-			if(SLOT_FLAGS_BACK)
-				if(!target?.equip_to_slot_if_possible(something, SLOT_S_STORE, disable_warning = TRUE))
-					target?.equip_to_slot_if_possible(something, SLOT_BACK)
-			if(SLOT_FLAGS_OCLOTHING)
-				target?.equip_to_slot_if_possible(something, SLOT_WEAR_SUIT, disable_warning = TRUE)
-			if(SLOT_FLAGS_HEAD)
-				target?.equip_to_slot_if_possible(something, SLOT_HEAD, disable_warning = TRUE)
+		if(do_after(target, 0.1 SECONDS, FALSE, src))
+			switch(something.slot_flags)
+				if(SLOT_FLAGS_MASK)
+					target?.equip_to_slot_if_possible(something, SLOT_WEAR_MASK, disable_warning = TRUE)
+				if(SLOT_FLAGS_FEET)
+					target?.equip_to_slot_if_possible(something, SLOT_SHOES, disable_warning = TRUE)
+				if(SLOT_FLAGS_BACK)
+					if(!target?.equip_to_slot_if_possible(something, SLOT_S_STORE, disable_warning = TRUE))
+						target?.equip_to_slot_if_possible(something, SLOT_BACK)
+				if(SLOT_FLAGS_OCLOTHING)
+					target?.equip_to_slot_if_possible(something, SLOT_WEAR_SUIT, disable_warning = TRUE)
+				if(SLOT_FLAGS_HEAD)
+					target?.equip_to_slot_if_possible(something, SLOT_HEAD, disable_warning = TRUE)
+			playsound(src, 'sound/misc/riginternaloff.ogg', VOL_EFFECTS_MASTER, 15)
+	for(var/atom/movable/something in contents) // if something didn`t equiped, drop it and set free occupant
+		dispense(something)
+
+	if(locked)
+		locked = FALSE
+	if(!opened)
+		open()
+
+	update_icon()
+
+/obj/machinery/suit_storage_unit/proc/fast_unequip(mob/living/target)
+	for(var/obj/item/something in target.contents)
+		load_something(something, target)
 
 /obj/machinery/suit_storage_unit/proc/update_connectors()
 	if(length(connectors_overlays))
@@ -115,14 +130,14 @@
 	var/mutable_appearance/I
 	ssu_left = locate(/obj/machinery/suit_storage_unit) in get_step(src, WEST)
 	if(!QDELETED(ssu_left))
-		I = mutable_appearance(icon_state = "left_connect")
+		I = mutable_appearance(icon_state = "left_connect_[type_icon_state]")
 		if(overlay_color)
 			I.color = overlay_color
 		connectors_overlays += I
 
 	ssu_right = locate(/obj/machinery/suit_storage_unit) in get_step(src, EAST)
 	if(!QDELETED(ssu_right))
-		I = mutable_appearance(icon_state = "right_connect")
+		I = mutable_appearance(icon_state = "right_connect_[type_icon_state]")
 		if(overlay_color)
 			I.color = overlay_color
 		connectors_overlays += I
@@ -134,22 +149,21 @@
 		cut_overlay(suit_storage_overlays)
 		LAZYCLEARLIST(suit_storage_overlays)
 	update_connectors(suit_storage_overlays)
-	if(contents?.len)
-		for(var/atom/target in contents)
-			if(ishardsuit(target))
-				var/obj/item/clothing/suit/space/rig/rig_suit = target
-				if(rig_suit?.helmet)
-					suit_storage_overlays += mutable_appearance(icon_state = "suit&helmet")
-				if(rig_suit?.boots)
-					suit_storage_overlays += mutable_appearance(icon_state = "boots")
-			else if(ismagboots(target))
+	for(var/atom/target in contents)
+		if(ishardsuit(target))
+			var/obj/item/clothing/suit/space/rig/rig_suit = target
+			if(rig_suit?.helmet)
+				suit_storage_overlays += mutable_appearance(icon_state = "suit&helmet")
+			if(rig_suit?.boots)
 				suit_storage_overlays += mutable_appearance(icon_state = "boots")
-			else if(isspacehelmet(target))
-				suit_storage_overlays += mutable_appearance(icon_state = "helmet")
-			else if(isspacesuit(target))
-				suit_storage_overlays += mutable_appearance(icon_state = "suit")
+		else if(ismagboots(target))
+			suit_storage_overlays += mutable_appearance(icon_state = "boots")
+		else if(isspacehelmet(target))
+			suit_storage_overlays += mutable_appearance(icon_state = "helmet")
+		else if(isspacesuit(target))
+			suit_storage_overlays += mutable_appearance(icon_state = "suit")
 
-	var/mutable_appearance/door_I = mutable_appearance(icon_state = "[opened ? "door_open" : "door_closed"]")
+	var/mutable_appearance/door_I = mutable_appearance(icon_state = "[opened ? "door_open_[type_icon_state]" : "door_closed_[type_icon_state]"]")
 	var/mutable_appearance/unit_color = mutable_appearance(icon_state = "[stat & BROKEN ? "suitholder_broken_color" : "suitholder_color"]")
 	if(overlay_color)
 		door_I.color = overlay_color
@@ -164,7 +178,7 @@
 	else
 		suit_storage_overlays += door_I
 	if(stat & BROKEN)
-		icon_state = "suitholder_broken"
+		icon_state = "suitholder_broken_[type_icon_state]"
 	if(ultra_violet && !super_ultra_violet)
 		suit_storage_overlays += door_I
 		suit_storage_overlays += mutable_appearance(icon_state = "lock_closed")
@@ -255,12 +269,21 @@
 	return TRUE
 
 /obj/machinery/suit_storage_unit/proc/start_ultra_violet(mob/user)
+	if(ultra_violet)
+		return
+	if(stat & (BROKEN | NOPOWER))
+		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
+		return
+	if(!allowed(user))
+		to_chat(user, "<span class='notice'>Access Denied</span>")
+		return
 	if(occupant && !super_ultra_violet)
 		to_chat(user, "<span class = 'danger'><B>WARNING:</B> Biological entity detected in the confines of the Unit's storage. Cannot initiate cycle.</span>")
 		return
-	if(!contents?.len)
+	if(!length(contents))
 		to_chat(user, "<span class ='danger'>Unit storage bays empty. Nothing to disinfect -- Aborting.</span>")
 		return
+
 	to_chat(user, "You start the Unit's cauterisation cycle.")
 	if(opened)
 		close()
@@ -286,22 +309,20 @@
 		else
 			super_ultra_violet_cleaning()
 
-		locked ? toggle_lock() : FALSE // anyway it may be unlocked
+		locked = FALSE // anyway it may be unlocked
 		open()
 		ultra_violet = FALSE //Cycle ends
 		update_icon()
 		return TRUE
 
 /obj/machinery/suit_storage_unit/proc/default_ultra_violet_cleaning()
-	if(contents?.len)
-		for(var/obj/item/target in contents) // we cand ultra_violeting only items
-			target.clean_blood()
-			target.decontaminate()
+	for(var/obj/item/target in contents) // we cand ultra_violeting only items
+		target.clean_blood()
+		target.decontaminate()
 
 /obj/machinery/suit_storage_unit/proc/super_ultra_violet_cleaning()
-	if(contents?.len)
-		for(var/atom/target as anything in contents)
-			QDEL_NULL(target)
+	for(var/atom/target as anything in contents)
+		QDEL_NULL(target)
 	playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
 	stat |= BROKEN
 	visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
@@ -317,11 +338,10 @@
 		visible_message("You see [user] kicking against the doors of the [src]!")
 		if(do_after(user, 2 MINUTE, target = src))
 			visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
-	locked ? toggle_lock() : FALSE // anyway it may be unlocked
+	locked = FALSE // anyway it may be unlocked
 	open()
 	eject_occupant(user)
 	add_fingerprint(user)
-	update_icon()
 	return
 
 /obj/machinery/suit_storage_unit/MouseDrop_T(atom/something, mob/user)
@@ -339,16 +359,7 @@
 
 /obj/machinery/suit_storage_unit/AltClick(mob/user)
 	add_fingerprint(user)
-	if(stat & (BROKEN | NOPOWER))
-		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
-		return
-	if(ultra_violet)
-		return
-	if(!allowed(user))
-		to_chat(user, "<span class='notice'>Access Denied</span>")
-		return
-	if((!opened && !locked) || emagged)
-		start_ultra_violet(user)
+	start_ultra_violet(user)
 
 /obj/machinery/suit_storage_unit/CtrlClick(mob/user)
 	add_fingerprint(user)
@@ -358,7 +369,6 @@
 	if(ultra_violet)
 		return
 	opened ? close() : open(user)
-	update_icon()
 
 /obj/machinery/suit_storage_unit/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -368,40 +378,32 @@
 	if(stat & BROKEN)
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
-	if(user.loc == src && ishuman(user))
-		var/list/options = list()
-		if(!(contents?.len - 1))
-			options += "Fast Uneqip"
-		else
-			options += "Fast Eqip"
-		if(length(options))
-			var/choosen_option = show_radial_menu(user, src, options, require_near = TRUE, tooltips = TRUE)
-			switch(choosen_option)
-				if("Fast Uneqip")
-					for(var/obj/item/something in user.contents)
-						load_something(something, user)
-				if("Fast Eqip")
-					fast_equip(user)
-					for(var/atom/movable/something in contents)
-						dispense(something)
-					update_icon()
-			return
-	if(!opened)
-		toggle_lock(user)
-	else if(contents?.len)
-		var/list/suit_storage = list()
-		for(var/atom/movable/target in contents)
-			suit_storage[target] = image(getFlatIcon(target))
-		var/atom/movable/to_dispense = show_radial_menu(user, src, suit_storage, require_near = TRUE, tooltips = TRUE)
-		if(to_dispense)
-			dispense(to_dispense)
-			update_icon()
+
+	if(opened && ishuman(user))
+		var/list/options = list("Fast Uneqip", "Fast Eqip")
+		var/choosen_option = show_radial_menu(user, src, options, require_near = TRUE, tooltips = TRUE)
+		switch(choosen_option)
+			if("Fast Uneqip")
+				fast_unequip(user)
+			if("Fast Eqip")
+				fast_equip(user)
+			if(null)
+				if(length(contents))
+					var/list/suit_storage = list()
+					for(var/atom/movable/target in contents)
+						suit_storage[target] = target.appearance
+					var/atom/movable/to_dispense = show_radial_menu(user, src, suit_storage, require_near = TRUE, tooltips = TRUE)
+					if(to_dispense)
+						dispense(to_dispense)
 		return
 
 	if(!locked && !(stat & BROKEN))
 		opened ? close() : open(user)
-		update_icon()
 		return
+	if(!opened)
+		toggle_lock(user)
+		return
+
 
 /obj/machinery/suit_storage_unit/attackby(obj/item/I, mob/user)
 	if(user.loc == src || ultra_violet)
@@ -412,7 +414,7 @@
 
 	if(!opened)
 		toggle_lock(user)
-	else if(POSSIBLE_TO_LOAD(I))
+	else if(POSSIBLE_TO_LOAD(I) || istype(I, /obj/item/weapon/grab))
 		if(istype(I, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/grab = I
 			if(!ismob(grab.affecting) || grab.state < GRAB_AGGRESSIVE)
@@ -432,27 +434,29 @@
 	return
 
 /obj/machinery/suit_storage_unit/proc/load_something(atom/movable/something, mob/user, obj/grab = null)
-	if(contents?.len)
+	if(length(contents))
 		for(var/atom/target in contents)
 			if(istype(something, target))
 				to_chat(user, "<span class ='warning'>The unit already contains something like [something.name].</span>")
 				return FALSE
 
 	if(POSSIBLE_TO_LOAD(something))
-		to_chat(user, "You load the [something.name] into the storage compartment.")
-		user.drop_from_inventory(something, src)
+		if(do_after(user, 0.1 SECONDS, FALSE, src))
+			to_chat(user, "You load the [something.name] into the storage compartment.")
+			user.drop_from_inventory(something, src)
+			playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER, 15)
 	update_icon()
 	return TRUE
 
 /obj/machinery/suit_storage_unit/proc/dispense(atom/movable/selected)
-	if(!contents?.len)
-		return FALSE
 	for(var/atom/movable/target in contents)
 		if(target == selected)
 			if(!iscarbon(selected))
 				selected.forceMove(get_turf(src))
 			else
 				eject_occupant(target)
+		playsound(src, 'sound/misc/robot_open.ogg', VOL_EFFECTS_MASTER, 15)
+	update_icon()
 	return TRUE
 
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
@@ -475,6 +479,32 @@
 	update_icon()
 	return TRUE
 
+
+/obj/machinery/suit_storage_unit/verb/toggle_open_unit()
+	set category = "Object"
+	set name = "Toggle Open SSU"
+	set src in view(1)
+
+	opened ? close() : open()
+
+/obj/machinery/suit_storage_unit/verb/toggle_ultra_violet_cylce()
+	set category = "Object"
+	set name = "Toggle SSU Ultra violet Cylce"
+	set src in view(1)
+
+	start_ultra_violet()
+
+/obj/machinery/suit_storage_unit/verb/fast_move()
+	set category = "Object"
+	set name = "Fast Equip/Unequip"
+	if(ishuman(usr))
+		set src in view(1)
+
+	if(opened)
+		length(contents) ? fast_equip(usr) : fast_unequip(usr)
+
+#undef POSSIBLE_TO_LOAD
+
 //The units themselves
 //unit for unit tests
 /obj/machinery/suit_storage_unit/test_unit
@@ -490,6 +520,8 @@
 /obj/machinery/suit_storage_unit/abandoned
 	name = "Abandoned Storage Unit"
 	build_type =  SUIT_STORAGE_BUILD_NONE
+	icon_state = "suitholder_syndicate"
+	type_icon_state = "syndicate"
 
 /obj/machinery/suit_storage_unit/abandoned/atom_init()
 	if(!filled)
@@ -520,8 +552,8 @@
 	req_access = list(access_syndicate)
 	build_type =  SUIT_STORAGE_BUILD_SYNDIE
 	emagged = TRUE
-
-	overlay_color = COLOR_DARK_GUNMETAL
+	icon_state = "suitholder_syndicate"
+	type_icon_state = "syndicate"
 
 /obj/machinery/suit_storage_unit/syndicate_unit/light
 	name = "Syndicate Hardsuit Storage Unit"
@@ -572,7 +604,8 @@
 	mask_type = /obj/item/clothing/mask/gas/coloured
 	tank_type = /obj/item/weapon/tank/jetpack/carbondioxide
 
-	overlay_color = COLOR_VIOLET
+	icon_state = "suitholder_science"
+	type_icon_state = "science"
 
 /obj/machinery/suit_storage_unit/science/rd
 	name = "Researh Director Hardsuit Storage Unit"
@@ -580,7 +613,8 @@
 	suit_type = /obj/item/clothing/suit/space/rig/science/rd
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
-	overlay_color = COLOR_DARK_PURPLE
+	icon_state = "suitholder_RD"
+	type_icon_state = "RD"
 
 //Engine
 /obj/machinery/suit_storage_unit/engine
@@ -589,13 +623,17 @@
 	suit_type  = /obj/item/clothing/suit/space/rig/engineering
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
+	icon_state = "suitholder_engineer"
+	type_icon_state = "engineer"
+
 /obj/machinery/suit_storage_unit/engine/atmos
 	name = "Atmospheric Hardsuit Storage Unit"
 	req_access = list(access_atmospherics)
 	suit_type = /obj/item/clothing/suit/space/rig/atmos
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
-	overlay_color = COLOR_TEAL
+	icon_state = "suitholder_atmos"
+	type_icon_state = "atmos"
 
 /obj/machinery/suit_storage_unit/engine/chief
 	name = "Chief Engineer Hardsuit Storage Unit"
@@ -603,7 +641,8 @@
 	suit_type = /obj/item/clothing/suit/space/rig/engineering/chief
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
-	overlay_color = COLOR_TITANIUM
+	icon_state = "suitholder_CE"
+	type_icon_state = "CE"
 
 //Security
 /obj/machinery/suit_storage_unit/security
@@ -612,15 +651,14 @@
 	suit_type = /obj/item/clothing/suit/space/rig/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 
-	overlay_color = COLOR_CRIMSON
+	icon_state = "suitholder_HOS"
+	type_icon_state = "HOS"
 
 /obj/machinery/suit_storage_unit/security/hos
 	name = "Head of Security Hardsuit Storage Unit"
 	req_access = list(access_hos)
 	suit_type = /obj/item/clothing/suit/space/rig/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-
-	overlay_color = COLOR_CRIMSON_RED
 
 //Medical
 /obj/machinery/suit_storage_unit/medical
@@ -629,7 +667,8 @@
 	suit_type = /obj/item/clothing/suit/space/rig/medical
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
-	overlay_color = COLOR_CYAN
+	icon_state = "suitholder_med"
+	type_icon_state = "med"
 
 /obj/machinery/suit_storage_unit/medical/paramedic
 	name = "Paremedic Hardsuit Storage Unit"
@@ -643,7 +682,8 @@
 	suit_type = /obj/item/clothing/suit/space/rig/medical/cmo
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
-	overlay_color = COLOR_CYAN_BLUE
+	icon_state = "suitholder_CMO"
+	type_icon_state = "CMO"
 
 //Other
 /obj/machinery/suit_storage_unit/globose
@@ -653,7 +693,9 @@
 	mask_type = /obj/item/clothing/mask/breath
 	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/jetpack/carbondioxide
-	overlay_color = COLOR_SILVER
+
+	icon_state = "suitholder_civilian"
+	type_icon_state = "civilian"
 
 /obj/machinery/suit_storage_unit/globose/science
 	name = "Science Space Suit Storage Unit"
@@ -662,7 +704,6 @@
 	helmet_type = /obj/item/clothing/head/helmet/space/globose/science
 	tank_type = /obj/item/weapon/tank/oxygen
 
-	overlay_color = COLOR_PINK
 
 /obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist
 	name = "Xenoarchaeologist Space Suit Storage Unit"
@@ -674,39 +715,38 @@
 	helmet_type = /obj/item/clothing/head/helmet/space/globose/mining
 	tank_type = /obj/item/weapon/tank/oxygen
 
-	overlay_color = COLOR_BROWN
+	icon_state = "suitholder_miner"
+	type_icon_state = "miner"
 
-/obj/machinery/suit_storage_unit/skrell
+/obj/machinery/suit_storage_unit/globose/skrell
 	build_type =  SUIT_STORAGE_BUILD_NONE
 	mask_type = /obj/item/clothing/mask/gas/coloured
 	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/oxygen
 
-	overlay_color = COLOR_BLUE_LIGHT
 
-/obj/machinery/suit_storage_unit/skrell/white
+/obj/machinery/suit_storage_unit/globose/skrell/white
 	name = "White Skrellian Suit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/skrell/white
 	helmet_type = /obj/item/clothing/head/helmet/space/skrell/white
 
-/obj/machinery/suit_storage_unit/skrell/black
+/obj/machinery/suit_storage_unit/globose/skrell/black
 	name = "Black Skrellian Suit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/skrell/black
 	helmet_type = /obj/item/clothing/head/helmet/space/skrell/black
 
-/obj/machinery/suit_storage_unit/unathi
+/obj/machinery/suit_storage_unit/globose/unathi
 	build_type =  SUIT_STORAGE_BUILD_NONE
 	mask_type = /obj/item/clothing/mask/gas/coloured
 	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/oxygen
-	overlay_color = COLOR_SEAWEED
 
-/obj/machinery/suit_storage_unit/unathi/nt
+/obj/machinery/suit_storage_unit/globose/unathi/nt
 	name = "NT Unathi Suit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/unathi/rig_cheap
 	helmet_type = /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
 
-/obj/machinery/suit_storage_unit/unathi/breacher
+/obj/machinery/suit_storage_unit/globose/unathi/breacher
 	name = "Breacher Unathi Suit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/unathi/breacher
 	helmet_type = /obj/item/clothing/head/helmet/space/unathi/breacher
@@ -715,14 +755,14 @@
 /obj/machinery/suit_storage_unit/captain
 	name = "Captain Suit Storage Unit"
 	req_access = list(access_captain)
-	overlay_color = COLOR_COMMAND_BLUE
-
-/obj/machinery/suit_storage_unit/captain
 	suit_type = /obj/item/clothing/suit/armor/captain
 	helmet_type = /obj/item/clothing/head/helmet/space/capspace
 	mask_type = /obj/item/clothing/mask/gas/coloured
 	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen
+
+	icon_state = "suitholder_captan"
+	type_icon_state = "captan"
 
 /obj/machinery/suit_storage_unit/nasa
 	name = "NASA Suit Storage Unit"
@@ -733,7 +773,8 @@
 	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/jetpack/void
 
-	overlay_color = COLOR_GUNMETAL
+	icon_state = "suitholder_NASA"
+	type_icon_state = "NASA"
 
 /obj/machinery/suit_storage_unit/wizard
 	build_type =  SUIT_STORAGE_BUILD_NONE
@@ -743,7 +784,8 @@
 	tank_type = /obj/item/weapon/tank/emergency_oxygen/double
 	req_access = list(access_syndicate)
 
-	overlay_color = COLOR_DARK_PURPLE
+	icon_state = "suitholder_mage"
+	type_icon_state = "mage"
 
 /obj/machinery/suit_storage_unit/vox
 	build_type =  SUIT_STORAGE_BUILD_NONE
@@ -753,7 +795,15 @@
 	req_access = list(access_syndicate)
 
 /obj/machinery/suit_storage_unit/vox/atom_init()
-	overlay_color = pick(COLOR_BLUE, COLOR_BROWN, COLOR_DARK_GRAY, COLOR_ADMIRAL_BLUE, COLOR_CRIMSON, COLOR_CYAN_BLUE)
+	var/list/icon_types_option = list()
+	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
+		icon_types_option += typepath::type_icon_state
+	if(length(icon_types_option))
+		var/new_icon = pick(icon_types_option)
+		icon_state = "suitholder_[new_icon]"
+		type_icon_state = new_icon
+		QDEL_NULL(new_icon)
+	QDEL_LIST(icon_types_option)
 	return ..()
 
 /obj/machinery/suit_storage_unit/vox/carapace
