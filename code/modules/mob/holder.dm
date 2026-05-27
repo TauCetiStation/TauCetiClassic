@@ -202,7 +202,7 @@
 		if(!do_mob(user, H))
 			return FALSE
 		H.log_combat(user, "fed [name], reagents: [reagent_list_text()] (INTENT: [uppertext(user.a_intent)])")
-		H.visible_message("<span class='rose'>[user] скармливает [H] [src].</span>", \
+		H.visible_message("<span class='rose'>[user] скармливает [H] [CASE(src, ACCUSATIVE_CASE)].</span>", \
 			"<span class='warning'><B>[user]</B> скармливает вам <B>[src]</B>.</span>")
 
 	playsound(H, 'sound/items/eatfood.ogg', VOL_EFFECTS_MASTER, rand(20, 50))
