@@ -166,7 +166,7 @@
 	var/mob/living/carbon/human/H = M
 	if(!istype(H) || !(H.species.name in list(TAJARAN, UNATHI, VOX)))
 		if(M == user)
-			to_chat(user, "<span class='warning'>Вам противно есть \the [src].</span>")
+			to_chat(user, "<span class='warning'>Вам противно есть [CASE(src, GENITIVE_CASE)].</span>")
 		else
 			to_chat(user, "<span class='warning'>[M] не выглядит заинтересованным в поедании \the [src].</span>")
 		return FALSE
