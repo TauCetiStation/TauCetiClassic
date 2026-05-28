@@ -260,7 +260,7 @@
 	// checks that the data string does not contain anything besides the hex colors
 	ASSERT(!r.Find(data))
 
-	world.ext_python("create_png.py", "'[png_filename]' '[width]' '[height]' '[data]'")
+	world.ext_python("create_png.py", "'[png_filename]' '[width]' '[height]' '[data]' 'RGB'")
 	generated_icon = new(png_filename)
 	fdel(png_filename) // don't need this anymore
 	icon_generated = TRUE
@@ -339,3 +339,236 @@
 	pixel_y = 9
 	framed_offset_x = 5
 	framed_offset_y = 3
+
+
+
+/obj/structure/statue
+	name = "statue"
+	cases = list("скульптура", "скульптуры", "скульптуре", "скульптуру", "скульптурой", "скульптуре")
+
+	icon = 'icons/obj/artstuff.dmi'
+	icon_state = "statue_empty"
+	w_class = SIZE_HUMAN
+	anchored = FALSE
+	density = FALSE
+
+	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
+
+	var/list/grid
+	var/finished = FALSE
+
+	var/width = 16
+	var/height = 28
+
+	var/used = FALSE
+	var/statue_name = "Untitled Artwork" //Painting name, this is set after framing.
+	var/icon_generated = FALSE
+	var/icon/generated_icon
+
+	var/material_color
+	var/brighter_color
+	var/darker_color
+
+/obj/structure/statue/examine(mob/user)
+	. = ..()
+	to_chat(user, "Подпись на пьедестале: '[statue_name]'")
+
+/obj/structure/statue/proc/reset_grid(new_color)
+	used = TRUE
+	density = TRUE
+	material_color = new_color
+	brighter_color = color_shift_luminance(new_color, 30)
+	darker_color = color_shift_luminance(new_color, -30)
+
+	grid = new/list(width, height)
+	for(var/x in 1 to width)
+		for(var/y in 1 to height)
+			if(x == 1 || y == 1)
+				grid[x][y] = brighter_color
+			else if(x == width || y == height)
+				grid[x][y] = darker_color
+			else
+				grid[x][y] = material_color
+
+	update_overlays()
+
+/obj/structure/statue/tgui_state(mob/user)
+	if(finished)
+		return global.physical_obscured_state
+	else
+		return global.tgui_default_state
+
+/obj/structure/statue/ui_interact(mob/user, datum/tgui/ui)
+	if(!finished)
+		tgui_interact(user)
+
+/obj/structure/statue/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Canvas", name)
+		ui.set_autoupdate(FALSE)
+		ui.open()
+
+/obj/structure/statue/attackby(obj/item/I, mob/living/user, params)
+	if(!grid && istype(I, /obj/item/stack/sheet/metal))
+		var/obj/item/stack/sheet/metal/sheet = I
+		if(!sheet.use(10))
+			return
+
+		reset_grid("#a1a1a5")
+		return
+
+	if(!grid && istype(I, /obj/item/stack/sheet/mineral/gold))
+		var/obj/item/stack/sheet/metal/sheet = I
+		if(!sheet.use(10))
+			return
+
+		reset_grid("#ffc20e")
+		return
+
+	if(!grid && istype(I, /obj/item/stack/sheet/mineral/phoron))
+		var/obj/item/stack/sheet/metal/sheet = I
+		if(!sheet.use(10))
+			return
+
+		reset_grid("#da3999")
+		return
+
+	if(!grid && istype(I, /obj/item/stack/sheet/mineral/uranium))
+		var/obj/item/stack/sheet/metal/sheet = I
+		if(!sheet.use(10))
+			return
+
+		reset_grid("#4c7a43")
+		return
+
+	if(!grid && istype(I, /obj/item/stack/sheet/mineral/sandstone))
+		var/obj/item/stack/sheet/metal/sheet = I
+		if(!sheet.use(10))
+			return
+
+		reset_grid("#d0bfa0")
+		return
+
+	if(user.a_intent == INTENT_HELP)
+		ui_interact(user)
+	else
+		return ..()
+
+/obj/structure/statue/tgui_data(mob/user)
+	. = ..()
+	.["grid"] = grid
+	.["name"] = statue_name
+	.["finalized"] = finished
+
+/obj/structure/statue/tgui_act(action, params)
+	. = ..()
+	if(. || finished)
+		return
+	var/mob/user = usr
+	switch(action)
+		if("paint")
+			var/obj/item/I = user.get_active_hand()
+			if(!I || !iscutter(I))
+				return
+
+			var/x = text2num(params["x"])
+			var/y = text2num(params["y"])
+
+			if(x < 1 || x > width || y < 1 || y > height)
+				return
+
+			chip_square(x, y)
+
+			used = TRUE
+			update_overlays()
+			. = TRUE
+
+		if("finalize")
+			. = TRUE
+			finish(user)
+
+/obj/structure/statue/proc/chip_square(x, y)
+	var/square_color = grid[x][y]
+
+	if(square_color == "#000000")
+		return
+
+	if(square_color == darker_color)
+		grid[x][y] = "#000000"
+
+		if(check_in_grid(x - 1, y))
+			if(grid[x - 1][y] == material_color)
+				grid[x - 1][y] = darker_color
+
+		if(check_in_grid(x, y - 1))
+			if(grid[x][y - 1] == material_color)
+				grid[x][y - 1] = darker_color
+
+	if((square_color == material_color) || (square_color == brighter_color))
+		grid[x][y] = darker_color
+
+	if(check_in_grid(x + 1, y))
+		if(grid[x + 1][y] == material_color)
+			grid[x + 1][y] = brighter_color
+
+	if(check_in_grid(x, y + 1))
+		if(grid[x][y + 1] == material_color)
+			grid[x][y + 1] = brighter_color
+
+/obj/structure/statue/proc/check_in_grid(x, y)
+	return (x >= 1) && (x <= width) && (y >= 1) && (y <= height)
+
+/obj/structure/statue/proc/finish(mob/user)
+	finished = TRUE
+	generate_proper_overlay()
+	try_rename(user)
+
+/obj/structure/statue/proc/update_overlays()
+	cut_overlays()
+	if(icon_generated)
+		var/mutable_appearance/detail = mutable_appearance(generated_icon)
+		detail.appearance_flags = KEEP_TOGETHER
+		detail.pixel_x = round((32 - width) / 2)
+		detail.pixel_y = 5
+		add_overlay(detail)
+		return
+	if(!used)
+		return
+
+	var/mutable_appearance/detail = mutable_appearance(icon, "statue_wip")
+	detail.appearance_flags = KEEP_TOGETHER
+	add_overlay(detail)
+	. += detail
+
+/obj/structure/statue/proc/generate_proper_overlay()
+	if(icon_generated)
+		return
+	var/data = get_data_string()
+	var/png_filename = "cache/paintings/painting[md5(lowertext(data))].png"
+	ASSERT(isnum(width))
+	ASSERT(isnum(height))
+
+	var/static/regex/r = regex(@"^(?!.*#[0-9a-fA-F]{8}$).*$", "g")
+	// checks that the data string does not contain anything besides the hex colors
+	ASSERT(!r.Find(data))
+
+	world.ext_python("create_png.py", "'[png_filename]' '[width]' '[height]' '[data]' 'RGBA'")
+	generated_icon = new(png_filename)
+	fdel(png_filename) // don't need this anymore
+	icon_generated = TRUE
+	update_overlays()
+
+/obj/structure/statue/proc/get_data_string()
+	var/list/data = list()
+	for(var/y in 1 to height)
+		for(var/x in 1 to width)
+			data += (grid[x][y] + (grid[x][y] == "#000000" ? "00" : "ff"))
+	return data.Join("")
+
+/obj/structure/statue/proc/try_rename(mob/user)
+	var/new_name = sanitize(input(user, "Как вы хотите назвать скульптуру?", "Скульптура", null) as text, MAX_NAME_LEN)
+	if(new_name != statue_name && new_name && Adjacent(user))
+		statue_name = new_name
+		SStgui.update_uis(src)

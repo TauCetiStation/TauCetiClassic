@@ -165,6 +165,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 	new/datum/stack_recipe("ballot box", /obj/structure/ballot_box, 4, time = 50, max_per_place = 1, build_outline = TRUE),
 	new/datum/stack_recipe("park chair", /obj/structure/stool/bed/chair/park, 2, time = 50, max_per_place = 1, build_outline = TRUE),
 	new/datum/stack_recipe("park table", /obj/structure/table/park_table, 4, time = 50, max_per_place = 1, build_outline = TRUE),
+	new/datum/stack_recipe("statue pedestal", /obj/structure/statue, 3, time = 50, max_per_place = 1, build_outline = TRUE),
 //	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, max_per_place = FALSE, build_outline = FALSE)
 	)
 

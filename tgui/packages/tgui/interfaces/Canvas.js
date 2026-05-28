@@ -90,7 +90,7 @@ export const Canvas = (props, context) => {
   return (
     <Window
       width={Math.min(700, width * dotsize + 72)}
-      height={Math.min(700, height * dotsize + 72)}>
+      height={Math.min(1000, height * dotsize + 72)}>
       <Window.Content>
         <Box textAlign="center">
           <PaintCanvas
@@ -102,20 +102,24 @@ export const Canvas = (props, context) => {
           />
           <Box width="80%" textAlign="center">
             <Box width="50%" inline position="absolute" left="5px">
-              <Box width="50%" inline>
-                Draw size:
-              </Box>
-              <Slider
-                width="50%"
-                value={data.draw_size}
-                minValue={1}
-                maxValue={3}
-                step={1}
-                stepPixelSize={50}
-                onChange={(_e, value) => {
-                  act('change_size', { size: value });
-                }}
-              />
+              {!!data.draw_size && (
+                <>
+                  <Box width="50%" inline>
+                    Draw size:
+                  </Box>
+                  <Slider
+                    width="50%"
+                    value={data.draw_size}
+                    minValue={1}
+                    maxValue={3}
+                    step={1}
+                    stepPixelSize={50}
+                    onChange={(_e, value) => {
+                      act('change_size', { size: value });
+                    }}
+                  />
+                </>
+              )}
             </Box>
             <Box width="50%" inline position="absolute" right="5%">
               {!data.finalized && (

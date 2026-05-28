@@ -15,17 +15,28 @@ def main():
 	width = int(sys.argv[2].strip("'"))
 	height = int(sys.argv[3].strip("'"))
 	data = sys.argv[4].strip("'")
+	colorcode = sys.argv[5].strip("'")
 
-	if(len(data) % 7 != 0):
-		print('Wrong image data format', file=sys.stderr)
-		sys.exit(1)
 
-	result = []
-	for i in range(0, len(data), 7):
-		result.append((int(data[i+1:i+3], 16), int(data[i+3:i+5], 16), int(data[i+5:i+7], 16)))
+	if colorcode == "RGB":
+		if(len(data) % 7 != 0):
+			print('Wrong image data format', file=sys.stderr)
+			sys.exit(1)
+
+		result = []
+		for i in range(0, len(data), 7):
+			result.append((int(data[i+1:i+3], 16), int(data[i+3:i+5], 16), int(data[i+5:i+7], 16)))
+	else:
+		if(len(data) % 9 != 0):
+			print('Wrong image data format', file=sys.stderr)
+			sys.exit(1)
+
+		result = []
+		for i in range(0, len(data), 9):
+			result.append((int(data[i+1:i+3], 16), int(data[i+3:i+5], 16), int(data[i+5:i+7], 16), int(data[i+7:i+9], 16)))
 
 	try:
-		img = Image.new('RGB', (width, height))
+		img = Image.new(colorcode, (width, height))
 		img.putdata(result)
 		os.makedirs(os.path.dirname(path), exist_ok=True)
 		img.save(path)
@@ -34,7 +45,7 @@ def main():
 		sys.exit(1)
 
 if __name__ == "__main__":
-	if(len(sys.argv) != 5):
+	if(len(sys.argv) != 6):
 		print(f'Wrong argument amount: {len(sys.argv)}, {sys.argv}', file=sys.stderr)
 		sys.exit(1)
 	main()
