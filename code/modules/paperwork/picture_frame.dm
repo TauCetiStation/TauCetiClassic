@@ -4,13 +4,13 @@
 
 /obj/item/weapon/picture_frame
 	name = "picture frame"
-	desc = "The perfect showcase for your favorite memories."
-	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "wooden_frame_item"
+	cases = list("фоторамка", "фоторамки", "фоторамке", "фоторамку", "фоторамкой", "фоторамке")
+	desc = "Рамка для картин или фотографий."
+	icon = 'icons/obj/artstuff.dmi'
+	icon_state = "wooden_frame"
 	w_class = SIZE_TINY
-	var/obj/item/weapon/photo/displayed
+	var/obj/item/displayed
 	var/frame_type = /obj/structure/picture_frame/wooden
-	var/frame_glass = FALSE
 
 /obj/item/weapon/picture_frame/Destroy()
 	. = ..()
@@ -22,20 +22,22 @@
 
 /obj/item/weapon/picture_frame/metal
 	name = "metal picture frame"
-	desc = "The perfect shiny showcase for your favorite memories."
-	icon_state = "metal_frame_item"
+	icon_state = "metal_frame"
 	frame_type = /obj/structure/picture_frame/metal
 
 /obj/item/weapon/picture_frame/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/photo))
+	if(istype(I, /obj/item/weapon/photo) || istype(I, /obj/item/canvas))
 		if(!displayed)
-			var/obj/item/weapon/photo/Photo = I
-			user.unEquip(Photo)
-			Photo.forceMove(src)
-			displayed = Photo
+			if(istype(I, /obj/item/canvas))
+				var/obj/item/canvas/Canvas = I
+				if(!Canvas.finalized)
+					return
+			user.unEquip(I)
+			I.forceMove(src)
+			displayed = I
 			update_icon()
 		else
-			to_chat(user, "<span class='notice'>\The [src] already contains a photo.</span>")
+			to_chat(user, "<span class='notice'>\The [src] already contains a picture.</span>")
 		return
 	if(iswrenching(I))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
@@ -47,27 +49,6 @@
 			C.forceMove(get_turf(src))
 		qdel(src)
 		return
-	if(istype(I, /obj/item/stack/sheet/glass))
-		if(!frame_glass)
-			frame_glass = TRUE
-			playsound(src, 'sound/effects/glassknock.ogg', VOL_EFFECTS_MASTER)
-			to_chat(user, "<span class='notice'>You insert the glass into \the [src].</span>")
-			var/obj/item/stack/sheet/glass/G = I
-			G.use(1)
-			update_icon()
-		else
-			to_chat(user, "<span class='notice'>There is already a glass in \the [src].</span>")
-		return
-	if(isscrewing(I))
-		if(frame_glass)
-			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-			frame_glass = FALSE
-			to_chat(user,"<span class='notice'>You screw the glass out of \the [src].</span>")
-			new /obj/item/stack/sheet/glass(get_turf(src))
-			update_icon()
-		else
-			to_chat(user, "<span class='notice'>There is no glass to screw out in \the [src].</span>")
-		return
 	return ..()
 
 /obj/item/weapon/picture_frame/attack_hand(mob/user)
@@ -75,7 +56,7 @@
 		if(displayed)
 			var/obj/item/I = displayed
 			user.put_in_hands(I)
-			to_chat(user, "<span class='notice'>You carefully remove the photo from \the [src].</span>")
+			to_chat(user, "<span class='notice'>You carefully remove the picture from \the [src].</span>")
 			displayed = null
 			update_icon()
 			return
@@ -86,55 +67,74 @@
 
 /obj/item/weapon/picture_frame/examine(mob/user)
 	if((user.r_hand == src || user.l_hand == src) && displayed)
-		displayed.show(user)
+		if(istype(displayed, /obj/item/canvas))
+			var/obj/item/canvas/Canvas = displayed
+			Canvas.ui_interact(user)
+		else
+			var/obj/item/weapon/photo/Photo = displayed
+			Photo.show(user)
 	else
 		..()
 
 /obj/item/weapon/picture_frame/update_icon()
 	cut_overlays()
+	icon_state = initial(icon_state)
 	if(displayed)
-		overlays |= image(displayed.icon, "photo")
-	if(frame_glass)
-		overlays |= icon('icons/obj/bureaucracy.dmi',"glass_frame_item")
+		if(istype(displayed, /obj/item/canvas))
+			var/obj/item/canvas/Canvas = displayed
+			icon_state = "[initial(icon_state)]_[Canvas.width]x[Canvas.height]"
+			var/mutable_appearance/MA = mutable_appearance(Canvas.generated_icon)
+			MA.pixel_x = Canvas.framed_offset_x
+			MA.pixel_y = Canvas.framed_offset_y
+			add_overlay(MA)
+		else
+			add_overlay(image(displayed.icon, "photo"))
 
-/obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity, params)
-	if(!proximity)
+/obj/item/weapon/picture_frame/proc/try_build(turf/on_wall)
+	if (!Adjacent(on_wall))
 		return
-	var/turf/T = target
-	if(!iswallturf(T))
-		return
-	var/ndir = get_dir(user, T)
+	var/ndir = get_dir(on_wall, usr)
 	if(!(ndir in cardinal))
 		return
-	user.visible_message("<span class='notice'>[user] hangs [src] to \the [T].</span>",
-						 "<span class='notice'>You hang [src] to \the [T].</span>")
-	var/obj/structure/picture_frame/wooden/PF = new frame_type(get_turf(user), ndir, 1)
+	var/turf/T = get_turf(usr)
+	var/area/A = get_area(T)
+	if(!isfloorturf(T))
+		to_chat(usr, "<span class='warning'>You cannot place [src] on this spot!</span>")
+		return
+
+	if(A.always_unpowered)
+		to_chat(usr, "<span class='warning'>You cannot place [src] in this area!</span>")
+		return
+
+	if(gotwallitem(T, ndir))
+		to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
+		return
+
+
+	var/obj/structure/picture_frame/PF = new frame_type(T, reverse_dir[ndir], 1)
 	if(displayed)
 		var/obj/item/I = displayed
 		displayed = null
 		I.forceMove(PF)
 		PF.framed = I
-	if(frame_glass)
-		PF.frame_glass = TRUE
 	PF.set_dir(ndir)
 	PF.update_icon()
+	PF.update_name()
 	qdel(src)
-	return
 
 /obj/structure/picture_frame
 	name = "picture frame"
-	desc = "Every time you look it makes you laugh."
-	icon = 'icons/obj/bureaucracy.dmi'
+	cases = list("фоторамка", "фоторамки", "фоторамке", "фоторамку", "фоторамкой", "фоторамке")
+	desc = "Рамка для картин или фотографий."
+	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "wooden_frame"
 	anchored = TRUE
 
 	max_integrity = 50
 	resistance_flags = CAN_BE_HIT
 
-	var/obj/item/weapon/photo/framed
+	var/obj/item/framed
 	var/frame_type = /obj/item/weapon/picture_frame/wooden
-	var/frame_glass = FALSE
-	var/glass_health = 10
 	var/screwed = FALSE
 
 /obj/structure/picture_frame/atom_init(mapload, ndir, building = 0)
@@ -160,72 +160,39 @@
 
 /obj/structure/picture_frame/examine(mob/user)
 	if(in_range(src, user) && framed)
-		framed.show(user)
+		if(istype(framed, /obj/item/canvas))
+			var/obj/item/canvas/Canvas = framed
+			Canvas.ui_interact(user)
+		else
+			var/obj/item/weapon/photo/Photo = framed
+			Photo.show(user)
 	else
 		..()
 
 /obj/structure/picture_frame/attackby(obj/item/weapon/O, mob/user, params)
-	if(isscrewing(O))
-		if(frame_glass)
-			var/choice = input("You can either [screwed ? "unscrew from the wall" : "screw to the wall"] \the [src] or screw out the glass from it") in list("[screwed ? "Unscrew" : "Screw"]", "Screw the glass out", "Cancel")
-			switch(choice)
-				if("Cancel")
-					return
-				if("Screw the glass out")
-					playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-					frame_glass = FALSE
-					to_chat(user, "<span class='notice'>You screw the glass out of \the [src].</span>")
-					new /obj/item/stack/sheet/glass(get_turf(src))
-					update_icon()
-					return
-		if(screwed)
-			user.visible_message("<span class='notice'>[user] starts unscrewing \the [src].</span>",
-								 "<span class='notice'>You start unscrewing \the [src].</span>")
-		else
-			user.visible_message("<span class='notice'>[user] starts screwing \the [src] to the wall.</span>",
-								 "<span class='notice'>You start screwing \the [src] to the wall.</span>")
-		if(do_after(user, 20 * O.toolspeed, target = src))
-			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
-			screwed = !screwed
-			if(!screwed)
-				user.visible_message("<span class='notice'>[user] unscrews \the [src].</span>",
-									 "<span class='notice'>You unscrew \the [src].</span>")
-			else
-				user.visible_message("<span class='notice'>[user] screws \the [src] to the wall.</span>",
-								 "<span class='notice'>You screw \the [src] to the wall.</span>")
-		update_icon()
-		return
-	else if(istype(O, /obj/item/stack/sheet/glass))
-		if(!frame_glass)
-			frame_glass = TRUE
-			playsound(src, 'sound/effects/glassknock.ogg', VOL_EFFECTS_MASTER)
-			to_chat(user, "<span class='notice'>You insert the glass into \the [src].</span>")
-			var/obj/item/stack/sheet/glass/G = O
-			G.use(1)
-			update_icon()
-		else
-			to_chat(user, "<span class='notice'>There is already a glass in \the [src].</span>")
-		return
-	else if(istype(O, /obj/item/weapon/photo))
+	if(istype(O, /obj/item/weapon/photo) || istype(O, /obj/item/canvas))
 		if(!framed)
-			var/obj/item/weapon/photo/Photo = O
-			user.unEquip(Photo)
-			Photo.forceMove(src)
-			framed = Photo
+			if(istype(O, /obj/item/canvas))
+				var/obj/item/canvas/Canvas = O
+				if(!Canvas.finalized)
+					return
+			user.unEquip(O)
+			O.forceMove(src)
+			framed = O
 			update_icon()
+			update_name()
 		else
-			to_chat(user, "<span class='notice'>\The [src] already contains a photo.</span>")
+			to_chat(user, "<span class='notice'>\The [src] already contains a picture.</span>")
+		return
+	if(iswrenching(O))
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+		deconstruct(TRUE, user)
 		return
 	else
 		..()
 
 // TODO move all handling into picture_frame item
 /obj/structure/picture_frame/play_attack_sound(damage_amount, damage_type, damage_flag)
-	if(frame_glass)
-		switch(damage_type)
-			if(BRUTE, BURN)
-				playsound(src, 'sound/effects/Glasshit.ogg', VOL_EFFECTS_MASTER)
-		return
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
@@ -236,23 +203,6 @@
 			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 100, TRUE)
 
 /obj/structure/picture_frame/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir)
-	if(frame_glass)
-		if(damage_amount < 3)
-			return
-		switch(damage_type)
-			if(BRUTE, BURN)
-				EMPTY_BLOCK_GUARD
-			else
-				return
-		glass_health -= damage_amount
-		if(glass_health > 0)
-			return
-		frame_glass = null
-		playsound(loc, 'sound/effects/Glassbr3.ogg', VOL_EFFECTS_MASTER)
-		new /obj/item/weapon/shard(loc)
-		update_icon()
-		damage_amount = -glass_health
-
 	if(damage_amount < 5)
 		return
 	switch(damage_type)
@@ -274,8 +224,6 @@
 			F.displayed = framed
 			framed.forceMove(F)
 			framed = null
-		if(frame_glass)
-			F.frame_glass = TRUE
 		F.update_icon()
 		if(user && !issilicon(user))
 			user.put_in_hands(F)
@@ -288,62 +236,29 @@
 
 /obj/structure/picture_frame/attack_hand(mob/user)
 	if(framed)
-		framed.show(user)
-	else
-		if(screwed)
-			to_chat(user, "<span class='warning'>It is screwed to the wall.</span>")
-			return
-		if(do_after(user, 8, target = src))
-			user.visible_message("<span class='notice'>[user] takes off \the [src] from the wall.</span>",
-								 "<span class='notice'>You take off \the [src] from the wall.</span>")
-			deconstruct(TRUE, user)
-		return
-
-/obj/structure/picture_frame/MouseDrop(obj/over_object)
-	if(istype(over_object, /atom/movable/screen/inventory/hand))
-		if(framed)
-			to_chat(usr, "<span class='notice'>You carefully remove the photo from \the [src].</span>")
-			over_object.MouseDrop_T(framed, usr)
-			framed = null
-			update_icon()
-		else
-			to_chat(usr, "<span class='notice'>There is no photo inside the \the [src].</span>")
-		add_fingerprint(usr)
-		return
-
-	if(ishuman(usr) || ismonkey(usr))
-		var/mob/living/carbon/M = usr
-		if(!over_object)
-			return
-		if(!usr.incapacitated())
-			if(over_object == M)
-				if(screwed)
-					to_chat(M,"<span class='warning'>It is screwed to the wall.</span>")
-					return
-				if(do_after(M, 8, target = src))
-					M.visible_message("<span class='notice'>[M] takes off \the [src] from the wall.</span>",
-									 "<span class='notice'>You take off \the [src] from the wall.</span>")
-					deconstruct(TRUE, M)
-					return
-
-			add_fingerprint(usr)
-	return
+		user.examinate(src)
 
 /obj/structure/picture_frame/update_icon()
 	cut_overlays()
-	if(screwed)
-		icon_state = "[initial(icon_state)]_screwed"
-	else
-		icon_state = initial(icon_state)
+	icon_state = initial(icon_state)
 	if(framed)
-		var/image/P = image(framed.icon, "photo")
-		if(dir == SOUTH)
-			var/matrix/Mx = matrix()
-			Mx.Turn(180)
-			Mx.Translate(0, 1)
-			P.transform = Mx
-		overlays |= P
-	if(frame_glass)
-		var/image/I = image('icons/obj/bureaucracy.dmi', "glass_frame")
-		I.dir = dir
-		overlays |= I
+		var/mutable_appearance/MA
+		if(istype(framed, /obj/item/canvas))
+			var/obj/item/canvas/Canvas = framed
+			icon_state = "[initial(icon_state)]_[Canvas.width]x[Canvas.height]"
+			MA = mutable_appearance(Canvas.generated_icon)
+			MA.pixel_x = Canvas.framed_offset_x
+			MA.pixel_y = Canvas.framed_offset_y
+		else
+			MA = mutable_appearance(framed.icon, "photo")
+		add_overlay(MA)
+
+/obj/structure/picture_frame/proc/update_name()
+	if(framed)
+		if(istype(framed, /obj/item/canvas))
+			var/obj/item/canvas/Canvas = framed
+			name = "painting - [Canvas.painting_name]"
+		else
+			name = "photo - [framed.name]"
+	else
+		name = initial(name)
