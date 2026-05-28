@@ -98,6 +98,11 @@ const Scanner = (props, context) => {
     <Section title="Scanner" buttons={<ScannerButtons />}>
       {!occupant ? (
         <Box color="average">Cell is unoccupied</Box>
+      ) : !occupant.isViableSubject ? (
+        <Box color="bad">
+          The occupant&apos;s DNA structure is ruined beyond recognition, please
+          insert a subject with an intact DNA structure.
+        </Box>
       ) : (
         <Flex align="center">
           <Flex.Item>
@@ -111,13 +116,13 @@ const Scanner = (props, context) => {
               </LabeledList.Item>
               <LabeledList.Item label="Health">
                 <ProgressBar
-                  min="0"
-                  max={occupant.maxHealth}
-                  value={occupant.health / occupant.maxHealth}
+                  minValue={occupant.minHealth}
+                  maxValue={occupant.maxHealth}
+                  value={occupant.health}
                   minWidth={12}
                   ranges={{
-                    good: [0.5, Infinity],
-                    average: [0, 0.5],
+                    good: [occupant.maxHealth * 0.5, Infinity],
+                    average: [0, occupant.maxHealth * 0.5],
                     bad: [-Infinity, 0],
                   }}
                 />
@@ -332,6 +337,10 @@ const DnaModifyScreen = (props, context) => {
         <Section fill title={title}>
           {!occupant ? (
             <Box color="average">No patient detected</Box>
+          ) : !occupant.isViableSubject ? (
+            <Box color="bad">
+              Subject&apos;s DNA structure is ruined beyond recognition.
+            </Box>
           ) : (
             <DnaBlocks
               dnaString={occupant[dnaField]}
@@ -350,14 +359,14 @@ const DnaModifyScreen = (props, context) => {
             <Button
               icon="radiation"
               m={1}
-              disabled={!occupant}
+              disabled={!occupant?.isViableSubject}
               onClick={() => act(pulseAction)}>
               Irradiate block
             </Button>
             <Button
               m={1}
               icon="triangle-exclamation"
-              disabled={!occupant}
+              disabled={!occupant?.isViableSubject}
               onClick={() => act('pulseRadiation')}>
               Pulse radiation
             </Button>
@@ -370,7 +379,7 @@ const DnaModifyScreen = (props, context) => {
 
 const TransferBuffersScreen = (props, context) => {
   const { act, data } = useBackend(context);
-  const { buffers, hasOccupant, isInjectorReady, hasDisk, disk } = data;
+  const { buffers, occupant, isInjectorReady, hasDisk, disk } = data;
   return (
     <Section title="Transfer buffers">
       {buffers.map((buf, index) => (
@@ -378,7 +387,7 @@ const TransferBuffersScreen = (props, context) => {
           key={index}
           buf={buf}
           index={index}
-          hasOccupant={hasOccupant}
+          occupant={occupant}
           isInjectorReady={isInjectorReady}
           hasDisk={hasDisk}
           act={act}
@@ -390,7 +399,7 @@ const TransferBuffersScreen = (props, context) => {
 };
 
 const BufferEntry = (props) => {
-  const { buf, index, hasOccupant, isInjectorReady, hasDisk, act } = props;
+  const { buf, index, occupant, isInjectorReady, hasDisk, act } = props;
   const bufferId = index + 1;
   return (
     <Box mb={3}>
@@ -444,7 +453,7 @@ const BufferEntry = (props) => {
           <LabeledList.Item label="Options">
             <Button
               icon="download"
-              disabled={!hasDisk && !hasOccupant}
+              disabled={!hasDisk && !occupant}
               onClick={() =>
                 act('bufferOption', { bufferId, bufferOption: 'loadFrom' })
               }>
@@ -477,7 +486,7 @@ const BufferEntry = (props) => {
             </Button>
             <Button
               icon="radiation"
-              disabled={!buf.data || !hasOccupant}
+              disabled={!buf.data || !occupant}
               onClick={() =>
                 act('bufferOption', { bufferId, bufferOption: 'transfer' })
               }>

@@ -496,8 +496,6 @@
 
 	data["opened"] = connected.open
 	data["locked"] = connected.locked
-	data["hasOccupant"] = !isnull(connected.occupant)
-
 	data["isInjectorReady"] = injector_ready
 
 	data["hasDisk"] = !isnull(disk)
@@ -524,7 +522,7 @@
 		data["occupant"] = list(
 			"name" = connected.occupant.name,
 			"stat" = connected.occupant.stat,
-			"isViableSubject" = connected.occupant.dna && !(NOCLONE in connected.occupant.mutations) && connected.scan_level != 3,
+			"isViableSubject" = !(NOCLONE in connected.occupant.mutations) && connected.scan_level != 3,
 			"health" = connected.occupant.health,
 			"maxHealth" = connected.occupant.maxHealth,
 			"minHealth" = config.health_threshold_dead,
