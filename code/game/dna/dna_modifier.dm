@@ -284,7 +284,7 @@
 	var/radiation_duration = 2.0
 	var/radiation_intensity = 1.0
 	var/list/datum/dna2/record/buffers[3]
-	var/irradiating = 0
+	var/irradiating = FALSE
 	var/injector_ready = FALSE	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
 	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/weapon/disk/data/disk = null
@@ -294,6 +294,10 @@
 	idle_power_usage = 10
 	active_power_usage = 400
 	var/waiting_for_user_input = 0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
+	var/irradiate_start = 0
+	var/irradiate_duration = 0
+	var/irradiate_lock_state = FALSE
+	var/irradiate_timer_id = null
 
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_TRAINED)
 
@@ -332,16 +336,131 @@
 		arr += "[i]: [EncodeDNABlock(buffer[i])]"
 	return arr
 
-/obj/machinery/computer/scan_consolenew/proc/do_irradiate(duration)
-	irradiating = duration
-	var/lock_state = connected.locked
-	connected.locked = TRUE
+/obj/machinery/computer/scan_consolenew/proc/start_irradiate(duration, action_type, buffer_id = 0)
+	if(!(action_type in list("pulseRadiation", "pulseUIRadiation", "pulseSERadiation", "transfer")))
+		audible_message("<span class='warning'>Something went wrong during irradiation process! Please contact technical support.</span>")
+		return
 
-	while(irradiating > 0)
-		sleep(1 SECONDS)
-		irradiating--
+	irradiating = TRUE
+	irradiate_start = world.time
+	irradiate_duration = duration
+	irradiate_lock_state = connected?.locked || FALSE
+	connected?.locked = TRUE
 
-	return lock_state
+	irradiate_timer_id = addtimer(
+		CALLBACK(src, .proc/finish_irradiate, action_type, buffer_id),
+		duration SECONDS,
+		TIMER_STOPPABLE
+	)
+
+/obj/machinery/computer/scan_consolenew/proc/finish_irradiate(action_type, buffer_id = 0)
+	irradiate_timer_id = null
+
+	if(QDELETED(src))
+		return
+
+	irradiating = FALSE
+
+	if(!connected || QDELETED(connected) || !connected.is_operational())
+		SStgui.update_uis(src)
+		return
+
+	connected.locked = irradiate_lock_state
+
+	switch(action_type)
+		if("pulseRadiation")
+			if(!connected.occupant)
+				SStgui.update_uis(src)
+				return
+
+			if(prob(95))
+				if(prob(75))
+					randmutb(connected.occupant)
+				else
+					randmuti(connected.occupant)
+			else
+				if(prob(95))
+					randmutg(connected.occupant)
+				else
+					randmuti(connected.occupant)
+
+			connected.occupant.radiation += ((radiation_intensity * 3) + radiation_duration * 3)
+
+		if("pulseUIRadiation")
+			if(!connected.occupant)
+				SStgui.update_uis(src)
+				return
+
+			var/block = connected.occupant.dna.GetUISubBlock(selected_ui_block, selected_ui_subblock)
+
+			if(prob(80 + connected.precision_coeff + radiation_duration / 2))
+				block = miniscrambletarget(num2text(selected_ui_target), radiation_intensity, radiation_duration)
+				connected.occupant.dna.SetUISubBlock(selected_ui_block, selected_ui_subblock, block)
+				connected.occupant.UpdateAppearance()
+				connected.occupant.radiation += (radiation_intensity + radiation_duration) / connected.damage_coeff
+			else
+				if	(prob(20 + radiation_intensity))
+					randmutb(connected.occupant)
+					domutcheck(connected.occupant, connected)
+				else
+					randmuti(connected.occupant)
+					connected.occupant.UpdateAppearance()
+				connected.occupant.radiation += radiation_intensity * 2 + radiation_duration + connected.precision_coeff
+
+		if("pulseSERadiation")
+			if(!connected.occupant)
+				SStgui.update_uis(src)
+				return
+
+			var/block = connected.occupant.dna.GetSESubBlock(selected_se_block, selected_se_subblock)
+
+			if(prob(80 + connected.precision_coeff + radiation_duration / 2))
+				var/real_SE_block = selected_se_block
+				block = miniscramble(block, radiation_intensity, radiation_duration)
+				if(prob(20 - connected.scan_level ** 2))
+					if(selected_se_block > 1 && selected_se_block < DNA_SE_LENGTH / 2)
+						real_SE_block++
+					else if(selected_se_block > DNA_SE_LENGTH / 2 && selected_se_block < DNA_SE_LENGTH)
+						real_SE_block--
+
+					connected.occupant.dna.SetSESubBlock(real_SE_block,selected_se_subblock,block)
+					connected.occupant.radiation += (radiation_intensity + radiation_duration) / connected.damage_coeff
+					domutcheck(connected.occupant, connected, block != null, 1)
+				else
+					connected.occupant.radiation += radiation_intensity * 2 + radiation_duration + connected.precision_coeff
+					if	(prob(80 - radiation_duration))
+						randmutb(connected.occupant)
+						domutcheck(connected.occupant, connected, block != null, 1)
+					else
+						randmuti(connected.occupant)
+						connected.occupant.UpdateAppearance()
+
+		if("transfer")
+			if(!connected.occupant || (NOCLONE in connected.occupant.mutations) || !connected.occupant.dna)
+				SStgui.update_uis(src)
+				return
+
+			var/datum/dna2/record/buf = buffers[buffer_id]
+
+			if((buf.types & DNA2_BUF_UI))
+				if((buf.types & DNA2_BUF_UE))
+					connected.occupant.real_name = buf.dna.real_name
+					connected.occupant.name = buf.dna.real_name
+				connected.occupant.UpdateAppearance(buf.dna.UI.Copy())
+			else if(buf.types & DNA2_BUF_SE)
+				connected.occupant.dna.SE = buf.dna.SE.Copy()
+				connected.occupant.dna.UpdateSE()
+				domutcheck(connected.occupant,connected)
+			connected.occupant.radiation += rand(15 / (connected.damage_coeff), 40 / (connected.damage_coeff))
+
+	SStgui.update_uis(src)
+
+/obj/machinery/computer/scan_consolenew/Destroy()
+	if(irradiate_timer_id)
+		deltimer(irradiate_timer_id)
+		irradiate_timer_id = null
+		irradiating = FALSE
+	return ..()
 
 /obj/machinery/computer/scan_consolenew/proc/setInjectorBlock(obj/item/weapon/dnainjector/I, blk, datum/dna2/record/buffer)
 	var/pos = findtext(blk,":")
@@ -373,7 +492,11 @@
 /obj/machinery/computer/scan_consolenew/tgui_data(mob/user)
 	var/list/data = list()
 	data["selectedMenuKey"] = selected_menu_key
-	data["irradiating"] = irradiating
+	if(irradiate_timer_id)
+		var/end_time = irradiate_start + irradiate_duration SECONDS
+		data["irradiating"] = max(0, round((end_time - world.time) / 10))
+	else
+		data["irradiating"] = 0
 	data["hasScanner"] = connected && connected.is_operational()
 	if(!data["hasScanner"])
 		return data		//No point gathering more data if it has no operational scanner
@@ -386,7 +509,7 @@
 
 	data["hasDisk"] = !isnull(disk)
 
-	data["disk"] = (!disk || !disk.buf) ? disk.buf.GetData() : null
+	data["disk"] = (!disk || !disk.buf) ? null : disk.buf.GetData()
 
 	var/list/new_buffers = list()
 	for(var/datum/dna2/record/buf in buffers)
@@ -452,24 +575,7 @@
 				connected.toggle_open(usr)
 
 		if("pulseRadiation")
-			var/lock_state = do_irradiate(radiation_duration, ui)
-
-			connected?.locked = lock_state
-			if(!connected?.occupant)
-				return
-
-			if(prob(95))
-				if(prob(75))
-					randmutb(connected.occupant)
-				else
-					randmuti(connected.occupant)
-			else
-				if(prob(95))
-					randmutg(connected.occupant)
-				else
-					randmuti(connected.occupant)
-
-			connected.occupant.radiation += ((radiation_intensity * 3) + radiation_duration * 3)
+			start_irradiate(radiation_duration, "pulseRadiation")
 
 		if("radiationDuration")
 			radiation_duration = clamp(params["duration"], 1, MAX_RAD_DURATION)
@@ -512,27 +618,8 @@
 		if("pulseUIRadiation")
 			if(!connected.occupant)
 				return FALSE
-			var/block = connected.occupant.dna.GetUISubBlock(selected_ui_block, selected_ui_subblock)
 
-			var/lock_state = do_irradiate(radiation_duration, ui)
-
-			connected?.locked = lock_state
-			if(!connected?.occupant)
-				return
-
-			if(prob(80 + connected.precision_coeff + radiation_duration / 2))
-				block = miniscrambletarget(num2text(selected_ui_target), radiation_intensity, radiation_duration)
-				connected.occupant.dna.SetUISubBlock(selected_ui_block, selected_ui_subblock, block)
-				connected.occupant.UpdateAppearance()
-				connected.occupant.radiation += (radiation_intensity + radiation_duration) / connected.damage_coeff
-			else
-				if	(prob(20 + radiation_intensity))
-					randmutb(connected.occupant)
-					domutcheck(connected.occupant, connected)
-				else
-					randmuti(connected.occupant)
-					connected.occupant.UpdateAppearance()
-				connected.occupant.radiation += radiation_intensity * 2 + radiation_duration + connected.precision_coeff
+			start_irradiate(radiation_duration, "pulseUIRadiation")
 
 		////////////////////////////////////////////////////////
 
@@ -561,34 +648,7 @@
 			if(!connected.occupant)
 				return FALSE
 
-			var/block = connected.occupant.dna.GetSESubBlock(selected_se_block, selected_se_subblock)
-
-			var/lock_state = do_irradiate(radiation_duration, ui)
-
-			connected?.locked = lock_state
-			if(!connected?.occupant)
-				return FALSE
-
-			if(prob(80 + connected.precision_coeff + radiation_duration / 2))
-				var/real_SE_block = selected_se_block
-				block = miniscramble(block, radiation_intensity, radiation_duration)
-				if(prob(20 - connected.scan_level ** 2))
-					if(selected_se_block > 1 && selected_se_block < DNA_SE_LENGTH / 2)
-						real_SE_block++
-					else if(selected_se_block > DNA_SE_LENGTH / 2 && selected_se_block < DNA_SE_LENGTH)
-						real_SE_block--
-
-					connected.occupant.dna.SetSESubBlock(real_SE_block,selected_se_subblock,block)
-					connected.occupant.radiation += (radiation_intensity + radiation_duration) / connected.damage_coeff
-					domutcheck(connected.occupant, connected, block != null, 1)
-				else
-					connected.occupant.radiation += radiation_intensity * 2 + radiation_duration + connected.precision_coeff
-					if	(prob(80 - radiation_duration))
-						randmutb(connected.occupant)
-						domutcheck(connected.occupant, connected, block != null, 1)
-					else
-						randmuti(connected.occupant)
-						connected.occupant.UpdateAppearance()
+			start_irradiate(radiation_duration, "pulseSERadiation")
 
 		if("ejectBeaker")
 			if(connected.beaker)
@@ -679,21 +739,7 @@
 				if(!connected.occupant || (NOCLONE in connected.occupant.mutations) || !connected.occupant.dna)
 					return FALSE
 
-				var/lock_state = do_irradiate(2, ui)
-				connected.locked = lock_state
-
-				var/datum/dna2/record/buf = buffers[bufferId]
-
-				if((buf.types & DNA2_BUF_UI))
-					if((buf.types & DNA2_BUF_UE))
-						connected.occupant.real_name = buf.dna.real_name
-						connected.occupant.name = buf.dna.real_name
-					connected.occupant.UpdateAppearance(buf.dna.UI.Copy())
-				else if(buf.types & DNA2_BUF_SE)
-					connected.occupant.dna.SE = buf.dna.SE.Copy()
-					connected.occupant.dna.UpdateSE()
-					domutcheck(connected.occupant,connected)
-				connected.occupant.radiation += rand(15 / (connected.damage_coeff), 40 / connected.damage_coeff)
+				start_irradiate(2, "transfer", bufferId)
 
 			else if(bufferOption == "createInjector")
 				if(injector_ready && !waiting_for_user_input)
@@ -733,6 +779,7 @@
 				disk.buf = buf
 				disk.name = "data disk - '[buf.dna.real_name]'"
 				audible_message("<span class='notice'>Data saved.</span>")
+	return TRUE
 
 /////////////////////////// DNA MACHINES
 
