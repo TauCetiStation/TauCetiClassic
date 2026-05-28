@@ -89,30 +89,10 @@
 	icon_state = "wood11"
 	},
 /area/space)
-"aq" = (
-/obj/machinery/suit_storage_unit/captain{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	dir = 1;
-	icon_state = "darkbluefull"
-	},
-/area/space)
 "ar" = (
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkbrowncorners"
-	},
-/area/space)
-"as" = (
-/obj/machinery/suit_storage_unit/nasa{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	dir = 1;
-	icon_state = "darkbluefull"
 	},
 /area/space)
 "at" = (
@@ -126,40 +106,10 @@
 	},
 /turf/simulated/floor,
 /area/space)
-"au" = (
-/obj/machinery/suit_storage_unit/globose/unathi/breacher{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	dir = 1;
-	icon_state = "darkbluefull"
-	},
-/area/space)
-"av" = (
-/obj/machinery/suit_storage_unit/security{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	dir = 1;
-	icon_state = "whiteredfull"
-	},
-/area/space)
 "aw" = (
 /turf/simulated/floor/airless{
 	dir = 1;
 	icon_state = "greenblue"
-	},
-/area/space)
-"ax" = (
-/obj/machinery/suit_storage_unit/security/hos{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	dir = 1;
-	icon_state = "whiteredfull"
 	},
 /area/space)
 "ay" = (
@@ -180,45 +130,9 @@
 	icon_state = "orange"
 	},
 /area/space)
-"aB" = (
-/obj/machinery/suit_storage_unit/medical{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "whitebluefull"
-	},
-/area/space)
-"aC" = (
-/obj/machinery/suit_storage_unit/medical/paramedic{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "whitebluefull"
-	},
-/area/space)
-"aD" = (
-/obj/machinery/suit_storage_unit/medical/cmo{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "whitebluefull"
-	},
-/area/space)
 "aE" = (
 /turf/simulated/floor/airless{
 	icon_state = "darkbrown"
-	},
-/area/space)
-"aF" = (
-/obj/machinery/suit_storage_unit/globose/science{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "whitepurplefull"
 	},
 /area/space)
 "aG" = (
@@ -232,33 +146,6 @@
 	icon_state = "siding_line"
 	},
 /turf/simulated/floor,
-/area/space)
-"aI" = (
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "whitepurplefull"
-	},
-/area/space)
-"aJ" = (
-/obj/machinery/suit_storage_unit/science{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "whitepurplefull"
-	},
-/area/space)
-"aK" = (
-/obj/machinery/suit_storage_unit/science/rd{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "whitepurplefull"
-	},
 /area/space)
 "aL" = (
 /turf/simulated/floor{
@@ -296,16 +183,6 @@
 	},
 /turf/simulated/floor,
 /area/space)
-"aR" = (
-/obj/machinery/suit_storage_unit/engine{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	dir = 1;
-	icon_state = "orangefull"
-	},
-/area/space)
 "aS" = (
 /obj/structure/cable/yellow{
 	d1 = 1;
@@ -313,16 +190,6 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/space)
-"aT" = (
-/obj/machinery/suit_storage_unit/engine/atmos{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	dir = 1;
-	icon_state = "orangefull"
-	},
 /area/space)
 "aU" = (
 /turf/simulated/floor{
@@ -358,16 +225,6 @@
 	icon_state = "white"
 	},
 /area/space)
-"aZ" = (
-/obj/machinery/suit_storage_unit/engine/chief{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	dir = 1;
-	icon_state = "orangefull"
-	},
-/area/space)
 "ba" = (
 /obj/structure/sign/departments/security,
 /obj/machinery/power/apc/mediumcell{
@@ -398,24 +255,6 @@
 	icon_state = "redfull"
 	},
 /area/space)
-"bb" = (
-/obj/machinery/suit_storage_unit/globose/skrell/white{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "bluechecker"
-	},
-/area/space)
-"bc" = (
-/obj/machinery/suit_storage_unit/globose/skrell/black{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "bluechecker"
-	},
-/area/space)
 "bd" = (
 /turf/simulated/floor{
 	dir = 6;
@@ -433,73 +272,9 @@
 	icon_state = "darkbrown"
 	},
 /area/space)
-"bg" = (
-/obj/machinery/suit_storage_unit/globose/unathi/nt{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "redbluefull"
-	},
-/area/space)
 "bh" = (
 /turf/simulated/floor/airless{
 	icon_state = "bluered"
-	},
-/area/space)
-"bi" = (
-/obj/machinery/suit_storage_unit/vox/carapace{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
-/area/space)
-"bj" = (
-/obj/machinery/suit_storage_unit/vox/engine{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
-/area/space)
-"bk" = (
-/obj/machinery/suit_storage_unit/vox/medic{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
-/area/space)
-"bl" = (
-/obj/machinery/suit_storage_unit/vox/stealth{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "dark"
-	},
-/area/space)
-"bm" = (
-/obj/machinery/suit_storage_unit/wizard{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	dir = 1;
-	icon_state = "darkpurplefull"
-	},
-/area/space)
-"bn" = (
-/obj/machinery/suit_storage_unit/syndicate_unit{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "darkredfull"
 	},
 /area/space)
 "bo" = (
@@ -508,45 +283,9 @@
 	icon_state = "red"
 	},
 /area/space)
-"bp" = (
-/obj/machinery/suit_storage_unit/syndicate_unit/elite{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "darkredfull"
-	},
-/area/space)
-"bq" = (
-/obj/machinery/suit_storage_unit/syndicate_unit/elite/comander{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "darkredfull"
-	},
-/area/space)
-"br" = (
-/obj/machinery/suit_storage_unit/syndicate_unit/light{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "darkredfull"
-	},
-/area/space)
 "bs" = (
 /turf/simulated/floor/airless{
 	icon_state = "darkorangechoco"
-	},
-/area/space)
-"bt" = (
-/obj/machinery/suit_storage_unit/syndicate_unit/light/chem{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "darkredfull"
 	},
 /area/space)
 "bu" = (
@@ -568,28 +307,10 @@
 	icon_state = "bluered"
 	},
 /area/space)
-"bx" = (
-/obj/machinery/suit_storage_unit/syndicate_unit/light/heavy{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "darkredfull"
-	},
-/area/space)
 "by" = (
 /turf/simulated/floor/airless{
 	dir = 1;
 	icon_state = "whiteyellow"
-	},
-/area/space)
-"bz" = (
-/obj/machinery/suit_storage_unit/syndicate_unit/striker{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "darkredfull"
 	},
 /area/space)
 "bA" = (
@@ -604,24 +325,6 @@
 	icon_state = "bot_old"
 	},
 /turf/simulated/floor,
-/area/space)
-"bC" = (
-/obj/machinery/suit_storage_unit/globose{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "neutralfull"
-	},
-/area/space)
-"bD" = (
-/obj/machinery/suit_storage_unit/globose/mining{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor/airless{
-	icon_state = "brownfull"
-	},
 /area/space)
 "bE" = (
 /turf/simulated/floor{
@@ -9540,10 +9243,10 @@
 /area/space)
 
 (1,1,1) = {"
-Hy
-aq
-bF
 uA
+uA
+Hy
+bF
 Hy
 Hy
 Hy
@@ -9620,10 +9323,10 @@ jb
 Pg
 "}
 (2,1,1) = {"
-Hy
-as
-bG
 uA
+uA
+Hy
+bG
 Hy
 Hy
 Hy
@@ -9700,10 +9403,10 @@ LZ
 Pq
 "}
 (3,1,1) = {"
-Hy
-au
-bH
 uA
+uA
+Hy
+bH
 Hy
 Hy
 lh
@@ -9780,10 +9483,10 @@ og
 dw
 "}
 (4,1,1) = {"
-Hy
-av
-bJ
 uA
+uA
+Hy
+bJ
 Hy
 Hy
 Hy
@@ -9860,10 +9563,10 @@ tR
 Sk
 "}
 (5,1,1) = {"
-Hy
-ax
-bK
 uA
+uA
+Hy
+bK
 Hy
 Hy
 Hy
@@ -9940,10 +9643,10 @@ CJ
 AB
 "}
 (6,1,1) = {"
-Hy
-aB
-bL
 uA
+uA
+Hy
+bL
 Hy
 Hy
 nX
@@ -10020,10 +9723,10 @@ Cg
 fa
 "}
 (7,1,1) = {"
-Hy
-aC
-bM
 uA
+uA
+Hy
+bM
 Hy
 Hy
 Hy
@@ -10100,10 +9803,10 @@ nw
 Fv
 "}
 (8,1,1) = {"
-Hy
-aD
-bP
 uA
+uA
+Hy
+bP
 Hy
 Hy
 Hy
@@ -10180,10 +9883,10 @@ Pr
 Ap
 "}
 (9,1,1) = {"
-Hy
-aF
-bQ
 uA
+uA
+Hy
+bQ
 Hy
 Hy
 Sv
@@ -10260,10 +9963,10 @@ rH
 CQ
 "}
 (10,1,1) = {"
-Hy
-aI
-bS
 uA
+uA
+Hy
+bS
 Hy
 Hy
 Hy
@@ -10340,10 +10043,10 @@ nC
 oa
 "}
 (11,1,1) = {"
-Hy
-aJ
-bT
 uA
+uA
+Hy
+bT
 Hy
 Hy
 Hy
@@ -10420,10 +10123,10 @@ Cw
 zR
 "}
 (12,1,1) = {"
-Hy
-aK
-bU
 uA
+uA
+Hy
+bU
 Hy
 Hy
 uK
@@ -10500,10 +10203,10 @@ xH
 zW
 "}
 (13,1,1) = {"
-Hy
-aR
-bW
 uA
+uA
+Hy
+bW
 Hy
 Hy
 Hy
@@ -10580,10 +10283,10 @@ sP
 GF
 "}
 (14,1,1) = {"
-Hy
-aT
-bZ
 uA
+uA
+Hy
+bZ
 Hy
 Hy
 Hy
@@ -10660,10 +10363,10 @@ Aa
 Bn
 "}
 (15,1,1) = {"
-Hy
-aZ
-cg
 uA
+uA
+Hy
+cg
 Hy
 Hy
 gv
@@ -10740,10 +10443,10 @@ Rl
 yq
 "}
 (16,1,1) = {"
-Hy
-bC
-ch
 uA
+uA
+Hy
+ch
 Hy
 Hy
 Hy
@@ -10820,10 +10523,10 @@ Dx
 PL
 "}
 (17,1,1) = {"
-Hy
-bD
-ck
 uA
+uA
+Hy
+ck
 Hy
 Hy
 Hy
@@ -10900,10 +10603,10 @@ tu
 bh
 "}
 (18,1,1) = {"
-Hy
-bb
-cl
 uA
+uA
+Hy
+cl
 Hy
 Hy
 uQ
@@ -10980,10 +10683,10 @@ bw
 ik
 "}
 (19,1,1) = {"
-Hy
-bc
-cm
 uA
+uA
+Hy
+cm
 Hy
 Hy
 Hy
@@ -11060,10 +10763,10 @@ iB
 ld
 "}
 (20,1,1) = {"
-Hy
-bg
-cq
 uA
+uA
+Hy
+cq
 Hy
 Hy
 Lr
@@ -11140,10 +10843,10 @@ Gg
 Ti
 "}
 (21,1,1) = {"
-Hy
-bi
-cr
 uA
+uA
+Hy
+cr
 Hy
 Lr
 wR
@@ -11220,10 +10923,10 @@ Bp
 df
 "}
 (22,1,1) = {"
-Hy
-bj
-ct
 uA
+uA
+Hy
+ct
 Hy
 Hy
 Lr
@@ -11300,10 +11003,10 @@ uA
 uA
 "}
 (23,1,1) = {"
-Hy
-bk
-cu
 uA
+uA
+Hy
+cu
 Hy
 Hy
 OD
@@ -11380,10 +11083,10 @@ uA
 uA
 "}
 (24,1,1) = {"
-Hy
-bl
-cv
 uA
+uA
+Hy
+cv
 Hy
 OD
 UM
@@ -11460,10 +11163,10 @@ uA
 uA
 "}
 (25,1,1) = {"
-Hy
-bm
-cw
 uA
+uA
+Hy
+cw
 Hy
 Hy
 OD
@@ -11540,10 +11243,10 @@ uA
 uA
 "}
 (26,1,1) = {"
-Hy
-bn
-cy
 uA
+uA
+Hy
+cy
 Hy
 Hy
 yO
@@ -11620,10 +11323,10 @@ uA
 uA
 "}
 (27,1,1) = {"
-Hy
-bp
-cz
 uA
+uA
+Hy
+cz
 Hy
 yO
 Oa
@@ -11700,10 +11403,10 @@ uA
 uA
 "}
 (28,1,1) = {"
-Hy
-bq
-cA
 uA
+uA
+Hy
+cA
 Hy
 Hy
 yO
@@ -11780,10 +11483,10 @@ uA
 uA
 "}
 (29,1,1) = {"
-Hy
-br
-cE
 uA
+uA
+Hy
+cE
 Hy
 Hy
 In
@@ -11860,10 +11563,10 @@ uA
 uA
 "}
 (30,1,1) = {"
-Hy
-bt
-cH
 uA
+uA
+Hy
+cH
 Hy
 In
 DB
@@ -11940,10 +11643,10 @@ uA
 uA
 "}
 (31,1,1) = {"
-Hy
-bx
-cN
 uA
+uA
+Hy
+cN
 Hy
 Hy
 In
@@ -12020,10 +11723,10 @@ uA
 uA
 "}
 (32,1,1) = {"
-Hy
-bz
-cO
 uA
+uA
+Hy
+cO
 Hy
 Hy
 ew

@@ -2420,8 +2420,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/security{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/station/security/armoury)
@@ -7953,8 +7952,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/suit_storage_unit/engine{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -13844,8 +13842,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/suit_storage_unit/engine{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -14008,8 +14005,7 @@
 	pixel_x = 27
 	},
 /obj/machinery/suit_storage_unit/science{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -15841,8 +15837,7 @@
 	pixel_x = 32
 	},
 /obj/machinery/suit_storage_unit/medical/cmo{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -18329,18 +18324,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
-"aFW" = (
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
-	},
-/obj/machinery/suit_storage_unit/engine{
-	filled = 1;
-	pixel_y = 2
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/ai_monitored/eva)
 "aFX" = (
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -23964,8 +23947,7 @@
 /area/station/rnd/hor)
 "aQu" = (
 /obj/machinery/suit_storage_unit/science/rd{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -28885,8 +28867,7 @@
 /area/station/hallway/secondary/entry)
 "aYV" = (
 /obj/machinery/suit_storage_unit/engine/chief{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -38042,8 +38023,7 @@
 /area/station/rnd/telesci)
 "bpm" = (
 /obj/machinery/suit_storage_unit/globose/science{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -40097,8 +40077,7 @@
 /area/station/hallway/secondary/entry)
 "bsY" = (
 /obj/machinery/suit_storage_unit/medical/paramedic{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -40812,8 +40791,7 @@
 /area/station/security/checkpoint)
 "bul" = (
 /obj/machinery/suit_storage_unit/medical/paramedic{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -50516,8 +50494,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/security/hos{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -57730,15 +57707,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "cdT" = (
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
 /obj/machinery/suit_storage_unit/medical{
-	filled = 1;
-	pixel_y = 2
-	},
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
-	},
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -58881,8 +58857,7 @@
 /area/station/engineering/break_room)
 "chi" = (
 /obj/machinery/suit_storage_unit/medical{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -59922,12 +59897,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "ckw" = (
-/obj/machinery/suit_storage_unit/security{
-	filled = 1;
-	pixel_y = 2
-	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/suit_storage_unit/security{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -115589,7 +115563,7 @@ aCu
 cdT
 aCv
 aCu
-aFW
+aFX
 aCv
 aCu
 aJA

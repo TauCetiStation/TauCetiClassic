@@ -2361,8 +2361,7 @@
 	icon_state = "bot_old"
 	},
 /obj/machinery/suit_storage_unit/security/hos{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -7395,8 +7394,7 @@
 	icon_state = "bot_old"
 	},
 /obj/machinery/suit_storage_unit/security{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -15313,8 +15311,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/suit_storage_unit/engine{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -29237,8 +29234,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/suit_storage_unit/captain{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/station/bridge/captain_quarters)
@@ -32220,8 +32216,7 @@
 	icon_state = "bot_old"
 	},
 /obj/machinery/suit_storage_unit/medical/cmo{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "neutral"
@@ -45013,8 +45008,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/suit_storage_unit/engine{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -59230,8 +59224,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/suit_storage_unit/engine/chief{
-	filled = 1;
-	pixel_y = 22
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -114468,8 +114461,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/suit_storage_unit/engine{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

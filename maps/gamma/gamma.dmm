@@ -8199,8 +8199,7 @@
 	network = list("SS13","Research")
 	},
 /obj/machinery/suit_storage_unit/science/rd{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor/carpet/purple,
 /area/station/rnd/hor)
@@ -13743,8 +13742,7 @@
 	pixel_x = 24
 	},
 /obj/machinery/suit_storage_unit/medical/paramedic{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -17224,8 +17222,7 @@
 /area/station/civilian/garden)
 "cHW" = (
 /obj/machinery/suit_storage_unit/medical/paramedic{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -17779,8 +17776,7 @@
 	pixel_x = 27
 	},
 /obj/machinery/suit_storage_unit/globose/science{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/station/rnd/telesci)
@@ -20808,8 +20804,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/globose/skrell/black{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -45942,8 +45937,7 @@
 	icon_state = "warn"
 	},
 /obj/machinery/suit_storage_unit/science{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/station/rnd/telesci)
@@ -54596,8 +54590,7 @@
 /area/station/rnd/chargebay)
 "jTu" = (
 /obj/machinery/suit_storage_unit/engine/chief{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor/carpet/orange,
 /area/station/engineering/chiefs_office)
@@ -59986,8 +59979,7 @@
 	pixel_y = -6
 	},
 /obj/machinery/suit_storage_unit/medical/cmo{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood4"
@@ -60460,8 +60452,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/globose/skrell/white{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -63351,8 +63342,7 @@
 	pixel_y = -6
 	},
 /obj/machinery/suit_storage_unit/security/hos{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -85241,8 +85231,7 @@
 /area/station/rnd/misc_lab)
 "qaQ" = (
 /obj/machinery/suit_storage_unit/engine/atmos{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -91459,8 +91448,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/globose/unathi/nt{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -121297,8 +121285,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/suit_storage_unit/security{
-	filled = 1;
-	pixel_y = 2
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

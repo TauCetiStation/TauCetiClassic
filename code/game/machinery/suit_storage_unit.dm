@@ -521,8 +521,10 @@
 	set name = "Fast Equip/Unequip"
 	set src in view(1)
 
-	if(ishuman(usr) && opened)
+	if(ishuman(usr) && opened && !ultra_violet)
 		length(contents) ? fast_equip(usr) : fast_unequip(usr)
+		if(emagged)
+			place_occupant(usr)
 
 #undef POSSIBLE_TO_LOAD
 
