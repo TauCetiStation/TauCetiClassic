@@ -66,10 +66,10 @@ class PaintCanvas extends Component {
         width={width * dotsize || 300}
         height={height * dotsize || 300}
         {...rest}
-        onClick={(e) => this.clickwrapper(e, "draw")}
+        onClick={(e) => this.clickwrapper(e, 'draw')}
         onContextMenu={(e) => {
-            e.preventDefault();
-            this.clickwrapper(e, "fill");
+          e.preventDefault();
+          this.clickwrapper(e, 'fill');
         }}>
         Canvas failed to render.
       </canvas>
@@ -96,32 +96,35 @@ export const Canvas = (props, context) => {
           <PaintCanvas
             value={data.grid}
             dotsize={dotsize}
-            onCanvasClick={(x, y, button_type) => act('paint', { x, y, button_type })}
+            onCanvasClick={(x, y, button_type) =>
+              act('paint', { x, y, button_type })
+            }
           />
           <Box width="80%" textAlign="center">
             <Box width="50%" inline position="absolute" left="5px">
-            <Box width="50%" inline>
-            Draw size:
-            </Box>
-            <Slider width="50%"
+              <Box width="50%" inline>
+                Draw size:
+              </Box>
+              <Slider
+                width="50%"
                 value={data.draw_size}
                 minValue={1}
                 maxValue={3}
                 step={1}
                 stepPixelSize={50}
                 onChange={(_e, value) => {
-                    act('change_size', {size: value});
+                  act('change_size', { size: value });
                 }}
-            />
+              />
             </Box>
             <Box width="50%" inline position="absolute" right="5%">
-            {!data.finalized && (
-              <Button.Confirm
-                onClick={() => act('finalize')}
-                content="Finalize"
-              />
-            )}
-            {data.name}
+              {!data.finalized && (
+                <Button.Confirm
+                  onClick={() => act('finalize')}
+                  content="Finalize"
+                />
+              )}
+              {data.name}
             </Box>
           </Box>
         </Box>
