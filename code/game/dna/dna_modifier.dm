@@ -716,23 +716,23 @@
 					if(success)
 						I.forceMove(loc)
 						I.name += " ([buf.name])"
-						//temphtml = "Injector created."
+						audible_message("<span class='notice'>Injector created.</span>")
 						injector_ready = FALSE
 						VARSET_IN(src, injector_ready, TRUE, 300)
-					//else
-						//temphtml = "Error in injector creation."
-				//else
-					//temphtml = "Replicator not ready yet."
+					else
+						audible_message("<span class='warning'>Injector creation was aborted due to unknown error!</span>")
+				else
+					audible_message("<span class='warning'>DNA replicator is not ready yet!</span>")
 
 			else if(bufferOption == "saveDisk")
 				if((isnull(disk)) || (disk.read_only))
-					//temphtml = "Invalid disk. Please try again."
+					audible_message("<span class='warning'>Invalid disk! Check if it's in read only mode or try another one.</span>")
 					return FALSE
 
 				var/datum/dna2/record/buf = buffers[bufferId]
 				disk.buf = buf
 				disk.name = "data disk - '[buf.dna.real_name]'"
-				//temphtml = "Data saved."
+				audible_message("<span class='notice'>Data saved.</span>")
 
 /////////////////////////// DNA MACHINES
 
