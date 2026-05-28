@@ -93,10 +93,10 @@ export const DnaModifier = (props, context) => {
 
 const Scanner = (props, context) => {
   const { data } = useBackend(context);
-  const { hasOccupant, occupant } = data;
+  const { occupant } = data;
   return (
     <Section title="Scanner" buttons={<ScannerButtons />}>
-      {!hasOccupant ? (
+      {!occupant ? (
         <Box color="average">Cell is unoccupied</Box>
       ) : (
         <Flex align="center">
@@ -313,7 +313,6 @@ const DnaBlocks = (props, context) => {
 const DnaModifyScreen = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    hasOccupant,
     occupant,
     dnaBlockSize,
     selectedUIBlock,
@@ -331,7 +330,7 @@ const DnaModifyScreen = (props, context) => {
     <Stack>
       <Stack.Item grow>
         <Section fill title={title}>
-          {!hasOccupant ? (
+          {!occupant ? (
             <Box color="average">No patient detected</Box>
           ) : (
             <DnaBlocks
@@ -351,14 +350,14 @@ const DnaModifyScreen = (props, context) => {
             <Button
               icon="radiation"
               m={1}
-              disabled={!hasOccupant}
+              disabled={!occupant}
               onClick={() => act(pulseAction)}>
               Irradiate block
             </Button>
             <Button
               m={1}
               icon="triangle-exclamation"
-              disabled={!hasOccupant}
+              disabled={!occupant}
               onClick={() => act('pulseRadiation')}>
               Pulse radiation
             </Button>
@@ -523,7 +522,7 @@ const DataDiskSection = (props) => {
             mb={-5}
             tooltip="Wipe disk"
             color="bad"
-            disabled={!disk.data}
+            disabled={!disk?.data}
             onClick={() => act('wipeDisk')}
           />
         </Flex.Item>
@@ -531,7 +530,7 @@ const DataDiskSection = (props) => {
       <Box p={1} style={DATA_BOX_STYLE} backgroundColor={DATA_BOX_BG}>
         <LabeledList>
           {!!hasDisk &&
-            (disk.data ? (
+            (disk?.data ? (
               <>
                 <LabeledList.Item label="Label">{disk.label}</LabeledList.Item>
                 <LabeledList.Item label="Subject">
