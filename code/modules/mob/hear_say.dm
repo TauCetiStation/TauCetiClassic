@@ -138,7 +138,7 @@
 		return
 	var/instrumental_sound = get_sound_by_voice(H, H.species.instrumental_voice_male, H.species.instrumental_voice_female)
 	playsound_local(H, instrumental_sound, VOL_EFFECTS_MASTER, 80)
-	addtimer(CALLBACK(src, PROC_REF(play_instrumental_voice), H, repeats - 1), 0.2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(play_instrumental_voice), H, repeats - 1), 0.3 SECONDS)
 
 /mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 

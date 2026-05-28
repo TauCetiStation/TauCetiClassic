@@ -206,22 +206,16 @@
 
 	var/surgery_icobase = 'icons/mob/surgery.dmi'
 
-	var/list/instrumental_voice_male = list(
-		'sound/music_voices/Human_male1.ogg',
-		'sound/music_voices/Human_male2.ogg',
-		'sound/music_voices/Human_male3.ogg',
-		'sound/music_voices/Human_male4.ogg',
-		'sound/music_voices/Human_male5.ogg',
-		'sound/music_voices/Human_male6.ogg',)
+	var/list/instrumental_voice_male
 
-	var/list/instrumental_voice_female = list(
-		'sound/music_voices/Human_female1.ogg',
-		'sound/music_voices/Human_female2.ogg',
-		'sound/music_voices/Human_female3.ogg',
-		'sound/music_voices/Human_female4.ogg',
-		'sound/music_voices/Human_female5.ogg',
-		'sound/music_voices/Human_female6.ogg',)
+	var/list/instrumental_voice_female
+
+/datum/species/proc/get_instrumental_voices()
+	instrumental_voice_male = global.human_male_voices
+	instrumental_voice_female = global.human_female_voices
+
 /datum/species/New()
+	get_instrumental_voices()
 	unarmed = new unarmed_type()
 
 	if(!has_organ[O_HEART])
@@ -596,21 +590,9 @@
 		SPRITE_SHEET_SUIT_FAT = 'icons/mob/species/unathi/suit_fat.dmi'
 	)
 
-	instrumental_voice_male = list(
-		'sound/music_voices/unathi_male1.ogg',
-		'sound/music_voices/unathi_male2.ogg',
-		'sound/music_voices/unathi_male3.ogg',
-		'sound/music_voices/unathi_male4.ogg',
-		'sound/music_voices/unathi_male5.ogg',
-		'sound/music_voices/unathi_male6.ogg',)
-
-	instrumental_voice_female = list(
-		'sound/music_voices/unathi_female1.ogg',
-		'sound/music_voices/unathi_female2.ogg',
-		'sound/music_voices/unathi_female3.ogg',
-		'sound/music_voices/unathi_female4.ogg',
-		'sound/music_voices/unathi_female5.ogg',
-		'sound/music_voices/unathi_female6.ogg',)
+/datum/species/unathi/get_instrumental_voices()
+	instrumental_voice_male = global.unathi_male_voices
+	instrumental_voice_female = global.unathi_female_voices
 
 /datum/species/unathi/New()
 	. = ..()
@@ -722,6 +704,10 @@
 		'sound/music_voices/tajaran_female5.ogg',
 		'sound/music_voices/tajaran_female6.ogg',)
 
+/datum/species/tajaran/get_instrumental_voices()
+	instrumental_voice_male = global.tajaran_male_voices
+	instrumental_voice_female = global.tajaran_female_voices
+
 /datum/species/tajaran/New()
 	. = ..()
 	has_organ += list(BP_TAIL = /obj/item/organ/external/tail)
@@ -787,15 +773,9 @@
 		SPRITE_SHEET_SUIT = 'icons/mob/species/skrell/suit.dmi'
 	)
 
-	instrumental_voice_male = list(
-		'sound/music_voices/skrell_male1.ogg',
-		'sound/music_voices/skrell_male2.ogg',
-		'sound/music_voices/skrell_male3.ogg',)
-
-	instrumental_voice_female = list(
-		'sound/music_voices/skrell_female1.ogg',
-		'sound/music_voices/skrell_female2.ogg',
-		'sound/music_voices/skrell_female3.ogg',)
+/datum/species/skrell/get_instrumental_voices()
+	instrumental_voice_male = global.skrell_male_voices
+	instrumental_voice_female = global.skrell_female_voices
 
 /datum/species/skrell/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.skrell_equip(H)
@@ -1100,21 +1080,9 @@
 		/obj/item/weapon/flora/pottedplant/thinbush,
 		/obj/item/weapon/flora/pottedplant/tropical_2)
 
-	instrumental_voice_male = list(
-		'sound/music_voices/diona1.ogg',
-		'sound/music_voices/diona2.ogg',
-		'sound/music_voices/diona3.ogg',
-		'sound/music_voices/diona4.ogg',
-		'sound/music_voices/diona5.ogg',
-		'sound/music_voices/diona6.ogg',)
-
-	instrumental_voice_female = list(
-		'sound/music_voices/diona1.ogg',
-		'sound/music_voices/diona2.ogg',
-		'sound/music_voices/diona3.ogg',
-		'sound/music_voices/diona4.ogg',
-		'sound/music_voices/diona5.ogg',
-		'sound/music_voices/diona6.ogg',)
+/datum/species/diona/get_instrumental_voices()
+	instrumental_voice_male = global.diona_voices
+	instrumental_voice_female = global.diona_voices
 
 /datum/species/diona/on_gain(mob/living/carbon/human/H)
 	..()
@@ -1419,6 +1387,10 @@
 		'sound/music_voices/ipc_female4.ogg',
 		'sound/music_voices/ipc_female5.ogg',
 		'sound/music_voices/ipc_female6.ogg',)
+
+/datum/species/machine/get_instrumental_voices()
+	instrumental_voice_male = global.ipc_male_voices
+	instrumental_voice_female = global.ipc_female_voices
 
 /datum/species/machine/on_gain(mob/living/carbon/human/H)
 	..()
