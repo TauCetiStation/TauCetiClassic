@@ -45,7 +45,8 @@
 	if(M.grabbed_by.len)
 		for (var/obj/item/weapon/grab/G in M.grabbed_by)
 			qdel(G)
-	if(M.Move(loc) && (M.loc != loc) || isnull(M))
+	M.Move(loc)
+	if(QDELETED(M) || (M.loc != loc))
 		return
 	M.buckled = src
 	M.set_dir(dir)
