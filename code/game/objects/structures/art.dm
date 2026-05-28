@@ -111,7 +111,7 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Canvas", name)
-		ui.set_autoupdate(TRUE)
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /obj/item/canvas/attackby(obj/item/I, mob/living/user, params)
@@ -192,15 +192,27 @@
 		draw_grid(new_x, new_y, color, iterator)
 
 /obj/item/canvas/proc/fill_grid(x, y, color, background_color)
+	var/list/cells_to_check = list(list(x, y))
 	grid[x][y] = color
 
-	for(var/mask in fill_mask)
-		var/new_x = x + mask[1]
-		var/new_y = y + mask[2]
-		if(!check_in_grid(new_x, new_y)) continue
-		if(grid[new_x][new_y] != background_color) continue
+	for(var/i in 1 to 1000)
+		if(!cells_to_check.len)
+			break
+		if(i > 1000)
+			break
 
-		fill_grid(new_x, new_y, color, background_color)
+		var/list/cell = pick_n_take(cells_to_check)
+
+		var/iterate_x = cell[1]
+		var/iterate_y = cell[2]
+
+		for(var/mask in fill_mask)
+			var/new_x = iterate_x + mask[1]
+			var/new_y = iterate_y + mask[2]
+			if(!check_in_grid(new_x, new_y)) continue
+			if(grid[new_x][new_y] != background_color) continue
+			grid[new_x][new_y] = color
+			cells_to_check += list(list(new_x, new_y))
 
 /obj/item/canvas/proc/check_in_grid(x, y)
 	return (x >= 1) && (x <= width) && (y >= 1) && (y <= height)
