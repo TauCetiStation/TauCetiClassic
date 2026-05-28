@@ -280,7 +280,6 @@
 	var/selected_se_block = 1.0
 	var/selected_se_subblock = 1.0
 	var/selected_ui_target = 1
-	var/selected_ui_target_hex = 1
 	var/radiation_duration = 2.0
 	var/radiation_intensity = 1.0
 	var/list/datum/dna2/record/buffers[3]
@@ -525,7 +524,6 @@
 	data["selectedSESubBlock"] = selected_se_subblock
 
 	data["selectedUITarget"] = selected_ui_target
-	data["selectedUITargetHex"] = selected_ui_target_hex
 
 	data["occupant"] = null
 	if(connected.occupant?.dna)
@@ -586,26 +584,7 @@
 	 ////////////////////////////////////////////////////////
 
 		if("changeUITarget")
-			selected_ui_target = text2num(params["target"])
-			if(selected_ui_target < 16 && selected_ui_target >= 0)
-				switch(selected_ui_target)
-					if(10)
-						selected_ui_target_hex = "A"
-					if(11)
-						selected_ui_target_hex = "B"
-					if(12)
-						selected_ui_target_hex = "C"
-					if(13)
-						selected_ui_target_hex = "D"
-					if(14)
-						selected_ui_target_hex = "E"
-					if(15)
-						selected_ui_target_hex = "F"
-					else
-						selected_ui_target_hex = selected_ui_target
-			else
-				selected_ui_target = 0
-				selected_ui_target_hex = 0
+			selected_ui_target = clamp(text2num(params["target"]), 0, 15)
 
 		if("selectUIBlock") // This chunk of code updates selected block / sub-block based on click
 			var/select_block = text2num(params["block"])
