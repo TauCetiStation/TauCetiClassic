@@ -2,12 +2,14 @@
 #define MAX_RAD_DURATION 10
 #define MAX_RAD_INTENSITY 20
 
+#define INJECTOR_CALIBRATION_TIME 25 SECONDS
+#define INJECTOR_RESTORE_TIME 30 SECONDS
+
 // Buffer datatype flags.
 #define DNA2_BUF_UI 1
 #define DNA2_BUF_UE 2
 #define DNA2_BUF_SE 4
 
-//list("data" = null, "owner" = null, "label" = null, "type" = null, "ue" = 0),
 /datum/dna2/record
 	var/datum/dna/dna = null
 	var/types = 0
@@ -51,8 +53,8 @@
 	var/damage_coeff
 	var/scan_level
 	var/precision_coeff
-	var/locked = 0
-	var/open = 0
+	var/locked = FALSE
+	var/open = FALSE
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/inject_amount = 5
 
@@ -72,7 +74,7 @@
 	..()
 
 	scan_level = 0
-	damage_coeff = 0
+	damage_coeff = 1
 	precision_coeff = 0
 	for(var/obj/item/weapon/stock_parts/P in component_parts)
 		if(istype(P, /obj/item/weapon/stock_parts/scanning_module))
@@ -94,7 +96,7 @@
 	var/mob/living/user = usr
 	var/breakout_time = 2
 	if(open || !locked)	//Open and unlocked, no need to escape
-		open = 1
+		open = TRUE
 		return
 	user.SetNextMove(100)
 	user.last_special = world.time + 100
@@ -116,7 +118,7 @@
 		if(panel_open)
 			to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
 			return
-		open = 0
+		open = FALSE
 		density = TRUE
 		var/atom/movable/occupant_body
 		for(var/atom/movable/M in loc)
@@ -176,7 +178,7 @@
 			return
 		var/turf/T = get_turf(src)
 		if(T)
-			open = 1
+			open = TRUE
 			density = FALSE
 			T.contents += (contents - beaker)
 			if(occupant)
@@ -267,7 +269,7 @@
 //DNA COMPUTER
 /obj/machinery/computer/scan_consolenew
 	name = "DNA Modifier Access Console"
-	desc = "Scand DNA."
+	desc = "Scans DNA."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
 	state_broken_preset = "crewb"
@@ -292,7 +294,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
 	active_power_usage = 400
-	var/waiting_for_user_input = 0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
+	var/waiting_for_user_input = FALSE // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
 	var/irradiate_start = 0
 	var/irradiate_duration = 0
 	var/irradiate_lock_state = FALSE
@@ -322,7 +324,7 @@
 /obj/machinery/computer/scan_consolenew/atom_init_late()
 	connected = locate(/obj/machinery/dna_scannernew) in range(4, src)
 	if(!isnull(connected))
-		VARSET_IN(src, injector_ready, TRUE, 250)
+		VARSET_IN(src, injector_ready, TRUE, INJECTOR_CALIBRATION_TIME)
 
 /obj/machinery/computer/scan_consolenew/can_interact_with(mob/user)
 	if(!isnull(connected) && user == connected.occupant)
@@ -366,12 +368,12 @@
 
 	connected.locked = irradiate_lock_state
 
+	if(action_type != "transfer" && !connected.occupant)
+		SStgui.update_uis(src)
+		return
+
 	switch(action_type)
 		if("pulseRadiation")
-			if(!connected.occupant)
-				SStgui.update_uis(src)
-				return
-
 			if(prob(95))
 				if(prob(75))
 					randmutb(connected.occupant)
@@ -386,19 +388,15 @@
 			connected.occupant.radiation += ((radiation_intensity * 3) + radiation_duration * 3)
 
 		if("pulseUIRadiation")
-			if(!connected.occupant)
-				SStgui.update_uis(src)
-				return
-
 			var/block = connected.occupant.dna.GetUISubBlock(selected_ui_block, selected_ui_subblock)
 
 			if(prob(80 + connected.precision_coeff + radiation_duration / 2))
 				block = miniscrambletarget(num2text(selected_ui_target), radiation_intensity, radiation_duration)
 				connected.occupant.dna.SetUISubBlock(selected_ui_block, selected_ui_subblock, block)
 				connected.occupant.UpdateAppearance()
-				connected.occupant.radiation += (radiation_intensity + radiation_duration) / connected.damage_coeff
+				connected.occupant.radiation += (radiation_intensity + radiation_duration) / max(1, connected.damage_coeff)
 			else
-				if	(prob(20 + radiation_intensity))
+				if(prob(20 + radiation_intensity))
 					randmutb(connected.occupant)
 					domutcheck(connected.occupant, connected)
 				else
@@ -407,10 +405,6 @@
 				connected.occupant.radiation += radiation_intensity * 2 + radiation_duration + connected.precision_coeff
 
 		if("pulseSERadiation")
-			if(!connected.occupant)
-				SStgui.update_uis(src)
-				return
-
 			var/block = connected.occupant.dna.GetSESubBlock(selected_se_block, selected_se_subblock)
 
 			if(prob(80 + connected.precision_coeff + radiation_duration / 2))
@@ -422,12 +416,12 @@
 					else if(selected_se_block > DNA_SE_LENGTH / 2 && selected_se_block < DNA_SE_LENGTH)
 						real_SE_block--
 
-					connected.occupant.dna.SetSESubBlock(real_SE_block,selected_se_subblock,block)
-					connected.occupant.radiation += (radiation_intensity + radiation_duration) / connected.damage_coeff
+					connected.occupant.dna.SetSESubBlock(real_SE_block, selected_se_subblock, block)
+					connected.occupant.radiation += (radiation_intensity + radiation_duration) / max(1, connected.damage_coeff)
 					domutcheck(connected.occupant, connected, block != null, 1)
 				else
 					connected.occupant.radiation += radiation_intensity * 2 + radiation_duration + connected.precision_coeff
-					if	(prob(80 - radiation_duration))
+					if(prob(80 - radiation_duration))
 						randmutb(connected.occupant)
 						domutcheck(connected.occupant, connected, block != null, 1)
 					else
@@ -449,8 +443,8 @@
 			else if(buf.types & DNA2_BUF_SE)
 				connected.occupant.dna.SE = buf.dna.SE.Copy()
 				connected.occupant.dna.UpdateSE()
-				domutcheck(connected.occupant,connected)
-			connected.occupant.radiation += rand(15 / (connected.damage_coeff), 40 / (connected.damage_coeff))
+				domutcheck(connected.occupant, connected)
+			connected.occupant.radiation += rand(15 / max(1, connected.damage_coeff), 40 / max(1, connected.damage_coeff))
 
 	SStgui.update_uis(src)
 
@@ -551,6 +545,101 @@
 
 	return data
 
+/obj/machinery/computer/scan_consolenew/proc/load_buffer_from_occupant(bufferId, type_flag, label)
+	if(!connected.occupant?.dna)
+		return FALSE
+	var/datum/dna2/record/databuf = new
+	databuf.types = type_flag
+	databuf.dna = connected.occupant.dna.Clone()
+	if(ishuman(connected.occupant))
+		databuf.dna.real_name = connected.occupant.name
+	databuf.name = label
+	buffers[bufferId] = databuf
+	return TRUE
+
+/obj/machinery/computer/scan_consolenew/proc/buffer_load_from(bufferId, datum/tgui/ui)
+	var/list/sources = list()
+	if(!isnull(connected.occupant))
+		sources += list("Subject U.I.", "Subject U.I. + U.E.", "Subject S.E.")
+	if(!isnull(disk) && !isnull(disk.buf))
+		sources += "Disk"
+
+	if(!sources.len)
+		return FALSE
+
+	var/choice = tgui_input_list(ui.user, "Choose DNA source", "Load from...", sources)
+	if(isnull(choice))
+		return FALSE
+
+	switch(choice)
+		if("Subject U.I.")
+			return load_buffer_from_occupant(bufferId, DNA2_BUF_UI, "Unique identifier")
+		if("Subject U.I. + U.E.")
+			return load_buffer_from_occupant(bufferId, DNA2_BUF_UI|DNA2_BUF_UE, "Unique identifier + unique enzymes")
+		if("Subject S.E.")
+			return load_buffer_from_occupant(bufferId, DNA2_BUF_SE, "Structural enzymes")
+		if("Disk")
+			if(!disk || !disk.buf)
+				return FALSE
+			buffers[bufferId] = disk.buf
+			return TRUE
+
+/obj/machinery/computer/scan_consolenew/proc/buffer_change_label(bufferId)
+	var/datum/dna2/record/buf = buffers[bufferId]
+	var/text = sanitize_safe(input(usr, "New Label:", "Edit Label", input_default(buf.name)) as text|null, MAX_NAME_LEN)
+	buf.name = text
+	buffers[bufferId] = buf
+	return TRUE
+
+/obj/machinery/computer/scan_consolenew/proc/buffer_transfer(bufferId)
+	if(!connected.occupant || (NOCLONE in connected.occupant.mutations) || !connected.occupant.dna)
+		return FALSE
+	start_irradiate(2, "transfer", bufferId)
+	return TRUE
+
+/obj/machinery/computer/scan_consolenew/proc/buffer_create_injector(bufferId, list/params, datum/tgui/ui)
+	if(!injector_ready || waiting_for_user_input)
+		audible_message("<span class='warning'>DNA replicator is not ready yet!</span>")
+		return TRUE
+
+	var/success = FALSE
+	var/obj/item/weapon/dnainjector/I = new /obj/item/weapon/dnainjector
+	var/datum/dna2/record/buf = buffers[bufferId]
+	if(params["createBlockInjector"])
+		waiting_for_user_input = TRUE
+		var/list/selectedbuf
+		if(buf.types & DNA2_BUF_SE)
+			selectedbuf = buf.dna.SE
+		else
+			selectedbuf = buf.dna.UI
+		var/blk = tgui_input_list(ui.user, "Select block", "Block injector", all_dna_blocks(selectedbuf))
+		success = setInjectorBlock(I, blk, buf)
+	else
+		I.buf = buf
+		success = TRUE
+	waiting_for_user_input = FALSE
+
+	if(success)
+		I.forceMove(loc)
+		I.name += " ([buf.name])"
+		audible_message("<span class='notice'>Injector created.</span>")
+		injector_ready = FALSE
+		VARSET_IN(src, injector_ready, TRUE, INJECTOR_RESTORE_TIME)
+	else
+		audible_message("<span class='warning'>Injector creation was aborted due to unknown error!</span>")
+	return TRUE
+
+/obj/machinery/computer/scan_consolenew/proc/buffer_save_disk(bufferId)
+	if(isnull(disk) || disk.read_only)
+		audible_message("<span class='warning'>Invalid disk! Check if it's in read only mode or try another one.</span>")
+		return FALSE
+
+	var/datum/dna2/record/buf = buffers[bufferId]
+	disk.buf = buf
+	disk.name = "data disk - '[buf.dna.real_name]'"
+	audible_message("<span class='notice'>Data saved.</span>")
+	return TRUE
+
 /obj/machinery/computer/scan_consolenew/tgui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
@@ -583,8 +672,6 @@
 		if("radiationIntensity")
 			radiation_intensity = clamp(params["intensity"], 1, MAX_RAD_INTENSITY)
 
-	 ////////////////////////////////////////////////////////
-
 		if("changeUITarget")
 			selected_ui_target = clamp(text2num(params["target"]), 0, 15)
 
@@ -602,8 +689,6 @@
 
 			start_irradiate(radiation_duration, "pulseUIRadiation")
 
-		////////////////////////////////////////////////////////
-
 		if("injectRejuvenators")
 			if(!connected.occupant)
 				return FALSE
@@ -615,7 +700,6 @@
 
 		if("injectAmount")
 			connected.inject_amount = min(connected?.beaker.volume, params["amount"])
-		////////////////////////////////////////////////////////
 
 		if("selectSEBlock") // This chunk of code updates selected block / sub-block based on click (se stands for strutural enzymes)
 			var/select_block = text2num(params["block"])
@@ -657,109 +741,24 @@
 			var/bufferId = text2num(params["bufferId"])
 
 			if(bufferId < 1 || bufferId > 3)
-				return FALSE // Not a valid buffer id
-			else if(bufferOption == "loadFrom")
-				var/list/sources = list()
-				var/choice
-				if(!isnull(connected.occupant))
-					sources += list("Subject U.I.", "Subject U.I. + U.E.", "Subject S.E.")
-				if(!isnull(disk) && !isnull(disk.buf))
-					sources += "Disk"
+				return FALSE
 
-				if(sources.len == 0)
-					choice = null
-				else
-					choice = tgui_input_list(ui.user, "Choose DNA source", "Load from...", sources)
-
-				if(isnull(choice))
-					return FALSE
-
-				switch(choice)
-					if("Subject U.I.")
-						if(connected.occupant?.dna)
-							var/datum/dna2/record/databuf = new
-							databuf.types = DNA2_BUF_UI
-							databuf.dna = connected.occupant.dna.Clone()
-							if(ishuman(connected.occupant))
-								databuf.dna.real_name = connected.occupant.name
-							databuf.name = "Unique identifier"
-							buffers[bufferId] = databuf
-					if("Subject U.I. + U.E.")
-						if(connected.occupant?.dna)
-							var/datum/dna2/record/databuf = new
-							databuf.types = DNA2_BUF_UI|DNA2_BUF_UE
-							databuf.dna = connected.occupant.dna.Clone()
-							if(ishuman(connected.occupant))
-								databuf.dna.real_name = connected.occupant.name
-							databuf.name = "Unique identifier + unique enzymes"
-							buffers[bufferId] = databuf
-					if("Subject S.E.")
-						if(connected.occupant?.dna)
-							var/datum/dna2/record/databuf = new
-							databuf.types = DNA2_BUF_SE
-							databuf.dna = connected.occupant.dna.Clone()
-							if(ishuman(connected.occupant))
-								databuf.dna.real_name = connected.occupant.name
-							databuf.name = "Structural enzymes"
-							buffers[bufferId] = databuf
-					if("Disk")
-						if(!disk || !disk.buf)
-							return FALSE
-						buffers[bufferId] = disk.buf
-
-			else if(bufferOption == "clear")
-				buffers[bufferId] = new /datum/dna2/record()
-
-			else if(bufferOption == "changeLabel")
-				var/datum/dna2/record/buf = buffers[bufferId]
-				var/text = sanitize_safe(input(usr, "New Label:", "Edit Label", input_default(buf.name)) as text|null, MAX_NAME_LEN)
-				buf.name = text
-				buffers[bufferId] = buf
-
-			else if(bufferOption == "transfer")
-				if(!connected.occupant || (NOCLONE in connected.occupant.mutations) || !connected.occupant.dna)
-					return FALSE
-
-				start_irradiate(2, "transfer", bufferId)
-
-			else if(bufferOption == "createInjector")
-				if(injector_ready && !waiting_for_user_input)
-					var/success = FALSE
-					var/obj/item/weapon/dnainjector/I = new /obj/item/weapon/dnainjector
-					var/datum/dna2/record/buf = buffers[bufferId]
-					if(params["createBlockInjector"])
-						waiting_for_user_input = TRUE
-						var/list/selectedbuf
-						if(buf.types & DNA2_BUF_SE)
-							selectedbuf = buf.dna.SE
-						else
-							selectedbuf = buf.dna.UI
-						var/blk = tgui_input_list(ui.user, "Select block", "Block injector", all_dna_blocks(selectedbuf))
-						success = setInjectorBlock(I,blk,buf)
-					else
-						I.buf = buf
-						success = TRUE
-					waiting_for_user_input = FALSE
-					if(success)
-						I.forceMove(loc)
-						I.name += " ([buf.name])"
-						audible_message("<span class='notice'>Injector created.</span>")
-						injector_ready = FALSE
-						VARSET_IN(src, injector_ready, TRUE, 300)
-					else
-						audible_message("<span class='warning'>Injector creation was aborted due to unknown error!</span>")
-				else
-					audible_message("<span class='warning'>DNA replicator is not ready yet!</span>")
-
-			else if(bufferOption == "saveDisk")
-				if((isnull(disk)) || (disk.read_only))
-					audible_message("<span class='warning'>Invalid disk! Check if it's in read only mode or try another one.</span>")
-					return FALSE
-
-				var/datum/dna2/record/buf = buffers[bufferId]
-				disk.buf = buf
-				disk.name = "data disk - '[buf.dna.real_name]'"
-				audible_message("<span class='notice'>Data saved.</span>")
+			switch(bufferOption)
+				if("loadFrom")
+					if(!buffer_load_from(bufferId, ui))
+						return FALSE
+				if("clear")
+					buffers[bufferId] = new /datum/dna2/record()
+				if("changeLabel")
+					buffer_change_label(bufferId)
+				if("transfer")
+					if(!buffer_transfer(bufferId))
+						return FALSE
+				if("createInjector")
+					buffer_create_injector(bufferId, params, ui)
+				if("saveDisk")
+					if(!buffer_save_disk(bufferId))
+						return FALSE
 	return TRUE
 
 /////////////////////////// DNA MACHINES
@@ -767,3 +766,5 @@
 #undef DNA_BLOCK_SIZE
 #undef MAX_RAD_DURATION
 #undef MAX_RAD_INTENSITY
+#undef INJECTOR_CALIBRATION_TIME
+#undef INJECTOR_RESTORE_TIME
