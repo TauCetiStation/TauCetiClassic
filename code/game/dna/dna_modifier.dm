@@ -556,7 +556,7 @@
 	if(.)
 		return
 
-	if(!src || !connected)
+	if(!connected)
 		return FALSE // don't update uis
 	else if(irradiating) // Make sure that it isn't already irradiating someone...
 		return FALSE // don't update uis
