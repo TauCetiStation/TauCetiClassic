@@ -348,12 +348,17 @@ const DnaModifyScreen = (props, context) => {
         <Section fill title="Emitter controls" width="180px">
           <EmitterControls showUITarget={showUITarget} />
           <Box textAlign="center">
-            <Button icon="radiation" m={1} onClick={() => act(pulseAction)}>
+            <Button
+              icon="radiation"
+              m={1}
+              disabled={!hasOccupant}
+              onClick={() => act(pulseAction)}>
               Irradiate block
             </Button>
             <Button
               m={1}
               icon="triangle-exclamation"
+              disabled={!hasOccupant}
               onClick={() => act('pulseRadiation')}>
               Pulse radiation
             </Button>

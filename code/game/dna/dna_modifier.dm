@@ -573,6 +573,8 @@
 				connected.toggle_open(usr)
 
 		if("pulseRadiation")
+			if(!connected.occupant)
+				return FALSE
 			start_irradiate(radiation_duration, "pulseRadiation")
 
 		if("radiationDuration")
