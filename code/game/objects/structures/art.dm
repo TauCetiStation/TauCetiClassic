@@ -201,7 +201,7 @@
 		if(i > 1000)
 			break
 
-		var/list/cell = pick_n_take(cells_to_check)
+		var/list/cell = pop(cells_to_check)
 
 		var/iterate_x = cell[1]
 		var/iterate_y = cell[2]
