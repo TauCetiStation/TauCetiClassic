@@ -285,7 +285,7 @@
 	var/radiation_intensity = 1.0
 	var/list/datum/dna2/record/buffers[3]
 	var/irradiating = 0
-	var/injector_ready = 0	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
+	var/injector_ready = FALSE	//Quick fix for issue 286 (screwdriver the screen twice to restore injector)	-Pete
 	var/obj/machinery/dna_scannernew/connected = null
 	var/obj/item/weapon/disk/data/disk = null
 	var/selected_menu_key = 1
@@ -319,8 +319,7 @@
 /obj/machinery/computer/scan_consolenew/atom_init_late()
 	connected = locate(/obj/machinery/dna_scannernew) in range(4, src)
 	if(!isnull(connected))
-		spawn(250)
-		injector_ready = 1
+		VARSET_IN(src, injector_ready, TRUE, 250)
 
 /obj/machinery/computer/scan_consolenew/can_interact_with(mob/user)
 	if(!isnull(connected) && user == connected.occupant)
@@ -708,20 +707,18 @@
 							selectedbuf = buf.dna.SE
 						else
 							selectedbuf = buf.dna.UI
-						//var/blk = input(usr,"Select Block","Block") as null|anything in all_dna_blocks(selectedbuf)
 						var/blk = tgui_input_list(ui.user, "Select block", "Block injector", all_dna_blocks(selectedbuf))
 						success = setInjectorBlock(I,blk,buf)
 					else
 						I.buf = buf
 						success = TRUE
-					waiting_for_user_input = 0
+					waiting_for_user_input = FALSE
 					if(success)
 						I.forceMove(loc)
 						I.name += " ([buf.name])"
 						//temphtml = "Injector created."
-						injector_ready = 0
-						spawn(300)
-							injector_ready = 1
+						injector_ready = FALSE
+						VARSET_IN(src, injector_ready, TRUE, 300)
 					//else
 						//temphtml = "Error in injector creation."
 				//else
