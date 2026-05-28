@@ -198,8 +198,6 @@
 	for(var/i in 1 to 1000)
 		if(!cells_to_check.len)
 			break
-		if(i > 1000)
-			break
 
 		var/list/cell = pop(cells_to_check)
 
