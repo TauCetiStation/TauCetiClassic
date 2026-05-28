@@ -6288,8 +6288,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/sign/painting{
-	pixel_x = 30
+/obj/structure/picture_frame{
+	pixel_x = 28
 	},
 /turf/simulated/floor/garden,
 /area/station/hallway/secondary/arrival)
@@ -9729,7 +9729,7 @@
 	pixel_y = 5
 	},
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/item/painting_frame{
+/obj/item/weapon/picture_frame/wooden{
 	pixel_x = -2;
 	pixel_y = -9
 	},
@@ -31024,8 +31024,8 @@
 	c_tag = "Arrival Hallway Center";
 	pixel_x = -4
 	},
-/obj/structure/sign/painting{
-	pixel_y = 30
+/obj/structure/picture_frame{
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	icon_state = "grass1"
@@ -31581,11 +31581,11 @@
 /area/station/engineering/break_room)
 "umY" = (
 /obj/structure/table/woodentable,
-/obj/item/painting_frame{
+/obj/item/weapon/picture_frame/wooden{
 	pixel_x = 2;
 	pixel_y = 5
 	},
-/obj/item/painting_frame{
+/obj/item/weapon/picture_frame/wooden{
 	pixel_x = -2
 	},
 /obj/item/stack/sheet/cloth{

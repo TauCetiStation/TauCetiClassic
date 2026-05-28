@@ -26492,8 +26492,8 @@
 "exZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/easel,
-/obj/structure/sign/painting{
-	pixel_y = 30
+/obj/structure/picture_frame{
+	pixel_y = 28
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood14"
@@ -34017,7 +34017,7 @@
 	pixel_x = -3;
 	pixel_y = 1
 	},
-/obj/structure/sign/painting{
+/obj/structure/picture_frame{
 	pixel_y = -30
 	},
 /obj/machinery/light/small,
@@ -67768,8 +67768,8 @@
 /area/station/medical/surgery2)
 "mAw" = (
 /obj/structure/stool,
-/obj/structure/sign/painting{
-	pixel_y = 30
+/obj/structure/picture_frame{
+	pixel_y = 28
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/bridge)
@@ -81455,7 +81455,7 @@
 	},
 /area/station/engineering/engine)
 "plS" = (
-/obj/structure/sign/painting{
+/obj/structure/picture_frame{
 	pixel_y = -30
 	},
 /turf/simulated/floor/wood{
@@ -96518,8 +96518,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "sng" = (
-/obj/structure/sign/painting{
-	pixel_x = 30
+/obj/structure/picture_frame{
+	pixel_x = 28
 	},
 /obj/machinery/light/small{
 	dir = 4
@@ -113101,10 +113101,10 @@
 "vvx" = (
 /obj/structure/table/woodentable,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/painting_frame{
+/obj/item/weapon/picture_frame/wooden{
 	pixel_y = -10
 	},
-/obj/item/painting_frame{
+/obj/item/weapon/picture_frame/wooden{
 	pixel_y = -10
 	},
 /obj/item/stack/sheet/cloth{
