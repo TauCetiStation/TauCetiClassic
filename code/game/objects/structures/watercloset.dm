@@ -812,3 +812,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	. = ..()
 	icon_state = "puddle-splash"
 	icon_state = "puddle"
+
+/obj/structure/sink/drinking_fountain
+	name = "drinking fountain"
+	cases = list("питьевой фонтанчик", "питьевого фонтанчика", "питьевому фонтанчику", "питьевой фонтанчик", "питьевым фонтанчиком", "питьевом фонтанчике")
+	desc = "Питьевой фонтанчик с чистой водой."
+	icon_state = "drinking_fountain"
+
+/obj/structure/sink/drinking_fountain/atom_init()
+	. = ..()
+
+	new /obj/effect/abstract/particle_holder(src, /particles/drinking_fountain, PARTICLE_FADEOUT)

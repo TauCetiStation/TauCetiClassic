@@ -44,6 +44,16 @@
 	P.def_zone = def_zone // a bit junky, but it will either bump this one, or bump object
 	return FALSE
 
+/mob/living/carbon/human/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(..())
+		return
+	if(hit_atom.density)
+		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smashes into [hit_atom]!</span>")
+		SetCrawling(TRUE)
+		update_canmove()
+		drop_from_inventory(l_hand)
+		drop_from_inventory(r_hand)
+
 /mob/living/carbon/human/mob_bullet_act(obj/item/projectile/P, def_zone)
 	. = PROJECTILE_ALL_OK
 
