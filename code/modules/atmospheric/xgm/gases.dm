@@ -103,10 +103,12 @@
 	tile_overlay = "fractol"
 	overlay_limit = 0.7
 
+	heat_of_combustion = 500000 // J/mol
+
 	flags = XGM_GAS_OXIDIZER | XGM_GAS_FUSION_FUEL
 	knowable = FALSE
 
-	burn_product = "helium"
+	burn_product = list("helium" = 1)
 
 /datum/xgm_gas/methane
 	id = "methane"
