@@ -126,6 +126,22 @@
 			return TRUE
 	return FALSE
 
+/proc/get_clothing_by_covered_bodypart(mob/living/carbon/human/T, covered)
+	var/static/list/zone_by_clothing_part = list(
+		BP_CHEST = UPPER_TORSO,
+		BP_GROIN = LOWER_TORSO,
+		BP_L_LEG = LEG_LEFT,
+		BP_R_LEG = LEG_RIGHT,
+		BP_L_ARM = ARM_LEFT,
+		BP_R_ARM = ARM_RIGHT,
+		BP_HEAD = HEAD,
+	)
+	var/zone = zone_by_clothing_part[covered]
+	for(var/obj/item/clothing/I in list(T.wear_suit, T.w_uniform, T.gloves, T.glasses, T.head, T.wear_mask, T.shoes))
+		if(I && (I.body_parts_covered & zone))
+			return I
+	return FALSE
+
 /proc/check_human_covering(mob/living/carbon/human/T, mob/living/user, covered)
 	var/static/list/zone_by_clothing_part = list(
 		BP_CHEST = UPPER_TORSO,

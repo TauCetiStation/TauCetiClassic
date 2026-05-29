@@ -37,16 +37,19 @@
 	name = "shotgun slug"
 	damage = 30
 	armor_multiplier = 0.4
+	close_range_impact_force = 1
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
 	damage = 14
 	dispersion = 2.5
 	armor_multiplier = 1.25
+	close_range_impact_force = 1
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
 	agony = 95
+	close_range_impact_force = 1
 
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
@@ -273,6 +276,7 @@
 	damage = 7
 	incendiary = 2
 	dispersion = 2.0
+	close_range_impact_force = 1
 
 /obj/item/projectile/bullet/chameleon
 	damage = 1 // stop trying to murderbone with a fake gun dumbass!!!

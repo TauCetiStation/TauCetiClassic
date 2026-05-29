@@ -173,3 +173,26 @@
 		qdel(src)
 	else
 		to_chat(user, "<span class='warning'>You can't put it here!</span>")
+
+
+
+/obj/item/weapon/mangal_parts/attackby(obj/item/I, mob/user, params)
+	if(iswrenching(I))
+		deconstruct(TRUE, user)
+		return
+	return ..()
+
+/obj/item/weapon/mangal_parts/deconstruct(disassembled, user = FALSE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(get_turf(user || src))
+	..()
+
+/obj/item/weapon/mangal_parts/attack_self(mob/user)
+	var/turf/simulated/T = get_turf(user)
+	if(T.CanPass(null, T))
+		var/obj/structure/mangal/R = new /obj/structure/mangal( T )
+		to_chat(user, "<span class='notice'>You assemble [src].</span>")
+		R.add_fingerprint(user)
+		qdel(src)
+	else
+		to_chat(user, "<span class='warning'>You can't put it here!</span>")
