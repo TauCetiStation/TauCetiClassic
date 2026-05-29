@@ -383,19 +383,13 @@
 
 	if(!can_point)
 		return FALSE
-	// Removes an ability to point to the object which is out of our sight.
-	// Mostly for cases when we have mesons, thermals etc. equipped.
+	// Prevent pointing at objects that are out of sight, unless they are in our inventory
+	// or an active storage UI. Also prevents pointing at objects inside closed containers.
 	if(client)
 		var/in_inventory_or_active = FALSE
 		if(ismovable(A))
 			var/atom/movable/AM = A
-			var/atom/L = AM.loc
-			while(L && !isturf(L))
-				if(L == src || L == s_active)
-					in_inventory_or_active = TRUE
-					break
-				L = L.loc
-
+			in_inventory_or_active = (contains(AM) || (s_active && s_active.contains(AM)))
 			if(!in_inventory_or_active && AM.loc && !isturf(AM.loc))
 				return FALSE
 

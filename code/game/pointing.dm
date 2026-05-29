@@ -18,15 +18,8 @@
 	if (!isturf(loc))
 		return FALSE
 
-	var/is_inside_src = FALSE
-	var/atom/L = pointed_atom.loc
-	while(L && !isturf(L))
-		if (L == src)
-			is_inside_src = TRUE
-			break
-		L = L.loc
-
-	if (is_inside_src)
+	// If pointing at something inside our own inventory/containers, show a thought bubble instead of a spatial arrow
+	if (pointed_atom != src && contains(pointed_atom))
 		var/atom/movable/AM = src
 		AM.create_point_bubble(pointed_atom)
 		return TRUE
@@ -35,7 +28,7 @@
 	if (!tile)
 		return FALSE
 
-	var/turf/our_tile = get_turf(src)
+	var/turf/our_tile = loc
 	var/obj/visual = new arrow_type(our_tile, invisibility)
 	QDEL_IN(visual, 20)
 
