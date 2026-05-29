@@ -51,7 +51,7 @@
 	// Rotate the arrow to face the target direction if pointing at others
 	if(pointed_atom != src)
 		var/matrix/rotated_matrix = new()
-		rotated_matrix.TurnTo(0, get_pixel_angle(-final_y, -final_x))
+		rotated_matrix.TurnTo(0, get_pixel_angle(-final_x, -final_y))
 		visual.transform = rotated_matrix
 
 	animate(visual, pixel_x = final_x, pixel_y = final_y, time = 1.7, easing = EASE_OUT)

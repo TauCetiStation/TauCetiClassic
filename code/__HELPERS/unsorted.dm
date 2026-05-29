@@ -36,7 +36,7 @@
 	else if(dx<0)
 		.+=360
 
-/proc/get_pixel_angle(y, x)//for getting the angle when animating something's pixel_x and pixel_y
+/proc/get_pixel_angle(x, y)//for getting the angle when animating something's pixel_x and pixel_y
 	if(!y)
 		return (x >= 0) ? 90 : 270
 	. = arctan(x / y)
