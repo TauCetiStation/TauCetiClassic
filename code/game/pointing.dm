@@ -4,6 +4,7 @@
 
 /datum/point_bubble/Destroy()
 	appearance = null
+	deltimer(timer_id)
 	timer_id = null
 	return ..()
 
@@ -64,7 +65,6 @@
 /atom/movable/proc/create_point_bubble(atom/pointed_atom)
 	if(active_point_bubble)
 		var/datum/point_bubble/old_pb = active_point_bubble
-		deltimer(old_pb.timer_id)
 		cut_overlay(old_pb.appearance)
 		qdel(old_pb)
 		active_point_bubble = null
