@@ -59546,12 +59546,18 @@
 /obj/item/weapon/scrap_lump{
 	pixel_y = -8
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "loadingarea"
-	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	req_access = list(67)
+	},
+/obj/effect/decal/cleanable/liquid_fuel{
+	amount = 100
+	},
+/obj/effect/decal/turf_decal/alpha/red{
+	icon_state = "box_white"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor/engine/type4/airless,
 /area/station/cargo/recycler)
@@ -60037,6 +60043,10 @@
 /area/station/engineering/drone_fabrication)
 "cks" = (
 /obj/structure/closet/crate,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "loadingarea";
+	dir = 4
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "ckt" = (
@@ -60475,7 +60485,18 @@
 /turf/simulated/floor/glass/reinforced,
 /area/station/aisat)
 "clF" = (
-/obj/machinery/floodlight,
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 2
+	},
+/obj/structure/closet/crate,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "loadingarea";
+	dir = 4
+	},
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_line"
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "clG" = (
@@ -60757,10 +60778,15 @@
 	},
 /area/station/rnd/mixing)
 "cmn" = (
-/obj/structure/table,
-/obj/item/weapon/storage/toolbox/mechanical,
-/obj/item/device/tagger/shop,
-/turf/simulated/floor/plating/airless,
+/obj/machinery/floodlight,
+/obj/effect/decal/turf_decal{
+	dir = 5;
+	icon_state = "warn"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/engine/airless,
 /area/station/cargo/recycler)
 "cmp" = (
 /obj/structure/cable{
@@ -61848,6 +61874,26 @@
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/starboard)
+"cpj" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+	dir = 1
+	},
+/obj/machinery/sparker{
+	id = "ScrapBurn3";
+	pixel_y = -24
+	},
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	req_access = list(67)
+	},
+/obj/effect/decal/turf_decal/alpha/red{
+	icon_state = "box_white"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "loadingarea"
+	},
+/turf/simulated/floor/engine/type4/airless,
+/area/station/cargo/recycler)
 "cpk" = (
 /obj/machinery/atmospherics/components/unary/tank/air,
 /turf/simulated/floor{
@@ -61915,7 +61961,10 @@
 /area/station/aisat/ai_chamber)
 "cps" = (
 /obj/mecha/working/ripley/recycle_ripley,
-/turf/simulated/floor/plating/airless,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/turf/simulated/floor/engine/type4/airless,
 /area/station/cargo/recycler)
 "cpt" = (
 /obj/structure/window/thin/reinforced{
@@ -61940,17 +61989,20 @@
 /area/station/aisat/ai_chamber)
 "cpv" = (
 /obj/machinery/mech_bay_recharge_port,
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
 	},
-/turf/simulated/floor/plating/airless,
+/obj/machinery/light/small,
+/turf/simulated/floor/engine/type4/airless,
 /area/station/cargo/recycler)
 "cpw" = (
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 8
 	},
-/turf/simulated/floor/plating/airless,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor/engine/type4/airless,
 /area/station/cargo/recycler)
 "cpx" = (
 /obj/machinery/door/poddoor{
@@ -67530,12 +67582,12 @@
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "cEn" = (
-/obj/structure/table,
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
-/obj/machinery/light/small{
-	dir = 4
+/obj/effect/decal/turf_decal{
+	dir = 6;
+	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/obj/random/foods/food_trash,
+/turf/simulated/floor/engine/airless,
 /area/station/cargo/recycler)
 "cEp" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
@@ -70082,12 +70134,15 @@
 /obj/item/stack/sheet/refined_scrap{
 	amount = 10
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "loadingarea"
-	},
 /obj/machinery/door/window/brigdoor{
 	dir = 1;
 	req_access = list(67)
+	},
+/obj/effect/decal/turf_decal/alpha/red{
+	icon_state = "box_white"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor/engine/type4/airless,
 /area/station/cargo/recycler)
@@ -71129,12 +71184,11 @@
 	},
 /area/station/medical/genetics)
 "dYF" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 4
 	},
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_line"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -71618,15 +71672,12 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "ezg" = (
-/obj/machinery/ignition_switch{
-	id = "ScrapBurn2";
-	pixel_y = -24
-	},
+/obj/machinery/atmospherics/components/binary/valve,
 /obj/effect/decal/turf_decal{
+	dir = 6;
 	icon_state = "warn"
 	},
-/obj/machinery/light/small,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/engine/airless,
 /area/station/cargo/recycler)
 "ezi" = (
 /obj/structure/sign/warning/securearea{
@@ -72534,12 +72585,14 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "fAb" = (
-/obj/machinery/camera{
-	c_tag = "Recycler External South"
-	},
+/obj/structure/closet/crate,
 /obj/structure/fence/metal{
 	color = "yellow";
-	dir = 8
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "loadingarea";
+	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -72598,6 +72651,9 @@
 	dir = 1;
 	name = "apc top";
 	pixel_y = 28
+	},
+/obj/machinery/camera{
+	c_tag = "Recycler External South"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -74982,26 +75038,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "hSW" = (
-/obj/structure/fence/metal{
-	color = "yellow";
-	dir = 8
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_corner"
 	},
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 6
-	},
-/obj/structure/reagent_dispensers/fueltank,
-/obj/structure/fence/metal{
-	color = "yellow";
-	dir = 1
-	},
-/obj/structure/fence/metal{
-	color = "yellow";
-	dir = 2
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/turf/simulated/floor/engine/type4/airless,
+/turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "hTt" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
@@ -77176,8 +77216,12 @@
 /turf/simulated/floor,
 /area/station/engineering/engine)
 "jXG" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 10
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_line"
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	target_pressure = 2.5
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -77268,6 +77312,13 @@
 	icon_state = "dark"
 	},
 /area/station/medical/morgue)
+"kbm" = (
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_line";
+	dir = 6
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "kbw" = (
 /obj/effect/decal/turf_decal{
 	dir = 4;
@@ -78978,21 +79029,10 @@
 	},
 /area/station/medical/cmo)
 "lMl" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
 	},
-/obj/machinery/sparker{
-	id = "ScrapBurn3";
-	pixel_y = -24
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "loadingarea"
-	},
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	req_access = list(67)
-	},
-/turf/simulated/floor/engine/type4/airless,
+/turf/simulated/floor/engine/airless,
 /area/station/cargo/recycler)
 "lMr" = (
 /obj/item/device/radio/intercom{
@@ -79218,14 +79258,31 @@
 	},
 /area/station/medical/morgue)
 "lWn" = (
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
 /obj/structure/fence/metal{
 	color = "yellow";
-	dir = 8
+	dir = 1
 	},
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 4
 	},
-/turf/simulated/floor/plating/airless,
+/obj/structure/reagent_dispensers/fueltank,
+/obj/structure/sign/warning/fire{
+	pixel_y = -32
+	},
+/obj/machinery/ignition_switch{
+	id = "ScrapBurn3";
+	pixel_y = -24;
+	pixel_x = -8
+	},
+/turf/simulated/floor/engine/type4/airless,
 /area/station/cargo/recycler)
 "lXb" = (
 /obj/item/weapon/pen,
@@ -79257,11 +79314,16 @@
 	},
 /area/station/medical/cmo)
 "lXR" = (
+/obj/machinery/ignition_switch{
+	id = "ScrapBurn2";
+	pixel_y = -24;
+	pixel_x = -8
+	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/obj/machinery/atmospherics/components/binary/valve,
-/turf/simulated/floor/plating/airless,
+/obj/machinery/light/small,
+/turf/simulated/floor/engine/airless,
 /area/station/cargo/recycler)
 "lYb" = (
 /obj/structure/rack,
@@ -82518,15 +82580,11 @@
 	},
 /area/station/medical/cmo)
 "pCl" = (
-/obj/machinery/ignition_switch{
-	id = "ScrapBurn1";
-	pixel_y = -24
-	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/obj/machinery/light/small,
-/turf/simulated/floor/plating/airless,
+/obj/machinery/atmospherics/components/binary/valve,
+/turf/simulated/floor/engine/airless,
 /area/station/cargo/recycler)
 "pCu" = (
 /obj/machinery/computer/station_alert{
@@ -82563,10 +82621,10 @@
 /area/station/engineering/chiefs_office)
 "pCU" = (
 /obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn_corner"
+	dir = 10;
+	icon_state = "warn"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/engine/airless,
 /area/station/cargo/recycler)
 "pDd" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
@@ -82643,14 +82701,8 @@
 	},
 /area/station/hallway/primary/central)
 "pLO" = (
-/obj/structure/fence/metal{
-	color = "yellow";
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/binary/passive_gate{
-	target_pressure = 2.5;
-	dir = 1
-	},
+/obj/structure/table,
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
 /turf/simulated/floor/engine/type4/airless,
 /area/station/cargo/recycler)
 "pNc" = (
@@ -83505,8 +83557,8 @@
 	},
 /area/station/civilian/fitness)
 "qJB" = (
-/obj/machinery/atmospherics/pipe/manifold/visible{
-	dir = 1
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_line"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -83613,6 +83665,10 @@
 "qNB" = (
 /obj/structure/closet/crate,
 /obj/machinery/light/small{
+	dir = 4
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -83896,6 +83952,16 @@
 	icon_state = "freezerfloor11"
 	},
 /area/station/civilian/garden)
+"raA" = (
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 6
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "rbb" = (
 /obj/structure/table/glass,
 /obj/item/weapon/game_kit/orange,
@@ -84719,12 +84785,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/starboardsolar)
 "rPX" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 10
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 8
 	},
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_line"
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	target_pressure = 2.5
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -84935,6 +85005,15 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
+"saI" = (
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_line"
+	},
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "sbb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -85047,8 +85126,11 @@
 	},
 /area/station/medical/virology)
 "sgH" = (
-/obj/machinery/atmospherics/pipe/simple/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/manifold/visible{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_line"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
@@ -86130,6 +86212,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
+"tdF" = (
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 10
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "teb" = (
 /obj/machinery/light/smart{
 	dir = 1
@@ -87187,23 +87275,12 @@
 /turf/environment/space,
 /area/shuttle/supply/station)
 "uEv" = (
-/obj/structure/fence/metal{
-	color = "yellow";
-	dir = 8
+/obj/effect/decal/turf_decal{
+	dir = 10;
+	icon_state = "warn"
 	},
-/obj/machinery/light/small,
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/atmospherics/components/unary/portables_connector{
-	dir = 1
-	},
-/obj/structure/fence/metal{
-	color = "yellow";
-	dir = 1
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/turf/simulated/floor/engine/type4/airless,
+/obj/machinery/atmospherics/components/binary/valve,
+/turf/simulated/floor/engine/airless,
 /area/station/cargo/recycler)
 "uEB" = (
 /obj/effect/decal/cleanable/dirt,
@@ -87342,6 +87419,15 @@
 	icon_state = "dark"
 	},
 /area/station/security/armoury)
+"uWG" = (
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_line"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 10
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/cargo/recycler)
 "uYg" = (
 /obj/effect/decal/turf_decal/white{
 	icon_state = "siding_wideplating_line";
@@ -87925,15 +88011,17 @@
 	},
 /area/station/engineering/engine)
 "wgc" = (
-/obj/effect/decal/turf_decal{
-	icon_state = "warn"
+/obj/structure/table,
+/obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/device/tagger/shop,
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 1
 	},
-/obj/machinery/light/small,
-/obj/machinery/ignition_switch{
-	id = "ScrapBurn3";
-	pixel_y = -24
+/obj/machinery/atmospherics/pipe/simple/visible{
+	dir = 9
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/engine/type4/airless,
 /area/station/cargo/recycler)
 "wgu" = (
 /obj/machinery/field_generator,
@@ -88608,12 +88696,16 @@
 /turf/environment/space,
 /area/shuttle/supply/station)
 "xvH" = (
+/obj/machinery/ignition_switch{
+	id = "ScrapBurn1";
+	pixel_y = -24;
+	pixel_x = -8
+	},
 /obj/effect/decal/turf_decal{
-	dir = 10;
 	icon_state = "warn"
 	},
-/obj/machinery/atmospherics/components/binary/valve,
-/turf/simulated/floor/plating/airless,
+/obj/machinery/light/small,
+/turf/simulated/floor/engine/airless,
 /area/station/cargo/recycler)
 "xvI" = (
 /obj/structure/object_wall/cargo{
@@ -88693,6 +88785,28 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/maintenance/cargo)
+"xER" = (
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 8
+	},
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/obj/structure/fence/metal{
+	color = "yellow";
+	dir = 1
+	},
+/obj/structure/sign/warning/nosmoking{
+	pixel_y = -32
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/engine/type4/airless,
+/area/station/cargo/recycler)
 "xFm" = (
 /obj/structure/closet/wardrobe/engineering_yellow,
 /obj/machinery/light/smart{
@@ -110323,13 +110437,13 @@ aaa
 aaa
 aaa
 aaa
-aah
-aah
-aah
-aah
-aaa
-aaa
-aaa
+yab
+agn
+agn
+agn
+agn
+agn
+agn
 aaa
 aaa
 aaa
@@ -110580,12 +110694,12 @@ aah
 aah
 aah
 aah
-yab
-agn
-agn
-agn
-agn
-agn
+aah
+aah
+aah
+aah
+aah
+aah
 agn
 aaa
 aaa
@@ -110833,17 +110947,17 @@ bNk
 bNk
 bNk
 bNk
-aaa
-aah
-aaa
-aaa
-aah
-aaa
-aaa
-aah
-aaa
-aaa
-agn
+nyN
+nyN
+nyN
+nyN
+nyN
+nyN
+raA
+rPX
+xER
+szJ
+szJ
 aaa
 aaa
 aaa
@@ -111090,16 +111204,16 @@ bNk
 fub
 fxb
 bNk
-fAb
-nyN
-nyN
-nyN
-nyN
-lWn
-hSW
-pLO
+bZZ
+bZZ
+bZZ
+bZZ
+bZZ
+bZZ
+tdF
+saI
 uEv
-szJ
+ciQ
 szJ
 aah
 aaa
@@ -111352,11 +111466,11 @@ bZZ
 bZZ
 bZZ
 bZZ
-pCU
-rPX
+bZZ
+cgO
 dYF
 xvH
-ciQ
+szJ
 szJ
 aah
 aaa
@@ -111606,14 +111720,14 @@ ybN
 bNk
 fCb
 bZZ
-bZZ
-bZZ
-bZZ
-bZZ
-cgO
+cbC
+cbB
+cwT
+cbB
+cbB
 sgH
 pCl
-szJ
+cRg
 szJ
 aah
 aaa
@@ -111863,14 +111977,14 @@ bZZ
 sEt
 bZZ
 bZZ
-cbC
 cbB
-cwT
+ciP
 cbB
-cbB
-qJB
+cgN
+ciP
+dYF
 lXR
-cRg
+szJ
 szJ
 aah
 aah
@@ -112120,14 +112234,14 @@ cZq
 xZb
 gKI
 bZZ
-cbB
 ciP
 cbB
-cgN
-ciP
+cgx
+cbB
+cbB
 sgH
 ezg
-szJ
+cpj
 szJ
 aah
 aaa
@@ -112377,14 +112491,14 @@ vsk
 cbS
 gKI
 bZZ
+cbB
+cbC
+cbB
 ciP
-cbB
-cgx
-cbB
-cbB
+cwT
 jXG
-lXR
-lMl
+lWn
+szJ
 szJ
 aah
 aaa
@@ -112635,14 +112749,14 @@ cbS
 bZZ
 bZZ
 cbB
-cbC
-cbB
 ciP
-cwT
-bZZ
+cbB
+cbB
+cbB
+uWG
 wgc
-szJ
-szJ
+pLO
+cap
 aah
 aaa
 aaa
@@ -112891,12 +113005,12 @@ cwE
 cgy
 bZZ
 bZZ
-cbB
-ciP
-cbB
-cbB
-cbB
 bZZ
+bZZ
+bZZ
+bZZ
+bZZ
+qJB
 pCU
 cpv
 cap
@@ -113152,9 +113266,9 @@ bZZ
 bZZ
 bZZ
 bZZ
-bZZ
-bZZ
-bZZ
+hSW
+kbm
+lMl
 cps
 cap
 cFw
@@ -113405,7 +113519,7 @@ cbf
 cgz
 bPK
 bZZ
-cks
+fAb
 cks
 qNB
 cks
