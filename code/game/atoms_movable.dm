@@ -32,6 +32,9 @@
 	// A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
 	var/list/area_sensitive_contents
 
+	var/mutable_appearance/active_point_bubble = null
+	var/active_point_bubble_timer_id = null
+
 /atom/movable/Destroy()
 
 	var/turf/T = loc
