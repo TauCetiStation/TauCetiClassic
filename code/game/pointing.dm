@@ -48,20 +48,11 @@
 		final_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x + (click_x - 16)
 		final_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y + (click_y - 16)
 
-	// Rotate the arrow to face the target direction
-	var/matrix/rotated_matrix = new()
-
-	// When pointing at self, arrow comes from outside toward the click point
-	if(pointed_atom == src)
-		var/dist = sqrt(final_x * final_x + final_y * final_y)
-		if(dist > 0)
-			visual.pixel_x = final_x + (final_x / dist) * world.icon_size
-			visual.pixel_y = final_y + (final_y / dist) * world.icon_size
-		rotated_matrix.TurnTo(0, get_pixel_angle(final_y, final_x))
-	else
+	// Rotate the arrow to face the target direction if pointing at others
+	if(pointed_atom != src)
+		var/matrix/rotated_matrix = new()
 		rotated_matrix.TurnTo(0, get_pixel_angle(-final_y, -final_x))
-
-	visual.transform = rotated_matrix
+		visual.transform = rotated_matrix
 
 	animate(visual, pixel_x = final_x, pixel_y = final_y, time = 1.7, easing = EASE_OUT)
 
