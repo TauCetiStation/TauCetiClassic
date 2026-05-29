@@ -795,10 +795,8 @@
 
 /atom/movable/proc/create_point_bubble(atom/pointed_atom)
 	if(active_point_bubble)
-		deltimer(active_point_bubble_timer_id)
 		cut_overlay(active_point_bubble)
 		active_point_bubble = null
-		active_point_bubble_timer_id = null
 
 	var/mutable_appearance/thought_bubble = mutable_appearance('icons/effects/effects.dmi', "thought_bubble", plane = POINT_PLANE)
 	thought_bubble.appearance_flags = KEEP_APART
@@ -821,11 +819,10 @@
 
 	active_point_bubble = thought_bubble
 	add_overlay(thought_bubble)
-	active_point_bubble_timer_id = addtimer(CALLBACK(src, PROC_REF(clear_point_bubble)), 2.5 SECONDS, TIMER_STOPPABLE)
+	addtimer(CALLBACK(src, PROC_REF(clear_point_bubble), thought_bubble), 2.5 SECONDS)
 
-/atom/movable/proc/clear_point_bubble()
-	if(active_point_bubble)
-		cut_overlay(active_point_bubble)
-	active_point_bubble = null
-	active_point_bubble_timer_id = null
+/atom/movable/proc/clear_point_bubble(mutable_appearance/thought_bubble)
+	if(active_point_bubble == thought_bubble)
+		active_point_bubble = null
+	cut_overlay(thought_bubble)
 
