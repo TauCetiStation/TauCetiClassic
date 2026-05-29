@@ -221,11 +221,12 @@
 
 			var/list/implantData = list()
 			var/has_unknown_implant = FALSE
-			for(var/obj/item/weapon/implant/I in E.embedded_objects)
+			for(var/obj/I in E.embedded_objects)
 				var/list/implantSubData = list()
 				implantSubData["name"] = C_CASE(I, NOMINATIVE_CASE)
 
-				if(!is_known_implant(I))
+				var/obj/item/weapon/implant/impl = I
+				if(!istype(impl) || !is_known_implant(impl))
 					has_unknown_implant = TRUE
 					implantSubData["name"] = null
 
@@ -411,8 +412,9 @@
 			infected = "[get_germ_level_name(BP.germ_level)]:"
 
 		var/unknown_body = 0
-		for(var/obj/item/weapon/implant/I in BP.embedded_objects)
-			if(is_known_implant(I))
+		for(var/obj/I in BP.embedded_objects)
+			var/obj/item/weapon/implant/impl = I
+			if(istype(impl) && is_known_implant(impl))
 				imp += "[I] имплантирован:"
 			else
 				unknown_body++
