@@ -383,17 +383,17 @@
 
 	if(!can_point)
 		return FALSE
-	// Prevent pointing at objects that are out of sight, unless they are in our inventory
-	// or an active storage UI. Also prevents pointing at objects inside closed containers.
+	// Prevent pointing at objects that are out of sight, unless they are in our inventory.
+	// Also prevents pointing at objects inside closed containers or external storages.
 	if(client)
-		var/in_inventory_or_active = FALSE
+		var/in_inventory = FALSE
 		if(ismovable(A))
 			var/atom/movable/AM = A
-			in_inventory_or_active = (contains(AM) || (s_active && s_active.contains(AM)))
-			if(!in_inventory_or_active && AM.loc && !isturf(AM.loc))
+			in_inventory = contains(AM)
+			if(!in_inventory && AM.loc && !isturf(AM.loc))
 				return FALSE
 
-		if(!in_inventory_or_active && !(A in view(client.view, src)))
+		if(!in_inventory && !(A in view(client.view, src)))
 			return FALSE
 
 	point_at(A, params = params)
