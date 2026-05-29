@@ -1,3 +1,12 @@
+/datum/point_bubble
+	var/mutable_appearance/appearance
+	var/timer_id
+
+/datum/point_bubble/Destroy()
+	appearance = null
+	timer_id = null
+	return ..()
+
 /**
  * Point at an atom
  *
@@ -104,12 +113,3 @@
 		active_point_bubble = null
 	cut_overlay(PB.appearance)
 	qdel(PB)
-
-/datum/point_bubble
-	var/mutable_appearance/appearance
-	var/timer_id
-
-/datum/point_bubble/Destroy()
-	appearance = null
-	timer_id = null
-	return ..()
