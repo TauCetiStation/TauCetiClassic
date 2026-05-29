@@ -17,6 +17,8 @@
 	has_leg = TRUE
 	faction = "bots"
 
+	fart_gas = "hydrogen"
+
 /mob/living/simple_animal/hostile/bot/death()
 	..()
 	new /obj/effect/gibspawner/robot(loc)

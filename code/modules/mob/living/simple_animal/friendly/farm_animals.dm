@@ -49,6 +49,7 @@
 			visible_message("<span class='notice'>[src] calms down.</span>")
 
 		if(stat == CONSCIOUS)
+			handle_fart_tick(0.00001)
 			if(udder && prob(5))
 				udder.add_reagent("milk", rand(5, 10))
 
@@ -140,6 +141,7 @@
 /mob/living/simple_animal/cow/Life()
 	. = ..()
 	if(stat == CONSCIOUS)
+		handle_fart_tick(0.000275)
 		if(udder && prob(5))
 			udder.add_reagent("milk", rand(5, 10))
 		else if(prob(15))

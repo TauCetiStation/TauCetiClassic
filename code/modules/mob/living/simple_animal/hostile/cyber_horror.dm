@@ -24,6 +24,8 @@
 	has_arm = TRUE
 	has_leg = TRUE
 
+	fart_gas = "hydrogen"
+
 /mob/living/simple_animal/hostile/cyber_horror/Life(mob/living/simple_animal/hostile/cyber_horror/M)
 	. = ..()
 	if(!.)

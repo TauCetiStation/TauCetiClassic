@@ -38,6 +38,8 @@
 	has_arm = TRUE
 	has_leg = TRUE
 
+	fart_gas = "deuterium"
+
 /mob/living/simple_animal/hostile/xenomorph/atom_init()
 	. = ..()
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_CLAW)

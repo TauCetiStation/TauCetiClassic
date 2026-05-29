@@ -70,6 +70,9 @@
 	// used for growing creatures
 	var/evolv_stage = 0
 
+	var/last_time_farted = 0
+	var/fart_gas = "methane"
+
 /mob/living/simple_animal/atom_init()
 	if(!moveset_type)
 		if(animalistic)
@@ -281,6 +284,8 @@
 	density = FALSE
 	med_hud_set_health()
 	med_hud_set_status()
+
+	fart(0.0001)
 	return ..()
 
 /mob/living/simple_animal/ex_act(severity)
@@ -425,3 +430,13 @@
 
 /mob/living/simple_animal/can_pickup(obj/O)
 	return FALSE
+
+/mob/living/simple_animal/proc/handle_fart_tick(fart_per_second) // in moles of methane
+	var/fart_amount = fart_per_second * (world.time - last_time_farted) / 1 SECOND
+	last_time_farted = world.time
+	fart(fart_amount)
+
+/mob/living/simple_animal/proc/fart(moles)
+	var/datum/gas_mixture/env = loc.return_air()
+	if(env)
+		env.adjust_gas(fart_gas,  moles)
