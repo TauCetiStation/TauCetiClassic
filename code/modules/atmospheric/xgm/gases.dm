@@ -112,7 +112,7 @@
 
 /datum/xgm_gas/methane
 	id = "methane"
-	name = "methane"
+	name = "Methane"
 
 	specific_heat = 35.7	// J/(mol*K)
 	molar_mass = 0.016	// kg/mol

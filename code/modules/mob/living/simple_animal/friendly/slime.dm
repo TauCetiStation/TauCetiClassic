@@ -61,6 +61,6 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-	fart(0.001)
+	fart(0.01)
 
 	qdel(src)
