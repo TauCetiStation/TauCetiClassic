@@ -144,7 +144,6 @@ What is the naming convention for planes or layers?
 #define GHOST_ILLUSION_PLANE 79
 
 #define GHOST_PLANE 80
-#define POINT_PLANE ABOVE_LIGHTING_PLANE
 
 //---------- -----LIGHTING -------------
 #define LIGHTING_PLANE 100

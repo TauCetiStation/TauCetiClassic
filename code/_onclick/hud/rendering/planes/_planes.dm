@@ -61,11 +61,6 @@
 
 	add_filter("ghost_illusion", 1, motion_blur_filter(x = 3, y = 3))
 
-/atom/movable/screen/plane_master/point
-	name = "point plane master"
-	plane = POINT_PLANE
-	blend_mode = BLEND_OVERLAY
-
 /atom/movable/screen/plane_master/area
 	name = "area plane"
 	plane = AREA_PLANE
