@@ -7,6 +7,8 @@
 	var/list/name = list()
 	//Specific heat of the gas.  Used for calculating heat capacity.
 	var/list/specific_heat = list()
+	//Heat of combustion
+	var/list/heat_of_combustion = list()
 	//Molar mass of the gas.  Used for calculating specific entropy.
 	var/list/molar_mass = list()
 	//Tile overlays.  /images, created from references to 'icons/effects/tile_effects.dmi'
@@ -29,12 +31,13 @@
 	var/name = "Unnamed Gas"
 	var/specific_heat = 20	// J/(mol*K)
 	var/molar_mass = 0.032	// kg/mol
+	var/heat_of_combustion = 1 //J/mol
 
 	var/tile_overlay = null
 	var/overlay_limit = null
 
 	var/flags = 0
-	var/burn_product = "carbon_dioxide"
+	var/burn_product = list("carbon_dioxide" = 2)
 	var/dangerous = FALSE // currently used by canisters
 	/// This variable determines whether the crew knows about this gas from the round start.
 	var/knowable = FALSE
@@ -72,6 +75,8 @@
 		gas_data.name[gas.id] = gas.name
 		gas_data.specific_heat[gas.id] = gas.specific_heat
 		gas_data.molar_mass[gas.id] = gas.molar_mass
+
+		gas_data.heat_of_combustion[gas.id] = gas.heat_of_combustion
 
 		if(gas.tile_overlay)
 			gas_data.tile_overlay[gas.id] = getGasTileOverlay(gas.tile_overlay, FLY_LAYER)

@@ -71,8 +71,10 @@
 #define FIRE_GAS_MIN_BURNRATE   0.01
 #define FIRE_LIQUD_MIN_BURNRATE 0.0025
 
-//How many moles of fuel are contained within one solid/liquid fuel volume unit
-#define LIQUIDFUEL_AMOUNT_TO_MOL 0.45  //mol/volume unit
+//How many moles of fuel are contained within one solid/liquid fuel volume unit. Used numbers for kerosene and 1vu = 10ml
+#define LIQUIDFUEL_AMOUNT_TO_MOL  0.0471 // mol/volume unit
+
+#define LIQUIDFUEL_HEATOFCOMBUSTION 7310000 // J/mol
 
 // XGM gas flags.
 #define XGM_GAS_FUEL        1

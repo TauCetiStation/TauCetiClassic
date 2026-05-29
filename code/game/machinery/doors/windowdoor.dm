@@ -371,6 +371,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 	base_state = "leftsecure"
 	req_access = list(access_security)
 	max_integrity = 300 //Stronger doors for prison (regular window door health is 150)
+	armor = list(MELEE = 50, BULLET = 70, LASER = 20, ENERGY = 20, BOMB = 10, BIO = 0, FIRE = 100, ACID = 30)
 
 /obj/machinery/door/window/brigdoor/atom_init()
 	. = ..()

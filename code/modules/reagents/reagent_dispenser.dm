@@ -27,7 +27,7 @@
 	to_chat(user, "<span class = 'notice'>You transfer [transfer_from ? "from" : "into"] [src]</span>")
 
 /obj/structure/reagent_dispensers/atom_init()
-	var/datum/reagents/R = new/datum/reagents(1000)
+	var/datum/reagents/R = new/datum/reagents(5000)
 	reagents = R
 	R.my_atom = src
 	if (!possible_transfer_amounts)
@@ -229,7 +229,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 
 /obj/structure/reagent_dispensers/fueltank/atom_init()
 	. = ..()
-	reagents.add_reagent("fuel",300)
+	reagents.add_reagent("fuel", 1000)
+	reagents.add_reagent("fuel", 1000)
+	reagents.add_reagent("fuel", 1000)
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
