@@ -385,8 +385,22 @@
 		return FALSE
 	// Removes an ability to point to the object which is out of our sight.
 	// Mostly for cases when we have mesons, thermals etc. equipped.
-	if(client && !(A in view(client.view, src)))
-		return FALSE
+	if(client)
+		var/in_inventory_or_active = FALSE
+		if(ismovable(A))
+			var/atom/movable/AM = A
+			var/atom/L = AM.loc
+			while(L && !isturf(L))
+				if(L == src || L == s_active)
+					in_inventory_or_active = TRUE
+					break
+				L = L.loc
+
+			if(!in_inventory_or_active && AM.loc && !isturf(AM.loc))
+				return FALSE
+
+		if(!in_inventory_or_active && !(A in view(client.view, src)))
+			return FALSE
 
 	point_at(A, params = params)
 
