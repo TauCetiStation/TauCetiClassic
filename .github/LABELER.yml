@@ -71,7 +71,8 @@
     - 'scripts/**/*'
     - 'test/**/*'
     - 'code/_compile_options.dm'
-    - '*'
+    - '.*'          # Только скрытые файлы в корне (например, .gitignore)
+    - '.**/*'		# Любые файлы внутри папок, начинающихся с точки (например, .github/workflows/main.yml)
   - all-globs-to-all-files:
     - '!taucetistation.dme'
 
