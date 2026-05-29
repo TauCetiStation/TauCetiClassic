@@ -436,7 +436,7 @@
 	last_time_farted = world.time
 	fart(fart_amount)
 
-/mob/living/simple_animal/proc/fart(moles)
+/mob/living/simple_animal/proc/fart(moles_amount)
 	var/datum/gas_mixture/env = loc.return_air()
 	if(env)
-		env.adjust_gas(fart_gas,  moles)
+		env.adjust_gas(fart_gas,  moles_amount)
