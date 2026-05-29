@@ -69,7 +69,7 @@
 		qdel(old_pb)
 		active_point_bubble = null
 
-	var/mutable_appearance/thought_bubble = mutable_appearance('icons/effects/effects.dmi', "thought_bubble", plane = ABOVE_LIGHTING_PLANE)
+	var/mutable_appearance/thought_bubble = mutable_appearance('icons/effects/effects.dmi', "thought_bubble", plane = POINT_PLANE)
 	thought_bubble.appearance_flags = KEEP_APART
 
 	var/mutable_appearance/pointed_atom_appearance = new(pointed_atom.appearance)
@@ -80,7 +80,7 @@
 	pointed_atom_appearance.pixel_y = 0
 	thought_bubble.overlays += pointed_atom_appearance
 
-	var/mutable_appearance/point_visual = mutable_appearance('icons/hud/screen1.dmi', "arrow", plane = ABOVE_LIGHTING_PLANE)
+	var/mutable_appearance/point_visual = mutable_appearance('icons/hud/screen1.dmi', "arrow", plane = POINT_PLANE)
 	thought_bubble.overlays += point_visual
 
 	thought_bubble.pixel_x = 16
