@@ -432,7 +432,7 @@
 	return FALSE
 
 /mob/living/simple_animal/proc/handle_fart_tick(fart_per_second) // in moles of methane
-	var/fart_amount = fart_per_second * (world.time - last_time_farted) / 1 SECOND
+	var/fart_amount = fart_per_second * (world.time - last_time_farted) / (1 SECOND)
 	last_time_farted = world.time
 	fart(fart_amount)
 
