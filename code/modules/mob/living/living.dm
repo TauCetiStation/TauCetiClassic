@@ -696,7 +696,7 @@
 
 	return
 
-/mob/living/pointed(atom/A)
+/mob/living/pointed(atom/A, params)
 	if(incapacitated() || (status_flags & FAKEDEATH))
 		return FALSE
 
