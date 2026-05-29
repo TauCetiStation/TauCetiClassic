@@ -32,7 +32,7 @@
 	// A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
 	var/list/area_sensitive_contents
 
-	var/mutable_appearance/active_point_bubble = null
+	var/datum/point_bubble/active_point_bubble = null
 
 /atom/movable/Destroy()
 

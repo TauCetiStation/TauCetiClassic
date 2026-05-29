@@ -795,7 +795,10 @@
 
 /atom/movable/proc/create_point_bubble(atom/pointed_atom)
 	if(active_point_bubble)
-		cut_overlay(active_point_bubble)
+		var/datum/point_bubble/old_pb = active_point_bubble
+		deltimer(old_pb.timer_id)
+		cut_overlay(old_pb.appearance)
+		qdel(old_pb)
 		active_point_bubble = null
 
 	var/mutable_appearance/thought_bubble = mutable_appearance('icons/effects/effects.dmi', "thought_bubble", plane = POINT_PLANE)
@@ -817,12 +820,25 @@
 	thought_bubble.alpha = 200
 	thought_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
-	active_point_bubble = thought_bubble
 	add_overlay(thought_bubble)
-	addtimer(CALLBACK(src, PROC_REF(clear_point_bubble), thought_bubble), 2.5 SECONDS)
 
-/atom/movable/proc/clear_point_bubble(mutable_appearance/thought_bubble)
-	if(active_point_bubble == thought_bubble)
+	var/datum/point_bubble/new_pb = new()
+	new_pb.appearance = thought_bubble
+	new_pb.timer_id = addtimer(CALLBACK(src, PROC_REF(clear_point_bubble), new_pb), 2.5 SECONDS, TIMER_STOPPABLE)
+	active_point_bubble = new_pb
+
+/atom/movable/proc/clear_point_bubble(datum/point_bubble/PB)
+	if(active_point_bubble == PB)
 		active_point_bubble = null
-	cut_overlay(thought_bubble)
+	cut_overlay(PB.appearance)
+	qdel(PB)
+
+/datum/point_bubble
+	var/mutable_appearance/appearance
+	var/timer_id
+
+/datum/point_bubble/Destroy()
+	appearance = null
+	timer_id = null
+	return ..()
 
