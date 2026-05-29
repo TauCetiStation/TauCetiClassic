@@ -62,6 +62,10 @@
 /atom/movable
 	var/datum/point_bubble/active_point_bubble = null
 
+/atom/movable/Destroy()
+	QDEL_NULL(active_point_bubble)
+	return ..()
+
 /atom/movable/proc/create_point_bubble(atom/pointed_atom)
 	if(active_point_bubble)
 		var/datum/point_bubble/old_pb = active_point_bubble
