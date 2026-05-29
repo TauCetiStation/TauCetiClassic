@@ -559,7 +559,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(src, "<span class='notice'><B>Living and available Ian not found.</B></span>")
 
-/mob/dead/observer/pointed(atom/A, params)
+/mob/dead/observer/pointed(atom/A)
 	if(next_point_to > world.time)
 		return FALSE
 	if(!..())
