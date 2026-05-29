@@ -253,7 +253,7 @@
 	A.MiddleShiftClick(src, params)
 
 /atom/proc/MiddleShiftClick(mob/user, params)
-	if(user.client && user.client.eye == user && (isturf(src) || isturf(loc)))
+	if(user.client && user.client.eye == user)
 		user.pointed(src, params)
 
 /*

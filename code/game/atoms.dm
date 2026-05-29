@@ -737,6 +737,11 @@
 	if (!isturf(loc))
 		return FALSE
 
+	if (pointed_atom in src)
+		var/atom/movable/AM = src
+		AM.create_point_bubble(pointed_atom)
+		return TRUE
+
 	var/turf/tile = get_turf(pointed_atom)
 	if (!tile)
 		return FALSE
@@ -779,3 +784,29 @@
 	animate(visual, pixel_x = final_x, pixel_y = final_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
+
+/atom/movable/proc/create_point_bubble(atom/pointed_atom)
+	var/mutable_appearance/thought_bubble = mutable_appearance('icons/effects/effects.dmi', "thought_bubble", plane = POINT_PLANE)
+	thought_bubble.appearance_flags = KEEP_APART
+
+	var/mutable_appearance/pointed_atom_appearance = new(pointed_atom.appearance)
+	pointed_atom_appearance.blend_mode = BLEND_INSET_OVERLAY
+	pointed_atom_appearance.plane = FLOAT_PLANE
+	pointed_atom_appearance.layer = FLOAT_LAYER
+	pointed_atom_appearance.pixel_x = 0
+	pointed_atom_appearance.pixel_y = 0
+	thought_bubble.overlays += pointed_atom_appearance
+
+	var/mutable_appearance/point_visual = mutable_appearance(icon('icons/hud/screen1.dmi', "arrow", frame = 1), plane = POINT_PLANE)
+	thought_bubble.overlays += point_visual
+
+	thought_bubble.pixel_x = 16
+	thought_bubble.pixel_y = 32
+	thought_bubble.alpha = 200
+	thought_bubble.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	add_overlay(thought_bubble)
+	addtimer(CALLBACK(src, PROC_REF(clear_point_bubble), thought_bubble), 2.5 SECONDS)
+
+/atom/movable/proc/clear_point_bubble(mutable_appearance/thought_bubble)
+	cut_overlay(thought_bubble)
