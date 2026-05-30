@@ -374,15 +374,17 @@
 
 	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
-/mob/verb/pointed(atom/A as mob|obj|turf in view(), params as text)
-	set name = "Point To"
-	set category = "Object"
-
+/mob/proc/can_point_at(atom/A)
 	if(istype(A, /obj/effect/decal/point))
 		return FALSE
 
 	if(!can_point)
 		return FALSE
+
+	// Handcuffed mobs cannot point at items in their own inventory, except for pointing at themselves.
+	if(restrained(ARMS) && contains(A) && A != src)
+		return FALSE
+
 	// Prevent pointing at objects that are out of sight, unless they are in our inventory.
 	// Also prevents pointing at objects inside closed containers or external storages.
 	if(client)
@@ -396,7 +398,17 @@
 		if(!in_inventory && !(A in view(client.view, src)))
 			return FALSE
 
-	point_at(A, params = params)
+	return TRUE
+
+/mob/verb/pointed(atom/A as mob|obj|turf in view(), params as text)
+	set name = "Point To"
+	set category = "Object"
+
+	if(!can_point_at(A))
+		return FALSE
+
+	if(!point_at(A, params = params))
+		return FALSE
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_POINTED, src, A)
 
