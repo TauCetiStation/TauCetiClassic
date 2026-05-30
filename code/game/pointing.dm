@@ -1,3 +1,6 @@
+#define POINT_TIME (2.5 SECONDS)
+#define POINT_ANIM_TIME 1.7
+
 /datum/point_bubble
 	var/mutable_appearance/appearance
 	var/timer_id
@@ -31,7 +34,7 @@
 
 	var/turf/our_tile = loc
 	var/obj/visual = new arrow_type(our_tile, invisibility)
-	QDEL_IN(visual, 20)
+	QDEL_IN(visual, POINT_TIME)
 
 	var/final_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x
 	var/final_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y
@@ -55,7 +58,7 @@
 		rotated_matrix.TurnTo(0, get_pixel_angle(-final_x, -final_y))
 		visual.transform = rotated_matrix
 
-	animate(visual, pixel_x = final_x, pixel_y = final_y, time = 1.7, easing = EASE_OUT)
+	animate(visual, pixel_x = final_x, pixel_y = final_y, time = POINT_ANIM_TIME, easing = EASE_OUT)
 
 	return TRUE
 
@@ -96,7 +99,7 @@
 
 	var/datum/point_bubble/new_pb = new()
 	new_pb.appearance = thought_bubble
-	new_pb.timer_id = addtimer(CALLBACK(src, PROC_REF(clear_point_bubble), new_pb), 2.5 SECONDS, TIMER_STOPPABLE)
+	new_pb.timer_id = addtimer(CALLBACK(src, PROC_REF(clear_point_bubble), new_pb), POINT_TIME, TIMER_STOPPABLE)
 	active_point_bubble = new_pb
 
 /atom/movable/proc/clear_point_bubble(datum/point_bubble/PB)
@@ -104,3 +107,6 @@
 		active_point_bubble = null
 	cut_overlay(PB.appearance)
 	qdel(PB)
+
+	#undef POINT_TIME
+	#undef POINT_ANIM_TIME
