@@ -82,75 +82,148 @@ var/global/list/spawned_surprises = list()
 	return
 
 
-//////////////
-
-/proc/make_mining_asteroid_secret(size = 5)
-	var/valid = 0
-	var/turf/T = null
-	var/sanity = 0
-	var/list/room = null
-	var/list/turfs = null
-
-
-	turfs = get_area_turfs(/area/asteroid/mine/unexplored)
+/proc/pick_valid_asteroid_room_spawn_turf(size_x, size_y)
+	var/valid = FALSE
+	var/iterator = 0
+	var/list/turfs = get_area_turfs(/area/asteroid/mine/unexplored)
+	var/turf/T
 
 	if(!turfs.len)
-		return 0
+		return FALSE
 
 	while(!valid)
-		valid = 1
-		sanity++
-		if(sanity > 100)
-			return 0
+		valid = TRUE
+		iterator++
+		if(iterator > 100)
+			return FALSE
 
 		T=pick(turfs)
 		if(!T)
-			return 0
+			return FALSE
 
 		var/list/surroundings = list()
 
 		surroundings += range(7, locate(T.x,T.y,T.z))
-		surroundings += range(7, locate(T.x+size,T.y,T.z))
-		surroundings += range(7, locate(T.x,T.y+size,T.z))
-		surroundings += range(7, locate(T.x+size,T.y+size,T.z))
+		surroundings += range(7, locate(T.x+size_x,T.y,T.z))
+		surroundings += range(7, locate(T.x,T.y+size_y,T.z))
+		surroundings += range(7, locate(T.x+size_x,T.y+size_y,T.z))
 
 		if(locate(/area/asteroid/mine/explored) in surroundings)			// +5s are for view range
-			valid = 0
+			valid = FALSE
 			continue
 
 		if(locate(/turf/environment) in surroundings)
-			valid = 0
+			valid = FALSE
 			continue
 
 		if(locate(/area/asteroid/artifactroom) in surroundings)
-			valid = 0
+			valid = FALSE
+			continue
+
+		if(locate(/area/asteroid/geode) in surroundings)
+			valid = FALSE
 			continue
 
 		if(locate(/turf/simulated/floor/plating/airless/asteroid) in surroundings)
-			valid = 0
+			valid = FALSE
 			continue
 
 	if(!T)
-		return 0
+		return FALSE
 
-	room = spawn_room(T,size,size,,,1)
+	return T
+
+//////////////
+
+/proc/make_mining_asteroid_secret(size = 5)
+	var/turf/T = pick_valid_asteroid_room_spawn_turf(size, size)
+	if(!T)
+		return FALSE
+
+	var/list/room = spawn_room(T,size,size,,,1)
 
 	if(room)
 		T = pick(room["floors"])
 		if(T)
 			var/surprise = null
-			valid = 0
+			var/valid = FALSE
 			while(!valid)
 				surprise = pickweight(space_surprises)
 				if(surprise in spawned_surprises)
 					if(prob(20))
-						valid++
+						valid = TRUE
 					else
 						continue
 				else
-					valid++
+					valid = TRUE
 
 			spawned_surprises.Add(surprise)
 			new surprise(T)
 
 	return 1
+
+
+
+/proc/make_mining_asteroid_geode()
+	var/offset_left = rand(2, 4)
+	var/offset_right = rand(2, 4)
+	var/offset_top = rand(2, 4)
+	var/offset_bottom = rand(2, 4)
+
+	var/turf/T = pick_valid_asteroid_room_spawn_turf(offset_left + 1 + offset_right, offset_top + 1 + offset_bottom)
+	if(!T)
+		return FALSE
+	var/turf/Center = locate(T.x + offset_left, T.y + offset_bottom, T.z)
+
+	var/datum/geode/geode_datum = global.geode_by_type[pick(global.geode_by_type)]
+
+	var/list/allturfs = list()
+	var/list/allwalls = list()
+
+	var/list/growing = list()
+	growing += list(list(get_step(Center, WEST), offset_left, EAST))
+	growing += list(list(get_step(Center, EAST), offset_right, WEST))
+	growing += list(list(get_step(Center, NORTH), offset_top, SOUTH))
+	growing += list(list(get_step(Center, SOUTH), offset_bottom, NORTH))
+
+	for(var/i in 1 to 1000)
+		if(!growing.len)
+			break
+
+		var/list/grow_turf = pop(growing)
+
+		var/turf/simulated/floor/plating/airless/asteroid/Floor = new(grow_turf[1])
+
+		var/area/asteroid/geode/A = new
+		A.name = "Geode [geode_datum.name] #[Center.x][Center.y][Center.z]"
+		A.contents += Floor
+
+		allturfs += Floor
+
+		if(prob(25))
+			var/floor_crystal = geode_datum.floor_crystal
+			new floor_crystal(Floor)
+		else
+			var/item_type = pickweight(geode_datum.items_inside)
+			new item_type(Floor)
+
+		for(var/new_dir in (global.cardinal - grow_turf[3]))
+			var/turf/this_turf = get_step(Floor, new_dir)
+			if(this_turf in allturfs)
+				continue
+
+			if(grow_turf[2] <= 0)
+				allwalls += this_turf
+				allturfs += this_turf
+			else
+				growing.Insert(1, list(list(this_turf, grow_turf[2] - 1, grow_turf[3])))
+
+	for(var/turf/Wall in allwalls + Center)
+		var/turf/simulated/mineral/NewWall = new(Wall)
+		NewWall.mineral = geode_datum.wall_mineral
+		NewWall.UpdateMineral()
+		NewWall.crystal_type = geode_datum.wall_crystal
+
+	var/turf/Floor = get_step(Center, NORTH)
+	var/datum/gas_mixture/environment = Floor.return_air()
+	environment.adjust_gas_temp(geode_datum.gas_inside, rand(allturfs.len * 15, allturfs.len * 30), rand(T0C - 100, T0C + 100))
