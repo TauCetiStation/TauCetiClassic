@@ -18,14 +18,13 @@
  *
  * Not intended as a replacement for the mob verb
  */
-/atom/proc/point_at(atom/pointed_atom, arrow_type = /obj/effect/decal/point, params)
+/atom/movable/proc/point_at(atom/pointed_atom, arrow_type = /obj/effect/decal/point, params)
 	if (!isturf(loc))
 		return FALSE
 
 	// If pointing at something inside our own inventory/containers, show a thought bubble instead of a spatial arrow
 	if (pointed_atom != src && contains(pointed_atom))
-		var/atom/movable/AM = src
-		AM.create_point_bubble(pointed_atom)
+		create_point_bubble(pointed_atom)
 		return TRUE
 
 	var/turf/tile = get_turf(pointed_atom)
