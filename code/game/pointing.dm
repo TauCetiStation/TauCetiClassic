@@ -41,15 +41,10 @@
 	// If click params are available, use exact click position instead of tile center
 	var/list/click_params = params2list(params)
 	if(length(click_params))
-		var/click_x = 16
-		var/click_y = 16
-		if(click_params["icon-x"])
-			click_x = text2num(click_params["icon-x"])
-		if(click_params["icon-y"])
-			click_y = text2num(click_params["icon-y"])
-
-		final_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x + (click_x - 16)
-		final_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y + (click_y - 16)
+		var/click_x = click_params["icon-x"] ? text2num(click_params["icon-x"]) : 16
+		var/click_y = click_params["icon-y"] ? text2num(click_params["icon-y"]) : 16
+		final_x += click_x - 16
+		final_y += click_y - 16
 
 	// Rotate the arrow to face the target direction if pointing at others
 	if(pointed_atom != src)
@@ -107,5 +102,5 @@
 	cut_overlay(PB.appearance)
 	qdel(PB)
 
-	#undef POINT_TIME
-	#undef POINT_ANIM_TIME
+#undef POINT_TIME
+#undef POINT_ANIM_TIME
