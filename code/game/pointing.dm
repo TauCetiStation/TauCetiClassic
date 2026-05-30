@@ -56,6 +56,11 @@
 
 	return TRUE
 
+/mob/point_at(atom/pointed_atom, arrow_type, params)
+	. = ..()
+	if(.)
+		face_atom(pointed_atom)
+
 /atom/movable
 	var/datum/point_bubble/active_point_bubble = null
 
