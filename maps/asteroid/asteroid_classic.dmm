@@ -9270,6 +9270,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
+/obj/item/weapon/storage/briefcase/inflatable,
 /turf/simulated/floor,
 /area/asteroid/mine/eva)
 "ug" = (
@@ -10584,6 +10585,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/item/weapon/storage/briefcase/inflatable,
 /turf/simulated/floor,
 /area/asteroid/mine/living_quarters)
 "wV" = (

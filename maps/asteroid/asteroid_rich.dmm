@@ -947,6 +947,7 @@
 	dir = 8;
 	pixel_x = 25
 	},
+/obj/item/weapon/storage/briefcase/inflatable,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkpurple"
@@ -7258,6 +7259,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/item/weapon/storage/briefcase/inflatable,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brownchoco"
