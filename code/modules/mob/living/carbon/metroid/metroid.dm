@@ -65,7 +65,6 @@
 	var/mob/living/last_pointed = null
 
 
-
 /mob/living/carbon/slime/adult
 	name = "adult slime"
 	icon = 'icons/mob/slimes.dmi'
@@ -94,7 +93,6 @@
 
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_POINTED, PROC_REF(on_friend_pointed))
-	ADD_TRAIT(src, TRAIT_NO_PAIN, INNATE_TRAIT)
 
 	var/datum/action/innate/slime/E
 	for(var/V in subtypesof(/datum/action/innate/slime))
