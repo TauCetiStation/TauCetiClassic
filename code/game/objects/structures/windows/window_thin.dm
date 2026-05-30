@@ -167,6 +167,8 @@
 
 	hit_particle_type = /particles/tool/digging/glass/phoron
 
+	weld_explosion = list(0, 0, 2)
+
 /obj/structure/window/thin/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 32000)
 		take_damage(round(exposed_volume / 1000), BURN, FIRE, FALSE)
@@ -185,6 +187,8 @@
 
 	max_integrity = 100
 
+	repair_time = 220
+
 /**
  * Fulltile reinforced phoron
  */
@@ -198,6 +202,8 @@
 	drops = list(/obj/item/stack/rods, /obj/item/weapon/shard/phoron)
 
 	max_integrity = 160
+
+	weld_explosion = list(0, 1, 2)
 
 /obj/structure/window/fulltile/reinforced/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return

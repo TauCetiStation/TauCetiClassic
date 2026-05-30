@@ -29,6 +29,8 @@
 
 	armor = list(melee = 50, fire = 70)
 
+	repair_time = 180
+
 	var/disassemble_glass_type = /obj/item/stack/sheet/glass // any better ideas to handle drops and disassembles?
 
 /obj/structure/window/fulltile/atom_init(mapload, grill)
@@ -154,6 +156,8 @@
 
 	hit_particle_type = /particles/tool/digging/glass/phoron
 
+	weld_explosion = list(0, 1, 2)
+
 /**
  * Fulltile tinted
  */
@@ -213,6 +217,8 @@
 	armor = list(melee = 80, fire = 70, bomb = 25)
 	explosive_resistance = 0.5
 
+	repair_time = 280
+
 	disassemble_glass_type = /obj/item/stack/sheet/rglass
 
 /**
@@ -235,6 +241,8 @@
 	disassemble_glass_type = /obj/item/stack/sheet/glass/phoronrglass
 
 	hit_particle_type = /particles/tool/digging/glass/phoron
+
+	weld_explosion = list(1, 2, 3)
 
 /**
  * Fulltile reinforced tinted

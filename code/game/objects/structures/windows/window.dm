@@ -20,6 +20,12 @@
 
 	var/list/drops = list(/obj/item/weapon/shard)
 
+	// Full repair time (deciseconds) when integrity is at 0. Actual time scales with damage.
+	var/repair_time = 120
+
+	// If set to list(devastation, heavy, light), welding the window detonates it instead of repairing it (phoron glass).
+	var/list/weld_explosion = null
+
 /obj/structure/window/atom_init()
 	update_nearby_tiles()
 	return ..()
@@ -78,6 +84,28 @@
 	return !density
 
 /obj/structure/window/attackby(obj/item/W, mob/user)
+	if(iswelding(W))
+		if((flags & NODECONSTRUCT) || (resistance_flags & INDESTRUCTIBLE))
+			return ..()
+		var/obj/item/weapon/weldingtool/WT = W
+		if(weld_explosion)
+			if(WT.use(0, user))
+				phoron_weld_explode(arglist(weld_explosion))
+			return
+		if(get_integrity() >= max_integrity)
+			to_chat(user, "<span class='notice'>[src] уже в хорошем состоянии.</span>")
+			return
+		if(WT.use(0, user))
+			var/damage_fraction = 1 - (get_integrity() / max_integrity)
+			var/cur_repair_time = max(30, round(repair_time * damage_fraction))
+			to_chat(user, "<span class='notice'>Вы начинаете чинить [CASE(src, ACCUSATIVE_CASE)]...</span>")
+			if(WT.use_tool(src, user, cur_repair_time, volume = 50, quality = QUALITY_WELDING))
+				repair_damage(max_integrity)
+				integrity_failure = initial(integrity_failure)
+				update_icon()
+				to_chat(user, "<span class='notice'>Вы починили [CASE(src, ACCUSATIVE_CASE)].</span>")
+		return
+
 	if(istype(W, /obj/item/weapon/airlock_painter))
 		change_paintjob(W, user)
 		return
@@ -180,6 +208,12 @@
 
 /obj/structure/window/proc/change_color(new_color)
 	color = new_color
+
+/obj/structure/window/proc/phoron_weld_explode(dev = 0, heavy = 1, light = 2)
+	visible_message("<span class='userdanger'>Сварка поджигает фороновое стекло, и [src] взрывается!</span>")
+	var/turf/T = get_turf(src)
+	qdel(src)
+	explosion(T, dev, heavy, light, light + 1)
 
 /obj/structure/window/proc/change_paintjob(obj/item/weapon/airlock_painter/W, mob/user)
 	if(!istype(W))
