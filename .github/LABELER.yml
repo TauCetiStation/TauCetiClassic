@@ -71,10 +71,8 @@
     - 'docs/**/*'
     - 'scripts/**/*'
     - 'test/**/*'
-    - 'code/_compile_options.dm'
     - '*'
-  - all-globs-to-all-files:
-    - '!taucetistation.dme'
+    - 'code/_compile_options.dm'
 
 'Tools':
 - changed-files:
