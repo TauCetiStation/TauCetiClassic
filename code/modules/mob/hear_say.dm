@@ -136,9 +136,28 @@
 /mob/proc/play_instrumental_voice(mob/living/carbon/human/H, repeats = 1)
 	if(!repeats)
 		return
-	var/instrumental_sound = get_sound_by_voice(H, H.species.instrumental_voice_male, H.species.instrumental_voice_female)
+	var/instrumental_sound = H.get_instrumental_voice()
 	playsound_local(H, instrumental_sound, VOL_EFFECTS_MASTER, 80)
 	addtimer(CALLBACK(src, PROC_REF(play_instrumental_voice), H, repeats - 1), 0.3 SECONDS)
+
+/mob/living/carbon/human/proc/get_instrumental_voice()
+	var/static/list/sound_by_gender_species = list(
+		"[TAJARAN][FEMALE]" = global.tajaran_female_voices,
+		"[TAJARAN][MALE]" = global.tajaran_male_voices,
+		"[SKRELL][FEMALE]" = global.skrell_female_voices,
+		"[SKRELL][MALE]" = global.skrell_male_voices,
+		"[UNATHI][FEMALE]" = global.unathi_female_voices,
+		"[UNATHI][MALE]" = global.unathi_male_voices,
+		"[DIONA][NEUTER]" = global.diona_voices,
+	)
+
+	var/hash = "[get_species()][gender]"
+
+	if(sound_by_gender_species[hash])
+		return pick(sound_by_gender_species[hash])
+	if(istype(species, /datum/species/machine))
+		return get_sound_by_voice(src, global.ipc_male_voices, global.ipc_female_voices)
+	return get_sound_by_voice(src, global.human_male_voices, global.human_female_voices)
 
 /mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 
