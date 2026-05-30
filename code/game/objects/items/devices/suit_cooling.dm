@@ -21,7 +21,7 @@
 	var/max_cooling = 12            // in degrees per second - probably don't need to mess with heat capacity here
 	var/charge_consumption = 33.2   // charge per second at max_cooling
 	var/thermostat = T20C
-	var/mob/living/carbon/human/cooled_user
+	var/datum/weakref/cooled_user
 
 	var/low_charge_warning_threshold_percent = 0.1
 	var/last_low_charge_warning_msg = 0
@@ -60,33 +60,35 @@
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/suit_cooling_unit/process()
-	if (!on || !cell || !is_attached_to_suit(loc))
+	if(!on || !cell || !is_attached_to_suit(loc))
 		stop_external_cooling()
 		return
 
 	var/mob/living/carbon/human/H = loc
-	if (H.species && H.species.flags[IS_SYNTHETIC] && H.get_pressure_protection() > 0)
+	if(H.species && H.species.flags[IS_SYNTHETIC] && H.get_pressure_protection() > 0)
 		set_external_cooling(H)
 	else
 		stop_external_cooling()
 
-	if (try_cool_user(H))
+	if(try_cool_user(H))
 		check_charge_usage(H)
-	else if (cooled_user)
+	else if(cooled_user)
 		cell.use(charge_consumption * 0.5)
 		check_charge_usage(H)
 
 /obj/item/device/suit_cooling_unit/proc/set_external_cooling(mob/living/carbon/human/H)
-	if (cooled_user == H)
+	if(cooled_user?.resolve() == H)
 		return
 	stop_external_cooling()
-	ADD_TRAIT(H, TRAIT_EXTERNAL_COOLING, "[REF(src)]")
-	cooled_user = H
+	ADD_TRAIT(H, TRAIT_EXTERNAL_COOLING, src)
+	cooled_user = WEAKREF(H)
 
 /obj/item/device/suit_cooling_unit/proc/stop_external_cooling()
-	if (!cooled_user)
+	if(!cooled_user)
 		return
-	REMOVE_TRAIT(cooled_user, TRAIT_EXTERNAL_COOLING, "[REF(src)]")
+	var/mob/living/carbon/human/H = cooled_user.resolve()
+	if(H)
+		REMOVE_TRAIT(H, TRAIT_EXTERNAL_COOLING, src)
 	cooled_user = null
 
 /obj/item/device/suit_cooling_unit/proc/is_attached_to_suit(mob/living/carbon/human/user)
