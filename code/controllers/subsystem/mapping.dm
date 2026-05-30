@@ -1,7 +1,7 @@
 // How many structures will be spawned
 #define SPACE_STRUCTURES_AMOUNT 7
 #define MAX_MINING_SECRET_ROOM 5
-#define MAX_MINING_GEODES 10
+#define MAX_MINING_GEODES 20
 // Uncomment to enable debug output of structure coords
 //#define SPACE_STRUCTURES_DEBUG 1
 

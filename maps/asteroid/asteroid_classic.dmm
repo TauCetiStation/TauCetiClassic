@@ -9746,8 +9746,6 @@
 /area/asteroid/mine/explored)
 "vh" = (
 /obj/structure/table,
-/obj/item/weapon/stock_parts/cell,
-/obj/item/weapon/stock_parts/cell,
 /obj/item/device/radio/intercom{
 	name = "Asteroid Intercom (General)";
 	pixel_x = 27
@@ -9756,6 +9754,8 @@
 	dir = 4;
 	icon_state = "ast_warn"
 	},
+/obj/item/weapon/stock_parts/cell,
+/obj/item/weapon/stock_parts/cell,
 /turf/simulated/floor/airless{
 	icon_state = "asteroidfloor"
 	},
@@ -12831,6 +12831,18 @@
 "Hg" = (
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
+"Hj" = (
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal{
+	dir = 5;
+	icon_state = "ast_warn"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "Hk" = (
 /obj/structure/alien/weeds{
 	icon_state = "weeds1"
@@ -13386,6 +13398,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/iso2)
+"Ms" = (
+/obj/machinery/portable_atmospherics/canister/empty/phoron,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "MA" = (
 /obj/structure/stool/bed/chair/metal,
 /turf/simulated/floor{
@@ -13498,6 +13519,18 @@
 "NC" = (
 /turf/simulated/wall/r_wall/purple,
 /area/asteroid/research_outpost/maint)
+"ND" = (
+/obj/effect/decal/turf_decal{
+	dir = 6;
+	icon_state = "ast_warn"
+	},
+/obj/structure/fence/metal{
+	dir = 4
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "NN" = (
 /obj/structure/transit_tube{
 	icon_state = "D-SE"
@@ -14025,6 +14058,23 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/asteroid/mine/explored)
+"TD" = (
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "ast_warn"
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/obj/machinery/portable_atmospherics/powered/scrubber/largecell,
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "TL" = (
 /obj/structure/alien/weeds,
 /obj/structure/closet/secure_closet/personal/cabinet,
@@ -14084,6 +14134,26 @@
 	icon_state = "graychoco"
 	},
 /area/asteroid/mine/production)
+"Uk" = (
+/obj/effect/decal/turf_decal{
+	dir = 5;
+	icon_state = "ast_warn"
+	},
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/obj/item/weapon/wrench,
+/obj/machinery/portable_atmospherics/powered/scrubber/largecell,
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "Uq" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/turf_decal/set_damaged,
@@ -14153,8 +14223,15 @@
 	dir = 1
 	},
 /obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "ast_warn"
+	icon_state = "ast_warn_corner";
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/empty/phoron,
+/obj/structure/fence/metal{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
 	},
 /turf/simulated/floor/airless{
 	icon_state = "asteroidfloor"
@@ -51859,7 +51936,7 @@ uo
 uo
 uo
 Vd
-qZ
+tL
 lA
 rG
 rp
@@ -52115,8 +52192,8 @@ lA
 lA
 lA
 lA
-lA
-lA
+Uk
+ND
 lA
 lA
 lA
@@ -59814,8 +59891,8 @@ lA
 lA
 lA
 lA
-lA
-lA
+TD
+Ms
 vD
 xD
 zD
@@ -60071,8 +60148,8 @@ lA
 lA
 lA
 lA
-lA
-lA
+Hj
+Aj
 vD
 zE
 zE

@@ -165,10 +165,10 @@ var/global/list/spawned_surprises = list()
 
 
 /proc/make_mining_asteroid_geode()
-	var/offset_left = rand(2, 4)
-	var/offset_right = rand(2, 4)
-	var/offset_top = rand(2, 4)
-	var/offset_bottom = rand(2, 4)
+	var/offset_left = rand(2, 3)
+	var/offset_right = rand(2, 3)
+	var/offset_top = rand(2, 3)
+	var/offset_bottom = rand(2, 3)
 
 	var/turf/T = pick_valid_asteroid_room_spawn_turf(offset_left + 1 + offset_right, offset_top + 1 + offset_bottom)
 	if(!T)

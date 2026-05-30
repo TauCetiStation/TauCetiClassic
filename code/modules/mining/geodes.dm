@@ -22,7 +22,7 @@
 	anchored = TRUE
 	density = TRUE
 
-	max_integrity = 50
+	max_integrity = 25
 	resistance_flags = CAN_BE_HIT
 
 	var/ore_type = /obj/item/weapon/ore/coal

@@ -7334,6 +7334,16 @@
 	icon_state = "whitepurple"
 	},
 /area/asteroid/research_outpost/anomaly)
+"uy" = (
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/powered/scrubber/largecell,
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "uz" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold/hidden/cyan{
@@ -10134,6 +10144,17 @@
 	icon_state = "dark"
 	},
 /area/asteroid/mine/abandoned)
+"EG" = (
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/obj/item/weapon/wrench,
+/obj/structure/fence/metal{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/powered/scrubber/largecell,
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "EH" = (
 /obj/structure/rack,
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -11395,6 +11416,18 @@
 	icon_state = "whitepurplecorner"
 	},
 /area/asteroid/research_outpost/hallway)
+"Ka" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/empty/phoron,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/explored)
 "Kb" = (
 /obj/machinery/door/window/westleft{
 	dir = 1;
@@ -12321,6 +12354,16 @@
 	},
 /turf/simulated/floor/plating/airless{
 	icon_state = "asteroidplating"
+	},
+/area/asteroid/mine/explored)
+"NR" = (
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/empty/phoron,
+/obj/structure/fence/metal,
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
 	},
 /area/asteroid/mine/explored)
 "NU" = (
@@ -28478,10 +28521,10 @@ Vf
 Bh
 nv
 VC
-VC
-VC
-VC
-VC
+uy
+Ka
+EG
+NR
 VC
 VC
 Px
