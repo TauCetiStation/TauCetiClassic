@@ -20096,7 +20096,6 @@
 /turf/simulated/floor,
 /area/station/rnd/storage)
 "aJi" = (
-/obj/machinery/portable_atmospherics/canister/phoron,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -60096,10 +60095,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "caution"
+/obj/machinery/portable_atmospherics/canister/empty,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
+/turf/simulated/floor,
 /area/station/engineering/atmos)
 "ckI" = (
 /obj/random/foods/food_trash,
@@ -64076,10 +64076,12 @@
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 6
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "caution"
+/obj/machinery/portable_atmospherics/canister/empty,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
+/obj/structure/fence/metal,
+/turf/simulated/floor,
 /area/station/engineering/atmos)
 "cus" = (
 /obj/machinery/light/small{
@@ -80494,6 +80496,12 @@
 	},
 /turf/simulated/wall,
 /area/station/rnd/xenobiology)
+"nuo" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/turf/simulated/floor,
+/area/station/rnd/storage)
 "nuy" = (
 /obj/structure/object_wall/cargo{
 	icon_state = "9,2"
@@ -81176,10 +81184,11 @@
 	dir = 4;
 	network = list("SS13","Engineering")
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "caution"
+/obj/machinery/portable_atmospherics/canister/empty,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
+/turf/simulated/floor,
 /area/station/engineering/atmos)
 "odC" = (
 /obj/item/weapon/shard{
@@ -81780,10 +81789,14 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "caution"
+/obj/structure/fence/metal{
+	dir = 1
 	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/machinery/portable_atmospherics/canister/empty,
+/turf/simulated/floor,
 /area/station/engineering/atmos)
 "oQM" = (
 /obj/structure/rack,
@@ -128297,7 +128310,7 @@ bFH
 aFa
 bRm
 aHY
-aHY
+nuo
 aLf
 aMv
 aNM
