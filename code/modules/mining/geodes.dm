@@ -22,7 +22,7 @@
 	anchored = TRUE
 	density = TRUE
 
-	max_integrity = 25
+	max_integrity = 5
 	resistance_flags = CAN_BE_HIT
 
 	var/ore_type = /obj/item/weapon/ore/coal
@@ -34,8 +34,7 @@
 	icon_state = "[initial(icon_state)][rand(1, icon_state_variants)]"
 
 /obj/structure/crystal/Destroy()
-	for(var/i in 1 to rand(1, 3))
-		new ore_type(loc)
+	new ore_type(loc)
 
 	..()
 

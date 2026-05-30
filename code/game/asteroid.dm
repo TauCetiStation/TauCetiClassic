@@ -165,15 +165,12 @@ var/global/list/spawned_surprises = list()
 
 
 /proc/make_mining_asteroid_geode()
-	var/offset_left = rand(2, 3)
-	var/offset_right = rand(2, 3)
-	var/offset_top = rand(2, 3)
-	var/offset_bottom = rand(2, 3)
+	var/scale = rand(1, 5)
 
-	var/turf/T = pick_valid_asteroid_room_spawn_turf(offset_left + 1 + offset_right, offset_top + 1 + offset_bottom)
+	var/turf/T = pick_valid_asteroid_room_spawn_turf((scale * 2) + 3, (scale * 2) + 3)
 	if(!T)
 		return FALSE
-	var/turf/Center = locate(T.x + offset_left, T.y + offset_bottom, T.z)
+	var/turf/Center = locate(T.x + scale, T.y + scale, T.z)
 
 	var/datum/geode/geode_datum = global.geode_by_type[pick(global.geode_by_type)]
 
@@ -181,10 +178,10 @@ var/global/list/spawned_surprises = list()
 	var/list/allwalls = list()
 
 	var/list/growing = list()
-	growing += list(list(get_step(Center, WEST), offset_left, EAST))
-	growing += list(list(get_step(Center, EAST), offset_right, WEST))
-	growing += list(list(get_step(Center, NORTH), offset_top, SOUTH))
-	growing += list(list(get_step(Center, SOUTH), offset_bottom, NORTH))
+	growing += list(list(get_step(Center, WEST), scale, EAST))
+	growing += list(list(get_step(Center, EAST), scale, WEST))
+	growing += list(list(get_step(Center, NORTH), scale, SOUTH))
+	growing += list(list(get_step(Center, SOUTH), scale, NORTH))
 
 	for(var/i in 1 to 1000)
 		if(!growing.len)
@@ -226,4 +223,4 @@ var/global/list/spawned_surprises = list()
 
 	var/turf/Floor = get_step(Center, NORTH)
 	var/datum/gas_mixture/environment = Floor.return_air()
-	environment.adjust_gas_temp(geode_datum.gas_inside, rand(allturfs.len * 15, allturfs.len * 30), rand(T0C - 100, T0C + 100))
+	environment.adjust_gas_temp(geode_datum.gas_inside, rand(allturfs.len * 50, allturfs.len * 100), rand(T0C - 100, T0C + 100))
