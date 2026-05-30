@@ -398,11 +398,7 @@
 
 	point_at(A, params = params)
 
-	// TODO: replace with a "COMSIG_MOB_POINTED" signal
-	if (isliving(A))
-		for (var/mob/living/carbon/slime/S in oview())
-			if (usr in S.Friends)
-				S.last_pointed = A
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_POINTED, src, A)
 
 	return TRUE
 
