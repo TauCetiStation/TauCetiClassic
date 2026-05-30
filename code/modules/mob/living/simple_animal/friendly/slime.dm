@@ -21,7 +21,7 @@
 	has_head = TRUE
 	moveset_type = /datum/combat_moveset/slime
 
-	fart_gas = "helium"
+	fart_gas = "hydrogen"
 
 /mob/living/simple_animal/adultslime
 	name = "pet slime"
@@ -44,7 +44,7 @@
 	has_head = TRUE
 	moveset_type = /datum/combat_moveset/slime
 
-	fart_gas = "helium"
+	fart_gas = "hydrogen"
 
 /mob/living/simple_animal/adultslime/atom_init()
 	. = ..()
@@ -61,6 +61,6 @@
 	med_hud_set_health()
 	med_hud_set_status()
 
-	fart(0.01)
+	fart(0.1)
 
 	qdel(src)

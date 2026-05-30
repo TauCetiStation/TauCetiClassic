@@ -222,3 +222,5 @@ var/global/list/gas_from_scrap = list(
 	"hydrogen" = 10,
 	"helium" = 1,
 	)
+
+var/global/list/smelting_recipes

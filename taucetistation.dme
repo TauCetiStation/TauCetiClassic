@@ -1906,6 +1906,7 @@
 #include "code\modules\mining\satchel_ore_boxdm.dm"
 #include "code\modules\mining\scanners.dm"
 #include "code\modules\mining\shelters.dm"
+#include "code\modules\mining\smelting_recipes.dm"
 #include "code\modules\mining\drilling\brace.dm"
 #include "code\modules\mining\drilling\circuitboard.dm"
 #include "code\modules\mining\drilling\drill.dm"
