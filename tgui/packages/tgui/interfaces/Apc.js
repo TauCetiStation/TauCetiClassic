@@ -50,6 +50,8 @@ const ApcContent = (props, context) => {
     charging,
     totalLoad,
     coverLocked,
+    needsReboot,
+    opened,
     siliconUser,
     malfCanHack,
     nightshiftLights,
@@ -64,6 +66,24 @@ const ApcContent = (props, context) => {
   return (
     <>
       <InterfaceLockNoticeBox />
+      {!!needsReboot && (
+        <NoticeBox danger>
+          <Box>
+            Сбой контроллера питания. Требуется перезагрузка на месте.
+          </Box>
+          <Button
+            mt={1}
+            icon="power-off"
+            color="bad"
+            disabled={siliconUser}
+            content="Перезагрузить контроллер"
+            tooltip={
+              opened ? undefined : 'Сначала вскройте крышку монтировкой.'
+            }
+            onClick={() => act('reboot')}
+          />
+        </NoticeBox>
+      )}
       <Section title="Сеть">
         <LabeledList>
           <LabeledList.Item

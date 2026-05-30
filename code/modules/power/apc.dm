@@ -108,6 +108,7 @@
 	var/locked = 1
 	var/coverlocked = 1
 	var/aidisabled = 0
+	var/needs_reboot = FALSE // Контроллер питания вышел из строя (напр. после электрического шторма), требуется перезагрузка
 	var/tdir = null
 	var/obj/machinery/power/terminal/terminal = null
 	var/lastused_light = 0
@@ -355,7 +356,7 @@
 	if(opened != APC_COVER_CLOSED)
 		if(opened == APC_COVER_OPENED)
 			update_state |= UPSTATE_OPENED1
-	else if(emagged || malfai)
+	else if(emagged || malfai || needs_reboot)
 		update_state |= UPSTATE_BLUESCREEN
 	else if(wiresexposed)
 		update_state |= UPSTATE_WIREEXP
@@ -811,6 +812,8 @@
 		"charging" = charging,
 		"totalLoad" = DisplayPower(lastused_total),
 		"coverLocked" = coverlocked,
+		"needsReboot" = needs_reboot,
+		"opened" = opened != APC_COVER_CLOSED,
 		"siliconUser" = issilicon(user) || isobserver(user),
 		"malfCanHack" = get_malf_status(user),
 		"nightshiftLights" = nightshift_lights,
@@ -878,7 +881,7 @@
 			return FALSE
 
 	else // Human
-		if(locked && act != "toggle_nightshift" && act != "change_smartlight")
+		if(locked && act != "toggle_nightshift" && act != "change_smartlight" && act != "reboot")
 			return FALSE
 
 	return TRUE
@@ -900,6 +903,9 @@
 			coverlocked = !coverlocked
 			. = TRUE
 		if("breaker")
+			if(needs_reboot)
+				to_chat(usr, "<span class='warning'>Контроллер питания не отвечает.</span>")
+				return
 			toggle_breaker(usr)
 			. = TRUE
 		if("toggle_nightshift")
@@ -937,6 +943,9 @@
 				update_icon()
 			. = TRUE
 		if("channel")
+			if(needs_reboot)
+				to_chat(usr, "<span class='warning'>Контроллер питания не отвечает.</span>")
+				return
 			if(params["eqp"])
 				equipment = setsubsystem(text2num(params["eqp"]))
 				update_icon()
@@ -958,6 +967,30 @@
 			if(issilicon(usr) && !aidisabled)
 				malf_hack(usr)
 				. = TRUE
+		if("reboot")
+			if(!needs_reboot)
+				return
+			if(issilicon(usr))
+				to_chat(usr, "<span class='warning'>Контроллер требует ручной перезагрузки на месте.</span>")
+				return
+			if(opened == APC_COVER_CLOSED)
+				to_chat(usr, "<span class='warning'>Сначала вскройте крышку [CASE(src, GENITIVE_CASE)].</span>")
+				return
+			if(!allowed(usr))
+				to_chat(usr, "<span class='warning'>Доступ запрещён. Перезагрузка контроллера доступна только инженерам.</span>")
+				return
+			if(usr.is_busy(src))
+				return
+			to_chat(usr, "Вы перезагружаете контроллер питания...")
+			if(do_after(usr, 50, target = src))
+				if(!needs_reboot)
+					return
+				needs_reboot = FALSE
+				operating = 1
+				update_icon()
+				update()
+				to_chat(usr, "<span class='notice'>Контроллер питания перезагружен.</span>")
+			. = TRUE
 
 /obj/machinery/power/apc/proc/toggle_breaker(mob/user)
 	operating = !operating
@@ -1065,6 +1098,8 @@
 
 /obj/machinery/power/apc/process()
 	if(stat & (BROKEN | MAINT))
+		return
+	if(needs_reboot)
 		return
 	if(!area.requires_power)
 		return

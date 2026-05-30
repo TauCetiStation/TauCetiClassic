@@ -21,10 +21,9 @@
 		else
 			apc.make_short_circuit()
 
+		apc.needs_reboot = TRUE
+		apc.operating = 0
 		apc.update()
-
-		apc.emagged = 1
-		apc.locked = FALSE
 		apc.update_icon()
 
 /datum/event/apc_damage/proc/acquire_random_apc()
@@ -56,4 +55,4 @@
 		return 0
 
 	var/turf/T = get_turf(apc)
-	return !apc.emagged && T && (T.z in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING)))
+	return !apc.emagged && !apc.needs_reboot && T && (T.z in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING)))
