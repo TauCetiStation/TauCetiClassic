@@ -132,8 +132,8 @@
 	ssu_left = locate(/obj/machinery/suit_storage_unit) in get_step(src, WEST)
 	if(!QDELETED(ssu_left))
 		if(ssu_left)
-			if(initial(ssu_left.icon_state) == initial(src.icon_state))
-				I = mutable_appearance(icon = overlays_file, icon_state = "left_connect_[icon_state]")
+			if(ssu_left.icon == src.icon)
+				I = mutable_appearance(icon = overlays_file, icon_state = "left_connect_[initial(icon_state)]")
 			else
 				I = mutable_appearance(icon = overlays_file, icon_state = "left_connect_civilian")
 			if(overlay_color)
@@ -143,8 +143,8 @@
 	ssu_right = locate(/obj/machinery/suit_storage_unit) in get_step(src, EAST)
 	if(!QDELETED(ssu_right))
 		if(ssu_right)
-			if(initial(ssu_right.icon_state) == initial(src.icon_state))
-				I = mutable_appearance(icon = overlays_file, icon_state = "right_connect_[icon_state]")
+			if(ssu_right.icon == src.icon)
+				I = mutable_appearance(icon = overlays_file, icon_state = "right_connect_[initial(icon_state)]")
 			else
 				I = mutable_appearance(icon = overlays_file, icon_state = "right_connect_civilian")
 			if(overlay_color)
