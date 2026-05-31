@@ -300,47 +300,58 @@
 	overdose = 2
 	var/alert_time = 0
 
+	var/safe_limit = 1       // helpful effect limit
+
+	var/jitteriness_reduction = 15
+	var/stun_reduction_prob = 50
+	var/message_prob = 1     // ~100 ticks (~200 seconds)
+
+	var/dizziness_limit = 120
+
+	var/weaken_prob = 3      // ~33 ticks (~67 seconds) to fall down
+	var/vomit_prob = 3       // ~33 ticks (~67 seconds) to vomit
+
+	var/alert_delay = 90 SECONDS
+
 /datum/reagent/nicotine/on_mob_life(mob/living/M)
 	if(!..())
-		return
+		return FALSE
 
-	if(M.stat == DEAD)
-		return
+	// Alkysine blocks all nicotine effects
+	if(holder.has_reagent("alkysine"))
+		return TRUE
 
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "nicotine", /datum/mood_event/smoked)
-	M.jitteriness = max(M.jitteriness - 15, 0)
+	if(volume < safe_limit)
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "nicotine", /datum/mood_event/smoked)
+		M.jitteriness = max(M.jitteriness - jitteriness_reduction, 0)
 
-	if(prob(50))
-		M.AdjustStunned(-1)
-		M.AdjustWeakened(-1)
-		M.AdjustParalysis(-1)
+		// 33% reduction to stun durations
+		if(prob(stun_reduction_prob))
+			M.AdjustStunned(-1)
+			M.AdjustWeakened(-1)
+			M.AdjustParalysis(-1)
 
-	if(prob(1))
-		var/smoke_message = pick("Напряжение уходит.", "На душе становится спокойнее.", "Разум проясняется.", "Вы кажетесь себе чертовски крутым.")
-		to_chat(M, "<span class='notice'>[smoke_message]</span>")
+		if(prob(message_prob))
+			to_chat(M, "<span class='notice'>[pick("Вы расслабляетесь.", "На душе становится спокойнее.", "Разум проясняется.", "Вы кажетесь себе чертовски крутым.")]</span>")
+	else
+		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "nicotine")
+		M.losebreath = max(M.losebreath + 1, 2)
 
-	if(!holder.has_reagent("alkysine"))
-		if(volume >= 0.85)
-			if(world.time > (alert_time + 90 SECONDS))
-				to_chat(M, "<span class='danger'>Вы чувствуете головокружение.</span>")
-				alert_time = world.time
+		if(M.dizziness < dizziness_limit) // To wiggle the client's pixel offset not too strong
+			M.make_dizzy(10)
 
-		if(volume >= 1)
-			if(prob(80))
-				M.losebreath = max(M.losebreath + 1, 2)
-			M.blurEyes(2)
-
-		if(volume >= 2)
+		if(volume >= overdose)
 			M.adjustOxyLoss(1.5)
-			M.drowsyness = min(20, (M.drowsyness + 2))
-			if(prob(50))
-				M.losebreath = max(M.losebreath + 1, 2)
-			if(prob(3) && ishuman(M))
+			if(prob(weaken_prob))
+				M.AdjustWeakened(1)
+			if(prob(vomit_prob) && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.invoke_vomit_async()
 
-	if(holder.has_reagent("anti_toxin"))
-		holder.remove_reagent("nicotine", 0.065)
+		if(world.time > (alert_time + alert_delay))
+			to_chat(M, "<span class='danger'>Вы чувствуете головокружение и слабость.</span>")
+			alert_time = world.time
+
 	return TRUE
 
 /datum/reagent/nicotine/on_diona_digest(mob/living/M)
