@@ -351,7 +351,7 @@
 	},
 /area/space)
 "bH" = (
-/obj/machinery/suit_storage_unit/globose/unathi/breacher{
+/obj/machinery/suit_storage_unit/unathi/breacher{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -631,7 +631,7 @@
 	},
 /area/space)
 "cq" = (
-/obj/machinery/suit_storage_unit/globose/unathi/nt{
+/obj/machinery/suit_storage_unit/unathi{
 	filled = 1
 	},
 /turf/simulated/floor/airless{

@@ -3845,7 +3845,7 @@
 	},
 /area/awaymission/stationcollision/southblock)
 "le" = (
-/obj/machinery/suit_storage_unit/abandoned{
+/obj/machinery/suit_storage_unit/syndicate_unit/abandoned{
 	filled = 1
 	},
 /turf/simulated/floor,

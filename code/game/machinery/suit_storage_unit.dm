@@ -4,10 +4,9 @@
 /obj/machinery/suit_storage_unit
 	name = "Suit Storage Unit"
 	desc = "An industrial U-Stor-It Storage unit designed to accomodate all kinds of space suits. Its on-board equipment also allows the user to decontaminate the contents through a ultra_violet-ray purging cycle. There's a warning label dangling from the control pad, reading \"STRICTLY NO BIOLOGICALS IN THE CONFINES OF THE UNIT\"."
-	icon = 'icons/obj/suitstorage.dmi'
-	icon_state = "suitholder"
-	var/type_icon_state
-	var/connector_icon_state
+	icon = 'icons/obj/suit_storage/civilian.dmi'
+	var/overlays_file = 'icons/obj/suit_storage/overlays.dmi'
+	icon_state = "civilian"
 	damage_deflection = 25
 	idle_power_usage = 10
 	anchored = TRUE
@@ -23,7 +22,6 @@
 
 //ultra violet stat
 	var/ultra_violet = FALSE
-	var/super_ultra_violet = FALSE
 	var/cycletime_left = null
 
 	var/filled = FALSE // For map placeing suit storages, when false, create empty suit storage
@@ -88,6 +86,7 @@
 	if((length(contents) - 1) <= 0) // - 1 because in content we place human, they couted too in content
 		to_chat(target, "<span class ='danger'>There are nothing here for you.</span>")
 	if(emagged)
+		to_chat(target, "<span class ='danger'>You feel like a terrible manipulators pulls you into [name].</span>")
 		start_ultra_violet(user)
 	update_icon()
 
@@ -121,6 +120,7 @@
 	for(var/obj/item/something in target.contents)
 		load_something(something, target)
 
+
 /obj/machinery/suit_storage_unit/proc/update_connectors()
 	if(length(connectors_overlays))
 		cut_overlay(connectors_overlays)
@@ -132,10 +132,10 @@
 	ssu_left = locate(/obj/machinery/suit_storage_unit) in get_step(src, WEST)
 	if(!QDELETED(ssu_left))
 		if(ssu_left)
-			if(ssu_left.connector_icon_state == src.connector_icon_state)
-				I = mutable_appearance(icon_state = "left_connect_[connector_icon_state]")
+			if(initial(ssu_left.icon_state) == initial(src.icon_state))
+				I = mutable_appearance(icon = overlays_file, icon_state = "left_connect_[icon_state]")
 			else
-				I = mutable_appearance(icon_state = "left_connect")
+				I = mutable_appearance(icon = overlays_file, icon_state = "left_connect_civilian")
 			if(overlay_color)
 				I.color = overlay_color
 			connectors_overlays += I
@@ -143,10 +143,10 @@
 	ssu_right = locate(/obj/machinery/suit_storage_unit) in get_step(src, EAST)
 	if(!QDELETED(ssu_right))
 		if(ssu_right)
-			if(ssu_right.connector_icon_state == src.connector_icon_state)
-				I = mutable_appearance(icon_state = "right_connect_[connector_icon_state]")
+			if(initial(ssu_right.icon_state) == initial(src.icon_state))
+				I = mutable_appearance(icon = overlays_file, icon_state = "right_connect_[icon_state]")
 			else
-				I = mutable_appearance(icon_state = "right_connect")
+				I = mutable_appearance(icon = overlays_file, icon_state = "right_connect_civilian")
 			if(overlay_color)
 				I.color = overlay_color
 			connectors_overlays += I
@@ -157,51 +157,38 @@
 	if(length(suit_storage_overlays))
 		cut_overlay(suit_storage_overlays)
 		LAZYCLEARLIST(suit_storage_overlays)
+	if(stat & BROKEN)
+		icon_state = "[initial(icon_state)]_broken"
 	update_connectors(suit_storage_overlays)
+
 	for(var/atom/target in contents)
 		if(ishardsuit(target))
 			var/obj/item/clothing/suit/space/rig/rig_suit = target
 			if(rig_suit?.helmet)
-				suit_storage_overlays += mutable_appearance(icon_state = "suit&helmet")
+				suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "suit&helmet")
 			if(rig_suit?.boots)
-				suit_storage_overlays += mutable_appearance(icon_state = "boots")
+				suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "boots")
 		else if(ismagboots(target))
-			suit_storage_overlays += mutable_appearance(icon_state = "boots")
+			suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "boots")
 		else if(isspacehelmet(target))
-			suit_storage_overlays += mutable_appearance(icon_state = "helmet")
+			suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "helmet")
 		else if(isspacesuit(target))
-			suit_storage_overlays += mutable_appearance(icon_state = "suit")
+			suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "suit")
 
-	var/mutable_appearance/door_I = mutable_appearance(icon_state = "[opened ? "door_open_[type_icon_state]" : "door_closed_[type_icon_state]"]")
+	var/mutable_appearance/door_I = mutable_appearance(icon = overlays_file, icon_state = "[opened ? "door_open_[icon_state]" : "door_closed_[icon_state]"]")
 	if(overlay_color)
-		var/mutable_appearance/unit_color = mutable_appearance(icon_state = "[stat & BROKEN ? "suitholder_broken_color" : "suitholder_color"]")
+		var/mutable_appearance/unit_color = mutable_appearance(icon = overlays_file, icon_state = "[stat & BROKEN ? "suitholder_broken_color" : "suitholder_color"]")
 		door_I.color = overlay_color
 		unit_color.color = overlay_color
 		suit_storage_overlays += unit_color
-	if(!opened && !(stat & BROKEN))
-		suit_storage_overlays += door_I
-		if(locked)
-			suit_storage_overlays += mutable_appearance(icon_state = "lock_closed")
-		else
-			suit_storage_overlays += mutable_appearance(icon_state = "lock_open")
-	else
-		suit_storage_overlays += door_I
-	if(stat & BROKEN)
-		icon_state = "suitholder_broken_[type_icon_state]"
-	if(ultra_violet && !super_ultra_violet)
-		suit_storage_overlays += door_I
-		suit_storage_overlays += mutable_appearance(icon_state = "lock_closed")
-		suit_storage_overlays += mutable_appearance(icon_state = "termalclean")
-		add_overlay(suit_storage_overlays)
-		return
-	else if(ultra_violet && super_ultra_violet)
-		suit_storage_overlays += door_I
-		suit_storage_overlays += mutable_appearance(icon_state = "lock_closed")
-		suit_storage_overlays += mutable_appearance(icon_state = "termalclean_emag")
-		add_overlay(suit_storage_overlays)
-		return
+	suit_storage_overlays += door_I
+	if(!opened)
+		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "[locked ? "lock_closed" : "lock_open"]")
+	if(ultra_violet)
+		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "lock_closed")
+		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "[emagged ? "termalclean_emag" : "termalclean"]")
 	if(panel_open)
-		suit_storage_overlays += mutable_appearance(icon_state = "panel_open")
+		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "panel_open")
 	add_overlay(suit_storage_overlays)
 
 /obj/machinery/suit_storage_unit/power_change()
@@ -286,7 +273,7 @@
 	if(!allowed(user))
 		to_chat(user, "<span class='notice'>Access Denied</span>")
 		return
-	if(occupant && !super_ultra_violet)
+	if(occupant && !emagged)
 		to_chat(user, "<span class = 'danger'><B>WARNING:</B> Biological entity detected in the confines of the Unit's storage. Cannot initiate cycle.</span>")
 		return
 	if(!length(contents))
@@ -298,7 +285,7 @@
 		close()
 	locked = TRUE
 	ultra_violet = TRUE
-	if(!super_ultra_violet)
+	if(!emagged)
 		cycletime_left = 1
 	else
 		cycletime_left = 5
@@ -308,20 +295,18 @@
 /obj/machinery/suit_storage_unit/proc/ultra_violet_cleaning()
 	if(cycletime_left)
 		cycletime_left--
-		if(occupant)
-			if(super_ultra_violet)
-				occupant.adjustFireLoss(rand(15, 30))
+		if(occupant && emagged)
+			occupant.adjustFireLoss(rand(15, 30))
 		addtimer(CALLBACK(src, PROC_REF(ultra_violet_cleaning)), 5 SECONDS)
 	else
-		if(!super_ultra_violet)
+		if(!emagged)
 			default_ultra_violet_cleaning()
 		else
 			super_ultra_violet_cleaning()
 
-		locked = FALSE // anyway it may be unlocked
-		open()
 		ultra_violet = FALSE //Cycle ends
-		update_icon()
+		locked = FALSE // anyway it may be unlocked
+		open() // open() call`s update_icon
 		return TRUE
 
 /obj/machinery/suit_storage_unit/proc/default_ultra_violet_cleaning()
@@ -337,6 +322,8 @@
 	visible_message("<span class ='danger'>With a loud whining noise, the Suit Storage Unit's door grinds opened. Puffs of ashen smoke come out of its chamber.</span>", 3)
 
 /obj/machinery/suit_storage_unit/container_resist()
+	if(ultra_violet)
+		return
 	var/mob/living/user = usr
 	if(locked)
 		if(user.is_busy())
@@ -403,6 +390,9 @@
 					fast_unequip(user)
 				if("Fast Eqip")
 					fast_equip(user)
+			if(emagged)
+				place_occupant(usr, usr)
+				return
 
 		if(length(contents))
 			var/list/suit_storage = list()
@@ -441,7 +431,8 @@
 			load_something(I, user)
 	else if(opened && !occupant)
 		if(isscrewing(I))
-			if(default_deconstruction_screwdriver(user, "suitholder_o", "suitholder", I))
+			if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
+				update_icon()
 				return TRUE
 		if(isprying(I))
 			if(default_deconstruction_crowbar(I))
@@ -494,11 +485,9 @@
 	s.set_up(5, 1, src)
 	s.start()
 	emagged = TRUE
-	super_ultra_violet = TRUE
 	locked = FALSE
 	update_icon()
 	return TRUE
-
 
 /obj/machinery/suit_storage_unit/verb/toggle_open_unit()
 	set category = "Object"
@@ -524,7 +513,7 @@
 	if(ishuman(usr) && opened && !ultra_violet)
 		length(contents) ? fast_equip(usr) : fast_unequip(usr)
 		if(emagged)
-			place_occupant(usr)
+			place_occupant(usr, usr)
 
 #undef POSSIBLE_TO_LOAD
 
@@ -532,22 +521,32 @@
 //unit for unit tests
 /obj/machinery/suit_storage_unit/test_unit
 	name = "Test Storage Unit"
-	build_type =  SUIT_STORAGE_BUILD_NONE
 	suit_type = /obj/item/clothing/suit/space
 	helmet_type = /obj/item/clothing/head/helmet/space
 	mask_type = /obj/item/clothing/mask
 	tank_type = /obj/item/weapon/tank
 	boot_type = /obj/item/clothing/shoes/magboots
 
-//Abandoned
-/obj/machinery/suit_storage_unit/abandoned
-	name = "Abandoned Storage Unit"
 	build_type =  SUIT_STORAGE_BUILD_NONE
-	icon_state = "suitholder_syndicate"
-	type_icon_state = "syndicate"
-	connector_icon_state = "syndicate"
 
-/obj/machinery/suit_storage_unit/abandoned/atom_init()
+//Syndicate
+/obj/machinery/suit_storage_unit/syndicate_unit
+	name = "Suit Storega Unit"
+	suit_type = /obj/item/clothing/suit/space/syndicate
+	helmet_type = /obj/item/clothing/head/helmet/space/syndicate
+	mask_type = /obj/item/clothing/mask/gas/syndicate
+	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
+
+	req_access = list(access_syndicate)
+	build_type =  SUIT_STORAGE_BUILD_NONE
+	icon_state = "syndicate"
+	icon = 'icons/obj/suit_storage/syndicate.dmi'
+
+//Abandoned
+/obj/machinery/suit_storage_unit/syndicate_unit/abandoned
+	name = "Abandoned Storage Unit"
+
+/obj/machinery/suit_storage_unit/syndicate_unit/abandoned/atom_init()
 	if(!filled)
 		return ..()
 
@@ -566,23 +565,8 @@
 				tank_type = /obj/item/weapon/tank/emergency_oxygen/double
 	return ..()
 
-//Syndicate
-/obj/machinery/suit_storage_unit/syndicate_unit
-	name = "Suit Storega Unit"
-	suit_type = /obj/item/clothing/suit/space/syndicate
-	helmet_type = /obj/item/clothing/head/helmet/space/syndicate
-	mask_type = /obj/item/clothing/mask/gas/syndicate
-	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
-	req_access = list(access_syndicate)
-	build_type =  SUIT_STORAGE_BUILD_SYNDIE
-	emagged = TRUE
-	icon_state = "suitholder_syndicate"
-	type_icon_state = "syndicate"
-	connector_icon_state = "syndicate"
-
 /obj/machinery/suit_storage_unit/syndicate_unit/light
 	name = "Syndicate Hardsuit Storage Unit"
-	build_type =  SUIT_STORAGE_BUILD_NONE
 	suit_type = /obj/item/clothing/suit/space/rig/syndi
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 
@@ -598,7 +582,6 @@
 
 /obj/machinery/suit_storage_unit/syndicate_unit/striker
 	name = "Syndicate Striker Suit Storage Unit"
-	build_type =  SUIT_STORAGE_BUILD_NONE
 	suit_type = /obj/item/clothing/suit/space/syndicate/elite
 	helmet_type = /obj/item/clothing/suit/space/syndicate/elite
 	mask_type = /obj/item/clothing/mask/gas/syndicate
@@ -606,7 +589,6 @@
 
 /obj/machinery/suit_storage_unit/syndicate_unit/elite
 	name = "Elite Syndicate Hardsuit Storage Unit"
-	build_type =  SUIT_STORAGE_BUILD_NONE
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/elite
 	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/elite
 	mask_type = /obj/item/clothing/mask/gas/syndicate
@@ -614,45 +596,44 @@
 
 /obj/machinery/suit_storage_unit/syndicate_unit/elite/comander
 	name = "Comander Syndicate Hardsuit Storage Unit"
-	req_access = list(access_syndicate_commander)
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/elite/comander
 	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
+	req_access = list(access_syndicate_commander)
+
 //Sience
 /obj/machinery/suit_storage_unit/science
-	name = "Sience Hardsuit Storage Unit"
-	req_access = list(access_research)
+	name = "Science Hardsuit Storage Unit"
+
 	suit_type = /obj/item/clothing/suit/space/rig/science
 	mask_type = /obj/item/clothing/mask/gas/coloured
 	tank_type = /obj/item/weapon/tank/jetpack/carbondioxide
 
-	icon_state = "suitholder_science"
-	type_icon_state = "science"
-	connector_icon_state = "science"
+	req_access = list(access_research)
+	icon_state = "science"
+	icon = 'icons/obj/suit_storage/science.dmi'
 
 /obj/machinery/suit_storage_unit/science/rd
-	name = "Researh Director Hardsuit Storage Unit"
-	req_access = list(access_rd)
+	name = "Research Director Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/science/rd
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
-	icon_state = "suitholder_RD"
-	type_icon_state = "RD"
-	connector_icon_state = "science"
+	req_access = list(access_rd)
+	icon_state = "RD"
+	icon = 'icons/obj/suit_storage/rd.dmi'
 
 //Engine
 /obj/machinery/suit_storage_unit/engine
 	name = "Engineer Hardsuit Storage Unit"
-	req_access = list(access_engine)
 	suit_type  = /obj/item/clothing/suit/space/rig/engineering
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
-	icon_state = "suitholder_engineer"
-	type_icon_state = "engineer"
-	connector_icon_state = "engineer"
+	req_access = list(access_engine)
+	icon_state = "engineer"
+	icon = 'icons/obj/suit_storage/engine.dmi'
 
 /obj/machinery/suit_storage_unit/engine/atmos
 	name = "Atmospheric Hardsuit Storage Unit"
@@ -660,8 +641,8 @@
 	suit_type = /obj/item/clothing/suit/space/rig/atmos
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
-	icon_state = "suitholder_atmos"
-	type_icon_state = "atmos"
+	icon_state = "atmos"
+	icon = 'icons/obj/suit_storage/atmos.dmi'
 
 /obj/machinery/suit_storage_unit/engine/chief
 	name = "Chief Engineer Hardsuit Storage Unit"
@@ -669,8 +650,8 @@
 	suit_type = /obj/item/clothing/suit/space/rig/engineering/chief
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
-	icon_state = "suitholder_CE"
-	type_icon_state = "CE"
+	icon_state = "CE"
+	icon = 'icons/obj/suit_storage/chief.dmi'
 
 //Security
 /obj/machinery/suit_storage_unit/security
@@ -679,18 +660,16 @@
 	suit_type = /obj/item/clothing/suit/space/rig/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 
-	icon_state = "suitholder_security"
-	type_icon_state = "security"
-	connector_icon_state = "security"
+	icon_state = "security"
+	icon = 'icons/obj/suit_storage/security.dmi'
 
 /obj/machinery/suit_storage_unit/security/hos
 	name = "Head of Security Hardsuit Storage Unit"
 	req_access = list(access_hos)
 	suit_type = /obj/item/clothing/suit/space/rig/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
-	icon_state = "suitholder_HOS"
-	type_icon_state = "HOS"
-	connector_icon_state = "security"
+	icon_state = "HOS"
+	icon = 'icons/obj/suit_storage/hos.dmi'
 
 //Medical
 /obj/machinery/suit_storage_unit/medical
@@ -699,9 +678,8 @@
 	suit_type = /obj/item/clothing/suit/space/rig/medical
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
-	icon_state = "suitholder_med"
-	type_icon_state = "med"
-	connector_icon_state = "med"
+	icon_state = "med"
+	icon = 'icons/obj/suit_storage/medical.dmi'
 
 /obj/machinery/suit_storage_unit/medical/paramedic
 	name = "Paremedic Hardsuit Storage Unit"
@@ -715,8 +693,8 @@
 	suit_type = /obj/item/clothing/suit/space/rig/medical/cmo
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
-	icon_state = "suitholder_CMO"
-	type_icon_state = "CMO"
+	icon_state = "CMO"
+	icon = 'icons/obj/suit_storage/cmo.dmi'
 
 //Other
 /obj/machinery/suit_storage_unit/globose
@@ -734,7 +712,6 @@
 	helmet_type = /obj/item/clothing/head/helmet/space/globose/science
 	tank_type = /obj/item/weapon/tank/oxygen
 
-
 /obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist
 	name = "Xenoarchaeologist Space Suit Storage Unit"
 
@@ -745,9 +722,8 @@
 	helmet_type = /obj/item/clothing/head/helmet/space/globose/mining
 	tank_type = /obj/item/weapon/tank/oxygen
 
-	icon_state = "suitholder_miner"
-	type_icon_state = "miner"
-	connector_icon_state = "miner"
+	icon_state = "miner"
+	icon = 'icons/obj/suit_storage/mining.dmi'
 
 /obj/machinery/suit_storage_unit/globose/skrell
 	build_type =  SUIT_STORAGE_BUILD_NONE
@@ -765,56 +741,49 @@
 	suit_type = /obj/item/clothing/suit/space/skrell/black
 	helmet_type = /obj/item/clothing/head/helmet/space/skrell/black
 
-/obj/machinery/suit_storage_unit/globose/unathi
-	build_type =  SUIT_STORAGE_BUILD_NONE
+/obj/machinery/suit_storage_unit/unathi
+	name = "NT Unathi Suit Storage Unit"
+	suit_type = /obj/item/clothing/suit/space/unathi/rig_cheap
+	helmet_type = /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
 	mask_type = /obj/item/clothing/mask/gas/coloured
 	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/oxygen
 
-	icon_state = "suitholder_civilian"
-	type_icon_state = "civilian"
-	connector_icon_state = "civilian"
+	icon_state = "unathi"
+	icon = 'icons/obj/suit_storage/unathi.dmi'
 
-/obj/machinery/suit_storage_unit/globose/unathi/nt
-	name = "NT Unathi Suit Storage Unit"
-	suit_type = /obj/item/clothing/suit/space/unathi/rig_cheap
-	helmet_type = /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
-
-/obj/machinery/suit_storage_unit/globose/unathi/breacher
+/obj/machinery/suit_storage_unit/unathi/breacher
 	name = "Breacher Unathi Suit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/unathi/breacher
 	helmet_type = /obj/item/clothing/head/helmet/space/unathi/breacher
-	req_access = list(access_captain)
 
-	icon_state = "suitholder_captain"
-	type_icon_state = "captain"
-	connector_icon_state = "captain"
+	build_type =  SUIT_STORAGE_BUILD_NONE
+	req_access = list(access_captain)
 
 /obj/machinery/suit_storage_unit/captain
 	name = "Captain Suit Storage Unit"
-	req_access = list(access_captain)
 	suit_type = /obj/item/clothing/suit/armor/captain
 	helmet_type = /obj/item/clothing/head/helmet/space/capspace
 	mask_type = /obj/item/clothing/mask/gas/coloured
 	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen
 
-	icon_state = "suitholder_captain"
-	type_icon_state = "captain"
-	connector_icon_state = "captain"
+	req_access = list(access_captain)
+	icon_state = "captain"
+	icon = 'icons/obj/suit_storage/captain.dmi'
 
 /obj/machinery/suit_storage_unit/nasa
 	name = "NASA Suit Storage Unit"
-	req_access = list(access_minisat)
+
 	suit_type = /obj/item/clothing/suit/space/nasavoid
 	helmet_type = /obj/item/clothing/head/helmet/space/nasavoid
 	mask_type = /obj/item/clothing/mask/gas/coloured
 	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/jetpack/void
 
-	icon_state = "suitholder_NASA"
-	type_icon_state = "NASA"
-	connector_icon_state = "NASA"
+	req_access = list(access_minisat)
+	icon_state = "NASA"
+	icon = 'icons/obj/suit_storage/nasa.dmi'
 
 /obj/machinery/suit_storage_unit/wizard
 	build_type =  SUIT_STORAGE_BUILD_NONE
@@ -824,26 +793,28 @@
 	tank_type = /obj/item/weapon/tank/emergency_oxygen/double
 	req_access = list(access_syndicate)
 
-	icon_state = "suitholder_mage"
-	type_icon_state = "mage"
-	connector_icon_state = "mage"
+	icon_state = "mage"
+	icon = 'icons/obj/suit_storage/wizard.dmi'
 
 /obj/machinery/suit_storage_unit/vox
 	build_type =  SUIT_STORAGE_BUILD_NONE
 	mask_type = /obj/item/clothing/mask/gas/vox
 	boot_type = /obj/item/clothing/shoes/magboots/vox
 	tank_type = /obj/item/weapon/tank/nitrogen
+
 	req_access = list(access_syndicate)
 
 /obj/machinery/suit_storage_unit/vox/atom_init()
 	var/list/icon_types_option = list()
 	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
-		icon_types_option += typepath::type_icon_state
+		if(!(typepath::icon in icon_types_option))
+			icon_types_option[typepath::icon] += typepath::icon_state
 	if(length(icon_types_option))
-		var/new_icon = pick(icon_types_option)
-		icon_state = "suitholder_[new_icon]"
-		type_icon_state = new_icon
-		connector_icon_state = new_icon
+		for(var/new_icon in icon_types_option)
+			if(prob(50)) // try to take some random appearance, or stay default if always false
+				icon = new_icon
+				icon_state = icon_types_option[new_icon]
+
 	return ..()
 
 /obj/machinery/suit_storage_unit/vox/carapace

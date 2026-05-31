@@ -99577,7 +99577,7 @@
 	},
 /area/station/medical/morgue)
 "xXi" = (
-/obj/machinery/suit_storage_unit/globose/unathi/nt{
+/obj/machinery/suit_storage_unit/unathi{
 	filled = 1
 	},
 /turf/simulated/floor{
