@@ -49,10 +49,7 @@
 		return
 	if(hit_atom.density)
 		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smashes into [hit_atom]!</span>")
-		SetCrawling(TRUE)
-		update_canmove()
-		drop_from_inventory(l_hand)
-		drop_from_inventory(r_hand)
+		apply_status_effect(/datum/status_effect/force_crawl, 5 SECONDS)
 
 /mob/living/carbon/human/mob_bullet_act(obj/item/projectile/P, def_zone)
 	. = PROJECTILE_ALL_OK

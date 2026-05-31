@@ -18,6 +18,6 @@
 	client.media?.open()
 
 	// unresting mob after ghosting
-	SetCrawling(FALSE)
+	get_up()
 
 	return .
