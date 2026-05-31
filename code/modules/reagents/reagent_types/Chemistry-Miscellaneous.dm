@@ -294,21 +294,16 @@
 	id = "nicotine"
 	description = "Slightly reduces stun times. If overdosed, it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
-	color = "#60A584" // rgb: 96, 165, 132
+	color = "#60A584"      // rgb: 96, 165, 132
 	custom_metabolism = 0.005
 	taste_message = "smoke"
-	overdose = 2
+	overdose = 1.2           // ~33 minutes if smoking regular cigs
 	var/alert_time = 0
-
-	var/safe_limit = 1       // helpful effect limit
 
 	var/jitteriness_reduction = 15
 	var/stun_reduction_prob = 50
 	var/message_prob = 1     // ~100 ticks (~200 seconds)
-
-	var/dizziness_limit = 120
-
-	var/weaken_prob = 3      // ~33 ticks (~67 seconds) to fall down
+	var/weaken_prob = 6      // ~17 ticks (~33 seconds) to fall down
 	var/vomit_prob = 3       // ~33 ticks (~67 seconds) to vomit
 
 	var/alert_delay = 90 SECONDS
@@ -321,8 +316,9 @@
 	if(holder.has_reagent("alkysine"))
 		return TRUE
 
-	if(volume < safe_limit)
+	if(volume < overdose)
 		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "nicotine", /datum/mood_event/smoked)
+
 		M.jitteriness = max(M.jitteriness - jitteriness_reduction, 0)
 
 		// 33% reduction to stun durations
@@ -335,18 +331,16 @@
 			to_chat(M, "<span class='notice'>[pick("Вы расслабляетесь.", "На душе становится спокойнее.", "Разум проясняется.", "Вы кажетесь себе чертовски крутым.")]</span>")
 	else
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "nicotine")
+
 		M.losebreath = max(M.losebreath + 1, 2)
+		M.adjustOxyLoss(1.5)
+		M.make_dizzy(10)
 
-		if(M.dizziness < dizziness_limit) // To wiggle the client's pixel offset not too strong
-			M.make_dizzy(10)
-
-		if(volume >= overdose)
-			M.adjustOxyLoss(1.5)
-			if(prob(weaken_prob))
-				M.AdjustWeakened(1)
-			if(prob(vomit_prob) && ishuman(M))
-				var/mob/living/carbon/human/H = M
-				H.invoke_vomit_async()
+		if(prob(weaken_prob))
+			M.AdjustWeakened(1)
+		if(prob(vomit_prob) && ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.invoke_vomit_async()
 
 		if(world.time > (alert_time + alert_delay))
 			to_chat(M, "<span class='danger'>Вы чувствуете головокружение и слабость.</span>")
