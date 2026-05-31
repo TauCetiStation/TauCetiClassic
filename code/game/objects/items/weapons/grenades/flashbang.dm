@@ -81,13 +81,12 @@
 	else if(distance <= 2)
 		if(ear_safety > 1)
 			M.Stun(1)
-			M.apply_status_effect(/datum/status_effect/force_crawl, 5 SECONDS)
 		else if(ear_safety > 0)
 			M.Stun(2)
-			M.apply_status_effect(/datum/status_effect/force_crawl, 10 SECONDS)
+			M.apply_status_effect(/datum/status_effect/force_crawl, 4 SECONDS)
 		else
 			M.Stun(5)
-			M.apply_status_effect(/datum/status_effect/force_crawl, 15 SECONDS)
+			M.apply_status_effect(/datum/status_effect/force_crawl, 10 SECONDS)
 			if((prob(14) || (M == loc && prob(70))))
 				M.ear_damage += rand(1, 10)
 			else
@@ -97,13 +96,13 @@
 	else if(distance <= 5)
 		if(!ear_safety)
 			M.Stun(4)
-			M.apply_status_effect(/datum/status_effect/force_crawl, 10 SECONDS)
+			M.apply_status_effect(/datum/status_effect/force_crawl, 8 SECONDS)
 			M.ear_damage += rand(0, 3)
 			M.ear_deaf = max(M.ear_deaf, 10)
 
 	else if(!ear_safety)
 		M.Stun(2)
-		M.apply_status_effect(/datum/status_effect/force_crawl, 8 SECONDS)
+		M.apply_status_effect(/datum/status_effect/force_crawl, 4 SECONDS)
 		M.ear_damage += rand(0, 1)
 		M.ear_deaf = max(M.ear_deaf, 5)
 
