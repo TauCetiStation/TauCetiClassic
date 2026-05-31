@@ -379,7 +379,7 @@
 
 	if(opened)
 		if(ishuman(user))
-			var/list/options = list("Procces UV" = mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = emagged ? "radial_kill" : "radial_start"),
+			var/list/options = list("Procces UV" = mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_start"),
 									"Fast Uneqip" = mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_use"),
 									"Fast Eqip" = mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_pickup")
 									)
