@@ -353,16 +353,18 @@
 				place_occupant(something, user)
 			return TRUE
 
-/obj/machinery/suit_storage_unit/AltClick(mob/user)
+/obj/machinery/suit_storage_unit/AltClick(mob/user, proximity)
 	add_fingerprint(user)
+	if(ultra_violet || !Adjacent(user))
+		return
 	start_ultra_violet(user)
 
-/obj/machinery/suit_storage_unit/CtrlClick(mob/user)
+/obj/machinery/suit_storage_unit/CtrlClick(mob/user, proximity)
 	add_fingerprint(user)
 	if(stat & BROKEN)
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return
-	if(ultra_violet)
+	if(ultra_violet || !Adjacent(user))
 		return
 	opened ? close() : open(user)
 
