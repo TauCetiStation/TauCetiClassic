@@ -398,9 +398,7 @@
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
 
-	// Read compile-time (initial) values: a freshly new'd item runs update_world_icon() in its
-	// atom_init while in nullspace, which mangles its own icon_state into the "_w" world sprite.
-	// Reading A.icon_state directly would copy that mangled state; initial() gives the clean value.
+
 	var/d_icon_custom = initial(A.icon_custom)
 	if(d_icon_custom)
 		icon = d_icon_custom
@@ -418,7 +416,7 @@
 	qdel(A)
 	update_world_icon()
 	update_inv_mob()
-	if(ishuman(loc))			//rebuild the worn overlay on the body from the new icon_state
+	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.update_inv_glasses()
 
