@@ -110,8 +110,8 @@
 
 /obj/machinery/portable_atmospherics/tile_atmos/oven
 	name = "Gas Oven"
-	cases = list("газовая печь", "газовой печи", "газовой печи", "газовую печь", "газовой печью", "газовой печи")
-	desc = "Газовая печь"
+	cases = list("РіР°Р·РѕРІР°СЏ РїРµС‡СЊ", "РіР°Р·РѕРІРѕР№ РїРµС‡Рё", "РіР°Р·РѕРІРѕР№ РїРµС‡Рё", "РіР°Р·РѕРІСѓСЋ РїРµС‡СЊ", "РіР°Р·РѕРІРѕР№ РїРµС‡СЊСЋ", "РіР°Р·РѕРІРѕР№ РїРµС‡Рё")
+	desc = "Р“Р°Р·РѕРІР°СЏ РїРµС‡СЊ"
 
 	icon_state = "oven_gas_open"
 	icon_state_base = "oven_gas"
@@ -158,26 +158,26 @@
 
 	if(on)
 		var/static/radial_off = image(icon = radial_icons, icon_state = "radial_off")
-		options["Выключить газ"] = radial_off
+		options["Р’С‹РєР»СЋС‡РёС‚СЊ РіР°Р·"] = radial_off
 	else
 		var/static/radial_on = image(icon = radial_icons, icon_state = "radial_on")
-		options["Включить газ"] = radial_on
+		options["Р’РєР»СЋС‡РёС‚СЊ РіР°Р·"] = radial_on
 
 	if(state_open)
 		var/static/radial_close = image(icon = radial_icons, icon_state = "radial_close")
-		options["Закрыть"] = radial_close
+		options["Р—Р°РєСЂС‹С‚СЊ"] = radial_close
 	else
 		var/static/radial_open = image(icon = radial_icons, icon_state = "radial_open")
-		options["Открыть"] = radial_open
+		options["РћС‚РєСЂС‹С‚СЊ"] = radial_open
 
 	var/choice = show_radial_menu(user, src, options, require_near = require_near, tooltips = TRUE)
 
 	switch(choice)
-		if("Открыть")
+		if("РћС‚РєСЂС‹С‚СЊ")
 			open_door()
-		if("Закрыть")
+		if("Р—Р°РєСЂС‹С‚СЊ")
 			close_door()
-		if("Включить газ")
+		if("Р’РєР»СЋС‡РёС‚СЊ РіР°Р·")
 			on = TRUE
-		if("Выключить газ")
+		if("Р’С‹РєР»СЋС‡РёС‚СЊ РіР°Р·")
 			on = FALSE
