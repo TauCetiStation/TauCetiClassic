@@ -12416,7 +12416,6 @@
 	},
 /area/station/cargo/storage)
 "auP" = (
-/obj/structure/table,
 /obj/machinery/windowtint{
 	id = "kitchen";
 	pixel_x = 24
@@ -12428,6 +12427,10 @@
 /obj/item/weapon/book/skillbook/chemistry,
 /obj/item/weapon/book/manual/wiki/barman_recipes{
 	pixel_y = 10
+	},
+/obj/machinery/portable_atmospherics/canister/hydrogen,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -12574,7 +12577,9 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/pie,
+/obj/machinery/chem_dispenser/soda{
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -15905,9 +15910,9 @@
 /turf/simulated/floor/beach/water/waterpool,
 /area/station/civilian/gym)
 "aBi" = (
-/obj/structure/table,
-/obj/machinery/chem_dispenser/soda{
-	pixel_y = 4
+/obj/machinery/portable_atmospherics/tile_atmos/oven,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -70648,6 +70653,7 @@
 /area/station/civilian/garden)
 "dyy" = (
 /obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/snacks/pie,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -111350,7 +111356,7 @@ npb
 bdv
 bdZ
 cjM
-cox
+aMZ
 aBi
 aWw
 aWw

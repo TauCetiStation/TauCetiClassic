@@ -362,6 +362,10 @@
 	..()
 	dropitems(user = thrower, target = target, scatter = TRUE)
 
+/obj/item/weapon/storage/visuals/tray/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	for(var/obj/item/I in contents)
+		I.fire_act(air, exposed_temperature, exposed_volume)
+
 
 ///////////////////NEW//////////////////////
 
