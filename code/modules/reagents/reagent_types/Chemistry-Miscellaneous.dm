@@ -294,7 +294,7 @@
 	id = "nicotine"
 	description = "Slightly reduces stun times. If overdosed, it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
-	color = "#60A584"      // rgb: 96, 165, 132
+	color = "#60a584"      // rgb: 96, 165, 132
 	custom_metabolism = 0.005
 	taste_message = "smoke"
 	overdose = 1.2           // ~33 minutes if smoking regular cigs
