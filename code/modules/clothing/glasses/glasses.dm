@@ -370,10 +370,72 @@
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
 	name = "optical meson scanner"
-	desc = "Used for seeing walls, floors, and stuff through anything."
+	desc = "It looks like a plain set of mesons, but on closer inspection, it seems to have a small dial inside. The thermal optics are always active."
 	icon_state = "meson"
 	item_state_world = "meson_w"
 	origin_tech = "magnets=3;syndicate=4"
+	toggleable = FALSE			//thermal optics are always on; appearance is changed via the chameleon dial instead
+	item_action_types = null
+	var/list/clothing_choices = list()
+
+/obj/item/clothing/glasses/thermal/syndi/atom_init()
+	. = ..()
+	var/blocked = list(/obj/item/clothing/glasses/chameleon)
+	for(var/U in subtypesof(/obj/item/clothing/glasses) - blocked)
+		var/obj/item/clothing/glasses/V = U
+		clothing_choices[initial(V.name)] = U
+
+/obj/item/clothing/glasses/thermal/syndi/verb/change()
+	set name = "Change Glasses Appearance"
+	set category = "Object"
+	set src in usr
+
+	var/picked = input("Select glasses to change it to", "Chameleon Thermals")as null|anything in clothing_choices
+	if(!picked || !clothing_choices[picked])
+		return
+	if(!(src in usr) || usr.incapacitated())
+		return
+	var/newtype = clothing_choices[picked]
+	var/obj/item/clothing/A = new newtype
+
+	// Read compile-time (initial) values: a freshly new'd item runs update_world_icon() in its
+	// atom_init while in nullspace, which mangles its own icon_state into the "_w" world sprite.
+	// Reading A.icon_state directly would copy that mangled state; initial() gives the clean value.
+	var/d_icon_custom = initial(A.icon_custom)
+	if(d_icon_custom)
+		icon = d_icon_custom
+		icon_custom = d_icon_custom
+	else
+		icon = initial(A.icon)
+		icon_custom = null
+	desc = initial(A.desc)
+	name = initial(A.name)
+	icon_state = initial(A.icon_state)
+	item_state = initial(A.item_state)
+	item_state_inventory = initial(A.item_state_inventory) ? initial(A.item_state_inventory) : initial(A.icon_state)
+	item_state_world = initial(A.item_state_world)
+	flags_inv = initial(A.flags_inv)
+	qdel(A)
+	update_world_icon()
+	update_inv_mob()
+	if(ishuman(loc))			//rebuild the worn overlay on the body from the new icon_state
+		var/mob/living/carbon/human/H = loc
+		H.update_inv_glasses()
+
+/obj/item/clothing/glasses/thermal/syndi/emp_act(severity) //cover blown: reset disguise to the default meson look + blind from /thermal/emp_act
+	..()
+	name = "optical meson scanner"
+	desc = "It's a set of mesons."
+	icon = initial(icon)
+	icon_custom = null
+	icon_state = "meson"
+	item_state = initial(item_state)
+	item_state_inventory = initial(item_state_inventory)
+	item_state_world = initial(item_state_world)
+	flags_inv = initial(flags_inv)
+	update_world_icon()
+	update_icon()
+	update_inv_mob()
 
 /obj/item/clothing/glasses/thermal/monocle
 	name = "thermoncle"
