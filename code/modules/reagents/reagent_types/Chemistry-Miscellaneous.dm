@@ -292,36 +292,53 @@
 /datum/reagent/nicotine
 	name = "Nicotine"
 	id = "nicotine"
-	description = "A highly addictive stimulant extracted from the tobacco plant."
+	description = "Slightly reduces stun times. If overdosed, it will deal toxin and oxygen damage."
 	reagent_state = LIQUID
-	color = "#181818" // rgb: 24, 24, 24
+	color = "#60A584" // rgb: 96, 165, 132
 	custom_metabolism = 0.005
+	taste_message = "smoke"
+	overdose = 2
 	var/alert_time = 0
 
 /datum/reagent/nicotine/on_mob_life(mob/living/M)
 	if(!..())
 		return
+
+	if(M.stat == DEAD)
+		return
+
+	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "nicotine", /datum/mood_event/smoked)
+	M.jitteriness = max(M.jitteriness - 15, 0)
+
+	if(prob(50))
+		M.AdjustStunned(-1)
+		M.AdjustWeakened(-1)
+		M.AdjustParalysis(-1)
+
+	if(prob(1))
+		var/smoke_message = pick("Напряжение уходит.", "На душе становится спокойнее.", "Разум проясняется.", "Вы кажетесь себе чертовски крутым.")
+		to_chat(M, "<span class='notice'>[smoke_message]</span>")
+
 	if(!holder.has_reagent("alkysine"))
 		if(volume >= 0.85)
 			if(world.time > (alert_time + 90 SECONDS))
-				to_chat(M, pick("<span class='danger'>You feel dizzy and weak</span>"))
+				to_chat(M, "<span class='danger'>Вы чувствуете головокружение.</span>")
 				alert_time = world.time
-			if(prob(60))
-				M.losebreath = max(M.losebreath + 1, 2)
-		if(volume < 0.7)
-			if(prob(10))
-				M.AdjustStunned(-1)
-				M.AdjustWeakened(-1)
-		if(volume > 1)
+
+		if(volume >= 1)
 			if(prob(80))
 				M.losebreath = max(M.losebreath + 1, 2)
-				M.drowsyness = min(40, (M.drowsyness + 2))
-			if(prob(3) & ishuman(M))
+			M.blurEyes(2)
+
+		if(volume >= 2)
+			M.adjustOxyLoss(1.5)
+			M.drowsyness = min(20, (M.drowsyness + 2))
+			if(prob(50))
+				M.losebreath = max(M.losebreath + 1, 2)
+			if(prob(3) && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.invoke_vomit_async()
-		if(volume > 5)
-			if(prob(70))
-				M.losebreath = max(M.losebreath + 1, 2)
+
 	if(holder.has_reagent("anti_toxin"))
 		holder.remove_reagent("nicotine", 0.065)
 	return TRUE
