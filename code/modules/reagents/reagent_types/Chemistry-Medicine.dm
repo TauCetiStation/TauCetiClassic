@@ -414,6 +414,8 @@
 		return
 
 	M.reagents.remove_all_type(/datum/reagent/toxin, REM, 0, 1)
+	if(holder.has_reagent("nicotine"))
+		holder.remove_reagent("nicotine", 0.065)
 	M.drowsyness = max(M.drowsyness - 2 * REM, 0)
 	M.hallucination = max(0, M.hallucination - 5 * REM)
 	M.adjustToxLoss(-2 * REM)
