@@ -158,9 +158,7 @@
 			return
 		BP = new L.bodypart_type()
 		target.remove_from_mob(tool)
-		qdel(tool)
-
-	if(isbodypart(tool))
+	else if(isbodypart(tool))
 		BP = tool
 
 	if(!BP)
@@ -171,6 +169,9 @@
 
 	user.remove_from_mob(tool)
 	BP.insert_organ(target, surgically = TRUE)
+
+	if(istype(tool, /obj/item/robot_parts))
+		qdel(tool)
 	target.update_body(BP.body_zone)
 	target.updatehealth()
 	target.UpdateDamageIcon(BP)
