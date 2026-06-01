@@ -843,7 +843,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 				if(H.species)
 					for(var/i in hair_styles_list)
 						var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
-						if(i in data["bald_hair_styles_list"])
+						if(i in data["bald_head_list"])
 							continue
 						if(H.species.name in tmp_hair.species_allowed)
 							species_hair += i
@@ -858,7 +858,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 				if(H.species)
 					for(var/i in facial_hair_styles_list)
 						var/datum/sprite_accessory/hair/tmp_hair = facial_hair_styles_list[i]
-						if(i in data["shaved_facial_hair_styles_list"])
+						if(i in data["shaved_face_list"])
 							continue
 						if(H.species.name in tmp_hair.species_allowed)
 							species_facial_hair += i
