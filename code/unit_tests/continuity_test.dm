@@ -152,7 +152,7 @@
 	if(!Object.sanitize_data(list("notfield" = /atom/movable)) == "THE PROC HAS RUNTIMED WHAT ARE YOU GOING ON ABOUT")
 		return FALSE
 
-	if(!Object.sanitize_data(list("field" = "/atom/movable")) == "THE PROC HAS RUNTIMED WHAT ARE YOU GOING ON ABOUT")
+	if(!Object.sanitize_data(list("field" = "atom/movable")) == "THE PROC HAS RUNTIMED WHAT ARE YOU GOING ON ABOUT")
 		return FALSE
 
 	if(!Object.sanitize_data(list("field" = null)) == "THE PROC HAS RUNTIMED WHAT ARE YOU GOING ON ABOUT")
