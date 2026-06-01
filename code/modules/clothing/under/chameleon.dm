@@ -439,21 +439,24 @@
 	var/newtype = clothing_choices[picked]
 	var/obj/item/clothing/A = new newtype
 
-	desc = null
-	permeability_coefficient = 0.90
-
-	if(A.icon_custom)
-		icon = A.icon_custom
-		icon_custom = A.icon_custom
+	// initial(): a new'd item's atom_init mangles its icon_state to the "_w" world sprite in nullspace
+	var/d_icon_custom = initial(A.icon_custom)
+	if(d_icon_custom)
+		icon = d_icon_custom
+		icon_custom = d_icon_custom
 	else
-		icon = A.icon
+		icon = initial(A.icon)
 		icon_custom = null
-	desc = A.desc
-	name = A.name
-	icon_state = A.icon_state
-	item_state = A.item_state
-	flags_inv = A.flags_inv
+	desc = initial(A.desc)
+	name = initial(A.name)
+	icon_state = initial(A.icon_state)
+	item_state = initial(A.item_state)
+	flags_inv = initial(A.flags_inv)
+	qdel(A)
 	update_inv_mob()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
+		H.update_inv_glasses()
 
 //*****************
 //**Chameleon Gun**
