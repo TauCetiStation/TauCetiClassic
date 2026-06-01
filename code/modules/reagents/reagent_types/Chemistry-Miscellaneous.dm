@@ -828,7 +828,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 /datum/reagent/hair_growth_accelerator
 	name = "Hair Growth Accelerator"
 	id = "hair_growth_accelerator"
-	data = list("bald_head_list"=list("Bald", "Balding Hair", "Skinhead", "Unathi Horns", "Tajaran Ears"),"shaved_face_list"=list("Shaved"),"allowed_races"=list(HUMAN, UNATHI, TAJARAN))
+	data = list("bald_hair_styles_list"=list("Bald", "Balding Hair", "Skinhead", "Unathi Horns", "Tajaran Ears"),"shaved_facial_hair_styles_list"=list("Shaved"),"allowed_races"=list(HUMAN, UNATHI, TAJARAN))
 	description = "A substance for the bald. Renews hair. Apply to head or groin."
 	reagent_state = LIQUID
 	color = "#efc769" // rgb: 239, 199, 105
