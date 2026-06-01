@@ -1,5 +1,5 @@
 /obj/item/clothing/shoes/syndigaloshes
-	desc = "A pair of brown shoes. They seem to have extra grip."
+	desc = "A pair of brown shoes. They seem to have extra grip. On closer inspection, there's a small dial inside."
 	name = "brown shoes"
 	icon_state = "brown"
 	item_state = "brown"
@@ -8,6 +8,52 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 	siemens_coefficient = 0.8
+
+/obj/item/clothing/shoes/syndigaloshes/atom_init()
+	. = ..()
+	var/blocked = list(/obj/item/clothing/shoes/chameleon, /obj/item/clothing/shoes/golem, /obj/item/clothing/shoes/cyborg)//Prevent infinite loops and bad shoes.
+	for(var/U in subtypesof(/obj/item/clothing/shoes) - blocked)
+		var/obj/item/clothing/shoes/V = U
+		clothing_choices[initial(V.name)] = U
+
+/obj/item/clothing/shoes/syndigaloshes/verb/change()
+	set name = "Change Shoes Appearance"
+	set category = "Object"
+	set src in usr
+
+	var/picked = input("Select shoes to change it to", "Chameleon Shoes")as null|anything in clothing_choices
+	if(!picked || !clothing_choices[picked])
+		return
+	if(!(src in usr) || usr.incapacitated())
+		return
+	var/newtype = clothing_choices[picked]
+	var/obj/item/clothing/A = new newtype
+
+	var/d_icon_custom = initial(A.icon_custom)
+	if(d_icon_custom)
+		icon = d_icon_custom
+		icon_custom = d_icon_custom
+	else
+		icon = initial(A.icon)
+		icon_custom = null
+	desc = initial(A.desc)
+	name = initial(A.name)
+	icon_state = initial(A.icon_state)
+	item_state = initial(A.item_state)
+	flags_inv = initial(A.flags_inv)
+	qdel(A)
+	update_inv_mob()
+
+/obj/item/clothing/shoes/syndigaloshes/emp_act(severity)
+	..()
+	name = initial(name)
+	desc = initial(desc)
+	icon = initial(icon)
+	icon_custom = null
+	icon_state = initial(icon_state)
+	item_state = initial(item_state)
+	flags_inv = initial(flags_inv)
+	update_inv_mob()
 
 /obj/item/clothing/shoes/mime
 	name = "mime shoes"
