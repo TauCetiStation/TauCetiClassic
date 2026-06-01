@@ -51,6 +51,26 @@ const mapTwoByTwo = (a, c) => {
   return result;
 };
 
+const aggregateImplants = (items) => {
+  if (!items) return items;
+  const result = [];
+  const foreignMap = {};
+  for (const item of items) {
+    if (item.type === 'foreign') {
+      if (foreignMap[item.name]) {
+        foreignMap[item.name].count += 1;
+      } else {
+        const entry = { ...item, count: 1 };
+        foreignMap[item.name] = entry;
+        result.push(entry);
+      }
+    } else {
+      result.push(item);
+    }
+  }
+  return result;
+};
+
 const reduceOrganStatus = (A) => {
   return A.length > 0
     ? A.filter((s) => !!s).reduce(
@@ -268,98 +288,115 @@ const BodyScannerMainOrgansExternal = (props) => {
           <Table.Cell textAlign="center">Повреждения</Table.Cell>
           <Table.Cell textAlign="right">Дополнительные сведения</Table.Cell>
         </Table.Row>
-        {props.organs.map((o, i) => (
-          <Table.Row
-            key={i}
-            textTransform="capitalize"
-            backgroundColor={i % 2 !== 0 && 'rgba(255, 255, 255, 0.05)'}>
-            <Table.Cell
-              color={
-                ((!!o.status.dead ||
-                  !!o.internalBleeding ||
-                  !!o.stump ||
-                  !!o.missing) &&
-                  'bad') ||
-                ((!!o.lungRuptured ||
-                  !!o.status.broken ||
-                  !!o.open ||
-                  !!o.germ_level ||
-                  !!o.unknown_implant) &&
-                  'average') ||
-                (!!o.status.robotic && 'label')
-              }
-              width="33%">
-              {o.name}
-            </Table.Cell>
-            <Table.Cell textAlign="center" q>
-              <ProgressBar
-                min="0"
-                max={o.maxHealth}
-                mt={i > 0 && '0.5rem'}
-                value={o.totalLoss / o.maxHealth}
-                ranges={damageRange}>
-                <Box
-                  inline
-                  style={{
-                    float: 'left',
-                  }}>
-                  {!!o.bruteLoss && (
-                    <Box inline position="relative">
-                      <Icon name="bone" />
-                      {round(o.bruteLoss, 0)}&nbsp;
-                    </Box>
-                  )}
-                  {!!o.fireLoss && (
-                    <Box inline position="relative">
-                      <Icon name="fire" />
-                      {round(o.fireLoss, 0)}
-                    </Box>
-                  )}
-                </Box>
-                <Box inline>{round(o.totalLoss, 0)}</Box>
-              </ProgressBar>
-            </Table.Cell>
-            <Table.Cell
-              textAlign="right"
-              verticalAlign="top"
-              width="33%"
-              pt={i > 0 && 'calc(0.5rem + 2px)'}>
-              <Box inline>
-                <Box color="bad" bold>
+        {props.organs.map((o, i) => {
+          const implants = aggregateImplants(o.implant);
+          return (
+            <Table.Row
+              key={i}
+              textTransform="capitalize"
+              backgroundColor={i % 2 !== 0 && 'rgba(255, 255, 255, 0.05)'}>
+              <Table.Cell
+                color={
+                  ((!!o.status.dead ||
+                    !!o.internalBleeding ||
+                    !!o.stump ||
+                    !!o.missing) &&
+                    'bad') ||
+                  ((!!o.lungRuptured ||
+                    !!o.status.broken ||
+                    !!o.open ||
+                    !!o.germ_level ||
+                    !!o.unknown_implant) &&
+                    'average') ||
+                  (!!o.status.robotic && 'label')
+                }
+                width="33%">
+                {o.name}
+              </Table.Cell>
+              <Table.Cell textAlign="center" q>
+                <ProgressBar
+                  min="0"
+                  max={o.maxHealth}
+                  mt={i > 0 && '0.5rem'}
+                  value={o.totalLoss / o.maxHealth}
+                  ranges={damageRange}>
+                  <Box
+                    inline
+                    style={{
+                      float: 'left',
+                    }}>
+                    {!!o.bruteLoss && (
+                      <Box inline position="relative">
+                        <Icon name="bone" />
+                        {round(o.bruteLoss, 0)}&nbsp;
+                      </Box>
+                    )}
+                    {!!o.fireLoss && (
+                      <Box inline position="relative">
+                        <Icon name="fire" />
+                        {round(o.fireLoss, 0)}
+                      </Box>
+                    )}
+                  </Box>
+                  <Box inline>{round(o.totalLoss, 0)}</Box>
+                </ProgressBar>
+              </Table.Cell>
+              <Table.Cell
+                textAlign="right"
+                verticalAlign="top"
+                width="33%"
+                pt={i > 0 && 'calc(0.5rem + 2px)'}>
+                <Box inline>
+                  <Box color="bad" bold>
+                    {reduceOrganStatus([
+                      !!o.internalBleeding && 'Артериальное кровотечение',
+                      !!o.status.dead && 'Отказ',
+                      !!o.stump && 'Культя',
+                      !!o.missing && 'Отсутствует',
+                    ])}
+                  </Box>
+                  <Box color="average">
+                    {reduceOrganStatus([
+                      !!o.lungRuptured && 'Разрыв легкого',
+                      !!o.status.broken && o.status.broken,
+                      !!o.germ_level && o.germ_level,
+                      !!o.open && 'Открытый разрез',
+                    ])}
+                  </Box>
+                  {implants?.map((s, i) => {
+                    if (s.type === 'implant') {
+                      return (
+                        <Box key={i} color="good">
+                          {s.name}
+                        </Box>
+                      );
+                    }
+                    if (s.type === 'implant_unknown') {
+                      return (
+                        <Box key={i} color="average">
+                          Неизвестный имплант
+                        </Box>
+                      );
+                    }
+                    return (
+                      <Box key={i} color="average">
+                        {s.count > 1
+                          ? `${s.name || 'Инородный объект'} x${s.count}`
+                          : s.name || 'Инородный объект'}
+                      </Box>
+                    );
+                  })}
                   {reduceOrganStatus([
-                    !!o.internalBleeding && 'Артериальное кровотечение',
-                    !!o.status.dead && 'Отказ',
-                    !!o.stump && 'Культя',
-                    !!o.missing && 'Отсутствует',
+                    !!o.status.splinted && (
+                      <Box color="good">Наложена шина</Box>
+                    ),
+                    !!o.robotic && <Box color="label">Протез</Box>,
                   ])}
                 </Box>
-                <Box color="average">
-                  {reduceOrganStatus([
-                    !!o.lungRuptured && 'Разрыв легкого',
-                    !!o.status.broken && o.status.broken,
-                    !!o.germ_level && o.germ_level,
-                    !!o.open && 'Открытый разрез',
-                  ])}
-                </Box>
-                {o.implant?.map((s, i) =>
-                  s.name ? (
-                    <Box key={i} color="good">
-                      {s.name}
-                    </Box>
-                  ) : (
-                    <Box key={i} color="average">
-                      Инородный объект
-                    </Box>
-                  )
-                )}
-                {reduceOrganStatus([
-                  !!o.status.splinted && <Box color="good">Наложена шина</Box>,
-                  !!o.robotic && <Box color="label">Протез</Box>,
-                ])}
-              </Box>
-            </Table.Cell>
-          </Table.Row>
-        ))}
+              </Table.Cell>
+            </Table.Row>
+          );
+        })}
       </Table>
     </Section>
   );
