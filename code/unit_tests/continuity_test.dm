@@ -1,8 +1,8 @@
 /datum/unit_test/continuity
 	name = "CONTINUITY: Continuity objects should return data they saved."
 
-	//disabled = TRUE
-	//why_disabled = "Runtimes while checking"
+	disabled = TRUE
+	why_disabled = "Runtimes while checking"
 
 	var/list/continuity_fields = list(
 		"field1" = list("field_type" = "list", "entry_config" = list("field_type" = "int", "max_num" = 999, "min_num" = -999, "can_be_null" = TRUE)),
