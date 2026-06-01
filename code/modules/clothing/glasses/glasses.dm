@@ -408,17 +408,16 @@
 		icon_custom = null
 	desc = initial(A.desc)
 	name = initial(A.name)
-	icon_state = initial(A.icon_state)
 	item_state = initial(A.item_state)
-	item_state_inventory = initial(A.item_state_inventory) ? initial(A.item_state_inventory) : initial(A.icon_state)
-	item_state_world = initial(A.item_state_world)
+	var/inv_state = initial(A.item_state_inventory) ? initial(A.item_state_inventory) : initial(A.icon_state)
+	var/world_state = initial(A.item_state_world)
+	icon_state = inv_state
+	item_state_inventory = inv_state
+	item_state_world = (world_state && icon_exists(icon, world_state)) ? world_state : null
 	flags_inv = initial(A.flags_inv)
 	qdel(A)
 	update_world_icon()
 	update_inv_mob()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_glasses()
 
 /obj/item/clothing/glasses/thermal/syndi/emp_act(severity) //cover blown: reset disguise to the default meson look + blind from /thermal/emp_act
 	..()
