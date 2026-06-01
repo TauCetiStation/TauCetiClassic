@@ -28,12 +28,6 @@
 		"field5" = /datum,
 	)
 
-	var/datum/component/continuity_object/Object_list
-	var/datum/component/continuity_object/Object_alist
-	var/datum/component/continuity_object/Object_string
-	var/datum/component/continuity_object/Object_int
-	var/datum/component/continuity_object/Object_type
-
 /datum/unit_test/continuity/proc/testproc()
 
 /datum/unit_test/continuity/start_test()
