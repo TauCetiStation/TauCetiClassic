@@ -6740,10 +6740,6 @@
 	},
 /turf/simulated/floor,
 /area/asteroid/research_outpost/outpost_misc_lab)
-"sW" = (
-/obj/machinery/suit_storage_unit/wizard,
-/turf/simulated/mineral/random/caves/high_chance,
-/area/asteroid/mine/unexplored/dangerous)
 "sX" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -62247,7 +62243,7 @@ sp
 sp
 pC
 pC
-sW
+pC
 pC
 pC
 pC
