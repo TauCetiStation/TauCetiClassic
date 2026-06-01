@@ -407,6 +407,7 @@
 	name = "optical meson scanner"
 	icon_state = "meson"
 	item_state = "glasses"
+	item_state_world = "meson_w"
 	desc = "It looks like a plain set of mesons, but on closer inspection, it seems to have a small dial inside."
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
@@ -421,8 +422,13 @@
 /obj/item/clothing/glasses/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "optical meson scanner"
 	desc = "It's a set of mesons."
+	icon = initial(icon)
+	icon_custom = null
 	icon_state = "meson"
 	item_state = "glasses"
+	item_state_inventory = initial(item_state_inventory)
+	item_state_world = initial(item_state_world)
+	update_world_icon()
 	update_icon()
 	update_inv_mob()
 
@@ -459,9 +465,6 @@
 	qdel(A)
 	update_world_icon()
 	update_inv_mob()
-	if(ishuman(loc))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_glasses()
 
 //*****************
 //**Chameleon Gun**
