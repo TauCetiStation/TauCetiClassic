@@ -3,12 +3,12 @@
 											||isbreathmask(something)\
 											||ismagboots(something)\
 											||istank(something)||iscarbon(something))
-#define IS_NOT_LOAD(something, target) (something && target) \
-										&& (!(isbreathmask(something) && isbreathmask(target)) \
-										|| !(isspacesuit(something) && isspacesuit(target)) \
-										|| !(isspacehelmet(something) && isspacehelmet(target))\
-										|| !(ismagboots(something) && ismagboots(target)) \
-										|| !(istank(something) && istank(target)))
+#define IS_LOAD(something, target) (something && target) \
+										&& ((isbreathmask(something) && isbreathmask(target)) \
+										|| (isspacesuit(something) && isspacesuit(target)) \
+										|| (isspacehelmet(something) && isspacehelmet(target))\
+										|| (ismagboots(something) && ismagboots(target)) \
+										|| (istank(something) && istank(target)))
 
 /obj/machinery/suit_storage_unit
 	name = "Suit Storage Unit"
@@ -454,10 +454,13 @@
 
 /obj/machinery/suit_storage_unit/proc/load_something(atom/movable/something, mob/user, obj/grab = null)
 	if(length(contents))
+		var/loaded = FALSE
 		for(var/atom/target in contents)
-			if(IS_NOT_LOAD(something, target))
-				to_chat(user, "<span class ='warning'>The unit already contains something like [something.name].</span>")
-				return FALSE
+			if(IS_LOAD(something, target))
+				loaded = TRUE
+		if(loaded)
+			to_chat(user, "<span class ='warning'>The unit already contains something like [something.name].</span>")
+			return FALSE
 
 	if(POSSIBLE_TO_LOAD(something))
 		if(do_after(user, 0.1 SECONDS, FALSE, src))
