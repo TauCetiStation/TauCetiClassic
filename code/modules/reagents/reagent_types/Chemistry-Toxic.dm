@@ -613,7 +613,6 @@
 	name = "Nicotine"
 	id = "nicotine"
 	description = "A highly addictive stimulant extracted from the tobacco plant."
-	reagent_state = LIQUID
 	color = "#60a584"      // rgb: 96, 165, 132
 	custom_metabolism = 0.005
 	taste_message = "smoke"
