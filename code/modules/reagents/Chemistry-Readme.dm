@@ -40,9 +40,9 @@ About the Holder:
 			If the specified amount is greater than what is available, it will use
 			the amount of the reagent that is available. If no reagent exists, returns null.
 
-		metabolize(mob/M)
+		metabolize(mob/living/M)
 			This proc is called by the mobs life proc. It simply calls on_mob_life for
-			all contained reagents. You shouldnt have to use this one directly.
+			all contained reagents, and then removes their metabolized amount. You shouldnt have to use this one directly.
 
 		handle_reactions()
 			This proc check all recipes and, on a match, uses them.
@@ -144,14 +144,11 @@ About Reagents:
 			with a turf. You'll want to put stuff like extra
 			slippery floors for lube or something in here.
 
-		on_mob_life(var/mob/M)
-			This proc is called everytime the mobs life proc executes.
-			This is the place where you put damage for toxins ,
-			drowsyness for sleep toxins etc etc.
-			You'll want to call the parents proc by using ..() .
-			If you don't, the chemical will stay in the mob forever -
-			unless you write your own piece of code to slowly remove it.
-			(Should be pretty easy, 1 line of code)
+		on_mob_life(mob/living/M)
+			This proc is called during the mob's metabolism tick (metabolize() in holder).
+			By default, it handles general digestion check, overdoses, and ingestion allergies.
+			Periodic effects of specific reagents should be implemented in on_general_digest(M)
+			or species-specific digest procs (on_diona_digest, on_skrell_digest, etc.).
 
 	Important variables:
 
