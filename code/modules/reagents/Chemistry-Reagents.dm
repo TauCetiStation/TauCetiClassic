@@ -128,9 +128,8 @@
 
 	if(allergen && allergen[ALLERGY_INGESTION] && ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.allergies && H.allergies[id])
-			H.trigger_allergy(id, custom_metabolism * H.mob_metabolism_mod.Get())
-			return FALSE
+		H.trigger_allergy(id, custom_metabolism * H.mob_metabolism_mod.Get())
+		return FALSE
 
 	return TRUE
 
