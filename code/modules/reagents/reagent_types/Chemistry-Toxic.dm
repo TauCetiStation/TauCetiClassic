@@ -618,7 +618,7 @@
 	custom_metabolism = 0.005
 	taste_message = "smoke"
 	overdose = 1.2           // ~33 minutes if smoking regular cigs
-	var/toxpwr = 0
+	toxpwr = 0
 
 	var/alert_time = 0
 
