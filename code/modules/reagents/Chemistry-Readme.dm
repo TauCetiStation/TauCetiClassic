@@ -1,6 +1,8 @@
 /*
 NOTE: IF YOU UPDATE THE REAGENT-SYSTEM, ALSO UPDATE THIS README.
 NOTE 2: NO ONE UPDATES THIS, IT MAY BE OUTDATED
+NOTE 3: metabolize AND on_mob_life IS UP TO DATE. PLEASE REMEMBER TO ADD AND UPDATE ANY CHANGES HERE.
+
 
 Structure: ///////////////////          //////////////////////////
 		   // Mob or object // -------> // Reagents var (datum) // 	    Is a reference to the datum that holds the reagents.
