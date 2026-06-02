@@ -12,5 +12,8 @@
 		fail("Some RIG`s spawn without helmet!")
 		for(var/target in error_list)
 			fail("[target]: spawn without helmet!")
+			return FALSE
 	else
 		pass("All RIG`s spawn currectly!")
+		return TRUE
+

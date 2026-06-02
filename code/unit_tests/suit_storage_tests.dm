@@ -13,8 +13,10 @@
 		fail("Total SSU errors: [length(error_list)]")
 		for(var/target in error_list)
 			fail("[target]: didn`t make themself full wtf")
+			return FALSE
 	else
 		pass("SSU successfully make full themself")
+		return TRUE
 
 /datum/unit_test/suit_storage_unit_test_dell
 	name = "SUIT STORAGE: TEST ANY UNIT CAN DELETE"
@@ -32,8 +34,10 @@
 		fail("TEST ANY UNIT CAN DELETE: TOTAL ERRORS [length(error_list)]")
 		for(var/target in error_list)
 			fail("[target]: didn`t Destroy() themself")
+		return FALSE
 	else
 		pass("All units successfuly Destroy() themself")
+		return TRUE
 
 /datum/unit_test/suit_storage_unit_test_duv
 	name = "SUIT STORAGE: TEST DEFAULT UV CLEAR"
@@ -49,10 +53,13 @@
 	for(var/obj/item/target in ssu.contents)
 		if(target.contaminated)
 			fail("SSU didn`t clear contaminate: [target]")
+			return FALSE
 		else if(target.blood_overlay)
 			fail("SSU didn` clear blood_overlay: [target]")
+			return FALSE
 		else
 			pass("SSU successfuly clear: [target]")
+			return TRUE
 
 /datum/unit_test/suit_storage_unit_test_suv_dell
 	name = "SUIT STORAGE: TEST SUPER UV CLEAR"
@@ -67,8 +74,10 @@
 	ssu.super_ultra_violet_cleaning()
 	if(length(ssu.contents))
 		fail("SSU didnt destroy all in contents")
+		return FALSE
 	else
 		pass("SSU successfully destroy all in contents")
+		return TRUE
 
 /datum/unit_test/suit_storage_unit_test_fast_equip_drop
 	name = "SUIT STORAGE: TEST FAST EUIP"
@@ -84,5 +93,7 @@
 	for(var/atom/target in ssu.contents)
 		if(!ishuman(target))
 			fail("SSU contents somethink like: [target], but must didn`t")
+			return FALSE
 
 	pass("SSU successfully use items in his contents")
+	return TRUE
