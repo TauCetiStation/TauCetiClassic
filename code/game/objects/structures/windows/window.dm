@@ -23,6 +23,9 @@
 	// Full repair time (deciseconds) when integrity is at 0. Actual time scales with damage.
 	var/repair_time = 12 SECONDS
 
+	// Welding fuel spent on a full repair from 0 integrity. Actual cost scales with damage.
+	var/repair_fuel = 5
+
 	// If set to list(devastation, heavy, light), welding the window detonates it instead of repairing it (phoron glass).
 	var/list/weld_explosion = null
 
@@ -95,11 +98,12 @@
 		if(get_integrity() >= max_integrity)
 			to_chat(user, "<span class='notice'>[src] уже в хорошем состоянии.</span>")
 			return
-		if(WT.use(0, user))
-			var/damage_fraction = 1 - (get_integrity() / max_integrity)
-			var/cur_repair_time = max(30, round(repair_time * damage_fraction))
+		var/damage_fraction = 1 - (get_integrity() / max_integrity)
+		var/cur_repair_time = max(30, round(repair_time * damage_fraction))
+		var/cur_repair_fuel = max(1, round(repair_fuel * damage_fraction))
+		if(WT.tool_start_check(user, amount = cur_repair_fuel))
 			to_chat(user, "<span class='notice'>Вы начинаете чинить [CASE(src, ACCUSATIVE_CASE)]...</span>")
-			if(WT.use_tool(src, user, cur_repair_time, volume = 50, quality = QUALITY_WELDING))
+			if(WT.use_tool(src, user, cur_repair_time, amount = cur_repair_fuel, volume = 50, quality = QUALITY_WELDING))
 				repair_damage(max_integrity)
 				integrity_failure = initial(integrity_failure)
 				update_icon()
