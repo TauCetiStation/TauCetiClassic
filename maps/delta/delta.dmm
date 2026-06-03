@@ -16093,10 +16093,10 @@
 /area/station/maintenance/dormitory)
 "aAZ" = (
 /obj/structure/table,
-/obj/item/clothing/suit/hooded/wintercoat/science{
+/obj/machinery/requests_console/science{
 	pixel_y = 8
 	},
-/obj/item/clothing/suit/hooded/wintercoat/science{
+/obj/machinery/requests_console/science{
 	pixel_y = 8
 	},
 /obj/item/clothing/shoes/winterboots{

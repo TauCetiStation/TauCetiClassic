@@ -84,6 +84,7 @@
 /obj/item/clothing/suit/storage/hooded/custom
 	name = "Custom hooded"
 
+
 /datum/custom_item
 	var/item_type // FLUFF_TYPES_LIST
 	var/name
