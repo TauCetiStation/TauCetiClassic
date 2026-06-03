@@ -457,7 +457,7 @@
 	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
 	return !(length(J.departments & list(DEP_SECURITY)))
 
-/datum/quality/positiveish/forged_credentials/add_effect(mob/living/carbon/human/H, latespawn)
+/datum/quality/positiveish/bribe/add_effect(mob/living/carbon/human/H, latespawn)
 	to_chat(H, "<span class='notice'>Ваш ID-доступ слегка расширен. Не привлекайте к этому внимания.</span>")
 	var/obj/item/weapon/card/id/id = H.get_idcard()
 	if(id)
