@@ -29,7 +29,7 @@
 
 	armor = list(melee = 50, fire = 70)
 
-	repair_time = 180
+	repair_time = 18 SECONDS
 
 	var/disassemble_glass_type = /obj/item/stack/sheet/glass // any better ideas to handle drops and disassembles?
 
