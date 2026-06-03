@@ -217,7 +217,7 @@
 	armor = list(melee = 80, fire = 70, bomb = 25)
 	explosive_resistance = 0.5
 
-	repair_time = 280
+	repair_time = 28 SECONDS
 
 	disassemble_glass_type = /obj/item/stack/sheet/rglass
 
