@@ -70,10 +70,7 @@
 
 /atom/movable/proc/create_point_bubble(atom/pointed_atom)
 	if(active_point_bubble)
-		var/datum/point_bubble/old_pb = active_point_bubble
-		cut_overlay(old_pb.appearance)
-		qdel(old_pb)
-		active_point_bubble = null
+		clear_point_bubble(active_point_bubble)
 
 	var/mutable_appearance/thought_bubble = mutable_appearance('icons/effects/effects.dmi', "thought_bubble", plane = POINT_PLANE)
 	thought_bubble.appearance_flags = KEEP_APART
