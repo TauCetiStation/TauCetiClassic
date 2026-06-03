@@ -26,7 +26,8 @@
 		/atom/movable/screen/buildmode,\
 		/datum/controller/subsystem/junkyard,\
 		/datum/tgui_list_input,\
-		/datum/tgui_modal,\
+		/datum/tgui_alert,\
+		/datum/tgui_state/admin_state,\
 		/datum/map_module,\
 	)
 

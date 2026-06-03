@@ -202,10 +202,10 @@ var/global/list/alldepartments = list("Central Command")
 	P.stamp_text = stamp_text
 	P.fields     = fields
 	P.sfields    = sfields
-	P.stamped    = LAZYCOPY(stamped)
-	P.ico        = LAZYCOPY(ico)
-	P.offset_x   = LAZYCOPY(offset_x)
-	P.offset_y   = LAZYCOPY(offset_y)
+	P.stamped    = LAZYLISTDUPLICATE(stamped)
+	P.ico        = LAZYLISTDUPLICATE(ico)
+	P.offset_x   = LAZYLISTDUPLICATE(offset_x)
+	P.offset_y   = LAZYLISTDUPLICATE(offset_y)
 	P.copy_overlays(src, TRUE)
 
 	P.updateinfolinks()

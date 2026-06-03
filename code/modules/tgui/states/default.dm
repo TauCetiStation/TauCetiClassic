@@ -1,11 +1,13 @@
+/*!
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
 /**
  * tgui state: default_state
  *
  * Checks a number of things -- mostly physical distance for humans
  * and view for robots.
- *
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
  */
 
 var/global/datum/tgui_state/default/tgui_default_state = new
@@ -18,15 +20,10 @@ var/global/datum/tgui_state/default/tgui_default_state = new
 
 /mob/living/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
-	if(. > UI_CLOSE && loc)
-		. = min(., loc.contents_ui_distance(src_object, src)) // Check the distance...
-	if(. == UI_INTERACTIVE) // Non-human living mobs can only look, not touch.
-		return UI_UPDATE
-
-/mob/living/carbon/human/default_can_use_topic(src_object)
-	. = shared_ui_interaction(src_object)
-	if(. > UI_CLOSE)
+	if(. > UI_CLOSE && loc) //must not be in nullspace.
 		. = min(., shared_living_ui_distance(src_object)) // Check the distance...
+	if(. == UI_INTERACTIVE && !IsAdvancedToolUser()) // unhandy living mobs can only look, not touch.
+		return UI_UPDATE
 
 /mob/living/silicon/robot/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)
@@ -54,14 +51,10 @@ var/global/datum/tgui_state/default/tgui_default_state = new
 		if(STATUS_CLOSE)
 			. = UI_CLOSE
 
-/mob/living/simple_animal/default_can_use_topic(src_object)
-	. = shared_ui_interaction(src_object)
-	if(. > UI_CLOSE)
-		. = min(., shared_living_ui_distance(src_object)) //simple animals can only use things they're near.
 
 /mob/living/silicon/pai/default_can_use_topic(src_object)
 	// pAIs can only use themselves and the owner's radio.
-	if((src_object == src || src_object == radio) && stat == CONSCIOUS)
+	if((src_object == src || src_object == radio) && !stat)
 		return UI_INTERACTIVE
 	else
-		return ..()
+		return min(..(), UI_UPDATE)

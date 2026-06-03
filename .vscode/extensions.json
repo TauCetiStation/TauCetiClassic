@@ -1,0 +1,11 @@
+{
+	"recommendations": [
+		"platymuus.dm-langclient",
+		"EditorConfig.EditorConfig",
+		"arcanis.vscode-zipfs",
+		"stylemistake.auto-comment-blocks",
+		"anturk.dmi-editor",
+		"esbenp.prettier-vscode",
+		"biomejs.biome"
+	]
+}

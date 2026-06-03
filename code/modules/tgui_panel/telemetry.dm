@@ -12,7 +12,7 @@
 /**
  * Maximum time allocated for sending a telemetry packet.
  */
-#define TGUI_TELEMETRY_RESPONSE_WINDOW 30 SECONDS
+#define TGUI_TELEMETRY_RESPONSE_WINDOW (30 SECONDS)
 
 /// Time of telemetry request
 /datum/tgui_panel/var/telemetry_requested_at
@@ -77,11 +77,12 @@
 		return
 
 	var/list/found
+
 	for(var/i in 1 to len)
 		var/list/row = telemetry_connections[i]
 
 		// Check for a malformed history object
-		if (!(row && row["ckey"] && row["address"] && row["computer_id"]))
+		if (!row || row.len < 3 || (!row["ckey"] || !row["address"] || !row["computer_id"]))
 			continue
 
 		row["ckey"] = ckey(row["ckey"])
@@ -108,3 +109,6 @@
 		log_admin_private(msg)
 
 	client.prefs.guard.chat_processed = TRUE
+
+#undef TGUI_TELEMETRY_MAX_CONNECTIONS
+#undef TGUI_TELEMETRY_RESPONSE_WINDOW

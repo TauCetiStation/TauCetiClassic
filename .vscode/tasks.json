@@ -2,40 +2,131 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			"type": "process",
+			"command": "tools/build/build.sh",
+			"windows": {
+				"command": ".\\tools\\build\\build.bat"
+			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": ["$dreammaker", "$tsc", "$eslint-stylish"],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"dependsOn": "dm: reparse",
+			"label": "Build All"
+		},
+		{
+			"type": "process",
+			"command": "tools/build/build.sh",
+			"args": [
+				"-DTESTING",
+				"-DTESTING",
+				"-DTESTING"
+			],
+			"windows": {
+				"command": ".\\tools\\build\\build.bat",
+				"args": [
+					"-DREFERENCE_TRACKING",
+					"-DGC_FAILURE_HARD_LOOKUP",
+					"-DFIND_REF_NO_CHECK_TICK"
+				]
+			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": ["$dreammaker", "$tsc", "$eslint-stylish"],
+			"group": {
+				"kind": "build"
+			},
+			"dependsOn": "dm: reparse",
+			"label": "Build All (testing)"
+		},
+		{
+			"type": "process",
+			"command": "tools/build/build.sh",
+			"args": [
+				"-DREFERENCE_TRACKING",
+				"-DGC_FAILURE_HARD_LOOKUP",
+				"-DFIND_REF_NO_CHECK_TICK"
+			],
+			"windows": {
+				"command": ".\\tools\\build\\build.bat",
+				"args": [
+					"-DREFERENCE_TRACKING",
+					"-DGC_FAILURE_HARD_LOOKUP",
+					"-DFIND_REF_NO_CHECK_TICK"
+				]
+			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": ["$dreammaker", "$tsc", "$eslint-stylish"],
+			"group": {
+				"kind": "build"
+			},
+			"dependsOn": "dm: reparse",
+			"label": "Build All (ref tracking)"
+		},
+		{
 			"type": "dreammaker",
-			"dme": "taucetistation.dme",
-			"problemMatcher": [
-				"$dreammaker"
-			],
+			"dme": "tgstation.dme",
+			"problemMatcher": ["$dreammaker"],
 			"group": "build",
-			"label": "dm: build - taucetistation.dme"
+			"label": "dm: build - tgstation.dme"
+		},
+		{
+			"command": "${command:dreammaker.reparse}",
+			"group": "build",
+			"label": "dm: reparse"
 		},
 		{
 			"type": "shell",
-			"command": "tgui/bin/tgui-build",
+			"command": "bin/tgui-dev",
 			"windows": {
-				"command": ".\\tgui\\bin\\tgui.bat"
+				"command": ".\\bin\\tgui-dev.cmd"
 			},
-			"problemMatcher": [
-				"$tsc",
-				"$eslint-stylish"
-			],
+			"problemMatcher": ["$tsc", "$eslint-stylish"],
 			"group": "build",
-			"label": "tgui: build"
+			"label": "tgui: dev server"
 		},
 		{
 			"type": "shell",
-			"command": "tgui/bin/tgui-dev-server",
+			"command": "bin/tgui-bench",
 			"windows": {
-				"command": ".\\tgui\\bin\\tgui-dev-server.bat"
+				"command": ".\\bin\\tgui-bench.cmd"
 			},
-			"problemMatcher": [
-				"$tsc",
-				"$eslint-stylish"
-			],
+			"problemMatcher": ["$tsc", "$eslint-stylish"],
 			"group": "build",
-			"label": "tgui: run dev server"
+			"label": "tgui: bench"
+		},
+		{
+			"type": "shell",
+			"command": "bin/tgui-sonar",
+			"windows": {
+				"command": ".\\bin\\tgui-sonar.cmd"
+			},
+			"problemMatcher": ["$tsc", "$eslint-stylish"],
+			"group": "build",
+			"label": "tgui: sonar"
+		},
+		{
+			"type": "shell",
+			"command": "bin/tgfont",
+			"windows": {
+				"command": ".\\bin\\tgfont.cmd"
+			},
+			"problemMatcher": ["$tsc", "$eslint-stylish"],
+			"group": "build",
+			"label": "tgui: rebuild tgfont"
 		}
-		,
 	]
 }

@@ -3,15 +3,15 @@
 ## The Easy Part
 
 - Copy and replace the following files in bulk:
-  - `code/__DEFINES/tgui.dm`
-  - `code/controllers/subsystem/tgui.dm`
-  - `code/modules/tgui/**`
-  - `tgui/**`
-    - Except: `tgui/packages/tgui/interfaces`
-    - Manually resolve conflicts for files that were touched outside the
-      `interfaces` folder.
+    - `code/__DEFINES/tgui.dm`
+    - `code/controllers/subsystem/tgui.dm`
+    - `code/modules/tgui/**`
+    - `tgui/**`
+        - Except: `tgui/packages/tgui/interfaces`
+        - Manually resolve conflicts for files that were touched outside the
+          `interfaces` folder.
 - Copy the updated `log_tgui` proc from:
-  - `code/__HELPERS/_logging.dm`
+    - `code/__HELPERS/_logging.dm`
 
 If you have a dual nano/tgui setup, then make sure to rename all ui procs
 on `/datum`, such as `ui_interact` to `tgui_interact`, to avoid namespace

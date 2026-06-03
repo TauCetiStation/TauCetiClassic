@@ -97,7 +97,7 @@
 	else
 		rand_role = pick(whitelisted_roles)
 
-	var/reason = "New Year [time2text(world.realtime, "YYYY")] Present."
+	var/reason = "New Year [UTC_YEAR] Present."
 	if(whitelist_DB_add(user_ckey, rand_role, reason, "yourfriendian", added_by_bot = TRUE))
 		to_chat(user, "<span class='notice'>You are so lucky bastard. Congratulations!</span>")
 

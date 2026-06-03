@@ -1,10 +1,12 @@
+/*!
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
 /**
  * tgui state: contained_state
  *
  * Checks that the user is inside the src_object.
- *
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
  */
 
 var/global/datum/tgui_state/contained_state/contained_state = new

@@ -9,6 +9,10 @@
 	var/list/active_timers
 	var/list/filter_data
 
+	/// Open uis owned by this datum
+	/// Lazy, since this case is semi rare
+	var/list/open_tguis
+
 	/// russian case forms of atom name in format
 	/// list(NOMINATIVE_CASE, GENITIVE_CASE, DATIVE_CASE, ACCUSATIVE_CASE, ABLATIVE_CASE, PREPOSITIONAL_CASE)
 	/// for usage with CASE macros (code/__DEFINES/_translation.dm)

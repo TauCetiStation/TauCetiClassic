@@ -1,0 +1,14 @@
+# Directories
+changelogs
+data
+font-awesome
+jquery
+juke
+**/build
+**/dist
+**/node_modules
+
+# File names / types
+*.min.*
+*.pnp.*
+*.bundle.*

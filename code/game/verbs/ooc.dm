@@ -203,30 +203,6 @@ var/global/bridge_ooc_colour = "#7b804f"
 				remote = "(R)"
 			to_chat(C, "[track]<span class='looc'><span class='prefix'>[remote][prefix]:</span> <EM>[mob.name]/([key]):</EM> <span class='message emojify linkify'>[msg]</span></span>")
 
-/client/verb/fix_ui()
-	set name = "Fix UI"
-	set desc = "Closes all opened NanoUI/TGUI and Reload your TGUI/NanoUI assets if they are not working"
-	set category = "OOC"
-
-	if(last_ui_resource_send > world.time)
-		to_chat(usr, "<span class='warning'>You requested your TGUI/NanoUI resource files too quickly. This will reload your NanoUI and TGUI/NanoUI resources. If you have any open UIs this may break them. Please try again in [(last_ui_resource_send - world.time)/10] seconds.</span>")
-		return
-	last_ui_resource_send = world.time + 60 SECONDS
-
-	// Close all NanoUI/TGUI windows
-	nanomanager.close_user_uis(usr)
-	SStgui.close_user_uis(usr)
-
-	// Clear the user's cache so they get resent.
-	// This is not fully clearing their BYOND cache, just their assets sent from the server this round
-	sent_assets = list()
-
-	// Resend the resources
-	get_asset_datum(/datum/asset/nanoui)
-	get_asset_datum(/datum/asset/simple/tgui)
-
-	to_chat(src, "<span class='notice'>UI resource files resent successfully. If you are still having issues, please try manually clearing your BYOND cache.</span>")
-
 /client/verb/show_test_merges()
 	set name = "Show Test Merges"
 	set desc = "Shows a list of all test merges that are currently active"

@@ -76,6 +76,7 @@
 #define SS_PRIORITY_FLUIDS        20
 #define SS_PRIORITY_GARBAGE       15
 #define SS_PRIORITY_HOLOMAPS      10
+#define SS_PRIORITY_PING          10
 #define SS_PRIORITY_SUN            3
 #define SS_PRIORITY_SMARTLIGHT     3
 #define SS_PRIORITY_LOW            1

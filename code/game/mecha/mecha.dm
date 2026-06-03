@@ -699,7 +699,7 @@
 					actions += "Exosuit Tracker"
 
 				if(actions.len > 0)
-					var/choice = tgui_input_list(user, "Pick what to unscrew.", "Unscrew part", actions, 5 SECONDS)
+					var/choice = tgui_input_list(user, "Pick what to unscrew.", "Unscrew part", actions, timeout = 5 SECONDS)
 					if(!choice || !Adjacent(user))
 						return
 					switch(choice)

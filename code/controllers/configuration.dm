@@ -190,9 +190,6 @@ var/global/bridge_secret = null
 
 	var/customitem_slot_by_time = 80000 // Gives one slot for fluff items after playing this much minutes
 
-	// The object used for the clickable stat() button.
-	var/obj/effect/statclick/statclick
-
 	var/craft_recipes_visibility = TRUE // Show all recipes (TRUE) or only these that have all required components around (FALSE) in craft menu.
 	var/nightshift = FALSE
 
@@ -230,6 +227,11 @@ var/global/bridge_secret = null
 
 	var/hard_deletes_overrun_threshold = 0.5
 	var/hard_deletes_overrun_limit = 0
+
+	var/tgui_storage_cdn_iframe = "https://tgstation.github.io/byond-client-storage/iframe.html"
+
+	// The object used for the clickable stat() button.
+	var/obj/effect/statclick/statclick
 
 /datum/configuration/New()
 	for (var/type in subtypesof(/datum/game_mode))
@@ -705,6 +707,9 @@ var/global/bridge_secret = null
 
 				if("hard_deletes_overrun_limit")
 					config.hard_deletes_overrun_limit = text2num(value)
+
+				if("storage_cdn_iframe")
+					config.tgui_storage_cdn_iframe = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

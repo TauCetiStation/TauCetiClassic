@@ -76,4 +76,4 @@
 	return TRUE
 
 /datum/bloom_edit/tgui_state(mob/user)
-	return global.admin_state
+	return ADMIN_STATE(R_ADMIN)

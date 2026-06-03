@@ -5,7 +5,7 @@
 	src.target = target
 
 /datum/filter_editor/tgui_state(mob/user)
-	return global.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/filter_editor/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

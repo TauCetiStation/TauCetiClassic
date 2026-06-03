@@ -203,10 +203,10 @@
 	P.fields = copy.fields
 	P.sfields = copy.sfields
 	P.stamp_text = replacetext(copy.stamp_text, "color:", "nocolor:") // Russian server? I hope nobody will write this on paper
-	P.stamped = LAZYCOPY(copy.stamped)
-	P.ico = LAZYCOPY(copy.ico)
-	P.offset_x = LAZYCOPY(copy.offset_x)
-	P.offset_y = LAZYCOPY(copy.offset_y)
+	P.stamped = LAZYLISTDUPLICATE(copy.stamped)
+	P.ico = LAZYLISTDUPLICATE(copy.ico)
+	P.offset_x = LAZYLISTDUPLICATE(copy.offset_x)
+	P.offset_y = LAZYLISTDUPLICATE(copy.offset_y)
 	var/image/img
 	for (var/i in 1 to copy.overlays.len)        //Iterates through stamps gray and puts a matching overlay onto the copy
 		img = copy.ico[i]

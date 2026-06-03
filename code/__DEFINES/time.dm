@@ -1,3 +1,9 @@
+/// Used in the GLOB year and tgui PreInit
+#define UTC_YEAR time2text(world.realtime, "YYYY", 0)
+
+/// In our universe, SS13 is set 200 years in the future from the real-world day, hence this number for determining the year-offset for the in-game year.
+#define STATION_YEAR_OFFSET 200
+
 #define JANUARY   1
 #define FEBRUARY  2
 #define MARCH     3

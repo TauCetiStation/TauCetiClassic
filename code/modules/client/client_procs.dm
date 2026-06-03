@@ -244,13 +244,13 @@ var/global/list/blacklisted_builds
 		src.preload_rsc = pick(config.resource_urls)
 	else src.preload_rsc = 1 // If config.resource_urls is not set, preload like normal.
 
-	to_chat(src, "<span class='warning'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>")
-
 	clients += src
 	directory[ckey] = src
 
 	// Instantiate tgui panel
-	tgui_panel = new(src)
+	tgui_panel = new(src, "browseroutput")
+
+	to_chat(src, "<span class='warning'>If the title screen is black, resources are still downloading. Please be patient until the title screen appears.</span>")
 
 	global.ahelp_tickets?.ClientLogin(src)
 
@@ -349,8 +349,6 @@ var/global/list/blacklisted_builds
 
 	generate_clickcatcher()
 
-	update_dpi()
-
 	// Set config based title for main window
 	if (config.server_name)
 		winset(src, "mainwindow", "title='[world.name]: [config.server_name]'")
@@ -364,7 +362,7 @@ var/global/list/blacklisted_builds
 
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
-		winset(src, "rpane.changelog", "font-style=bold")
+		winset(src, "infobuttons.changelog", "font-style=bold")
 
 		//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
@@ -684,11 +682,6 @@ var/global/list/blacklisted_builds
 
 /client/proc/update_pixel_ratio(number)
 	window_pixelratio = number
-
-/client/proc/update_dpi() // todo: remove me some time after 516
-	set waitfor = FALSE
-
-	dpi = text2num(winget(src, null, "dpi"))
 
 /client/proc/generate_clickcatcher()
 	if(!void)

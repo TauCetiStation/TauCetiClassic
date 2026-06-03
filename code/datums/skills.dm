@@ -95,7 +95,7 @@
 
 	on_start_help_other(target)
 
-	LAZYDISTINCTADD(target.helpers_skillsets, active_skillset)
+	LAZYOR(target.helpers_skillsets, active_skillset)
 	while(do_mob(src, target, HELP_OTHER_TIME))
 		if(prob(40 / length(target.helpers_skillsets)))
 			target.emote("hmm")
@@ -114,7 +114,7 @@
 	visible_message("<span class='notice'>[src] removes [P_THEIR(src)] hand from \the [target]'s shoulder.</span>", "<span class='notice'>You remove your hand from \the [target]'s shoulder.</span>")
 
 /mob/living/proc/add_skills_buff(datum/skillset/skillset, time = -1)
-	LAZYDISTINCTADD(helpers_skillsets, skillset)
+	LAZYOR(helpers_skillsets, skillset)
 	if(time != -1)
 		addtimer(CALLBACK(src, PROC_REF(remove_skills_buff), skillset), time)
 

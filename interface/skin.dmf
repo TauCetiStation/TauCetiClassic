@@ -232,52 +232,133 @@ window "outputwindow"
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
-		titlebar = false
-		statusbar = false
-		can-close = false
-		can-minimize = false
-		can-resize = false
+		is-pane = true
+	elem "output_input_child"
+		type = CHILD
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = #ffc41f
+		saved-params = "splitter"
+		left = "infowindow"
+		right = "input_and_buttons"
+		is-vert = false
+		splitter = 98
+		show-splitter = false
+
+window "infowindow"
+	elem "infowindow"
+		type = MAIN
+		pos = 0,0
+		size = 640x480
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "info"
+		type = CHILD
+		pos = 0,5
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "splitter"
+		left = "statwindow"
+		right = "output_selector"
+		is-vert = false
+
+window "output_selector"
+	elem "output_selector"
+		type = MAIN
+		pos = 0,0
+		size = 640x480
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "legacy_output_selector"
 		type = CHILD
 		pos = 0,0
-		size = 640x456
+		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = #ffffff
 		saved-params = "splitter"
 		left = "output_legacy"
 		is-vert = false
+
+window "input_and_buttons"
+	elem "input_and_buttons"
+		type = MAIN
+		pos = 291,0
+		size = 640x20
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "input_buttons_child"
+		type = CHILD
+		pos = 0,0
+		size = 640x20
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = #ffc41f
+		saved-params = "splitter"
+		left = "inputwindow"
+		right = "inputbuttons"
+		is-vert = true
+		splitter = 90
+		show-splitter = false
+
+window "inputwindow"
+	elem "inputwindow"
+		type = MAIN
+		pos = 575,0
+		size = 560x20
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
 	elem "input"
 		type = INPUT
-		pos = 2,460
+		pos = 0,0
 		size = 560x20
-		anchor1 = 0,100
+		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = #d3b5b5
 		is-default = true
-		border = sunken
+		border = line
 		saved-params = "command"
-	elem "saybutton"
-		type = BUTTON
-		pos = 600,460
-		size = 40x20
-		anchor1 = 100,100
-		anchor2 = -1,-1
-		saved-params = "is-checked"
-		text = "Chat"
-		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\"\"saybutton.is-checked=true?mebutton.is-checked=false\""
-		button-type = pushbox
+		can-scroll = true
+
+window "inputbuttons"
+	elem "inputbuttons"
+		type = MAIN
+		pos = 331,0
+		size = 80x20
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
 	elem "mebutton"
 		type = BUTTON
-		pos = 560,460
+		pos = 0,0
 		size = 40x20
-		anchor1 = 100,100
-		anchor2 = -1,-1
+		anchor1 = 0,0
+		anchor2 = 50,100
 		saved-params = "is-checked"
 		text = "Emote"
 		command = ".winset \"mebutton.is-checked=true?input.command=\"!me \\\"\" macrobutton.is-checked=false:input.command=\"\"mebutton.is-checked=true?saybutton.is-checked=false\""
-		button-type = pushbox
+        button-type = pushbox
+	elem "saybutton"
+		type = BUTTON
+		pos = 40,0
+		size = 40x20
+		anchor1 = 50,0
+		anchor2 = 100,100
+		saved-params = "is-checked"
+		text = "Chat"
+		command = ".winset \"saybutton.is-checked=true?input.command=\"!say \\\"\" macrobutton.is-checked=false:input.command=\"\"saybutton.is-checked=true?mebutton.is-checked=false\""
+        button-type = pushbox
 
 window "output_legacy"
 	elem "output_legacy"
@@ -286,7 +367,6 @@ window "output_legacy"
 		size = 640x456
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "output"
@@ -305,7 +385,6 @@ window "output_browser"
 		size = 640x456
 		anchor1 = -1,-1
 		anchor2 = -1,-1
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "browseroutput"
@@ -314,7 +393,6 @@ window "output_browser"
 		size = 640x456
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = none
 		saved-params = ""
 
 window "preferences_window"
@@ -378,32 +456,25 @@ window "barber_window"
 window "rpane"
 	elem "rpane"
 		type = MAIN
-		pos = 281,0
+		pos = 0,0
 		size = 640x480
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		anchor1 = 0,0
+		anchor2 = 100,100
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "rpanewindow"
 		type = CHILD
-		pos = 0,30
-		size = 0x0
+		pos = 0,0
+		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = #ffc41f
 		saved-params = "splitter"
+		left = "infobuttons"
 		right = "outputwindow"
-		left = "infowindow"
 		is-vert = false
-	elem "rulesb"
-		type = BUTTON
-		pos = 278,0
-		size = 60x16
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		saved-params = "is-checked"
-		text = "Rules"
-		command = "rules"
-		group = "rpanemode"
+		splitter = 2
+		show-splitter = false
 	elem "hosttracker"
 		type = BROWSER
 		pos = 392,25
@@ -412,22 +483,85 @@ window "rpane"
 		anchor2 = -1,-1
 		is-visible = false
 		saved-params = ""
-	elem "changelog"
-		type = BUTTON
-		pos = 369,0
-		size = 67x16
+
+window "infobuttons"
+	elem "infobuttons"
+		type = MAIN
+		pos = 291,0
+		size = 640x16
 		anchor1 = -1,-1
 		anchor2 = -1,-1
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "textb"
+		type = BUTTON
+		pos = 0,0
+		size = 60x16
+		anchor1 = 0,0
+		anchor2 = 9,100
+		saved-params = "is-checked"
+		text = "Text"
+		command = ".winset \"info.left=; rpane.infob.is-checked=false rpane.textb.is-checked=true\""
+		group = "rpanemode"
+		button-type = pushbox
+	elem "infob"
+		type = BUTTON
+		pos = 64,0
+		size = 60x16
+		anchor1 = 10,0
+		anchor2 = 19,100
+		saved-params = "is-checked"
+		is-checked = true
+		text = "Info"
+		command = ".winset \"info.left=statwindow rpane.textb.is-checked=false rpane.infob.is-checked=true\""
+		group = "rpanemode"
+		button-type = pushbox
+	elem "wikib"
+		type = BUTTON
+		pos = 154,0
+		size = 60x16
+		anchor1 = 24,0
+		anchor2 = 33,100
+		saved-params = "is-checked"
+		text = "Wiki"
+		command = "wiki"
+		group = "rpanemode"
+	elem "forumb"
+		type = BUTTON
+		pos = 218,0
+		size = 60x16
+		anchor1 = 34,0
+		anchor2 = 43,100
+		saved-params = "is-checked"
+		text = "Forum"
+		command = "forum"
+		group = "rpanemode"
+	elem "rulesb"
+		type = BUTTON
+		pos = 282,0
+		size = 60x16
+		anchor1 = 44,0
+		anchor2 = 53,100
+		saved-params = "is-checked"
+		text = "Rules"
+		command = "rules"
+		group = "rpanemode"
+	elem "changelog"
+		type = BUTTON
+		pos = 372,0
+		size = 70x16
+		anchor1 = 58,0
+		anchor2 = 69,100
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "Changelog"
 		group = "rpanemode"
 	elem "discord"
 		type = BUTTON
-		pos = 439,0
-		size = 67x16
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		pos = 446,0
+		size = 70x16
+		anchor1 = 70,0
+		anchor2 = 81,100
 		font-style = "bold"
 		text-color = #ffffff
 		background-color = #7186f0
@@ -437,62 +571,19 @@ window "rpane"
 		group = "rpanemode"
 	elem "report-issue"
 		type = BUTTON
-		pos = 509,0
+		pos = 520,0
 		size = 90x16
-		anchor1 = -1,-1
-		anchor2 = -1,-1
+		anchor1 = 82,0
+		anchor2 = 93,100
 		font-style = "bold"
 		text-color = #ffffff
 		background-color = #df3e3e
 		saved-params = "is-checked"
 		text = "Report Issue"
 		command = "report-issue"
-	elem "forumb"
-		type = BUTTON
-		pos = 215,0
-		size = 60x16
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		saved-params = "is-checked"
-		text = "Forum"
-		command = "forum"
-		group = "rpanemode"
-	elem "wikib"
-		type = BUTTON
-		pos = 152,0
-		size = 60x16
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		saved-params = "is-checked"
-		text = "Wiki"
-		command = "wiki"
-		group = "rpanemode"
-	elem "textb"
-		type = BUTTON
-		pos = 0,0
-		size = 60x16
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		saved-params = "is-checked"
-		text = "Text"
-		command = ".winset \"rpanewindow.left=; rpane.infob.is-checked=false rpane.textb.is-checked=true\""
-		group = "rpanemode"
-		button-type = pushbox
-	elem "infob"
-		type = BUTTON
-		pos = 64,0
-		size = 60x16
-		anchor1 = -1,-1
-		anchor2 = -1,-1
-		saved-params = "is-checked"
-		is-checked = true
-		text = "Info"
-		command = ".winset \"rpanewindow.left=infowindow rpane.textb.is-checked=false rpane.infob.is-checked=true\""
-		group = "rpanemode"
-		button-type = pushbox
 
-window "infowindow"
-	elem "infowindow"
+window "statwindow"
+	elem "statwindow"
 		type = MAIN
 		pos = 281,0
 		size = 640x480
@@ -501,13 +592,12 @@ window "infowindow"
 		saved-params = "pos;size;is-minimized;is-maximized"
 		title = "Info"
 		is-pane = true
-	elem "info"
+	elem "statbrowser"
 		type = INFO
 		pos = 0,0
-		size = 638x475
+		size = 640x480
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
 		saved-params = ""
 		highlight-color = #00aa00
-

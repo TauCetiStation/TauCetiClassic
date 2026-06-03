@@ -838,11 +838,52 @@
 		sub_keys |= assoc_list[primary_key]
 	return sub_keys
 
+/*
+ * ## Lazylists
+ *
+ * * What is a lazylist?
+ *
+ * True to its name a lazylist is a lazy instantiated list.
+ * It is a list that is only created when necessary (when it has elements) and is null when empty.
+ *
+ * * Why use a lazylist?
+ *
+ * Lazylists save memory - an empty list that is never used takes up more memory than just `null`.
+ *
+ * * When to use a lazylist?
+ *
+ * Lazylists are best used on hot types when making lists that are not always used.
+ *
+ * For example, if you were adding a list to all atoms that tracks the names of people who touched it,
+ * you would want to use a lazylist because most atoms will never be touched by anyone.
+ *
+ * * How do I use a lazylist?
+ *
+ * A lazylist is just a list you defined as `null` rather than `list()`.
+ * Then, you use the LAZY* macros to interact with it, which are essentially null-safe ways to interact with a list.
+ *
+ * Note that you probably should not be using these macros if your list is not a lazylist.
+ * This will obfuscate the code and make it a bit harder to read and debug.
+ *
+ * Generally speaking you shouldn't be checking if your lazylist is `null` yourself, the macros will do that for you.
+ * Remember that LAZYLEN (and by extension, length) will return 0 if the list is null.
+ */
+
+///Initialize the lazylist
 #define LAZYINITLIST(L) if (!L) L = list()
+///If the provided list is empty, set it to null
 #define UNSETEMPTY(L) if (L && !L.len) L = null
-#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+///Like LAZYCOPY - copies an input list if the list has entries, If it doesn't the assigned list is nulled
+#define LAZYLISTDUPLICATE(L) (L ? L.Copy() : null )
+///Remove an item from the list, set the list to null if empty
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
+///Add an item to the list, if the list is null it will initialize it
+#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+///Add an item to the list if not already present, if the list is null it will initialize it
+#define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
+///returns L[I] if L exists and I is a valid index of L, runtimes if L is not a list
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
+///Sets the item K to the value V, if the list is null it will initialize it
 #define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
 //#define LAZYLEN(L) length(L) // don't return it, pointless now
 #define LAZYCLEARLIST(L) if(L) L.Cut()
@@ -854,7 +895,10 @@
 #define LAZYACCESSASSOC(L, I, K) L ? L[I] ? L[I][K] ? L[I][K] : null : null : null
 ///Qdel every item in the list before setting the list to null
 #define QDEL_LAZYLIST(L) for(var/I in L) qdel(I); L = null;
-#define LAZYCOPY(L) L && L.len ? L.Copy() : null
+//These methods don't null the list
+///Use LAZYLISTDUPLICATE instead if you want it to null with no entries
+#define LAZYCOPY(L) (L?.Copy() || list())
+///Returns the list if it's actually a valid list, otherwise will initialize it
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 
 // Helper macros to aid in optimizing lazy instantiation of lists.

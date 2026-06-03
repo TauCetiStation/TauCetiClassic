@@ -1,4 +1,4 @@
-/**
+/*!
  * External tgui definitions, such as src_object APIs.
  *
  * Copyright (c) 2020 Aleksej Komarov
@@ -42,7 +42,7 @@
  *
  * required user mob The mob interacting with the UI.
  *
- * return list Statuic Data to be sent to the UI.
+ * return list Static Data to be sent to the UI.
  */
 /datum/proc/tgui_static_data(mob/user)
 	return list()
@@ -55,12 +55,35 @@
  *
  * required user the mob currently interacting with the ui
  * optional ui ui to be updated
+ * always_instant when set to true stops the ui update cooldown from happening
  */
-/datum/proc/update_static_data(mob/user, datum/tgui/ui)
+/datum/proc/update_static_data(mob/user, datum/tgui/ui, always_instant)
 	if(!ui)
 		ui = SStgui.get_open_ui(user, src)
 	if(ui)
-		ui.send_full_update()
+		ui.send_full_update(always_instant = always_instant)
+
+/**
+ * public
+ *
+ * Will force an update on static data for all viewers.
+ * Should be done manually whenever something happens to
+ * change static data.
+ */
+/datum/proc/update_static_data_for_all_viewers()
+	for (var/datum/tgui/window as anything in open_tguis)
+		window.send_full_update()
+
+/**
+ * public
+ *
+ * Will force an update on non-static data for all viewers.
+ * Use when you are manually controlling UI data updates,
+ * such as when you are not using the auto-update system.
+ */
+/datum/proc/update_data_for_all_viewers()
+	for(var/datum/tgui/ui as anything in open_tguis)
+		ui.send_update()
 
 /**
  * public
@@ -71,12 +94,17 @@
  * required action string The action/button that has been invoked by the user.
  * required params list A list of parameters attached to the button.
  *
- * return bool If the UI should be updated or not.
+ * return bool If the user's input has been handled and the UI should update.
  */
 /datum/proc/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	SHOULD_CALL_PARENT(TRUE)
 	// If UI is not interactive or usr calling Topic is not the UI user, bail.
 	if(!ui || ui.status != UI_INTERACTIVE)
-		return 1
+		return TRUE
+	// if(action == "change_tgui_state")
+	// 	var/mob/living/user = ui.user
+	// 	//write_preferences will make sure it's valid for href exploits.
+	// 	user.client.prefs.write_preference(GLOB.preference_entries[layout_prefs_used], params["new_state"])
 
 /**
  * public
@@ -144,6 +172,7 @@
  * client/verb/tguiclose(), which closes the ui window
  */
 /datum/proc/tgui_close(mob/user)
+	SIGNAL_HANDLER
 
 /**
  * verb
@@ -157,7 +186,7 @@
 	// Name the verb, and hide it from the user panel.
 	set name = "tguiclose"
 	set hidden = TRUE
-	var/mob/user = src && src.mob
+	var/mob/user = src?.mob
 	if(!user)
 		return
 	// Close all tgui datums based on window_id.

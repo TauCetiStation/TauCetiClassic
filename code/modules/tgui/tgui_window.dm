@@ -11,6 +11,7 @@
 	var/is_browser = FALSE
 	var/status = TGUI_WINDOW_CLOSED
 	var/locked = FALSE
+	var/visible = FALSE
 	var/datum/tgui/locked_by
 	var/datum/subscriber_object
 	var/subscriber_delegate
@@ -18,8 +19,13 @@
 	var/message_queue
 	var/sent_assets = list()
 	// Vars passed to initialize proc (and saved for later)
-	var/inline_assets
-	var/fancy
+	var/initial_strict_mode
+	var/initial_assets
+	var/initial_inline_html
+	var/initial_inline_js
+	var/initial_inline_css
+
+	var/list/oversized_payloads = list()
 
 /**
  * public
@@ -44,38 +50,38 @@
  * state. You can begin sending messages right after initializing. Messages
  * will be put into the queue until the window finishes loading.
  *
- * optional inline_assets list List of assets to inline into the html.
- * optional inline_html string Custom HTML to inject.
- * optional fancy bool If TRUE, will hide the window titlebar.
+ * optional strict_mode bool - Enables strict error handling and BSOD.
+ * optional assets list - List of assets to load during initialization.
+ * optional inline_html string - Custom HTML to inject.
+ * optional inline_js string - Custom JS to inject.
+ * optional inline_css string - Custom CSS to inject.
  */
 /datum/tgui_window/proc/initialize(
 		strict_mode = FALSE,
-		inline_assets = list(),
+		assets = list(),
 		inline_html = "",
-		fancy = FALSE)
+		inline_js = "",
+		inline_css = "")
 	log_tgui(client,
 		context = "[id]/initialize",
 		window = src)
 	if(!client)
 		return
-	src.inline_assets = inline_assets
-	src.fancy = fancy
+	src.initial_assets = assets
+	src.initial_inline_html = inline_html
+	src.initial_inline_js = inline_js
+	src.initial_inline_css = inline_css
 	status = TGUI_WINDOW_LOADING
 	fatally_errored = FALSE
 	// Build window options
-	var/options = "file=[id].html;can_minimize=0;auto_format=0;"
-	// Remove titlebar and resize handles for a fancy window
-	if(fancy)
-		options += "titlebar=0;can_resize=0;"
-	else
-		options += "titlebar=1;can_resize=1;"
+	var/options = "file=[id].html;can_minimize=0;auto_format=0;titlebar=0;can_resize=0;"
 	// Generate page html
 	var/html = SStgui.basehtml
-	html = replacetextEx(html, "\[tgui:strictMode]", strict_mode)
 	html = replacetextEx(html, "\[tgui:windowId]", id)
-	// Inject inline assets
+	html = replacetextEx(html, "\[tgui:strictMode]", strict_mode)
+	// Inject assets
 	var/inline_assets_str = ""
-	for(var/datum/asset/asset in inline_assets)
+	for(var/datum/asset/asset in assets)
 		var/mappings = asset.get_url_mappings()
 		for(var/name in mappings)
 			var/url = mappings[name]
@@ -88,8 +94,17 @@
 	if(length(inline_assets_str))
 		inline_assets_str = "<script>\n" + inline_assets_str + "</script>\n"
 	html = replacetextEx(html, "<!-- tgui:assets -->\n", inline_assets_str)
-	// Inject custom HTML
-	html = replacetextEx(html, "<!-- tgui:html -->\n", inline_html)
+	// Inject inline HTML
+	if (inline_html)
+		html = replacetextEx(html, "<!-- tgui:inline-html -->", isfile(inline_html) ? file2text(inline_html) : inline_html)
+	// Inject inline JS
+	if (inline_js)
+		inline_js = "<script>\n'use strict';\n[isfile(inline_js) ? file2text(inline_js) : inline_js]\n</script>"
+		html = replacetextEx(html, "<!-- tgui:inline-js -->", inline_js)
+	// Inject inline CSS
+	if (inline_css)
+		inline_css = "<style>\n[isfile(inline_css) ? file2text(inline_css) : inline_css]\n</style>"
+		html = replacetextEx(html, "<!-- tgui:inline-css -->", inline_css)
 	// Open the window
 	client << browse(html, "window=[id];[options]")
 	// Detect whether the control is a browser
@@ -97,6 +112,22 @@
 	// Instruct the client to signal UI when the window is closed.
 	if(!is_browser)
 		winset(client, id, "on-close=\"tguiclose [id]\"")
+
+/**
+ * public
+ *
+ * Reinitializes the panel with previous data used for initialization.
+ */
+/datum/tgui_window/proc/reinitialize()
+	initialize(
+		strict_mode = initial_strict_mode,
+		assets = initial_assets,
+		inline_html = initial_inline_html,
+		inline_js = initial_inline_js,
+		inline_css = initial_inline_css)
+	// Resend assets
+	for(var/datum/asset/asset in sent_assets)
+		send_asset(asset)
 
 /**
  * public
@@ -185,6 +216,7 @@
 		log_tgui(client,
 			context = "[id]/close (suspending)",
 			window = src)
+		visible = FALSE
 		status = TGUI_WINDOW_READY
 		send_message("suspend")
 		return
@@ -192,6 +224,7 @@
 		context = "[id]/close",
 		window = src)
 	release_lock()
+	visible = FALSE
 	status = TGUI_WINDOW_CLOSED
 	message_queue = null
 	// Do not close the window to give user some time
@@ -277,6 +310,24 @@
 	message_queue = null
 
 /**
+ * public
+ *
+ * Replaces the inline HTML content.
+ *
+ * required inline_html string HTML to inject
+ */
+/datum/tgui_window/proc/replace_html(inline_html = "")
+	client << output(url_encode(inline_html), is_browser \
+		? "[id]:replaceHtml" \
+		: "[id].browser:replaceHtml")
+
+/**
+ * Tgui ui_act payloads larger than 2kb are split into chunks a maximum of 1kb in size.
+ * This flag represents the maximum chunk count the server is willing to receive.
+ */
+#define TGUI_MAX_CHUNK_COUNT 32
+
+/**
  * private
  *
  * Callback for handling incoming tgui messages.
@@ -310,7 +361,9 @@
 	// If not locked, handle these message types
 	switch(type)
 		if("ping")
-			send_message("pingReply", payload)
+			send_message("ping/reply", payload)
+		if("visible")
+			visible = TRUE
 		if("suspend")
 			close(can_be_suspended = TRUE)
 		if("close")
@@ -318,8 +371,46 @@
 		if("openLink")
 			client << link(href_list["url"])
 		if("cacheReloaded")
-			// Reinitialize
-			initialize(inline_assets = inline_assets, fancy = fancy)
-			// Resend the assets
-			for(var/asset in sent_assets)
-				send_asset(asset)
+			reinitialize()
+		if("chat/resend")
+			SSchat.handle_resend(client, payload)
+		if("oversizedPayloadRequest")
+			var/payload_id = payload["id"]
+			var/chunk_count = payload["chunkCount"]
+			var/permit_payload = chunk_count <= TGUI_MAX_CHUNK_COUNT
+			if(permit_payload)
+				create_oversized_payload(payload_id, payload["type"], chunk_count)
+			send_message("oversizePayloadResponse", list("allow" = permit_payload, "id" = payload_id))
+		if("payloadChunk")
+			var/payload_id = payload["id"]
+			append_payload_chunk(payload_id, payload["chunk"])
+			send_message("acknowledgePayloadChunk", list("id" = payload_id))
+
+/datum/tgui_window/proc/create_oversized_payload(payload_id, message_type, chunk_count)
+	if(oversized_payloads[payload_id])
+		stack_trace("Attempted to create oversized tgui payload with duplicate ID.")
+		return
+	oversized_payloads[payload_id] = list(
+		"type" = message_type,
+		"count" = chunk_count,
+		"chunks" = list(),
+		"timeout" = addtimer(CALLBACK(src, PROC_REF(remove_oversized_payload), payload_id), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+	)
+
+/datum/tgui_window/proc/append_payload_chunk(payload_id, chunk)
+	var/list/payload = oversized_payloads[payload_id]
+	if(!payload)
+		return
+	var/list/chunks = payload["chunks"]
+	chunks += chunk
+	if(length(chunks) >= payload["count"])
+		deltimer(payload["timeout"])
+		var/message_type = payload["type"]
+		var/final_payload = chunks.Join()
+		remove_oversized_payload(payload_id)
+		on_message(message_type, json_decode(final_payload), list("type" = message_type, "payload" = final_payload, "tgui" = TRUE, "window_id" = id))
+	else
+		payload["timeout"] = addtimer(CALLBACK(src, PROC_REF(remove_oversized_payload), payload_id), 1 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+
+/datum/tgui_window/proc/remove_oversized_payload(payload_id)
+	oversized_payloads -= payload_id

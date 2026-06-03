@@ -6,15 +6,11 @@ It's quite simple: create a file ending in `.test.ts` or `.spec.ts` (usually wit
 
 ```js
 test('something', () => {
-  expect('a').toBe('a');
+	expect('a').toBe('a');
 });
 ```
 
-To run the tests, type the following into the terminal:
-
-```
-bin/tgui --test
-```
+Refer to [README](../README.md) to learn how to run tests.
 
 There is an example test in `packages/common/react.spec.ts`.
 

@@ -1,10 +1,12 @@
+/*!
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
 /**
  * tgui state: physical_state
  *
  * Short-circuits the default state to only check physical distance.
- *
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
  */
 
 var/global/datum/tgui_state/physical/physical_state = new

@@ -474,6 +474,7 @@ var/global/shutdown_processed = FALSE
 	config = new /datum/configuration()
 	config.load("config/config.txt")
 	config.load("config/game_options.txt","game_options")
+	config.load("config/resources.txt")
 	config.loadsql("config/dbconfig.txt")
 	config.loadmaplist("config/maps.txt")
 	config.load_announcer_config("config/announcer")

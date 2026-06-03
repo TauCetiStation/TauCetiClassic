@@ -9,7 +9,7 @@ var/global/station_name_ru = "КСН Исход"
 var/global/system_name = "Tau Ceti"
 var/global/system_name_ru = "Tay Кита"
 var/global/game_version = "TauCetiStation"
-var/global/game_year = (text2num(time2text(world.realtime, "YYYY")) + 200)
+var/global/game_year = text2num(UTC_YEAR) + STATION_YEAR_OFFSET
 var/global/gamestory_start_year = 2213
 var/global/changelog_hash = ""
 

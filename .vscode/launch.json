@@ -1,0 +1,50 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "byond",
+			"request": "launch",
+			"name": "Launch DreamSeeker",
+			"preLaunchTask": "Build All",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
+		},
+		{
+			"type": "byond",
+			"request": "launch",
+			"name": "Launch DreamSeeker (testing)",
+			"preLaunchTask": "Build All (testing)",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
+		},
+		{
+			"type": "byond",
+			"request": "launch",
+			"name": "Launch DreamSeeker (ref tracking)",
+			"preLaunchTask": "Build All (ref tracking)",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
+		},
+		{
+			"type": "byond",
+			"request": "launch",
+			"name": "Launch DreamDaemon",
+			"preLaunchTask": "Build All",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
+			"dreamDaemon": true
+		},
+		{
+			"type": "byond",
+			"request": "launch",
+			"name": "Launch DreamDaemon (testing)",
+			"preLaunchTask": "Build All (testing)",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
+			"dreamDaemon": true
+		},
+		{
+			"type": "byond",
+			"request": "launch",
+			"name": "Launch DreamDaemon (ref tracking)",
+			"preLaunchTask": "Build All (ref tracking)",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
+			"dreamDaemon": true
+		},
+	]
+}

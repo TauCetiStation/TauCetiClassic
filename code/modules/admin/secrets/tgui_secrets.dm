@@ -10,7 +10,7 @@
 	return UI_INTERACTIVE
 
 /datum/tgui_secrets/tgui_state()
-	return global.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/tgui_secrets/proc/interact(mob/user)
 	tgui_interact(user)
