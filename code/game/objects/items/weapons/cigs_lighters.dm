@@ -146,6 +146,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.handle_reactions()
 		icon_state = icon_on
 		item_state = icon_on
+		set_light(1, 2, LIGHT_COLOR_FIRE)
 		update_inv_mob()
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
@@ -279,6 +280,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		damtype = BURN
 		icon_state = icon_on
 		item_state = icon_on
+		set_light(1, 2, LIGHT_COLOR_FIRE)
 		update_inv_mob()
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
@@ -297,6 +299,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			icon_state = icon_off
 			item_state = icon_off
 			update_inv_mob()
+		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(location)
@@ -309,6 +312,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
+		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(smoketime <= 0)
