@@ -26,9 +26,6 @@
 	// Welding fuel spent on a full repair from 0 integrity. Actual cost scales with damage.
 	var/repair_fuel = 5
 
-	// If set to list(devastation, heavy, light), welding the window detonates it instead of repairing it (phoron glass).
-	var/list/weld_explosion = null
-
 /obj/structure/window/atom_init()
 	update_nearby_tiles()
 	return ..()
@@ -91,9 +88,7 @@
 		if((flags & NODECONSTRUCT) || (resistance_flags & INDESTRUCTIBLE))
 			return ..()
 		var/obj/item/weapon/weldingtool/WT = W
-		if(weld_explosion)
-			if(WT.use(0, user))
-				phoron_weld_explode(arglist(weld_explosion))
+		if(weld_react(user, WT))
 			return
 		if(get_integrity() >= max_integrity)
 			to_chat(user, "<span class='notice'>[src] уже в хорошем состоянии.</span>")
@@ -213,7 +208,12 @@
 /obj/structure/window/proc/change_color(new_color)
 	color = new_color
 
-/obj/structure/window/proc/phoron_weld_explode(dev = 0, heavy = 1, light = 2)
+// Reaction to being welded. Base glass returns FALSE and gets repaired by the caller;
+// phoron glass overrides this to detonate and returns TRUE to skip the repair.
+/obj/structure/window/proc/weld_react(mob/user, obj/item/weapon/weldingtool/WT)
+	return FALSE
+
+/obj/structure/window/proc/weld_explode(dev, heavy, light)
 	visible_message("<span class='userdanger'>Сварка поджигает фороновое стекло, и [src] взрывается!</span>")
 	var/turf/T = get_turf(src)
 	qdel(src)

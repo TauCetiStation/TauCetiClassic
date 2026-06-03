@@ -156,7 +156,10 @@
 
 	hit_particle_type = /particles/tool/digging/glass/phoron
 
-	weld_explosion = list(0, 1, 2)
+/obj/structure/window/fulltile/phoron/weld_react(mob/user, obj/item/weapon/weldingtool/WT)
+	if(WT.use(0, user))
+		weld_explode(0, 1, 2)
+	return TRUE
 
 /**
  * Fulltile tinted
@@ -242,7 +245,10 @@
 
 	hit_particle_type = /particles/tool/digging/glass/phoron
 
-	weld_explosion = list(1, 2, 3)
+/obj/structure/window/fulltile/reinforced/phoron/weld_react(mob/user, obj/item/weapon/weldingtool/WT)
+	if(WT.use(0, user))
+		weld_explode(1, 2, 3)
+	return TRUE
 
 /**
  * Fulltile reinforced tinted
