@@ -145,7 +145,7 @@ About Reagents:
 			with a turf. You'll want to put stuff like extra
 			slippery floors for lube or something in here.
 
-		on_mob_life(mob/living/M)
+		on_mob_life(mob/living/M, remove_amount)
 			This proc is called during the mob's metabolism tick (metabolize() in holder).
 			By default, it handles general digestion check, overdoses, and ingestion allergies.
 			Periodic effects of specific reagents should be implemented in on_general_digest(M)
