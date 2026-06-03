@@ -187,7 +187,7 @@
 
 	max_integrity = 100
 
-	repair_time = 220
+	repair_time = 22 SECONDS
 
 /**
  * Fulltile reinforced phoron
