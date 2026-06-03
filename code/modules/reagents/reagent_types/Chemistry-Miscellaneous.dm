@@ -298,8 +298,9 @@
 	custom_metabolism = 0.005
 	var/alert_time = 0
 
-/datum/reagent/nicotine/on_mob_life(mob/living/M)
-	if(!..())
+/datum/reagent/nicotine/on_general_digest(mob/living/M)
+	. = ..()
+	if(!.)
 		return
 	if(!holder.has_reagent("alkysine"))
 		if(volume >= 0.85)
@@ -324,7 +325,6 @@
 				M.losebreath = max(M.losebreath + 1, 2)
 	if(holder.has_reagent("anti_toxin"))
 		holder.remove_reagent("nicotine", 0.065)
-	return TRUE
 
 /datum/reagent/nicotine/on_diona_digest(mob/living/M)
 	return FALSE

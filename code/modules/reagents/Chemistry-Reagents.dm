@@ -113,7 +113,7 @@
 	SEND_SIGNAL(src, COMSIG_REAGENT_REACTION_TURF, T, volume)
 	return
 
-/datum/reagent/proc/on_mob_life(mob/living/M)
+/datum/reagent/proc/on_mob_life(mob/living/M, remove_amount)
 	if(!M || !holder)
 		return
 
@@ -125,7 +125,7 @@
 
 	if(allergen && allergen[ALLERGY_INGESTION] && ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.trigger_allergy(id, custom_metabolism * H.mob_metabolism_mod.Get())
+		H.trigger_allergy(id, remove_amount)
 
 /datum/reagent/proc/on_move(mob/M)
 	return
