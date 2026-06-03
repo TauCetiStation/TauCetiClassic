@@ -21,7 +21,7 @@
 	var/list/drops = list(/obj/item/weapon/shard)
 
 	// Full repair time (deciseconds) when integrity is at 0. Actual time scales with damage.
-	var/repair_time = 120
+	var/repair_time = 12 SECONDS
 
 	// If set to list(devastation, heavy, light), welding the window detonates it instead of repairing it (phoron glass).
 	var/list/weld_explosion = null
