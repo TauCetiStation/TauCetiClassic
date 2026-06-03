@@ -130,8 +130,7 @@
 	if(!faction)
 		SSticker.mode.orphaned_roles.Remove(src)
 
-	if(antag)
-		RemoveFromRole(antag, msg_admins)
+	RemoveFromRole(antag, msg_admins)
 
 	qdel(src)
 
