@@ -88,7 +88,7 @@
 	screen.plane = plane
 	screen.layer = layer + 0.01
 
-/obj/item/device/contraband_finder/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
+/obj/item/device/contraband_finder/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null, spare_icon_path = FALSE)
 	var/image/base = ..()
 
 	var/image/I = image(base.icon, base, "[base.icon_state]_screen")
