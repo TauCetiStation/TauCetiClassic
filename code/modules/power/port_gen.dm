@@ -17,7 +17,7 @@
 	var/power_gen = 5000
 	var/recent_fault = 0
 	var/power_output = 1
-	var/consumption = 0
+	var/efficiency = 0
 
 /obj/machinery/power/port_gen/proc/HasFuel() //Placeholder for fuel check.
 	return 1
@@ -108,16 +108,16 @@
 	..()
 
 	var/temp_rating = 0
-	var/consumption_coeff = 0
+	var/efficiency_coeff = 0
 	for(var/obj/item/weapon/stock_parts/SP in component_parts)
 		if(istype(SP, /obj/item/weapon/stock_parts/matter_bin) && capacity_scale_with_upgrades)
 			max_sheets = SP.rating * SP.rating * 50
 		else if(istype(SP, /obj/item/weapon/stock_parts/capacitor))
 			temp_rating += SP.rating
 		else
-			consumption_coeff += SP.rating
+			efficiency_coeff += SP.rating
 	power_gen = round(initial(power_gen) * temp_rating * 2)
-	consumption = consumption_coeff
+	efficiency = efficiency_coeff
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
 	..()
@@ -132,8 +132,13 @@
 			return FALSE
 		if(env.get_gas(consumed_gas) < consumed_moles_per_sheet)
 			return FALSE
-	if(sheets >= 1 / (seconds_per_sheet / power_output) - sheet_left)
+
+	var/has_fuel = sheets + sheet_left
+	var/fuel_usage_rate = seconds_per_sheet * efficiency / power_output
+
+	if(has_fuel >= fuel_usage_rate)
 		return TRUE
+
 	return FALSE
 
 /obj/machinery/power/port_gen/pacman/DropFuel()
@@ -147,14 +152,17 @@
 			sheets -= amount
 
 /obj/machinery/power/port_gen/pacman/UseFuel(seconds_per_tick)
-	var/needed_sheets = seconds_per_tick / (seconds_per_sheet * consumption / power_output)
-	var/temp = min(needed_sheets, sheet_left)
-	needed_sheets -= temp
-	sheet_left -= temp
-	sheets -= round(needed_sheets)
-	needed_sheets -= round(needed_sheets)
+	var/percentage_of_sheet_to_use = seconds_per_tick / (seconds_per_sheet * efficiency / power_output)
+
+	var/available_percentage_of_sheet = min(percentage_of_sheet_to_use, sheet_left)
+
+	var/take_from_next_sheet = percentage_of_sheet_to_use - available_percentage_of_sheet
+
+	sheet_left -= available_percentage_of_sheet
+
 	if(sheet_left <= 0 && sheets > 0)
-		sheet_left = 1 - needed_sheets
+		sheet_left = 1 - take_from_next_sheet
+
 		sheets--
 
 		if(consumed_gas)
@@ -182,7 +190,7 @@
 
 	var/surplus_load_heat_margin = 0
 
-	var/heat_increase_bias = round(power_output + malfunctions * 0.5 - consumption)
+	var/heat_increase_bias = round(power_output + malfunctions * 0.5 - efficiency)
 
 	if(total_surplus > 0 && power_gen > 0)
 		surplus_load_heat_margin = min(safety_heat_margin - 10, round(total_surplus / power_gen) * 10)
