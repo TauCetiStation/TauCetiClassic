@@ -151,6 +151,8 @@ What is the naming convention for planes or layers?
 
 #define DYNAMIC_LIGHTING_PLANE 101 // light objects
 
+#define EMISSIVE_PLANE 102 // self-illuminated sprite pixels (added onto the lighting plane so they glow through darkness)
+
 #define ENVIRONMENT_LIGHTING_PLANE 105
 #define ENVIRONMENT_LIGHTING_LOCAL_PLANE 106
 
