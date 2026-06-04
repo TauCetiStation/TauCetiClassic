@@ -130,7 +130,8 @@ Please contact me on #coderbus IRC. ~Carn x
 		icon_path = spare_icon_path
 
 	var/fem = ""
-	if(H.gender == FEMALE && S.gender_limb_icons)
+	// narrow female-cut clothing (_fem) is only for slim bodies; average uses the base sprite
+	if(H.gender == FEMALE && S.gender_limb_icons && H.bodytype && H.bodytype.name == SLIM_BODYTYPE)
 		if(t_state != null)
 			if(icon_exists(icon_path, "[t_state]_fem"))
 				fem = "_fem"
