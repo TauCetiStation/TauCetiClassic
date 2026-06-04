@@ -311,6 +311,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			item_state = icon_off
 			update_inv_mob()
 		set_light(0)
+		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(location)
@@ -323,6 +324,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
+		set_light(0)
 		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 		return
