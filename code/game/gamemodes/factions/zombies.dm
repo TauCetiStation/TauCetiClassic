@@ -6,16 +6,16 @@
 
 	logo_state = "zombie-logo"
 
-	var/last_check = 0
+	COOLDOWN_DECLARE(last_check)
 
 /datum/faction/zombie/forgeObjectives()
 	. = ..()
 	AppendObjective(/datum/objective/turn_into_zombie)
 
 /datum/faction/zombie/check_win()
-	if(last_check > world.time)
+	if(COOLDOWN_FINISHED(src, last_check))
 		return FALSE
-	last_check = world.time + 1 MINUTE
+	COOLDOWN_START(src, last_check, 1 MINUTE)
 	if(round(length(members) / check_crew()) >= 0.8)
 		if(SSshuttle.location || SSshuttle.direction) //If traveling or docked somewhere other than idle at command, don't call.
 			return FALSE
