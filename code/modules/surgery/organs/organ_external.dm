@@ -264,8 +264,11 @@
 
 /obj/item/organ/external/proc/get_icon_state(gender_state = TRUE, fat_state = TRUE, pump_state = TRUE)
 	var/gender_suffix
-	var/fat_suffix
+	var/bodytype_suffix = ""
 	var/pump_suffix
+
+	if(owner && owner.bodytype)
+		bodytype_suffix = owner.bodytype.external_organs_suffix
 
 	if(gender_state)
 		var/gender_icon = FALSE
@@ -282,10 +285,10 @@
 		if(gender_icon)
 			gender_suffix = (owner_gender == FEMALE ? "_f" : "_m")
 
-	if(pump_state && !fat_suffix && pumped > pumped_threshold)
+	if(pump_state && !bodytype_suffix && pumped > pumped_threshold)
 		pump_suffix = "_pumped"
 
-	return "[body_zone][organ_suffix][gender_suffix][owner.bodytype.external_organs_suffix][pump_suffix]"
+	return "[body_zone][organ_suffix][gender_suffix][bodytype_suffix][pump_suffix]"
 
 // generates list of (mutable) appearances
 // should work even without owner

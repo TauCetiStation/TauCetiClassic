@@ -27,8 +27,7 @@
 	name = SLIM_BODYTYPE
 	external_organs_suffix = "_femine"
 
-	undershirts_path = 'icons/mob/human_undershirt_slim.dmi'
-	undershirts_prints_path = 'icons/mob/human_undershirt_prints_slim.dmi'
+	// undershirts/prints are shared with average for females (slim sheets are unfinished)
 	socks_path = 'icons/mob/human_socks_slim.dmi'
 	underwear_path = 'icons/mob/human_underwear_slim.dmi'
 

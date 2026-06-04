@@ -656,7 +656,7 @@ var/global/list/tourette_bad_words= list(
 			mob_metabolism_mod.RemoveMods("Fatness")
 			bodytype_name = AVERAGE_BODYTYPE
 			if(gender == FEMALE)
-				bodytype_name = species.females_standart_bodytype
+				bodytype_name = species.females_standard_bodytype
 			update_bodytype()
 			update_body()
 			update_underwear()

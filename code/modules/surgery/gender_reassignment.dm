@@ -45,14 +45,12 @@
 		user.visible_message("<span class='notice'>[user] has made a man of [target] with \the [tool].</span>" , \
 		"<span class='notice'>You have made a man of [target].</span>")
 		target.gender = MALE
-		target.bodytype = AVERAGE_BODYTYPE
 	else
 		user.visible_message("<span class='notice'>[user] has made a woman of [target] with \the [tool].</span>" , \
 		"<span class='notice'>You have made a woman of [target].</span>")
 		target.gender = FEMALE
-		target.bodytype = target.species.females_standart_bodytype
 
-	target.update_bodytype()
+	target.set_bodytype_for_gender()
 	target.regenerate_icons()
 
 /datum/surgery_step/gender_reassignment/reshape_genitals/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

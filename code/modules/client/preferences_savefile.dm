@@ -491,7 +491,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(current_version < 58)
 		if(gender == FEMALE)
 			var/datum/species/specie_obj = all_species[species]
-			bodytype = specie_obj.females_standart_bodytype
+			if(specie_obj)
+				bodytype = specie_obj.females_standard_bodytype
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 

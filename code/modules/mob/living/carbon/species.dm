@@ -109,7 +109,7 @@
 	var/flesh_color = "#ffc896" //Pink.
 	var/default_skin_color // default skin color (r_skin, g_skin, b_skin)
 	var/default_eyes_color
-	var/females_standart_bodytype = SLIM_BODYTYPE
+	var/females_standard_bodytype = AVERAGE_BODYTYPE
 
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
@@ -391,6 +391,7 @@
 	eyes_static_layer = "human"
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
+	females_standard_bodytype = SLIM_BODYTYPE
 
 	language = LANGUAGE_SOLCOMMON
 	primitive = /mob/living/carbon/monkey
@@ -520,6 +521,7 @@
 	eyes_colorable_layer = "unathi_colorable"
 	eyes_static_layer = "unathi"
 	second_color_mask = TRUE
+	females_standard_bodytype = SLIM_BODYTYPE
 	gender_tail_icons = TRUE
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
@@ -611,6 +613,7 @@
 	eyes_colorable_layer = "tajaran_colorable"
 	eyes_static_layer = "tajaran"
 	gender_limb_icons = TRUE
+	females_standard_bodytype = SLIM_BODYTYPE
 	fat_limb_icons = TRUE
 	gender_tail_icons = TRUE
 
@@ -693,7 +696,6 @@
 	eyes_static_layer = "skrell"
 	gender_body_icons = FALSE
 	fat_limb_icons = TRUE
-	females_standart_bodytype = AVERAGE_BODYTYPE
 
 	language = LANGUAGE_SKRELLIAN
 	primitive = /mob/living/carbon/monkey/skrell

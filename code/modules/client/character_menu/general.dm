@@ -17,7 +17,7 @@
 		. += 					"<br><b>Gender:</b> <a href='byond://?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
 	if(species == IPC)  // only ipc can change their voice at this moment
 		. += 					"<br><b>Voice:</b> <a href='byond://?_src_=prefs;preference=gendervoice'><b>[neuter_gender_voice == MALE ? "Male" : "Female"]</b></a>"
-	if(specie_obj.flags[HAS_BODYTYPE_SELECTION] && (gender ==FEMALE))
+	if(specie_obj.flags[HAS_BODYTYPE_SELECTION] && (gender == FEMALE))
 		. += 					"<br><b>Bodytype:</b> <a href='byond://?_src_=prefs;preference=bodytype'><b>[bodytype == AVERAGE_BODYTYPE ? "Average" : "Slim"]</b></a>"
 	. += 						"<br><b>Height:</b> <a href='byond://?_src_=prefs;preference=height;task=input'>[height]</a>"
 	. += 						"<br><b>Randomized Character Slot:</b> <a href='byond://?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
@@ -306,7 +306,7 @@
 							if(!(species in lang.allowed_speak))
 								language = "None"
 						if(gender == FEMALE)
-							bodytype = specie_obj.females_standart_bodytype
+							bodytype = specie_obj.females_standard_bodytype
 						else
 							bodytype = AVERAGE_BODYTYPE
 
@@ -630,7 +630,7 @@
 						return
 					if(gender == MALE)
 						gender = FEMALE
-						bodytype = specie_obj.females_standart_bodytype
+						bodytype = specie_obj.females_standard_bodytype
 					else
 						gender = MALE
 						bodytype = AVERAGE_BODYTYPE

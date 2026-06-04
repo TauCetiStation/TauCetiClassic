@@ -732,12 +732,11 @@
 	return turf_to_check
 
 /proc/get_bodytype_by_name(bodytype_name)
-	var/datum/bodytype/bt
-	if(bodytype_name == AVERAGE_BODYTYPE)
-		bt = /datum/bodytype/average
-	else if(bodytype_name == SLIM_BODYTYPE)
-		bt = /datum/bodytype/slim
-	else if(bodytype_name == FAT_BODYTYPE)
-		bt = /datum/bodytype/fat
-	return bt
+	switch(bodytype_name)
+		if(SLIM_BODYTYPE)
+			return /datum/bodytype/slim
+		if(FAT_BODYTYPE)
+			return /datum/bodytype/fat
+		else
+			return /datum/bodytype/average
 

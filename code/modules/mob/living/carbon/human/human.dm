@@ -1131,6 +1131,7 @@
 			gender = MALE
 		else
 			gender = FEMALE
+		set_bodytype_for_gender()
 	regenerate_icons(update_body_preferences = TRUE)
 	check_dna()
 
@@ -2336,4 +2337,12 @@
 
 /mob/living/carbon/human/proc/update_bodytype()
 	var/datum/bodytype/new_bodytype = get_bodytype_by_name(bodytype_name)
-	bodytype = new new_bodytype(src)
+	bodytype = new new_bodytype
+
+// keeps bodytype in sync with the current gender/species (males have no slim sprites)
+/mob/living/carbon/human/proc/set_bodytype_for_gender()
+	if(gender == FEMALE && species)
+		bodytype_name = species.females_standard_bodytype
+	else
+		bodytype_name = AVERAGE_BODYTYPE
+	update_bodytype()
