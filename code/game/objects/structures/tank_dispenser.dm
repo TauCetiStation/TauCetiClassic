@@ -38,7 +38,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/dispenser, tank_dispenser_list)
 /obj/structure/dispenser/attack_hand(mob/user)
 	user.set_machine(src)
 	var/dat
-	dat += "Кислород: [oxygentanks] [pluralize_russian(oxygentanks, "баллон", "баллона", "баллонов")] - [oxygentanks ? "<A href='?src=\ref[src];oxygen=1'>Получить</A>" : "empty"]<br>"
+	dat += "Кислород: [oxygentanks] [pluralize_russian(oxygentanks, "баллон", "баллона", "баллонов")] - [oxygentanks ? "<A href='byond://?src=\ref[src];oxygen=1'>Получить</A>" : "empty"]<br>"
 	dat += "Форон: [phorontanks] [pluralize_russian(phorontanks, "баллон", "баллона", "баллонов")] - [phorontanks ? "<A href='?src=\ref[src];phoron=1'>Получить</A>" : "empty"]"
 	var/datum/browser/popup = new(user, "window=dispenser", "[CASE(src, NOMINATIVE_CASE)]")
 	popup.set_content(dat)
