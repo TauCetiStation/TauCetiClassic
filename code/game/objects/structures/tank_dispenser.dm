@@ -69,7 +69,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/dispenser, tank_dispenser_list)
 		return
 	if(iswrenching(I))
 		if(anchored)
-			to_chat(user, "<span class='notice'>Вы открутили [CASE(src, NOMINATIVE_CASE)].</span>")
+			to_chat(user, "<span class='notice'>Вы открутили [CASE(src, ACCUSATIVE_CASE)].</span>")
 			anchored = FALSE
 		else
 			to_chat(user, "<span class='notice'>Вы прикрутили [CASE(src, ACCUSATIVE_CASE)] на место.</span>")
