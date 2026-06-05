@@ -111,7 +111,7 @@
 /obj/machinery/portable_atmospherics/tile_atmos/oven
 	name = "Gas Oven"
 	cases = list("газовая печь", "газовой печи", "газовой печи", "газовую печь", "газовой печью", "газовой печи")
-	desc = "Газовая печь"
+	desc = "Печёт газом."
 
 	icon_state = "oven_gas_open"
 	icon_state_base = "oven_gas"
