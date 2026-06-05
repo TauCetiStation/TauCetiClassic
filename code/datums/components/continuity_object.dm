@@ -104,6 +104,8 @@ fields = alist(...)
 /datum/continuity_field/listfield/Destroy()
 	QDEL_NULL(entry_config)
 
+	..()
+
 /datum/continuity_field/listfield/sanitize_field(list/field)
 	if(isnull(field))
 		if(can_be_null)
@@ -151,6 +153,8 @@ fields = alist(...)
 /datum/continuity_field/alistfield/Destroy()
 	QDEL_NULL(key_config)
 	QDEL_NULL(entry_config)
+
+	..()
 
 /datum/continuity_field/alistfield/sanitize_field(list/field)
 	if(isnull(field))
