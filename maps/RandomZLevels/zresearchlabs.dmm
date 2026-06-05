@@ -69,8 +69,8 @@
 /area/awaymission/labs/cave)
 "aq" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Underground Maintenance";
-	dir = 4
+	dir = 4;
+	name = "Underground Maintenance"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/labs/cave)
@@ -1153,8 +1153,7 @@
 /turf/simulated/floor,
 /area/awaymission/labs/researchdivision)
 "dl" = (
-/obj/structure/table,
-/obj/machinery/implantchair,
+/obj/structure/stool/bed/chair/electrotherapy,
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1326,6 +1325,12 @@
 "dK" = (
 /obj/structure/table,
 /obj/item/pizzabox,
+/obj/item/weapon/paper{
+	icon_state = "paper_words";
+	info = "Study of the Soghun genome has proven successful. Using their blood as a base, we have managed to develop a series of nanoaugmentations that operate on a biological basis. With it, we can supply our commandos with implants that would give them the strength of at least ten Soghun, or the combat skills of many more. Further research is required to develop safer solutions, but the soldiers seem receptive to the current batch of test implants. They are to be kept under watch at all times in their quarters.";
+	name = "Research Notes";
+	text = "p"
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -1927,8 +1932,8 @@
 /area/awaymission/labs/militarydivision)
 "fm" = (
 /obj/machinery/door/airlock/hatch{
-	name = "Armory Door";
-	dir = 4
+	dir = 4;
+	name = "Armory Door"
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -2302,8 +2307,8 @@
 /area/awaymission/labs/gateway)
 "gb" = (
 /obj/machinery/door/airlock/research/glass{
-	name = "Storage";
-	dir = 4
+	dir = 4;
+	name = "Storage"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -2855,8 +2860,8 @@
 /area/awaymission/labs/researchdivision)
 "hv" = (
 /obj/machinery/door/airlock/research/glass{
-	name = "Development Labs";
-	dir = 4
+	dir = 4;
+	name = "Development Labs"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -3449,8 +3454,8 @@
 /area/awaymission/labs/militarydivision)
 "iO" = (
 /obj/machinery/door/airlock/command{
-	name = "Team Leader's Desk";
-	dir = 4
+	dir = 4;
+	name = "Team Leader's Desk"
 	},
 /turf/simulated/floor/carpet,
 /area/awaymission/labs/militarydivision)
@@ -3782,8 +3787,8 @@
 /area/awaymission/labs/command)
 "jB" = (
 /obj/machinery/door/airlock/research{
-	name = "Research Division";
-	dir = 4
+	dir = 4;
+	name = "Research Division"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5354,7 +5359,7 @@
 "mO" = (
 /obj/machinery/atmospherics/pipe/simple{
 	color = "blue";
-	icon_state = "intact-b-f";
+	icon_state = "intact-b-f"
 	},
 /obj/structure/table,
 /obj/item/weapon/book/manual/wiki/chefs_recipes,
@@ -5506,9 +5511,9 @@
 /area/awaymission/labs/cargo)
 "nh" = (
 /obj/machinery/door/poddoor/shutters{
+	dir = 8;
 	id = "qm_warehouse";
-	name = "Warehouse Shutters";
-	dir = 8
+	name = "Warehouse Shutters"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
@@ -5643,7 +5648,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/item/weapon/wrapping_paper,
+/obj/item/weapon/packageWrap/present,
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "nz" = (
@@ -6032,8 +6037,8 @@
 /area/awaymission/labs/command)
 "ot" = (
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Bay";
-	dir = 4
+	dir = 4;
+	name = "Cargo Bay"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -6117,8 +6122,8 @@
 /area/awaymission/labs/civilian)
 "oE" = (
 /obj/machinery/door/airlock/glass{
-	name = "Civilian Division";
-	dir = 4
+	dir = 4;
+	name = "Civilian Division"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -6129,8 +6134,8 @@
 /area/awaymission/labs/civilian)
 "oF" = (
 /obj/machinery/door/airlock/glass{
-	name = "Command Rotunda";
-	dir = 4
+	dir = 4;
+	name = "Command Rotunda"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -6161,11 +6166,11 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -6209,8 +6214,8 @@
 /area/awaymission/labs/cargo)
 "oN" = (
 /obj/machinery/door/airlock/mining/glass{
-	name = "Excavation";
-	dir = 4
+	dir = 4;
+	name = "Excavation"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -6302,9 +6307,9 @@
 /area/awaymission/labs/command)
 "oW" = (
 /obj/machinery/door/airlock/command/glass{
+	dir = 4;
 	name = "Bridge";
-	req_access = list(19);
-	dir = 4
+	req_access = list(19)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -6362,9 +6367,9 @@
 /area/awaymission/labs/command)
 "pb" = (
 /obj/machinery/door/airlock/command/glass{
+	dir = 4;
 	name = "Bridge";
-	req_access = list(19);
-	dir = 4
+	req_access = list(19)
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -6953,8 +6958,8 @@
 /area/awaymission/labs/civilian)
 "qz" = (
 /obj/machinery/door/airlock/glass{
-	name = "Mess Hall";
-	dir = 4
+	dir = 4;
+	name = "Mess Hall"
 	},
 /turf/simulated/floor{
 	icon_state = "bar"
@@ -7203,8 +7208,8 @@
 /area/awaymission/labs/civilian)
 "qY" = (
 /obj/machinery/door/airlock/glass{
-	name = "Command Rotunda";
-	dir = 4
+	dir = 4;
+	name = "Command Rotunda"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -7400,7 +7405,7 @@
 /area/awaymission/labs/civilian)
 "rz" = (
 /obj/structure/table,
-/obj/structure/bedsheetbin{
+/obj/structure/bedsheetbin/full{
 	pixel_x = -2;
 	pixel_y = 1
 	},
@@ -7649,8 +7654,8 @@
 /area/awaymission/labs/civilian)
 "sj" = (
 /obj/machinery/door/airlock{
-	name = "Communal Bathroom";
-	dir = 4
+	dir = 4;
+	name = "Communal Bathroom"
 	},
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
@@ -7669,8 +7674,8 @@
 /area/awaymission/labs/medical)
 "sl" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Underground Maintenance";
-	dir = 4
+	dir = 4;
+	name = "Underground Maintenance"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
@@ -7751,11 +7756,11 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "Prison Gate";
 	name = "Prison Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -7869,15 +7874,15 @@
 /area/awaymission/labs/medical)
 "sO" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Security";
-	dir = 4
+	dir = 4;
+	name = "Security"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "sP" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Security";
-	dir = 4
+	dir = 4;
+	name = "Security"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/security)
@@ -7902,8 +7907,8 @@
 /area/awaymission/labs/security)
 "sS" = (
 /obj/machinery/door/airlock/medical/glass{
-	name = "Medical";
-	dir = 4
+	dir = 4;
+	name = "Medical"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -7911,8 +7916,8 @@
 /area/awaymission/labs/medical)
 "sT" = (
 /obj/machinery/door/airlock/medical/glass{
-	name = "Medical";
-	dir = 4
+	dir = 4;
+	name = "Medical"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -7977,8 +7982,8 @@
 /area/awaymission/labs/medical)
 "tc" = (
 /obj/machinery/door/airlock/medical/glass{
-	name = "Medical";
-	dir = 4
+	dir = 4;
+	name = "Medical"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -8002,8 +8007,8 @@
 /area/awaymission/labs/medical)
 "te" = (
 /obj/machinery/door/airlock/medical/glass{
-	name = "Medical";
-	dir = 4
+	dir = 4;
+	name = "Medical"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -8176,8 +8181,8 @@
 /area/awaymission/labs/security)
 "tx" = (
 /obj/machinery/door/airlock/medical{
-	name = "Patient Room";
-	dir = 4
+	dir = 4;
+	name = "Patient Room"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -8430,8 +8435,8 @@
 /area/awaymission/labs/security)
 "ue" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Armory";
-	dir = 4
+	dir = 4;
+	name = "Armory"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/security)
@@ -8721,10 +8726,10 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
+	dir = 4;
 	id = "sandstorm shutters";
 	layer = 2.4;
-	name = "Sandstorm Shutters";
-	dir = 4
+	name = "Sandstorm Shutters"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/security)
@@ -8735,18 +8740,29 @@
 	},
 /obj/machinery/door/poddoor{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "Prison Gate";
 	name = "Prison Blast Door";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/security)
+"wI" = (
+/obj/item/weapon/paper{
+	icon_state = "paper_words";
+	info = "Study of the Soghun genome has proven successful. Using their blood as a base, we have managed to develop a series of nanoaugmentations that operate on a biological basis. With it, we can supply our commandos with implants that would give them the strength of at least ten Soghun, or the combat skills of many more. Further research is required to develop safer solutions, but the soldiers seem receptive to the current batch of test implants. They are to be kept under watch at all times in their quarters.";
+	name = "Research Notes";
+	text = "p"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/awaymission/labs/researchdivision)
 "xl" = (
 /obj/machinery/door/airlock/medical/glass{
-	name = "Medical";
-	dir = 4
+	dir = 4;
+	name = "Medical"
 	},
 /turf/simulated/floor{
 	icon_state = "white"
@@ -8766,10 +8782,10 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
+	dir = 4;
 	id = "sandstorm shutters";
 	layer = 2.4;
-	name = "Sandstorm Shutters";
-	dir = 4
+	name = "Sandstorm Shutters"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
@@ -8779,10 +8795,10 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
+	dir = 4;
 	id = "sandstorm shutters";
 	layer = 2.4;
-	name = "Sandstorm Shutters";
-	dir = 4
+	name = "Sandstorm Shutters"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/command)
@@ -8792,10 +8808,10 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
+	dir = 4;
 	id = "sandstorm shutters";
 	layer = 2.4;
-	name = "Sandstorm Shutters";
-	dir = 4
+	name = "Sandstorm Shutters"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/civilian)
@@ -8813,29 +8829,29 @@
 	icon_state = "gr_window_reinforced"
 	},
 /obj/machinery/door/poddoor{
+	dir = 4;
 	id = "sandstorm shutters";
 	layer = 2.4;
-	name = "Sandstorm Shutters";
-	dir = 4
+	name = "Sandstorm Shutters"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/cargo)
 "Xi" = (
 /obj/machinery/door/poddoor{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
 	id = "bridge blast";
 	name = "Bridge Blast Doors";
-	opacity = 0;
-	dir = 4
+	opacity = 0
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
 /area/awaymission/labs/command)
 "ZR" = (
 /obj/machinery/door/airlock/research{
-	name = "Military Division";
-	dir = 4
+	dir = 4;
+	name = "Military Division"
 	},
 /turf/simulated/floor,
 /area/awaymission/labs/militarydivision)
@@ -33376,7 +33392,7 @@ bN
 bN
 bN
 bN
-bN
+wI
 bN
 dJ
 bG

@@ -33,14 +33,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		// don't use fixed size, it can break map_view scaling
 		screen_loc = "[map_view]:1,1"
 
-/atom/movable/screen/plane_master/proc/generate_relays()
+/atom/movable/screen/plane_master/proc/generate_relays(map_view)
 	. = list()
 	if(!isnull(render_relay_planes))
 		for(var/relay_plane in render_relay_planes)
 			// here I assume that plane always exists with client and we don't need to destroy it,
 			// so there is no need to keep render_plane_relay referenced anywhere except for client.screen
 			// for outer maps we just cleanup it all at once based on assigned_map value
-			var/atom/movable/screen/render_plane_relay/relay = new(null, src, relay_plane)
+			var/atom/movable/screen/render_plane_relay/relay = new(null, src, relay_plane, map_view)
 
 			. += relay
 

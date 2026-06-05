@@ -57,7 +57,7 @@
 
 	var/alt_name = get_alt_name()
 
-	var/admin_msg = "<span class='notice'>[bicon(cross)] <b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""] PRAY: </font>[key_name(src, 1)] (<A HREF='?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A HREF='?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[src]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]</span>"
+	var/admin_msg = "<span class='notice'>[bicon(cross)] <b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""] PRAY: </font>[key_name(src, 1)] (<A href='byond://?_src_=holder;adminmoreinfo=\ref[src]'>?</A>) (<A href='byond://?_src_=holder;adminplayeropts=\ref[src]'>PP</A>) (<A href='byond://?_src_=vars;Vars=\ref[src]'>VV</A>) (<A href='byond://?_src_=holder;subtlemessage=\ref[src]'>SM</A>) (<A href='byond://?_src_=holder;adminplayerobservejump=\ref[src]'>JMP</A>) (<A href='byond://?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A href='byond://?_src_=holder;adminspawncookie=\ref[src]'>SC</a>):</b> [msg]</span>"
 	var/ghost_msg = "<span class='notice'>[bicon(cross)] <b>[real_name]'s[alt_name ? " " + alt_name : ""]</b> <b><font color=[font_color]>[prayer_type][deity ? " (to [deity])" : ""]:</b></font></span> <span class='game say'>\"[msg]\"</span>"
 	var/gods_msg = "<span class='notice'>[bicon(cross)] <b>[src]'s</b> <b><font color=[font_color]>[prayer_type]:</b></font></span> <span class='game say'>\"[msg]\"</span>"
 
@@ -148,7 +148,7 @@
 		attachment_footer = get_admin_counts_formatted(),
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)
-	text = "<span class='notice'><b><font color=orange>CENTCOMM[iamessage ? " IA" : ""]:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [text]</span>"
+	text = "<span class='notice'><b><font color=orange>CENTCOMM[iamessage ? " IA" : ""]:</font>[key_name(Sender, 1)] (<A href='byond://?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A href='byond://?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A href='byond://?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A href='byond://?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A href='byond://?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A href='byond://?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A href='byond://?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [text]</span>"
 	for(var/client/C as anything in admins)
 		to_chat(C, text)
 
@@ -160,6 +160,6 @@
 		attachment_footer = get_admin_counts_formatted(),
 		attachment_color = BRIDGE_COLOR_ADMINCOM,
 	)
-	text = "<span class='notice'><b><font color=crimson>SYNDICATE:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;SyndicateReply=\ref[Sender]'>RPLY</A>):</b> [text]</span>"
+	text = "<span class='notice'><b><font color=crimson>SYNDICATE:</font>[key_name(Sender, 1)] (<A href='byond://?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A href='byond://?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A href='byond://?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A href='byond://?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A href='byond://?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A href='byond://?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A href='byond://?_src_=holder;SyndicateReply=\ref[Sender]'>RPLY</A>):</b> [text]</span>"
 	for(var/client/C as anything in admins)
 		to_chat(C, text)

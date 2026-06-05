@@ -24,6 +24,7 @@
 	var/atom/movable/screen/l_hand_hud_object = null
 
 	var/atom/movable/screen/move_intent = null
+	var/atom/movable/screen/crawl_hud_icon = null
 	var/atom/movable/screen/complex/act_intent/action_intent = null
 	var/atom/movable/screen/staminadisplay = null
 
@@ -60,12 +61,16 @@
 	var/next_move = null
 	var/notransform = null	//Carbon
 	var/hand = 0            //active hand; 0 is right hand, 1 is left hand //todo: we need defines for this...
+
+	// todo: we need to rewrite them as status effects
 	var/eye_blind = null	//Carbon
 	var/eye_blurry = null	//Carbon
 	var/ear_deaf = null		//Carbon
 	var/ear_damage = null	//Carbon
 	var/stuttering = 0	//Carbon
 	var/slurring = null		//Carbon
+
+
 	var/real_name = null
 	var/flavor_text = ""
 	var/med_record = ""
@@ -148,18 +153,6 @@
 
 	var/faction = "neutral" //Used for checking whether hostile simple animals will attack you, possibly more stuff later
 
-	// Determines how mood affects actionspeed.
-	// If ever used by anything else but mood, please
-	// port /datum/actionspeed_modifier system from /tg.
-	// The value is multiplicative.
-	var/mood_multiplicative_actionspeed_modifier = 0.0
-	// Determines how mood affects movespeed.
-	// used only in humans, because mood only is.
-	// If ever used by anything else but mood, please
-	// port /datum/movespeed_modifier system from /tg.
-	// The value is additive.
-	var/mood_additive_speed_modifier = 0.0
-
 //The last mob/living/carbon to push/drag/grab this mob (mostly used by slimes friend recognition)
 	var/mob/living/carbon/LAssailant = null
 
@@ -168,7 +161,7 @@
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
-	var/update_icon = 0 //Set to 1 to trigger regenerate_icons() at the next life() call
+	var/regenerate_icons_next_tick = FALSE //Set to TRUE to trigger regenerate_icons() at the next life() call
 
 	var/status_flags = MOB_STATUS_FLAGS_DEFAULT // bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
@@ -191,7 +184,7 @@
 	var/immune_to_ssd = 0
 
 	var/turf/listed_turf = null  //the current turf being examined in the stat panel
-	var/list/shouldnt_see = list()	//list of objects that this mob shouldn't see in the stat panel. this silliness is needed because of AI alt+click and cult blood runes
+	var/list/shouldnt_see = list(/obj/item/mine/replicator)	//list of objects that this mob shouldn't see in the stat panel. this silliness is needed because of AI alt+click and cult blood runes
 
 	var/list/active_genes=list()
 

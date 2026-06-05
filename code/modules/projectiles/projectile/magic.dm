@@ -22,7 +22,7 @@
 	wabbajack(target)
 
 /obj/item/projectile/magic/proc/wabbajack(mob/living/M)
-	if(!istype(M) || isAI(M) || isdrone(M) || isconstruct(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags) || isxenoqueen(M))
+	if(!istype(M) || isAI(M) || isdrone(M) || isconstruct(M) || M.stat == DEAD || M.notransform || isxenoqueen(M) || HAS_TRAIT(M, TRAIT_MORPH_IMMUNE))
 		return
 
 	if(!issilicon(M))
@@ -168,7 +168,7 @@
 					R.Deconvert()
 
 /obj/item/projectile/magic/animate/proc/animate_atom_living(mob/living/M)
-	if(!istype(M) || M.stat == DEAD || M.notransform || (GODMODE & M.status_flags) || !M.client || isxenoqueen(M))
+	if(!istype(M) || M.stat == DEAD || M.notransform || HAS_TRAIT(M, TRAIT_MORPH_IMMUNE) || !M.client || isxenoqueen(M))
 		return
 
 	M.notransform = TRUE

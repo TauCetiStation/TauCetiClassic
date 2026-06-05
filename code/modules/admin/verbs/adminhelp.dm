@@ -75,10 +75,10 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(!l2b)
 		return
 	var/list/dat = list("<title>[title]</title>")
-	dat += "<A href='?_src_=holder;ahelp_tickets=[state]'>Refresh</A><br><br>"
+	dat += "<A href='byond://?_src_=holder;ahelp_tickets=[state]'>Refresh</A><br><br>"
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
-		dat += "<span class='adminnotice'><span class='adminhelp'>Ticket #[AH.id]</span>: <A href='?_src_=holder;ahelp=\ref[AH];ahelp_action=ticket'>[AH.initiator_key_name]: [AH.name]</A></span><br>"
+		dat += "<span class='adminnotice'><span class='adminhelp'>Ticket #[AH.id]</span>: <A href='byond://?_src_=holder;ahelp=\ref[AH];ahelp_action=ticket'>[AH.initiator_key_name]: [AH.name]</A></span><br>"
 
 	var/datum/browser/popup = new(usr, "ahelp_list[state]", null, 600, 480, null, CSS_THEME_LIGHT)
 	popup.set_content(dat.Join())
@@ -255,32 +255,40 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 /datum/admin_help/proc/ClosureLinks(ref_src)
 	if(!ref_src)
 		ref_src = "\ref[src]"
-	. = " (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=reject'>REJT</A>)"
-	. += " (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=icissue'>IC</A>)"
-	. += " (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=close'>CLOSE</A>)"
-	. += " (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=resolve'>RSLVE</A>)"
-	. += " (<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=handleissue'>HANDLE</A>)"
+	. = " (<A href='byond://?_src_=holder;ahelp=[ref_src];ahelp_action=reject'>REJT</A>)"
+	. += " (<A href='byond://?_src_=holder;ahelp=[ref_src];ahelp_action=icissue'>IC</A>)"
+	. += " (<A href='byond://?_src_=holder;ahelp=[ref_src];ahelp_action=close'>CLOSE</A>)"
+	. += " (<A href='byond://?_src_=holder;ahelp=[ref_src];ahelp_action=resolve'>RSLVE</A>)"
+	. += " (<A href='byond://?_src_=holder;ahelp=[ref_src];ahelp_action=handleissue'>HANDLE</A>)"
 
 //private
 /datum/admin_help/proc/LinkedReplyName(ref_src)
 	if(!ref_src)
 		ref_src = "\ref[src]"
-	return "<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=reply'>[initiator_key_name]</A>"
+	return "<A href='byond://?_src_=holder;ahelp=[ref_src];ahelp_action=reply'>[initiator_key_name]</A>"
 
 //private
 /datum/admin_help/proc/TicketHref(msg, ref_src, action = "ticket")
 	if(!ref_src)
 		ref_src = "\ref[src]"
-	return "<A HREF='?_src_=holder;ahelp=[ref_src];ahelp_action=[action]'>[msg]</A>"
+	return "<A href='byond://?_src_=holder;ahelp=[ref_src];ahelp_action=[action]'>[msg]</A>"
 
 //message from the initiator without a target, all admins will see this
 //won't bug irc
-/datum/admin_help/proc/MessageNoRecipient(msg)
+/datum/admin_help/proc/MessageNoRecipient(msg, log_to_bridge = FALSE)
 	var/ref_src = "\ref[src]"
 	//Message to be sent to all admins
 	var/admin_msg = "<span class='adminnotice'><span class='adminhelp'>Ticket [TicketHref("#[id]", ref_src)]</span><b>: [LinkedReplyName(ref_src)] [FullMonty(ref_src)]:</b> <span class='emojify linkify'>[msg]</span></span>"
 
 	AddInteraction("<font color='red'>[LinkedReplyName(ref_src)]: [msg]</font>")
+
+	if(log_to_bridge)
+		world.send2bridge(
+			type = list(BRIDGE_ADMINLOG),
+			attachment_title = "**Ticket #[id]** from **[key_name(initiator)]**",
+			attachment_msg = sanitize(msg),
+			attachment_color = BRIDGE_COLOR_ADMINALERT,
+		)
 
 	//send this msg to all admins
 	for(var/client/X in global.admins)
@@ -588,7 +596,7 @@ var/global/datum/admin_help_tickets/ahelp_tickets
 	if(current_ticket)
 		if(tgui_alert(src, "You already have a ticket open. Is this for the same issue?",, list("Yes","No")) != "No")
 			if(current_ticket)
-				current_ticket.MessageNoRecipient(msg)
+				current_ticket.MessageNoRecipient(msg, TRUE)
 				current_ticket.TimeoutVerb()
 				return
 			else

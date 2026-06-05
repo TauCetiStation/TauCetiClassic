@@ -19,7 +19,7 @@
 /datum/role/traitor/New()
 	..()
 	if(give_uplink)
-		AddComponent(/datum/component/gamemode/syndicate, telecrystals, "traitor")
+		AddComponent(/datum/component/gamemode/syndicate, telecrystals, UPLINK_TYPE_TRAITOR)
 
 /datum/role/traitor/proc/add_one_objective(datum/mind/traitor)
 	switch(rand(1,120))
@@ -124,6 +124,7 @@
 	. = ..()
 
 /datum/role/traitor/wishgranter
+	id = TRAITOR_WISHGRANTER
 
 /datum/role/traitor/wishgranter/forgeObjectives()
 	if(!..())
@@ -133,6 +134,7 @@
 	return TRUE
 
 /datum/role/traitor/syndbeacon
+	id = TRAITOR_SYNDBEACON
 
 /datum/role/traitor/syndbeacon/forgeObjectives()
 	if(!..())
@@ -141,6 +143,7 @@
 	return TRUE
 
 /datum/role/traitor/syndcall
+	id = TRAITOR_SYNDCALL
 
 /datum/role/traitor/syndcall/Greet(greeting, custom)
 	..()
@@ -150,3 +153,6 @@
 	. = ..()
 	var/mob/living/carbon/human/H = antag.current
 	H.equip_or_collect(new /obj/item/device/encryptionkey/syndicate(antag.current), SLOT_R_STORE)
+
+/datum/role/traitor/syndcall/create_traitor_objectives()
+	AppendObjective(/datum/objective/nuclear)

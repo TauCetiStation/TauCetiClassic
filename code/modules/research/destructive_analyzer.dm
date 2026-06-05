@@ -79,6 +79,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		loaded_item = O
 		user.drop_from_inventory(O, src)
 		to_chat(user, "<span class='notice'>You add the [O.name] to the machine!</span>")
+		playsound(src, 'sound/machines/destructive_analyzer_close.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 		icon_state = "d_analyzer_l"
 		flick("d_analyzer_la", src)
 		if(linked_console)
@@ -96,6 +97,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 	busy = TRUE
 	flick("d_analyzer_process", src)
+	playsound(src, 'sound/machines/destructive_analyzer_act.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	if(linked_console)
 		linked_console.screen = "working"
 	addtimer(CALLBACK(src, PROC_REF(finish_deconstructing)), 15)
@@ -141,6 +143,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 		loaded_item.forceMove(loc)
 		loaded_item = null
 		update_icon()
+		playsound(src, 'sound/machines/destructive_analyzer_open.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 /obj/machinery/r_n_d/destructive_analyzer/power_change()
 	. = ..()

@@ -152,10 +152,12 @@
 		n_gloves = U.gloves
 		n_gloves.canremove=0
 
+	U.regenerate_icons()
+
 	return TRUE
 
 //This proc allows the suit to be taken off.
-/obj/item/clothing/suit/space/space_ninja/proc/unlock_suit()
+/obj/item/clothing/suit/space/space_ninja/proc/unlock_suit(mob/living/carbon/human/U)
 	affecting = null
 	canremove = 1
 	slowdown = 0.5
@@ -171,6 +173,8 @@
 		n_gloves.canremove=1
 		n_gloves.candrain=0
 		n_gloves.draining=0
+
+	U.regenerate_icons()
 
 //Allows the mob to grab a stealth icon.
 /mob/proc/NinjaStealthActive(atom/A)//A is the atom which we are using as the overlay.

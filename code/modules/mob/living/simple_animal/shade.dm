@@ -136,6 +136,10 @@
 
 /mob/living/simple_animal/shade/god/atom_init()
 	. = ..()
+
+	mutations.Add(XRAY) //its the god
+	ADD_TRAIT(src, ELEMENT_TRAIT_GODMODE, INNATE_TRAIT)
+
 	gods_list += src
 
 /mob/living/simple_animal/shade/god/Destroy()

@@ -8,13 +8,6 @@
 	siemens_coefficient = 0.9
 	flags = ONESIZEFITSALL|HEAR_TALK
 
-/obj/item/clothing/under/syndicate/equipped(mob/M)
-	if(M.gender == "male")
-		item_state = "syndicate"
-	else
-		item_state = "syndicate_f"
-	return ..()
-
 /obj/item/clothing/under/syndicate/combat
 	name = "combat turtleneck"
 

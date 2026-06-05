@@ -84,7 +84,7 @@
 
 	var/node_proximity = FALSE
 	for(var/obj/structure/forcefield_node/FN as anything in global.forcefield_nodes)
-		if(get_dist(FN, src) >= 2)
+		if(get_dist(FN, user) > 1)
 			continue
 		if(locate(/obj/machinery/power/replicator_generator) in FN.loc)
 			continue
@@ -500,13 +500,13 @@
 
 	var/on = FALSE
 
-/obj/effect/proc_holder/spell/no_target/toggle_light/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/no_target/toggle_light/cast(list/targets, mob/user)
 	on = !on
 	if(on)
-		set_light(2)
+		user.set_light(2)
 		user.playsound_local(src, 'sound/effects/click_on.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 	else
-		set_light(0)
+		user.set_light(0)
 		user.playsound_local(src, 'sound/effects/click_off.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 
 

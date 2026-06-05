@@ -4,6 +4,7 @@
 	icon_state = "saber"
 	item_state = null
 	w_class = SIZE_SMALL
+	recoil = MEDIUM_RECOIL
 	origin_tech = "combat=4;materials=2"
 	initial_mag = /obj/item/ammo_box/magazine/smg
 	has_ammo_counter = TRUE
@@ -51,11 +52,12 @@
 	desc = "Легкий, скорострельный пистолет-пулемёт. Использует патроны калибра 9мм."
 	spread_increase = 0.5
 	spread_max = 1.5
-	fire_delay = 0
+	fire_delay = 2
+	recoil = LOW_RECOIL
 
 /obj/item/weapon/gun/projectile/automatic/saber/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi
 	name = "Mac-10"
@@ -67,13 +69,14 @@
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	initial_mag = /obj/item/ammo_box/magazine/mac10
 	can_be_silenced = TRUE
-	fire_delay = 0
+	fire_delay = 1
+	recoil = LOW_RECOIL
 	spread_increase = 0.25
 	spread_max = 2
 
 /obj/item/weapon/gun/projectile/automatic/mini_uzi/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/projectile/automatic/c20r
 	name = "C-20r SMG"
@@ -88,13 +91,14 @@
 	should_alarm_when_empty = TRUE
 	can_be_silenced = TRUE
 	has_ammo_counter = TRUE
-	fire_delay = 0
+	fire_delay = 2
+	recoil = LOW_RECOIL
 	spread_increase = 0.25
 	spread_max = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/c20r/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
 	name = "L6 SAW"
@@ -108,13 +112,13 @@
 	has_cover = TRUE
 	two_hand_weapon = ONLY_TWOHAND
 	has_ammo_counter = TRUE
-	fire_delay = 0
+	fire_delay = 2.5
 	spread_increase = 0.5
 	spread_max = 2
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.25 SECONDS)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? CEIL(get_ammo(0) / 25) * 25 : "-empty"]"
@@ -168,13 +172,14 @@
 	suitable_mags = list(/obj/item/ammo_box/magazine/l13, /obj/item/ammo_box/magazine/l13/lethal)
 	fire_sound = 'sound/weapons/guns/gunshot_l13.ogg'
 	can_be_silenced = TRUE
-	fire_delay = 0
+	fire_delay = 2
+	recoil = LOW_RECOIL
 	spread_increase = 0.25
 	spread_max = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/l13/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/projectile/automatic/tommygun
 	name = "tommy gun"
@@ -188,13 +193,13 @@
 	initial_mag = /obj/item/ammo_box/magazine/tommygun
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	can_be_silenced = TRUE
-	fire_delay = 0
+	fire_delay = 1.5
 	spread_increase = 0.25
 	spread_max = 2
 
 /obj/item/weapon/gun/projectile/automatic/tommygun/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/projectile/automatic/bar
 	name = "Browning M1918"
@@ -206,13 +211,14 @@
 	origin_tech = "combat=5;materials=2"
 	initial_mag = /obj/item/ammo_box/magazine/bar
 	fire_sound = 'sound/weapons/guns/Gunshot2.ogg'
-	fire_delay = 0
+	fire_delay = 4
+	recoil = HEAVY_RECOIL
 	spread_increase = 0.5
 	spread_max = 1
 
 /obj/item/weapon/gun/projectile/automatic/bar/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.4 SECONDS)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/projectile/automatic/borg
 	name = "Robot SMG"
@@ -239,10 +245,11 @@
 
 /obj/item/weapon/gun/projectile/automatic/bulldog
 	name = "V15 Bulldog shotgun"
-	desc = "Малогабаритный самозарядный полуавтоматический дробовик для ведения огня в узких коридорах. Совместим лишь со специальными магазинами."
+	desc = "Самозарядный полуавтоматический дробовик для ведения огня в узких коридорах. Совместим лишь со специальными магазинами."
 	icon_state = "bulldog"
 	item_state = "bulldog"
-	w_class = SIZE_SMALL
+	w_class = SIZE_NORMAL
+	dispersion_multiplier = 0.75
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	initial_mag = /obj/item/ammo_box/magazine/bulldog
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
@@ -251,30 +258,33 @@
 
 /obj/item/weapon/gun/projectile/automatic/a28
 	name = "A28 assault rifle"
-	desc = "Автоматическая винтовка типа булл-пап с воздушным охлаждением, используемая военным корпусом пехоты НаноТрейзен. На ствольной коробке выгравировано - 'Сэр, я заканчиваю этот бой'. Использует патроны калибра 5.56мм."
+	desc = "Автоматическая винтовка с воздушным охлаждением, используемая военным корпусом пехоты НаноТрейзен. На ствольной коробке выгравировано - 'Моя винтовка — мой лучший друг'. Использует патроны калибра 5.56мм."
 	icon_state = "a28"
 	item_state = "a28"
-	w_class = SIZE_SMALL
-	two_hand_weapon = DESIRABLE_TWOHAND
-	origin_tech = "combat=5;materials=4;syndicate=6"
+	w_class = SIZE_NORMAL
+	can_be_silenced = TRUE
+	two_hand_weapon = ONLY_TWOHAND
+	slot_flags = 0
+	origin_tech = "combat=5;materials=4"
 	initial_mag = /obj/item/ammo_box/magazine/a28
 	suitable_mags = list(/obj/item/ammo_box/magazine/a28, /obj/item/ammo_box/magazine/a28/nonlethal, /obj/item/ammo_box/magazine/a28/incendiary)
 	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
-	fire_delay = 0
+	fire_delay = 2.5
 	spread_increase = 0.5
 	spread_max = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/a28/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.25 SECONDS)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/projectile/automatic/a28/nonlethal
-	name = "A28 assault rifle NL"
-	icon_state = "a28w"
-	item_state = "a28w"
-	silenced = TRUE
 	initial_mag = /obj/item/ammo_box/magazine/a28/nonlethal
-	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg'
+
+/obj/item/weapon/gun/projectile/automatic/a28/nonlethal/atom_init()
+	. = ..()
+	silenced = new /obj/item/weapon/silencer
+	fire_sound = 'sound/weapons/guns/gunshot_silencer.ogg' // once the silencer is removed, the weapon will use the standard gunshot sound.
+	update_icon() //adds silencer overlay
 
 /obj/item/weapon/gun/projectile/automatic/a74
 	name = "A74 assault rifle"
@@ -287,26 +297,26 @@
 	item_state = "a74"
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	fire_sound = 'sound/weapons/guns/gunshot_ak74.ogg'
-	fire_delay = 0
+	fire_delay = 2.5
 	spread_increase = 0.5
 	spread_max = 1.5
 
 /obj/item/weapon/gun/projectile/automatic/a74/atom_init()
 	. = ..()
-	AddComponent(/datum/component/automatic_fire, 0.25 SECONDS)
+	AddComponent(/datum/component/automatic_fire, fire_delay)
 
 /obj/item/weapon/gun/projectile/automatic/a74/krinkov
 	name = "Krinkov"
 	desc = "Маленький и смертоносный A74U легче своего старшего брата, но, тем не менее, обладает серьезной мощью."
 	initial_mag = /obj/item/ammo_box/magazine/a74/krinkov
-	recoil = 1.5
 	two_hand_weapon = FALSE
 	icon_state = "krinkov"
 	item_state = "krinkov"
 
 /obj/item/weapon/gun/projectile/automatic/drozd
 	name = "OTs-114 assault rifle"
-	desc = "Известный также как Дрозд, этот маленький сукин сын оснащен чертовым гранатометом! Как же это круто!"
+	desc = "Известный также как \"Дрозд\", этот маленький сукин сын оснащен чертовым гранатометом! Как же это круто!"
+	cases = list("автомат \"Дрозд\"", "автомата \"Дрозд\"", "автомату \"Дрозд\"", "автомат \"Дрозд\"", "автоматом \"Дрозд\"", "автомате \"Дрозд\"")
 	icon_state = "drozd"
 	item_state = "drozd"
 	initial_mag = /obj/item/ammo_box/magazine/drozd
@@ -314,6 +324,7 @@
 	two_hand_weapon = DESIRABLE_TWOHAND
 	fire_sound = 'sound/weapons/guns/gunshot_drozd.ogg'
 	fire_delay = 7
+	recoil = HEAVY_RECOIL
 	var/using_gl = FALSE
 	var/obj/item/weapon/gun/projectile/grenade_launcher/underslung/gl
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_gl)
@@ -332,12 +343,12 @@
 /obj/item/weapon/gun/projectile/automatic/drozd/proc/toggle_gl(mob/user)
 	using_gl = !using_gl
 	if(using_gl)
-		user.visible_message("<span class='warning'>[user] щелкает маленький переключатель, активируя [gl]!</span>",\
-		"<span class='warning'>Вы активируете ваш [gl].</span>",\
+		user.visible_message("<span class='warning'>[user] нажимает на кнопку, активируя [CASE(gl, NOMINATIVE_CASE)]!</span>",\
+		"<span class='warning'>Вы активируете [CASE(gl, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
 		"You hear an ominous click.")
 	else
-		user.visible_message("<span class='notice'>[user] щелкает маленьким переключателем, принимая решение прекратить все взрывать.</span>",\
-		"<span class='notice'>Вы деактивируете ваш [gl].</span>",\
+		user.visible_message("<span class='notice'>[user] нажимает на кнопку, принимая решение прекратить все взрывать.</span>",\
+		"<span class='notice'>Вы деактивируете [CASE(gl, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
 		"You hear a click.")
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	update_icon()
@@ -370,12 +381,14 @@
 /obj/item/weapon/gun/projectile/automatic/m41a
 	name = "M41A pulse rifle"
 	desc = "Импульсная винтовка М41А, принятая на вооружение в КМП НТ. Малая поражающая способность с лихвой компенсируется количеством свинца, выпускаемого по противнику. Использует безгильзовые патроны 10х24 мм."
+	cases = list("импульсная винтовка M41A", "импульсной винтовки M41A", "импульсной винтовке M41A", "импульсную винтовку M41A", "импульсной винтовкой M41A", "импульсной винтовке M41A")
 	icon_state = "pulserifle"
 	item_state = "pulserifle"
 	fire_sound = 'sound/weapons/guns/gunshot_m41.ogg'
 	initial_mag = /obj/item/ammo_box/magazine/m41a
 	w_class = SIZE_SMALL
 	two_hand_weapon = DESIRABLE_TWOHAND
+	recoil = LOW_RECOIL
 	fire_delay = 3
 	burst = 3
 	spread_increase = 0.5
@@ -407,13 +420,13 @@
 	if(using_gl)
 		spread = 0
 		burst = 1
-		user.visible_message("<span class='warning'>[user] presses a button, activating their [launcher]!</span>",\
-		"<span class='warning'>You activate your [launcher].</span>",\
+		user.visible_message("<span class='warning'>[user] нажимает на кнопку, активируя [CASE(launcher, NOMINATIVE_CASE)]!</span>",\
+		"<span class='warning'>Вы активируете [CASE(launcher, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
 		"You hear an ominous click.")
 	else
 		burst = 3
-		user.visible_message("<span class='notice'>[user] presses a button, deciding to stop the bombings.</span>",\
-		"<span class='notice'>You deactivate your [launcher].</span>",\
+		user.visible_message("<span class='notice'>[user] нажимает на кнопку, принимая решение прекратить все взрывать.</span>",\
+		"<span class='notice'>Вы деактивируете [CASE(launcher, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
 		"You hear a click.")
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 	update_icon()

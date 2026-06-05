@@ -83,7 +83,7 @@
 	if(footstep_type)
 		AddComponent(/datum/component/footstep, footstep_type)
 
-/mob/living/simple_animal/Login()
+/mob/living/simple_animal/LateLogin()
 	. = ..()
 	stop_automated_movement = TRUE
 

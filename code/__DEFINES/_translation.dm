@@ -76,6 +76,14 @@
                || atom.gender == FEMALE && "её" \
                || atom.gender == NEUTER && "это" \
                || "их"
+
+// У Кого/чего
+// "Внезапно у [THEM2_RU(src)] начинаются спазмы"
+#define THEM2_RU(atom) atom.gender == MALE && "него" \
+               || atom.gender == FEMALE && "неё" \
+               || atom.gender == NEUTER && "этого" \
+               || "них"
+
 // Т Кем/чем
 // "Вы пытаетесь ударить [BY_RU(src)]"
 #define BY_RU(atom) atom.gender == MALE && "им" \
@@ -144,6 +152,9 @@
 // Capitalize Case: тоже самое, что и CASE, только превращает первую букву в заглавную
 #define C_CASE(atom, case) capitalize(CASE(atom, case))
 
+// Выводит отформатированное оригинальное name объекта на английском, и в скобках перевод, если он существует
+#define CASEPLUS(datum, case) (datum.cases && datum.cases[case] ? "\the [datum.name] ([capitalize(datum.cases[case])])" : datum.name)
+
 // Часто встречаемые pluralize_russian(). Не забывайте про существование нецелых чисел и округления - они тоже влияют.
 #define PLUR_UNITS(units) pluralize_russian(units, "юнит", "юнита", "юнитов")
 
@@ -152,3 +163,5 @@
 
 #define PLUR_MINUTES_LEFT(minutes) pluralize_russian(minutes, "минута", "минуты", "минут") // "Осталась 1 минута". Не путайте с нижним.
 #define PLUR_MINUTES_IN(minutes)   pluralize_russian(minutes, "минуту", "минуты", "минут") // "Через 1 минуту". Не путайте с верхним.
+
+#define PLURALIZE_RUSSIAN_POINTS(points) pluralize_russian(points, "очко", "очка", "очков") // "20 очков"

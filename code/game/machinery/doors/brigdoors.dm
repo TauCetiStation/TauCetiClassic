@@ -209,17 +209,17 @@
 			dat += " <b>Контролирует двери камеры [id]</b><br/>"
 			dat +={"
 				<HR><B>Все поля должны быть заполнены правильно.</B>
-				<br/><B><A href='?src=\ref[src];set_prisoner_name=TRUE'>Имя</A>:</B> [prisoner_name] <B><A href='?src=\ref[src];set_manually_name=TRUE'>Ввести вручную</A></B>
-				<br/><B><A href='?src=\ref[src];set_prisoner_crimes=TRUE'>Статьи</A>:</B> [prisoner_crimes]
-				<br/><B><A href='?src=\ref[src];set_prisoner_details=TRUE'>Подробности</A>:</B> [prisoner_details]<BR>
+				<br/><B><A href='byond://?src=\ref[src];set_prisoner_name=TRUE'>Имя</A>:</B> [prisoner_name] <B><A href='byond://?src=\ref[src];set_manually_name=TRUE'>Ввести вручную</A></B>
+				<br/><B><A href='byond://?src=\ref[src];set_prisoner_crimes=TRUE'>Статьи</A>:</B> [prisoner_crimes]
+				<br/><B><A href='byond://?src=\ref[src];set_prisoner_details=TRUE'>Подробности</A>:</B> [prisoner_details]<BR>
 				<br/><B>Уполномоченный:</B> <FONT COLOR='green'>[timer_activator]</FONT><HR></hr>
 			"}
 
 			// Start/Stop timer
 			if (src.timing)
-				dat += "<a href='?src=\ref[src];timing=0'>Остановить таймер и открыть двери</a><br/>"
+				dat += "<a href='byond://?src=\ref[src];timing=0'>Остановить таймер и открыть двери</a><br/>"
 			else
-				dat += "<a href='?src=\ref[src];timing=1'>Запустить таймер и закрыть двери</a><br/>"
+				dat += "<a href='byond://?src=\ref[src];timing=1'>Запустить таймер и закрыть двери</a><br/>"
 
 			// Time Left display (uses releasetime)
 			dat += "Осталось времени: [(minute ? text("[minute]:") : null)][second] <br/>"
@@ -227,19 +227,19 @@
 
 			// Set Timer display (uses timetoset)
 			if(src.timing)
-				dat += "Установить время: [(setminute ? text("[setminute]:") : null)][setsecond]  <a href='?src=\ref[src];change=1'>Установить</a><br/>"
+				dat += "Установить время: [(setminute ? text("[setminute]:") : null)][setsecond]  <a href='byond://?src=\ref[src];change=1'>Установить</a><br/>"
 			else
 				dat += "Установить время: [(setminute ? text("[setminute]:") : null)][setsecond]<br/>"
 
 			// Controls
-			dat += "<a href='?src=\ref[src];tp=-60'>-</a> <a href='?src=\ref[src];tp=-1'>-</a> <a href='?src=\ref[src];set_time=TRUE'>Ввести время</a> <a href='?src=\ref[src];tp=1'>+</a> <A href='?src=\ref[src];tp=60'>+</a><br/>"
+			dat += "<a href='byond://?src=\ref[src];tp=-60'>-</a> <a href='byond://?src=\ref[src];tp=-1'>-</a> <a href='byond://?src=\ref[src];set_time=TRUE'>Ввести время</a> <a href='byond://?src=\ref[src];tp=1'>+</a> <A href='byond://?src=\ref[src];tp=60'>+</a><br/>"
 
 			// Mounted flash controls
 			for(var/obj/machinery/flasher/F in targets)
 				if(!COOLDOWN_FINISHED(F, cd_flash))
-					dat += "<br/><A href='?src=\ref[src];fc=1'>Вспышка Перезаряжается</A>"
+					dat += "<br/><A href='byond://?src=\ref[src];fc=1'>Вспышка Перезаряжается</A>"
 				else
-					dat += "<br/><A href='?src=\ref[src];fc=1'>Ослепить</A>"
+					dat += "<br/><A href='byond://?src=\ref[src];fc=1'>Ослепить</A>"
 
 			dat += "</TT>"
 
@@ -251,7 +251,7 @@
 				dat+="<FONT COLOR='red'>•Не указаны статьи.</FONT><BR>"
 			if(prisoner_details == "")
 				dat+="<FONT COLOR='red'>•Не указаны подробности нарушения.</FONT><BR>"
-			dat+="<BR><A href='?src=\ref[src];setScreen=[MAIN_SCREEN]'>Назад</A><BR>"
+			dat+="<BR><A href='byond://?src=\ref[src];setScreen=[MAIN_SCREEN]'>Назад</A><BR>"
 
 	var/datum/browser/popup = new(user, "computer", null, 400, 500)
 	popup.set_content(dat)

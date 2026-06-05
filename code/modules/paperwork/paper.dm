@@ -109,7 +109,7 @@
 
 	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
-		if(istype(H) && !H.species.flags[NO_MINORCUTS])
+		if(istype(H) && !HAS_TRAIT(H, TRAIT_NO_MINORCUTS))
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	var/n_name = sanitize_safe(input(usr, "What would you like to label the paper?", "Paper Labelling", null) as text, MAX_NAME_LEN)
@@ -124,7 +124,7 @@
 
 	if(usr.ClumsyProbabilityCheck(50))
 		var/mob/living/carbon/human/H = usr
-		if(istype(H) && !H.species.flags[NO_MINORCUTS])
+		if(istype(H) && !HAS_TRAIT(H, TRAIT_NO_MINORCUTS))
 			to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
 	if(!crumpled)
@@ -193,7 +193,7 @@
 			if(H == user)
 				to_chat(user, "<span class='notice'>You wipe off the lipstick with [src].</span>")
 				H.lip_style = null
-				H.update_body()
+				H.update_body(BP_HEAD, update_preferences = TRUE)
 			else if(!user.is_busy())
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
 								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick.</span>")
@@ -201,7 +201,7 @@
 					user.visible_message("<span class='notice'>[user] wipes [H]'s lipstick off with \the [src].</span>", \
 										 "<span class='notice'>You wipe off [H]'s lipstick.</span>")
 					H.lip_style = null
-					H.update_body()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /obj/item/weapon/paper/proc/addtofield(id, text, links = 0, type = "paper")
 	var/locid = 0
@@ -245,10 +245,10 @@
 	info_links = info
 	var/i = 0
 	for(i = 1, i <= fields, i++)
-		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
+		addtofield(i, " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=[i]'>write</A></font>", 1)
 	for(i = 1, i <= sfields, i++)
-		addtofield(i, " <font face=\"[deffont]\"><A href='?src=\ref[src];write=[i];sign=1'>sign</A></font>", 1, "sign")
-	info_links = info_links + " <font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
+		addtofield(i, " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=[i];sign=1'>sign</A></font>", 1, "sign")
+	info_links = info_links + " <font face=\"[deffont]\"><A href='byond://?src=\ref[src];write=end'>write</A></font>"
 
 
 /obj/item/weapon/paper/proc/clearpaper()
@@ -263,26 +263,6 @@
 	cut_overlays()
 	updateinfolinks()
 	update_icon()
-
-/obj/item/weapon/paper/proc/create_self_copy()
-	var/obj/item/weapon/paper/P = new
-
-	P.name       = name
-	P.info       = info
-	P.info_links = info_links
-	P.stamp_text = stamp_text
-	P.fields     = fields
-	P.sfields    = sfields
-	P.stamped    = LAZYCOPY(stamped)
-	P.ico        = LAZYCOPY(ico)
-	P.offset_x   = LAZYCOPY(offset_x)
-	P.offset_y   = LAZYCOPY(offset_y)
-	P.copy_overlays(src, TRUE)
-
-	P.updateinfolinks()
-	P.update_icon()
-
-	return P
 
 /obj/item/weapon/paper/proc/get_signature(obj/item/weapon/pen/P, mob/user)
 	if(P && istype(P, /obj/item/weapon/pen))
@@ -383,7 +363,7 @@
 
 		for(var/premade_form in predefined_forms_list[department]["content"])
 			var/datum/form/form = new premade_form
-			dat += "<tr><th style='background-color:[color];'><A href='?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></th>"
+			dat += "<tr><th style='background-color:[color];'><A href='byond://?src=\ref[src];write=end;form=[form.index]'>Форма [form.index]</A></th>"
 			dat += "<th> [form.name]</th></tr>"
 		dat +="</tbody></table>"
 
@@ -676,15 +656,6 @@
 	update_icon()
 	updateinfolinks()
 
-/obj/item/weapon/paper/brig_arsenal
-	name = "Armory Inventory"
-	info = "<b>Armory Inventory:</b><ul>6 Deployable Barriers<br>4 Portable Flashers<br>3 Riot Sets:<small><ul><li>Riot Shield<li>Stun Baton<li>Riot Helmet<li>Riot Suit</ul></small>3 Bulletproof Helmets<br>3 Bulletproof Vests<br>3 Ablative Helmets <br>3 Ablative Vests <br>1 Bomb Suit <br>1 Biohazard Suit<br>8 Security Masks<br>3 Pistols Glock 17<br>6 Magazines (9mm rubber)</ul><b>Secure Armory Inventory:</b><ul>3 Energy Guns<br>2 Ion Rifle<br>3 Laser rifles <br>1 L10-c Carbine<br>1 104-sass Shotgun<br>2 Plasma weapon battery packs<br>1 M79 Grenade Launcher<br>2 Shotguns<br>6 Magazines (9mm)<br>2 Shotgun Shell Boxes (beanbag, 20 shells)<br>1 m79 Grenade Box (40x46 teargas, 7 rounds)<br>1 m79 Grenade Box (40x46 rubber, 7 rounds)<br>1 m79 Grenade Box (40x46 EMP, 7 rounds)<br>1 Chemical Implant Kit<br>1 Tracking Implant Kit<br>1 Mind Shield Implant Kit<br>1 Death Alarm Implant Kit<br>1 Box of Flashbangs<br>2 Boxes of teargas grenades<br>1 Space Security Set:<small><ul><li>Security Hardsuit<li>Security Hardsuit Helmet<li>Magboots<li>Breath Mask</ul></small></ul>"
-
-/obj/item/weapon/paper/brig_arsenal/atom_init()
-	. = ..()
-	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY) || HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
-		info = "A program is underway to re-equip NanoTrasen security. The current list has not yet been compiled, we apologize."
-
 /obj/item/weapon/paper/firing_range
 	name = "Firing Range Instructions"
 	info = "Directions:<br><i>First you'll want to make sure there is a target stake in the center of the magnetic platform. Next, take an aluminum target from the crates back there and slip it into the stake. Make sure it clicks! Next, there should be a control console mounted on the wall somewhere in the room.<br><br> This control console dictates the behaviors of the magnetic platform, which can move your firing target around to simulate real-world combat situations. From here, you can turn off the magnets or adjust their electromagnetic levels and magnetic fields. The electricity level dictates the strength of the pull - you will usually want this to be the same value as the speed. The magnetic field level dictates how far the magnetic pull reaches.<br><br>Speed and path are the next two settings. Speed is associated with how fast the machine loops through the designated path. Paths dictate where the magnetic field will be centered at what times. There should be a pre-fabricated path input already. You can enable moving to observe how the path affects the way the stake moves. To script your own path, look at the following key:</i><br><br>N: North<br>S: South<br>E: East<br>W: West<br>C: Center<br>R: Random (results may vary)<br>; or &: separators. They are not necessary but can make the path string better visible."
@@ -951,7 +922,7 @@ var/global/list/contributor_names
 
 /obj/item/weapon/paper/psc
 	name = "Разрешение на работу ЧОП"
-	info = {"<h1 style="text-align: center;"Разрешение на работу ЧОП></h1>
+	info = {"<h1 style="text-align: center;">Разрешение на работу ЧОП</h1>
 	<p>Данный документ подтверждает, что держатель документа (далее Сотрудник) является сотрудником частного охранного предприятия, нанятого для охраны активов Карго.</p>
 	<p>Сотрудник имеет право на владение и использование пистолета W&J PP и/или флешера и средств личной защиты в целях охраны активов Карго.</p>
 	<p>При неправомерном применении спецсредств офицеры охраны имеют право изъять пистолет, флешер и средства личной защиты.</p>"}
@@ -1142,3 +1113,19 @@ var/global/list/contributor_names
 /obj/item/weapon/paper/old_station_note_egun
 	name = "Object #2921"
 	info = "Энергопистолет второго поколения. В нём установлена более эффективная система охлаждения и продвинутая батарея."
+
+/obj/item/weapon/paper/mlm
+	name = "Памятка от компании НаноФлейм"
+	info = {"<h1 style="text-align: center;">Теперь вы представитель компании НаноФлейм</h1>
+	<p>Спасибо, за то, что выбрали компанию НаноФлейм. Наша компания одна из крупнейших и наиболее авторитетных компаний на рынке дистрибьюции. Мы существуем уже больше 150 лет и за это время наши ряды росли и ширились.</p>
+	<p>Вы можете найти множество успешных кейсов дистрибьютеров, поднявшихся со дна до ранга "Сам себе Босс" и победивших в игре под названием жизнь. Их опыт и успехи сосредоточены в этой памятке.</p>
+	<p>1. Родственники и друзья - тоже твои покупатели. Не стесняйся предлагать им продукцию твоей компании, она безупречна.</p>
+	<p>2. Начинай разговор с потенциальным клиентом с помощью открытого вопроса, например: <i>"Здравствуйте, я из компании НаноФлейм, когда вы в последний раз задумывались о |имя продукта|?"</i>, или: <i>"Здравствуйте, давно ли вы мечтали о том, чтобы стать сами себе боссом?"</i>.</p>
+	<p>3. После того, как жертва начнёт отвечать на вопрос, завали её преимуществами товара, расхваливай его так, будто от его покупки зависит жизнь клиента.</p>
+	<p>4. Когда бедолага попадётся на крючок и купит товар - расспроси его о родственниках и колегах.</p>
+	<p>5. Предложи ему стать партнёром и дистрибьютером компании НаноФлейм.</p>"}
+
+/obj/item/weapon/paper/mlm/atom_init()
+	. = ..()
+	var/obj/item/weapon/stamp/velocity/S = new
+	S.stamp_paper(src, "ООО Horns&Hooves ltd")

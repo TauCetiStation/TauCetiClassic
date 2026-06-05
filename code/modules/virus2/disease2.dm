@@ -236,7 +236,7 @@
 	var/list/res = list()
 	for (var/specie in all_species)
 		var/datum/species/S = all_species[specie]
-		if(!S.flags[VIRUS_IMMUNE] && S.name)
+		if(S.name && !(TRAIT_VIRUS_IMMUNE in S.race_traits))
 			meat += S.name
 	if(meat.len)
 		var/num = rand(1,meat.len)

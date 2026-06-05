@@ -30,6 +30,7 @@
 		var/obj/O = target
 		if(!O.anchored)
 			if(cargo_holder.cargo.len < cargo_holder.cargo_capacity)
+				playsound(target, 'sound/mecha/hydraulic.ogg', VOL_EFFECTS_MASTER)
 				occupant_message("You lift [target] and start to load it into cargo compartment.")
 				chassis.visible_message("[chassis] lifts [target] and starts to load it into cargo compartment.")
 				set_ready_state(0)
@@ -51,15 +52,23 @@
 		else if(istype(target, /obj/structure/scrap))
 			var/obj/structure/scrap/pile = target
 			playsound(target, 'sound/effects/metal_creaking.ogg', VOL_EFFECTS_MASTER)
+
+			var/obj/effect/abstract/particle_holder/Particle = new(pile, /particles/tool/squeeze_trash, PARTICLE_FADEOUT)
+			var/particles/particle_datum = Particle.get_particle()
+			particle_datum.change_dir(get_dir(get_turf(pile), get_turf(src)))
+
 			if(do_after_cooldown(pile))
 				occupant_message("<font color='red'>You squeeze the [pile.name] into compact shape.</font>")
 				pile.make_cube()
 			else
 				occupant_message("<font color='red'>[target] is firmly secured.</font>")
+
+			Particle.delete_particle()
 		else if(istype(target, /obj/structure/droppod))
 			var/obj/structure/droppod/Drop = target
 			if(Drop.stat_flags & STATE_DROPING || Drop.intruder || Drop.second_intruder)
 				return
+			playsound(target, 'sound/mecha/hydraulic.ogg', VOL_EFFECTS_MASTER)
 			var/T = chassis.loc
 			if(do_after_cooldown(Drop) && T == chassis.loc && src == chassis.selected\
 			&& !Drop.intruder && !Drop.second_intruder && !(Drop.stat_flags & STATE_DROPING) && !(Drop.stat_flags & STATE_AIMING))
@@ -112,8 +121,14 @@
 	occupant_message("<font color='red'><b>You start to drill [target]</b></font>")
 	var/T = chassis.loc
 	var/C = target.loc	//why are these backwards? we may never know -Pete
+
+	var/obj/effect/abstract/particle_holder/Particle = new(target, /particles/tool/drill_mineral, PARTICLE_FADEOUT)
+	var/particles/particle_datum = Particle.get_particle()
+	particle_datum.change_dir(get_dir(get_turf(target), get_turf(src)))
+
 	if(do_after_cooldown(target))
 		if(T == chassis.loc && src == chassis.selected)
+			playsound(target, 'sound/mecha/mechdrill.ogg', VOL_EFFECTS_MASTER)
 			if(istype(target, /turf/simulated/wall/r_wall))
 				occupant_message("<font color='red'>[target] is too durable to drill through.</font>")
 			else if(istype(target, /turf/simulated/mineral) || istype(target, /obj/structure/flora/mine_rocks))
@@ -150,6 +165,8 @@
 
 				log_message("Drilled through [target]")
 				target.ex_act(EXPLODE_HEAVY)
+
+	Particle.delete_particle()
 	return 1
 
 /obj/item/mecha_parts/mecha_equipment/drill/can_attach(obj/mecha/M)
@@ -182,6 +199,7 @@
 	var/C = target.loc	//why are these backwards? we may never know -Pete
 	if(do_after_cooldown(target))
 		if(T == chassis.loc && src == chassis.selected)
+			playsound(target, 'sound/mecha/mechdrill.ogg', VOL_EFFECTS_MASTER)
 			if(istype(target, /turf/simulated/wall/r_wall))
 				if(do_after_cooldown(target))//To slow down how fast mechs can drill through the station
 					log_message("Drilled through [target]")
@@ -271,7 +289,7 @@
 		update_equip_info()
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
-	return "[..()] \[[ext.reagents.total_volume]\]\[<a href='?src=\ref[src];switch=1'>[src.ext.safety ? "Safe" : "Ready"]</a>\]"
+	return "[..()] \[[ext.reagents.total_volume]\]\[<a href='byond://?src=\ref[src];switch=1'>[src.ext.safety ? "Safe" : "Ready"]</a>\]"
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/on_reagent_change()
 	return
@@ -363,16 +381,15 @@
 					chassis.use_power(energy_drain*2)
 		if(2)
 			if(isfloorturf(target))
-				occupant_message("Building Airlock...")
+				occupant_message("Building Airlock Assembly...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))
 					if(disabled) return
 					chassis.spark_system.start()
-					var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock(target)
-					T.autoclose = 1
-					playsound(target, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
-					playsound(target, 'sound/effects/sparks2.ogg', VOL_EFFECTS_MASTER)
-					chassis.use_power(energy_drain*2)
+					var/obj/structure/door_assembly/DA = new /obj/structure/door_assembly(target)
+					DA.anchored = TRUE
+					DA.state = ASSEMBLY_WIRED
+					DA.update_state()
 	return
 
 
@@ -390,7 +407,7 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/rcd/get_equip_info()
-	return "[..()] \[<a href='?src=\ref[src];mode=0'>D</a>|<a href='?src=\ref[src];mode=1'>C</a>|<a href='?src=\ref[src];mode=2'>A</a>\]"
+	return "[..()] \[<a href='byond://?src=\ref[src];mode=0'>D</a>|<a href='byond://?src=\ref[src];mode=1'>C</a>|<a href='byond://?src=\ref[src];mode=2'>A</a>\]"
 
 
 /********Teleporter********/
@@ -534,7 +551,7 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/get_equip_info()
-	return "[..()] [mode==1?"([locked||"Nothing"])":null] \[<a href='?src=\ref[src];mode=1'>S</a>|<a href='?src=\ref[src];mode=2'>P</a>\]"
+	return "[..()] [mode==1?"([locked||"Nothing"])":null] \[<a href='byond://?src=\ref[src];mode=1'>S</a>|<a href='byond://?src=\ref[src];mode=2'>P</a>\]"
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/Topic(href, href_list)
 	..()
@@ -703,7 +720,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/get_equip_info()
 	if(!chassis) return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_repairs=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='byond://?src=\ref[src];toggle_repairs=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Topic(href, href_list)
 	..()
@@ -825,7 +842,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/get_equip_info()
 	if(!chassis) return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='?src=\ref[src];toggle_relay=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[src.name] - <a href='byond://?src=\ref[src];toggle_relay=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/process()
 	if(!chassis || chassis.hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
@@ -904,7 +921,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[[fuel]: [round(fuel.amount*fuel.perunit,0.1)] cm<sup>3</sup>\] - <a href='?src=\ref[src];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
+		return "[output] \[[fuel]: [round(fuel.amount*fuel.perunit,0.1)] cm<sup>3</sup>\] - <a href='byond://?src=\ref[src];toggle=1'>[equip_ready?"A":"Dea"]ctivate</a>"
 	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/action(target)
@@ -1119,7 +1136,7 @@
 /obj/item/mecha_parts/mecha_equipment/Drop_system/get_equip_info()
 	if(!chassis)
 		return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[name] - <a href='?src=\ref[src];start_drop=1'>Start Drop</a>"
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[name] - <a href='byond://?src=\ref[src];start_drop=1'>Start Drop</a>"
 
 /obj/item/mecha_parts/mecha_equipment/Drop_system/proc/Select() // little copypaste from droppod code
 	if(aiming)

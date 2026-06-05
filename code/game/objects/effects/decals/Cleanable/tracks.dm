@@ -41,6 +41,10 @@ var/global/list/image/fluidtrack_cache=list()
 	var/going_state="blood2"
 	var/updatedtracks=0
 
+	// tracks handle it differently
+	should_merge = FALSE
+	should_dry = FALSE
+
 	// dir = id in stack
 	var/list/setdirs=list(
 		"1"=0,

@@ -208,7 +208,7 @@
 		held_item.loc = loc
 		held_item = null
 
-	robogibs(loc)
+	new /obj/effect/gibspawner/robot(get_turf(loc))
 	qdel(src)
 
 //copy paste from alien/larva, if that func is updated please update this one alsoghost

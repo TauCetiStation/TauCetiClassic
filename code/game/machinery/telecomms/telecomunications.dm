@@ -377,10 +377,15 @@
 	if(D.have_data == TRUE)
 		to_chat(user, "<span class='notice'>На дискету уже загружены данные.</span>")
 		return
+	if(user.is_busy())
+		return
+
 	add_fingerprint(user)
 	to_chat(user, "<span class='warning'>Вы начинаете перемещать данные на дискету...</span>")
+
 	if(!do_after(user, 1 MINUTE, target = src))
 		return
+
 	D.have_data = TRUE
 	playsound(src, 'sound/machines/ping.ogg', VOL_EFFECTS_MASTER)
 	to_chat(user, "<span class='nicegreen'>Готово!</span>")

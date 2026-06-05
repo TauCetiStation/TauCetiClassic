@@ -70,6 +70,7 @@
 	var/list/subordinate_staff = list()
 	var/last_trans_tick = 0
 
+	//Variables for OnlineShop
 	var/category
 	var/list/shop_lots = list()
 	var/list/shop_lots_paged = list()
@@ -77,6 +78,7 @@
 	var/list/shopping_cart = list()
 	var/category_shop_page = 1
 	var/category_shop_per_page = 5
+	var/referrer_account
 
 	var/obj/item/device/paicard/pai = null	// A slot for a personal AI device
 
@@ -662,13 +664,13 @@
 
 	var/secLevelStr = code_name_eng[security_level]
 	if(security_level == SEC_LEVEL_GREEN)
-		secLevelStr = "<font color='green'><b>&#9899;</b></font>"
+		secLevelStr = {"<div class="circle circle_green"></div>"}
 	if(security_level == SEC_LEVEL_BLUE)
-		secLevelStr = "<font color='blue'><b>&#9899;</b></font>"
+		secLevelStr = {"<div class="circle circle_blue"></div>"}
 	if(security_level == SEC_LEVEL_RED)
-		secLevelStr = "<font color='red'><b>&#9899;</b></font>"
+		secLevelStr = {"<div class="circle circle_red"></div>"}
 	if(security_level == SEC_LEVEL_DELTA)
-		secLevelStr = "<font color='purple'><b>&Delta;</b></font>"
+		secLevelStr = {"<div class="triangle triangle_purple"></div>"}
 	data["securityLevel"] = secLevelStr
 
 	data["new_Message"] = newmessage
@@ -736,13 +738,7 @@
 
 	if(mode == 8 || mode == 81 || mode == 82)
 	 	// find active QMs and technicians
-		var/manifest = global.data_core.get_manifest()
-		var/no_cargonauts = TRUE
-		for(var/civ in manifest["civ"])
-			if(civ["active"] == "Active" && (civ["rank"] in list("Quartermaster", "Cargo Technician")))
-				no_cargonauts = FALSE
-				break
-		data["no_cargonauts"] = no_cargonauts
+		data["no_cargonauts"] = !check_active_cargonauts()
 		// pass onlineshop data...
 		var/list/categories_frontend = list()
 		for(var/index in global.shop_categories)
@@ -804,7 +800,7 @@
 		data["orders_and_offers"] = orders_and_offers_frontend
 
 		var/list/shopping_cart_frontend = list()
-		if(MA.shopping_cart.len)
+		if(MA?.shopping_cart.len)
 			for(var/index in MA.shopping_cart)
 				var/list/Item = MA.shopping_cart[index]
 				shopping_cart_frontend.len++
@@ -893,8 +889,9 @@
 			U.unset_machine()
 			ui.close()
 			return 0
-		if("Refresh")//Refresh, goes to the end of the proc.
-		if("Return")//Return
+		if("Refresh") //Refresh, goes to the end of the proc.
+			EMPTY_BLOCK_GUARD
+		if("Return") //Return
 			if(mode<=9)
 				mode = 0
 			else
@@ -1034,7 +1031,6 @@
 					if(src.hidden_uplink && hidden_uplink.check_trigger(U, lowertext(t), lowertext(lock_code)))
 						to_chat(U, "The PDA softly beeps.")
 						ui.close()
-					else
 
 				set_ringtone(Tone, t)
 				play_ringtone(ignore_presence = TRUE)
@@ -1167,7 +1163,7 @@
 
 		if("Staff Salary")
 			mode = 73
-			subordinate_staff = my_subordinate_staff(ownrank)
+			subordinate_staff = SSeconomy.my_subordinate_staff(ownrank)
 
 		if("Change insurance price")
 			if(!check_permission_to_change_insurance_price())
@@ -1224,6 +1220,7 @@
 		if("Shop")
 			category_shop_page = 1
 			mode = 8
+			referrer_account = null
 
 		//Maintain Category
 		if("Shop_Category")
@@ -1274,15 +1271,16 @@
 						if(online_shop_lots_hashed.Find(Lot.hash))
 							for(var/datum/shop_lot/NewLot in online_shop_lots_hashed[Lot.hash])
 								if(NewLot && !NewLot.sold && (Lot.get_discounted_price() <= NewLot.get_discounted_price()))
-									if(order_onlineshop_item(owner, owner_account, NewLot, T))
+									if(order_onlineshop_item(owner, owner_account, NewLot, T, referrer_account = referrer_account))
 										MA.shopping_cart["[NewLot.number]"] = Lot.to_list()
+										break
 									else
 										to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
 										return
 						to_chat(user, "<span class='notice'>ОШИБКА: Этот предмет уже куплен.</span>")
 						return
 
-					else if(order_onlineshop_item(owner, owner_account, Lot, T))
+					else if(order_onlineshop_item(owner, owner_account, Lot, T, referrer_account = referrer_account))
 						MA.shopping_cart["[Lot.number]"] = Lot.to_list()
 					else
 						to_chat(user, "<span class='notice'>ОШИБКА: Недостаточно средств.</span>")
@@ -1416,22 +1414,26 @@
 	return 1 // return 1 tells it to refresh the UI in NanoUI
 
 /obj/item/device/pda/update_icon()
-	..()
 	cut_overlays()
+	var/list/new_overlays = list()
 
 	world_state = (icon_state == item_state_world)
 	overlay_suffix = world_state ? "_world" : ""
 
 	if(newmessage && icon_state != item_state_world)
-		add_overlay(image('icons/obj/pda.dmi', "pda-r"))
+		new_overlays += "pda-r"
 	if(id)
 		var/id_overlay = get_id_overlay(id)
 		if(id_overlay)
-			add_overlay(image('icons/obj/pda.dmi', id_overlay + overlay_suffix))
+			new_overlays +=  id_overlay + overlay_suffix
 	if(pen)
-		add_overlay(image('icons/obj/pda.dmi', "pen_pda" + overlay_suffix))
+		new_overlays += "pen_pda" + overlay_suffix
 	if(cartridge)
-		add_overlay(image('icons/obj/pda.dmi', "cart_pda" + overlay_suffix))
+		new_overlays += "cart_pda" + overlay_suffix
+	if(blood_DNA && blood_DNA.len && blood_overlay)
+		new_overlays += blood_overlay
+
+	add_overlay(new_overlays)
 
 /obj/item/device/pda/dropped(mob/user)
 	. = ..()
@@ -2010,7 +2012,7 @@
 	playsound(L, 'sound/machines/twobeep.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/device/pda/proc/check_rank(rank)
-	if((rank in command_positions) || (rank == "Quartermaster"))
+	if((rank in SSjob.heads_positions) || (rank == JOB_QM))
 		boss_PDA = 1
 	else
 		boss_PDA = 0
@@ -2065,5 +2067,12 @@
 			return
 		chiptune_player.repeat = Ring.replays
 		chiptune_player.parse_song_text(Ring.melody)
+
+/obj/item/device/pda/proc/open_shop_page(mob/user, referrer_account_number = null)
+	category_shop_page = 1
+	mode = 8
+	referrer_account = referrer_account_number
+
+	attack_self(user)
 
 #undef TRANSCATION_COOLDOWN

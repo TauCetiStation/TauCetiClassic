@@ -1,13 +1,18 @@
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const Apc = (props, context) => {
   return (
-    <Window
-      width={500}
-      height={445}>
+    <Window width={500} height={445}>
       <Window.Content scrollable>
         <ApcContent />
       </Window.Content>
@@ -52,10 +57,9 @@ const ApcContent = (props, context) => {
     powerChannels,
   } = data;
   const isLocked = locked && !siliconUser;
-  const externalPowerStatus = powerStatusMap[externalPower]
-    || powerStatusMap[0];
-  const chargingStatus = powerStatusMap[charging]
-    || powerStatusMap[0];
+  const externalPowerStatus =
+    powerStatusMap[externalPower] || powerStatusMap[0];
+  const chargingStatus = powerStatusMap[charging] || powerStatusMap[0];
   const channelArray = powerChannels || [];
   return (
     <>
@@ -65,78 +69,83 @@ const ApcContent = (props, context) => {
           <LabeledList.Item
             label="Вводный автомат"
             color={externalPowerStatus.color}
-            buttons={(
+            buttons={
               <Button
                 icon={isOperating ? 'power-off' : 'times'}
                 content={isOperating ? 'Вкл.' : 'Выкл.'}
                 selected={isOperating && !isLocked}
                 disabled={isLocked}
-                onClick={() => act('breaker')} />
-            )}>
+                onClick={() => act('breaker')}
+              />
+            }>
             [ {externalPowerStatus.externalPowerText} ]
           </LabeledList.Item>
           <LabeledList.Item label="Аккумулятор">
-            {!!powerCellStatus && (
+            {(!!powerCellStatus && (
               <ProgressBar
                 color="good"
                 fractionDigits={1}
-                value={powerCellCharge * 0.01} />
-            ) || (
-              <Box color="bad">
-                Извлечён
-              </Box>
-            )}
+                value={powerCellCharge * 0.01}
+              />
+            )) || <Box color="bad">Извлечён</Box>}
           </LabeledList.Item>
           <LabeledList.Item
             label="Режим зарядки"
             color={chargingStatus.color}
-            buttons={(
+            buttons={
               <Button
                 icon={chargeMode ? 'sync' : 'times'}
                 content={chargeMode ? 'Авт.' : 'Выкл.'}
                 disabled={isLocked}
-                onClick={() => act('charge')} />
-            )}>
+                onClick={() => act('charge')}
+              />
+            }>
             [ {chargingStatus.chargingText} ]
           </LabeledList.Item>
         </LabeledList>
       </Section>
       <Section title="Автоматы">
         <LabeledList>
-          {channelArray.map(channel => {
+          {channelArray.map((channel) => {
             const { topicParams } = channel;
             return (
               <LabeledList.Item
                 key={channel.title}
                 label={channel.title}
-                buttons={(
+                buttons={
                   <>
-                    <Box inline mx={2}
+                    <Box
+                      inline
+                      mx={2}
                       color={channel.status >= 2 ? 'good' : 'bad'}>
                       {channel.status >= 2 ? 'Вкл.' : 'Выкл.'}
                     </Box>
                     <Button
                       icon="sync"
                       content="Авт."
-                      selected={!isLocked && (
-                        channel.status === 1 || channel.status === 3
-                      )}
+                      selected={
+                        !isLocked &&
+                        (channel.status === 1 || channel.status === 3)
+                      }
                       disabled={isLocked}
-                      onClick={() => act('channel', topicParams.auto)} />
+                      onClick={() => act('channel', topicParams.auto)}
+                    />
                     <Button
                       icon="power-off"
                       content="Вкл."
                       selected={!isLocked && channel.status === 2}
                       disabled={isLocked}
-                      onClick={() => act('channel', topicParams.on)} />
+                      onClick={() => act('channel', topicParams.on)}
+                    />
                     <Button
                       icon="times"
                       content="Выкл."
                       selected={!isLocked && channel.status === 0}
                       disabled={isLocked}
-                      onClick={() => act('channel', topicParams.off)} />
+                      onClick={() => act('channel', topicParams.off)}
+                    />
                   </>
-                )}>
+                }>
                 {channel.powerLoad}
               </LabeledList.Item>
             );
@@ -148,47 +157,57 @@ const ApcContent = (props, context) => {
       </Section>
       <Section
         title="Разное"
-        buttons={!!siliconUser && (
-          <>
-            {!!malfCanHack && (
+        buttons={
+          !!siliconUser && (
+            <>
+              {!!malfCanHack && (
+                <Button
+                  icon="terminal"
+                  content="Перепрошить"
+                  color="bad"
+                  onClick={() => act('hack')}
+                />
+              )}
               <Button
-                icon="terminal"
-                content="Перепрошить"
-                color="bad"
-                onClick={() => act('hack')} />
-            )}
-            <Button
-              icon="lightbulb-o"
-              content="Перегрузить"
-              onClick={() => act('overload')} />
-          </>
-        )}>
+                icon="lightbulb-o"
+                content="Перегрузить"
+                onClick={() => act('overload')}
+              />
+            </>
+          )
+        }>
         <LabeledList>
           <LabeledList.Item
             label="Крышка"
-            buttons={(
+            buttons={
               <Button
                 icon={coverLocked ? 'lock' : 'unlock'}
                 content={coverLocked ? 'Заблокирована' : 'Разблокирована'}
                 disabled={isLocked}
-                onClick={() => act('cover')} />
-            )} />
+                onClick={() => act('cover')}
+              />
+            }
+          />
           <LabeledList.Item
             label="Ночной режим"
-            buttons={(
+            buttons={
               <Button
                 icon="lightbulb-o"
                 content={nightshiftLights ? 'Вкл' : 'Выкл'}
-                onClick={() => act('toggle_nightshift')} />
-            )} />
+                onClick={() => act('toggle_nightshift')}
+              />
+            }
+          />
           <LabeledList.Item
             label="Текущий режим освещения"
-            buttons={(
+            buttons={
               <Button
                 icon="lightbulb-o"
                 content={smartlightMode}
-                onClick={() => act('change_smartlight')} />
-            )} />
+                onClick={() => act('change_smartlight')}
+              />
+            }
+          />
         </LabeledList>
       </Section>
     </>

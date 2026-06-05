@@ -121,13 +121,6 @@
 	. = ..()
 	new /obj/item/weapon/implanter/freedom(src)
 
-/obj/item/weapon/storage/box/syndie_kit/imp_compress
-	name = "box (C)"
-
-/obj/item/weapon/storage/box/syndie_kit/imp_compress/atom_init()
-	new /obj/item/weapon/implanter/compressed(src)
-	. = ..()
-
 /obj/item/weapon/storage/box/syndie_kit/imp_explosive
 	name = "box (E)"
 
@@ -194,6 +187,29 @@
 		new /obj/item/weapon/legcuffs/bola/tactical(src)
 	for (var/i in 1 to 5)
 		new /obj/item/weapon/throwing_star(src)
+	make_exact_fit()
+
+/obj/item/weapon/storage/box/syndie_kit/romerol
+	name = "Red box"
+	desc = "A small red box, though with additional metal fasteners, which makes it seem that it is very, very important. But... How would it get into your hands if it`s really important?"
+
+/obj/item/weapon/storage/box/syndie_kit/romerol/atom_init()
+	. = ..()
+	new /obj/item/weapon/reagent_containers/glass/beaker/vial/romerol(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	new /obj/item/weapon/reagent_containers/dropper(src)
+	new /obj/item/weapon/reagent_containers/hypospray/combat/zombie(src)
+
+	var/garanted_item = pick(/obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol, /obj/item/weapon/grenade/chem_grenade/romerol, /obj/item/weapon/implanter/zombie)
+	new garanted_item (src)
+
+	if(prob(50))
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol(src)
+	if(prob(50))
+		new /obj/item/weapon/grenade/chem_grenade/romerol(src)
+	if(prob(30))
+		new /obj/item/weapon/implanter/zombie(src)
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/cutouts

@@ -60,9 +60,9 @@
 /area/space_structures/old_station/warehouse)
 "au" = (
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Research and Development";
-	req_access = list(73);
-	dir = 4
+	req_access = list(73)
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -203,8 +203,8 @@
 /area/space_structures/old_station/right/rnd)
 "ba" = (
 /obj/machinery/door/airlock/glass{
-	name = "Central Access";
-	dir = 4
+	dir = 4;
+	name = "Central Access"
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/left)
@@ -239,11 +239,11 @@
 /area/space_structures/old_station/central/hydro)
 "bm" = (
 /obj/machinery/door/airlock/security/glass{
+	dir = 4;
 	id_tag = "InnerBrig";
 	layer = 2.8;
 	name = "Brig";
-	req_access = list(73);
-	dir = 4
+	req_access = list(73)
 	},
 /obj/item/weapon/reagent_containers/food/snacks/donut/banana,
 /turf/simulated/floor{
@@ -316,8 +316,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "yellow";
-	dir = 4
+	dir = 4;
+	icon_state = "yellow"
 	},
 /area/space_structures/old_station/left)
 "bH" = (
@@ -341,7 +341,6 @@
 "bQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 30
 	},
@@ -352,8 +351,8 @@
 "bR" = (
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/simulated/floor/airless{
-	icon_state = "whiteblue";
-	dir = 5
+	dir = 5;
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left)
 "bT" = (
@@ -417,7 +416,7 @@
 	},
 /area/space_structures/carp_space)
 "cy" = (
-/obj/item/weapon/rcd_ammo,
+/obj/item/weapon/rcd_ammo/huge,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -562,8 +561,8 @@
 	pixel_x = 27
 	},
 /turf/simulated/floor/airless{
-	icon_state = "brown";
-	dir = 6
+	dir = 6;
+	icon_state = "brown"
 	},
 /area/space_structures/old_station/left)
 "dk" = (
@@ -575,8 +574,8 @@
 /area/space_structures/old_station/left/med)
 "dl" = (
 /turf/simulated/floor/airless{
-	icon_state = "yellow";
-	dir = 4
+	dir = 4;
+	icon_state = "yellow"
 	},
 /area/space_structures/old_station/left)
 "dm" = (
@@ -593,8 +592,8 @@
 "do" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "yellow";
-	dir = 8
+	dir = 8;
+	icon_state = "yellow"
 	},
 /area/space_structures/old_station/left)
 "dp" = (
@@ -668,11 +667,11 @@
 /area/space_structures/old_station/central/brig)
 "dO" = (
 /obj/machinery/door/airlock/security/glass{
+	dir = 4;
 	id_tag = "InnerBrig";
 	layer = 2.8;
 	name = "Brig";
-	req_access = list(73);
-	dir = 4
+	req_access = list(73)
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -845,8 +844,8 @@
 	dir = 1
 	},
 /turf/simulated/floor/airless{
-	icon_state = "whiteblue";
-	dir = 10
+	dir = 10;
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left)
 "eT" = (
@@ -859,8 +858,8 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/airless{
-	icon_state = "whiteblue";
-	dir = 4
+	dir = 4;
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left)
 "eW" = (
@@ -895,8 +894,8 @@
 /obj/structure/closet/crate/trashcart,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/airless{
-	icon_state = "whiteblue";
-	dir = 9
+	dir = 9;
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left)
 "fn" = (
@@ -910,9 +909,9 @@
 /area/space_structures/old_station/right/rnd)
 "fq" = (
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Research and Development";
-	req_access = list(73);
-	dir = 4
+	req_access = list(73)
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
@@ -1099,12 +1098,12 @@
 /area/space_structures/old_station/left/med)
 "gy" = (
 /obj/machinery/door/airlock/external{
+	dir = 4;
 	frequency = 1379;
 	id_tag = "virology_inner";
 	locked = 1;
 	name = "Engineering External Access";
-	req_one_access = list(13,45,1);
-	dir = 4
+	req_one_access = list(13,45,1)
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
@@ -1180,8 +1179,8 @@
 	},
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/airless{
-	icon_state = "bluechoco";
-	dir = 1
+	dir = 1;
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left)
 "gU" = (
@@ -1372,9 +1371,9 @@
 /area/space_structures/old_station/right)
 "hZ" = (
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Research and Development";
-	req_access = list(7);
-	dir = 4
+	req_access = list(7)
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/hydro)
@@ -1384,9 +1383,9 @@
 	name = "doorway barricade"
 	},
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Research and Development";
-	req_access = list(73);
-	dir = 4
+	req_access = list(73)
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -1410,8 +1409,8 @@
 /area/space_structures/old_station/central/hydro)
 "ie" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(73);
-	dir = 4
+	dir = 4;
+	req_access = list(73)
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/right)
@@ -1644,9 +1643,9 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Research and Development";
-	req_access = list(73);
-	dir = 4
+	req_access = list(73)
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -1704,8 +1703,8 @@
 /area/space_structures/old_station/central/brig)
 "jz" = (
 /turf/simulated/floor/airless{
-	icon_state = "brown";
-	dir = 4
+	dir = 4;
+	icon_state = "brown"
 	},
 /area/space_structures/old_station/left)
 "jB" = (
@@ -1775,8 +1774,8 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless{
-	icon_state = "whiteblue";
-	dir = 1
+	dir = 1;
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left)
 "jP" = (
@@ -1973,8 +1972,8 @@
 /area/space)
 "le" = (
 /obj/machinery/door/airlock/glass{
-	name = "Primary Tool Storage";
-	dir = 4
+	dir = 4;
+	name = "Primary Tool Storage"
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/central)
@@ -1983,8 +1982,8 @@
 	prices = list()
 	},
 /turf/simulated/floor/airless{
-	icon_state = "brown";
-	dir = 5
+	dir = 5;
+	icon_state = "brown"
 	},
 /area/space_structures/old_station/left)
 "li" = (
@@ -2016,8 +2015,8 @@
 /area/space_structures/old_station/satellite)
 "lt" = (
 /turf/simulated/floor/airless{
-	icon_state = "caution";
-	dir = 1
+	dir = 1;
+	icon_state = "caution"
 	},
 /area/space_structures/carp_space)
 "lu" = (
@@ -2148,9 +2147,9 @@
 /area/space_structures/old_station/right)
 "mA" = (
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	name = "Engineering";
-	req_access = list(73);
-	dir = 4
+	req_access = list(73)
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/solars_c)
@@ -2168,8 +2167,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "whitepurple";
-	dir = 8
+	dir = 8;
+	icon_state = "whitepurple"
 	},
 /area/space_structures/old_station/right)
 "mG" = (
@@ -2421,8 +2420,8 @@
 	dir = 8
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 1
+	dir = 1;
+	icon_state = "darkpurple"
 	},
 /area/space_structures/old_station/satellite)
 "oe" = (
@@ -2879,8 +2878,8 @@
 "ri" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/simulated/floor/airless{
-	icon_state = "yellow";
-	dir = 6
+	dir = 6;
+	icon_state = "yellow"
 	},
 /area/space_structures/carp_space)
 "rk" = (
@@ -2895,10 +2894,10 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/medical/glass{
+	dir = 4;
 	id_tag = "MedbayFoyerIn";
 	name = "Medbay";
-	req_access = list(5);
-	dir = 4
+	req_access = list(5)
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/left/med)
@@ -3018,8 +3017,8 @@
 	prices = list()
 	},
 /turf/simulated/floor/airless{
-	icon_state = "brown";
-	dir = 1
+	dir = 1;
+	icon_state = "brown"
 	},
 /area/space_structures/old_station/left)
 "sk" = (
@@ -3064,8 +3063,8 @@
 	},
 /obj/item/apc_frame,
 /turf/simulated/floor/airless{
-	icon_state = "caution";
-	dir = 1
+	dir = 1;
+	icon_state = "caution"
 	},
 /area/space_structures/carp_space)
 "sz" = (
@@ -3092,8 +3091,8 @@
 "sK" = (
 /obj/item/stack/rods,
 /turf/simulated/floor/airless{
-	icon_state = "yellow";
-	dir = 8
+	dir = 8;
+	icon_state = "yellow"
 	},
 /area/space_structures/carp_space)
 "sM" = (
@@ -3110,8 +3109,8 @@
 /area/space_structures/old_station/warehouse)
 "sN" = (
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 5
+	dir = 5;
+	icon_state = "darkpurple"
 	},
 /area/space_structures/old_station/satellite)
 "sO" = (
@@ -3130,7 +3129,7 @@
 /turf/simulated/floor/glass/reinforced,
 /area/space_structures/old_station/central/brig)
 "ta" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkblue"
@@ -3299,8 +3298,8 @@
 /area/space_structures/old_station/central)
 "um" = (
 /turf/simulated/floor/airless{
-	icon_state = "brown";
-	dir = 1
+	dir = 1;
+	icon_state = "brown"
 	},
 /area/space_structures/old_station/left)
 "uu" = (
@@ -3401,9 +3400,9 @@
 /area/space_structures/old_station/warehouse)
 "uR" = (
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Research and Development";
-	req_access = list(73);
-	dir = 4
+	req_access = list(73)
 	},
 /turf/simulated/floor{
 	icon_state = "whitepurplefull"
@@ -3521,13 +3520,12 @@
 	dir = 1
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 1;
 	pixel_y = 32
 	},
 /turf/simulated/floor/airless{
-	icon_state = "brown";
-	dir = 1
+	dir = 1;
+	icon_state = "brown"
 	},
 /area/space_structures/old_station/left)
 "vB" = (
@@ -3535,8 +3533,8 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless{
-	icon_state = "bluechoco";
-	dir = 1
+	dir = 1;
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left)
 "vD" = (
@@ -3697,7 +3695,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central)
 "wt" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkblue"
@@ -3802,9 +3800,9 @@
 /area/space_structures/old_station/left)
 "wV" = (
 /obj/machinery/door/airlock/research{
+	dir = 4;
 	name = "Miscellaneous Research";
-	req_access = list(47);
-	dir = 4
+	req_access = list(47)
 	},
 /turf/simulated/floor/plating/airless,
 /area/space_structures/old_station/right)
@@ -3844,8 +3842,8 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/airless{
-	icon_state = "whiteblue";
-	dir = 8
+	dir = 8;
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left)
 "xe" = (
@@ -3923,7 +3921,7 @@
 "xx" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -3931,8 +3929,8 @@
 /area/space_structures/old_station/warehouse)
 "xA" = (
 /turf/simulated/floor/airless{
-	icon_state = "caution";
-	dir = 4
+	dir = 4;
+	icon_state = "caution"
 	},
 /area/space_structures/carp_space)
 "xC" = (
@@ -4100,8 +4098,8 @@
 "yp" = (
 /obj/item/weapon/shard,
 /turf/simulated/floor/airless{
-	icon_state = "yellow";
-	dir = 4
+	dir = 4;
+	icon_state = "yellow"
 	},
 /area/space_structures/carp_space)
 "yw" = (
@@ -4267,8 +4265,8 @@
 	dir = 8
 	},
 /turf/simulated/floor/airless{
-	icon_state = "whiteblue";
-	dir = 6
+	dir = 6;
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left)
 "zy" = (
@@ -4287,12 +4285,10 @@
 /area/space_structures/old_station/central/bridge)
 "zD" = (
 /obj/structure/sign/directions/medical{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 40
 	},
 /obj/structure/sign/directions/engineering{
-	buildable_sign = 0;
 	dir = 8;
 	pixel_y = 34
 	},
@@ -4532,7 +4528,6 @@
 /area/space_structures/old_station/central/hydro)
 "Bk" = (
 /obj/structure/table/glass,
-/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
 	},
@@ -4542,8 +4537,8 @@
 /obj/item/trash/candle,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "whitepurplecorner";
-	dir = 8
+	dir = 8;
+	icon_state = "whitepurplecorner"
 	},
 /area/space_structures/old_station/right)
 "Bt" = (
@@ -4589,9 +4584,9 @@
 /area/space)
 "BL" = (
 /obj/machinery/door/airlock/highsecurity{
+	dir = 4;
 	name = "Secure Armoury Section";
-	req_access = list(20);
-	dir = 4
+	req_access = list(20)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -4670,8 +4665,8 @@
 	dir = 1
 	},
 /turf/simulated/floor/airless{
-	icon_state = "whitepurplecorner";
-	dir = 4
+	dir = 4;
+	icon_state = "whitepurplecorner"
 	},
 /area/space_structures/old_station/right)
 "Ce" = (
@@ -4821,8 +4816,8 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless{
-	icon_state = "bluechoco";
-	dir = 1
+	dir = 1;
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left)
 "CS" = (
@@ -4886,8 +4881,8 @@
 "Di" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /turf/simulated/floor/airless{
-	icon_state = "yellow";
-	dir = 4
+	dir = 4;
+	icon_state = "yellow"
 	},
 /area/space_structures/carp_space)
 "Dj" = (
@@ -4995,8 +4990,8 @@
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/nutriment,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "whitepurple";
-	dir = 4
+	dir = 4;
+	icon_state = "whitepurple"
 	},
 /area/space_structures/old_station/right)
 "DM" = (
@@ -5015,8 +5010,8 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "bluechoco";
-	dir = 1
+	dir = 1;
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left)
 "DO" = (
@@ -5049,9 +5044,9 @@
 /area/space_structures/old_station/central/kitchen)
 "DW" = (
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Research and Development";
-	req_access = list(73);
-	dir = 4
+	req_access = list(73)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -5081,8 +5076,8 @@
 	dir = 4
 	},
 /turf/simulated/floor/airless{
-	icon_state = "whiteblue";
-	dir = 4
+	dir = 4;
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left)
 "Eg" = (
@@ -5108,8 +5103,8 @@
 /obj/item/trash/chips,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "whitepurple";
-	dir = 4
+	dir = 4;
+	icon_state = "whitepurple"
 	},
 /area/space_structures/old_station/right)
 "Ek" = (
@@ -5128,8 +5123,8 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/stool/bed/roller,
 /turf/simulated/floor/airless{
-	icon_state = "whiteblue";
-	dir = 8
+	dir = 8;
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left)
 "Eo" = (
@@ -5166,8 +5161,8 @@
 	dir = 8
 	},
 /turf/simulated/floor/airless{
-	icon_state = "whiteblue";
-	dir = 4
+	dir = 4;
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left)
 "Eu" = (
@@ -5192,10 +5187,10 @@
 /area/space_structures/old_station/central/bridge)
 "Ex" = (
 /obj/machinery/door/airlock/highsecurity{
+	dir = 4;
 	locked = 1;
 	name = "AI Chamber";
-	req_access = list(16);
-	dir = 4
+	req_access = list(16)
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5267,8 +5262,8 @@
 	req_access = list(20)
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Old_station";
-	dir = 4
+	dir = 4;
+	id = "Old_station"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -5400,12 +5395,10 @@
 	pixel_y = 23
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 30
 	},
 /obj/structure/sign/directions/security{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 37
 	},
@@ -5433,8 +5426,8 @@
 "FY" = (
 /obj/structure/closet/emcloset,
 /turf/simulated/floor/airless{
-	icon_state = "brown";
-	dir = 1
+	dir = 1;
+	icon_state = "brown"
 	},
 /area/space_structures/old_station/left)
 "FZ" = (
@@ -5678,8 +5671,8 @@
 /area/space_structures/old_station/satellite)
 "Hq" = (
 /obj/effect/decal/turf_decal/dark_red{
-	icon_state = "arrow";
-	dir = 4
+	dir = 4;
+	icon_state = "arrow"
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -5799,8 +5792,8 @@
 "HV" = (
 /obj/machinery/pipedispenser/disposal,
 /turf/simulated/floor/airless{
-	icon_state = "yellow";
-	dir = 8
+	dir = 8;
+	icon_state = "yellow"
 	},
 /area/space_structures/old_station/left)
 "HW" = (
@@ -5916,8 +5909,8 @@
 /area/space_structures/old_station/central/hydro)
 "IE" = (
 /obj/machinery/door/airlock{
-	name = "Dorm";
-	dir = 4
+	dir = 4;
+	name = "Dorm"
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/central)
@@ -6091,9 +6084,9 @@
 /area/space_structures/old_station/left/med)
 "JI" = (
 /obj/machinery/door/airlock/glass{
+	dir = 4;
 	name = "Kitchen";
-	req_access = list(73);
-	dir = 4
+	req_access = list(73)
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -6479,8 +6472,8 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /turf/simulated/floor/airless{
-	icon_state = "caution";
-	dir = 1
+	dir = 1;
+	icon_state = "caution"
 	},
 /area/space_structures/carp_space)
 "Mc" = (
@@ -6513,9 +6506,9 @@
 /area/space_structures/old_station/satellite)
 "Mo" = (
 /obj/machinery/door/airlock/glass{
+	dir = 4;
 	name = "Hydroponics";
-	req_access = list(73);
-	dir = 4
+	req_access = list(73)
 	},
 /turf/simulated/floor{
 	icon_state = "greenchoco"
@@ -6629,8 +6622,8 @@
 /obj/structure/table,
 /obj/item/device/flashlight/flare,
 /obj/item/stack/medical/bruise_pack/rags/not_old{
-	pixel_y = -4;
-	pixel_x = 16
+	pixel_x = 16;
+	pixel_y = -4
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -6639,8 +6632,8 @@
 /area/space_structures/old_station/central)
 "Ne" = (
 /turf/simulated/floor/airless{
-	icon_state = "yellow";
-	dir = 4
+	dir = 4;
+	icon_state = "yellow"
 	},
 /area/space_structures/carp_space)
 "Nf" = (
@@ -6700,8 +6693,8 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless{
-	icon_state = "bluechoco";
-	dir = 1
+	dir = 1;
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left)
 "NA" = (
@@ -6778,8 +6771,8 @@
 /area/space_structures/old_station/central/bridge)
 "Od" = (
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 4
+	dir = 4;
+	icon_state = "darkpurple"
 	},
 /area/space_structures/old_station/satellite)
 "Of" = (
@@ -6990,8 +6983,8 @@
 "Pe" = (
 /obj/item/pipe,
 /turf/simulated/floor/airless{
-	icon_state = "caution";
-	dir = 5
+	dir = 5;
+	icon_state = "caution"
 	},
 /area/space_structures/carp_space)
 "Pg" = (
@@ -7095,7 +7088,6 @@
 "PD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_x = -32
 	},
@@ -7109,9 +7101,9 @@
 /obj/machinery/door_control{
 	id = "Old_station_armory";
 	name = "Shutters Control";
+	pixel_x = -27;
 	pixel_y = 1;
-	req_access = list(20);
-	pixel_x = -27
+	req_access = list(20)
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -7161,7 +7153,7 @@
 /area/space_structures/old_station/central)
 "PW" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "neutral"
@@ -7202,8 +7194,8 @@
 "Qq" = (
 /obj/structure/cable,
 /turf/simulated/floor/airless{
-	icon_state = "bluechoco";
-	dir = 1
+	dir = 1;
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left)
 "Qr" = (
@@ -7213,8 +7205,8 @@
 "QA" = (
 /obj/item/stack/rods,
 /turf/simulated/floor/airless{
-	icon_state = "yellow";
-	dir = 4
+	dir = 4;
+	icon_state = "yellow"
 	},
 /area/space_structures/carp_space)
 "QE" = (
@@ -7264,10 +7256,10 @@
 	},
 /area/space_structures/old_station/satellite)
 "QP" = (
-/obj/item/weapon/flora/pottedplant/dead,
+/obj/item/weapon/flora/pottedplant/cactus,
 /turf/simulated/floor/airless{
-	icon_state = "yellow";
-	dir = 8
+	dir = 8;
+	icon_state = "yellow"
 	},
 /area/space_structures/old_station/left)
 "QQ" = (
@@ -7370,7 +7362,6 @@
 	pixel_y = 28
 	},
 /obj/structure/sign/directions/science{
-	buildable_sign = 0;
 	dir = 4;
 	pixel_y = 36
 	},
@@ -7481,9 +7472,9 @@
 /area/space_structures/old_station/right)
 "Sf" = (
 /obj/machinery/door/airlock/research/glass{
+	dir = 4;
 	name = "Chemistry Lab";
-	req_access = list(73);
-	dir = 4
+	req_access = list(73)
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -7592,9 +7583,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/engineering/glass{
+	dir = 4;
 	name = "Engineering";
-	req_access = list(73);
-	dir = 4
+	req_access = list(73)
 	},
 /turf/simulated/floor/plating,
 /area/space_structures/old_station/central/solars_c)
@@ -7621,8 +7612,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(73);
-	dir = 4
+	dir = 4;
+	req_access = list(73)
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
@@ -7659,8 +7650,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "whitepurple";
-	dir = 5
+	dir = 5;
+	icon_state = "whitepurple"
 	},
 /area/space_structures/old_station/right)
 "Tl" = (
@@ -7672,8 +7663,8 @@
 "Tm" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "whitepurple";
-	dir = 10
+	dir = 10;
+	icon_state = "whitepurple"
 	},
 /area/space_structures/old_station/right)
 "Tp" = (
@@ -7835,8 +7826,8 @@
 	dir = 4
 	},
 /turf/simulated/floor/airless{
-	icon_state = "brown";
-	dir = 4
+	dir = 4;
+	icon_state = "brown"
 	},
 /area/space_structures/old_station/left)
 "Ug" = (
@@ -7989,9 +7980,9 @@
 /area/space_structures/old_station/central/hydro)
 "UW" = (
 /obj/machinery/door/airlock{
+	dir = 4;
 	name = "Custodial Closet";
-	req_access = list(73);
-	dir = 4
+	req_access = list(73)
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/right)
@@ -8033,8 +8024,8 @@
 	pixel_y = 30
 	},
 /turf/simulated/floor/airless{
-	icon_state = "caution";
-	dir = 1
+	dir = 1;
+	icon_state = "caution"
 	},
 /area/space_structures/carp_space)
 "Vk" = (
@@ -8179,8 +8170,8 @@
 	req_access = list(20)
 	},
 /obj/machinery/door/poddoor/shutters{
-	id = "Old_station";
-	dir = 4
+	dir = 4;
+	id = "Old_station"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -8284,8 +8275,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/airless{
-	icon_state = "whitepurple";
-	dir = 6
+	dir = 6;
+	icon_state = "whitepurple"
 	},
 /area/space_structures/old_station/right)
 "WG" = (
@@ -8333,8 +8324,8 @@
 "WV" = (
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/airless{
-	icon_state = "bluechoco";
-	dir = 1
+	dir = 1;
+	icon_state = "bluechoco"
 	},
 /area/space_structures/old_station/left)
 "WX" = (
@@ -8589,14 +8580,14 @@
 /area/space_structures/old_station/central/bridge)
 "YH" = (
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 6
+	dir = 6;
+	icon_state = "darkpurple"
 	},
 /area/space_structures/old_station/satellite)
 "YI" = (
 /obj/machinery/door/airlock/glass{
-	name = "Central Access";
-	dir = 4
+	dir = 4;
+	name = "Central Access"
 	},
 /turf/simulated/floor,
 /area/space_structures/old_station/central)
@@ -8645,8 +8636,8 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless{
-	icon_state = "brown";
-	dir = 1
+	dir = 1;
+	icon_state = "brown"
 	},
 /area/space_structures/old_station/left)
 "Zh" = (
@@ -8746,8 +8737,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,
 /turf/simulated/floor/airless{
-	icon_state = "whiteblue";
-	dir = 8
+	dir = 8;
+	icon_state = "whiteblue"
 	},
 /area/space_structures/old_station/left)
 "ZC" = (
@@ -8761,8 +8752,8 @@
 /area/space_structures/old_station/central/kitchen)
 "ZD" = (
 /obj/machinery/door/airlock/glass{
-	name = "Central Access";
-	dir = 4
+	dir = 4;
+	name = "Central Access"
 	},
 /obj/structure/cable{
 	d1 = 4;

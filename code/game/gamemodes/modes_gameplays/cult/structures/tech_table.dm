@@ -114,7 +114,7 @@
 
 	to_chat(user, "<span class='notice'>Вы начали изучение [chosen_tech.info.name].</span>")
 
-	current_research = initial(chosen_tech.info.name)
+	current_research = chosen_tech.info.name
 	chosen_tech.researching = TRUE
 	start_activity(CALLBACK(src, PROC_REF(research_tech), chosen_tech))
 

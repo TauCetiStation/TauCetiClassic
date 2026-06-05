@@ -53,17 +53,72 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 
+	var/source = tgui_alert(src, "Выберите источник сообщения:", "Subtle Message для [M.key]", list("Голос в голове", "ЦК", "Синдикат", "Свой"))
+	if(!source)
+		return
+
+	if(source == "ЦК")
+		if(isliving(M))
+			var/mob/living/L = M
+			if(!L.CanObtainCentcommMessage())
+				to_chat(src, "The person you are trying to contact is not wearing a headset.")
+				return
+		else
+			to_chat(src, "CentCom messages can only be sent to living mobs.")
+			return
+
+	if(source == "Синдикат")
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
+				to_chat(src, "The person you are trying to contact is not wearing a headset.")
+				return
+		else
+			to_chat(src, "Syndicate messages can only be sent to humans.")
+			return
+
+	var/custom_color = "green"
+	var/custom_sender = ""
+	if(source == "Свой")
+		var/col_choice = tgui_alert(src, "Выберите цвет имени:", "Цвет", list("Зелёный", "Синий", "ХОНК", "Серый"))
+		if(!col_choice)
+			return
+		switch(col_choice)
+			if("Зелёный") custom_color = "green"
+			if("Синий") custom_color = "#3366ff" // a nice readable blue
+			if("ХОНК") custom_color = "#ff1493" // deep pink, readable
+			if("Серый") custom_color = "gray"
+
+		custom_sender = sanitize(input("Введите имя отправителя:", text("Отправитель для [M.key]")) as text)
+		if(!custom_sender)
+			return
+
 	var/msg = sanitize(input("Message:", text("Subtle PM to [M.key]")) as text)
 
 	if (!msg)
 		return
-	if(usr)
-		if (usr.client)
-			if(usr.client.holder)
-				to_chat(M, "<b>You hear a voice in your head... <i>[msg]</i></b>")
+	if(usr?.client?.holder)
+		switch(source)
+			if("Голос в голове")
+				to_chat(M, "<b>Вы слышите голос в своей голове... <i>[msg]</i></b>")
+			if("ЦК")
+				to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"На связи <b><font color='blue'>Центральное Командование</font></b>. Прослушайте внимательно следующую информацию: <b>\"[msg]\"</b> Конец связи.\"")
+			if("Синдикат")
+				to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='red'><i>Синдиката</i></font></b>. Слушайте внимательно, агент: <b>\"[msg]\"</b> Конец связи.\"")
+			if("Свой")
+				to_chat(M, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='[custom_color]'>[custom_sender]</font></b>. Сообщение: <b>\"[msg]\"</b> Конец связи.\"")
 
-	log_admin("SubtlePM: [key_name(usr)] -> [key_name(M)] : [msg]")
-	message_admins("<span class='notice'><b>SubtleMessage</b>: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]</span>")
+		log_admin("SubtlePM([source]): [key_name(usr)] -> [key_name(M)] : [msg]")
+		message_admins("<span class='notice'><b>SubtleMessage([source])</b>: [key_name_admin(usr)] -> [key_name_admin(M)] : [msg]</span>")
+
+		if(source == "ЦК" || source == "Синдикат")
+			world.send2bridge(
+				type = list(BRIDGE_ADMINCOM),
+				attachment_title = "[source == "ЦК" ? ":regional_indicator_c:" : ":regional_indicator_s:"] **[key_name(usr)]** replied to **[key_name(M)]** via Subtle Message",
+				attachment_msg = msg,
+				attachment_color = BRIDGE_COLOR_ADMINCOM,
+			)
+
 	feedback_add_details("admin_verb","SMS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_mentor_check_new_players()	//Allows mentors / admins to determine who the newer players are.
@@ -142,25 +197,27 @@
 	if( !msg )
 		return
 
-	to_chat(M, msg)
+	to_chat(M, "<big><b><span class='notice'><i>[msg]</i></span></b></big>")
 	log_admin("DirectNarrate: [key_name(usr)] to [key_name(M)]: [msg]")
 	message_admins("<span class='notice'><b>DirectNarrate</b>: [key_name(usr)] to [key_name(M)]: [msg]<BR></span>")
 	feedback_add_details("admin_verb","DIRN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/cmd_admin_godmode(mob/M as mob in mob_list)
+/client/proc/cmd_admin_godmode(mob/living/M as mob in mob_list)
 	set category = "Special Verbs"
 	set name = "Godmode"
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	if(M.status_flags & GODMODE)
-		M.remove_status_flags(GODMODE)
+	var/godmode = HAS_TRAIT_FROM(M, ELEMENT_TRAIT_GODMODE, ADMIN_TRAIT)
+	if(godmode)
+		REMOVE_TRAIT(M, ELEMENT_TRAIT_GODMODE, ADMIN_TRAIT)
 	else
-		M.add_status_flags(GODMODE)
-	to_chat(usr, "<span class='notice'>Toggled [(M.status_flags & GODMODE) ? "ON" : "OFF"]</span>")
+		ADD_TRAIT(M, ELEMENT_TRAIT_GODMODE, ADMIN_TRAIT)
+	godmode = !godmode
+	to_chat(usr, "<span class='notice'>Toggled [godmode ? "ON" : "OFF"]</span>")
 
-	log_admin("[key_name(usr)] has toggled [key_name(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
-	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s nodamage to [(M.status_flags & GODMODE) ? "On" : "Off"]")
+	log_admin("[key_name(usr)] has toggled [key_name(M)]'s God Mode to [godmode ? "On" : "Off"]")
+	message_admins("[key_name_admin(usr)] has toggled [key_name_admin(M)]'s God Mode to [godmode ? "On" : "Off"]")
 	feedback_add_details("admin_verb","GOD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_add_random_ai_law()
@@ -604,7 +661,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(src, "Only administrators may use this command.")
 		return
 	if(SSjob)
-		for(var/datum/job/job in SSjob.occupations)
+		for(var/datum/job/job as anything in SSjob.active_occupations)
 			to_chat(src, "[job.title]: [job.total_positions]")
 	feedback_add_details("admin_verb","LFS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -654,9 +711,47 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		message_admins("[key_name_admin(usr)] created an EM PUlse ([heavy],[light]) at [COORD(O)]")
 		feedback_add_details("admin_verb","EMP") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/cmd_admin_burn(mob/living/carbon/human/H)
+	if(!check_rights(R_ADMIN))
 		return
+
+	if(HAS_TRAIT(H, TRAIT_BURNT))
+		REMOVE_TRAIT(H, TRAIT_BURNT, GENERIC_TRAIT)
 	else
+		ADD_TRAIT(H, TRAIT_BURNT, GENERIC_TRAIT)
+
+	H.update_body()
+
+	log_admin("[key_name(usr)] toggled burn skin for [key_name(H)]")
+	message_admins("[key_name_admin(usr)] toggled burn skin for [key_name_admin(H)]")
+
+/client/proc/cmd_admin_husk(mob/living/carbon/human/H)
+	if(!check_rights(R_ADMIN))
 		return
+
+	if(HAS_TRAIT(H, TRAIT_HUSK))
+		REMOVE_TRAIT(H, TRAIT_HUSK, GENERIC_TRAIT)
+	else
+		ADD_TRAIT(H, TRAIT_HUSK, GENERIC_TRAIT)
+
+	H.update_body()
+
+	log_admin("[key_name(usr)] toggled husk skin for [key_name(H)]")
+	message_admins("[key_name_admin(usr)] toggled husk skin for [key_name_admin(H)]")
+
+/client/proc/cmd_admin_electrocute(mob/living/carbon/human/H)
+	if(!check_rights(R_ADMIN))
+		return
+
+	var/duration = input("Choice duration for electrocute animation (seconds).", "Electrocute duration") as null|num
+
+	if(!duration)
+		return
+
+	H.electrocution_animation(duration SECONDS)
+
+	log_admin("[key_name(usr)] added [duration] seconds electrocute animation for [key_name(H)]")
+	message_admins("[key_name_admin(usr)] added [duration] seconds electrocute animation for [key_name_admin(H)]")
 
 /client/proc/cmd_admin_gib(mob/M as mob in mob_list)
 	set category = "Special Verbs"
@@ -674,7 +769,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]")
 
 	if(isobserver(M))
-		gibs(M.loc)
+		new /obj/effect/gibspawner/generic(get_turf(M.loc))
 		return
 
 	M.gib()

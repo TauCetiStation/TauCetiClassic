@@ -51,7 +51,7 @@
 
 /datum/role/gangster/extraPanelButtons()
 	var/dat = ..()
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];gangster_equip=1'>(Give Extra Equipment)</a>"
+	dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];gangster_equip=1'>(Give Extra Equipment)</a>"
 	return dat
 
 /datum/role/gangster/RoleTopic(href, href_list, datum/mind/M, admin_auth)

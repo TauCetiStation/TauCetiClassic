@@ -858,7 +858,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 				if(user.is_busy())
 					return
 				to_chat(user, "You start prying out the circuit.")
-				if(W.use_tool(src, user, 20, volume = 50))
+				if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_PRYING))
 					to_chat(user, "You pry out the circuit!")
 					var/obj/item/weapon/airalarm_electronics/circuit = new /obj/item/weapon/airalarm_electronics()
 					circuit.loc = user.loc
@@ -915,7 +915,8 @@ Just a object used in constructing air alarms
 /obj/item/weapon/airalarm_electronics
 	name = "air alarm electronics"
 	icon = 'icons/obj/doors/door_electronics.dmi'
-	icon_state = "door_electronics"
+	icon_state = "airalarm_electronics"
+	item_state_world = "airalarm_electronics_w"
 	desc = "Looks like a circuit. Probably is."
 	w_class = SIZE_TINY
 	m_amt = 50
@@ -1055,7 +1056,7 @@ FIRE ALARM
 
 				else if(isprying(W))
 					to_chat(user, "You start prying out the circuit.")
-					if(W.use_tool(src, user, 20, volume = 50))
+					if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_PRYING))
 						to_chat(user, "You pry out the circuit!")
 						var/obj/item/weapon/firealarm_electronics/circuit = new /obj/item/weapon/firealarm_electronics()
 						circuit.loc = user.loc
@@ -1125,16 +1126,16 @@ FIRE ALARM
 	var/d2
 	if (ishuman(user) || issilicon(user) || isobserver(user))
 		if (A.fire)
-			d1 = text("<A href='?src=\ref[];reset=1'>Reset - Lockdown</A>", src)
+			d1 = text("<A href='byond://?src=\ref[];reset=1'>Reset - Lockdown</A>", src)
 		else
-			d1 = text("<A href='?src=\ref[];alarm=1'>Alarm - Lockdown</A>", src)
+			d1 = text("<A href='byond://?src=\ref[];alarm=1'>Alarm - Lockdown</A>", src)
 		if (timing)
-			d2 = text("<A href='?src=\ref[];time=0'>Stop Time Lock</A>", src)
+			d2 = text("<A href='byond://?src=\ref[];time=0'>Stop Time Lock</A>", src)
 		else
-			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
+			d2 = text("<A href='byond://?src=\ref[];time=1'>Initiate Time Lock</A>", src)
 		var/second = round(time) % 60
 		var/minute = (round(time) - second) / 60
-		var/dat = "[d1]\n<HR><b>The current alert level is: [code_name_eng[security_level]]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n"
+		var/dat = "[d1]\n<HR><b>The current alert level is: [code_name_eng[security_level]]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='byond://?src=\ref[src];tp=-30'>-</A> <A href='byond://?src=\ref[src];tp=-1'>-</A> <A href='byond://?src=\ref[src];tp=1'>+</A> <A href='byond://?src=\ref[src];tp=30'>+</A>\n"
 
 		var/datum/browser/popup = new(user, "window=firealarm", src.name)
 		popup.set_content(dat)
@@ -1142,16 +1143,16 @@ FIRE ALARM
 
 	else
 		if (A.fire)
-			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("Reset - Lockdown"))
+			d1 = text("<A href='byond://?src=\ref[];reset=1'>[]</A>", src, stars("Reset - Lockdown"))
 		else
-			d1 = text("<A href='?src=\ref[];alarm=1'>[]</A>", src, stars("Alarm - Lockdown"))
+			d1 = text("<A href='byond://?src=\ref[];alarm=1'>[]</A>", src, stars("Alarm - Lockdown"))
 		if (timing)
-			d2 = text("<A href='?src=\ref[];time=0'>[]</A>", src, stars("Stop Time Lock"))
+			d2 = text("<A href='byond://?src=\ref[];time=0'>[]</A>", src, stars("Stop Time Lock"))
 		else
-			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
+			d2 = text("<A href='byond://?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
 		var/second = round(time) % 60
 		var/minute = (round(time) - second) / 60
-		var/dat = "[d1]\n<HR><b>The current alert level is: [stars(code_name_eng[security_level])]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n"
+		var/dat = "[d1]\n<HR><b>The current alert level is: [stars(code_name_eng[security_level])]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='byond://?src=\ref[src];tp=-30'>-</A> <A href='byond://?src=\ref[src];tp=-1'>-</A> <A href='byond://?src=\ref[src];tp=1'>+</A> <A href='byond://?src=\ref[src];tp=30'>+</A>\n"
 
 		var/datum/browser/popup = new(user, "window=firealarm", stars(src.name))
 		popup.set_content(dat)
@@ -1267,7 +1268,8 @@ Just a object used in constructing fire alarms
 /obj/item/weapon/firealarm_electronics
 	name = "fire alarm electronics"
 	icon = 'icons/obj/doors/door_electronics.dmi'
-	icon_state = "door_electronics"
+	icon_state = "firealarm_electronics"
+	item_state_world = "firealarm_electronics_w"
 	desc = "A circuit. It has a label on it, it says \"Can handle heat levels up to 40 degrees celsius!\""
 	w_class = SIZE_TINY
 	m_amt = 50

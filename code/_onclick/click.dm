@@ -69,6 +69,9 @@
 		client.click_intercept.InterceptClickOn(src, params, A)
 		return
 
+	if(incapacitated(NONE))
+		return
+
 	var/list/modifiers = params2list(params)
 
 	if(client.cob && client.cob.in_building_mode)
@@ -99,9 +102,6 @@
 	if(RegularClickOn(A, params))
 		return
 
-	if(incapacitated(NONE))
-		return
-
 	face_atom(A) // change direction to face what you clicked on
 	if(next_move > world.time) // in the year 2000...
 		return
@@ -128,6 +128,14 @@
 		W.attack_self(src)
 		W.update_inv_mob()
 		return
+
+	// Prevents any actions when using detective stuff (for taking forensic samples from atoms)
+	if(istype(W, /obj/item/weapon/swab) || istype(W, /obj/item/weapon/forensic_sample_kit) || istype(W, /obj/item/device/detective_scanner))
+		// Used only in HELP intent
+		// We are handling taking samples from mobs in attack()
+		if(a_intent == INTENT_HELP && A.Adjacent(src) && !ismob(A))
+			W.afterattack(A, src, TRUE, params)
+			return
 
 	if(istype(W, /obj/item/device/pda))
 		var/obj/item/device/pda/P = W
@@ -427,8 +435,9 @@
 // Craft or Build helper (main file can be found here: code/datums/cob_highlight.dm)
 /mob/proc/cob_click(client/C, list/modifiers)
 	if(C.cob.busy)
-		//do nothing
-	else if(modifiers[LEFT_CLICK])
+		return
+
+	if(modifiers[LEFT_CLICK])
 		if(modifiers[ALT_CLICK])
 			C.cob.rotate_object()
 		else

@@ -36,16 +36,9 @@
 	moving = 1
 	lastMove = world.time
 
+	SSshuttle.undock_act(curr_location, "velocity_officer_shuttle")
 	if(curr_location == locate(/area/shuttle/officer/station))
-		SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_officer")
-		SSshuttle.undock_act(curr_location, "arrival_officer")
 		radio.autosay(department_note, "Система оповещения")
-	else if(curr_location == locate(/area/shuttle/officer/velocity))
-		SSshuttle.undock_act(/area/velocity, "velocity_officer")
-		SSshuttle.undock_act(curr_location, "arrival_officer")
-	else if(curr_location == locate(/area/shuttle/officer/centcom))
-		SSshuttle.undock_act(/area/centcom/evac, "centcomm_officer")
-		SSshuttle.undock_act(curr_location, "arrival_officer")
 
 	var/area/transit_location = locate(/area/shuttle/officer/transit)
 	transit_location.parallax_movedir = WEST
@@ -69,16 +62,9 @@
 	curr_location.move_contents_to(dest_location)
 	SSshuttle.shake_mobs_in_area(dest_location, WEST)
 
+	SSshuttle.dock_act(dest_location, "velocity_officer_shuttle")
 	if(dest_location == locate(/area/shuttle/officer/station))
-		SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_officer")
-		SSshuttle.dock_act(dest_location, "arrival_officer")
 		radio.autosay(arrival_note, "Система оповещения")
-	else if(dest_location == locate(/area/shuttle/officer/velocity))
-		SSshuttle.dock_act(/area/velocity, "velocity_officer")
-		SSshuttle.dock_act(dest_location, "arrival_officer")
-	else if(dest_location == locate(/area/shuttle/officer/centcom))
-		SSshuttle.dock_act(/area/centcom/evac, "centcomm_officer")
-		SSshuttle.dock_act(dest_location, "arrival_officer")
 
 	curr_location = dest_location
 
@@ -93,9 +79,9 @@
 	var/seconds_word = pluralize_russian(seconds, "секунду", "секунды", "секунд")
 	var/dat = {"Местоположение: <b>[capitalize(CASE(curr_location, NOMINATIVE_CASE))]</b><br>
 			Готов лететь[max(lastMove + OFFICER_SHUTTLE_COOLDOWN - world.time, 0) ? " через [seconds] [seconds_word]" : ": сейчас"]<br>
-		<a href='?src=\ref[src];velocity=1'>Велосити Док 42</a> |
-		<a href='?src=\ref[src];station=1'>[station_name_ru()]</a> |
-		<a href='?src=\ref[src];centcomm=1'>ЦентКом</a><br>"}
+		<a href='byond://?src=\ref[src];velocity=1'>Велосити Док 42</a> |
+		<a href='byond://?src=\ref[src];station=1'>[station_name_ru()]</a> |
+		<a href='byond://?src=\ref[src];centcomm=1'>ЦентКом</a><br>"}
 
 	var/datum/browser/popup = new(user, "computer", "[capitalize(CASE(src, NOMINATIVE_CASE))]", 575, 450)
 	popup.set_content(dat)

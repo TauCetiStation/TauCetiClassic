@@ -60,8 +60,7 @@ var/global/specops_shuttle_timeleft = 0
 	var/area/start_location = locate(/area/shuttle/specops/station)
 	var/area/end_location = locate(/area/shuttle/specops/centcom)
 
-	SSshuttle.undock_act(start_location)
-	SSshuttle.undock_act(/area/station/hallway/secondary/entry, "arrival_specops")
+	SSshuttle.undock_act(start_location, "specops_shuttle")
 
 	sleep(10)
 
@@ -95,8 +94,7 @@ var/global/specops_shuttle_timeleft = 0
 		var/mob/M = locate(/mob) in T
 		to_chat(M, "<span class='warning'>Вы прибыли на станцию ЦентКом. Операция завершена!</span>")
 
-	SSshuttle.dock_act(end_location)
-	SSshuttle.dock_act(/area/centcom/living, "centcomm_specops")
+	SSshuttle.dock_act(end_location, "specops_shuttle")
 
 	specops_shuttle_at_station = 0
 
@@ -151,8 +149,7 @@ var/global/specops_shuttle_timeleft = 0
 	var/area/start_location = locate(/area/shuttle/specops/centcom)
 	var/area/end_location = locate(/area/shuttle/specops/station)
 
-	SSshuttle.undock_act(start_location)
-	SSshuttle.undock_act(/area/centcom/living, "centcomm_specops")
+	SSshuttle.undock_act(start_location, "specops_shuttle")
 
 	sleep(10)
 
@@ -176,8 +173,7 @@ var/global/specops_shuttle_timeleft = 0
 
 	start_location.move_contents_to(end_location)
 
-	SSshuttle.dock_act(end_location)
-	SSshuttle.dock_act(/area/station/hallway/secondary/entry, "arrival_specops")
+	SSshuttle.dock_act(end_location, "specops_shuttle")
 
 	for(var/turf/T in get_area_turfs(end_location) )
 		var/mob/M = locate(/mob) in T
@@ -211,7 +207,7 @@ var/global/specops_shuttle_timeleft = 0
 		dat = temp
 	else
 		dat += {"\nМестоположение: [specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "Отправляющийся на [station_name_ru] через [seconds] [seconds_word]":specops_shuttle_at_station ? "[station_name_ru]":"Док"]<BR>
-			[specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "\n*Шаттл специального назначения уже отправляется.*<BR>\n<BR>":specops_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Начать полёт</a><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Отправка на [station_name_ru]</A><BR>\n<BR>"]"}
+			[specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "\n*Шаттл специального назначения уже отправляется.*<BR>\n<BR>":specops_shuttle_at_station ? "\n<A href='byond://?src=\ref[src];sendtodock=1'>Начать полёт</a><BR>\n<BR>":"\n<A href='byond://?src=\ref[src];sendtostation=1'>Отправка на [station_name_ru]</A><BR>\n<BR>"]"}
 
 	var/datum/browser/popup = new(user, "computer", "Шаттл специального назначения", 575, 450)
 	popup.set_content(dat)
@@ -237,7 +233,7 @@ var/global/specops_shuttle_timeleft = 0
 
 		to_chat(usr, "<span class='notice'>Шаттл специального назначения прибудет на Центральное командование через [(SPECOPS_MOVETIME / 10)] секунд.</span>")
 
-		temp += "Шаттл отправляется.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		temp += "Шаттл отправляется.<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 		specops_shuttle_moving_to_centcom = 1
 		specops_shuttle_time = world.timeofday + SPECOPS_MOVETIME
@@ -253,7 +249,7 @@ var/global/specops_shuttle_timeleft = 0
 
 		to_chat(usr, "<span class='notice'>Шаттл специального назначения прибудет на [station_name_ru] через [(SPECOPS_MOVETIME/10)] секунд.</span>")
 
-		temp += "Шаттл отправляется.<BR><BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
+		temp += "Шаттл отправляется.<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
 
 		specops_shuttle_moving_to_station = 1
 

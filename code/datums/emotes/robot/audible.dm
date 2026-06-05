@@ -1,223 +1,216 @@
 /datum/emote/robot/beep
 	key = "beep"
 
-	message_1p = "You beep."
-	message_3p = "beeps."
+	message_1p = "Вы пикаете."
+	message_3p = "пикает."
 
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "flickers."
+	message_impaired_production = "издаёт слабый звук."
+	message_impaired_reception = "мерцает."
 
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
+	message_miming = "изображает звуки робота."
+	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
 
 	sound = 'sound/machines/twobeep.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/robot/ping
 	key = "ping"
 
-	message_1p = "You ping."
-	message_3p = "pings."
+	message_1p = "Вы сигналите."
+	message_3p = "сигналит."
 
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "flickers."
+	message_impaired_production = "издаёт слабый звук."
+	message_impaired_reception = "мерцает."
 
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
+	message_miming = "изображает звуки робота."
+	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
 
 	sound = 'sound/machines/ping.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/robot/buzz
 	key = "buzz"
 
-	message_1p = "You buzz."
-	message_3p = "buzzes."
+	message_1p = "Вы жужжите."
+	message_3p = "жужжит."
 
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "flickers."
+	message_impaired_production = "издаёт слабый звук."
+	message_impaired_reception = "мерцает."
 
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
+	message_miming = "изображает звуки робота."
+	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
 
 	sound = 'sound/machines/buzz-sigh.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 
 /datum/emote/robot/law
 	key = "law"
 
-	message_1p = "You show your legal authorization barcode."
-	message_3p = "shows it's legal authorization barcode."
+	message_1p = "Вы предъявляете штрихкод полномочий службы безопасности.."
+	message_3p = "предъявляет штрихкод полномочий службы безопасности.."
 
-	message_impaired_production = "makes a noise."
-	message_impaired_reception = "flickers."
+	message_impaired_production = "издаёт звук."
+	message_impaired_reception = "мерцает."
 
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a noise."
+	message_miming = "изображает звуки робота."
+	message_muzzled = "издаёт звук."
 
 	message_type = SHOWMSG_AUDIO
 
 	sound = 'sound/voice/beepsky/iamthelaw.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(has_robot_module, /obj/item/weapon/robot_module/security),
-	)
+	required_stat = CONSCIOUS
+
+/datum/emote/robot/law/can_emote(mob/user, intentional)
+	var/mob/living/silicon/robot/R = user
+	if(!istype(R.module, /obj/item/weapon/robot_module/security))
+		if(intentional)
+			to_chat(R, "<span class='notice'>У вас неподходящий модуль для этого эмоута.</span>")
+		return FALSE
+
+	return ..()
+
 
 /datum/emote/robot/confirm
 	key = "confirm"
 
-	message_1p = "You emits affirmative blip."
-	message_3p = "emits an affirmative blip."
+	message_1p = "Вы утвердительно сигналите."
+	message_3p = "утвердительно сигналит."
 
-	message_impaired_production = "makes a noise."
-	message_impaired_reception = "flickers."
+	message_impaired_production = "издаёт звук."
+	message_impaired_reception = "мерцает."
 
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
+	message_miming = "изображает звуки робота."
+	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
 
 	sound = 'sound/machines/synth_yes.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/robot/deny
 	key = "deny"
 
-	message_1p = "You emits negative blip."
-	message_3p = "emits a negative blip."
+	message_1p = "Вы отрицательно сигналите."
+	message_3p = "отрицательно сигналит."
 
-	message_impaired_production = "makes a noise."
-	message_impaired_reception = "flickers."
+	message_impaired_production = "издаёт звуки."
+	message_impaired_reception = "мерцает."
 
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
+	message_miming = "изображает звуки робота."
+	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
 
 	sound = 'sound/machines/synth_no.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/robot/scary
 	key = "scary"
 
-	message_1p = "You emits disconcerting tone."
-	message_3p = "emits a disconcerting tone."
+	message_1p = "Вы пугающе сигналите."
+	message_3p = "пугающе сигналит."
 
-	message_impaired_production = "makes a noise."
-	message_impaired_reception = "flickers."
+	message_impaired_production = "издаёт звуки."
+	message_impaired_reception = "мерцает."
 
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
+	message_miming = "изображает звуки робота."
+	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
 
 	sound = 'sound/machines/synth_alert.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/robot/woop
 	key = "woop"
 
-	message_1p = "You chirp happily."
-	message_3p = "chirps happily."
+	message_1p = "Вы радостно пиликаете."
+	message_3p = "радостно пиликает."
 
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "flickers."
+	message_impaired_production = "издаёт слабый звук."
+	message_impaired_reception = "мерцает."
 
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
+	message_miming = "изображает звуки робота."
+	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
 
 	sound = 'sound/machines/dwoop.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/robot/boop
 	key = "boop"
 
-	message_1p = "You boop."
-	message_3p = "boops."
+	message_1p = "Вы издаёте короткий гудок."
+	message_3p = "издаёт короткий гудок."
 
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "flickers."
+	message_impaired_production = "издаёт слабый звук."
+	message_impaired_reception = "мерцает."
 
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
+	message_miming = "изображает звуки робота."
+	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
 
 	sound = 'sound/machines/roboboop.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/robot/robochirp
 	key = "chirp"
 
-	message_1p = "You chirp."
-	message_3p = "chirps."
+	message_1p = "Вы пиликаете."
+	message_3p = "пиликает."
 
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "flickers."
+	message_impaired_production = "издаёт слабый звук."
+	message_impaired_reception = "мерцает."
 
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
+	message_miming = "изображает звуки робота."
+	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
 
 	sound = 'sound/machines/robochirp.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/robot/calling
 	key = "call"
 
-	message_1p = "You're dialing."
-	message_3p = "dialling."
+	message_1p = "Вы набираете номер."
+	message_3p = "набирает номер."
 
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "flickers."
+	message_impaired_production = "издаёт звуки."
+	message_impaired_reception = "мерцает."
 
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
+	message_miming = "изображает звуки робота."
+	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
 
 	sound = 'sound/machines/longwhistle_robot.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS

@@ -130,7 +130,7 @@
 			if(NOCLONE in T.mutations)
 				return
 
-			if(T.species && T.species.flags[NO_BLOOD])
+			if(HAS_TRAIT(T, TRAIT_NO_BLOOD))
 				return
 
 			// If the human is losing too much blood, beep.

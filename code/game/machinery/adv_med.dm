@@ -73,7 +73,6 @@
 	add_fingerprint(user)
 	close_machine(G.affecting)
 	playsound(src, 'sound/machines/analysis.ogg', VOL_EFFECTS_MASTER, null, FALSE)
-	qdel(G)
 
 /obj/machinery/bodyscanner/update_icon()
 	icon_state = "body_scanner_[occupant ? "1" : "0"]"
@@ -117,13 +116,13 @@
 			if(prob(75))
 				return
 	for(var/atom/movable/A in src)
-		A.forceMove(loc)
-		ex_act(severity)
+		A.forceMove(get_turf(src))
+		A.ex_act(severity)
 	qdel(src)
 
 /obj/machinery/bodyscanner/deconstruct(disassembled)
 	for(var/atom/movable/A in src)
-		A.forceMove(loc)
+		A.forceMove(get_turf(src))
 	..()
 
 /obj/machinery/body_scanconsole/power_change()
@@ -141,7 +140,6 @@
 
 /obj/machinery/body_scanconsole
 	var/obj/machinery/bodyscanner/connected
-	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mind_protect/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/obedience, /obj/item/weapon/implant/skill, /obj/item/weapon/implant/blueshield, /obj/item/weapon/implant/fake_loyal, /obj/item/weapon/implant/bork)
 	name = "Body Scanner Console"
 	cases = list("консоль медицинского сканера", "консоли медицинского сканера", "консоли медицинского сканера", "консоль медицинского сканера", "консолью медицинского сканера", "консоли медицинского сканера")
 	icon = 'icons/obj/Cryogenic3.dmi'
@@ -196,10 +194,10 @@
 
 		var/list/bloodData = list()
 		bloodData["hasBlood"] = FALSE
-		if(!occupant.species.flags[NO_BLOOD])
+		if(!HAS_TRAIT(occupant, TRAIT_NO_BLOOD))
 			bloodData["hasBlood"] = TRUE
 			bloodData["percent"] = round(((occupant.blood_amount() / BLOOD_VOLUME_NORMAL)*100))
-			bloodData["pulse"] = occupant.get_pulse(GETPULSE_TOOL)
+			bloodData["pulse"] = occupant.get_pulse_number(GETPULSE_TOOL)
 			bloodData["bloodLevel"] = occupant.blood_amount()
 			bloodData["bloodNormal"] = BLOOD_VOLUME_NORMAL
 		occupantData["blood"] = bloodData
@@ -223,11 +221,11 @@
 
 			var/list/implantData = list()
 			var/has_unknown_implant = FALSE
-			for(var/obj/I in E.implants)
+			for(var/obj/item/weapon/implant/I in E.embedded_objects)
 				var/list/implantSubData = list()
 				implantSubData["name"] = C_CASE(I, NOMINATIVE_CASE)
 
-				if(!is_type_in_list(I, known_implants))
+				if(!is_known_implant(I))
 					has_unknown_implant = TRUE
 					implantSubData["name"] = null
 
@@ -239,7 +237,7 @@
 			var/list/organStatus = list()
 			if(E.status & ORGAN_BROKEN)
 				organStatus["broken"] = capitalize(E.broken_description)
-			if(E.is_robotic())
+			if(E.is_robotic_part())
 				organStatus["robotic"] = TRUE
 			if(E.status & ORGAN_SPLINTED)
 				organStatus["splinted"] = TRUE
@@ -279,8 +277,7 @@
 			organData["maxHealth"] = I.min_broken_damage
 			organData["bruised"] = I.is_bruised()
 			organData["broken"] = I.is_broken()
-			organData["assisted"] = I.robotic == 1
-			organData["robotic"] = I.robotic == 2
+			organData["robotic"] = I.is_robotic()
 			organData["dead"] = (I.status & ORGAN_DEAD)
 
 			intOrganData.Add(list(organData))
@@ -291,8 +288,12 @@
 		occupantData["nearsighted"] = HAS_TRAIT(occupant, TRAIT_NEARSIGHT)
 
 	data["occupant"] = occupantData
+	data["canPopout"] = hasHUD(user, "medical")
 
 	return data
+
+/obj/machinery/body_scanconsole/proc/is_known_implant(obj/item/weapon/implant/I)
+	return I.legal
 
 /obj/machinery/body_scanconsole/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
@@ -304,6 +305,8 @@
 			connected.eject()
 		if("print_p")
 			print_scan()
+		if("popout_scan")
+			popout_scan()
 
 	return TRUE
 
@@ -398,7 +401,7 @@
 			bled = "Кровотечение:"
 		if(BP.status & ORGAN_BROKEN)
 			AN = "[capitalize(BP.broken_description)]:"
-		if(BP.is_robotic())
+		if(BP.is_robotic_part())
 			robot = "Протез:"
 		if(BP.open)
 			open = "Вскрытое:"
@@ -408,8 +411,8 @@
 			infected = "[get_germ_level_name(BP.germ_level)]:"
 
 		var/unknown_body = 0
-		for(var/I in BP.implants)
-			if(is_type_in_list(I,known_implants))
+		for(var/obj/item/weapon/implant/I in BP.embedded_objects)
+			if(is_known_implant(I))
 				imp += "[I] имплантирован:"
 			else
 				unknown_body++
@@ -434,9 +437,7 @@
 		var/mech = "Органическое:"
 		var/organ_status = ""
 		var/infection = ""
-		if(IO.robotic == 1)
-			mech = "Со вспомогательными средствами:" // sounds weird
-		if(IO.robotic == 2)
+		if(IO.is_robotic())
 			mech = "Механическое:"
 
 		if(istype(IO, /obj/item/organ/internal/heart))
@@ -467,3 +468,52 @@
 		dat += "Обнаружено смещение сетчатки.<BR>"
 
 	return dat
+
+/obj/machinery/body_scanconsole/proc/popout_scan()
+	if(!do_skill_checks(usr))
+		return
+
+	if(!connected || !connected.occupant || !hasHUD(usr, "medical"))
+		return
+	
+	new /datum/body_scanconsole_tguidataholder(usr, tgui_data())
+
+/datum/body_scanconsole_tguidataholder
+	var/list/saved_tgui_data
+
+/datum/body_scanconsole_tguidataholder/New(mob/user, list/data)
+	. = ..()
+	saved_tgui_data = data
+	saved_tgui_data["isPopout"] = TRUE
+	tgui_interact(user)
+
+/datum/body_scanconsole_tguidataholder/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BodyScanner", "Результаты сканирования [saved_tgui_data["occupant"]["name"]]", 690, 600)
+		ui.open()
+
+/datum/body_scanconsole_tguidataholder/tgui_static_data(mob/user)
+	return saved_tgui_data
+
+/datum/body_scanconsole_tguidataholder/tgui_state(mob/user)
+	return global.conscious_state
+
+/datum/body_scanconsole_tguidataholder/tgui_status(mob/user, datum/tgui_state/state)
+	. = ..()
+	if(. < UI_DISABLED)
+		return
+
+	if(!hasHUD(user, "medical"))
+		return UI_CLOSE
+	return UI_INTERACTIVE
+
+/datum/body_scanconsole_tguidataholder/tgui_close(mob/user)
+	qdel(src)
+
+/datum/body_scanconsole_tguidataholder/Destroy(force, ...)
+	SStgui.close_uis(src)
+	. = ..()
+
+/obj/machinery/body_scanconsole/vox/is_known_implant(obj/item/weapon/implant/I)
+	return istype(I, /obj/item/weapon/implant/cortical)

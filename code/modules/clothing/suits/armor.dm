@@ -218,7 +218,8 @@
 	slowdown = 0.2
 	armor = list(melee = 80, bullet = 70, laser = 70,energy = 70, bomb = 70, bio = 0, rad = 0)
 	allowed = list(/obj/item/weapon/gun/energy,/obj/item/weapon/gun/plasma,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/clothing/head/helmet, /obj/item/weapon/tank)
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	render_flags = parent_type::render_flags | HIDE_TAIL
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
@@ -402,7 +403,7 @@
 			to_chat(usr, "<span class='notice'>You need your gun equiped to holster it.</span>")
 			return
 		if(!I.can_be_holstered)
-			to_chat(usr, "<span class='warning'>This gun won't fit in \the belt!</span>")
+			to_chat(usr, "<span class='warning'>This gun won't fit in the belt!</span>")
 			return
 		holstered = usr.get_active_hand()
 		usr.drop_from_inventory(holstered, src)
@@ -430,7 +431,8 @@
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 80, bullet = 70, laser = 55, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	render_flags = parent_type::render_flags | HIDE_TAIL
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 

@@ -80,3 +80,12 @@
 #define RESET_LEVEL_LIGHTING(turf) \
 	turf.underlays -= list(global.level_light_source_mask, global.level_light_cast_mask); \
 	turf.luminosity = initial(turf.luminosity)
+
+#define GLOW_BRIGHTNESS_BASE_DEF 0.46
+#define GLOW_BRIGHTNESS_POWER_DEF -1.6
+#define GLOW_CONTRAST_BASE_DEF 10
+#define GLOW_CONTRAST_POWER_DEF -0.15
+#define EXPOSURE_BRIGHTNESS_BASE_DEF 0.2
+#define EXPOSURE_BRIGHTNESS_POWER_DEF -0.2
+#define EXPOSURE_CONTRAST_BASE_DEF 10
+#define EXPOSURE_CONTRAST_POWER_DEF 0

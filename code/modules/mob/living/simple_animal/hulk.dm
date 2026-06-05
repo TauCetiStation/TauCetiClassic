@@ -113,7 +113,7 @@
 	for(var/spell in hulk_powers)
 		AddSpell(new spell(src))
 
-/mob/living/simple_animal/hulk/unathi/Login()
+/mob/living/simple_animal/hulk/unathi/LateLogin()
 	..()
 	to_chat(src, "<span class='notice'>Вы можете есть конечности (Левая кнопка мыши).</span>")
 

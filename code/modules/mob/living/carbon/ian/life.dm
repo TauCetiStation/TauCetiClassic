@@ -107,7 +107,6 @@
 			location_as_object.handle_internal_lifeform(src, 0)
 
 		handle_mutations_and_radiation()
-		handle_chemicals_in_body()
 		handle_disabilities()
 		handle_virus_updates()
 
@@ -137,7 +136,7 @@
 	..()
 
 /mob/living/carbon/ian/is_skip_breathe()
-	return ..() || istype(head, /obj/item/clothing/head/helmet/space) || reagents?.has_reagent("lexorin")
+	return ..() || istype(head, /obj/item/clothing/head/helmet/space)
 
 /mob/living/carbon/ian/proc/handle_mutations_and_radiation()
 	if(getFireLoss())
@@ -190,19 +189,20 @@
 					domutcheck(src,null)
 					emote("gasp")
 
-/mob/living/carbon/ian/proc/handle_chemicals_in_body()
-	if(reagents && reagents.reagent_list.len)
-		reagents.metabolize(src)
+/mob/living/carbon/ian/handle_metabolism()
+	. = ..()
+	if(!.)
+		return FALSE
 
-		var/total_phoronloss = 0
-		for(var/obj/item/I in src)
-			if(I.contaminated)
-				total_phoronloss += vsc.plc.CONTAMINATION_LOSS
-		adjustToxLoss(total_phoronloss)
+	var/total_phoronloss = 0
+	for(var/obj/item/I in src)
+		if(I.contaminated)
+			total_phoronloss += vsc.plc.CONTAMINATION_LOSS
+	adjustToxLoss(total_phoronloss)
 
 	// nutrition decrease
 	if (nutrition > 0)
-		nutrition = max(0, nutrition - get_metabolism_factor() / 10)
+		nutrition = max(0, nutrition - mob_metabolism_mod.Get() / 10)
 
 	if (nutrition > 450)
 		if(overeatduration < 600)
@@ -248,7 +248,7 @@
 			Stuttering(10)
 
 /mob/living/carbon/ian/proc/handle_virus_updates()
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_VIRUS_IMMUNE))
 		return FALSE
 	if(bodytemperature > 406)
 		for (var/ID in virus2)
@@ -325,12 +325,8 @@
 	return
 
 /mob/living/carbon/ian/updatehealth()
-	if(status_flags & GODMODE)
-		health = 100
-		stat = CONSCIOUS
-	else
-		health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
-		med_hud_set_health()
+	health = 100 - getOxyLoss() - getToxLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
+	med_hud_set_health()
 
 /mob/living/carbon/ian/proc/handle_regular_status_updates()
 	if(stat == DEAD)
@@ -355,7 +351,7 @@
 			to_chat(src, "<span class='notice'>You're in too much pain to keep going...</span>")
 			visible_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.")
 			Paralyse(10)
-			setHalLoss(99)
+			adjustHalLoss(-1)
 
 		if(paralysis)
 			blinded = TRUE
@@ -401,7 +397,7 @@
 	return TRUE
 
 /mob/living/carbon/ian/proc/handle_temperature_damage(body_part, exposed_temperature, exposed_intensity)
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_GODMODE))
 		return
 	var/discomfort = min(abs(exposed_temperature - bodytemperature)*(exposed_intensity) / 2000000, 1.0)
 

@@ -227,6 +227,16 @@
 		var/datum/metahelp/H = new help
 		global.metahelps[H.id] = H
 
+
+	global.skin_tones_by_ru_name = list()
+	global.skin_tones_by_name = list()
+	global.skin_tones = list()
+	for(var/tone in subtypesof(/datum/skin_tone))
+		var/datum/skin_tone/T = new tone
+		global.skin_tones_by_ru_name[T.cases[NOMINATIVE_CASE]] = T
+		global.skin_tones_by_name[T.name] = T
+		global.skin_tones += T
+
 	global.special_roles = get_list_of_primary_keys(special_roles_ignore_question)
 
 	global.antag_roles = global.special_roles - ROLE_GHOSTLY
@@ -297,12 +307,11 @@
 	for(var/datum/ringtone/Ring as anything in subtypesof(/datum/ringtone))
 		global.ringtones_by_names["[initial(Ring.name)]"] = new Ring
 
-	init_washing_items_list()
+	global.package_wrap_by_type = list()
+	for(var/package_wrap_type as anything in typesof(/datum/package_wrap))
+		global.package_wrap_by_type[package_wrap_type] = new package_wrap_type
 
-	global.body_wing_accessory_by_name = list()
-	for(var/A as anything in subtypesof(/datum/sprite_accessory/wing))
-		var/datum/sprite_accessory/wing/B = new A
-		global.body_wing_accessory_by_name[B.name] = B
+	init_washing_items_list()
 
 /proc/init_washing_items_list()
 	var/list/path_list = list(/obj/item/clothing/mask,
@@ -327,12 +336,6 @@
 	global.washing_items_list -= /obj/item/clothing/head/syndicatefake
 	global.washing_items_list -= /obj/item/clothing/head/helmet
 	global.washing_items_list -= /obj/item/clothing/gloves/pipboy
-
-/proc/init_joblist() // Moved here because we need to load map config to edit jobs, called from SSjobs
-	//List of job. I can't believe this was calculated multiple times per tick!
-	for(var/T in (subtypesof(/datum/job) - list(/datum/job/ai,/datum/job/cyborg)))
-		var/datum/job/J = new T
-		joblist[J.title] = J
 
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()

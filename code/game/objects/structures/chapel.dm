@@ -33,7 +33,7 @@
 		return !density
 	return TRUE
 
-/obj/structure/stool/bed/chair/pew/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+/obj/structure/stool/bed/chair/pew/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	if(!density)
 		return TRUE
 	if(is_the_opposite_dir(dir, to_dir))
@@ -293,7 +293,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	return ..()
 
 /obj/structure/big_bell/attackby(obj/item/I, mob/user)
-	if(iswrenching(I) && !user.is_busy(src) && I.use_tool(src, user, 40, volume = 50))
+	if(iswrenching(I) && !user.is_busy(src) && I.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 		anchored = !anchored
 		visible_message("<span class='warning'>[src] has been [anchored ? "secured to the floor" : "unsecured from the floor"] by [user].</span>")
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
@@ -304,8 +304,8 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 /obj/structure/big_bell/CanPass(atom/movable/mover, turf/target, height=0)
 	return istype(mover) && mover.checkpass(PASSCRAWL)
 
-/obj/structure/big_bell/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, atom/movable/caller)
-	return istype(caller) && caller.checkpass(PASSCRAWL)
+/obj/structure/big_bell/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, atom/movable/origin)
+	return istype(origin) && origin.checkpass(PASSCRAWL)
 
 /obj/structure/big_bell/CheckExit(atom/movable/mover, target)
 	return istype(mover) && mover.checkpass(PASSCRAWL)
@@ -573,7 +573,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 
 	return get_dir(target, loc) & dir
 
-/obj/structure/stool/bed/chair/lectern/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+/obj/structure/stool/bed/chair/lectern/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	if(!density)
 		return TRUE
 

@@ -407,7 +407,7 @@
 	id = "flash_powder"
 	result = null
 	required_reagents = list("aluminum" = 1, "potassium" = 1, "sulfur" = 1 )
-	result_amount = null
+	result_amount = 3
 
 /datum/chemical_reaction/flash_powder/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -415,22 +415,19 @@
 	s.set_up(2, 1, location)
 	s.start()
 
-	var/range = created_volume / 3
 	if(isatom(holder.my_atom))
 		var/atom/A = holder.my_atom
-		A.flash_lighting_fx(_range = (range + 2), _reset_lighting = FALSE)
+		A.flash_lighting_fx(_range = (FLASH_LIGHT_RANGE * created_volume / (created_volume + 10)), _reset_lighting = FALSE)
 
 	for(var/mob/living/carbon/M in viewers(world.view, location))
-		if(M.eyecheck() > 0)
+		var/dist = get_dist(M, location)
+		if(M.eyecheck() > 0 && dist > 0)
 			continue
 		M.flash_eyes()
-		switch(get_dist(M, location))
-			if(0 to 3)
-				M.Stun(7)
-				M.Weaken(15)
-
-			if(4 to 5)
-				M.Stun(5)
+		if(dist < world.view)
+			var/duration = floor(sqrt(created_volume) / 2) / sqrt(dist + 1)
+			M.Stun(duration)
+			M.Weaken(duration * 1.2)
 
 /datum/chemical_reaction/napalm
 	name = "Napalm"
@@ -874,7 +871,7 @@
 		target_tile.assume_gas("phoron", 25, 1400)
 		spawn (0)
 			target_tile.hotspot_expose(700, 400)
-	message_admins("Orange slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
+	message_admins("Orange slime extract activated by [key_name_admin(usr)](<A href='byond://?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
 	log_game("Orange slime extract activated by [key_name(usr)]")
 
 //Yellow
@@ -889,7 +886,7 @@
 
 /datum/chemical_reaction/slimeoverload/on_reaction(datum/reagents/holder, created_volume)
 	empulse(get_turf_loc(holder.my_atom), 3, 7)
-	message_admins("Yellow slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
+	message_admins("Yellow slime extract activated by [key_name_admin(usr)](<A href='byond://?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
 	log_game("Yellow slime extract activated by [key_name(usr)]")
 
 /datum/chemical_reaction/slimecell
@@ -1025,7 +1022,7 @@
 
 /datum/chemical_reaction/slimeexplosion/proc/do_explosion(datum/reagents/holder)
 	explosion(get_turf_loc(holder.my_atom), 1 ,3, 6)
-	message_admins("Oil slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
+	message_admins("Oil slime extract activated by [key_name_admin(usr)](<A href='byond://?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>) [ADMIN_JMP(usr)]")
 	log_game("Oil slime extract activated by [key_name(usr)]")
 
 //Light Pink

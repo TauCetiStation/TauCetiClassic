@@ -39,13 +39,13 @@
 	data["stationTime"] = worldtime2text()
 	var/secLevelStr = code_name_eng[security_level]
 	if(security_level == SEC_LEVEL_GREEN)
-		secLevelStr = "<font color='green'><b>&#9899;</b></font>"
+		secLevelStr = {"<div class="circle circle_green"></div>"}
 	if(security_level == SEC_LEVEL_BLUE)
-		secLevelStr = "<font color='blue'><b>&#9899;</b></font>"
+		secLevelStr = {"<div class="circle circle_blue"></div>"}
 	if(security_level == SEC_LEVEL_RED)
-		secLevelStr = "<font color='red'><b>&#9899;</b></font>"
+		secLevelStr = {"<div class="circle circle_red"></div>"}
 	if(security_level == SEC_LEVEL_DELTA)
-		secLevelStr = "<font color='purple'><b>&Delta;</b></font>"
+		secLevelStr = {"<div class="triangle triangle_purple"></div>"}
 	data["securityLevel"] = secLevelStr
 
 	data["mode"] = mode

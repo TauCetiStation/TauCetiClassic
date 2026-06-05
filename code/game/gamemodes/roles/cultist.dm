@@ -4,7 +4,7 @@
 
 	required_pref = ROLE_CULTIST
 	restricted_jobs = list("Security Cadet", "Chaplain", "AI", "Cyborg", "Security Officer", "Warden", "Head of Security", "Captain", "Internal Affairs Agent", "Blueshield Officer")
-	restricted_species_flags = list(NO_BLOOD)
+	restricted_species_traits = list(TRAIT_NO_BLOOD)
 
 	antag_hud_type = ANTAG_HUD_CULT
 	antag_hud_name = "hudcultist"
@@ -62,10 +62,10 @@
 
 /datum/role/cultist/extraPanelButtons()
 	var/dat = ..()
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];cult_tome=1;'>(Give Tome)</a>"
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];cult_heaven=1;'>(TP to Heaven)</a>"
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];cult_cheating=1;'>(Cheating Religion)</a>"
-	dat += " - <a href='?src=\ref[antag];mind=\ref[antag];role=\ref[src];cult_leader=1;'>(Make Leader)</a>"
+	dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];cult_tome=1;'>(Give Tome)</a>"
+	dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];cult_heaven=1;'>(TP to Heaven)</a>"
+	dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];cult_cheating=1;'>(Cheating Religion)</a>"
+	dat += " - <a href='byond://?src=\ref[antag];mind=\ref[antag];role=\ref[src];cult_leader=1;'>(Make Leader)</a>"
 	return dat
 
 /datum/role/cultist/RoleTopic(href, href_list, datum/mind/M, admin_auth)

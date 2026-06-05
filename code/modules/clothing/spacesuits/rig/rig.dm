@@ -185,6 +185,7 @@
 	return TRUE
 
 /obj/item/clothing/suit/space/rig/Topic(href,href_list)
+	..()
 	var/mob/living/carbon/human/user = usr
 	if(offline || !istype(user) || user.wear_suit != src)
 		return FALSE
@@ -485,12 +486,14 @@
 		slowdown += boots.slowdown_off
 		magpulse = TRUE
 		to_chat(user, "You enable \the [src] the mag-pulse traction system.")
+		playsound(src, pick(SOUNDIN_MAGBOOTS_TOGGLE), VOL_EFFECTS_MASTER, 100)
 
 /obj/item/clothing/suit/space/rig/proc/disable_magpulse(mob/user)
 		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
 		slowdown = initial(slowdown)
 		magpulse = FALSE
 		to_chat(user, "You disable \the [src] the mag-pulse traction system.")
+		playsound(src, 'sound/effects/magb4.ogg', VOL_EFFECTS_MASTER, 100)
 
 /obj/item/clothing/suit/space/rig/negates_gravity()
 	return flags & NOSLIP
@@ -709,7 +712,7 @@
 	var/equipped_on_head = FALSE
 	var/rig_type = "syndie"
 	var/glowtype = "terror"
-	flags = BLOCKHAIR | PHORONGUARD
+	flags = PHORONGUARD
 	light_color = LIGHT_COLOR_NUKE_OPS
 
 /obj/item/clothing/head/helmet/space/rig/syndi/atom_init()

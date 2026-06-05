@@ -11,6 +11,7 @@
 	else
 		new /obj/item/weapon/storage/backpack/satchel/cap(src)
 
+
 	//weapon replacement
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_BULLETS))
 		new /obj/item/weapon/gun/projectile/revolver/detective(src)
@@ -36,9 +37,10 @@
 	new /obj/item/clothing/under/dress/dress_cap(src)
 	new /obj/item/clothing/under/rank/capcamsole(src)
 	new /obj/item/device/remote_device/captain(src)
-	new /obj/item/airbag(src)
+	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/lockbox/medal/captain(src)
+	new /obj/item/weapon/storage/pouch/medium_generic(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
 		new /obj/item/clothing/head/santa(src)
@@ -99,9 +101,11 @@
 
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/device/flash(src)
-	new /obj/item/airbag(src)
+	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/lockbox/medal/hop(src)
+	new /obj/item/weapon/storage/pouch/medium_generic(src)
+	new /obj/item/weapon/storage/pouch/large_generic(src)
 
 /obj/structure/closet/secure_closet/hop2
 	name = "Head of Personnel's Attire"
@@ -173,10 +177,11 @@
 	new /obj/item/weapon/melee/telebaton(src)
 	new /obj/item/device/flashlight/flare(src)
 	new /obj/item/device/flashlight/seclite(src)
-	new /obj/item/airbag(src)
+	new /obj/item/clothing/neck/airbag(src)
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/storage/lockbox/medal/hos(src)
+	new /obj/item/weapon/storage/pouch/medium_generic(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
@@ -237,6 +242,7 @@
 	new /obj/item/weapon/storage/pouch/pistol_holster(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
 	new /obj/item/weapon/storage/box/mines/shock(src)
+	new /obj/item/weapon/storage/pouch/ammo(src)
 	if(SSenvironment.envtype[z] == ENV_TYPE_SNOW)
 		new /obj/item/clothing/suit/hooded/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
@@ -333,11 +339,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	overlay_unlocked = "cabinetsecure_unlocked"
 	overlay_welded = "cabinetsecure_welded"
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	new /obj/item/clothing/under/det(src)
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/device/detective_scanner(src)
+	new /obj/item/weapon/storage/briefcase/crimekit(src)
+	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/suit/armor/det_suit(src)
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
 		new /obj/item/weapon/gun/energy/taser(src)
@@ -396,6 +405,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	overlay_unlocked = "cabinetsecure_unlocked"
 	overlay_welded = "cabinetsecure_welded"
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/closet/secure_closet/forensics/PopulateContents()
 	new /obj/item/clothing/under/rank/forensic_technician(src)
 	new /obj/item/clothing/under/rank/forensic_technician/black(src)
@@ -406,7 +417,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/device/detective_scanner(src)
+	new /obj/item/weapon/storage/briefcase/crimekit(src)
+	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/toy/crayon/chalk(src)
 
@@ -494,3 +506,4 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical(src)
 	new /obj/item/device/flashlight/seclite(src)
 	new /obj/item/weapon/storage/pouch/baton_holster(src)
+	new	/obj/item/clothing/gloves/latex/nitrile(src)

@@ -148,6 +148,7 @@ Note: Must be placed west/left of and R&D console to function.
 	busy = TRUE
 
 	to_chat(user, "<span class='notice'>You add [amount] sheets to the [name].</span>")
+	playsound(src, 'sound/machines/material_insert.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 	add_overlay("protolathe_[stack.name]")
 	sleep(10)
@@ -210,7 +211,6 @@ Note: Must be placed west/left of and R&D console to function.
 		return
 
 	busy = TRUE
-	flick("protolathe_n",src)
 	use_power(power)
 
 	for(var/M in D.materials)
@@ -243,6 +243,8 @@ Note: Must be placed west/left of and R&D console to function.
 		linked_console.files.design_created_prototypes[D.id]++
 	busy = FALSE
 	queue -= RNDD
+	flick("protolathe_n",src)
+	playsound(src, 'sound/machines/protolat.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 	if(queue.len)
 		produce_design(queue[1])
@@ -259,3 +261,4 @@ Note: Must be placed west/left of and R&D console to function.
 			var/sheet_amount = min(available_num_sheets, amount)
 			sheet.set_amount(sheet_amount)
 			loaded_materials[sheet_type].amount = max(0, loaded_materials[sheet_type].amount - sheet_amount * loaded_materials[sheet_type].sheet_size)
+			playsound(src, 'sound/machines/material_eject.ogg', VOL_EFFECTS_MASTER, vary = FALSE)

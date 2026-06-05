@@ -126,7 +126,7 @@
 						switch(target_zone)
 							if(BP_CHEST)
 								pulse_status = "pulse"
-								if(H.heart_status == HEART_NORMAL && M.oxyloss < 50)
+								if(H.heart_status == HEART_NORMAL && M.getOxyLoss() < 50)
 									pulse_strength = "hear a healthy"
 								else if(H.heart_status == HEART_FIBR)
 									pulse_strength = "hear an odd pulse"
@@ -365,7 +365,7 @@
 			var/obj/item/device/pda/pda = I
 			id_card = pda.id
 
-		if(access_security in id_card.access || emagged)
+		if((access_security in id_card.access) || emagged)
 			to_chat(user, "You imprint your ID details onto the badge.")
 			stored_name = id_card.registered_name
 			name = "holobadge ([stored_name])"
@@ -419,3 +419,33 @@
 /obj/item/clothing/accessory/holobadge/emp_act(severity)
 	if(camera)
 		camera.emp_act(1)
+
+
+/obj/item/clothing/accessory/newbiebadge
+	name = "newbie badge"
+	desc = "Бейджик с надписью: \"Я здесь новенький!\"."
+	icon_state = "newbieBadge"
+	item_state_world = "newbieBadge_world"
+	slot_flags = SLOT_FLAGS_NECK | SLOT_FLAGS_TIE
+
+	item_action_types = list(/datum/action/item_action/hands_free/showBadge)
+
+/obj/item/clothing/accessory/newbiebadge/attack(mob/living/carbon/human/M, mob/living/user)
+	if(isliving(user))
+		user.visible_message(
+			"<span class='warning'>[user] invades [M]'s personal space, thrusting [src] into their face insistently.</span>",
+			"<span class='warning'>You invade [M]'s personal space, thrusting [src] into their face insistently.</span>")
+
+/obj/item/clothing/accessory/newbiebadge/attack_self(mob/user)
+	if(isliving(user))
+		user.visible_message(
+			"<span class='warning'>[user] показывает свой бейдж NanoTrasen Employee Adaptation Program.\nС надписью: \"Я здесь новенький!\".</span>",
+			"<span class='warning'>Вы показываете свой бейдж NanoTrasen Employee Adaptation Program.\nС надписью: \"Я здесь новенький!\".</span>")
+
+/datum/action/item_action/hands_free/showBadge
+	name = "Show Badge"
+
+/datum/action/item_action/hands_free/showBadge/Activate()
+	usr.visible_message(
+		"<span class='warning'>[usr] показывает свой бейдж NanoTrasen Employee Adaptation Program.\nС надписью: \"Я здесь новенький!\".</span>",
+		"<span class='warning'>Вы показываете свой бейдж NanoTrasen Employee Adaptation Program.\nС надписью: \"Я здесь новенький!\".</span>")

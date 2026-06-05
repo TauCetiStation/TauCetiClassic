@@ -1,19 +1,4 @@
 #define PROTECTION_TO_MULTIPLE(p) ((100 - min(p, 100)) * 0.01)
-/mob/living/carbon/human/getHalLoss()
-	if(species.flags[NO_PAIN])
-		return 0
-	return ..()
-
-/mob/living/carbon/human/setHalLoss()
-	if(species.flags[NO_PAIN])
-		return
-	..()
-
-/mob/living/carbon/human/adjustHalLoss()
-	if(species.flags[NO_PAIN])
-		return
-	..()
-
 /mob/living/carbon/proc/can_catch_item()
 	if(!in_throw_mode)
 		return
@@ -58,6 +43,16 @@
 		return TRUE
 	P.def_zone = def_zone // a bit junky, but it will either bump this one, or bump object
 	return FALSE
+
+/mob/living/carbon/human/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(..())
+		return
+	if(hit_atom.density)
+		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smashes into [hit_atom]!</span>")
+		SetCrawling(TRUE)
+		update_canmove()
+		drop_from_inventory(l_hand)
+		drop_from_inventory(r_hand)
 
 /mob/living/carbon/human/mob_bullet_act(obj/item/projectile/P, def_zone)
 	. = PROJECTILE_ALL_OK
@@ -148,7 +143,7 @@
 			else if(force <= 40)
 				apply_effects(B.stoping_power,B.stoping_power,0,0,B.stoping_power,0,0,armor)
 
-		if(!species.flags[NO_EMBED] && P.embed && prob(20 + max(P.damage - armor, -20)) && P.damage_type == BRUTE)
+		if(!HAS_TRAIT(src, TRAIT_NO_EMBED) && P.embed && prob(20 + max(P.damage - armor, -20)) && P.damage_type == BRUTE)
 			var/obj/item/weapon/shard/shrapnel/SP = new()
 			SP.name = "[P.name] shrapnel"
 			SP.desc = "[SP.desc] It looks like it was fired from [P.shot_from]."
@@ -273,7 +268,7 @@
 			continue
 		BP.emplode(severity)
 		for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-			if(IO.robotic == 0)
+			if(!IO.is_robotic())
 				continue
 			IO.emplode(severity)
 	..()
@@ -290,7 +285,7 @@
 	var/hit_area = BP.name
 
 	if(istype(I,/obj/item/weapon/card/emag))
-		if(!BP.is_robotic())
+		if(!BP.is_robotic_part())
 			to_chat(user, "<span class='userdanger'>That limb isn't robotic.</span>")
 			return
 		if(BP.sabotaged)
@@ -333,7 +328,8 @@
 	if(prob(armor))
 		damage_flags &= ~(DAM_SHARP | DAM_EDGE)
 
-	var/datum/wound/created_wound = apply_damage(force_with_melee_skill, I.damtype, BP, armor, damage_flags, I)
+	var/impact_direction = get_impact_direction_from(user)
+	var/datum/wound/created_wound = apply_damage(force_with_melee_skill, I.damtype, BP, armor, damage_flags, I, impact_direction = impact_direction)
 
 	//Melee weapon embedded object code.
 	if(I.damtype == BRUTE && !I.anchored && I.can_embed && !I.is_robot_module())
@@ -403,6 +399,9 @@
 	..(O, throw_damage, dtype, zone, armor)
 
 /mob/living/carbon/human/embed(obj/item/I, zone, created_wound)
+	if(HAS_TRAIT(src, TRAIT_NO_EMBED))
+		return
+
 	if(!zone)
 		return ..()
 

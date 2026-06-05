@@ -39,13 +39,21 @@
 
 		to_chat(ghost, "<span class='ghostalert'>Доступны новые роли в меню возрождения!</span>")
 
+	if(spawner.alert_message)
+		var/atom/source = spawner.pick_alert_source()
+		if(source)
+			var/mutable_appearance/overlay = null
+			if(spawner.alert_overlay_icon && spawner.alert_overlay_state)
+				overlay = mutable_appearance(spawner.alert_overlay_icon, spawner.alert_overlay_state)
+			notify_ghosts(spawner.alert_message, source = source, alert_overlay = overlay, action = spawner.alert_action, header = spawner.alert_header)
+
 	return spawner
 
 /datum/spawner
 	// Name of spawner, wow
 	var/name
 
-	// Priority of spawner, affects position in menu and roll order for lobby spawners
+	// Priority of spawner, affects position in menu and roll order for lobby spawners (lesser means higher priority/order)
 	var/priority = 100
 
 	// In interface: "Описание: "
@@ -73,6 +81,9 @@
 	// Flag if it's awaylable only for applications first, and will be rolled for spawn later
 	var/register_only = FALSE
 
+	// Flag if it's supports multiple selection
+	var/multideclare = FALSE
+
 	// List of clients who checked for spawner
 	var/list/registered_candidates = list()
 
@@ -97,6 +108,14 @@
 	// id of timers
 	var/registration_timer_id
 	var/availability_timer_id
+
+	// If set — _create_spawners will send a ghost-alert when the spawner appears
+	var/alert_message
+	var/alert_header
+	var/alert_action = NOTIFY_JUMP
+	// Icon for alert_overlay; if unset — alert is sent without an overlay
+	var/alert_overlay_icon
+	var/alert_overlay_state
 
 /datum/spawner/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -127,7 +146,7 @@
 
 	if(length(registered_candidates))
 		for(var/mob/dead/M in registered_candidates)
-			M.registred_spawner = null
+			M.registered_spawners -= src
 		registered_candidates = null
 
 	return ..()
@@ -165,27 +184,29 @@
 			do_spawn(spectator)
 		return
 
-	// todo: registration for multiple spawners?
 	if(spectator in registered_candidates)
 		cancel_registration(spectator)
 		to_chat(spectator, "<span class='notice'>Вы отменили заявку на роль \"[name]\".</span>")
 		return
 
-	else if(spectator.registred_spawner)
-		to_chat(spectator, "<span class='notice'>Вы уже ждете роль \"[spectator.registred_spawner.name]\". Сначала отмените заявку.</span>")
-		return
-
 	if(!can_spawn(spectator))
 		return
 
+	if(!multideclare)
+		spectator.clear_spawner_registration()
+	else if(spectator.registered_spawners.len)
+		for(var/datum/spawner/S as anything in spectator.registered_spawners)
+			if(!S.multideclare)
+				S.cancel_registration(spectator)
+
 	registered_candidates += spectator
-	spectator.registred_spawner = src
+	spectator.registered_spawners += src
 
 	to_chat(spectator, "<span class='notice'>Вы изъявили желание на роль \"[name]\". Доступные позиции будет случайно разыграны между всеми желающими по истечении таймера.</span>")
 
 /datum/spawner/proc/cancel_registration(mob/dead/spectator)
 	registered_candidates -= spectator
-	spectator.registred_spawner = null
+	spectator.registered_spawners -= src
 
 /datum/spawner/proc/roll_registrations()
 	register_only = FALSE
@@ -213,6 +234,7 @@
 			positions--
 			to_chat(M, "<span class='notice'>Вы получили роль \"[name]\"!</span>")
 			INVOKE_ASYNC(src, PROC_REF(do_spawn), M)
+			M.clear_spawner_registration()
 		else
 			to_chat(M, "<span class='warning'>К сожалению, вам не выпала роль \"[name]\".</span>")
 
@@ -221,7 +243,6 @@
 	if(!can_spawn(spectator))
 		positions++
 		return
-
 	var/client/C = spectator.client
 
 	// temporary flag to fight some races because of pre-spawn dialogs in spawn_body of some spawners
@@ -266,6 +287,13 @@
 		CRASH("[src.type] attempts to pick spawn location \"[spawn_landmark_name]\", but can't find one!")
 
 	return pick_landmarked_location(spawn_landmark_name)
+
+// Atom used as source for notify_ghosts. Defaults to a random landmark from spawn_landmark_name.
+// Returns null if nothing was found — notify_ghosts will be skipped in that case.
+/datum/spawner/proc/pick_alert_source()
+	if(spawn_landmark_name && length(landmarks_list[spawn_landmark_name]))
+		return pick(landmarks_list[spawn_landmark_name])
+	return null
 
 /datum/spawner/proc/spawn_body(mob/dead/spectator)
 	return
@@ -380,6 +408,11 @@
 
 	spawn_landmark_name = "blobstart"
 
+	alert_message = "Blob event! Доступна роль в спавнер-меню, чтобы стать блобом."
+	alert_header = "Blob"
+	alert_overlay_icon = 'icons/mob/blob.dmi'
+	alert_overlay_state = "blob_core"
+
 /datum/spawner/blob_event/spawn_body(mob/dead/spectator)
 	var/turf/spawn_turf = pick_spawn_location()
 	new /obj/structure/blob/core(spawn_turf, spectator.client, 120)
@@ -449,11 +482,22 @@
 
 	time_while_available = 3 MINUTES
 
+	alert_message = "Alien infestation! Доступна роль в спавнер-меню."
+	alert_header = "Alien Infestation"
+	alert_overlay_icon = 'icons/obj/cardboard_cutout.dmi'
+	alert_overlay_state = "cutout_fukken_xeno"
+
 /datum/spawner/alien_event/spawn_body(mob/dead/spectator)
 	var/list/vents = get_vents()
 	var/obj/vent = pick(vents)
 	var/mob/living/carbon/xenomorph/facehugger/new_xeno = new(vent.loc)
 	new_xeno.key = spectator.key
+
+/datum/spawner/alien_event/pick_alert_source()
+	var/list/vents = get_vents()
+	if(length(vents))
+		return pick(vents)
+	return null
 
 /*
  * Other
@@ -467,7 +511,7 @@
 	cooldown = 0
 	positions = INFINITY
 
-	spawn_landmark_name = "eorgwarp"
+	spawn_landmark_name = "Gladiator"
 
 /datum/spawner/gladiator/spawn_body(mob/dead/spectator)
 	var/spawnloc = pick_spawn_location()
@@ -582,6 +626,11 @@
 
 	spawn_landmark_name = "Heist"
 
+	alert_message = "Heist event! Доступна роль в спавнер-меню, чтобы стать вокс-налётчиком."
+	alert_header = "Heist"
+	alert_overlay_icon = 'icons/obj/cardboard_cutout.dmi'
+	alert_overlay_state = "cutout_voxraider"
+
 /datum/spawner/vox/spawn_body(mob/dead/spectator)
 	var/spawnloc = pick_spawn_location()
 
@@ -596,6 +645,7 @@
 	for(var/i in 1 to sounds)
 		newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
 
+	// todo: maybe we need to add a randomize argument for set_species
 	vox.real_name = capitalize(newname)
 	vox.name = vox.real_name
 	vox.age = rand(5, 15) // its fucking lore
@@ -607,11 +657,10 @@
 	vox.grad_style = "none"
 
 	//Now apply cortical stack.
-	var/obj/item/weapon/implant/cortical/I = new(vox)
-	I.inject(vox, BP_HEAD)
+	new /obj/item/weapon/implant/cortical(vox)
 
 	vox.equip_vox_raider()
-	vox.regenerate_icons()
+	vox.regenerate_icons(update_body_preferences = TRUE)
 
 	add_faction_member(faction, vox)
 
@@ -626,6 +675,16 @@
 	time_for_registration = 0.5 MINUTES
 
 	time_while_available = 5 MINUTES
+
+	alert_message = "Abduction event! Доступна роль в спавнер-меню, чтобы стать похитителем."
+	alert_header = "Abductors"
+	alert_overlay_icon = 'icons/effects/landmarks_static.dmi'
+	alert_overlay_state = "abductor_agent"
+
+/datum/spawner/abductor/pick_alert_source()
+	if(length(scientist_landmarks))
+		return scientist_landmarks[1]
+	return null
 
 /datum/spawner/abductor/spawn_body(mob/dead/spectator)
 	// One team. Working together
@@ -702,6 +761,11 @@
 
 	spawn_landmark_name = "Solo operative"
 
+	alert_message = "Lone operative event! Доступна роль в спавнер-меню, чтобы стать одиночным агентом Синдиката."
+	alert_header = "Lone Operative"
+	alert_overlay_icon = 'icons/obj/cardboard_cutout.dmi'
+	alert_overlay_state = "cutout_flukecombat"
+
 /datum/spawner/lone_op_event/spawn_body(mob/dead/spectator)
 	var/spawnloc = pick_spawn_location()
 
@@ -730,6 +794,11 @@
 
 	spawn_landmark_name = "Wizard"
 
+	alert_message = "Wizard event! Доступна роль в спавнер-меню, чтобы стать магом."
+	alert_header = "Wizard"
+	alert_overlay_icon = 'icons/obj/cardboard_cutout.dmi'
+	alert_overlay_state = "cutout_wizard"
+
 /datum/spawner/wizard_event/New()
 	. = ..()
 	desc = "Вы просыпаетесь в [pick("Логове Волшебника", "Убежище мага", "Винтерхолде", "Башне мага")] с неотложным заданием от Федерации магов."
@@ -748,6 +817,25 @@
 	setup_role(R, TRUE)
 
 /*
+ * Midround replicator
+*/
+/datum/spawner/replicator_event
+	name = "Репликатор"
+	desc = "Вы попали сюда через оставшийся блюспейс коридор. Потреблять. Потреблять."
+
+	ranks = list(ROLE_REPLICATOR, ROLE_GHOSTLY)
+
+	register_only = TRUE
+	time_for_registration = 0.5 MINUTES
+
+	spawn_landmark_name = "replicator"
+
+/datum/spawner/replicator_event/spawn_body(mob/dead/spectator)
+	var/spawnloc = pick_spawn_location()
+	var/mob/living/simple_animal/hostile/replicator/H = new(spawnloc)
+	H.key = spectator.client.key
+
+/*
  * SPACE TRADERS
 */
 /datum/spawner/space_trader
@@ -757,6 +845,7 @@
 	ranks = list(ROLE_GHOSTLY)
 
 	register_only = TRUE
+	multideclare = TRUE
 	time_for_registration = 0.5 MINUTES
 
 	time_while_available = 4 MINUTES
@@ -842,4 +931,41 @@
 
 	var/datum/faction/space_traders/F = find_faction_by_type(/datum/faction/space_traders)
 	add_faction_member(F, H, TRUE, TRUE)
+/*
+ * MALFUNCTION DRONE
+*/
+/datum/spawner/malf_drone
+	name = "Сбойный Дрон"
+	desc = "Станция взывает к вам, ей необходимо преображение."
 
+	ranks = list(ROLE_GHOSTLY)
+
+	var/obj/machinery/drone_fabricator/fabricator
+
+/datum/spawner/malf_drone/New(obj/machinery/drone_fabricator/DF)
+	. = ..()
+	fabricator = DF
+	RegisterSignal(fabricator, COMSIG_PARENT_QDELETING, PROC_REF(fabricator_deleting))
+
+/datum/spawner/malf_drone/proc/fabricator_deleting()
+	qdel(src)
+
+/datum/spawner/malf_drone/jump(mob/dead/spectator)
+	spectator.forceMove(get_turf(fabricator))
+
+/datum/spawner/malf_drone/spawn_body(mob/dead/spectator)
+	if(fabricator.stat & NOPOWER || !fabricator.produce_drones)
+		to_chat(spectator, "<span class='warning'>Фабрикатор обесточен и не может произвести нового дрона.</span>")
+		return
+
+	var/client/C = spectator.client
+
+	var/mob/living/silicon/robot/drone/maintenance/malfuction/D = new
+	D.key = C.key
+	D.forceMove(get_turf(fabricator))
+
+	D.mind.skills.add_available_skillset(/datum/skillset/cyborg)
+	D.mind.skills.maximize_active_skills()
+
+	var/datum/faction/malf_drones/F = find_faction_by_type(/datum/faction/malf_drones)
+	add_faction_member(F, D, FALSE)

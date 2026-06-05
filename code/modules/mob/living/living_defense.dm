@@ -25,7 +25,7 @@
 	return 0
 
 /mob/living/proc/is_impact_force_affected(impact_force, impact_dir)
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_IMMOVABLE))
 		return FALSE
 	if(buckled || anchored)
 		return FALSE
@@ -42,15 +42,12 @@
 
 	return ..()
 
-/mob/living/proc/get_projectile_impact_force(obj/item/projectile/P, def_zone)
-	return P.impact_force
-
 /mob/living/proc/prob_miss(obj/item/projectile/P)
 	return prob(20 + P.get_miss_modifier()) // no bopyparts -> no reason to check def_zone
 
 /mob/living/bullet_act(obj/item/projectile/P, def_zone)
-	var/impact_force = get_projectile_impact_force(P, def_zone)
-	if(impact_force && is_impact_force_affected(P.impact_force, get_dir(P, src)))
+	var/impact_force = P.get_full_impact_force(src)
+	if(impact_force && is_impact_force_affected(impact_force, get_dir(P, src)))
 		if(isturf(loc))
 			loc.add_blood(src)
 		throw_at(get_edge_target_turf(src, P.dir), impact_force, 1, P.firer, spin = TRUE)
@@ -263,7 +260,6 @@
 		visible_message("<span class='warning'>[src] catches fire!</span>",
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "on_fire", /datum/mood_event/on_fire)
 		update_fire()
 
 /mob/living/proc/ExtinguishMob()
@@ -271,7 +267,6 @@
 		playsound(src, 'sound/effects/extinguish_mob.ogg', VOL_EFFECTS_MASTER)
 		on_fire = 0
 		fire_stacks = 0
-		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 		for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 			qdel(F)
 		update_fire()
@@ -338,7 +333,7 @@
 	update_action_buttons()
 
 /mob/living/incapacitated(restrained_type = ARMS)
-	return stat || HAS_TRAIT(src, TRAIT_INCAPACITATED) || restrained(restrained_type)
+	return stat || HAS_TRAIT(src, TRAIT_INCAPACITATED) || (status_flags & FAKEDEATH) || restrained(restrained_type)
 
 // These procs define whether this mob has a usable limb at a given targetzone. Heavily used in combo-combat.
 // If targetzone is not specified, returns TRUE if the mob has the bodypart in general.

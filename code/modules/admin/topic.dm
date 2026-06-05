@@ -322,7 +322,7 @@
 		message_admins("[key_name(usr)] [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].")
 		world.send2bridge(
 			type = list(BRIDGE_ROUNDSTAT),
-			attachment_msg = "**[key_name(usr)]** [SSticker.admin_delayed ? "delayed the round end" : "has made the round end normally"].",
+			attachment_msg = "[SSticker.admin_delayed ? "**[key_name(usr)]** приостановил конец раунда" : "Теперь раунд закончится нормально"].",
 			attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 		)
 
@@ -403,17 +403,17 @@
 //Regular jobs
 	//Command (Blue)
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr align='center' bgcolor='ccccff'><th colspan='[length(command_positions)]'><a href='?src=\ref[src];jobban3=commanddept;jobban4=\ref[M]'>Command Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in command_positions)
+		jobs += "<tr align='center' bgcolor='ccccff'><th colspan='[length(SSjob.departments_occupations[DEP_COMMAND])]'><a href='byond://?src=\ref[src];jobban3=commanddept;jobban4=\ref[M]'>Command Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in SSjob.departments_occupations[DEP_COMMAND])
 			if(!jobPos)	continue
 			var/datum/job/job = SSjob.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
-				jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 			else
-				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 
 			if(counter >= 6) //So things dont get squiiiiished!
@@ -421,20 +421,42 @@
 				counter = 0
 		jobs += "</tr></table>"
 
-	//Security (Red)
-		counter = 0
+	//Special Department Nanotrasen station (Grey-blue)
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ffddf0'><th colspan='[length(security_positions)]'><a href='?src=\ref[src];jobban3=securitydept;jobban4=\ref[M]'>Security Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in security_positions)
+		jobs += "<tr align='center' bgcolor='6c7391'><th colspan='[length(SSjob.departments_occupations[DEP_SPECIAL])]'><a href='byond://?src=\ref[src];jobban3=specialdept;jobban4=\ref[M]'>Special Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in SSjob.departments_occupations[DEP_SPECIAL])
 			if(!jobPos)	continue
 			var/datum/job/job = SSjob.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
-				jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 			else
-				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				counter++
+
+			if(counter >= 6) //So things dont get squiiiiished!
+				jobs += "</tr><tr>"
+				counter = 0
+		jobs += "</tr></table>"
+
+
+
+	//Security (Red)
+		counter = 0
+		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
+		jobs += "<tr bgcolor='ffddf0'><th colspan='[length(SSjob.departments_occupations[DEP_SECURITY])]'><a href='byond://?src=\ref[src];jobban3=securitydept;jobban4=\ref[M]'>Security Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in SSjob.departments_occupations[DEP_SECURITY])
+			if(!jobPos)	continue
+			var/datum/job/job = SSjob.GetJob(jobPos)
+			if(!job) continue
+
+			if(jobban_isbanned(M, job.title))
+				jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				counter++
+			else
+				jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 
 			if(counter >= 5) //So things dont get squiiiiished!
@@ -445,17 +467,17 @@
 	//Engineering (Yellow)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='fff5cc'><th colspan='[length(engineering_positions)]'><a href='?src=\ref[src];jobban3=engineeringdept;jobban4=\ref[M]'>Engineering Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in engineering_positions)
+		jobs += "<tr bgcolor='fff5cc'><th colspan='[length(SSjob.departments_occupations[DEP_ENGINEERING])]'><a href='byond://?src=\ref[src];jobban3=engineeringdept;jobban4=\ref[M]'>Engineering Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in SSjob.departments_occupations[DEP_ENGINEERING])
 			if(!jobPos)	continue
 			var/datum/job/job = SSjob.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
-				jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 			else
-				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 
 			if(counter >= 5) //So things dont get squiiiiished!
@@ -466,17 +488,17 @@
 	//Medical (White)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ffeef0'><th colspan='[length(medical_positions)]'><a href='?src=\ref[src];jobban3=medicaldept;jobban4=\ref[M]'>Medical Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in medical_positions)
+		jobs += "<tr bgcolor='ffeef0'><th colspan='[length(SSjob.departments_occupations[DEP_MEDICAL])]'><a href='byond://?src=\ref[src];jobban3=medicaldept;jobban4=\ref[M]'>Medical Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in SSjob.departments_occupations[DEP_MEDICAL])
 			if(!jobPos)	continue
 			var/datum/job/job = SSjob.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
-				jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 			else
-				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 
 			if(counter >= 5) //So things dont get squiiiiished!
@@ -487,17 +509,17 @@
 	//Science (Purple)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='e79fff'><th colspan='[length(science_positions)]'><a href='?src=\ref[src];jobban3=sciencedept;jobban4=\ref[M]'>Science Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in science_positions)
+		jobs += "<tr bgcolor='e79fff'><th colspan='[length(SSjob.departments_occupations[DEP_SCIENCE])]'><a href='byond://?src=\ref[src];jobban3=sciencedept;jobban4=\ref[M]'>Science Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in SSjob.departments_occupations[DEP_SCIENCE])
 			if(!jobPos)	continue
 			var/datum/job/job = SSjob.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
-				jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 			else
-				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 
 			if(counter >= 5) //So things dont get squiiiiished!
@@ -508,17 +530,17 @@
 	//Civilian (Grey)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='dddddd'><th colspan='[length(civilian_positions)]'><a href='?src=\ref[src];jobban3=civiliandept;jobban4=\ref[M]'>Civilian Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in civilian_positions)
+		jobs += "<tr bgcolor='dddddd'><th colspan='[length(SSjob.departments_occupations[DEP_CIVILIAN])]'><a href='byond://?src=\ref[src];jobban3=civiliandept;jobban4=\ref[M]'>Civilian Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in SSjob.departments_occupations[DEP_CIVILIAN])
 			if(!jobPos)	continue
 			var/datum/job/job = SSjob.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
-				jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 			else
-				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 
 			if(counter >= 5) //So things dont get squiiiiished!
@@ -530,17 +552,17 @@
 	//Non-Human (Green)
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ccffcc'><th colspan='[length(nonhuman_positions) + 4]'><a href='?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
-		for(var/jobPos in nonhuman_positions)
+		jobs += "<tr bgcolor='ccffcc'><th colspan='[length(SSjob.departments_occupations[DEP_SILICON]) + 4]'><a href='byond://?src=\ref[src];jobban3=nonhumandept;jobban4=\ref[M]'>Non-human Positions</a></th></tr><tr align='center'>"
+		for(var/jobPos in SSjob.departments_occupations[DEP_SILICON])
 			if(!jobPos)	continue
 			var/datum/job/job = SSjob.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
-				jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 			else
-				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 
 			if(counter >= 5) //So things dont get squiiiiished!
@@ -548,37 +570,37 @@
 				counter = 0
 
 		if(jobban_isbanned(M, ROLE_DRONE))
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_DRONE];jobban4=\ref[M]'>[ROLE_DRONE]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_DRONE];jobban4=\ref[M]'>[ROLE_DRONE]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_DRONE];jobban4=\ref[M]'>[ROLE_DRONE]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_DRONE];jobban4=\ref[M]'>[ROLE_DRONE]</a></td>"
 
 		//Observer is no job and probably not at all human still there's no better place.
 
 		if(jobban_isbanned(M, "Observer"))
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=Observer;jobban4=\ref[M]'>Observer</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=Observer;jobban4=\ref[M]'>Observer</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Observer;jobban4=\ref[M]'>Observer</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=Observer;jobban4=\ref[M]'>Observer</a></td>"
 
 		if(jobban_isbanned(M, "AntagHUD"))
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=AntagHUD;jobban4=\ref[M]'>AntagHUD</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=AntagHUD;jobban4=\ref[M]'>AntagHUD</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=AntagHUD;jobban4=\ref[M]'>AntagHUD</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=AntagHUD;jobban4=\ref[M]'>AntagHUD</a></td>"
 
 /*
 	//Clown&Mime
 		counter = 0
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='dddddd'><th colspan='[length(entertaiment_positions)]'><a href='?src=\ref[src];jobban3=entertaimentdept;jobban4=\ref[M]'>Entertaiment Positions</a></th></tr><tr align='center'>"
+		jobs += "<tr bgcolor='dddddd'><th colspan='[length(entertaiment_positions)]'><a href='byond://?src=\ref[src];jobban3=entertaimentdept;jobban4=\ref[M]'>Entertaiment Positions</a></th></tr><tr align='center'>"
 		for(var/jobPos in entertaiment_positions)
 			if(!jobPos)	continue
 			var/datum/job/job = job_master.GetJob(jobPos)
 			if(!job) continue
 
 			if(jobban_isbanned(M, job.title))
-				jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 			else
-				jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
+				jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[job.title];jobban4=\ref[M]'>[replacetext(job.title, " ", "&nbsp")]</a></td>"
 				counter++
 
 			if(counter >= 5) //So things dont get squiiiiished!
@@ -589,69 +611,69 @@
 	//Antagonist (Orange)
 		var/isbanned_dept = jobban_isbanned(M, "Syndicate")
 		jobs += "<table cellpadding='1' cellspacing='0' width='100%'>"
-		jobs += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>Antagonist Positions</a></th></tr><tr align='center'>"
+		jobs += "<tr bgcolor='ffeeaa'><th colspan='10'><a href='byond://?src=\ref[src];jobban3=Syndicate;jobban4=\ref[M]'>Antagonist Positions</a></th></tr><tr align='center'>"
 
 		//Traitor
 		if(jobban_isbanned(M, ROLE_TRAITOR) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_TRAITOR];jobban4=\ref[M]'>[ROLE_TRAITOR]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_TRAITOR];jobban4=\ref[M]'>[ROLE_TRAITOR]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_TRAITOR];jobban4=\ref[M]'>[ROLE_TRAITOR]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_TRAITOR];jobban4=\ref[M]'>[ROLE_TRAITOR]</a></td>"
 
 		//Changeling
 		if(jobban_isbanned(M, ROLE_CHANGELING) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_CHANGELING];jobban4=\ref[M]'>[ROLE_CHANGELING]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_CHANGELING];jobban4=\ref[M]'>[ROLE_CHANGELING]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_CHANGELING];jobban4=\ref[M]'>[ROLE_CHANGELING]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_CHANGELING];jobban4=\ref[M]'>[ROLE_CHANGELING]</a></td>"
 
 		//Nuke Operative
 		if(jobban_isbanned(M, ROLE_OPERATIVE) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_OPERATIVE];jobban4=\ref[M]'>[ROLE_OPERATIVE]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_OPERATIVE];jobban4=\ref[M]'>[ROLE_OPERATIVE]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_OPERATIVE];jobban4=\ref[M]'>[ROLE_OPERATIVE]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_OPERATIVE];jobban4=\ref[M]'>[ROLE_OPERATIVE]</a></td>"
 
 		//Revolutionary
 		if(jobban_isbanned(M, ROLE_REV) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_REV];jobban4=\ref[M]'>[ROLE_REV]</a></td>"
 
 		//Raider (New heist)
 		if(jobban_isbanned(M, ROLE_RAIDER) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_RAIDER];jobban4=\ref[M]'>[ROLE_RAIDER]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_RAIDER];jobban4=\ref[M]'>[ROLE_RAIDER]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_RAIDER];jobban4=\ref[M]'>[ROLE_RAIDER]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_RAIDER];jobban4=\ref[M]'>[ROLE_RAIDER]</a></td>"
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		//Cultist
 		if(jobban_isbanned(M, ROLE_CULTIST) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_CULTIST];jobban4=\ref[M]'>[ROLE_CULTIST]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_CULTIST];jobban4=\ref[M]'>[ROLE_CULTIST]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_CULTIST];jobban4=\ref[M]'>[ROLE_CULTIST]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_CULTIST];jobban4=\ref[M]'>[ROLE_CULTIST]</a></td>"
 
 		//Wizard
 		if(jobban_isbanned(M, ROLE_WIZARD) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_WIZARD];jobban4=\ref[M]'>[ROLE_WIZARD]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_WIZARD];jobban4=\ref[M]'>[ROLE_WIZARD]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_WIZARD];jobban4=\ref[M]'>[ROLE_WIZARD]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_WIZARD];jobban4=\ref[M]'>[ROLE_WIZARD]</a></td>"
 
 		//ERT
 		if(jobban_isbanned(M, ROLE_ERT) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_ERT];jobban4=\ref[M]'>[ROLE_ERT]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_ERT];jobban4=\ref[M]'>[ROLE_ERT]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ERT];jobban4=\ref[M]'>[ROLE_ERT]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_ERT];jobban4=\ref[M]'>[ROLE_ERT]</a></td>"
 
 		//Shadowling
 		if(jobban_isbanned(M, ROLE_SHADOWLING) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_SHADOWLING];jobban4=\ref[M]'>[ROLE_SHADOWLING]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_SHADOWLING];jobban4=\ref[M]'>[ROLE_SHADOWLING]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_SHADOWLING];jobban4=\ref[M]'>[ROLE_SHADOWLING]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_SHADOWLING];jobban4=\ref[M]'>[ROLE_SHADOWLING]</a></td>"
 
 		//Abductor
 		if(jobban_isbanned(M, ROLE_ABDUCTOR) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_ABDUCTOR];jobban4=\ref[M]'>[ROLE_ABDUCTOR]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_ABDUCTOR];jobban4=\ref[M]'>[ROLE_ABDUCTOR]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ABDUCTOR];jobban4=\ref[M]'>[ROLE_ABDUCTOR]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_ABDUCTOR];jobban4=\ref[M]'>[ROLE_ABDUCTOR]</a></td>"
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
@@ -659,42 +681,42 @@
 
 		//Ninja
 		if(jobban_isbanned(M, ROLE_NINJA) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_NINJA];jobban4=\ref[M]'>[ROLE_NINJA]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_NINJA];jobban4=\ref[M]'>[ROLE_NINJA]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_NINJA];jobban4=\ref[M]'>[ROLE_NINJA]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_NINJA];jobban4=\ref[M]'>[ROLE_NINJA]</a></td>"
 
 		//Blob
 		if(jobban_isbanned(M, ROLE_BLOB) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_BLOB];jobban4=\ref[M]'>[ROLE_BLOB]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_BLOB];jobban4=\ref[M]'>[ROLE_BLOB]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_BLOB];jobban4=\ref[M]'>[ROLE_BLOB]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_BLOB];jobban4=\ref[M]'>[ROLE_BLOB]</a></td>"
 
 		//Malfunctioning AI
 		if(jobban_isbanned(M, ROLE_MALF) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_MALF];jobban4=\ref[M]'>[ROLE_MALF]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_MALF];jobban4=\ref[M]'>[ROLE_MALF]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_MALF];jobban4=\ref[M]'>[ROLE_MALF]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_MALF];jobban4=\ref[M]'>[ROLE_MALF]</a></td>"
 
 		//Families
 		if(jobban_isbanned(M, ROLE_FAMILIES) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_FAMILIES];jobban4=\ref[M]'>[ROLE_FAMILIES]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_FAMILIES];jobban4=\ref[M]'>[ROLE_FAMILIES]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_FAMILIES];jobban4=\ref[M]'>[ROLE_FAMILIES]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_FAMILIES];jobban4=\ref[M]'>[ROLE_FAMILIES]</a></td>"
 
 		//Xenomorph
 		if(jobban_isbanned(M, ROLE_ALIEN) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_ALIEN];jobban4=\ref[M]'>[ROLE_ALIEN]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_ALIEN];jobban4=\ref[M]'>[ROLE_ALIEN]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_ALIEN];jobban4=\ref[M]'>[ROLE_ALIEN]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_ALIEN];jobban4=\ref[M]'>[ROLE_ALIEN]</a></td>"
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		jobs += "</tr><tr align='center'>" //Breaking it up so it fits nicer on the screen every 5 entries
 
 		if(jobban_isbanned(M, ROLE_REPLICATOR) || isbanned_dept)
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_REPLICATOR];jobban4=\ref[M]'>[ROLE_REPLICATOR]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_REPLICATOR];jobban4=\ref[M]'>[ROLE_REPLICATOR]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_REPLICATOR];jobban4=\ref[M]'>[ROLE_REPLICATOR]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_REPLICATOR];jobban4=\ref[M]'>[ROLE_REPLICATOR]</a></td>"
 
 		jobs += "</tr><tr align='center'>"
 
@@ -706,14 +728,14 @@
 
 		//many roles available to ghost after die
 		if(jobban_isbanned(M, ROLE_GHOSTLY))
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=[ROLE_GHOSTLY];jobban4=\ref[M]'>[ROLE_GHOSTLY]</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=[ROLE_GHOSTLY];jobban4=\ref[M]'>[ROLE_GHOSTLY]</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=[ROLE_GHOSTLY];jobban4=\ref[M]'>[ROLE_GHOSTLY]</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=[ROLE_GHOSTLY];jobban4=\ref[M]'>[ROLE_GHOSTLY]</a></td>"
 
 		if(jobban_isbanned(M, "Mouse"))
-			jobs += "<td width='20%'><a class='red' href='?src=\ref[src];jobban3=Mouse;jobban4=\ref[M]'>Mouse</a></td>"
+			jobs += "<td width='20%'><a class='red' href='byond://?src=\ref[src];jobban3=Mouse;jobban4=\ref[M]'>Mouse</a></td>"
 		else
-			jobs += "<td width='20%'><a href='?src=\ref[src];jobban3=Mouse;jobban4=\ref[M]'>Mouse</a></td>"
+			jobs += "<td width='20%'><a href='byond://?src=\ref[src];jobban3=Mouse;jobban4=\ref[M]'>Mouse</a></td>"
 
 
 		jobs += "</tr></table>"
@@ -751,38 +773,44 @@
 		var/list/joblist = list()
 		switch(href_list["jobban3"])
 			if("commanddept")
-				for(var/jobPos in command_positions)
+				for(var/jobPos in SSjob.departments_occupations[DEP_COMMAND])
 					if(!jobPos)
 						continue
 					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
+			if("specialdept")
+				for(var/jobPos in SSjob.departments_occupations[DEP_SPECIAL])
+					if(!jobPos)	continue
+					var/datum/job/temp = SSjob.GetJob(jobPos)
+					if(!temp) continue
+					joblist += temp.title
 			if("securitydept")
-				for(var/jobPos in security_positions)
+				for(var/jobPos in SSjob.departments_occupations[DEP_SECURITY])
 					if(!jobPos)	continue
 					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
 			if("engineeringdept")
-				for(var/jobPos in engineering_positions)
+				for(var/jobPos in SSjob.departments_occupations[DEP_ENGINEERING])
 					if(!jobPos)	continue
 					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
 			if("medicaldept")
-				for(var/jobPos in medical_positions)
+				for(var/jobPos in SSjob.departments_occupations[DEP_MEDICAL])
 					if(!jobPos)	continue
 					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
 			if("sciencedept")
-				for(var/jobPos in science_positions)
+				for(var/jobPos in SSjob.departments_occupations[DEP_SCIENCE])
 					if(!jobPos)	continue
 					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
 					joblist += temp.title
 			if("civiliandept")
-				for(var/jobPos in civilian_positions)
+				for(var/jobPos in SSjob.departments_occupations[DEP_CIVILIAN])
 					if(!jobPos)	continue
 					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
@@ -795,7 +823,7 @@
 					joblist += temp.title */
 			if("nonhumandept")
 				joblist += ROLE_DRONE
-				for(var/jobPos in nonhuman_positions)
+				for(var/jobPos in SSjob.departments_occupations[DEP_SILICON])
 					if(!jobPos)	continue
 					var/datum/job/temp = SSjob.GetJob(jobPos)
 					if(!temp) continue
@@ -1152,14 +1180,14 @@
 			return tgui_alert(usr, "The game has already started.")
 		var/dat = ""
 		for(var/mode in config.mode_names)
-			dat += {"<A href='?src=\ref[src];c_mode2=[mode]'>[mode]</A><br>"}
+			dat += {"<A href='byond://?src=\ref[src];c_mode2=[mode]'>[mode]</A><br>"}
 		dat += "<HR>"
 		for(var/type in subtypesof(/datum/modesbundle))
 			var/datum/modesbundle/bound_type = type
 			if(initial(bound_type.hide_for_shitspawn))
 				continue
 			var/bname = initial(bound_type.name)
-			dat += {"<A href='?src=\ref[src];c_mode2=[bname]'>[bname]</A><br>"}
+			dat += {"<A href='byond://?src=\ref[src];c_mode2=[bname]'>[bname]</A><br>"}
 		dat += {"Now: [master_mode]"}
 
 		var/datum/browser/popup = new(usr, "c_mode", "What mode do you wish to play?", 400, 535)
@@ -1176,12 +1204,12 @@
 			return tgui_alert(usr, "The game mode has to be secret!")
 		var/dat = {"<B>What game mode do you want to force secret to be? Use this if you want to change the game mode, but want the players to believe it's secret. This will only work if the current game mode is secret.</B><HR>"}
 		for(var/mode in config.mode_names)
-			dat += {"<A href='?src=\ref[src];f_secret2=[mode]'>[mode]</A><br>"}
+			dat += {"<A href='byond://?src=\ref[src];f_secret2=[mode]'>[mode]</A><br>"}
 		dat += "<HR>"
 		for(var/type in subtypesof(/datum/modesbundle))
 			var/datum/modesbundle/bound_type = type
 			var/bname = initial(bound_type.name)
-			dat += {"<A href='?src=\ref[src];f_secret2=[bname]'>[bname]</A><br>"}
+			dat += {"<A href='byond://?src=\ref[src];f_secret2=[bname]'>[bname]</A><br>"}
 		dat += {"Now: [secret_force_mode]"}
 
 		var/datum/browser/popup = new(usr, "f_secret")
@@ -1519,7 +1547,6 @@
 		//testing("togmutate([href_list["block"]] -> [block])")
 		usr.client.cmd_admin_toggle_block(H,block)
 		show_player_panel(H)
-		//H.regenerate_icons()
 
 	else if(href_list["adminplayeropts"])
 		if(!check_rights(R_ADMIN))
@@ -1624,7 +1651,7 @@
 		to_chat(src.owner, "Name = <b>[M.name]</b>; Real_name = [M.real_name]; Mind_name = [M.mind?"[M.mind.name]":""]; Key = <b>[M.key]</b>;")
 		to_chat(src.owner, "Location = [location_description];")
 		to_chat(src.owner, "[special_role_description]")
-		to_chat(src.owner, "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)")
+		to_chat(src.owner, "(<a href='byond://?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A href='byond://?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A href='byond://?_src_=vars;Vars=\ref[M]'>VV</A>) (<A href='byond://?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A href='byond://?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A href='byond://?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)")
 
 	else if(href_list["adminspawncookie"])
 		if(!check_rights(R_ADMIN))
@@ -1683,7 +1710,7 @@
 			M.adjustBruteLoss( min( 99 , (M.health - 1) )    )
 			M.Stun(20)
 			M.Weaken(20)
-			M.setStuttering(20)
+			M.Stuttering(20)
 
 	else if(href_list["CentcommReply"])
 		var/mob/living/H = locate(href_list["CentcommReply"])
@@ -1693,9 +1720,12 @@
 		if(!H.CanObtainCentcommMessage())
 			to_chat(usr, "The person you are trying to contact is not wearing a headset")
 			return
+		message_admins("[key_name_admin(usr)] has started replying to Emergency message.")
 
 		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from Centcomm", ""))
-		if(!input)	return
+		if(!input)
+			message_admins("[key_name_admin(usr)] has cancelled their reply to Emergency message.")
+			return
 
 		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
 		log_admin("[src.owner] replied to [key_name(H)]'s Centcomm message with the message [input].")
@@ -1707,7 +1737,7 @@
 			attachment_color = BRIDGE_COLOR_ADMINCOM,
 		)
 
-		to_chat(H, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from Central Command.  Message as follows. <b>\"[input]\"</b>  Message ends.\"")
+		to_chat(H, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"На связи <b><font color='blue'>Центральное Командование</font></b>. Прослушайте внимательно следующую информацию: <b>\"[input]\"</b> Конец связи.\"")
 
 	else if(href_list["SyndicateReply"])
 		var/mob/living/carbon/human/H = locate(href_list["SyndicateReply"])
@@ -1717,9 +1747,12 @@
 		if(!istype(H.l_ear, /obj/item/device/radio/headset) && !istype(H.r_ear, /obj/item/device/radio/headset))
 			to_chat(usr, "The person you are trying to contact is not wearing a headset")
 			return
+		message_admins("[key_name_admin(usr)] has started replying to Syndicate Emergency message.")
 
 		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", ""))
-		if(!input)	return
+		if(!input)
+			message_admins("[key_name_admin(usr)] has cancelled their reply to Syndicate Emergency message.")
+			return
 
 		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
 		log_admin("[src.owner] replied to [key_name(H)]'s Syndicate message with the message [input].")
@@ -1730,7 +1763,7 @@
 			attachment_msg = input,
 			attachment_color = BRIDGE_COLOR_ADMINCOM,
 		)
-		to_chat(H, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\"")
+		to_chat(H, "Вы слышите треск в гарнитуре, после чего раздаётся голос: \"Ожидайте сообщение от <b><font color='red'><i>Синдиката</i></font></b>. Слушайте внимательно, агент: <b>\"[input]\"</b> Конец связи.\"")
 
 	else if(href_list["CentcommFaxViewInfo"])
 		var/info = locate(href_list["CentcommFaxViewInfo"])
@@ -1741,11 +1774,13 @@
 		popup.open()
 
 	else if(href_list["CentcommFaxReply"])
+		message_admins("[key_name_admin(usr)] has started replying to fax.")
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
 		var/department = locate(href_list["CentcommFaxReplyDestination"])
 
 		var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
 		if(!input)
+			message_admins("[key_name_admin(usr)] has cancelled their reply to fax.")
 			return
 
 		var/customname = sanitize_safe(input(src.owner, "Pick a title for the report", "Title") as text|null)
@@ -2352,13 +2387,10 @@
 			return
 		var/ratio_rate = text2num(replacetext(replacetext(input_rate, "+", ""), "%", ""))
 		var/new_ratio = 1 + (ratio_rate/100)
-		var/list/excluded_rank = list("AI", "Cyborg", "Clown Police", "Internal Affairs Agent")
-		for(var/datum/job/J in SSjob.occupations)
-			if(J.title in excluded_rank)
-				continue
+		for(var/datum/job/J as anything in SSjob.active_occupations)
 			J.salary_ratio = new_ratio
 
-		var/list/crew = my_subordinate_staff("Admin")
+		var/list/crew = SSeconomy.my_subordinate_staff("Admin")
 		for(var/person in crew)
 			var/datum/money_account/account = get_account(person["account"])
 			if(!account)
@@ -2396,7 +2428,7 @@
 		var/id = text2num(href_list["index"])
 
 		var/DBQuery/query = dbcon.NewQuery({"SELECT type, adminckey, text
-			FROM erro_messages 
+			FROM erro_messages
 			WHERE id='[id]' AND deleted=0"})
 		query.Execute()
 
@@ -2429,7 +2461,7 @@
 		var/id = text2num(href_list["index"])
 
 		var/DBQuery/query = dbcon.NewQuery({"SELECT type, adminckey, text
-			FROM erro_messages 
+			FROM erro_messages
 			WHERE id='[id]' AND deleted=0"})
 		query.Execute()
 

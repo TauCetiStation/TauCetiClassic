@@ -44,6 +44,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
+	var/list/mail_orders = list() //list("sender", "type", "receiver")
 		//shuttle movement
 	var/at_station = TRUE
 	var/movetime = 1200
@@ -135,8 +136,7 @@ SUBSYSTEM_DEF(shuttle)
 						M.playsound_local(null, 'sound/effects/escape_shuttle/es_cc_docking.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 					shake_mobs_in_area(end_location, SOUTH)
 
-					dock_act(end_location, "shuttle_escape")
-					dock_act(/area/centcom/evac, "shuttle_escape")
+					dock_act(end_location, "escape_shuttle")
 
 
 							//pods
@@ -180,8 +180,7 @@ SUBSYSTEM_DEF(shuttle)
 
 				start_location.move_contents_to(end_location)
 
-				dock_act(end_location, "shuttle_escape")
-				dock_act(/area/station/hallway/secondary/exit, "arrival_escape")
+				dock_act(end_location, "escape_shuttle")
 
 				settimeleft(SHUTTLELEAVETIME)
 				if(alert == 0)
@@ -191,8 +190,8 @@ SUBSYSTEM_DEF(shuttle)
 
 				world.send2bridge(
 					type = list(BRIDGE_ROUNDSTAT),
-					attachment_title = "The shuttle docked to the station",
-					attachment_msg = "Join now: <[BYOND_JOIN_LINK]>",
+					attachment_title = "Шаттл пристыковался к станции",
+					attachment_msg = BRIDGE_JOIN_LINKS,
 					attachment_color = BRIDGE_COLOR_ROUNDSTAT,
 				)
 
@@ -205,8 +204,7 @@ SUBSYSTEM_DEF(shuttle)
 			if(!station_doors_bolted && timeleft < 10)
 				station_doors_bolted = TRUE
 
-				undock_act(/area/shuttle/escape/station, "shuttle_escape")
-				undock_act(/area/station/hallway/secondary/exit, "arrival_escape")
+				undock_act(/area/shuttle/escape/station, "escape_shuttle")
 
 			if(timeleft > 0)
 				if(timeleft == 13)
@@ -252,12 +250,6 @@ SUBSYSTEM_DEF(shuttle)
 				try_launch_pod(/area/shuttle/escape_pod5/station, /area/shuttle/escape_pod5/transit, NORTH, SOUTH, "pod5")
 				try_launch_pod(/area/shuttle/escape_pod6/station, /area/shuttle/escape_pod6/transit, NORTH, SOUTH, "pod6")
 				if(alert == 0)
-					undock_act(/area/station/maintenance/chapel || /area/station/maintenance/bridge, "pod1")
-					undock_act(/area/station/maintenance/medbay || /area/station/maintenance/bridge || /area/station/maintenance/dormitory, "pod2")
-					undock_act(/area/station/maintenance/dormitory || /area/station/maintenance/brig, "pod3")
-					undock_act(/area/station/maintenance/engineering || /area/station/maintenance/brig, "pod4")
-					undock_act(/area/station/hallway/secondary/entry, "pod5")
-					undock_act(/area/station/hallway/secondary/entry, "pod6")
 					announce_emer_left.play()
 				else
 					announce_crew_left.play()
@@ -331,9 +323,9 @@ SUBSYSTEM_DEF(shuttle)
 					step(L, fall_direction)
 		CHECK_TICK
 
-/datum/controller/subsystem/shuttle/proc/dock_act(area_type, door_tag)
+/datum/controller/subsystem/shuttle/proc/dock_act(shuttle_area, door_tag)
 	//todo post_signal? & doors with door_tag near shuttle zone
-	var/area/A = ispath(area_type) ? locate(area_type) : area_type
+	var/area/A = ispath(shuttle_area) ? locate(shuttle_area) : shuttle_area
 
 	for(var/obj/machinery/door/DOOR in A)
 		if(DOOR.dock_tag == door_tag)
@@ -344,10 +336,13 @@ SUBSYSTEM_DEF(shuttle)
 				var/obj/machinery/door/unpowered/D = DOOR
 				D.locked = 0
 				D.open()
+			for(var/obj/machinery/door/airlock/AL in orange(1, DOOR))
+				if(AL.dock_tag == door_tag)
+					AL.unbolt()
 
-/datum/controller/subsystem/shuttle/proc/undock_act(area_type, door_tag)
+/datum/controller/subsystem/shuttle/proc/undock_act(shuttle_area, door_tag)
 	//todo post_signal? & doors with door_tag near shuttle zone
-	var/area/A = ispath(area_type) ? locate(area_type) : area_type
+	var/area/A = ispath(shuttle_area) ? locate(shuttle_area) : shuttle_area
 
 	for(var/obj/machinery/door/DOOR in A)
 		if(DOOR.dock_tag == door_tag)
@@ -358,6 +353,9 @@ SUBSYSTEM_DEF(shuttle)
 				var/obj/machinery/door/unpowered/D = DOOR
 				D.close()
 				D.locked = 1
+			for(var/obj/machinery/door/airlock/AL in orange(1, DOOR))
+				if(AL.dock_tag == door_tag)
+					AL.close_unsafe(TRUE)
 
 /datum/controller/subsystem/shuttle/proc/send()
 	var/area/from
@@ -366,19 +364,17 @@ SUBSYSTEM_DEF(shuttle)
 		if(1)
 			from = locate(SUPPLY_STATION_AREATYPE)
 			dest = locate(SUPPLY_DOCK_AREATYPE)
-			undock_act(/area/station/cargo/storage, "supply_dock")
-			dock_act(/area/velocity, "velocity_dock")
 			at_station = 0
 		if(0)
 			from = locate(SUPPLY_DOCK_AREATYPE)
 			dest = locate(SUPPLY_STATION_AREATYPE)
-			dock_act(/area/station/cargo/storage, "supply_dock")
-			undock_act(/area/velocity, "velocity_dock")
 			at_station = 1
 	moving = 0
 
+	undock_act(from, "supply_dock")
 	clean_arriving_area(dest)
 	from.move_contents_to(dest)
+	dock_act(dest, "supply_dock")
 
 //Check whether the shuttle is allowed to move
 /datum/controller/subsystem/shuttle/proc/can_move()
@@ -450,10 +446,20 @@ SUBSYSTEM_DEF(shuttle)
 	centcom_message = msg
 	//log_investigate("Shuttle contents sold for [SSshuttle.points - presale_points] credits. Contents: [sold_atoms || "none."] Message: [SSshuttle.centcom_message || "none."]", INVESTIGATE_CARGO)
 
+/datum/controller/subsystem/shuttle/proc/is_turf_clear(turf/T)
+	for(var/atom/A in T.contents)
+		if(!A.simulated)
+			continue
+		if(istype(A, /obj/machinery/light))
+			continue
+
+		return FALSE
+
+	return TRUE
 
 //Buyin
 /datum/controller/subsystem/shuttle/proc/buy()
-	if(!shoppinglist.len)
+	if(!shoppinglist.len && !mail_orders.len)
 		return
 
 	var/shuttle_at
@@ -471,36 +477,96 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/turf/T in shuttle)
 		if(T.density)
 			continue
-		var/contcount
-		for(var/atom/A in T.contents)
-			if(!A.simulated)
-				continue
-			if(istype(A, /obj/machinery/light))
-				continue
-			contcount++
-		if(contcount)
+
+		if(!is_turf_clear(T))
 			continue
+
 		clear_turfs += T
 		CHECK_TICK
 
 	for(var/S in shoppinglist)
 		if(!clear_turfs.len)
 			break
-		var/i = rand(1,clear_turfs.len)
-		var/turf/pickedloc = clear_turfs[i]
-		clear_turfs.Cut(i,i+1)
+		var/turf/picked_loc = pick_n_take(clear_turfs)
 
 		var/datum/supply_order/SO = S
 
-		SO.generate(pickedloc)
+		SO.generate(picked_loc)
 		if(SO.object.dangerous)
 			message_admins("[SO.object.name] ordered by [key_name_admin(SO.orderer_ckey)] has shipped.")
 
 		SSStatistics.score.stuffshipped++
 		CHECK_TICK
 
+	if(mail_orders.len && clear_turfs.len)
+		var/turf/picked_loc = pick_n_take(clear_turfs)
+
+		var/obj/structure/closet/crate/mailcrate/Crate = new(picked_loc)
+		Crate.spawn_filling = TRUE
+		for(var/datum/mail_order/Order in mail_orders)
+			var/obj/item/Item = generate_mail_item(Order, picked_loc)
+			if(Item)
+				Item.forceMove(Crate)
+
+			mail_orders -= Order
+
 	SSshuttle.shoppinglist.Cut()
 	return
+
+/datum/mail_order
+	var/sender
+	var/item_type
+	var/receiver_name
+	var/receiver_acc
+
+/datum/mail_order/New(sender, item_type, receiver_name, receiver_acc)
+	src.sender = sender
+	src.item_type = item_type
+	src.receiver_name = receiver_name
+	src.receiver_acc = receiver_acc
+
+/datum/controller/subsystem/shuttle/proc/add_mail(sender, receiver_name, receiver_acc, item_type)
+	var/datum/mail_order/Order = new /datum/mail_order(sender, item_type, receiver_name, receiver_acc)
+	mail_orders += Order
+
+/datum/controller/subsystem/shuttle/proc/generate_mail_item(datum/mail_order/Order, turf/picked_loc)
+	var/item_type = Order.item_type
+
+	var/sender = Order.sender
+	var/receiver_name = Order.receiver_name
+	var/receiver_number = Order.receiver_acc
+	var/datum/money_account/receiver_account = get_account(receiver_number)
+	if(!receiver_account || !sender || !item_type)
+		return
+
+	var/obj/item/Item = new item_type(picked_loc)
+
+	Item.add_price_tag("Отправитель - [sender]", 50, "Разное", global.cargo_account.account_number)
+
+	Item = object2onlineshop_package(Item, force_color = "white", hide_info = TRUE)
+
+	Item.pixel_x = rand(-10, 10)
+	Item.pixel_y = rand(-10, 10)
+
+	var/lot_number
+	if(istype(Item, /obj/item/smallDelivery))
+		var/obj/item/smallDelivery/Delivery = Item
+		lot_number = Delivery.lot_number
+	else
+		var/obj/structure/bigDelivery/Delivery = Item
+		lot_number = Delivery.lot_number
+
+	if(!lot_number)
+		return Item
+
+	var/datum/shop_lot/Lot = global.online_shop_lots[lot_number]
+
+	order_onlineshop_item(receiver_name, receiver_number, Lot, station_name_ru(), forced = TRUE)
+	receiver_account.shopping_cart["[lot_number]"] = Lot.to_list()
+
+	Item.name = "Посылка для [receiver_name]"
+
+	return Item
 
 
 /datum/controller/subsystem/shuttle/proc/incall(coeff = 1)
@@ -606,7 +672,6 @@ SUBSYSTEM_DEF(shuttle)
 	if(prob(5) || check_emag(transit)) // 5% that they survive
 		transit.move_contents_to(centcom, null, NORTH)
 		dock_act(centcom, loc_name)
-		dock_act(/area/centcom/evac, loc_name)
 	shake_mobs_in_area(centcom, EAST)
 
 
@@ -614,6 +679,7 @@ SUBSYSTEM_DEF(shuttle)
 	eta_timeofday = (REALTIMEOFDAY + flytime) % MIDNIGHT_ROLLOVER
 
 /datum/controller/subsystem/shuttle/proc/start_transit()
+	SSticker.load_arena()
 	SSrating.start_rating_collection()
 
 /obj/effect/bgstar

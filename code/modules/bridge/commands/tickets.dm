@@ -39,7 +39,7 @@
 		to_chat(target, "<font color='red' size='4'><b>-- Administrator private message --</b></font>")
 
 	//todo: reply (priv_msg) currently works only with client
-	//to_chat(target, "<font color='red'>Admin PM from-<b><a href='?priv_msg=[BRIDGE_FROM_SNIPPET_TEXT]'>[BRIDGE_FROM_SNIPPET_HTML]</a></b>: <span class='emojify linkify'>[message]</span></font>")
+	//to_chat(target, "<font color='red'>Admin PM from-<b><a href='byond://?priv_msg=[BRIDGE_FROM_SNIPPET_TEXT]'>[BRIDGE_FROM_SNIPPET_HTML]</a></b>: <span class='emojify linkify'>[message]</span></font>")
 	to_chat(target, "<font color='red'>Remote admin PM from-<b>[BRIDGE_FROM_SNIPPET_HTML]</b>: <span class='emojify linkify'>[message]</span></font>")
 
 	if(!target.holder)

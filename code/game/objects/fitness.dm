@@ -40,8 +40,6 @@
 		user.apply_effect(pain_amount, AGONY, 0)
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 
-	user.update_body()
-
 	var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 	to_chat(user, "<span class='notice'>[finishmessage]</span>")
 
@@ -67,7 +65,7 @@
 		to_chat(user, "You should get off the [user.buckled] first.")
 		return
 
-	if(gymnast.halloss > 80 || gymnast.traumatic_shock > 80)
+	if(gymnast.getHalLoss() > 80 || gymnast.traumatic_shock > 80)
 		to_chat(user, "You are too exausted.")
 		return
 
@@ -148,8 +146,6 @@
 		user.apply_effect(pain_amount, AGONY, 0)
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
 
-	user.update_body()
-
 	var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 	to_chat(user, "<span class='notice'>[finishmessage]</span>")
 
@@ -171,7 +167,7 @@
 	if(user.buckled && user.buckled != src)
 		to_chat(user, "You should get off the [user.buckled] first.")
 		return
-	if(user.halloss > 80 || user.traumatic_shock > 80)
+	if(user.getHalLoss() > 80 || user.traumatic_shock > 80)
 		to_chat(user, "You are too exausted.")
 		return
 
@@ -327,7 +323,6 @@
 	var/pain_amount = 3 * BP.adjust_pumped(mass, max_pumped)
 	H.apply_effect(pain_amount, AGONY, 0)
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "swole", /datum/mood_event/swole, pain_amount)
-	H.update_body()
 
 	H.nutrition -= 2 * mass
 	H.overeatduration -= 2 * mass

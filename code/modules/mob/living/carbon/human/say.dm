@@ -137,6 +137,9 @@
 
 	message = accent_sounds(message, speaking)
 
+	if(HAS_TRAIT(src, TRAIT_DYSLALIA) && !(speaking && (speaking.flags & SIGNLANG)))
+		message = message_with_dyslalia(message)
+
 	if(!speaking)
 		switch(species.name)
 			if(PODMAN)
@@ -160,7 +163,7 @@
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
-	if(get_species() == HOMUNCULUS)
+	if(HAS_TRAIT(src, TRAIT_CURSED_TALK))
 		message = cursed_talk(message)
 
 	message = capitalize(trim(message))

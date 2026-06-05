@@ -124,7 +124,10 @@
 	if(!ismob(A) || istype(A, /mob/living/simple_animal/hostile/asteroid))
 		return
 	var/mob/M = A
-	M.overlay_fullscreen("mine_veil", /atom/movable/screen/fullscreen/oxy, 7)
+	if(!HAS_TRAIT(A, TRAIT_CAVE_EXPLORER))
+		M.overlay_fullscreen("mine_veil", /atom/movable/screen/fullscreen/oxy, 7)
+	else
+		M.overlay_fullscreen("mine_veil", /atom/movable/screen/fullscreen/impaired, 1)
 	to_chat(A, "<span class='warning'>Suspension of particles obstructs the view. This area are more dangerous.</span>")
 
 /area/asteroid/mine/unexplored/dangerous/Exited(atom/movable/A, atom/NewLoc)

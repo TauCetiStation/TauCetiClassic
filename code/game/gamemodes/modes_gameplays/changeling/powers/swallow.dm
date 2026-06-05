@@ -35,7 +35,7 @@
 	if(T.species.flags[IS_SYNTHETIC] || T.species.flags[IS_PLANT])
 		to_chat(user, "<span class='warning'>[T] is not compatible with our biology.</span>")
 		return FALSE
-	if(T.species.flags[NO_SCAN])
+	if(HAS_TRAIT(T, TRAIT_INCOMPATIBLE_DNA))
 		to_chat(user, "<span class='warning'>We do not know how to digest this creature!</span>")
 		return FALSE
 	return TRUE
@@ -53,7 +53,7 @@
 	                     "<span class='notice'>We have devour [target]!</span>")
 	to_chat(target, "<span class='danger'>You have been devoured by the changeling!</span>")
 	var/mob/living/carbon/human/changeling = user
-	changeling.mind.pluvian_social_credit += target.mind.pluvian_social_credit
+	changeling.mind.pluvian_social_credit += target.mind?.pluvian_social_credit
 	for(var/obj/item/I in target)
 		target.drop_from_inventory(I)
 	target.spawn_gibs()

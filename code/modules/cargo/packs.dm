@@ -71,6 +71,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 	fill(C)
 
+	if(ispath(crate_type, /obj/structure/closet))
+		C.spawn_filling = TRUE
+
 	return C
 
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
@@ -112,9 +115,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/toy/crayon/spraycan,
 					/obj/item/toy/crayon/spraycan,
 					/obj/item/toy/crayon/spraycan,
-					/obj/item/weapon/wrapping_paper,
-					/obj/item/weapon/wrapping_paper,
-					/obj/item/weapon/wrapping_paper,
+					/obj/item/weapon/packageWrap/present,
+					/obj/item/weapon/packageWrap/present,
+					/obj/item/weapon/packageWrap/present,
 					/obj/item/weapon/paper_refill)
 	crate_name = "Arts and Crafts crate"
 	group = "Operations"
@@ -164,8 +167,8 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "Weapons crate"
 	contains = list(/obj/item/weapon/melee/baton,
 					/obj/item/weapon/melee/baton,
-					/obj/item/weapon/gun/energy/laser,
-					/obj/item/weapon/gun/energy/laser,
+					/obj/item/weapon/gun/energy/laser/big,
+					/obj/item/weapon/gun/energy/laser/big,
 					/obj/item/weapon/storage/box/flashbangs,
 					/obj/item/weapon/storage/box/flashbangs)
 	additional_costs = 350
@@ -410,6 +413,17 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	access = access_armory
 	group = "Security"
 
+/datum/supply_pack/ballistic/exp4046
+	name = "40x46mm explosive grenades"
+	contains = list(/obj/item/weapon/storage/box/r4046/explosion,
+					/obj/item/weapon/storage/box/r4046/explosion)
+	additional_costs = 520
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "40x46mm explosive grenades"
+	access = access_armory
+	hidden = TRUE
+	group = "Security"
+
 /datum/supply_pack/ballistic/m79
 	name = "m79 grenade launcher"
 	contains = list(/obj/item/weapon/gun/projectile/grenade_launcher/m79,
@@ -484,12 +498,14 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "Investigation Crate"
 	contains = list(/obj/item/weapon/autopsy_scanner,
 					/obj/item/weapon/scalpel,
-					/obj/item/device/detective_scanner,
 					/obj/item/device/taperecorder,
 					/obj/item/clothing/gloves/latex,
 					/obj/item/clothing/suit/storage/labcoat,
 					/obj/item/clothing/mask/surgical,
-					/obj/item/weapon/storage/box/evidence
+					/obj/item/weapon/storage/box/evidence,
+					/obj/item/weapon/storage/box/swabs,
+					/obj/item/weapon/forensic_sample_kit,
+					/obj/item/weapon/forensic_sample_kit/powder
 					 )
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Investigation Crate"
@@ -711,6 +727,20 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 500
 	crate_type = /obj/structure/closet/crate
 	crate_name = "Party equipment"
+	group = "Hospitality"
+
+/datum/supply_pack/shashlik
+	name = "BBQ equipment"
+	contains = list(/obj/item/weapon/mangal_parts,
+					/obj/item/weapon/storage/bag/plasticbag/coal,
+					/obj/item/weapon/storage/bag/plasticbag/coal,
+					/obj/item/clothing/suit/chef_classic,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer)
+	additional_costs = 500
+	crate_type = /obj/structure/closet/crate
+	crate_name = "BBQ equipment"
 	group = "Hospitality"
 
 /datum/supply_pack/ramens
@@ -1849,6 +1879,16 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/suit/lasertag/bluetag)
 	group = "Miscellaneous"
 
+/datum/supply_pack/casino
+	name = "Casino Starter Pack"
+	contains = list(/obj/item/device/cardpay/casino,
+					/obj/item/toy/cards,
+					/obj/item/toy/cards,
+					/obj/item/weapon/storage/pill_bottle/dice,
+					/obj/item/weapon/storage/pill_bottle/dice,
+					/obj/item/weapon/cane)
+	group = "Miscellaneous"
+
 //----------------------------------------------
 //-----------------RANDOMISED-------------------
 //----------------------------------------------
@@ -1989,7 +2029,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "Xeno liquidator"
 	contains = list(/obj/item/clothing/suit/space/globose/recycler,
 					/obj/item/clothing/head/helmet/space/globose/recycler,
-					/obj/item/weapon/gun/energy/laser,
+					/obj/item/weapon/gun/energy/laser/big,
 					/obj/item/weapon/shield/buckler,
 					/obj/item/clothing/mask/breath,
 					/obj/item/weapon/tank/oxygen,
@@ -2028,7 +2068,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/shoes/magboots,
 					/obj/item/clothing/mask/breath,
 					/obj/item/weapon/tank/oxygen,
-					/obj/item/weapon/gun/energy/laser,
+					/obj/item/weapon/gun/energy/laser/big,
 					/obj/item/weapon/gun/projectile/automatic/pistol/glock,
 					/obj/item/ammo_box/magazine/glock,
 					/obj/item/ammo_box/magazine/glock,
@@ -2041,9 +2081,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/blob_equipment/group
 	name = "Anti-blob equipment: Group supply"
-	contains = list(/obj/item/weapon/gun/energy/laser,
-					/obj/item/weapon/gun/energy/laser,
-					/obj/item/weapon/gun/energy/laser,
+	contains = list(/obj/item/weapon/gun/energy/laser/big,
+					/obj/item/weapon/gun/energy/laser/big,
+					/obj/item/weapon/gun/energy/laser/big,
 					/obj/machinery/recharger,
 					/obj/machinery/recharger,
 					/obj/machinery/recharger,
@@ -2074,10 +2114,10 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(
 		/obj/item/weapon/disk/smartlight_programm/soft,
 		/obj/item/weapon/disk/smartlight_programm/hard,
-		/obj/item/weapon/disk/smartlight_programm/k3000,
 		/obj/item/weapon/disk/smartlight_programm/k4000,
+		/obj/item/weapon/disk/smartlight_programm/k4500,
 		/obj/item/weapon/disk/smartlight_programm/k5000,
-		/obj/item/weapon/disk/smartlight_programm/k6000,
+		/obj/item/weapon/disk/smartlight_programm/k5500,
 	)
 	additional_costs = 1000
 	group = "Operations"

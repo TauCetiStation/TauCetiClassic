@@ -335,7 +335,7 @@
 
 	if(!M || !src) return
 
-	if(M.species.flags[NO_BLOOD])
+	if(HAS_TRAIT(M, TRAIT_NO_BLOOD))
 		to_chat(src, "<span class='warning'>That donor has no blood to take.</span>")
 		return
 

@@ -26,16 +26,6 @@
 	icon_state = "gygax"
 	spawn_type = /obj/mecha/combat/gygax/security
 
-/obj/effect/spawner/aspect/mech/gygax/ultra
-	name = "security gygax ultra spawner"
-	icon_state = "ultra"
-	spawn_type = /obj/mecha/combat/gygax/ultra/security
-
-/obj/effect/spawner/aspect/mech/dark_gygax
-	name = "dark gygax spawner"
-	icon_state = "black_gygax"
-	spawn_type =/obj/mecha/combat/gygax/dark
-
 /obj/effect/spawner/aspect/mech/medical
 	name = "medical mech spawner"
 	icon_state = "medical"

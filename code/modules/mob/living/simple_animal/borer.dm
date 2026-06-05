@@ -64,7 +64,7 @@
 		"Septenary", "Octonary", "Novenary", "Decenary", "Undenary", "Duodenary",
 		)
 
-	var/static/list/banned_species = list(IPC, GOLEM, SLIME, DIONA)
+	var/static/list/banned_species = list(IPC, GOLEM, DIONA)
 
 	var/dominate_cd = 0                        // Cooldown for dominate victim
 	var/assuming = FALSE
@@ -200,7 +200,7 @@
 
 	var/list/choices = list()
 	for(var/mob/living/carbon/C in view(3,src))
-		if(C.stat != DEAD && !(C.get_species() in banned_species))
+		if(C.stat != DEAD && !(C.get_species() in banned_species) && !HAS_TRAIT(C, ELEMENT_TRAIT_SLIME))
 			choices += C
 
 	if(world.time - dominate_cd < 300)
@@ -252,7 +252,7 @@
 	to_chat(src, "You begin delicately adjusting your connection to the host brain...")
 	assuming = TRUE
 
-	addtimer(CALLBACK(src, PROC_REF(take_control)), 300 + (host.brainloss * 5))
+	addtimer(CALLBACK(src, PROC_REF(take_control)), 300 + (host.getBrainLoss() * 5))
 
 /mob/living/simple_animal/borer/proc/take_control()
 	assuming = FALSE
@@ -362,7 +362,7 @@
 		var/mob/living/carbon/human/H = host
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 
-		BP.implants -= src
+		BP.embedded_objects -= src
 		if(H.glasses?.hud_list)
 			for(var/hud in H.glasses.hud_list)
 				var/datum/atom_hud/AH = global.huds[hud]
@@ -460,7 +460,7 @@
 	if(ishuman(host))
 		var/mob/living/carbon/human/H = host
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-		BP.implants += src
+		BP.embedded_objects += src
 		H.sec_hud_set_implants()
 
 	host_brain.name = C.name

@@ -12,7 +12,9 @@
  */
 /obj/structure/table
 	name = "table"
-	desc = "A square piece of metal standing on four metal legs. It can not move."
+	cases = list("стол", "стола", "столу", "стол", "столом", "столе")
+	desc = "Квадратный кусок металла, стоящий на четырех металлических ножках. Он не может двигаться."
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/table.dmi'
 	icon_state = "box"
 	density = TRUE
@@ -24,6 +26,8 @@
 
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
+
+	hit_particle_type = /particles/tool/digging/metal
 
 	var/parts = /obj/item/weapon/table_parts
 	var/flipped = 0
@@ -93,14 +97,14 @@
 	if(HULK in user.mutations)
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		visible_message("<span class='danger'>[user] smashes the [src] apart!</span>")
+		user.say(pick(";РРРРРРАААРГХ!", ";ХHННННННННГГГГГГХ!", ";ГВААААААААРРРХХХ!", "ННННННННГГГГГГГГХХ!", ";АААААААРРГХ!" ))
+		visible_message("<span class='danger'>[user] разламывает [CASE(src, NOMINATIVE_CASE)] на части!</span>")
 		deconstruct(TRUE)
 
 /obj/structure/table/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
+	visible_message("<span class='danger'>[user] разрезает [CASE(src, ACCUSATIVE_CASE)] на части!</span>")
 	if(istype(src, /obj/structure/table/glass))
 		deconstruct(FALSE)
 	else
@@ -110,14 +114,14 @@
 	if(user.environment_smash)
 		..()
 		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
-		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		visible_message("<span class='danger'>[user] разламывает [CASE(src, ACCUSATIVE_CASE)] на части!</span>")
 		deconstruct(TRUE)
 
 /obj/structure/table/attack_hand(mob/user)
 	if(HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
-		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		visible_message("<span class='danger'>[user] разламывает [CASE(src, NOMINATIVE_CASE)] на части!</span>")
+		user.say(pick(";РРРРРРАААРГХ!", ";ХHННННННННГГГГГГХ!", ";ГВААААААААРРРХХХ!", "ННННННННГГГГГГГГХХ!", ";АААААААРРГХ!" ))
 		deconstruct(TRUE)
 
 /obj/structure/table/attack_tk() // no telehulk sorry
@@ -128,7 +132,9 @@
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
-	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
+	// todo: we should not change mover properties here, this method is only for attempt to pass
+	// part of future mob layer / crawl refactoring
+	if(buckled_mob != mover && iscarbon(mover) && mover.checkpass(PASSCRAWL))
 		mover.layer = 2.7
 		return 1
 	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
@@ -170,7 +176,7 @@
 /obj/structure/table/CheckExit(atom/movable/O, target)
 	if(istype(O) && O.checkpass(PASSTABLE))
 		return 1
-	if(istype(O) && O.checkpass(PASSCRAWL))
+	if(buckled_mob != O && iscarbon(O) && O.checkpass(PASSCRAWL))
 		O.layer = 4.0
 		return 1
 	if (flipped)
@@ -187,7 +193,7 @@
 	spark_system.start()
 	playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-	visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
+	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] был[VERB_RU(src)] разрезан[VERB_RU(src)] на части [user]!</span>", "<span class='notice'>Вы слышите, как [CASE(src, NOMINATIVE_CASE)] разваливается на части.</span>")
 	user.SetNextMove(CLICK_CD_MELEE)
 	deconstruct(TRUE)
 
@@ -198,7 +204,7 @@
 	spark_system.start()
 	playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 	playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-	to_chat(user, "<span class='notice'>You tried to slice through [src] but [I] is too weak.</span>")
+	to_chat(user, "<span class='notice'>Вы пытаетесь разрезать [CASE(src, ACCUSATIVE_CASE)], но [CASE(I, NOMINATIVE_CASE)] слишком слаб[VERB_RU(src)] для этого.</span>")
 	user.SetNextMove(CLICK_CD_MELEE)
 
 // React to tools attacking src.
@@ -206,8 +212,8 @@
 	if(iswrenching(I))
 		if(user.is_busy(src))
 			return FALSE
-		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
-		if(I.use_tool(src, user, 50, volume = 50))
+		to_chat(user, "<span class='notice'>Вы начинаете разбирать [CASE(src, ACCUSATIVE_CASE)].</span>")
+		if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
 			deconstruct(TRUE)
 		return TRUE
 	return FALSE
@@ -238,6 +244,9 @@
 /obj/structure/table/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
 		return ..()
+	if(!parts)
+		return ..()
+
 	var/obj/item/weapon/table_parts/t_parts = new parts(loc)
 	if(disassembled)
 		transfer_fingerprints_to(t_parts)
@@ -270,10 +279,10 @@
 		return
 
 	if(!flip(get_cardinal_dir(usr,src)))
-		to_chat(usr, "<span class='notice'>It won't budge.</span>")
+		to_chat(usr, "<span class='notice'>Оно не сдвинется с места.</span>")
 		return
 
-	usr.visible_message("<span class='warning'>[usr] flips \the [src]!</span>")
+	usr.visible_message("<span class='warning'>[usr] переворачивает [CASE(src, ACCUSATIVE_CASE)]!</span>")
 
 	if(climbable)
 		structure_shaken()
@@ -308,7 +317,7 @@
 		return
 
 	if (!unflipping_check())
-		to_chat(usr, "<span class='notice'>It won't budge.</span>")
+		to_chat(usr, "<span class='notice'>Оно не сдвинется с места.</span>")
 		return
 	unflip()
 
@@ -360,10 +369,14 @@
  */
 /obj/structure/table/glass
 	name = "glass table"
-	desc = "Looks fragile. You should totally flip it. It is begging for it."
+	cases = list("стеклянный стол", "стеклянного стола", "стеклянному столу", "стеклянный стол", "стеклянным столом", "стеклянном столе")
+	desc = "Выглядит хрупким. Вас так и манит перевернуть его. Он так и ПРОСИТ СДЕЛАТЬ ЭТО!"
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	parts = /obj/item/weapon/table_parts/glass
 	max_integrity = 10
+
+	hit_particle_type = /particles/tool/digging/glass
 
 /obj/structure/table/glass/atom_init()
 	. = ..()
@@ -392,7 +405,7 @@
 	update_adjacent()
 
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
-	visible_message("<span class='warning'>[src] breaks!</span>", "<span class='danger'>You hear breaking glass.</span>")
+	visible_message("<span class='warning'>[CASE(src, NOMINATIVE_CASE)] сломал[VERB2_RU(src)]!</span>", "<span class='danger'>Вы слышите разбивающееся стекло.</span>")
 
 	var/T = get_turf(src)
 	new /obj/item/weapon/shard(T)
@@ -406,7 +419,7 @@
 /obj/structure/table/glass/on_climb(mob/living/user)
 	usr.forceMove(get_turf(src))
 	if(check_break(user))
-		usr.visible_message("<span class='warning'>[user] tries to climb onto \the [src], but breaks it!</span>")
+		usr.visible_message("<span class='warning'>[user] пытается забраться на [CASE(src, ACCUSATIVE_CASE)], но [THEY_RU(src)] ломается!</span>")
 	else
 		..()
 
@@ -432,7 +445,7 @@
 
 	victim.Stun(2)
 	victim.Weaken(5)
-	visible_message("<span class='danger'>[assailant] slams [victim]'s face against \the [src], breaking it!</span>")
+	visible_message("<span class='danger'>[assailant] разбивает лицо [victim] об [CASE(src, ACCUSATIVE_CASE)] и [THEY_RU(src)] ломается!</span>")
 	playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
 
 	victim.log_combat(assailant, "face-slammed against [name]")
@@ -464,21 +477,29 @@
  */
 /obj/structure/table/woodentable
 	name = "wooden table"
-	desc = "Do not apply fire to this. Rumour says it burns easily."
+	cases = list("деревянный стол", "деревянного стола ", "деревянному столу", "деревянный стол", "деревянным столом", "деревянном столе")
+	desc = "Ходят слухи, что достаточно одного маленького огня и стол сгорит за секунды. Лучше не курить возле него."
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/wooden_table.dmi'
 	parts = /obj/item/weapon/table_parts/wood
 	max_integrity = 50
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/table/woodentable/poker //No specialties, Just a mapping object.
 	name = "gambling table"
-	desc = "A seedy table for seedy dealings in seedy places."
+	cases = list("игровой стол", "игрового стола", "игровому столу", "игровой стол", "игровым столом", "игровом столе")
+	desc = "Убогий стол для сомнительных сделок в убогих местах."
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/poker_table.dmi'
 	parts = /obj/item/weapon/table_parts/wood/poker
 	max_integrity  = 50
 
 /obj/structure/table/woodentable/fancy
 	name = "fancy table"
-	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
+	cases = list("украшенный стол", "украшенного стола", "украшенному столу", "украшенный стол", "украшенным столом", "украшенном столе")
+	desc = "Стандартный металлический каркас стола, обтянутый изумительно вычурной тканью с рисунком."
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/fancy_table.dmi'
 	canSmoothWith = list(/obj/structure/table/woodentable/fancy, /obj/structure/table/woodentable/fancy/black)
 	parts = /obj/item/weapon/table_parts/wood/fancy
@@ -493,7 +514,9 @@
  */
 /obj/structure/table/reinforced
 	name = "reinforced table"
-	desc = "A version of the four legged table. It is stronger."
+	cases = list("укреплённый стол", "укреплённого стола", "укреплённому столу", "укреплённый стол", "укреплённым столом", "укреплённом столе")
+	desc = "Вариант стола на четырех ножках. Он прочнее, чем ты."
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/reinforced_table.dmi'
 	max_integrity = 200
 	parts = /obj/item/weapon/table_parts/reinforced
@@ -531,14 +554,14 @@
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			if(status == 2)
-				to_chat(user, "<span class='notice'>You are now strengthening \the [src].</span>")
-				if(WT.use_tool(src, user, 50, volume = 50))
-					to_chat(user, "<span class='notice'>You have weakened \the [src].</span>")
+				to_chat(user, "<span class='notice'>Вы начинаете укреплять [CASE(src, ACCUSATIVE_CASE)].</span>")
+				if(WT.use_tool(src, user, 50, volume = 50, quality = QUALITY_WELDING))
+					to_chat(user, "<span class='notice'>Вы ослабляете укрепления [CASE(src, GENITIVE_CASE)].</span>")
 					src.status = 1
 			else
-				to_chat(user, "<span class='notice'>You are now strengthening \the [src].</span>")
-				if(WT.use_tool(src, user, 50, volume = 50))
-					to_chat(user, "<span class='notice'>You have strengthened \the [src].</span>")
+				to_chat(user, "<span class='notice'>Вы начинаете укреплять [CASE(src, ACCUSATIVE_CASE)].</span>")
+				if(WT.use_tool(src, user, 50, volume = 50, quality = QUALITY_WELDING))
+					to_chat(user, "<span class='notice'>Вы ослабляете укрепления [CASE(src, GENITIVE_CASE)].</span>")
 					src.status = 2
 			return TRUE
 		return FALSE
@@ -546,8 +569,8 @@
 	else if(status != 2 && iswrenching(I))
 		if(user.is_busy(src))
 			return FALSE
-		to_chat(user, "<span class='notice'>You are now disassembling \the [src].</span>")
-		if(I.use_tool(src, user, 50, volume = 50))
+		to_chat(user, "<span class='notice'>Вы разбираете [CASE(src, ACCUSATIVE_CASE)].</span>")
+		if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
 			deconstruct(TRUE)
 		return TRUE
 
@@ -690,7 +713,9 @@
 
 /obj/structure/table/reinforced/stall
 	name = "stall table"
-	desc = "A market stall table equipped with magnetic grip."
+	cases = list("магнитный стол", "магнитного стола", "магнитному столу", "магнитный стол", "магнитным столом", "магнитном столе")
+	desc = "Стол, оснащенный магнитным захватом."
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/stall_table.dmi'
 	max_integrity = 200
 	parts = /obj/item/weapon/table_parts/stall
@@ -738,18 +763,24 @@
 
 /obj/structure/table/rglass
 	name = "reinforced glass table"
-	desc = "A reinforced version of the glass table"
+	cases = list("укреплённый стеклянный стол", "укреплённого стеклянного стола", "укреплённому стеклянному столу", "укреплённый стеклянный стол", "укреплённым стеклянным столом", "укреплённом стеклянном столе")
+	desc = "Укрепленная версия стеклянного стола."
+	gender = MALE
 	icon = 'icons/obj/smooth_structures/rglass.dmi'
 	max_integrity = 100
 	parts = /obj/item/weapon/table_parts/rglass
 	flipable = FALSE
+
+	hit_particle_type = /particles/tool/digging/glass
 
 /*
  * Racks
  */
 /obj/structure/rack // TODO subtype of table?
 	name = "rack"
-	desc = "Different from the Middle Ages version."
+	cases = list("стеллаж", "стеллажа", "стеллажу", "стеллаж", "стеллажом", "стеллаже")
+	desc = "Обычный железный стеллаж, который точно не использовали для пыток в средних веках."
+	gender = MALE
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 	density = TRUE
@@ -761,6 +792,8 @@
 
 	max_integrity = 20
 	resistance_flags = CAN_BE_HIT
+
+	hit_particle_type = /particles/tool/digging/metal
 
 /obj/structure/rack/atom_init()
 	. = ..()
@@ -809,7 +842,7 @@
 
 	playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 	playsound(src, "sparks", VOL_EFFECTS_MASTER)
-	visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'> You hear [src] coming apart.</span>")
+	visible_message("<span class='notice'>[CASE(src, NOMINATIVE_CASE)] был[VERB_RU(src)] разрезан[VERB_RU(src)] на части [user]!</span>", "<span class='notice'>Вы слышите, как [CASE(src, NOMINATIVE_CASE)] разваливается на части.</span>")
 	deconstruct(TRUE)
 
 /obj/structure/rack/play_attack_sound(damage_amount, damage_type, damage_flag)
@@ -836,22 +869,22 @@
 	if(HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
-		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
+		visible_message("<span class='danger'>[user] разламывает [CASE(src, NOMINATIVE_CASE)] на части!</span>")
+		user.say(pick(";РААААААААГХ!", ";ХHННННННННГГГГГГХ!", ";ГВААААААААРРРХХХ!", "ННННННННГГГГГГГГХХ!", ";АААААААРРГХ!" ))
 		deconstruct(TRUE)
 
 /obj/structure/rack/attack_paw(mob/user)
 	if(HULK in user.mutations)
 		user.SetNextMove(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		user.say(pick(";РРРРРРАААРГХ!", ";ХHННННННННГГГГГГХ!", ";ГВААААААААРРРХХХ!", "ННННННННГГГГГГГГХХ!", ";АААААААРРГХ!" ))
+		visible_message("<span class='danger'>[user] разламывает [CASE(src, NOMINATIVE_CASE)] на части!</span>")
 		deconstruct(TRUE)
 
 /obj/structure/rack/attack_alien(mob/user)
 	user.do_attack_animation(src)
 	user.SetNextMove(CLICK_CD_MELEE)
-	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
+	visible_message("<span class='danger'>[user] разрезает [CASE(src, ACCUSATIVE_CASE)] на части!</span>")
 	deconstruct(TRUE)
 
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
@@ -859,8 +892,196 @@
 		..()
 		playsound(user, 'sound/effects/grillehit.ogg', VOL_EFFECTS_MASTER)
 		user.do_attack_animation(src)
-		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
+		visible_message("<span class='danger'>[user] разламывает [CASE(src, ACCUSATIVE_CASE)] на части!</span>")
 		deconstruct(TRUE)
 
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return FALSE
+
+
+/obj/structure/mangal
+	name = "mangal"
+	cases = list("мангал", "мангала", "мангалу", "мангал", "мангалом", "мангале")
+	desc = "Сборный мангал из листов металла."
+	gender = MALE
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "mangal_empty"
+	density = TRUE
+	anchored = TRUE
+	layer = CONTAINER_STRUCTURE_LAYER
+	throwpass = 1	//You can throw objects over this, despite it's density.")
+	climbable = TRUE
+
+	max_integrity = 25
+	resistance_flags = CAN_BE_HIT
+
+	hit_particle_type = /particles/tool/digging/metal
+
+	light_color = LIGHT_COLOR_FIRE
+
+	var/coal_amount = 0
+	var/coal_max = 25
+	var/lit = FALSE
+
+	COOLDOWN_DECLARE(last_burn_time)
+	var/coal_consumption_time = 1 MINUTE
+
+/obj/structure/mangal/atom_init(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/clickplace)
+
+	if(mapload)
+		coal_amount = rand(10, coal_max)
+		update_icon()
+
+/obj/structure/mangal/airlock_crush_act()
+	deconstruct(TRUE)
+
+/obj/structure/mangal/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	var/obj/item/weapon/mangal_parts/parts = new (loc)
+	if(coal_amount > 0)
+		for(var/i in 1 to coal_amount)
+			new /obj/item/weapon/ore/coal (loc)
+
+	if(disassembled)
+		transfer_fingerprints_to(parts)
+	else
+		parts.deconstruct(FALSE)
+	..()
+
+/obj/structure/mangal/attackby(obj/item/weapon/W, mob/user)
+	if(iswrenching(W))
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+		deconstruct(TRUE)
+		return
+
+	if(istype(W, /obj/item/weapon/ore/coal) && (coal_amount < coal_max))
+		qdel(W)
+		coal_amount++
+		visible_message("<span class='notice'>[user] добавляет [CASE(W, ACCUSATIVE_CASE)] в мангал</span>")
+		update_icon()
+		return
+
+	if(W.get_current_temperature() && (coal_amount > 0))
+		visible_message("<span class='notice'>[user] поджигает [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)].</span>")
+		StartBurning()
+		return
+
+	if(W.is_open_container() && W.reagents && W.reagents.remove_reagent("water", 1))
+		visible_message("<span class='notice'>[user] тушит [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)].</span>")
+		extinguish()
+		return
+
+	. = ..()
+
+/obj/structure/mangal/update_icon()
+	if(!coal_amount)
+		icon_state = "mangal_empty"
+		return
+
+	if(lit)
+		icon_state = "mangal_lit"
+		return
+
+	icon_state = "mangal_coal"
+
+/obj/structure/mangal/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	StartBurning()
+
+/obj/structure/mangal/water_act()
+	extinguish()
+
+/obj/structure/mangal/get_current_temperature()
+	if(lit)
+		return 500
+	return 0
+
+/obj/structure/mangal/process()
+	if(!CheckOxygen())
+		extinguish()
+		return
+
+	if(COOLDOWN_FINISHED(src, last_burn_time))
+		COOLDOWN_START(src, last_burn_time, coal_consumption_time)
+		coal_amount--
+		if(coal_amount <= 0)
+			coal_amount = 0
+			extinguish()
+			return
+
+	Burn()
+
+/obj/structure/mangal/proc/Burn()
+	var/turf/current_location = get_turf(src)
+	current_location.hotspot_expose(500, 250)
+	for(var/A in current_location)
+		if(A == src)
+			continue
+		if(isobj(A))
+			var/obj/O = A
+			O.fire_act(exposed_temperature = T0C+1000, exposed_volume = 250)
+		else if(ismob(A))
+			var/mob/M = A
+			M.fire_act(exposed_temperature = T0C+1000, exposed_volume = 250)
+
+/obj/structure/mangal/proc/StartBurning()
+	if(lit || !CheckOxygen())
+		return
+
+	lit = TRUE
+	START_PROCESSING(SSobj, src)
+	update_icon()
+	set_light(3)
+
+/obj/structure/mangal/proc/extinguish()
+	if(!lit)
+		return
+
+	lit = FALSE
+	set_light(0)
+	STOP_PROCESSING(SSobj, src)
+	update_icon()
+
+/obj/structure/mangal/proc/CheckOxygen()
+	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
+	if(G.get_by_flag(XGM_GAS_OXIDIZER) > 1)
+		return 1
+	return 0
+
+
+/obj/structure/table/park_table
+	name = "park table"
+	cases = list("парковый столик", "паркового столика", "парковому столику", "парковый столик", "парковым столиком", "парковом столике")
+	desc = "Простой дощатый стол."
+	gender = MALE
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "table_park"
+	smooth = FALSE
+
+	max_integrity = 75
+	resistance_flags = CAN_BE_HIT
+
+	hit_particle_type = /particles/tool/digging/wood
+
+	parts = null
+	flipable = FALSE
+	canconnect = FALSE
+
+/obj/structure/table/park_table/atom_init(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/clickplace)
+
+/obj/structure/table/park_table/airlock_crush_act()
+	deconstruct(TRUE)
+
+/obj/structure/table/park_table/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	new /obj/item/stack/sheet/wood(loc, 4)
+
+	..()

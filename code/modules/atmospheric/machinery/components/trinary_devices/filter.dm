@@ -46,7 +46,7 @@
 
 	for(var/id in gas_data.gases)
 		if(gas_data.gases_knowable[id])
-			filters_dat += "<A href='?src=\ref[src];filterset=[id]'>[gas_data.name[id]]</A><BR>"
+			filters_dat += "<A href='byond://?src=\ref[src];filterset=[id]'>[gas_data.name[id]]</A><BR>"
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	..()
@@ -116,15 +116,15 @@
 	current_filter_type = filter_type
 
 	dat += {"
-			<b>Power: </b><a href='?src=\ref[src];power=1'>[use_power?"On":"Off"]</a><br>
+			<b>Power: </b><a href='byond://?src=\ref[src];power=1'>[use_power?"On":"Off"]</a><br>
 			<b>Filtering: </b>[ current_filter_type != NOTHING_FILTER ? gas_data.name[current_filter_type] : NOTHING_FILTER ]<br><HR>
 			<h4>Set Filter Type:</h4>"}
 	dat += filters_dat
 	dat += {"
-			<A href='?src=\ref[src];filterset=NOTHING_FILTER'>[NOTHING_FILTER]</A><BR>
+			<A href='byond://?src=\ref[src];filterset=NOTHING_FILTER'>[NOTHING_FILTER]</A><BR>
 			<HR>
 			<B>Set Flow Rate Limit:</B>
-			[src.set_flow_rate]L/s | <a href='?src=\ref[src];set_flow_rate=1'>Change</a><BR>
+			[src.set_flow_rate]L/s | <a href='byond://?src=\ref[src];set_flow_rate=1'>Change</a><BR>
 			<B>Flow rate: </B>[round(last_flow_rate, 0.1)]L/s
 			"}
 

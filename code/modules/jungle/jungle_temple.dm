@@ -340,8 +340,10 @@
 				qdel(flicker)
 			//flick("flameburst",src)
 		if("phoron_gas")
+			EMPTY_BLOCK_GUARD
 			//spawn a bunch of phoron
 		if("n2_gas")
+			EMPTY_BLOCK_GUARD
 			//spawn a bunch of sleeping gas
 		if("thrower")
 			//edited version of obj/effect/step_trigger/thrower

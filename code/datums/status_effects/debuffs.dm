@@ -33,8 +33,8 @@
 	owner.stunned = TRUE
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, id)
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
-	owner.drop_from_inventory(owner.l_hand)
-	owner.drop_from_inventory(owner.r_hand)
+	owner.drop_l_hand()
+	owner.drop_r_hand()
 
 /datum/status_effect/incapacitating/stun/on_remove()
 	owner.stunned = FALSE
@@ -164,8 +164,13 @@
 	update_time_of_death()
 	handle_stasis_bag()
 
+/datum/status_effect/incapacitating/stasis_bag/on_apply()
+	owner.mob_metabolism_mod.ModMultiplicative(0, src) // stop any metabolism while in the bag
+	return ..()
+
 /datum/status_effect/incapacitating/stasis_bag/on_remove()
 	update_time_of_death()
+	owner.mob_metabolism_mod.RemoveMods(src)
 	return ..()
 
 /datum/status_effect/incapacitating/stasis_bag/be_replaced()
@@ -224,8 +229,8 @@
 	if(!isxeno(owner))
 		return
 	var/mob/living/carbon/xenomorph/Q = owner
-	Q.bruteloss = Q.bruteloss / 2
-	Q.fireloss = Q.fireloss / 2
+	Q.adjustBruteLoss(Q.getBruteLoss() / 2)
+	Q.adjustFireLoss(Q.getFireLoss() / 2)
 	Q.maxHealth = Q.maxHealth / 2
 	Q.update_health_hud()
 	Q.heal_rate = Q.heal_rate / 2.5
@@ -332,6 +337,7 @@
 	COOLDOWN_START(src, hallucination_cooldown, rand(lower_tick_interval, upper_tick_interval))
 
 /// Causes a fake "zap" to the hallucinator.
+// todo: rewrite it to use get_skeleton_appearance() or /obj/effect/electrocute (and remove electrocute dmi states)
 /datum/hallucination/shock
 	var/electrocution_icon = 'icons/mob/human.dmi'
 	var/electrocution_icon_state = "electrocuted_base"
@@ -478,3 +484,26 @@
 	var/mutable_appearance/fake_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "[source.body_zone][5]") //bodyparts[source]
 	owner.healthdoll.add_overlay(fake_overlay)
 	return COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD
+
+//WEAKENED
+/datum/status_effect/cursed_talk
+	id = "cursed_talk"
+	alert_type = /atom/movable/screen/alert/status_effect/cursed_talk
+
+/atom/movable/screen/alert/status_effect/cursed_talk
+	name = "Паранормальный ужас"
+	desc = "Вы против своей воли говорите о ужасных и мерзких вещах."
+	icon_state = "cursed_talk"
+
+/datum/status_effect/cursed_talk/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	if(!.)
+		return
+	duration = world.time + set_duration
+
+/datum/status_effect/cursed_talk/on_apply()
+	ADD_TRAIT(owner, TRAIT_CURSED_TALK, id)
+	return TRUE
+
+/datum/status_effect/cursed_talk/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_CURSED_TALK, id)

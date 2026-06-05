@@ -32,7 +32,7 @@
 
 	html += {"
 		<div style='color: #000; font-weight: bold;'>
-			<a style='float: right;' href='?_src_=holder;notes_add=[sql_ckey]'>Add new message</a>
+			<a style='float: right;' href='byond://?_src_=holder;notes_add=[sql_ckey]'>Add new message</a>
 			[offline ? "<span style='color: red;'>Offline</span>" : "<span style='color: green;'>Online</span>"] /
 			Player age: [player_age] / In-game age: [player_ingame_age]
 			<br/><hr>
@@ -96,13 +96,13 @@
 		if(message_type == "note" && message_id)
 			buttons = {"
 				<div style='float: right'>
-					<a title='Edit' href='?_src_=holder;notes_edit=[sql_ckey];index=[message_id]'>E</a> <a title='Remove' href='?_src_=holder;notes_delete=[sql_ckey];index=[message_id]'>R</a>
+					<a title='Edit' href='byond://?_src_=holder;notes_edit=[sql_ckey];index=[message_id]'>E</a> <a title='Remove' href='byond://?_src_=holder;notes_delete=[sql_ckey];index=[message_id]'>R</a>
 				</div>
 			"}
 		else // bans
 			buttons = {"
 				<div style='float: right'>
-					<a title='View bans' href='?_src_=holder;dbsearchckey=[sql_ckey];index=[message_id]'>V</a>
+					<a title='View bans' href='byond://?_src_=holder;dbsearchckey=[sql_ckey];index=[message_id]'>V</a>
 				</div>
 			"}
 

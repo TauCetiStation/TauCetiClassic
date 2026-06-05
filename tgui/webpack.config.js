@@ -9,7 +9,7 @@ const path = require('path');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
 const { createBabelConfig } = require('./babel.config.js');
 
-const createStats = verbose => ({
+const createStats = (verbose) => ({
   assets: verbose,
   builtAt: verbose,
   cached: false,
@@ -29,16 +29,10 @@ module.exports = (env = {}, argv) => {
   const config = {
     mode,
     context: path.resolve(__dirname),
-    target: ['web', 'es3', 'browserslist:ie 8'],
+    target: ['web', 'es5', 'browserslist:ie 11'],
     entry: {
-      'tgui': [
-        './packages/tgui-polyfill',
-        './packages/tgui',
-      ],
-      'tgui-panel': [
-        './packages/tgui-polyfill',
-        './packages/tgui-panel',
-      ],
+      'tgui': ['./packages/tgui-polyfill', './packages/tgui'],
+      'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
     },
     output: {
       path: argv.useTmpFolder
@@ -47,10 +41,13 @@ module.exports = (env = {}, argv) => {
       filename: '[name].bundle.js',
       chunkFilename: '[name].bundle.js',
       chunkLoadTimeout: 15000,
+      hashFunction: 'xxhash64',
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
-      alias: {},
+      alias: {
+        'custom-fonts': path.resolve(__dirname, '../html/custom-fonts'),
+      },
     },
     module: {
       rules: [
@@ -85,19 +82,23 @@ module.exports = (env = {}, argv) => {
         },
         {
           test: /\.(png|jpg|svg|gif)$/,
-          use: [
-            {
-              loader: require.resolve('url-loader'),
-              options: {
-                esModule: true,
-              },
-            },
-          ],
+          type: 'asset/inline',
+        },
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/,
+          issuer: /\.scss$/,
+          type: 'asset/resource',
+          generator: {
+            filename: '[name][ext]',
+            emit: false,
+          },
         },
       ],
     },
     optimization: {
       emitOnErrors: false,
+      realContentHash: true,
+      moduleIds: 'deterministic',
     },
     performance: {
       hints: false,
@@ -127,25 +128,16 @@ module.exports = (env = {}, argv) => {
   // Add a bundle analyzer to the plugins array
   if (argv.analyze) {
     const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-    config.plugins = [
-      ...config.plugins,
-      new BundleAnalyzerPlugin(),
-    ];
+    config.plugins = [...config.plugins, new BundleAnalyzerPlugin()];
   }
 
   // Production build specific options
   if (argv.mode === 'production') {
-    const TerserPlugin = require('terser-webpack-plugin');
+    const { EsbuildPlugin } = require('esbuild-loader');
     config.optimization.minimizer = [
-      new TerserPlugin({
-        extractComments: false,
-        terserOptions: {
-          ie8: true,
-          output: {
-            ascii_only: true,
-            comments: false,
-          },
-        },
+      new EsbuildPlugin({
+        target: 'ie11',
+        css: true,
       }),
     ];
   }

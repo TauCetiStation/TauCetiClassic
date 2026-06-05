@@ -43,9 +43,6 @@
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
-		//Chemicals in the body
-		handle_chemicals_in_body()
-
 		//Disabilities
 		handle_disabilities()
 
@@ -157,7 +154,8 @@
 					emote("gasp")
 
 /mob/living/carbon/monkey/proc/handle_virus_updates()
-	if(status_flags & GODMODE)	return 0	//godmode
+	if(HAS_TRAIT(src, TRAIT_VIRUS_IMMUNE))
+		return 0
 	if(bodytemperature > 406)
 		for (var/ID in virus2)
 			var/datum/disease2/disease/V = virus2[ID]
@@ -196,7 +194,7 @@
 	return
 
 /mob/living/carbon/monkey/is_skip_breathe()
-	return ..() || reagents?.has_reagent("lexorin") || istype(loc, /obj/item/weapon/holder)
+	return ..() || istype(loc, /obj/item/weapon/holder)
 
 /mob/living/carbon/monkey/get_breath_from_internal(volume_needed)
 	if(!internal)
@@ -207,10 +205,10 @@
 
 	return internal.remove_air_volume(volume_needed)
 
-/mob/living/carbon/monkey/proc/handle_chemicals_in_body()
-
-	if(reagents && reagents.reagent_list.len)
-		reagents.metabolize(src)
+/mob/living/carbon/monkey/handle_metabolism()
+	. = ..()
+	if(!.)
+		return FALSE
 
 	if (drowsyness)
 		drowsyness--
@@ -226,8 +224,6 @@
 		dizziness = max(0, dizziness - 5)
 	else
 		dizziness = max(0, dizziness - 1)
-
-	return //TODO: DEFERRED
 
 /mob/living/carbon/monkey/proc/handle_regular_status_updates()
 
@@ -254,7 +250,7 @@
 		if(halloss > 100)
 			visible_message("<B>[src]</B> slumps to the ground, too weak to continue fighting.", self_message = "<span class='notice'>You're in too much pain to keep going...</span>")
 			Paralyse(10)
-			setHalLoss(99)
+			adjustHalLoss(-1)
 
 		if(paralysis)
 			blinded = 1
@@ -298,7 +294,6 @@
 
 		if(druggy)
 			adjustDrugginess(-1)
-	return 1
 
 /mob/living/carbon/monkey/handle_regular_hud_updates()
 	if(!client)
@@ -333,7 +328,7 @@
 			light_amount = round((T.get_lumcount()*10)-5)
 
 		nutrition += light_amount
-		traumatic_shock -= light_amount
+		adjustHalLoss(-light_amount)
 
 		if(nutrition > NUTRITION_LEVEL_NORMAL)
 			nutrition = NUTRITION_LEVEL_NORMAL

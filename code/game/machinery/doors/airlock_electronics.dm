@@ -3,6 +3,8 @@
 	desc = "Looks like a circuit. Probably is."
 	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
+	item_state_inventory = "door_electronics"
+	item_state_world = "door_electronics_w"
 	w_class = SIZE_TINY
 	m_amt = 50
 	g_amt = 50
@@ -28,6 +30,9 @@
 	to_chat(user, "<span class='notice'>Has a <i>selection menu</i> for modifying airlock access levels.</span>")
 
 /obj/item/weapon/airlock_electronics/attack_self(mob/user)
+	if(broken)
+		to_chat(user, "<span class='warning'>[src] has broken!</span>")
+		return
 	if(!user.IsAdvancedToolUser())
 		return ..(user)
 	if(ishuman(user))
@@ -35,6 +40,13 @@
 		if(H.getBrainLoss() >= 60)
 			return
 	tgui_interact(user)
+
+/obj/item/weapon/airlock_electronics/proc/make_broken()
+	icon_state = "door_electronics_smoked"
+	item_state_inventory = "door_electronics_smoked"
+	item_state_world = "door_electronics_smoked_w"
+	broken = TRUE
+	update_world_icon()
 
 /obj/item/weapon/airlock_electronics/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

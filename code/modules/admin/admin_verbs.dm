@@ -73,6 +73,7 @@ var/global/list/admin_verbs_admin = list(
 	/client/proc/toggle_combo_hud, // Toggle all aviables huds, except mining hud,
 	/client/proc/set_bwoink_sound, // affects only the admin that put it there,
 	/client/proc/send_gods_message,
+	/client/proc/metabolism_debug,
 	)
 var/global/list/admin_verbs_log = list(
 	/client/proc/show_player_notes,
@@ -196,6 +197,8 @@ var/global/list/admin_verbs_debug = list(
 	/datum/admins/proc/run_unit_test,
 	/client/proc/event_manager_panel,
 	/client/proc/generate_fulltile_window_placeholders,
+	/client/proc/allow_browser_inspect,
+	/client/proc/mc_show_all_toggle,
 #ifdef REFERENCE_TRACKING
 /client/proc/find_refs,
 /client/proc/qdel_then_find_references,
@@ -228,7 +231,8 @@ var/global/list/admin_verbs_event = list(
 	/client/proc/event_map_loader,
 	/client/proc/admin_crew_salary,
 	/client/proc/event_manager_panel,
-	/client/proc/change_blobwincount
+	/client/proc/change_blobwincount,
+	/client/proc/load_deathmatch_arena
 	)
 
 //verbs which can be hidden - needs work
@@ -702,7 +706,7 @@ var/global/list/admin_verbs_hideable = list(
 		for (var/mob/V in hearers(O))
 			V.show_messageold(message, 2)
 		log_admin("[key_name(usr)] made [O] at [COORD(O)]. make a sound")
-		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [COORD(O)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[O.x];Y=[O.y];Z=[O.z]'>JMP</a>) make a sound</span>")
+		message_admins("<span class='notice'>[key_name_admin(usr)] made [O] at [COORD(O)] (<A href='byond://?_src_=holder;adminplayerobservecoodjump=1;X=[O.x];Y=[O.y];Z=[O.z]'>JMP</a>) make a sound</span>")
 		feedback_add_details("admin_verb","MS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 */
 
@@ -845,11 +849,9 @@ var/global/list/admin_verbs_hideable = list(
 		M.g_skin = hex2num(copytext(new_skin, 4, 6))
 		M.b_skin = hex2num(copytext(new_skin, 6, 8))
 
-	var/new_tone = input("Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Character Generation")  as text
-
-	if (new_tone)
-		M.s_tone = max(min(round(text2num(new_tone)), 220), 1)
-		M.s_tone =  -M.s_tone + 35
+	var/new_tone = input("Выберите цвет кожи", "Создание персонажа") in global.skin_tones_by_ru_name
+	var/datum/skin_tone/T = global.skin_tones_by_ru_name[new_tone]
+	M.s_tone = T.name
 
 	var/new_gender = tgui_alert(usr, "Please select gender.", "Character Generation", list("Male", "Female"))
 	if (new_gender)
@@ -868,9 +870,7 @@ var/global/list/admin_verbs_hideable = list(
 	if(new_fstyle)
 		M.f_style = new_fstyle
 
-	M.apply_recolor()
-	M.update_hair()
-	M.update_body()
+	M.update_body(update_preferences = TRUE)
 	M.check_dna(M)
 
 /client/proc/show_player_notes(key as text)
@@ -883,7 +883,7 @@ var/global/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	if(holder)
 		var/list/jobs = list()
-		for (var/datum/job/J in SSjob.occupations)
+		for (var/datum/job/J as anything in SSjob.active_occupations)
 			if (J.current_positions >= J.total_positions && J.total_positions != -1)
 				jobs += J.title
 		if (!jobs.len)
@@ -892,7 +892,6 @@ var/global/list/admin_verbs_hideable = list(
 		var/job = input("Please select job slot to free", "Free job slot")  as null|anything in jobs
 		if (job)
 			SSjob.FreeRole(job)
-	return
 
 /client/proc/toggle_combo_hud()
 	set name = "Toggle Combo HUD"
@@ -1251,3 +1250,32 @@ var/global/centcom_barriers_stat = 1
 /obj/structure/centcom_barrier/Destroy()
 	centcom_barrier_list -= src
 	return ..()
+
+/client/proc/load_deathmatch_arena()
+	set category = "Event"
+	set name = "Load Deathmatch Arena"
+
+	var/list/arenas = list()
+
+	for(var/i in subtypesof(/datum/map_template/post_round_arena))
+		var/datum/map_template/post_round_arena/A = i
+		arenas[A.name] = A
+
+	var/choice = input("Select the arena") as null|anything in arenas
+	if(!choice) return
+
+	var/datum/map_template/post_round_arena/arena = arenas[choice]
+	SSticker.load_arena_admin(arena)
+
+	log_admin("[key_name(src)] load arena map [arena.name] - [arena.mappath]")
+	message_admins("[key_name_admin(src)] load arena map [arena.name] - [arena.mappath]")
+
+/client/proc/metabolism_debug()
+	set category = "Debug"
+	set name = "Debug Metabolism"
+
+	if(!isliving(mob))
+		return
+
+	var/mob/living/L = mob
+	L.metabolism_debug()

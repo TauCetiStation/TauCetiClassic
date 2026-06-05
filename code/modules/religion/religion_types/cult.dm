@@ -124,10 +124,7 @@
 		var/datum/religion_tech/upgrade_aspect/tech = new
 		tech.id = A.name
 		tech.aspect_type = type
-		tech.info = new /datum/building_agent/tech/aspect
-		tech.info.name = A.name
-		tech.info.icon = A.icon
-		tech.info.icon_state = A.icon_state
+		tech.info = new /datum/building_agent/tech/aspect(A.name, A.icon, A.icon_state)
 		tech.calculate_costs(src)
 		available_techs += tech
 		qdel(A)
@@ -248,12 +245,12 @@
 		return FALSE
 	if(jobban_isbanned(M, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate")) // Nar-sie will punish people with a jobban, it's funny (used for objective)
 		return FALSE
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.species.flags[NO_BLOOD] || H.mind.pluvian_blessed)
-			return FALSE
-	if(M.ismindprotect())
+	if(HAS_TRAIT(M, TRAIT_NO_BLOOD) || M?.mind?.pluvian_blessed)
 		return FALSE
+	if(isliving(M))
+		var/mob/living/L = M
+		if(ismindprotect(L))
+			return FALSE
 	return TRUE
 
 /datum/religion/cult/add_member(mob/M, holy_role)
@@ -294,16 +291,20 @@
 	return TRUE
 
 /datum/religion/cult/proc/first_rise()
+	for(var/mob/M as anything in player_list)
+		if(!isnewplayer(M))
+			M.playsound_local(null, 'sound/antag/bloodcult_eyes.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	for(var/mob/living/L in members)
-		playsound(L, 'sound/hallucinations/i_see_you_2.ogg', VOL_EFFECTS_MASTER)
 		to_chat(L, "<span class='cult'>Культ набирает силы, вуаль реальности всё слабее, ваши глаза начинают светиться...</span>")
 		rise(L)
 	risen = TRUE
 	log_game("The blood cult has risen with [length(members)] players.")
 
 /datum/religion/cult/proc/first_ascend()
+	for(var/mob/M as anything in player_list)
+		if(!isnewplayer(M))
+			M.playsound_local(null, 'sound/antag/bloodcult_halos.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	for(var/mob/living/L in members)
-		playsound(L, 'sound/hallucinations/im_here1.ogg', VOL_EFFECTS_MASTER)
 		to_chat(L, "<span class='cult'>Культ всё сильнее, и приближается жатва - вы не можете больше скрывать свою истинную природу!</span>")
 		ascend(L)
 	ascendent = TRUE

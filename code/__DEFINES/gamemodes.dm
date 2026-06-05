@@ -3,7 +3,9 @@
 // Faction IDs
 #define F_ABDUCTORS          "Abductor Team"
 #define F_BLOODCULT          "Cult Of Blood"
+#define F_BLOODCULT_HEADS    "Cult Of Blood with Heads"
 #define F_BLOBCONGLOMERATE   "Blob Conglomerate"
+#define F_BLOBCONGLOMERATE_HARD "Blob Conglomerate Harder"
 #define F_BORER_HIVEMIND     "Borer Hivemind"
 #define F_COPS               "Organized Crimes Department"
 #define F_CUSTOMSQUAD        "Custom Squad"
@@ -16,6 +18,7 @@
 #define F_HIVEMIND           "Changeling Hivemind"
 #define F_PROPS              "Props"
 #define F_REVOLUTION         "Revolution"
+#define F_REVOLUTION_STAION  "Revolution Saves Station"
 #define F_SYNDIOPS           "Syndicate Operatives"
 #define F_SYNDIOPS_CROSSFIRE "Syndicate Operatives (CrossFire)"
 #define F_SYNDIESQUAD        "Syndicate Elite Strike Team"
@@ -23,8 +26,11 @@
 #define F_SPIDERCLAN         "Spider Clan"
 #define F_WIZFEDERATION      "Wizard Federation"
 #define F_XENOMORPH_HIVE     "Alien Hivemind"
+#define F_SMART_XENOMORPH_HIVE "Alien Hivemind vs Replicators"
 #define F_ZOMBIES            "Zobmies"
 #define F_REPLICATORS        "Replicators"
+#define F_SMART_REPLICATORS  "Replicator Hivemind vs Aliens"
+#define F_MALF_DRONES		 "Malf Drones"
 #define F_SPACE_TRADERS      "Space Traders"
 
 // Role IDs
@@ -59,6 +65,9 @@
 #define SPACE_COP "OCD Officer"
 #define SYNDIESQUADIE "Syndicate Commando"
 #define TRAITOR "Traitor"
+#define TRAITOR_WISHGRANTER "Traitor Wishgranter"
+#define TRAITOR_SYNDBEACON "Traitor Syndbeacon"
+#define TRAITOR_SYNDCALL "Traitor Syndcall"
 #define TRAITORCHAN "TraitorChan"
 #define UNDERCOVER_COP "Undercover Officer"
 #define VOXRAIDER "Vox Raider"
@@ -68,8 +77,10 @@
 #define REPLICATOR "Replicator"
 #define PIRATE "Pirate"
 #define PRISONER "Prisoner"
+#define MALF_DRONE "Malf Drone"
 #define SPACE_TRADER "Space Trader"
 #define THIEF "Thief"
+#define ZOMBIE "Zombie"
 
 ////////////////////// GREETS /////////////////////////
 #define GREET_DEFAULT		"default"

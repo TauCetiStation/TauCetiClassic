@@ -24,7 +24,7 @@
 				return
 			if(!check_conditions(host, disease, src))
 				return
-			if(ismob(host))
+			if(isliving(host))
 				effect.activate_mob(host, src, disease)
 			if(istype(host, /obj/machinery/hydroponics))
 				effect.activate_plant(host, src, disease)
@@ -168,6 +168,7 @@
 	chance_maxm = 20
 	pools = list(POOL_NEGATIVE_VIRUS)
 	var/activated = FALSE
+	var/signal_setup = TRUE
 	var/obj/item/organ/external/infected_organ = null //if infected part is removed, destroys itself
 
 /datum/disease2/effect/zombie/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
@@ -179,10 +180,14 @@
 		UnregisterSignal(H, COMSIG_MOB_DIED)
 		return
 
+	if(signal_setup)
+		RegisterSignal(A, COMSIG_MOB_DIED, PROC_REF(handle_infected_death))
+		signal_setup = FALSE
+
 	if(!(H.can_zombified()))
 		return
 
-	if(infected_organ == null && holder.ticks == 0)
+	if(infected_organ == null && holder.ticks <= 1)
 		var/list/organs = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG) // Organs that you can actually cut off are checked first to give a chance
 		organs = shuffle(organs) + shuffle(list(BP_CHEST, BP_GROIN, BP_HEAD))
 		for(var/o in organs)
@@ -231,9 +236,10 @@
 	if(holder.stage > 9) //rip
 		activated = TRUE
 		H.suiciding = TRUE
-		UnregisterSignal(H, COMSIG_MOB_DIED)
 		H.adjustOxyLoss(max(H.maxHealth * 2 - H.getToxLoss() - H.getFireLoss() - H.getBruteLoss() - H.getOxyLoss(), 0))
 		H.updatehealth()
+		H.death()
+		UnregisterSignal(H, COMSIG_MOB_DIED)
 		disease.dead = TRUE
 
 /datum/disease2/effect/zombie/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
@@ -327,15 +333,17 @@
 	COOLDOWN_DECLARE(metabolicboost_message)
 
 /datum/disease2/effect/metabolism/activate_mob(mob/living/carbon/human/M, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
-	if(M.reagents)
-		M.reagents.metabolize(M) //this works even without a liver; it's intentional since the virus is metabolizing by itself
-	M.overeatduration = max(M.overeatduration - 2, 0)
-	var/lost_nutrition = 2
-	M.nutrition = max(M.nutrition - (lost_nutrition * M.get_metabolism_factor()), 0) //Hunger depletes at 2x the normal speed
+	// i have no idea what is happening in diseases, this code is so old
+	M.mob_metabolism_mod.ModAdditive(1, src) // +100%
 	if(!COOLDOWN_FINISHED(src, metabolicboost_message))
 		return
 	to_chat(M, "<span class='notice'>You feel an odd gurgle in your stomach, as if it was working much faster than normal.</span>")
 	COOLDOWN_START(src, metabolicboost_message, 1 MINUTES)
+
+/datum/disease2/effect/metabolism/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	if(isliving(A))
+		var/mob/living/L = A
+		L.mob_metabolism_mod.RemoveMods(src)
 
 /datum/disease2/effect/metabolism/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustSpeedmultiplier(holder.stage)
@@ -973,7 +981,7 @@
 	var/mob/living/carbon/human/H = mob
 	var/list/parts = list()
 	for(var/obj/item/organ/external/BP in H.bodyparts)
-		if(BP.is_robotic())
+		if(BP.is_robotic_part())
 			if(BP.get_damage())
 				parts += BP
 	if(!parts.len)
@@ -1022,17 +1030,17 @@
 				to_chat(H, "<span class='warning'>Your chin itches.</span>")
 				if(H.f_style == "Shaved" && prob(30))
 					H.f_style = "Jensen Beard"
-					H.update_hair()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 			if(2)
 				if(!(H.f_style == "Dwarf Beard") && !(H.f_style == "Very Long Beard") && !(H.f_style == "Full Beard"))
 					to_chat(H, "<span class='warning'>You feel tough.</span>")
 					H.f_style = "Full Beard"
-					H.update_hair()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 			if(3)
 				if(!(H.f_style == "Dwarf Beard") && !(H.f_style == "Very Long Beard"))
 					to_chat(H, "<span class='warning'>You feel manly!</span>")
 					H.f_style = pick("Dwarf Beard", "Very Long Beard")
-					H.update_hair()
+					H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/disease2/effect/hallucinations
 	name = "Hallucinational Syndrome"
@@ -1456,7 +1464,7 @@
 			H.h_style = "Balding Hair"
 		else if(H.species.name == TAJARAN)
 			H.h_style = "Tajaran Ears"
-	H.update_hair()
+	H.update_body(BP_HEAD, update_preferences = TRUE)
 
 /datum/disease2/effect/monitoring
 	name = "Monitoring"
@@ -1598,7 +1606,7 @@
 /datum/disease2/effect/headache/activate_mob(mob/living/carbon/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	if(ishuman(A))
 		var/mob/living/carbon/human/H = A
-		if(H.species && !H.species.flags[NO_PAIN])
+		if(!HAS_TRAIT(H, TRAIT_NO_PAIN))
 			if(prob(20) || holder.stage	== 1)
 				to_chat(H, "<span class = 'notice'>[pick("Your head hurts.", "Your head pounds.", "Your head hurts a bit.", "You have a headache.")]</span>")
 			else if(prob(20) || (holder.stage >= 2 && holder.stage <= 5))
@@ -1698,3 +1706,7 @@
 /datum/disease2/effect/conductivity/activate_plant(obj/machinery/hydroponics/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
 	A.adjustWater(holder.stage)
 	A.myseed.react_to_disease_effect(A, src, holder)
+
+/datum/disease2/effect/conductivity/deactivate(atom/A, datum/disease2/effectholder/holder, datum/disease2/disease/disease)
+	REMOVE_TRAIT(A, TRAIT_CONDUCT, VIRUS_TRAIT)
+	trait_added = FALSE

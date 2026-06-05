@@ -9,10 +9,19 @@
 
 	return TRUE
 
+/proc/is_one_skill_competent(mob/user, required_skills)
+	if(isobserver(user))
+		return TRUE
+
+	for(var/datum/skill/required_skill as anything in required_skills)
+		var/value_with_helpers = get_skill_with_assistance(user, required_skill)
+		if(value_with_helpers >= required_skills[required_skill])
+			return TRUE
+
+	return FALSE
+
 /proc/apply_skill_bonus(mob/user, value, required_skills, multiplier)
 	var/result = value
-	if(SSticker.is_lowpop)
-		return result
 	for(var/datum/skill/required_skill as anything in required_skills)
 		var/value_with_helpers = get_skill_with_assistance(user, required_skill)
 		result += value * multiplier * (value_with_helpers - required_skills[required_skill])
