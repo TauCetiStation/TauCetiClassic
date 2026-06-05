@@ -13,7 +13,7 @@
 /obj/item/weapon/tank/oxygen
 	name = "oxygen tank"
 	cases = list("баллон с кислородом", "баллона с кислородом", "баллону с кислородом","баллон с кислородом", "баллоном с кислородом", "баллоне с кислородом")
-	desc = "Просто баллон с кислородом."
+	desc = "Баллон с кислородом, ничего необычного."
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 	icon_state = "oxygen"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
