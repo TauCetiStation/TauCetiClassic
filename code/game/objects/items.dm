@@ -355,6 +355,9 @@
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/I, mob/user, params)
+if(istype(I, /obj/item/weapon/antag_spawner/borg_tele) && hidden_uplink)
+		return hidden_uplink.attackby(I, user, params)
+
 	if(istype(I, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = I
 		if(S.use_to_pickup)
