@@ -58,6 +58,9 @@
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 
+		// fat trait was just removed above, keep bodytype in sync
+		H.set_bodytype_for_gender()
+
 		if(H.f_style)
 			H.f_style = "Shaved"
 		if(H.h_style)
