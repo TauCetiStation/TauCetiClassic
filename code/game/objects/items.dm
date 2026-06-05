@@ -356,8 +356,16 @@
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/I, mob/user, params)
 if(istype(I, /obj/item/weapon/antag_spawner/borg_tele) && hidden_uplink)
-		return hidden_uplink.attackby(I, user, params)
-
+		var/obj/item/weapon/antag_spawner/borg_tele/S = I
+		if(!S.used)
+			hidden_uplink.uses += S.TC_cost
+			qdel(S)
+			to_chat(user, "<span class='notice'>Teleporter refunded.</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>This teleporter is already used.</span>")
+			return
+	
 	if(istype(I, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = I
 		if(S.use_to_pickup)
