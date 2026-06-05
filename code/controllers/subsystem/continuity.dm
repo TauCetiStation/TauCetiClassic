@@ -19,8 +19,6 @@ SUBSYSTEM_DEF(continuity)
 /datum/controller/subsystem/continuity/proc/continuity_save_things()
 	for(var/save_path in continuity_objects)
 		var/list/objects_list = continuity_objects[save_path]
-		var/file = file("[PERSISTENT_CACHE_FOLDER]/[save_path].json")
-
 		var/list/datalist = list()
 
 		for(var/thing in objects_list)
@@ -37,6 +35,7 @@ SUBSYSTEM_DEF(continuity)
 		if(!datalist.len)
 			continue
 
+		var/file = file("[PERSISTENT_CACHE_FOLDER]/[save_path].json")
 		fdel(file)
 		WRITE_FILE(file, json_encode(datalist))
 

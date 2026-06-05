@@ -724,11 +724,23 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 
 	if(type == /mob/living/simple_animal/parrot/Poly)
 		AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/poly", list(
-			"phrases" = list("field_type" = "list", "can_be_null" = TRUE, "entry_config" = list("field_type" = "string", "max_length" = 150, "can_be_null" = TRUE)),
-			"roundssurvived" = list("field_type" = "int", "min_num" = 0),
-			"longestsurvival" = list("field_type" = "int", "min_num" = 0),
-			"longestdeathstreak" = list("field_type" = "int", "min_num" = 0),
-		), list(COMSIG_MOB_DIED))
+			"phrases" = new /datum/continuity_field/listfield(
+				can_be_null = TRUE,
+				entry_config = new /datum/continuity_field/string(
+					max_length = 150,
+					can_be_null = TRUE
+				)
+			),
+			"roundssurvived" = new /datum/continuity_field/int(
+				min_num = 0
+			),
+			"longestsurvival" = new /datum/continuity_field/int(
+				min_num = 0
+			),
+			"longestdeathstreak" = new /datum/continuity_field/int(
+				min_num = 0
+			),
+		))
 
 	. = ..()
 

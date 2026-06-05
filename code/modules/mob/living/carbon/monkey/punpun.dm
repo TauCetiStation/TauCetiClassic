@@ -11,10 +11,17 @@
 
 /mob/living/carbon/monkey/punpun/atom_init()
 	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/punpun", list(
-		"ancestor_name" = list("field_type" = "string", "max_length" = 150, "can_be_null" = TRUE),
-		"ancestor_chain" = list("field_type" = "int", "min_num" = 1),
-		"relic_mask" = list("field_type" = "type", "in_list" = subtypesof(/obj/item/clothing/mask) + null, "can_be_null" = TRUE),
-	), list(COMSIG_MOB_DIED), CALLBACK(src, PROC_REF(Write_Death)))
+		"ancestor_name" = new /datum/continuity_field/string(
+			max_length = 150,
+			can_be_null = TRUE
+		),
+		"ancestor_chain" = new /datum/continuity_field/int(
+			min_num = 1
+		),
+		"relic_mask" = new /datum/continuity_field/type(
+			in_list = subtypesof(/obj/item/clothing/mask) + null
+		),
+	))
 
 	name = pick(pet_monkey_names)
 	gender = pick(MALE, FEMALE)
@@ -41,21 +48,14 @@
 			name = pick(pet_monkey_names)
 		gender = pick(MALE, FEMALE)
 
-/mob/living/carbon/monkey/punpun/proc/Write_Death(gibbed)
-	return Write_Memory(TRUE, gibbed)
-
-/mob/living/carbon/monkey/punpun/proc/Write_Memory(dead, gibbed)
+/mob/living/carbon/monkey/punpun/proc/Write_Memory()
 	var/list/data = list(
 		"ancestor_name" = null,
 		"ancestor_chain" = ancestor_chain,
 		"relic_mask" = null,
 	)
 
-	if(gibbed)
-		data["ancestor_chain"] = 1
-		return data
-
-	if(dead && istext(ancestor_name) && isnum(ancestor_chain))
+	if(stat == DEAD && istext(ancestor_name) && isnum(ancestor_chain))
 		data["ancestor_name"] = ancestor_name
 		data["ancestor_chain"] = ancestor_chain + 1
 	if(!ancestor_name && istext(name))	//new monkey name this round
