@@ -321,7 +321,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 
 	if(!mind.GetRole(REPLICATOR))
-		add_faction_member(FR, src, TRUE)
+		add_faction_member(FR, src, recruit=TRUE, post_setup=TRUE)
 
 	var/datum/replicator_array_info/RAI = FR.ckey2info[ckey]
 	if(RAI)
