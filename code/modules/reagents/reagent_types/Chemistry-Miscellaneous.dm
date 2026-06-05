@@ -289,7 +289,6 @@
 	color = "#664b63" // rgb: 102, 75, 99
 	taste_message = null
 
-
 /datum/reagent/ammonia
 	name = "Ammonia"
 	id = "ammonia"
