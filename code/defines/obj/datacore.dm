@@ -160,7 +160,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 	// Formating keyword -> Description
 	var/list/departments_list = list(\
 		"heads" = "Heads",\
-		"centcom" = "NanoTrasen representatives",\
+		"centcom" = "Special Department",\
 		"sec" = "Security",\
 		"eng" = "Engineering",\
 		"med" = "Medical",\

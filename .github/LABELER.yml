@@ -65,15 +65,18 @@
 #    - '**/*.tsx'
 
 'Maintainability Improvements':
-- changed-files:
-  - any-glob-to-any-file:
-    - '.*/**/*'
-    - 'docs/**/*'
-    - 'scripts/**/*'
-    - 'test/**/*'
-    - '*'
-    - 'code/_compile_options.dm'
-
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '.*/**/*'
+      - 'docs/**/*'
+      - 'scripts/**/*'
+      - 'test/**/*'
+      - 'code/_compile_options.dm'
+      - '*'
+    - all-globs-to-all-files:
+      - '!taucetistation.dme'
+  
 'Tools':
 - changed-files:
   - any-glob-to-any-file:
