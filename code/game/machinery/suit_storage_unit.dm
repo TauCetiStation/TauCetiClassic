@@ -535,8 +535,8 @@
 	name = "Test Storage Unit"
 	suit_type = /obj/item/clothing/suit/space
 	helmet_type = /obj/item/clothing/head/helmet/space
-	mask_type = /obj/item/clothing/mask
-	tank_type = /obj/item/weapon/tank
+	mask_type = /obj/item/clothing/mask/gas
+	tank_type = /obj/item/weapon/tank/oxygen
 	boot_type = /obj/item/clothing/shoes/magboots
 
 	build_type =  SUIT_STORAGE_BUILD_NONE

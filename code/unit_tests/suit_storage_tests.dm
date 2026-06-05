@@ -26,7 +26,7 @@
 
 	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
 		var/obj/machinery/suit_storage_unit/test_unit/ssu = new typepath.type
-		ssu.Destroy()
+		qdel(ssu)
 		if(ssu)
 			error_list += ssu
 

@@ -78523,7 +78523,6 @@
 /area/station/maintenance/medbay)
 "lBj" = (
 /obj/structure/table/glass,
-/obj/structure/table/glass,
 /obj/item/bodybag/cryobag{
 	pixel_x = 6
 	},
