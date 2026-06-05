@@ -72,7 +72,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/dispenser, tank_dispenser_list)
 			to_chat(user, "<span class='notice'>Вы открутили [CASE(src, NOMINATIVE_CASE)].</span>")
 			anchored = FALSE
 		else
-			to_chat(user, "<span class='notice'>Вы вкрутили [CASE(src, NOMINATIVE_CASE)] на место.</span>")
+			to_chat(user, "<span class='notice'>Вы прикрутили [CASE(src, ACCUSATIVE_CASE)] на место.</span>")
 			anchored = TRUE
 		return
 
