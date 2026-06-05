@@ -277,7 +277,7 @@ var/global/online_shop_referrer_revenue = 0.50
 	var/itemPixelX = Item.pixel_x
 	var/itemPixelY = Item.pixel_y
 
-	var/obj/Package = Item.try_wrap_up(texture_name = "blank")
+	var/obj/Package = Item.try_wrap_up(/datum/package_wrap)
 	if(!Package)
 		return
 

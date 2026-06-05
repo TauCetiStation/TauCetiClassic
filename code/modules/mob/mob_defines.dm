@@ -24,6 +24,7 @@
 	var/atom/movable/screen/l_hand_hud_object = null
 
 	var/atom/movable/screen/move_intent = null
+	var/atom/movable/screen/crawl_hud_icon = null
 	var/atom/movable/screen/complex/act_intent/action_intent = null
 	var/atom/movable/screen/staminadisplay = null
 

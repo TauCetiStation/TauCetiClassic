@@ -298,8 +298,9 @@
 	custom_metabolism = 0.005
 	var/alert_time = 0
 
-/datum/reagent/nicotine/on_mob_life(mob/living/M)
-	if(!..())
+/datum/reagent/nicotine/on_general_digest(mob/living/M)
+	. = ..()
+	if(!.)
 		return
 	if(!holder.has_reagent("alkysine"))
 		if(volume >= 0.85)
@@ -324,7 +325,6 @@
 				M.losebreath = max(M.losebreath + 1, 2)
 	if(holder.has_reagent("anti_toxin"))
 		holder.remove_reagent("nicotine", 0.065)
-	return TRUE
 
 /datum/reagent/nicotine/on_diona_digest(mob/living/M)
 	return FALSE
@@ -828,7 +828,7 @@ TODO: Convert everything to custom hair dye. ~ Luduk.
 /datum/reagent/hair_growth_accelerator
 	name = "Hair Growth Accelerator"
 	id = "hair_growth_accelerator"
-	data = list("bald_head_list"=list("Bald", "Balding Hair", "Skinhead", "Unathi Horns", "Tajaran Ears"),"shaved_face_list"=list("Shaved"),"allowed_races"=list(HUMAN, UNATHI, TAJARAN))
+	data = list("bald_hair_styles_list"=list("Bald", "Balding Hair", "Skinhead", "Unathi Horns", "Tajaran Ears"),"shaved_facial_hair_styles_list"=list("Shaved"),"allowed_races"=list(HUMAN, UNATHI, TAJARAN))
 	description = "A substance for the bald. Renews hair. Apply to head or groin."
 	reagent_state = LIQUID
 	color = "#efc769" // rgb: 239, 199, 105

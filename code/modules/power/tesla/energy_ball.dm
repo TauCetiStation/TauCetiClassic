@@ -92,6 +92,10 @@ var/global/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmosp
 	var/first_move = dir
 	for(var/i in 0 to move_amount)
 		var/move_dir = pick(alldirs + first_move) //give the first move direction a bit of favoring.
+
+		if(prob(round((length(orbiters) - length(orbiting_balls)) * 1.5))) //These ghosts are griefers
+			move_dir = get_dir(src, get_turf(length(global.living_list) ? pick(global.living_list) : get_turf(src)))
+
 		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
 			loc = T
