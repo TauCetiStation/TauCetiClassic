@@ -79,7 +79,7 @@
 /obj/item/weapon/tank/phoron
 	name = "phoron tank"
 	cases = list("баллон с фороном", "баллона с фороном", "баллону с фороном","баллон с фороном", "баллоном с фороном", "баллоне с фороном")
-	desc = "Содержит огнеопасный форон. Не вдыхать!"
+	desc = "Содержит огнеопасный форон. Не вдыхать! Огнеопасно."
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 	icon_state = "phoron"
 	item_state = "plasma"
