@@ -47262,6 +47262,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
+/obj/structure/composter/botany,
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "hMC" = (

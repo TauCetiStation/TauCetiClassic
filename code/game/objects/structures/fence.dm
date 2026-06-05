@@ -139,6 +139,7 @@
 
 	max_integrity = 5
 	resistance_flags = CAN_BE_HIT
+	hit_particle_type = /particles/tool/digging/wood
 
 	fence_full = FALSE
 	fence_cover_chance = 20
