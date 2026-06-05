@@ -52,7 +52,7 @@
 /obj/item/weapon/tank/anesthetic/small
 	name = "small anesthetic tank"
 	cases = list("маленький баллон с анестетиком", " маленького баллона с анестетиком", "маленькому баллону с анестетиком"," маленький баллон с анестетиком", " маленьким баллоном с анестетиком", "маленьком баллоне с анестетиком")
-	desc = "Небольшой баллон с закисью азота."
+	desc = "Небольшой баллон с кислородно-закисноазотной смесью."
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 	icon_state = "smallanesthetic"
 	item_state = "an_tank"
