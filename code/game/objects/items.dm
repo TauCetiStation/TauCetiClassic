@@ -355,28 +355,27 @@
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/I, mob/user, params)
-if(istype(I, /obj/item/weapon/antag_spawner/borg_tele) && hidden_uplink)
+	// Возврат для скрытых аплинков (КПК, гарнитура)
+	if(istype(I, /obj/item/weapon/antag_spawner/borg_tele) && hidden_uplink)
 		var/obj/item/weapon/antag_spawner/borg_tele/S = I
 		if(!S.used)
 			hidden_uplink.uses += S.TC_cost
 			qdel(S)
 			to_chat(user, "<span class='notice'>Teleporter refunded.</span>")
-			return
 		else
 			to_chat(user, "<span class='notice'>This teleporter is already used.</span>")
-			return
-	
+		return
+
 	if(istype(I, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = I
 		if(S.use_to_pickup)
-			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
+			if(S.collection_mode)
 				if(isturf(loc))
 					S.gather_all(loc, user)
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
 			return FALSE
 	return ..()
-
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	callback = CALLBACK(src, PROC_REF(after_throw), callback) // Replace their callback with our own.
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
