@@ -531,16 +531,13 @@ BLIND     // can't see anything
 
 	dyed_type = DYED_UNIFORM
 
-	/// Whether this uniform uses the polychromic system
 	var/poly = FALSE
-	/// Base style: "std", "std_w", "belt", "belt_w", "turt", "turt_w"
+	// Style: "std"/"std_w"/"belt"/"belt_w"/"turt"/"turt_w". Pattern: "1"-"5"/"turt"/null.
 	var/poly_style = "std"
-	/// Pattern overlay for second color: "1"-"5", "turt", or null for none
 	var/poly_pattern = null
-	/// list("#base_color", "#pattern_color")
+	// list("#base_color", "#pattern_color")
 	var/list/poly_colors = null
 
-/// Shared color palette for polychromic jumpsuit customization (used in UI pickers)
 var/global/list/poly_color_palette = list(
 	"Фиолетовый"       = "#6e39a9",
 	"Фиолетовый V2"    = "#8d45a9",
@@ -565,9 +562,6 @@ var/global/list/poly_color_palette = list(
 )
 
 
-/// Creates a poly overlay mutable_appearance with RESET_COLOR set.
-/// Optionally tints with `color_hex` and applies `human.update_height()`.
-/// `icon_file` defaults to the poly uniform sheet; pass blood.dmi for blood overlays.
 /proc/make_poly_overlay(state, color_hex = null, mob/living/carbon/human/human = null, icon_file = 'icons/mob/uniform_poly.dmi')
 	var/mutable_appearance/overlay = mutable_appearance(icon_file, state)
 	if(color_hex)
@@ -587,9 +581,6 @@ var/global/list/poly_color_palette = list(
 	MA.add_overlay(get_poly_mob_overlays(H, bloodied_icon_state))
 	return MA
 
-/// Builds detail, pattern and blood overlays for mob-worn display.
-/// When `H` is a human, each sub-overlay is passed through `H.update_height()`
-/// so height filters don't get clipped. Returns a list of mutable_appearances.
 /obj/item/clothing/under/proc/get_poly_mob_overlays(mob/living/carbon/human/H, bloodied_icon_state)
 	. = list()
 	var/detail_state = get_poly_detail_state(H)
@@ -603,7 +594,6 @@ var/global/list/poly_color_palette = list(
 		blood.color = dirt_overlay.color
 		. += blood
 
-/// Builds pattern and blood overlays for inventory display.
 /obj/item/clothing/under/proc/get_poly_inventory_overlays()
 	. = list()
 	if(poly_pattern && length(poly_colors) >= 2)
@@ -615,7 +605,6 @@ var/global/list/poly_color_palette = list(
 		blood.color = dirt_overlay.color
 		. += blood
 
-/// Builds pattern and blood overlays for world display.
 /obj/item/clothing/under/proc/get_poly_world_overlays()
 	. = list()
 	if(poly_pattern && length(poly_colors) >= 2)
@@ -648,126 +637,101 @@ var/global/list/poly_color_palette = list(
 		return
 	..()
 
-/// Returns the inventory icon_state for this poly uniform.
 /obj/item/clothing/under/proc/get_poly_inventory_state()
 	return "inventory_std"
 
-/// Returns the inventory pattern icon_state, or null if this style/pattern has none.
 /obj/item/clothing/under/proc/get_poly_inventory_pattern_state()
 	if(!poly_pattern)
 		return null
-	if(poly_style == "turt_w")
+	if(poly_style == POLY_STYLE_TURT)
 		return "inventory_turt_pattern"
 	return "inventory_pattern"
 
-/// Returns the world (inventory/in-hand) icon_state for this poly uniform.
-/// World states don't vary by gender/fat/species. Belt styles reuse the std world sprite.
 /obj/item/clothing/under/proc/get_poly_world_state()
-	if(poly_style == "turt_w")
+	if(poly_style == POLY_STYLE_TURT)
 		return "w_turt"
 	return "w_std_w"
 
-/// Returns the world pattern icon_state, or null if this style/pattern has none.
 /obj/item/clothing/under/proc/get_poly_world_pattern_state()
 	if(!poly_pattern)
 		return null
-	if(poly_style == "turt_w")
+	if(poly_style == POLY_STYLE_TURT)
 		return "w_turt_pattern"
 	return "w_pattern"
 
-/// Returns the style this uniform should RENDER as for a given mob.
-/// Fat mobs have no turtleneck sprites in the DMI — downgrade turt → std so the
-/// whole appearance (base + detail + pattern) stays consistent.
+// Fat mobs have no turtleneck sprites — downgrade turt → std so base, detail and pattern stay consistent.
 /obj/item/clothing/under/proc/get_effective_poly_style(mob/living/carbon/human/H)
-	if(H && HAS_TRAIT(H, TRAIT_FAT) && poly_style == "turt_w")
-		return "std_w"
+	if(H && HAS_TRAIT(H, TRAIT_FAT) && poly_style == POLY_STYLE_TURT)
+		return POLY_STYLE_STD
 	return poly_style
 
-/// Returns the mob icon_state for this poly uniform, accounting for gender, fat, and vox
 /obj/item/clothing/under/proc/get_poly_mob_state(mob/living/carbon/human/H)
 	var/style = get_effective_poly_style(H)
-	// Map poly_style to base state prefix
 	var/base
 	switch(style)
-		if("std_w")
+		if(POLY_STYLE_STD)
 			base = "b_std_w"
-		if("belt_w")
+		if(POLY_STYLE_BELT)
 			base = "b_belt_w"
-		if("turt_w")
+		if(POLY_STYLE_TURT)
 			base = "b_turt_w"
 		else
 			base = "b_std_w"
-	// Roll-down states
 	if(rolled_down)
 		base = is_poly_white_base(style) ? "b_roll_w" : "b_roll"
-	// Vox variant — b_std_w_vox is the only Vox base sprite, used for all styles
 	if(H && H.species?.name == VOX)
 		return "b_std_w_vox"
-	// Fat variant — b_turt_w has no fat sprites; fall through to fem/base
 	// b_belt_w has no fat sprite — fall back to b_std_w_fat
 	if(H && HAS_TRAIT(H, TRAIT_FAT) && base == "b_belt_w")
 		return "b_std_w_fat"
 	var/static/list/has_fat = list("b_std_w", "b_roll_w")
 	if(H && HAS_TRAIT(H, TRAIT_FAT) && (base in has_fat))
 		return "[base]_fat"
-	// Female variant
 	if(H && H.gender == FEMALE)
 		return "[base]_fem"
 	return base
 
-/// Returns the non-colorable detail overlay state (zippers, seams, etc.)
-/// These are drawn on top of the colored layers without tinting.
+// Non-colorable detail overlay (zippers, seams) drawn on top of the colored layers.
 /obj/item/clothing/under/proc/get_poly_detail_state(mob/living/carbon/human/H)
 	var/style = get_effective_poly_style(H)
-	// No detail when rolled down
 	if(rolled_down)
 		return null
-	// Turtlenecks have no zipper detail
-	if(style == "turt_w")
+	if(style == POLY_STYLE_TURT)
 		return null
-	var/is_belt = (style == "belt_w")
-	// Vox variant — only one sprite exists, used for all patterns
+	var/is_belt = (style == POLY_STYLE_BELT)
 	if(H && H.species?.name == VOX)
 		return "d_vox"
-	// Fat variant — takes priority over pattern-specific detail
 	if(H && HAS_TRAIT(H, TRAIT_FAT))
 		return "d_fat"
-	// Pattern 5 has its own detail sprite due to zipper position — only for non-belt, non-female
+	// Pattern 5's zipper sits differently and needs its own detail sprite.
 	if(poly_pattern == "5" && !is_belt && !(H && H.gender == FEMALE))
 		return "d_p5"
-	// Female variant
 	if(H && H.gender == FEMALE)
 		return is_belt ? "d_belt_fem" : "d_fem"
-	// Male variant
 	return is_belt ? "d_belt" : "d"
 
 
-/// Returns the pattern icon_state for the mob overlay
 /obj/item/clothing/under/proc/get_poly_pattern_state(mob/living/carbon/human/H)
 	if(!poly_pattern)
 		return null
-	// No pattern when rolled down
 	if(rolled_down)
 		return null
-	// No pattern for fat mobs — fat sprites don't have pattern overlays
+	// Fat and vox bases have no pattern overlays in the DMI.
 	if(H && HAS_TRAIT(H, TRAIT_FAT))
 		return null
-	// Vox only has one base sprite — no pattern overlays
 	if(H && H.species?.name == VOX)
 		return null
 	var/style = get_effective_poly_style(H)
-	// turt pattern uses _white suffix in DMI
-	if(poly_pattern == "turt")
+	if(poly_pattern == POLY_PATTERN_TURT)
 		return (H && H.gender == FEMALE) ? "p_turt_white_fem" : "p_turt_white"
 	var/pat = "p[poly_pattern]"
-	// Belt variants for patterns that have them (p1_belt, p3_belt, p5_belt)
-	if(style == "belt_w" && (poly_pattern == "1" || poly_pattern == "3" || poly_pattern == "5"))
+	// Only patterns 1, 3 and 5 have belt sprites.
+	if(style == POLY_STYLE_BELT && (poly_pattern == "1" || poly_pattern == "3" || poly_pattern == "5"))
 		pat = "p[poly_pattern]_belt"
-	// Fat variant — only p1_fat and p2_fat exist in DMI; p3/p4/p5 fall through to fem/base
+	// Only patterns 1 and 2 have fat sprites.
 	var/static/list/has_fat_pattern = list("1", "2")
 	if(H && HAS_TRAIT(H, TRAIT_FAT) && (poly_pattern in has_fat_pattern))
 		return "[pat]_fat"
-	// Female variant
 	if(H && H.gender == FEMALE)
 		return "[pat]_fem"
 	return pat
@@ -893,7 +857,7 @@ var/global/list/poly_color_palette = list(
 /obj/item/clothing/under/color/polychromic/rollsuit()
 	if(!can_rollsuit(usr))
 		return
-	if(poly_style == "turt_w")
+	if(poly_style == POLY_STYLE_TURT)
 		to_chat(usr, "<span class='notice'>You cannot roll down a turtleneck!</span>")
 		return
 

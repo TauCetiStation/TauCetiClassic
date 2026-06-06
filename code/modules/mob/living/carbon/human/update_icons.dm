@@ -433,9 +433,8 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		standing.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
 
-		// Accessories ride as siblings of the uniform in overlays_standing, not as
-		// sub-overlays of `standing` — nested sub-overlays of a colored poly appearance
-		// lose their explicit layer and get buried under pattern/detail.
+		// Accessories must sit beside the uniform in overlays_standing: as sub-overlays of a
+		// colored poly appearance they lose their layer and get buried under pattern/detail.
 		var/list/uniform_stack = list(standing)
 		for(var/obj/item/clothing/accessory/A in U.accessories)
 			var/t_state = A.icon_state

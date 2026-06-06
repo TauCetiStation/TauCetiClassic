@@ -41,8 +41,6 @@
 	if(!busy_left_hand && !busy_right_hand)
 		busy_with_action = FALSE
 
-/// Drops and deletes the item currently in `slot`, then equips `new_item` there.
-/// If `new_item` is null, just clears the slot.
 /mob/living/carbon/human/proc/replace_in_slot(slot, obj/item/new_item)
 	var/obj/item/existing = get_equipped_item(slot)
 	if(existing)
