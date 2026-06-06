@@ -12,6 +12,10 @@
 	var/alist/fields
 
 /datum/component/continuity_object/Initialize(datum/callback/_saveproc = null, datum/callback/_loadproc = null, file_path = null, _fields = null)
+	if(SSticker && SSticker.current_state >= GAME_STATE_PLAYING)
+		qdel(src)
+		return
+
 	if(!_saveproc || !_loadproc || !_fields || !file_path)
 		qdel(src)
 		return
