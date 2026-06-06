@@ -355,7 +355,6 @@
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/I, mob/user, params)
-	// Возврат для скрытых аплинков (КПК, гарнитура)
 	if(istype(I, /obj/item/weapon/antag_spawner/borg_tele) && hidden_uplink)
 		var/obj/item/weapon/antag_spawner/borg_tele/S = I
 		if(!S.used)
@@ -369,7 +368,7 @@
 	if(istype(I, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = I
 		if(S.use_to_pickup)
-			if(S.collection_mode)
+			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
 				if(isturf(loc))
 					S.gather_all(loc, user)
 			else if(S.can_be_inserted(src))
