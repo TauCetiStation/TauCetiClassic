@@ -13769,6 +13769,10 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn_corner"
 	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 2;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "cbg" = (
@@ -16335,6 +16339,10 @@
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 2;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -45245,6 +45253,12 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 30
+	},
+/obj/structure/fence/metal{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -80094,6 +80108,10 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 2;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "oXU" = (
@@ -86852,8 +86870,9 @@
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/science)
 "qpi" = (
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 30
+/obj/structure/elevator/cargo,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -96800,6 +96819,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 1
+	},
+/obj/structure/fence/metal{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -141158,7 +141180,7 @@ atB
 mun
 eXK
 xLy
-hdK
+qpi
 cbf
 rJq
 rJq
@@ -141415,7 +141437,7 @@ kFL
 qUL
 wrv
 xLy
-hdK
+qpi
 oXL
 azw
 tro

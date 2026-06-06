@@ -16075,6 +16075,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/storage)
+"gpK" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "ast_warn_corner"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/asteroid/mine/eva)
 "gpZ" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/structure/cable{
@@ -17187,14 +17201,14 @@
 /turf/simulated/wall/r_wall,
 /area/station/bridge/nuke_storage)
 "hrp" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "supply_dock";
-	name = "Supply Dock Airlock";
-	req_access = list(31)
+/obj/structure/elevator/cargo,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/cargo/storage)
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/eva)
 "hrw" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper{
@@ -30417,6 +30431,9 @@
 	pixel_y = 32;
 	supply_display = 1
 	},
+/obj/structure/fence/metal{
+	dir = 4
+	},
 /turf/simulated/floor/plating/airless/catwalk,
 /area/asteroid/mine/eva)
 "tmq" = (
@@ -31164,6 +31181,13 @@
 /obj/structure/stool/bed/chair/wood/normal,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/captain_quarters)
+"tUm" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "ast_warn"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/asteroid/mine/eva)
 "tUr" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
@@ -35674,6 +35698,32 @@
 /area/asteroid/mine/west_outpost{
 	name = "Mining Outpost"
 	})
+"xWX" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "ast_warn"
+	},
+/turf/simulated/floor/plating/airless{
+	icon_state = "asteroidplating"
+	},
+/area/asteroid/mine/eva)
+"xXf" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "ast_warn"
+	},
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "ast_warn"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/eva)
 "xXy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -64950,7 +65000,7 @@ iiV
 abJ
 xbK
 tMy
-hrp
+xbK
 lVb
 rTU
 kek
@@ -65464,7 +65514,7 @@ akS
 abH
 xbK
 smt
-hrp
+xbK
 qRj
 bkM
 idm
@@ -67007,10 +67057,10 @@ vlw
 gih
 aof
 gpH
-jWx
-jWx
-jWx
-jWx
+hrp
+xXf
+hrp
+tUm
 ncx
 pQv
 pQv
@@ -67264,10 +67314,10 @@ tmq
 wZq
 aog
 fXJ
-lem
-lem
-lem
-lem
+xWX
+xWX
+xWX
+gpK
 kcO
 qLj
 fOC

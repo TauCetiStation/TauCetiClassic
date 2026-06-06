@@ -307,6 +307,10 @@
 	for(var/datum/ringtone/Ring as anything in subtypesof(/datum/ringtone))
 		global.ringtones_by_names["[initial(Ring.name)]"] = new Ring
 
+
+	global.elevator_saveables_list += subtypesof(/obj/item/weapon/ore)
+	global.elevator_saveables_list += subtypesof(/obj/item/weapon/reagent_containers/food/snacks/grown)
+
 	init_washing_items_list()
 
 /proc/init_washing_items_list()
