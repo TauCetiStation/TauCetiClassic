@@ -229,7 +229,7 @@
 			progress = FALSE
 
 	var/obj/effect/abstract/particle_holder/Particle
-	if(!isnull(particle_type))
+	if(particle_type)
 		var/is_in_user = (get_turf(target) == get_turf(user))
 
 		Particle = new(is_in_user ? user : target, particle_type, PARTICLE_FADEOUT | PARTICLE_NO_TRANSFORM)
@@ -317,7 +317,7 @@
 			progress = FALSE
 
 	var/obj/effect/abstract/particle_holder/Particle
-	if(!isnull(particle_type))
+	if(particle_type)
 		var/is_in_user = (get_turf(target) == get_turf(user))
 
 		Particle = new(is_in_user ? user : target, particle_type, PARTICLE_FADEOUT | PARTICLE_NO_TRANSFORM)
