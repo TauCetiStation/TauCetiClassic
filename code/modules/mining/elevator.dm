@@ -37,6 +37,10 @@
 			),
 		))
 
+/obj/structure/elevator/Destroy()
+	unload_ore(contents_amount)
+	..()
+
 /obj/structure/elevator/proc/Write_Memory()
 	return list("contents_type" = contents_type, "contents_amount" = contents_amount)
 
