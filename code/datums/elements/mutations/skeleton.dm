@@ -59,7 +59,7 @@
 		var/mob/living/carbon/human/H = L
 
 		// fat trait was just removed above, keep bodytype in sync
-		H.set_bodytype_for_gender()
+		H.restore_bodytype_after_fat()
 
 		if(H.f_style)
 			H.f_style = "Shaved"
