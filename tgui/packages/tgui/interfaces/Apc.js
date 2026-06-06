@@ -68,7 +68,9 @@ const ApcContent = (props, context) => {
       <InterfaceLockNoticeBox />
       {!!needsReboot && (
         <NoticeBox danger>
-          <Box>Сбой контроллера питания. Сообщите о сбое инженерному персоналу.</Box>
+          <Box>
+            Сбой контроллера питания. Сообщите о сбое инженерному персоналу.
+          </Box>
           <Button
             mt={1}
             icon="power-off"
