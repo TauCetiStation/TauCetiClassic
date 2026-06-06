@@ -40,3 +40,12 @@
 		busy_right_hand = FALSE
 	if(!busy_left_hand && !busy_right_hand)
 		busy_with_action = FALSE
+
+/// Clears `slot` (dropping and deleting whatever is there) then equips `new_item`, if given.
+/mob/living/carbon/human/proc/replace_in_slot(slot, obj/item/new_item)
+	var/obj/item/existing = get_equipped_item(slot)
+	if(existing)
+		drop_from_inventory(existing)
+		qdel(existing)
+	if(new_item)
+		equip_to_slot_or_del(new_item, slot)
