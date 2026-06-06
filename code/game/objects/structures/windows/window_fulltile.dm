@@ -157,8 +157,7 @@
 	hit_particle_type = /particles/tool/digging/glass/phoron
 
 /obj/structure/window/fulltile/phoron/weld_react(mob/user, obj/item/weapon/weldingtool/WT)
-	if(WT.use(0, user))
-		weld_explode(0, 1, 2)
+	weld_explode(0, 1, 2)
 	return TRUE
 
 /**
@@ -246,8 +245,7 @@
 	hit_particle_type = /particles/tool/digging/glass/phoron
 
 /obj/structure/window/fulltile/reinforced/phoron/weld_react(mob/user, obj/item/weapon/weldingtool/WT)
-	if(WT.use(0, user))
-		weld_explode(1, 2, 3)
+	weld_explode(1, 2, 3)
 	return TRUE
 
 /**

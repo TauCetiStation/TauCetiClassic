@@ -88,6 +88,8 @@
 		if((flags & NODECONSTRUCT) || (resistance_flags & INDESTRUCTIBLE))
 			return ..()
 		var/obj/item/weapon/weldingtool/WT = W
+		if(!WT.use(0, user)) // сварка должна быть включена (и тут же eyecheck)
+			return
 		if(weld_react(user, WT))
 			return
 		if(get_integrity() >= max_integrity)
@@ -97,12 +99,14 @@
 		var/cur_repair_time = max(30, round(repair_time * damage_fraction))
 		var/cur_repair_fuel = max(1, round(repair_fuel * damage_fraction))
 		if(WT.tool_start_check(user, amount = cur_repair_fuel))
-			to_chat(user, "<span class='notice'>Вы начинаете чинить [CASE(src, ACCUSATIVE_CASE)]...</span>")
+			user.visible_message("<span class='notice'>[user] начинает чинить [CASE(src, ACCUSATIVE_CASE)]...</span>", \
+								 "<span class='notice'>Вы начинаете чинить [CASE(src, ACCUSATIVE_CASE)]...</span>")
 			if(WT.use_tool(src, user, cur_repair_time, amount = cur_repair_fuel, volume = 50, quality = QUALITY_WELDING))
 				repair_damage(max_integrity)
 				integrity_failure = initial(integrity_failure)
 				update_icon()
-				to_chat(user, "<span class='notice'>Вы починили [CASE(src, ACCUSATIVE_CASE)].</span>")
+				user.visible_message("<span class='notice'>[user] чинит [CASE(src, ACCUSATIVE_CASE)].</span>", \
+									 "<span class='notice'>Вы починили [CASE(src, ACCUSATIVE_CASE)].</span>")
 		return
 
 	if(istype(W, /obj/item/weapon/airlock_painter))
