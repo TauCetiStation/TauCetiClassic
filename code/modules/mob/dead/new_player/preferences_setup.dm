@@ -143,8 +143,6 @@
 	parent.show_character_previews(new /mutable_appearance(mannequin))
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
 
-/// Maps an item's slot_flags bitmask to the corresponding equip slot constant.
-/// Returns null if the flags don't map to a single clear body slot (e.g. pockets).
 /proc/_preview_slot_from_flags(slot_flags)
 	if(slot_flags & SLOT_FLAGS_BACK)     return SLOT_BACK
 	if(slot_flags & SLOT_FLAGS_OCLOTHING) return SLOT_WEAR_SUIT
