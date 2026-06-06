@@ -977,7 +977,7 @@
 				to_chat(usr, "<span class='warning'>Сначала вскройте крышку [CASE(src, GENITIVE_CASE)].</span>")
 				return
 			if(!allowed(usr))
-				to_chat(usr, "<span class='warning'>Доступ запрещён. Перезагрузка контроллера доступна только инженерам.</span>")
+				to_chat(usr, "<span class='warning'>В доступе отказано. Обратитесь к инженерному персоналу для устранения проблемы.</span>")
 				return
 			if(usr.is_busy(src))
 				return
