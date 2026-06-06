@@ -561,14 +561,12 @@ var/global/list/datum/preferences/preferences_datums = list()
 		popup.set_content(dat)
 		popup.open()
 
-/// Creates and returns a custom polychromic jumpsuit configured from preferences.
-/// Returns null if style is "job" or not set.
 /datum/preferences/proc/spawn_custom_jumpsuit(atom/location)
-	if(!jumpsuit_style || jumpsuit_style == "job")
+	if(!jumpsuit_style || jumpsuit_style == POLY_STYLE_JOB)
 		return null
 	var/obj/item/clothing/under/color/polychromic/J = new(location)
 	J.poly_style = jumpsuit_style
-	J.poly_pattern = (jumpsuit_style == "turt_w") ? "turt" : jumpsuit_pattern
+	J.poly_pattern = (jumpsuit_style == POLY_STYLE_TURT) ? POLY_PATTERN_TURT : jumpsuit_pattern
 	var/base_col = is_poly_white_base(jumpsuit_style) ? jumpsuit_base_color : "#ffffff"
 	J.poly_colors = list(base_col, jumpsuit_color)
 	J.update_icon()
