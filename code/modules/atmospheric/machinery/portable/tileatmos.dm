@@ -118,12 +118,10 @@
 
 	var/inject_moles_per_second = 0.1
 
-/obj/machinery/portable_atmospherics/tile_atmos/oven/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon) && user.Adjacent(loc))
-		user.drop_from_inventory(I, loc)
-		return
+/obj/machinery/portable_atmospherics/tile_atmos/oven/atom_init()
+	. = ..()
 
-	return ..()
+	AddComponent(/datum/component/clickplace)
 
 /obj/machinery/portable_atmospherics/tile_atmos/oven/proc/ignite()
 	if(anchored && isturf(loc))

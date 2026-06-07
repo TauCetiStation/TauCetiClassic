@@ -323,6 +323,9 @@
 	toggle_gathering_mode(user)
 	return
 
+/obj/item/weapon/storage/visuals/tray/toggle_open()
+	return
+
 /obj/item/weapon/storage/visuals/tray/toggle_gathering_mode(mob/user)
 	collection_mode = !collection_mode
 	to_chat(user, "<span class='notice'>You change gathering mode to [collection_mode?"load":"unload"]</span>")
@@ -387,12 +390,12 @@
 			I.fire_act(air, exposed_temperature, exposed_volume)
 		return
 
-	else if(prob(10))
+	else if(available_recipe && prob(10))
 		var/turf/T = get_turf(src)
+		var/byproduct = available_recipe.get_byproduct()
 		var/obj/item/I = available_recipe.make_food(src)
 		if(I)
 			I.forceMove(T)
-		var/byproduct = available_recipe.get_byproduct()
 		if(byproduct)
 			byproduct = new byproduct(T)
 
@@ -448,9 +451,10 @@
 
 	else if(available_recipe && prob(10))
 		var/turf/T = get_turf(src)
-		var/obj/item/I = available_recipe.make_food(src)
-		I.forceMove(T)
 		var/byproduct = available_recipe.get_byproduct()
+		var/obj/item/I = available_recipe.make_food(src)
+		if(I)
+			I.forceMove(T)
 		if(byproduct)
 			byproduct = new byproduct(T)
 

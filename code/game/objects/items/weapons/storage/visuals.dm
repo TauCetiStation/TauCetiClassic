@@ -138,6 +138,10 @@
 		close_all()
 	update_overlays()
 
+/obj/item/weapon/storage/visuals/AltClick(mob/user)
+	add_fingerprint(user)
+	toggle_open()
+
 
 /obj/item/weapon/storage/visuals/surgery
 	name = "surgeon tray"
