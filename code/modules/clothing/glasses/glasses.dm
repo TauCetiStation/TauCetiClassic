@@ -370,10 +370,28 @@
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
 	name = "optical meson scanner"
-	desc = "Used for seeing walls, floors, and stuff through anything."
+	desc = "It looks like a plain set of mesons, but on closer inspection, it seems to have a small dial inside. The thermal optics are always active."
 	icon_state = "meson"
 	item_state_world = "meson_w"
 	origin_tech = "magnets=3;syndicate=4"
+	toggleable = FALSE			//thermal optics are always on; appearance is changed via the chameleon dial
+	item_action_types = null
+
+/obj/item/clothing/glasses/thermal/syndi/atom_init()
+	. = ..()
+	AddComponent(/datum/component/chameleon, /obj/item/clothing/glasses, list(/obj/item/clothing/glasses/chameleon))
+
+/obj/item/clothing/glasses/thermal/syndi/emp_act(severity)
+	..()			//thermal blinding from /thermal/emp_act
+	var/datum/component/chameleon/CH = GetComponent(/datum/component/chameleon)
+	CH?.reset()
+
+/obj/item/clothing/glasses/thermal/syndi/verb/change()
+	set name = "Change Glasses Appearance"
+	set category = "Object"
+	set src in usr
+	var/datum/component/chameleon/CH = GetComponent(/datum/component/chameleon)
+	CH?.disguise(usr)
 
 /obj/item/clothing/glasses/thermal/monocle
 	name = "thermoncle"

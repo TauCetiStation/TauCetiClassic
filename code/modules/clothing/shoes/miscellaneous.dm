@@ -1,13 +1,27 @@
 /obj/item/clothing/shoes/syndigaloshes
-	desc = "A pair of brown shoes. They seem to have extra grip."
+	desc = "A pair of brown shoes. They seem to have extra grip. On closer inspection, there's a small dial inside."
 	name = "brown shoes"
 	icon_state = "brown"
 	item_state = "brown"
 	permeability_coefficient = 0.05
 	flags = NOSLIP
 	origin_tech = "syndicate=3"
-	var/list/clothing_choices = list()
 	siemens_coefficient = 0.8
+
+/obj/item/clothing/shoes/syndigaloshes/atom_init()
+	. = ..()
+	AddComponent(/datum/component/chameleon, /obj/item/clothing/shoes, list(/obj/item/clothing/shoes/chameleon))
+
+/obj/item/clothing/shoes/syndigaloshes/emp_act(severity)
+	var/datum/component/chameleon/CH = GetComponent(/datum/component/chameleon)
+	CH?.reset()
+
+/obj/item/clothing/shoes/syndigaloshes/verb/change()
+	set name = "Change Shoes Appearance"
+	set category = "Object"
+	set src in usr
+	var/datum/component/chameleon/CH = GetComponent(/datum/component/chameleon)
+	CH?.disguise(usr)
 
 /obj/item/clothing/shoes/mime
 	name = "mime shoes"
