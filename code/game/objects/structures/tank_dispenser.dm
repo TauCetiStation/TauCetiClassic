@@ -118,7 +118,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/dispenser, tank_dispenser_list)
 				else
 					P = new /obj/item/weapon/tank/phoron(loc)
 				P.loc = loc
-				to_chat(usr, "<span class='notice'>Вы вытащили [CASE(P, NOMINATIVE_CASE)] из [CASE(src, GENITIVE_CASE)].</span>")
+				to_chat(usr, "<span class='notice'>Вы вытащили [CASE(P, ACCUSATIVE_CASE)] из [CASE(src, GENITIVE_CASE)].</span>")
 				phorontanks--
 				update_icon()
 		add_fingerprint(usr)
