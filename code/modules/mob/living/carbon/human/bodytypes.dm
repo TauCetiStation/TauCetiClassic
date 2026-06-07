@@ -25,7 +25,7 @@
 
 /datum/bodytype/slim
 	name = SLIM_BODYTYPE
-	external_organs_suffix = "_femine"
+	external_organs_suffix = "_slim"
 
 	// undershirts/prints are shared with average for females (slim sheets are unfinished)
 	socks_path = 'icons/mob/human_socks_slim.dmi'
