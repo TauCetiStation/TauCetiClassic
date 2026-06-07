@@ -307,17 +307,17 @@
 /obj/item/weapon/storage/visuals/tray/handle_reagents_change()
 	. = ..()
 	if(.)
-		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/grill], src, exact = 0)
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/grill], src)
 
 /obj/item/weapon/storage/visuals/tray/handle_item_insertion(obj/item/I, prevent_warning = FALSE, NoUpdate = FALSE)
 	. = ..()
 	if(.)
-		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/grill], src, exact = 0)
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/grill], src)
 
 /obj/item/weapon/storage/visuals/tray/remove_from_storage(obj/item/I, atom/new_location, NoUpdate = FALSE)
 	. = ..()
 	if(.)
-		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/grill], src, exact = 0)
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/grill], src)
 
 /obj/item/weapon/storage/visuals/tray/attack_self(mob/user)
 	toggle_gathering_mode(user)
@@ -398,7 +398,7 @@
 
 		update_overlays()
 
-		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/grill], src, exact = 0)
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/grill], src)
 
 		SSStatistics.score.meals++
 
@@ -428,17 +428,17 @@
 /obj/item/weapon/storage/visuals/casserole/handle_reagents_change()
 	. = ..()
 	if(.)
-		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/oven], src, exact = 0)
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/oven], src)
 
 /obj/item/weapon/storage/visuals/casserole/handle_item_insertion(obj/item/I, prevent_warning = FALSE, NoUpdate = FALSE)
 	. = ..()
 	if(.)
-		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/oven], src, exact = 0)
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/oven], src)
 
 /obj/item/weapon/storage/visuals/casserole/remove_from_storage(obj/item/I, atom/new_location, NoUpdate = FALSE)
 	. = ..()
 	if(.)
-		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/oven], src, exact = 0)
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/oven], src)
 
 /obj/item/weapon/storage/visuals/casserole/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(opened)
@@ -454,7 +454,7 @@
 		if(byproduct)
 			byproduct = new byproduct(T)
 
-		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/oven], src, exact = 0)
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/oven], src)
 		toggle_open()
 
 		SSStatistics.score.meals++
