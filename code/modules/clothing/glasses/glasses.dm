@@ -370,7 +370,7 @@
 
 /obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
 	name = "optical meson scanner"
-	desc = "It looks like a plain set of mesons, but on closer inspection, it seems to have a small dial inside. The thermal optics are always active."
+	desc = "Used for seeing walls, floors, and stuff through anything."
 	icon_state = "meson"
 	item_state_world = "meson_w"
 	origin_tech = "magnets=3;syndicate=4"
