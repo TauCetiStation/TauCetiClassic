@@ -106,7 +106,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/dispenser, tank_dispenser_list)
 				else
 					O = new /obj/item/weapon/tank/oxygen(loc)
 				O.loc = loc
-				to_chat(usr, "<span class='notice'>Вы вытащили [CASE(O, NOMINATIVE_CASE)] из [CASE(src, GENITIVE_CASE)].</span>")
+				to_chat(usr, "<span class='notice'>Вы вытащили [CASE(O, ACCUSATIVE_CASE)] из [CASE(src, GENITIVE_CASE)].</span>")
 				oxygentanks--
 				update_icon()
 		if(href_list["phoron"])
