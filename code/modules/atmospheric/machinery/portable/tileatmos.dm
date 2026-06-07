@@ -141,7 +141,7 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(environment && air_contents.temperature > 0)
-		var/has_fire = locate(/obj/fire) in loc)
+		var/has_fire = locate(/obj/fire) in loc
 		if(!has_fire)
 			pump_gas_passive(src, air_contents, environment, inject_moles_per_second * seconds)
 			ignite()
