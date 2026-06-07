@@ -48,8 +48,9 @@
 		var/trans = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this)
 		handle_reagents_change()
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [src].</span>")
-	else
-		return ..()
+		return
+
+	return ..()
 
 /obj/item/weapon/storage/visuals/proc/gen_item_overlay(obj/item/I)
 	var/image/IO = image(I.icon, I.icon_state)
