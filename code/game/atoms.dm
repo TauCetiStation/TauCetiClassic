@@ -80,7 +80,7 @@
 											QUALITY_WRENCHING = /particles/tool/wrench,
 											QUALITY_SCREWING = /particles/tool/screw,
 											QUALITY_WELDING = null,
-											QUALITY_PULSING = null,
+											QUALITY_PULSING = /particles/tool/signal,
 											QUALITY_SIGNALLING = null,
 										)
 
