@@ -652,6 +652,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/projectile/kinetic/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
 	var/turf/target_turf = get_turf(target)
+	target_turf.hotspot_expose(750, 50)
 	if(istype(target_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target_turf
 		M.GetDrilled(firer, mineral_drop_coefficient = mineral_multiply_coefficient)
@@ -714,6 +715,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/projectile/beam/plasma_cutter/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
 	var/turf/target_turf = get_turf(target)
+	target_turf.hotspot_expose(2000, 100)
 	if(istype(target_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target_turf
 		M.GetDrilled(firer)
