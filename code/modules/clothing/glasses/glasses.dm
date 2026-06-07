@@ -381,18 +381,6 @@
 	. = ..()
 	AddComponent(/datum/component/chameleon, /obj/item/clothing/glasses, list(/obj/item/clothing/glasses/chameleon))
 
-/obj/item/clothing/glasses/thermal/syndi/emp_act(severity)
-	..()			//thermal blinding from /thermal/emp_act
-	var/datum/component/chameleon/CH = GetComponent(/datum/component/chameleon)
-	CH?.reset()
-
-/obj/item/clothing/glasses/thermal/syndi/verb/change()
-	set name = "Change Glasses Appearance"
-	set category = "Object"
-	set src in usr
-	var/datum/component/chameleon/CH = GetComponent(/datum/component/chameleon)
-	CH?.disguise(usr)
-
 /obj/item/clothing/glasses/thermal/monocle
 	name = "thermoncle"
 	desc = "A monocle thermal."

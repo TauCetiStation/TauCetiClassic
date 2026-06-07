@@ -2,7 +2,8 @@
 // applies them, replacing the per-item copy-pasted change() logic.
 var/global/list/chameleon_choices_cache = list()
 
-// name -> type for every disguise of root_type, built once and cached (it only depends on root_type).
+// name -> type for every disguise of root_type, built once and cached (depends only on root_type).
+// Disguises without a real sprite are skipped so they can't be picked.
 /proc/get_chameleon_choices(root_type, list/blocked)
 	. = global.chameleon_choices_cache[root_type]
 	if(.)
@@ -10,6 +11,9 @@ var/global/list/chameleon_choices_cache = list()
 	. = list()
 	for(var/t in subtypesof(root_type) - blocked)
 		var/obj/item/A = t
+		var/ic = initial(A.icon_custom) || initial(A.icon)
+		if(!ic || !icon_exists(ic, initial(A.icon_state)))
+			continue
 		.[initial(A.name)] = t
 	global.chameleon_choices_cache[root_type] = .
 
@@ -20,6 +24,19 @@ var/global/list/chameleon_choices_cache = list()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	choices = get_chameleon_choices(root_type, blocked)
+	var/obj/item/I = parent
+	I.verbs += /obj/item/proc/chameleon_change
+	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp))
+
+/datum/component/chameleon/Destroy()
+	var/obj/item/I = parent
+	if(istype(I))
+		I.verbs -= /obj/item/proc/chameleon_change
+	return ..()
+
+/datum/component/chameleon/proc/on_emp(datum/source, severity)
+	SIGNAL_HANDLER
+	reset()
 
 /datum/component/chameleon/proc/disguise(mob/user)
 	var/obj/item/I = parent
@@ -59,3 +76,10 @@ var/global/list/chameleon_choices_cache = list()
 	I.update_world_icon()
 	I.update_icon()
 	I.update_inv_mob()
+
+/obj/item/proc/chameleon_change()
+	set name = "Change Appearance"
+	set category = "Object"
+	set src in usr
+	var/datum/component/chameleon/CH = GetComponent(/datum/component/chameleon)
+	CH?.disguise(usr)
