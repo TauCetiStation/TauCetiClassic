@@ -57,6 +57,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 	if(!terminal)
 		stat |= BROKEN
 		return
+
+	if(mapload)
+		credits_per_kwh = round(credits_per_kwh * (rand(8, 12) / 10))
+		new_credits_per_kwh = round(new_credits_per_kwh * (rand(8, 12) / 10))
+
 	terminal.master = src
 	connect_to_network()
 
@@ -77,8 +82,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 			return
 		if(!account_num)
 			return
-
-
 
 		var/datum/money_account/meter_acc = attempt_account_access_with_user_input(account_num, 2, user)
 		if(!meter_acc)
@@ -290,13 +293,16 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		return FALSE
 
 	if(powernet == terminal.powernet)
+		stat |= BROKEN
 		return FALSE
 
 	for(var/obj/machinery/power/meter/M in (powernet.nodes - src))
+		stat |= BROKEN
 		return FALSE
 
 	for(var/obj/machinery/power/terminal/Term in powernet.nodes)
 		if(Term.master && istype(Term.master, /obj/machinery/power/meter))
+			stat |= BROKEN
 			return FALSE
 
 	return paid
@@ -326,8 +332,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		icon_state = "[initial(icon_state)][anchored ? "" : "_notanchored"]-o"
 	else if(!anchored)
 		icon_state = "[initial(icon_state)]_notanchored"
+	else if(!paid || (stat & BROKEN))
+		icon_state = "[initial(icon_state)]_fail"
 	else
-		icon_state = "[initial(icon_state)][paid ? "" : "_fail"]"
+		icon_state = initial(icon_state)
 
 	if(!holoprice)
 		holoprice = image('icons/effects/32x32.dmi', "blank")
