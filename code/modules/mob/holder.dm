@@ -48,6 +48,7 @@
 	var/obj/item/weapon/holder/H = new holder_type(loc)
 	forceMove(H)
 	H.name = src.name
+	H.w_class = w_class
 	H.attack_hand(grabber)
 
 	to_chat(grabber, "You scoop up [src].")
@@ -101,62 +102,46 @@
 	icon_state = "cat"
 	flags = HEAR_PASS_SAY
 
-/obj/item/weapon/holder/edible_animal
-	w_class = SIZE_MINUSCULE
-	flags = HEAR_PASS_SAY
-	var/bitesize = 3
-
-/obj/item/weapon/holder/edible_animal/atom_init()
-	. = ..()
-	create_reagents(6)
-
-/obj/item/weapon/holder/edible_animal/pickup(mob/living/user)
-	. = ..()
-	sync_reagents_from_animal()
-
-/obj/item/weapon/holder/edible_animal/dropped(mob/living/carbon/user)
-	sync_reagents_to_animal()
-	return ..()
-
-/obj/item/weapon/holder/edible_animal/process()
-	if(istype(loc,/turf) || !(contents.len))
-		sync_reagents_to_animal()
-	return ..()
-
-/obj/item/weapon/holder/edible_animal/attack_self(mob/user)
+/obj/item/weapon/holder/attack_self(mob/user)
 	if(isliving(user))
-		return attack(user, user)
+		var/mob/living/simple_animal/edible_animal = get_held_edible_animal()
+		if(edible_animal)
+			return attack(user, user)
 	return ..()
 
-/obj/item/weapon/holder/edible_animal/proc/get_held_edible_animal()
-	return locate(/mob/living/simple_animal) in contents
+/obj/item/weapon/holder/proc/get_held_edible_animal()
+	for(var/mob/living/simple_animal/M in contents)
+		if(M.edible_nutriment > 0 || M.edible_protein > 0)
+			return M
 
-/obj/item/weapon/holder/edible_animal/proc/sync_reagents_from_animal()
-	var/mob/living/simple_animal/M = get_held_edible_animal()
-	if(!M || !reagents)
+/obj/item/weapon/holder/proc/build_edible_animal_reagents(mob/living/simple_animal/M)
+	var/total_volume = M.edible_nutriment + M.edible_protein
+	if(total_volume <= 0)
 		return
-	reagents.clear_reagents()
+	var/datum/reagents/animal_reagents = new(total_volume)
 	if(M.edible_nutriment > 0)
-		reagents.add_reagent("nutriment", M.edible_nutriment)
+		animal_reagents.add_reagent("nutriment", M.edible_nutriment)
 	if(M.edible_protein > 0)
-		reagents.add_reagent("protein", M.edible_protein)
+		animal_reagents.add_reagent("protein", M.edible_protein)
+	return animal_reagents
 
-/obj/item/weapon/holder/edible_animal/proc/sync_reagents_to_animal()
-	var/mob/living/simple_animal/M = get_held_edible_animal()
-	if(!M || !reagents)
-		return
-	M.edible_nutriment = reagents.get_reagent_amount("nutriment")
-	M.edible_protein = reagents.get_reagent_amount("protein")
+/obj/item/weapon/holder/proc/sync_edible_animal_reagents(mob/living/simple_animal/M, datum/reagents/animal_reagents)
+	M.edible_nutriment = animal_reagents.get_reagent_amount("nutriment")
+	M.edible_protein = animal_reagents.get_reagent_amount("protein")
 
-/obj/item/weapon/holder/edible_animal/proc/reagent_list_text()
-	if(reagents?.reagent_list?.len)
+/obj/item/weapon/holder/proc/reagent_list_text(datum/reagents/animal_reagents)
+	if(animal_reagents?.reagent_list?.len)
 		var/data
-		for(var/datum/reagent/R in reagents.reagent_list)
+		for(var/datum/reagent/R in animal_reagents.reagent_list)
 			data += "[R.id]([R.volume] units); "
 		return data
 	return "No reagents"
 
-/obj/item/weapon/holder/edible_animal/attack(mob/living/M, mob/user, def_zone, silent = FALSE)
+/obj/item/weapon/holder/attack(mob/living/M, mob/user, def_zone, silent = FALSE)
+	var/mob/living/simple_animal/edible_animal = get_held_edible_animal()
+	if(!edible_animal)
+		return ..()
+
 	if(!istype(M))
 		return FALSE
 
@@ -168,13 +153,15 @@
 			to_chat(user, "<span class='warning'>[M] не выглядит заинтересованным в поедании [CASE(src, GENITIVE_CASE)].</span>")
 		return FALSE
 
-	if(!reagents || !reagents.total_volume)
+	var/datum/reagents/animal_reagents = build_edible_animal_reagents(edible_animal)
+	if(!animal_reagents || !animal_reagents.total_volume)
 		to_chat(user, "<span class='rose'>От [CASE(src, GENITIVE_CASE)] ничего не осталось!</span>")
 		user.drop_from_inventory(src)
 		qdel(src)
 		return FALSE
 
 	if(!CanEat(user, M, src, "eat"))
+		qdel(animal_reagents)
 		return FALSE
 
 	var/fullness = H.get_satiation()
@@ -198,16 +185,16 @@
 			"<span class='warning'><B>[user]</B> пытается скормить вам <B>[CASE(src, ACCUSATIVE_CASE)]</B>.</span>")
 		if(!do_mob(user, H))
 			return FALSE
-		H.log_combat(user, "fed [name], reagents: [reagent_list_text()] (INTENT: [uppertext(user.a_intent)])")
+		H.log_combat(user, "fed [name], reagents: [reagent_list_text(animal_reagents)] (INTENT: [uppertext(user.a_intent)])")
 		H.visible_message("<span class='rose'>[user] скармливает [H] [CASE(src, ACCUSATIVE_CASE)].</span>", \
 			"<span class='warning'><B>[user]</B> скармливает вам <B>[CASE(src, ACCUSATIVE_CASE)]</B>.</span>")
 
 	playsound(H, 'sound/items/eatfood.ogg', VOL_EFFECTS_MASTER, rand(20, 50))
-	reagents.trans_to_ingest(H, min(bitesize, reagents.total_volume))
-	sync_reagents_to_animal()
+	animal_reagents.trans_to_ingest(H, min(max(edible_animal.w_class, SIZE_MINUSCULE), animal_reagents.total_volume))
+	sync_edible_animal_reagents(edible_animal, animal_reagents)
 	SEND_SIGNAL(H, COMSIG_HUMAN_ON_CONSUME, src)
 
-	if(!reagents.total_volume)
+	if(!animal_reagents.total_volume)
 		for(var/mob/living/simple_animal/eaten_animal in contents)
 			eaten_animal.ghostize(bancheck = TRUE)
 			qdel(eaten_animal)
@@ -217,16 +204,13 @@
 		SSStatistics.score.foodeaten++
 		user.drop_from_inventory(src)
 		qdel(src)
+	qdel(animal_reagents)
 	return TRUE
 
 /obj/item/weapon/holder/mouse
-	parent_type = /obj/item/weapon/holder/edible_animal
 	name = "mouse"
 	desc = "It's a small rodent."
 	icon_state = "mouse_gray"
-
-/obj/item/weapon/holder/mouse/get_held_edible_animal()
-	return locate(/mob/living/simple_animal/mouse) in contents
 
 /obj/item/weapon/holder/mouse/gray
 	icon_state = "mouse_gray"
@@ -245,15 +229,11 @@
 	flags = HEAR_PASS_SAY
 
 /obj/item/weapon/holder/lizard
-	parent_type = /obj/item/weapon/holder/edible_animal
 	name = "lizard"
 	desc = "A cute tiny lizard."
 	icon_state = "lizard"
 	w_class = SIZE_MINUSCULE
 	flags = HEAR_PASS_SAY
-
-/obj/item/weapon/holder/lizard/get_held_edible_animal()
-	return locate(/mob/living/simple_animal/lizard) in contents
 
 /obj/item/weapon/holder/monkey
 	name = "monkey"
