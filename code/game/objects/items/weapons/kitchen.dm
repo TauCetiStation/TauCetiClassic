@@ -302,6 +302,23 @@
 	max_storage_space = 18
 	var/cooldown = 0
 
+	var/datum/recipe/available_recipe
+
+/obj/item/weapon/storage/visuals/tray/handle_reagents_change()
+	. = ..()
+	if(.)
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/grill], src, exact = 0)
+
+/obj/item/weapon/storage/visuals/tray/handle_item_insertion(obj/item/I, prevent_warning = FALSE, NoUpdate = FALSE)
+	. = ..()
+	if(.)
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/grill], src, exact = 0)
+
+/obj/item/weapon/storage/visuals/tray/remove_from_storage(obj/item/I, atom/new_location, NoUpdate = FALSE)
+	. = ..()
+	if(.)
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/grill], src, exact = 0)
+
 /obj/item/weapon/storage/visuals/tray/attack_self(mob/user)
 	toggle_gathering_mode(user)
 	return
@@ -343,6 +360,8 @@
 		return
 	if(!proximity)
 		return
+	if(target.is_open_container() && reagents.total_volume)
+		return ..()
 	if(collection_mode)
 		gather_all(get_turf(target), user)
 	else
@@ -363,8 +382,82 @@
 	dropitems(user = thrower, target = target, scatter = TRUE)
 
 /obj/item/weapon/storage/visuals/tray/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	for(var/obj/item/I in contents)
-		I.fire_act(air, exposed_temperature, exposed_volume)
+	if(!available_recipe)
+		for(var/obj/item/I in contents)
+			I.fire_act(air, exposed_temperature, exposed_volume)
+		return
+
+	else if(prob(10))
+		var/turf/T = get_turf(src)
+		var/obj/item/I = available_recipe.make_food(src)
+		if(I)
+			I.forceMove(T)
+		var/byproduct = available_recipe.get_byproduct()
+		if(byproduct)
+			byproduct = new byproduct(T)
+
+		update_overlays()
+
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/grill], src, exact = 0)
+
+		SSStatistics.score.meals++
+
+/obj/item/weapon/storage/visuals/casserole
+	name = "casserole pan"
+	desc = "Для запекания предметов в печи."
+
+	def_icon_state = "case-surgery"
+	icon_state = "case-surgery_closed"
+	item_state = "case-surgery"
+
+	use_sound = 'sound/items/surgery_tray_use.ogg'
+
+	flags = CONDUCT
+	force = 8.0
+	throw_speed = 1
+	throw_range = 4
+	w_class = SIZE_NORMAL
+
+	max_storage_space = 18
+	max_w_class = SIZE_SMALL
+
+	require_opened = TRUE
+
+	var/datum/recipe/available_recipe
+
+/obj/item/weapon/storage/visuals/casserole/handle_reagents_change()
+	. = ..()
+	if(.)
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/oven], src, exact = 0)
+
+/obj/item/weapon/storage/visuals/casserole/handle_item_insertion(obj/item/I, prevent_warning = FALSE, NoUpdate = FALSE)
+	. = ..()
+	if(.)
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/oven], src, exact = 0)
+
+/obj/item/weapon/storage/visuals/casserole/remove_from_storage(obj/item/I, atom/new_location, NoUpdate = FALSE)
+	. = ..()
+	if(.)
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/oven], src, exact = 0)
+
+/obj/item/weapon/storage/visuals/casserole/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(opened)
+		for(var/obj/item/I in contents)
+			I.fire_act(air, exposed_temperature, exposed_volume)
+		return
+
+	else if(available_recipe && prob(10))
+		var/turf/T = get_turf(src)
+		var/obj/item/I = available_recipe.make_food(src)
+		I.forceMove(T)
+		var/byproduct = available_recipe.get_byproduct()
+		if(byproduct)
+			byproduct = new byproduct(T)
+
+		available_recipe = select_recipe(global.cooking_recipes[/datum/recipe/oven], src, exact = 0)
+		toggle_open()
+
+		SSStatistics.score.meals++
 
 
 ///////////////////NEW//////////////////////

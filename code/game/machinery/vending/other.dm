@@ -197,6 +197,7 @@
 	icon_state = "dinnerware"
 	products = list(
 		/obj/item/weapon/storage/visuals/tray = 8,
+		/obj/item/weapon/storage/visuals/casserole = 8,
 		/obj/item/weapon/kitchen/utensil/fork = 6,
 		/obj/item/weapon/kitchenknife = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 8,

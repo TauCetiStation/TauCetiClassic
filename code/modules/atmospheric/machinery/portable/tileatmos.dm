@@ -58,14 +58,14 @@
 	update_nearby_tiles()
 	..()
 
-/obj/machinery/portable_atmospherics/tile_atmos/update_icon()
+/obj/machinery/portable_atmospherics/tile_atmos/update_icon(fire_inside = FALSE)
 	cut_overlay(door)
 	icon_state = "[icon_state_base]_[state_open ? "open" : "closed"]"
 
 	if(!state_open)
 		door = mutable_appearance(icon, "[icon_state_base]_door")
-		door.plane = ABOVE_GAME_PLANE
-		door.layer = WINDOWS_LAYER
+		door.plane = fire_inside ? ABOVE_LIGHTING_PLANE : GAME_PLANE
+		door.layer = INFRONT_MOB_LAYER
 		add_overlay(door)
 
 /obj/machinery/portable_atmospherics/tile_atmos/c_airblock(turf/other)
@@ -116,10 +116,10 @@
 	icon_state = "oven_gas_open"
 	icon_state_base = "oven_gas"
 
-	var/injecting_amount = 0.1
+	var/inject_moles_per_second = 0.1
 
 /obj/machinery/portable_atmospherics/tile_atmos/oven/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/storage/visuals/tray) && user.Adjacent(loc))
+	if(istype(I, /obj/item/weapon) && user.Adjacent(loc))
 		user.drop_from_inventory(I, loc)
 		return
 
@@ -131,7 +131,7 @@
 		use_power(50)
 		T.hotspot_expose(1000, 500)
 
-/obj/machinery/portable_atmospherics/tile_atmos/oven/process_atmos()
+/obj/machinery/portable_atmospherics/tile_atmos/oven/process_atmos(seconds)
 	if((stat & (NOPOWER|BROKEN)))
 		return
 
@@ -141,13 +141,14 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(environment && air_contents.temperature > 0)
-		pump_gas_passive(src, air_contents, environment, injecting_amount)
-		ignite()
+		var/has_fire = locate(/obj/fire in loc)
+		if(!has_fire)
+			pump_gas_passive(src, air_contents, environment, inject_moles_per_second * seconds)
+			ignite()
+		update_icon(has_fire)
 		update_connected_network()
 
 /obj/machinery/portable_atmospherics/tile_atmos/oven/ui_interact(mob/user, require_near = TRUE)
-	if(user.is_busy())
-		return
 	if(!Adjacent(user))
 		return
 	if(!user.IsAdvancedToolUser())
@@ -158,10 +159,10 @@
 
 	if(on)
 		var/static/radial_off = image(icon = radial_icons, icon_state = "radial_off")
-		options["Выключить газ"] = radial_off
+		options["Выкл."] = radial_off
 	else
 		var/static/radial_on = image(icon = radial_icons, icon_state = "radial_on")
-		options["Включить газ"] = radial_on
+		options["Вкл."] = radial_on
 
 	if(state_open)
 		var/static/radial_close = image(icon = radial_icons, icon_state = "radial_close")
@@ -177,7 +178,7 @@
 			open_door()
 		if("Закрыть")
 			close_door()
-		if("Включить газ")
+		if("Вкл.")
 			on = TRUE
-		if("Выключить газ")
+		if("Выкл.")
 			on = FALSE
