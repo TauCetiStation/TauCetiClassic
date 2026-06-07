@@ -6,16 +6,16 @@
 	announcement = new /datum/announcement/centcomm/portal_storm
 
 	var/list/hostile_types = list(
-		/mob/living/simple_animal/hostile/syndicate/melee/space  = 20,
-		/mob/living/simple_animal/hostile/syndicate/ranged/space = 10,
+		/mob/living/simple_animal/hostile/syndicate/melee/space  = 8,
+		/mob/living/simple_animal/hostile/syndicate/ranged/space = 4,
 	)
 	var/list/boss_types = list(
-		/mob/living/simple_animal/hostile/syndicate/ranged/space/elite = 5,
+		/mob/living/simple_animal/hostile/syndicate/ranged/space/elite = 2,
 	)
 	var/number_of_hostiles = 0
 	var/number_of_bosses = 0
 	var/next_boss_spawn = 0
-	var/spawns_per_tick = 4
+	var/spawns_per_tick = 1
 	var/list/spawned_mobs = list()
 
 /datum/event/portal_storm/setup()
