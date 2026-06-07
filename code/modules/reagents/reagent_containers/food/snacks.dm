@@ -212,7 +212,7 @@
 			to_chat(N, text("<span class='notice'>You are unable to nibble away at \the [src] while being hidden.</span>"))
 
 /obj/item/weapon/reagent_containers/food/snacks/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature >= 400)
+	if(exposed_temperature >= T0C+100)
 		cookingProgress++
 
 	if(cookingProgress >= cookingThreshold)
