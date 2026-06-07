@@ -190,8 +190,12 @@
 			"<span class='warning'><B>[user]</B> скармливает вам <B>[CASE(src, ACCUSATIVE_CASE)]</B>.</span>")
 
 	playsound(H, 'sound/items/eatfood.ogg', VOL_EFFECTS_MASTER, rand(20, 50))
-	animal_reagents.trans_to_ingest(H, min(max(edible_animal.w_class, SIZE_MINUSCULE), animal_reagents.total_volume))
+	var/remaining_food = animal_reagents.total_volume
+	var/bite_size = min(max(edible_animal.w_class, SIZE_MINUSCULE), remaining_food)
+	var/bite_damage = edible_animal.health * bite_size / remaining_food
+	animal_reagents.trans_to_ingest(H, bite_size)
 	sync_edible_animal_reagents(edible_animal, animal_reagents)
+	edible_animal.health = clamp(edible_animal.health - bite_damage, 1, edible_animal.maxHealth)
 	SEND_SIGNAL(H, COMSIG_HUMAN_ON_CONSUME, src)
 
 	if(!animal_reagents.total_volume)
