@@ -1,14 +1,25 @@
 // Shared "disguise" behaviour for chameleon gear. Holds the appearance choices and
 // applies them, replacing the per-item copy-pasted change() logic.
+var/global/list/chameleon_choices_cache = list()
+
+// name -> type for every disguise of root_type, built once and cached (it only depends on root_type).
+/proc/get_chameleon_choices(root_type, list/blocked)
+	. = global.chameleon_choices_cache[root_type]
+	if(.)
+		return
+	. = list()
+	for(var/t in subtypesof(root_type) - blocked)
+		var/obj/item/A = t
+		.[initial(A.name)] = t
+	global.chameleon_choices_cache[root_type] = .
+
 /datum/component/chameleon
-	var/list/choices = list()
+	var/list/choices
 
 /datum/component/chameleon/Initialize(root_type, list/blocked)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	for(var/t in subtypesof(root_type) - blocked)
-		var/obj/item/A = t
-		choices[initial(A.name)] = t
+	choices = get_chameleon_choices(root_type, blocked)
 
 /datum/component/chameleon/proc/disguise(mob/user)
 	var/obj/item/I = parent
