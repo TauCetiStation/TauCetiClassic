@@ -708,7 +708,7 @@
 
 /datum/uplink_item/stealthy_tools/syndigolashes
 	name = "No-Slip Brown Shoes"
-	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces. Fitted with a chameleon dial that lets you re-disguise them as any other footwear."
+	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces."
 	item = /obj/item/clothing/shoes/syndigaloshes
 	cost = 1
 	uplink_types = list(UPLINK_TYPE_TRAITOR)
