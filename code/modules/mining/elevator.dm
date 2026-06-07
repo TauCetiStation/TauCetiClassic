@@ -52,7 +52,7 @@
 
 /obj/structure/elevator/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Заполнен на [round((contents_amount / contents_max_amount) * 100)]%</span>")
+	to_chat(user, "<span class='notice'>[C_CASE(src, NOMINATIVE_CASE)] заполнен на [round((contents_amount / contents_max_amount) * 100)]%</span>")
 
 /obj/structure/elevator/update_icon()
 	cut_overlay(contents_image)
@@ -78,19 +78,19 @@
 	switch(selection)
 		if("Загрузить")
 			if(contents_amount >= contents_max_amount)
-				to_chat(user, "<span class='notice'>Элеватор полон</span>")
+				to_chat(user, "<span class='notice'>[C_CASE(src, NOMINATIVE_CASE)] полон</span>")
 				return
 
 			load_ore()
 
 		if("Выгрузить (x25)")
 			if(contents_amount <= 0)
-				to_chat(user, "<span class='notice'>Элеватор пуст</span>")
+				to_chat(user, "<span class='notice'>[C_CASE(src, NOMINATIVE_CASE)] пуст</span>")
 			unload_ore(25)
 
 		if("Выгрузить (x50)")
 			if(contents_amount <= 0)
-				to_chat(user, "<span class='notice'>Элеватор пуст</span>")
+				to_chat(user, "<span class='notice'>[C_CASE(src, NOMINATIVE_CASE)] пуст</span>")
 			unload_ore(50)
 
 	update_icon()
