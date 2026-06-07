@@ -1,7 +1,7 @@
 /obj/structure/elevator
 	name = "elevator"
-	cases = list("элеватор", "элеватора", "элеватору", "элеватор", "элеватором", "элеваторе")
-	desc = "Большое хранилище для чего-то маленького и сыпучего."
+	cases = list("СЌР»РµРІР°С‚РѕСЂ", "СЌР»РµРІР°С‚РѕСЂР°", "СЌР»РµРІР°С‚РѕСЂСѓ", "СЌР»РµРІР°С‚РѕСЂ", "СЌР»РµРІР°С‚РѕСЂРѕРј", "СЌР»РµРІР°С‚РѕСЂРµ")
+	desc = "Р‘РѕР»СЊС€РѕРµ С…СЂР°РЅРёР»РёС‰Рµ РґР»СЏ С‡РµРіРѕ-С‚Рѕ РјР°Р»РµРЅСЊРєРѕРіРѕ Рё СЃС‹РїСѓС‡РµРіРѕ."
 
 	icon = 'icons/obj/elevator.dmi'
 	icon_state = "elevator"
@@ -52,7 +52,7 @@
 
 /obj/structure/elevator/examine(mob/user)
 	..()
-	to_chat(user, "<span class='notice'>Заполнен на [round((contents_amount / contents_max_amount) * 100)]%</span>")
+	to_chat(user, "<span class='notice'>Р—Р°РїРѕР»РЅРµРЅ РЅР° [round((contents_amount / contents_max_amount) * 100)]%</span>")
 
 /obj/structure/elevator/update_icon()
 	cut_overlay(contents_image)
@@ -66,9 +66,9 @@
 
 /obj/structure/elevator/attack_hand(mob/user)
 	var/list/choices = list()
-	choices["Загрузить"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_increase")
-	choices["Выгрузить (x25)"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_decrease")
-	choices["Выгрузить (x50)"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_decrease")
+	choices["Р—Р°РіСЂСѓР·РёС‚СЊ"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_increase")
+	choices["Р’С‹РіСЂСѓР·РёС‚СЊ (x25)"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_decrease")
+	choices["Р’С‹РіСЂСѓР·РёС‚СЊ (x50)"] = image(icon = 'icons/hud/radial.dmi', icon_state = "radial_decrease")
 
 	var/obj/item/selection = show_radial_menu(user, src, choices, require_near = TRUE, tooltips = TRUE)
 
@@ -76,21 +76,21 @@
 		return
 
 	switch(selection)
-		if("Загрузить")
+		if("Р—Р°РіСЂСѓР·РёС‚СЊ")
 			if(contents_amount >= contents_max_amount)
-				to_chat(user, "<span class='notice'>Элеватор полон</span>")
+				to_chat(user, "<span class='notice'>Р­Р»РµРІР°С‚РѕСЂ РїРѕР»РѕРЅ</span>")
 				return
 
 			load_ore()
 
-		if("Выгрузить (x25)")
+		if("Р’С‹РіСЂСѓР·РёС‚СЊ (x25)")
 			if(contents_amount <= 0)
-				to_chat(user, "<span class='notice'>Элеватор пуст</span>")
+				to_chat(user, "<span class='notice'>Р­Р»РµРІР°С‚РѕСЂ РїСѓСЃС‚</span>")
 			unload_ore(25)
 
-		if("Выгрузить (x50)")
+		if("Р’С‹РіСЂСѓР·РёС‚СЊ (x50)")
 			if(contents_amount <= 0)
-				to_chat(user, "<span class='notice'>Элеватор пуст</span>")
+				to_chat(user, "<span class='notice'>Р­Р»РµРІР°С‚РѕСЂ РїСѓСЃС‚</span>")
 			unload_ore(50)
 
 	update_icon()
