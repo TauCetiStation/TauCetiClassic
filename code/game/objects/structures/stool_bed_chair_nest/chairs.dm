@@ -561,3 +561,12 @@
 /obj/structure/stool/bed/chair/office/dark
 	icon_state = "officechair_dark"
 	behind = "officechair_dark_behind"
+
+
+/obj/structure/stool/bed/chair/park
+	icon_state = "chair_park"
+	behind = "chair_park_behind"
+
+	material = /obj/item/stack/sheet/wood
+
+	hit_particle_type = /particles/tool/digging/wood

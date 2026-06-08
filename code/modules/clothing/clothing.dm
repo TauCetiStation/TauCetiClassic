@@ -6,6 +6,7 @@
 	var/rig_restrict_helmet = 0 // Stops the user from equipping a rig helmet without attaching it to the suit first.
 	var/gang //Is this a gang outfit?
 	var/species_restricted_locked = FALSE
+	var/list/potentially_protected_organs = list() //These organs can be protected by armor if it has high protective properties
 
 	/*
 		Sprites used when the clothing item is refit. This is done by setting icon_override.
@@ -26,6 +27,12 @@
 	var/can_be_modded = FALSE //modding hardsuits with modkits
 
 	var/flashbang_protection = FALSE
+
+
+/obj/item/clothing/atom_init()
+	. = ..()
+	if(body_parts_covered & UPPER_TORSO)
+		potentially_protected_organs |= O_HEART
 
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)
@@ -177,8 +184,23 @@
 
 /obj/item/clothing/examine(mob/user)
 	..()
+	var/check_stats = armor[MELEE] >= PROTECTION_REQUIRED_FOR_ORGANS || armor[BULLET] >= PROTECTION_REQUIRED_FOR_ORGANS || armor[LASER] >= PROTECTION_REQUIRED_FOR_ORGANS || armor[ENERGY] >= PROTECTION_REQUIRED_FOR_ORGANS
+	if(potentially_protected_organs.len && check_stats)
+		to_chat(user, "<a href='byond://?src=\ref[src];show_organ_protection=1'>Show vital organs protection</a>")
 	for(var/obj/item/clothing/accessory/A in accessories)
 		to_chat(user, "[bicon(A)] \A [A] is attached to it.")
+
+/obj/item/clothing/Topic(href, href_list)
+	..()
+	if(href_list["show_organ_protection"])
+		if(armor[MELEE] >= PROTECTION_REQUIRED_FOR_ORGANS)
+			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>impacts.</b></span>")
+		if(armor[BULLET] >= PROTECTION_REQUIRED_FOR_ORGANS)
+			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>bullets.</b></span>")
+		if(armor[LASER] >= PROTECTION_REQUIRED_FOR_ORGANS)
+			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>lasers.</b></span>")
+		if(armor[ENERGY] >= PROTECTION_REQUIRED_FOR_ORGANS)
+			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>energy weapons.</b></span>")
 
 /obj/item/clothing/proc/attach_accessory(obj/item/clothing/accessory/A, mob/user)
 	if(can_attach_accessory(A))

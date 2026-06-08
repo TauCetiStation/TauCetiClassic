@@ -550,7 +550,7 @@
 			if(user.is_busy(src))
 				return
 			flick("apc-spark", src)
-			if(W.use_tool(src, user, 6, volume = 50))
+			if(W.use_tool(src, user, 6, volume = 50, particle_type = /particles/tool/signal/emag))
 				if(prob(50))
 					emagged = 1
 					locked = 0

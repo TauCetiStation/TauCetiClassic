@@ -615,6 +615,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["snd_notifications_vol"]              >> snd_notifications_vol
 	S["snd_admin_vol"]                      >> snd_admin_vol
 	S["snd_jukebox_vol"]                    >> snd_jukebox_vol
+	S["snd_jukebox_mediaserver"]            >> snd_jukebox_mediaserver
 
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
@@ -664,6 +665,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	snd_notifications_vol	= sanitize_integer(snd_notifications_vol, 0, 100, initial(snd_notifications_vol))
 	snd_admin_vol	= sanitize_integer(snd_admin_vol, 0, 100, initial(snd_admin_vol))
 	snd_jukebox_vol = sanitize_integer(snd_jukebox_vol, 0, 100, initial(snd_jukebox_vol))
+	var/default_url = (config.media_base_urls && config.media_base_urls.len) ? config.media_base_urls[1] : ""
+	snd_jukebox_mediaserver = sanitize_inlist(snd_jukebox_mediaserver, config.media_base_urls, default_url)
 
 	if(needs_update >= 0) //save the updated version
 		var/old_default_slot = default_slot
@@ -741,6 +744,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["snd_notifications_vol"]              << snd_notifications_vol
 	S["snd_admin_vol"]                      << snd_admin_vol
 	S["snd_jukebox_vol"]                    << snd_jukebox_vol
+	S["snd_jukebox_mediaserver"]            << snd_jukebox_mediaserver
 	return 1
 
 /datum/preferences/proc/load_saved_character(dir)

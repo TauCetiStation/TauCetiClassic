@@ -312,17 +312,35 @@
 	pixel_x = -48
 	pixel_y = -20
 
+	var/leaves_particle_type = /particles/leaves
+	var/leaves_hit_particle_type = /particles/leaves/hit
+
 /obj/structure/flora/tree/jungle/get_seethrough_map()
 	return SEE_THROUGH_MAP_THREE_X_THREE
 
-/obj/structure/flora/tree/jungle/atom_init()
+/obj/structure/flora/tree/jungle/atom_init(mapload)
 	. = ..()
 	icon_state = pick(icon_states(icon))
+
+	add_shared_particles(leaves_particle_type, particle_flags = PARTICLE_FADEOUT, pool_size = 5)
+
+	RegisterSignal(src, COMSIG_ATOM_TAKE_DAMAGE, PROC_REF(fall_leaves))
+
+/obj/structure/flora/tree/jungle/proc/fall_leaves()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+
+	new /obj/effect/abstract/particle_holder(T, leaves_hit_particle_type, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	shake_act(1)
 
 /obj/structure/flora/tree/jungle/small
 	pixel_y = 0
 	pixel_x = -32
 	icon = 'icons/obj/flora/jungletreesmall.dmi'
+
+	leaves_particle_type = /particles/leaves/small
+	leaves_hit_particle_type = /particles/leaves/small/hit
 
 /obj/structure/flora/tree/jungle/small/get_seethrough_map()
 	return SEE_THROUGH_MAP_THREE_X_TWO

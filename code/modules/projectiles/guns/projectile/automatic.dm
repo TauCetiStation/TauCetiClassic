@@ -245,10 +245,11 @@
 
 /obj/item/weapon/gun/projectile/automatic/bulldog
 	name = "V15 Bulldog shotgun"
-	desc = "Малогабаритный самозарядный полуавтоматический дробовик для ведения огня в узких коридорах. Совместим лишь со специальными магазинами."
+	desc = "Самозарядный полуавтоматический дробовик для ведения огня в узких коридорах. Совместим лишь со специальными магазинами."
 	icon_state = "bulldog"
 	item_state = "bulldog"
-	w_class = SIZE_SMALL
+	w_class = SIZE_NORMAL
+	dispersion_multiplier = 0.75
 	origin_tech = "combat=5;materials=4;syndicate=6"
 	initial_mag = /obj/item/ammo_box/magazine/bulldog
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
