@@ -1,4 +1,4 @@
-var/global/total_runtimes = 0
+var/global/list/total_runtimes = list()
 var/global/total_runtimes_skipped = 0
 
 #ifdef DEBUG
