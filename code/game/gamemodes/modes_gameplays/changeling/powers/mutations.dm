@@ -13,11 +13,12 @@
 	var/last_form_time = 0
 
 /obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
-	if(istype(user.get_active_hand(),weapon_type))
-		user.drop_from_inventory(user.get_active_hand()) // cuz changeling weapons are unremovable with standart procedure with canremove = 0, but we still need it
-		return
 	if(world.time < last_form_time + form_cooldown)
 		to_chat(user, "<span class='warning'>We need a moment before reshaping our [weapon_name_simple].</span>")
+		return
+	if(istype(user.get_active_hand(),weapon_type))
+		last_form_time = world.time
+		user.drop_from_inventory(user.get_active_hand()) // cuz changeling weapons are unremovable with standart procedure with canremove = 0, but we still need it
 		return
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
