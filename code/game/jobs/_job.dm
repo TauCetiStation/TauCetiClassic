@@ -200,5 +200,8 @@
 		return skillsets[H.mind.role_alt_title] || skillsets[title]
 	return skillsets[title]
 
-/datum/job/proc/round_total_positions()
-	return (map_total_positions || total_positions)
+/datum/job/proc/round_total_positions(players_online = 0)
+	var/dynamic_positions = (map_total_positions || total_positions)
+	if(players_online > 0)
+		dynamic_positions += round(players_online / 10)
+	return dynamic_positions

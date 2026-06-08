@@ -135,17 +135,14 @@
 		LAZYADD(skillsets, /datum/skillset/warden)
 
 /datum/job/officer/round_total_positions()
-	. = ..()
-	var/players_online = length(global.clients)
-	if(players_online > 0)
-		. += round(players_online / 10)
+	return ..(length(global.clients) + 10)
 
 
 /datum/job/cadet
 	title = JOB_CADET
 	departments = list(DEP_SECURITY)
 	order = CREW_INTEND_ASSIST(1)
-	total_positions = 1
+	total_positions = 2
 	spawn_positions = 3
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
@@ -165,7 +162,4 @@
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC, PLUVIAN)
 
 /datum/job/cadet/round_total_positions()
-	. = ..()
-	var/players_online = length(global.clients)
-	if(players_online > 0)
-		. += round(players_online / 10)
+	return ..(length(global.clients) + 10)
