@@ -135,7 +135,7 @@
 		LAZYADD(skillsets, /datum/skillset/warden)
 
 /datum/job/officer/round_total_positions()
-	return ..(length(global.clients) + 10)
+	return ..(length(global.clients))
 
 
 /datum/job/cadet
@@ -162,4 +162,4 @@
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC, PLUVIAN)
 
 /datum/job/cadet/round_total_positions()
-	return ..(length(global.clients) + 10)
+	return ..(length(global.clients))
