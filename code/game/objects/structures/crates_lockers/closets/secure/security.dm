@@ -454,6 +454,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 
 /obj/structure/closet/secure_closet/tactical_armor/PopulateContents()
 	new /obj/item/clothing/suit/armor/tactical(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical(src)
+	new /obj/item/clothing/under/pants/milipants_army/ranger(src)
 	new /obj/item/clothing/head/helmet/tactical(src)
 
 /obj/structure/closet/secure_closet/usp_cartridges
