@@ -110,7 +110,7 @@
 	mannequin.update_inv_w_uniform()
 	mannequin.update_inv_wear_suit()
 
-	var/obj/item/clothing/under/color/polychromic/polychromic_jumpsuit = spawn_custom_jumpsuit(mannequin)
+	var/obj/item/clothing/under/color/polychromic/polychromic_jumpsuit = spawn_custom_jumpsuit()
 	if(polychromic_jumpsuit)
 		mannequin.replace_in_slot(SLOT_W_UNIFORM, polychromic_jumpsuit)
 

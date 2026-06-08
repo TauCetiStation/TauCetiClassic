@@ -114,7 +114,6 @@
 	negative_quirks = list()
 	neutral_quirks = list()
 	character_quirks = list()
-	save_character()
 
 /datum/preferences/proc/process_link_quirks(mob/user, list/href_list)
 	switch(href_list["task"])

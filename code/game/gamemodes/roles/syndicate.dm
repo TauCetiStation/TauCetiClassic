@@ -35,12 +35,6 @@
 
 	if(ishuman(antag.current))
 		var/mob/living/carbon/human/H = antag.current
-		// Operatives come from a roundstart crew slot, so strip that gear before
-		// equipping their own nuclear outfit (equip_to_slot_or_del would otherwise
-		// delete the nuke items it can't fit into already-occupied slots).
-		for(var/obj/item/I in H.get_equipped_items() + list(H.l_store, H.r_store, H.s_store))
-			H.drop_from_inventory(I)
-			qdel(I)
 		H.equipOutfit(nuclear_outfit)
 	antag.current.add_language(LANGUAGE_SYCODE)
 
