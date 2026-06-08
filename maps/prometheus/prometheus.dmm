@@ -83818,19 +83818,13 @@
 	},
 /area/station/civilian/hydroponics)
 "ucF" = (
-/obj/structure/rack,
-/obj/item/ammo_box/magazine/plasma{
-	pixel_y = 2
-	},
-/obj/item/ammo_box/magazine/plasma{
-	pixel_y = -2
-	},
 /obj/machinery/light/small/emergency{
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/structure/closet/secure_closet/tactical_armor,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -86794,6 +86788,12 @@
 /area/station/maintenance/chapel)
 "uOS" = (
 /obj/structure/rack,
+/obj/item/ammo_box/magazine/plasma{
+	pixel_y = -2
+	},
+/obj/item/ammo_box/magazine/plasma{
+	pixel_y = 2
+	},
 /obj/item/weapon/gun/plasma/p104sass{
 	pixel_y = 4
 	},

@@ -192,7 +192,7 @@
 	item_state = "helmet"
 	flags = HEADCOVERSEYES
 	flags_inv = HIDEEARS
-	armor = list(melee = 62, bullet = 60, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
+	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 	siemens_coefficient = 0.7
 
 /obj/item/clothing/head/helmet/tactical/marinad
@@ -200,11 +200,13 @@
 	desc = "Spectrum alloy helmet. Lightweight and ready for action."
 	icon_state = "marinad"
 	item_state = "marinad_helmet"
+	armor = list(melee = 62, bullet = 60, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
 
 /obj/item/clothing/head/helmet/tactical/marinad/leader
 	name = "marine beret"
 	desc = "Sturdy kevlar beret in protective colors, issued to low-ranking NTCM officers."
 	icon_state = "beret_marinad"
+	armor = list(melee = 62, bullet = 60, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
 
 /obj/item/clothing/head/helmet/helmet_of_justice
 	name = "helmet of justice"

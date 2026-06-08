@@ -445,6 +445,17 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 		for (var/i in 1 to 3)
 			new /obj/item/weapon/gun/projectile/automatic/pistol/glock(src)
 
+/obj/structure/closet/secure_closet/tactical_armor
+	name = "Tactical Armor Secure Closet"
+	req_access = list(access_armory)
+	icon_state = "syndicatealtsecure"
+	icon_closed = "syndicatealtsecure"
+	icon_opened = "syndicatealtsecure_open"
+
+/obj/structure/closet/secure_closet/tactical_armor/PopulateContents()
+	new /obj/item/clothing/suit/armor/tactical(src)
+	new /obj/item/clothing/head/helmet/tactical(src)
+
 /obj/structure/closet/secure_closet/usp_cartridges
 	name = "USP cartridges Secure Closet"
 	req_access = list(access_keycard_auth)

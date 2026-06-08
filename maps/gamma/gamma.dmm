@@ -110230,11 +110230,18 @@
 /area/station/civilian/hydroponics)
 "uQA" = (
 /obj/machinery/light/smart,
-/obj/structure/table,
-/obj/machinery/recharger,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
+	},
+/obj/structure/table,
+/obj/item/clothing/suit/armor/tactical{
+	pixel_y = -1;
+	pixel_x = -2
+	},
+/obj/item/clothing/head/helmet/tactical{
+	pixel_y = 10;
+	pixel_x = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
