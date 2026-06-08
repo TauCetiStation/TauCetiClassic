@@ -447,7 +447,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 
 /obj/structure/closet/secure_closet/tactical_armor
 	name = "Tactical Armor Secure Closet"
-	req_access = list(access_armory)
+	req_access = list(access_security)
 	icon_state = "syndicatealtsecure"
 	icon_closed = "syndicatealtsecure"
 	icon_opened = "syndicatealtsecure_open"
