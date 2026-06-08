@@ -584,13 +584,11 @@ var/global/list/poly_color_palette = list(
 )
 
 
-/proc/make_poly_overlay(state, color_hex = null, mob/living/carbon/human/human = null, icon_file = 'icons/mob/uniform_poly.dmi')
+/proc/make_poly_overlay(state, color_hex = null, icon_file = 'icons/mob/uniform_poly.dmi')
 	var/mutable_appearance/overlay = mutable_appearance(icon_file, state)
 	if(color_hex)
 		overlay.color = color_luminance_max(color_hex, 12)
 	overlay.appearance_flags |= RESET_COLOR
-	if(human)
-		human.update_height(overlay)
 	return overlay
 
 /obj/item/clothing/under/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
@@ -600,6 +598,8 @@ var/global/list/poly_color_palette = list(
 		return ..()
 	var/mutable_appearance/MA = mutable_appearance('icons/mob/uniform_poly.dmi', get_poly_mob_state(H), layer)
 	MA.color = color_luminance_max(poly_colors[1], 12)
+	// Keep the colored layers as one unit so the caller's update_height filter covers them all.
+	MA.appearance_flags |= KEEP_TOGETHER
 	MA.add_overlay(get_poly_mob_overlays(H, bloodied_icon_state))
 	return MA
 
@@ -607,12 +607,12 @@ var/global/list/poly_color_palette = list(
 	. = list()
 	var/detail_state = get_poly_detail_state(H)
 	if(detail_state)
-		. += make_poly_overlay(detail_state, null, H)
+		. += make_poly_overlay(detail_state)
 	var/pattern_state = get_poly_pattern_state(H)
 	if(pattern_state && length(poly_colors) >= 2)
-		. += make_poly_overlay(pattern_state, poly_colors[2], H)
+		. += make_poly_overlay(pattern_state, poly_colors[2])
 	if(dirt_overlay && bloodied_icon_state)
-		var/mutable_appearance/blood = make_poly_overlay(bloodied_icon_state, null, H, 'icons/effects/blood.dmi')
+		var/mutable_appearance/blood = make_poly_overlay(bloodied_icon_state, null, 'icons/effects/blood.dmi')
 		blood.color = dirt_overlay.color
 		. += blood
 
@@ -623,7 +623,7 @@ var/global/list/poly_color_palette = list(
 		if(pat_state)
 			. += make_poly_overlay(pat_state, poly_colors[2])
 	if(dirt_overlay)
-		var/mutable_appearance/blood = make_poly_overlay("uniformblood", null, null, 'icons/effects/blood.dmi')
+		var/mutable_appearance/blood = make_poly_overlay("uniformblood", null, 'icons/effects/blood.dmi')
 		blood.color = dirt_overlay.color
 		. += blood
 
@@ -634,7 +634,7 @@ var/global/list/poly_color_palette = list(
 		if(pat_state)
 			. += make_poly_overlay(pat_state, poly_colors[2])
 	if(dirt_overlay)
-		var/mutable_appearance/blood = make_poly_overlay("uniformblood", null, null, 'icons/effects/blood.dmi')
+		var/mutable_appearance/blood = make_poly_overlay("uniformblood", null, 'icons/effects/blood.dmi')
 		blood.color = dirt_overlay.color
 		. += blood
 

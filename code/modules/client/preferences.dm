@@ -328,7 +328,6 @@ var/global/list/datum/preferences/preferences_datums = list()
 			load_character()
 
 		if("changeslot")
-			save_character()
 			load_character(text2num(href_list["num"]))
 
 		if("general")
