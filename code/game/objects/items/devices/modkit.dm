@@ -35,7 +35,7 @@
 	if(hardsuit.can_be_modded == FALSE || helmet.can_be_modded == FALSE)
 		to_chat(user, "<span class='notice'>[src] is unable to modify that.</span>")
 		return
-	if(check_exclude(hardsuit, user) && check_exclude(helmet, user))
+	if(check_exclude(hardsuit, user) || check_exclude(helmet, user))
 		if(hardsuit && helmet && (parts & MODKIT_FULL))
 			parts &= ~MODKIT_FULL
 		else
@@ -44,7 +44,7 @@
 
 	playsound(user, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
-	user.visible_message("<span class='red'>[user] opens \the [src] and modifies \the [target].</span>","<span class='red'> You open \the [src] and modify \the [target].</span>")
+	user.visible_message("<span class='red'>[user] opens \the [src] and modifies \the [target].</span>","<span class='red'>You open \the [src] and modify \the [target].</span>")
 
 	hardsuit.refit_for_species(target_species)
 	helmet.refit_for_species(target_species)
