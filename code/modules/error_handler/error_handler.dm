@@ -20,7 +20,7 @@ var/global/total_runtimes_skipped = 0
 		return ..()
 
 	var/erroruid = "[E.file][E.line]"
-	total_runtimes += "[E.line]"
+	total_runtimes += E.line
 	var/last_seen = error_last_seen[erroruid]
 	var/cooldown = error_cooldown[erroruid] || 0
 
