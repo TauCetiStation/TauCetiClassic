@@ -61,7 +61,7 @@
 	else
 		if(isliving(src))
 			message = highlight_traitor_codewords(message, src.mind)
-		if(language)
+		if(language && !((REMOTE_TALK in mutations)))
 			message = "[track]<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [language.format_message(message, verb)]</span>"
 		else
 			message = "[track]<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>"
