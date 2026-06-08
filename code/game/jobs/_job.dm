@@ -189,7 +189,8 @@
 	return max(0, roles_ingame_minute_unlock[role] - C.player_ingame_age)
 
 /datum/job/proc/is_position_available()
-	return (current_positions < total_positions) || (total_positions == -1)
+	var/dynamic_positions = round_total_positions()
+	return (current_positions < dynamic_positions) || (dynamic_positions == -1)
 
 /datum/job/proc/map_check()
 	return TRUE
@@ -198,3 +199,6 @@
 	if(alt_titles && H.mind.role_alt_title)
 		return skillsets[H.mind.role_alt_title] || skillsets[title]
 	return skillsets[title]
+
+/datum/job/proc/round_total_positions()
+	return (map_total_positions || total_positions)
