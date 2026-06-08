@@ -18,6 +18,7 @@
 	icon_state = "civilian"
 	damage_deflection = 25
 	idle_power_usage = 10
+	active_power_usage = 100
 	anchored = TRUE
 
 	var/build_type = SUIT_STORAGE_BUILD_DEFAULT
@@ -185,13 +186,16 @@
 		else if(isspacesuit(target))
 			suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "suit")
 
-	var/mutable_appearance/door_I = mutable_appearance(icon = overlays_file, icon_state = "[opened ? "door_open_[icon_state]" : "door_closed_[icon_state]"]")
+	var/mutable_appearance/door_I = null
+	if(!(stat & BROKEN))
+		door_I = mutable_appearance(icon = overlays_file, icon_state = "[opened ? "door_open_[icon_state]" : "door_closed_[icon_state]"]")
 	if(overlay_color)
 		var/mutable_appearance/unit_color = mutable_appearance(icon = overlays_file, icon_state = "[stat & BROKEN ? "suitholder_broken_color" : "suitholder_color"]")
-		door_I.color = overlay_color
+		door_I?.color = overlay_color
 		unit_color.color = overlay_color
 		suit_storage_overlays += unit_color
-	suit_storage_overlays += door_I
+	if(door_I)
+		suit_storage_overlays += door_I
 	if(!opened)
 		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "[locked ? "lock_closed" : "lock_open"]")
 	if(ultra_violet)
@@ -301,6 +305,7 @@
 		cycletime_left = 5
 	update_icon()
 	ultra_violet_cleaning()
+	set_power_use(ACTIVE_POWER_USE)
 
 /obj/machinery/suit_storage_unit/proc/ultra_violet_cleaning()
 	if(cycletime_left)
@@ -317,6 +322,7 @@
 		ultra_violet = FALSE //Cycle ends
 		locked = FALSE // anyway it may be unlocked
 		open() // open() call`s update_icon
+		set_power_use(IDLE_POWER_USE)
 		return TRUE
 
 /obj/machinery/suit_storage_unit/proc/default_ultra_violet_cleaning()

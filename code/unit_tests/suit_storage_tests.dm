@@ -26,7 +26,7 @@
 
 	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
 		var/obj/machinery/suit_storage_unit/test_unit/ssu = new typepath.type
-		qdel(ssu)
+		qdel(ssu, TRUE)
 		if(ssu)
 			error_list += ssu
 
@@ -44,6 +44,8 @@
 
 /datum/unit_test/suit_storage_unit_test_duv/start_test()
 	var/obj/machinery/suit_storage_unit/test_unit/ssu = new
+	ssu.filled = TRUE
+	ssu.make_full()
 	for(var/obj/item/target in ssu.contents)
 		target.contaminate()
 		target.add_dirt_cover()
