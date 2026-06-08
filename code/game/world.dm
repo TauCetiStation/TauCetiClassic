@@ -191,7 +191,7 @@ var/global/world_topic_spam_protect_time = world.timeofday
 		if (packet_data)
 			if(packet_data["announce"] == "")
 				return receive_net_announce(packet_data, addr)
-			if(packet_data["bridge"] == "" && addr == "127.0.0.1") // 
+			if(packet_data["bridge"] == "" && addr == "127.0.0.1") //
 				bridge2game(packet_data)
 				return "bridge=1" // no return data in topic, feedback should be send only through bridge
 
@@ -208,7 +208,9 @@ var/global/world_topic_spam_protect_time = world.timeofday
 		dbcon.Disconnect()
 
 	world.log << "Runtimes count: [total_runtimes]. Runtimes skip count: [total_runtimes_skipped]."
-
+	for(var/runtimes in total_runtimes)
+		var/exception/E = Error()
+		world.log << "Runtime on: [E.file][E.line]"
 	// Bad initializations log.
 	var/initlog = SSatoms.InitLog()
 	if(initlog)
