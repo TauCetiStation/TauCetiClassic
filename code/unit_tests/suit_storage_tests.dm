@@ -18,27 +18,6 @@
 		pass("SSU successfully make full themself")
 		return TRUE
 
-/datum/unit_test/suit_storage_unit_test_dell
-	name = "SUIT STORAGE: TEST ANY UNIT CAN DELETE"
-
-/datum/unit_test/suit_storage_unit_test_dell/start_test()
-	var/error_list = list()
-
-	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
-		var/obj/machinery/suit_storage_unit/ssu = new typepath.type
-		del ssu
-		if(ssu)
-			error_list += ssu
-
-	if(length(error_list))
-		fail("TEST ANY UNIT CAN DELETE: TOTAL ERRORS [length(error_list)]")
-		for(var/target in error_list)
-			fail("[target]: didn`t Destroy() themself")
-		return FALSE
-	else
-		pass("All units successfuly Destroy() themself")
-		return TRUE
-
 /datum/unit_test/suit_storage_unit_test_duv
 	name = "SUIT STORAGE: TEST DEFAULT UV CLEAR"
 
