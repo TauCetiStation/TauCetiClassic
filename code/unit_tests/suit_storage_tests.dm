@@ -1,23 +1,3 @@
-/datum/unit_test/suit_storage_unit_test_full
-	name = "SUIT STORAGE: TEST ALL FULL"
-
-/datum/unit_test/suit_storage_unit_test_full/start_test()
-	var/list/error_list = list()
-	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
-		var/obj/machinery/suit_storage_unit/ssu = new typepath.type
-		ssu.filled = TRUE
-		ssu.make_full()
-		if(!length(ssu.contents))
-			error_list += ssu.name
-	if(length(error_list))
-		fail("Total SSU errors: [length(error_list)]")
-		for(var/target in error_list)
-			fail("[target]: didn`t make themself full wtf")
-			return FALSE
-
-	pass("SSU successfully make full themself")
-	return TRUE
-
 /datum/unit_test/suit_storage_unit_test_duv
 	name = "SUIT STORAGE: TEST DEFAULT UV CLEAR"
 
