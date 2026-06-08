@@ -248,7 +248,7 @@ SUBSYSTEM_DEF(unit_tests)
 
 		if (5)	// Finalization.
 			unit_test_final_message()
-			log_unit_test("Caught [global.total_runtimes] Runtime\s.")
+			log_unit_test("Caught [global.total_runtimes.len] Runtime\s.")
 			del world
 #endif
 #undef MAX_UNIT_TEST_RUN_TIME
