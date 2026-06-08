@@ -4,7 +4,7 @@
 /datum/unit_test/suit_storage_unit_test_full/start_test()
 	var/list/error_list = list()
 	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
-		var/obj/machinery/suit_storage_unit/test_unit/ssu = new typepath.type
+		var/obj/machinery/suit_storage_unit/ssu = new typepath.type
 		ssu.filled = TRUE
 		ssu.make_full()
 		if(!length(ssu.contents))
@@ -14,9 +14,9 @@
 		for(var/target in error_list)
 			fail("[target]: didn`t make themself full wtf")
 			return FALSE
-	else
-		pass("SSU successfully make full themself")
-		return TRUE
+
+	pass("SSU successfully make full themself")
+	return TRUE
 
 /datum/unit_test/suit_storage_unit_test_duv
 	name = "SUIT STORAGE: TEST DEFAULT UV CLEAR"
@@ -31,16 +31,21 @@
 
 	ssu.default_ultra_violet_cleaning()
 
+	var/list/error_list = list()
 	for(var/obj/item/target in ssu.contents)
 		if(target.contaminated)
-			fail("SSU didn`t clear contaminate: [target]")
-			return FALSE
+			error_list += "SSU didn`t contaminate: [target]"
 		else if(target.blood_overlay)
-			fail("SSU didn` clear blood_overlay: [target]")
+			error_list += "SSU didn`t clear blood_overlay: [target]"
+
+	if(error_list)
+		for(var/error in error_list)
+			fail(error)
 			return FALSE
-		else
-			pass("SSU successfuly clear: [target]")
-			return TRUE
+
+	pass("SSU successfuly clear all on themself")
+	return TRUE
+
 
 /datum/unit_test/suit_storage_unit_test_suv_dell
 	name = "SUIT STORAGE: TEST SUPER UV CLEAR"
@@ -56,9 +61,9 @@
 	if(length(ssu.contents))
 		fail("SSU didnt destroy all in contents")
 		return FALSE
-	else
-		pass("SSU successfully destroy all in contents")
-		return TRUE
+
+	pass("SSU successfully destroy all in contents")
+	return TRUE
 
 /datum/unit_test/suit_storage_unit_test_fast_equip_drop
 	name = "SUIT STORAGE: TEST FAST EUIP"
@@ -73,7 +78,7 @@
 
 	for(var/atom/target in ssu.contents)
 		if(!ishuman(target))
-			fail("SSU contents somethink like: [target], but must didn`t")
+			fail("SSU contents something like: [target], but must didn`t")
 			return FALSE
 
 	pass("SSU successfully use items in his contents")
