@@ -207,10 +207,8 @@ var/global/world_topic_spam_protect_time = world.timeofday
 
 		dbcon.Disconnect()
 
-	world.log << "Runtimes count: [length(total_runtimes)]. Runtimes skip count: [total_runtimes_skipped]."
-	if(length(total_runtimes))
-		for(var/runtime in global.total_runtimes)
-			world.log << "Runtime on: [runtime]"
+	world.log << "Runtimes count: [total_runtimes]. Runtimes skip count: [total_runtimes_skipped]."
+
 	// Bad initializations log.
 	var/initlog = SSatoms.InitLog()
 	if(initlog)
