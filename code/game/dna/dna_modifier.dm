@@ -297,7 +297,7 @@
 	var/waiting_for_user_input = FALSE // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
 	var/irradiate_start = 0
 	var/irradiate_duration = 0
-	var/irradiate_lock_state = FALSE
+	var/irradiate_lock_state = FALSE // buffer for lock state before irradiation start; used to restore lock after irradiation is finished
 	var/irradiate_timer_id = null
 
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_TRAINED)
