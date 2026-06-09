@@ -202,3 +202,25 @@ var/global/list/reagents_list = typecacheof(/datum/reagent)
 var/global/list/virus_types_by_pool
 
 var/global/list/package_wrap_by_type
+
+var/global/list/ore_from_scrap = list(
+		/obj/item/weapon/ore/uranium = 5,
+		/obj/item/weapon/ore/iron = 50,
+		/obj/item/weapon/ore/coal = 10,
+		/obj/item/weapon/ore/glass = 10,
+		/obj/item/weapon/ore/phoron = 1,
+		/obj/item/weapon/ore/silver = 7,
+		/obj/item/weapon/ore/gold = 15,
+		/obj/item/weapon/ore/diamond = 1,
+		/obj/item/weapon/ore/osmium = 1,
+		/obj/item/weapon/ore/hydrogen = 1,
+		/obj/item/weapon/ore/slag = 30,
+	)
+
+var/global/list/gas_from_scrap = list(
+	"methane" = 5,
+	"hydrogen" = 10,
+	"helium" = 1,
+	)
+
+var/global/list/smelting_recipes

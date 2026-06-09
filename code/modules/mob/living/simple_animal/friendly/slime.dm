@@ -21,6 +21,8 @@
 	has_head = TRUE
 	moveset_type = /datum/combat_moveset/slime
 
+	fart_gas = "hydrogen"
+
 /mob/living/simple_animal/adultslime
 	name = "pet slime"
 	desc = "Милый, одомашненный слайм."
@@ -42,6 +44,8 @@
 	has_head = TRUE
 	moveset_type = /datum/combat_moveset/slime
 
+	fart_gas = "hydrogen"
+
 /mob/living/simple_animal/adultslime/atom_init()
 	. = ..()
 	add_overlay("aslime-:33")
@@ -56,4 +60,7 @@
 		S.colour = "[colour]"
 	med_hud_set_health()
 	med_hud_set_status()
+
+	fart(0.1)
+
 	qdel(src)

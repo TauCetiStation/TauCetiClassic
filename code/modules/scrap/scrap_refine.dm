@@ -26,6 +26,11 @@
 	else
 		visible_message("<span class='notice'>\The [user] smashes the [src], but [W] is too weak to break it!</span>")
 
+/obj/structure/scrap_cube/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if((exposed_temperature > (T0C + 1000)) && prob(10))
+		explosion(get_turf(src), 0, 2, 3, 0)
+		qdel(src)
+
 /obj/item/weapon/scrap_lump
 	name = "unrefined scrap"
 	desc = "This thing is messed up beyond any recognition. Into the grinder it goes!"
@@ -45,6 +50,22 @@ var/global/list/datum/stack_recipe/scrap_recipes = list ( \
 	new/datum/stack_recipe("cardborg helmet", /obj/item/clothing/head/cardborg), \
 )
 
+/obj/item/weapon/scrap_lump/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if((exposed_temperature > (T0C + 250)) && prob(5))
+		if(isturf(loc))
+			var/turf/T = loc
+			T.create_fire(1)
+
+		var/datum/gas_mixture/env = loc.return_air()
+		if(env)
+			env.adjust_gas(pickweight(global.gas_from_scrap), 1)
+
+		if(prob(50))
+			var/picked_type = pickweight(global.ore_from_scrap)
+			new picked_type(loc)
+
+		qdel(src)
+
 /obj/item/stack/sheet/refined_scrap
 	name = "refined scrap"
 	desc = "This is ghetto gold! It could be used as fuel or building material. Even Central Command would give credits for this."
@@ -56,3 +77,9 @@ var/global/list/datum/stack_recipe/scrap_recipes = list ( \
 /obj/item/stack/sheet/refined_scrap/atom_init()
 	. = ..()
 	AddElement(/datum/element/beauty, -15)
+
+/obj/item/stack/sheet/refined_scrap/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if((exposed_temperature > (T0C + 1000)) && prob(5 * amount))
+		var/picked_type = pickweight(global.ore_from_scrap)
+		new picked_type(loc)
+		use(1)

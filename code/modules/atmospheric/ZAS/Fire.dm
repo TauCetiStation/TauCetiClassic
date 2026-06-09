@@ -334,7 +334,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 		//liquid fuels are not as volatile, and the reaction progress depends on the size of the area that is burning. Limit the burn rate to a certain amount per area.
 		var/liquid_firelevel = calculate_firelevel(liquid_fuel, total_oxidizers, reaction_limit, 0) / vsc.fire_firelevel_multiplier
-		var/liquid_reaction_progress = min((liquid_firelevel * 0.2 + 0.05) * fuel_area * FIRE_LIQUID_BURNRATE_MULT, liquid_fuel)
+		var/liquid_reaction_progress = min((liquid_firelevel) * fuel_area * FIRE_LIQUID_BURNRATE_MULT, liquid_fuel)
 
 		var/firelevel = (gas_fuel * gas_firelevel + liquid_fuel * liquid_firelevel)/total_fuel
 
@@ -359,22 +359,29 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 
 		//*** Remove fuel and oxidizer, add carbon dioxide and heat
+		var/heat_of_combustion = 0
 
 		//remove and add gasses as calculated
 		var/used_gas_fuel = min(max(0.25, used_fuel * (gas_reaction_progress/total_reaction_progress)), gas_fuel) //remove in proportion to the relative reaction progress
-		var/used_liquid_fuel = min(max(0.25, used_fuel-used_gas_fuel), liquid_fuel)
+		var/used_liquid_fuel = min(max(0.25, (used_fuel-used_gas_fuel) * (liquid_reaction_progress/total_reaction_progress)), liquid_fuel)
 
 		//remove_by_flag() and adjust_gas() handle the group_multiplier for us.
 		remove_by_flag(XGM_GAS_OXIDIZER, used_oxidizers)
 		var/datum/gas_mixture/burned_fuel = remove_by_flag(XGM_GAS_FUEL, used_gas_fuel)
 		for(var/g in burned_fuel.gas)
-			adjust_gas(gas_data.burn_product[g], burned_fuel.gas[g])
+			var/list/burn_list = gas_data.burn_product[g]
+			for(var/product in burn_list)
+				adjust_gas(product, burned_fuel.gas[g] * burn_list[product])
+			heat_of_combustion += (burned_fuel.gas[g] * gas_data.heat_of_combustion[g])
 
 		if(zone)
 			zone.remove_liquidfuel(used_liquid_fuel, !check_combustability())
+			adjust_gas("carbon_dioxide", used_liquid_fuel * 12)
+			adjust_gas("watervapor", used_liquid_fuel * 12)
+			heat_of_combustion += (used_liquid_fuel * LIQUIDFUEL_HEATOFCOMBUSTION)
 
 		//calculate the energy produced by the reaction and then set the new temperature of the mix
-		temperature = (starting_energy + vsc.fire_fuel_energy_release * (used_gas_fuel + used_liquid_fuel)) / heat_capacity()
+		temperature = (starting_energy + heat_of_combustion * (used_gas_fuel + used_liquid_fuel)) / heat_capacity()
 		update_values()
 
 		#ifdef FIREDBG

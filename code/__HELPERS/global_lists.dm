@@ -311,6 +311,10 @@
 	for(var/package_wrap_type as anything in typesof(/datum/package_wrap))
 		global.package_wrap_by_type[package_wrap_type] = new package_wrap_type
 
+	global.smelting_recipes = list()
+	for(var/recipetype as anything in subtypesof(/datum/smelting_recipe))
+		global.smelting_recipes += new recipetype
+
 	init_washing_items_list()
 
 /proc/init_washing_items_list()

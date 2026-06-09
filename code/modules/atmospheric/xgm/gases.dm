@@ -11,6 +11,8 @@
 	//and following a N/Z ratio of 1.5, the molar mass of a monatomic gas is:
 	molar_mass = 0.405	// kg/mol
 
+	heat_of_combustion = 1000000 // J/mol
+
 	tile_overlay = "phoron"
 	overlay_limit = 0.7
 	flags = XGM_GAS_FUEL | XGM_GAS_CONTAMINANT | XGM_GAS_FUSION_FUEL
@@ -59,9 +61,11 @@
 	specific_heat = 100	// J/(mol*K)
 	molar_mass = 0.002	// kg/mol
 
+	heat_of_combustion = 120900 // J/mol
+
 	flags = XGM_GAS_FUEL|XGM_GAS_FUSION_FUEL
 
-	burn_product = "watervapor"
+	burn_product = list("watervapor" = 0.5)
 	knowable = TRUE
 
 /datum/xgm_gas/hydrogen/deuterium
@@ -99,7 +103,23 @@
 	tile_overlay = "fractol"
 	overlay_limit = 0.7
 
+	heat_of_combustion = 500000 // J/mol
+
 	flags = XGM_GAS_OXIDIZER | XGM_GAS_FUSION_FUEL
 	knowable = FALSE
 
-	burn_product = "helium"
+	burn_product = list("helium" = 1)
+
+/datum/xgm_gas/methane
+	id = "methane"
+	name = "Methane"
+
+	specific_heat = 35.7	// J/(mol*K)
+	molar_mass = 0.016	// kg/mol
+
+	heat_of_combustion = 803000 // J/mol
+
+	flags = XGM_GAS_FUEL
+
+	burn_product = list("carbon_dioxide" = 1, "watervapor" = 2)
+	knowable = TRUE

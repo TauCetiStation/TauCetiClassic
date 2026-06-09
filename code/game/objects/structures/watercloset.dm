@@ -54,6 +54,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			COOLDOWN_START(user, wc_use_cooldown, 30 MINUTES)
 			playsound(src, 'sound/effects/toilet_flush.ogg', VOL_EFFECTS_MASTER)
 
+			var/datum/gas_mixture/env = loc.return_air()
+			if(env)
+				env.adjust_gas("methane",  0.0015)
+
 			var/problem_chance = 0.5
 
 			if(HAS_TRAIT(user, TRAIT_FAT))
@@ -70,6 +74,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				broken = TRUE
 				START_PROCESSING(SSobj, src)
 				user.playsound_local_timed(2 SECOND, turf_source = null, soundin = 'sound/misc/s_asshole_short.ogg', volume_channel = VOL_EFFECTS_MASTER, vol = 100, vary = FALSE, ignore_environment = TRUE)
+
+				if(env)
+					env.adjust_gas("methane",  0.005)
 
 				if(HAS_TRAIT(user, TRAIT_CLUMSY))
 					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "clown_evil", /datum/mood_event/clown_evil)

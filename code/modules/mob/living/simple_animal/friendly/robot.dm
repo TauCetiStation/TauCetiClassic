@@ -29,6 +29,9 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 	response_harm   = "kicks the"
 	minbodytemp = 198	// Below -75 Degrees Celcius
 	maxbodytemp = 423	// Above 150 Degrees Celcius
+
+	fart_gas = "hydrogen"
+
 	var/emagged = 0    // Trigger EMAG used
 	var/commandtrigger = 0    // Used command
 	var/act_emag

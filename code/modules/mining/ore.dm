@@ -8,11 +8,56 @@
 	var/points = 0
 	var/refined_type = null //What this ore defaults to being refined into
 
+	var/smelt_progress = 0
+	var/smelt_max = 5
+
 /obj/item/weapon/ore/Crossed(atom/movable/M)
 	if(isliving(M))
 		var/mob/living/L = M
 		if (L.stat == CONSCIOUS && !L.restrained())
 			L.pickup_ore()
+
+/obj/item/weapon/ore/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	var/datum/gas_mixture/env = loc.return_air()
+	if(!env)
+		return
+
+	var/list/found_recipes = list()
+	checking_recipes:
+		for(var/datum/smelting_recipe/recipe in global.smelting_recipes)
+			if(exposed_temperature < recipe.temp)
+				continue
+
+			if(recipe.input != oretag)
+				continue
+
+			for(var/inputgas in recipe.inputgasses)
+				if(!env.get_gas(inputgas) || (env.get_gas(inputgas) < 0.1))
+					continue checking_recipes
+
+			found_recipes += recipe
+
+	if(!found_recipes.len)
+		return
+
+	smelt_progress++
+
+	if(smelt_progress >= smelt_max)
+		var/datum/smelting_recipe/recipe = pick(found_recipes)
+
+		for(var/gas in recipe.inputgasses)
+			env.adjust_gas(gas, -0.1)
+
+		for(var/gas in recipe.outputgasses)
+			env.adjust_gas(gas, 0.1)
+
+		if(recipe.output)
+			var/outputtype = recipe.output
+			new outputtype(loc)
+
+		qdel(src)
+		return
+
 
 /obj/item/weapon/ore/uranium
 	name = "pitchblende"
