@@ -469,11 +469,8 @@
 	if(POSSIBLE_TO_LOAD(something))
 		if(do_after(user, 0.1 SECONDS, FALSE, src))
 			to_chat(user, "You load the [something.name] into the storage compartment.")
-			if(something.loc == user || issilicon(user))
-				user.drop_from_inventory(something, src)
-				something.forceMove(src)
-			else
-				something.forceMove(src)
+			user.drop_from_inventory(something, src)
+			something.forceMove(src)
 			playsound(src, 'sound/misc/robot_close.ogg', VOL_EFFECTS_MASTER, 15)
 	update_icon()
 	return TRUE
