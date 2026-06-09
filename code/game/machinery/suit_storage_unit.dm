@@ -432,7 +432,7 @@
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return FALSE
 
-	if(!opened)
+	if(!opened && allowed(user))
 		toggle_lock(user)
 	else if(POSSIBLE_TO_LOAD(I) || istype(I, /obj/item/weapon/grab))
 		if(istype(I, /obj/item/weapon/grab))
