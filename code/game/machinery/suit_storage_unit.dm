@@ -1,14 +1,15 @@
-#define POSSIBLE_TO_LOAD(something) something && (isspacesuit(something)\
+#define POSSIBLE_TO_LOAD(something) something\
+											&& (isspacesuit(something)\
 											||(isspacehelmet(something) && !ishardhelmet(something))\
 											||isbreathmask(something)\
 											||ismagboots(something)\
 											||istank(something)||iscarbon(something))
 #define IS_LOAD(something, target) (something && target) \
-										&& ((isbreathmask(something) && isbreathmask(target)) \
-										|| (isspacesuit(something) && isspacesuit(target)) \
-										|| (isspacehelmet(something) && isspacehelmet(target))\
-										|| (ismagboots(something) && ismagboots(target)) \
-										|| (istank(something) && istank(target)))
+											&& ((isbreathmask(something) && isbreathmask(target)) \
+											|| (isspacesuit(something) && isspacesuit(target)) \
+											|| (isspacehelmet(something) && isspacehelmet(target))\
+											|| (ismagboots(something) && ismagboots(target)) \
+											|| (istank(something) && istank(target)))
 
 /obj/machinery/suit_storage_unit
 	name = "Suit Storage Unit"
@@ -24,7 +25,7 @@
 	var/build_type = SUIT_STORAGE_BUILD_DEFAULT
 	var/opened = FALSE
 	var/locked = TRUE
-
+	allowed_checks = ALLOWED_CHECK_NONE //disable allowed() check on parent attack_hand, we check allowed on toggle_lock()
 	var/overlay_color = null
 
 	var/list/connectors_overlays = list()
@@ -263,6 +264,9 @@
 		return FALSE
 	if(ultra_violet)
 		return FALSE
+	if(!allowed(user))
+		allowed_fail(user)
+		return FALSE
 	if(stat & (NOPOWER))
 		to_chat(user, "<span class='warning'>The [src] appears to be broken.</span>")
 		return FALSE
@@ -431,12 +435,9 @@
 	if(stat & BROKEN)
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return FALSE
-
-	if(!opened && allowed(user))
+	if(!opened)
 		toggle_lock(user)
 		return
-	else
-		allowed_fail(user)
 
 	if(POSSIBLE_TO_LOAD(I) || istype(I, /obj/item/weapon/grab))
 		if(istype(I, /obj/item/weapon/grab))
