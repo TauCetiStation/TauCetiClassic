@@ -435,6 +435,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	full_w_class = SIZE_TINY
 	merge_type = /obj/item/stack/cable_coil
 
+	var/obj/try_bound
+
 /obj/item/stack/cable_coil/cyborg
 	max_amount = 90
 	m_amt = 0
@@ -487,6 +489,41 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	else
 		return ..()
+
+/obj/item/stack/cable_coil/attack_self(mob/user)
+	if(!user)
+		return FALSE
+
+	try_bound = null
+	return TRUE
+
+/obj/item/stack/cable_coil/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return ..()
+
+	if(!(istype(target, /obj/structure) || istype(target, /obj/machinery)))
+		return ..()
+
+	if(user.is_busy(src) || !do_after(user, 5 SECONDS, target = target))
+		return
+
+	if(!try_bound)
+		try_bound = target
+		to_chat(user, "<span class='warning'>Вы привязали провод к [CASE(try_bound, DATIVE_CASE)].</span>")
+		return
+
+	if(!try_bound.Adjacent(target))
+		try_bound = null
+		to_chat(user, "<span class='warning'>[CASE(try_bound, NOMINATIVE_CASE)] и [CASE(target, NOMINATIVE_CASE)] слишком далеко друг от друга, чтобы их связать проводом.</span>")
+		return
+
+	target.AddComponent(/datum/component/tied, try_bound, /obj/effect/ebeam/cable, "cable", color)
+	use(1)
+	try_bound = null
+
+/obj/effect/ebeam/cable
+	name = "cable"
+	icon_state = "cable"
 
 /obj/item/stack/cable_coil/update_icon()
 	if(amount == 1)

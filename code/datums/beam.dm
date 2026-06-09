@@ -17,9 +17,11 @@
 	var/timing_id = null
 	var/recalculating = FALSE
 
+	var/beam_color
+
 	var/obj/effect/ebeam/visuals //what we add to the ebeam's visual contents. never gets deleted on redrawing.
 
-/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam, beam_sleep_time=3, beam_plane)
+/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam, beam_sleep_time=3, beam_plane, bcolor)
 	origin = beam_origin
 	origin_oldloc =	get_turf(origin)
 	target = beam_target
@@ -32,6 +34,7 @@
 	icon = beam_icon
 	icon_state = beam_icon_state
 	beam_type = btype
+	beam_color = bcolor
 	if(!isnull(beam_plane))
 		plane = beam_plane
 	if(time < INFINITY)
@@ -114,6 +117,8 @@
 		X.owner = src
 		if(plane)
 			X.plane = plane
+		if(beam_color)
+			X.color = beam_color
 		elements += X
 
 		//Assign our single visual ebeam to each ebeam's vis_contents
@@ -169,7 +174,7 @@
 /obj/effect/ebeam/singularity_act()
 	return
 
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3,beam_plane)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time,beam_plane)
+/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3,beam_plane, bcolor)
+	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time,beam_plane, bcolor)
 	INVOKE_ASYNC(newbeam, TYPE_PROC_REF(/datum/beam, Start))
 	return newbeam

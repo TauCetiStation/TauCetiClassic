@@ -370,6 +370,7 @@
 #include "code\datums\components\tactical.dm"
 #include "code\datums\components\talking_atom.dm"
 #include "code\datums\components\teleblock.dm"
+#include "code\datums\components\tied.dm"
 #include "code\datums\components\twohanded.dm"
 #include "code\datums\components\visible_radius.dm"
 #include "code\datums\components\waddle.dm"
