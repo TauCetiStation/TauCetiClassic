@@ -364,27 +364,28 @@ const BodyScannerMainOrgansExternal = (props) => {
                     ])}
                   </Box>
                   {embedded?.map((s, j) => {
-                    if (s.type === 'implant') {
-                      return (
-                        <Box key={j} color="good">
-                          {s.name}
-                        </Box>
-                      );
+                    switch (s.type) {
+                      case 'implant':
+                        return (
+                          <Box key={j} color="good">
+                            {s.name}
+                          </Box>
+                        );
+                      case 'implant_unknown':
+                        return (
+                          <Box key={j} color="average">
+                            Неизвестный имплант
+                          </Box>
+                        );
+                      default:
+                        return (
+                          <Box key={j} color="average">
+                            {s.count > 1
+                              ? `${s.name || 'Инородный объект'} x${s.count}`
+                              : s.name || 'Инородный объект'}
+                          </Box>
+                        );
                     }
-                    if (s.type === 'implant_unknown') {
-                      return (
-                        <Box key={j} color="average">
-                          Неизвестный имплант
-                        </Box>
-                      );
-                    }
-                    return (
-                      <Box key={j} color="average">
-                        {s.count > 1
-                          ? `${s.name || 'Инородный объект'} x${s.count}`
-                          : s.name || 'Инородный объект'}
-                      </Box>
-                    );
                   })}
                   {reduceOrganStatus([
                     !!o.status.splinted && (
