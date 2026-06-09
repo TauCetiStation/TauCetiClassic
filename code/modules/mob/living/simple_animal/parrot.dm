@@ -700,7 +700,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 		":e Мы - инженерр.",
 	)
 	speak_chance = 3
-	var/memory_saved = 0
 	var/rounds_survived = 0
 	var/longest_survival = 0
 	var/longest_deathstreak = 0
@@ -708,7 +707,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 /mob/living/simple_animal/parrot/Poly/atom_init()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)
 	available_channels = list(":e")
-	Read_Memory()
 	if(rounds_survived == longest_survival)
 		speak += pick("...[longest_survival].", "Чего я только не видал!", "Я прожил так много жизней!", "Что ты предо мной?")
 		desc += " Старый как грех, и такой же громкий. Утверждал, что пережил [rounds_survived] [pluralize_russian(rounds_survived, "смену", "смены", "смен")]."
@@ -723,39 +721,49 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 		desc += " Он провел [rounds_survived] [pluralize_russian(rounds_survived, "смену", "смены", "смен")] без \"ужасных\" \"инцидентов\"!"
 	else
 		speak += pick("...я жив?", "Это не птичий ррай!", "Я живу, умирраю, и снова живу!", "Пустота исчезает!")
+
+	if(type == /mob/living/simple_animal/parrot/Poly)
+		AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/poly", list(
+			"phrases" = new /datum/continuity_field/listfield(
+				can_be_null = TRUE,
+				entry_config = new /datum/continuity_field/string(
+					max_length = 150,
+					can_be_null = TRUE
+				)
+			),
+			"roundssurvived" = new /datum/continuity_field/int(
+				min_num = 0
+			),
+			"longestsurvival" = new /datum/continuity_field/int(
+				min_num = 0
+			),
+			"longestdeathstreak" = new /datum/continuity_field/int(
+				min_num = 0
+			),
+		))
+
 	. = ..()
 
-/mob/living/simple_animal/parrot/Poly/Life()
-	if(stat == CONSCIOUS && SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
-		rounds_survived = max(++rounds_survived,1)
-		if(rounds_survived > longest_survival)
-			longest_survival = rounds_survived
-		Write_Memory()
-	..()
-
 /mob/living/simple_animal/parrot/Poly/death(gibbed)
-	if(!memory_saved)
-		var/go_ghost = 0
-		if(rounds_survived == longest_survival || rounds_survived == longest_deathstreak)
-			go_ghost = 1
-		rounds_survived = min(--rounds_survived,0)
-		if(rounds_survived < longest_deathstreak)
-			longest_deathstreak = rounds_survived
-		Write_Memory()
-		if(go_ghost)
-			var/mob/living/simple_animal/parrot/Poly/ghost/G = new(loc)
-			if(mind)
-				mind.transfer_to(G)
-			else
-				G.key = key
+	var/go_ghost = 0
+	if(rounds_survived == longest_survival || rounds_survived == longest_deathstreak)
+		go_ghost = 1
+	rounds_survived = min(--rounds_survived,0)
+	if(rounds_survived < longest_deathstreak)
+		longest_deathstreak = rounds_survived
+	if(go_ghost)
+		var/mob/living/simple_animal/parrot/Poly/ghost/G = new(loc)
+		if(mind)
+			mind.transfer_to(G)
+		else
+			G.key = key
 	..(gibbed)
 
-/mob/living/simple_animal/parrot/Poly/proc/Read_Memory()
-	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
-	S["phrases"] 			>> speech_buffer
-	S["roundssurvived"]		>> rounds_survived
-	S["longestsurvival"]	>> longest_survival
-	S["longestdeathstreak"] >> longest_deathstreak
+/mob/living/simple_animal/parrot/Poly/proc/Read_Memory(list/save_data)
+	speech_buffer = save_data["phrases"]
+	rounds_survived = save_data["roundssurvived"]
+	longest_survival = save_data["longestsurvival"]
+	longest_deathstreak = save_data["longestdeathstreak"]
 
 	if(isnull(speech_buffer))
 		speech_buffer = list()
@@ -764,20 +772,23 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 			speak += pick(speech_buffer)
 
 /mob/living/simple_animal/parrot/Poly/proc/Write_Memory()
-	var/savefile/S = new /savefile("data/npc_saves/Poly.sav")
 	if(length(speech_buffer))
 		for(var/text in speech_buffer)
 			if(!istext(text))
 				speech_buffer = null // omg we somehow corrupted
 
-	S["phrases"] 			<< speech_buffer
-	if(isnum(rounds_survived))
-		S["roundssurvived"]		<< rounds_survived
-	if(isnum(longest_survival))
-		S["longestsurvival"]	<< longest_survival
-	if(isnum(longest_deathstreak))
-		S["longestdeathstreak"] << longest_deathstreak
-	memory_saved = 1
+	rounds_survived = max(++rounds_survived,1)
+	if(rounds_survived > longest_survival)
+		longest_survival = rounds_survived
+
+	var/list/data = list(
+		"phrases" = speech_buffer,
+		"roundssurvived" = rounds_survived,
+		"longestsurvival" = longest_survival,
+		"longestdeathstreak" = longest_deathstreak,
+	)
+
+	return data
 
 /mob/living/simple_animal/parrot/Poly/ghost
 	name = "The Ghost of Poly"
@@ -788,7 +799,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/parrot/Poly, chief_animal_list)
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/ectoplasm = 1)
 
 /mob/living/simple_animal/parrot/Poly/ghost/atom_init()
-	memory_saved = 1 //At this point nothing is saved
 	. = ..()
 	ADD_TRAIT(src, ELEMENT_TRAIT_GODMODE, INNATE_TRAIT)
 

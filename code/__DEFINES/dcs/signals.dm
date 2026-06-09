@@ -448,3 +448,7 @@
 	#define COMPONENT_CLIENT_MOUSEUP_INTERCEPT (1<<0)
 //from base of client/MouseUp(): (/client, object, location, control, params)
 #define COMSIG_CLIENT_MOUSEDRAG "client_mousedrag"
+
+
+// send this signal to preemtively save a continuity object
+#define COMSIG_CONTINUITY_SAVE "continuity_save"

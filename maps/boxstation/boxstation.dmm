@@ -5079,6 +5079,10 @@
 "aix" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/reagent_containers/food/drinks/flask/barflask,
+/obj/structure/picture_frame/wooden{
+	pixel_y = -30;
+	continuity_tag = "hos"
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -11081,6 +11085,10 @@
 	pixel_y = -8
 	},
 /obj/effect/decal/turf_decal/set_damaged,
+/obj/structure/picture_frame/metal{
+	pixel_x = -28;
+	continuity_tag = "library"
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "asr" = (
@@ -12252,6 +12260,10 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/structure/picture_frame/wooden{
+	pixel_x = 28;
+	continuity_tag = "bar"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "dark"
@@ -12474,10 +12486,10 @@
 	pixel_x = -28
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/painting_frame{
+/obj/item/weapon/picture_frame/wooden{
 	pixel_y = -10
 	},
-/obj/item/painting_frame{
+/obj/item/weapon/picture_frame/wooden{
 	pixel_y = -10
 	},
 /obj/item/stack/sheet/cloth{
@@ -15830,9 +15842,9 @@
 	dir = 4;
 	network = list("SS13","Engineering")
 	},
-/obj/machinery/windowtint{
-	id = "CE";
-	pixel_x = -28
+/obj/structure/picture_frame/wooden{
+	pixel_x = -28;
+	continuity_tag = "ce"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -25403,9 +25415,9 @@
 /area/station/rnd/hor)
 "aSU" = (
 /obj/structure/closet/secure_closet/RD,
-/obj/machinery/windowtint{
-	id = "RD";
-	pixel_x = 28
+/obj/structure/picture_frame/wooden{
+	pixel_x = 28;
+	continuity_tag = "rd"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -26995,6 +27007,11 @@
 /obj/machinery/light_switch{
 	pixel_x = -22
 	},
+/obj/machinery/windowtint{
+	id = "CE";
+	pixel_x = -22;
+	pixel_y = 10
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkyellow"
@@ -27986,6 +28003,11 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/machinery/windowtint{
+	id = "CMO";
+	pixel_y = 9;
+	pixel_x = -27
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -28085,6 +28107,11 @@
 	dir = 4;
 	name = "RnD right APC";
 	pixel_x = 27
+	},
+/obj/machinery/windowtint{
+	id = "RD";
+	pixel_x = -10;
+	pixel_y = -28
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -29440,6 +29467,10 @@
 /obj/item/weapon/coin/silver{
 	pixel_x = -8;
 	pixel_y = -2
+	},
+/obj/structure/picture_frame/wooden{
+	pixel_y = -30;
+	continuity_tag = "qm"
 	},
 /turf/simulated/floor{
 	icon_state = "brown"
@@ -31417,6 +31448,11 @@
 /obj/structure/stool/bed/chair/comfy/brown,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
@@ -33601,6 +33637,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/structure/picture_frame/wooden{
+	pixel_y = -30;
+	continuity_tag = "captain"
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -38416,6 +38456,10 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/machinery/light_switch{
+	pixel_y = -27;
+	pixel_x = 11
+	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "bpT" = (
@@ -42665,8 +42709,9 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/machinery/newscaster{
-	pixel_x = 32
+/obj/structure/picture_frame/wooden{
+	pixel_x = 28;
+	continuity_tag = "bar"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -43613,6 +43658,9 @@
 /obj/item/newtons_pendulum,
 /obj/item/weapon/book/manual/wiki/possible_threats{
 	pixel_x = 6
+	},
+/obj/item/portrait/captain{
+	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -46710,13 +46758,12 @@
 /turf/simulated/floor/carpet/purple,
 /area/station/civilian/theatre)
 "bEt" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+/obj/effect/decal/turf_decal/set_damaged,
+/obj/machinery/light_switch{
+	pixel_y = 28
 	},
-/turf/simulated/floor/carpet/green,
-/area/station/medical/psych)
+/turf/simulated/floor/wood,
+/area/station/civilian/chapel)
 "bEu" = (
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
@@ -46907,6 +46954,9 @@
 "bEM" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 8
+	},
+/obj/machinery/newscaster{
+	pixel_y = -28
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -48618,8 +48668,9 @@
 "bHH" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk,
-/obj/item/portrait/captain{
-	pixel_y = 32
+/obj/structure/picture_frame/wooden{
+	pixel_y = 28;
+	continuity_tag = "hop"
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -49680,6 +49731,9 @@
 "bJF" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/turf_decal/religion_emblem,
+/obj/machinery/alarm{
+	pixel_y = 24
+	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/chapel)
 "bJG" = (
@@ -51992,10 +52046,11 @@
 "bNL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/painting{
-	pixel_x = 30
-	},
 /obj/effect/decal/turf_decal/set_damaged,
+/obj/structure/picture_frame/metal{
+	pixel_x = 28;
+	continuity_tag = "library"
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bNM" = (
@@ -53168,15 +53223,6 @@
 	icon_state = "neutral"
 	},
 /area/station/civilian/dormitories)
-"bPQ" = (
-/obj/machinery/light/smart{
-	dir = 1
-	},
-/obj/machinery/light_switch{
-	pixel_y = 28
-	},
-/turf/simulated/floor/wood,
-/area/station/civilian/chapel)
 "bPR" = (
 /obj/structure/disposaloutlet{
 	dir = 1
@@ -53653,10 +53699,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "bQH" = (
-/obj/structure/sign/painting{
-	pixel_y = -30
-	},
 /obj/effect/decal/turf_decal/set_damaged,
+/obj/structure/picture_frame/metal{
+	pixel_y = -30;
+	continuity_tag = "library"
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bQI" = (
@@ -55384,14 +55431,6 @@
 	icon_state = "cautioncorner"
 	},
 /area/station/engineering/monitoring)
-"bVy" = (
-/obj/structure/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/carpet/green,
-/area/station/medical/psych)
 "bVA" = (
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
@@ -55956,16 +55995,16 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "bWV" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 10
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
@@ -57001,6 +57040,11 @@
 	pixel_x = -8;
 	pixel_y = 10
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "cap" = (
@@ -57553,9 +57597,12 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/psychiatrist,
-/obj/machinery/light_switch{
-	pixel_y = -27
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "default 4000k";
+	name = "4000k apc down";
+	pixel_y = -28
 	},
+/obj/structure/cable,
 /turf/simulated/floor/wood,
 /area/station/medical/psych)
 "ccN" = (
@@ -68808,6 +68855,10 @@
 	dir = 1
 	},
 /obj/machinery/light/smart,
+/obj/structure/picture_frame/wooden{
+	pixel_y = -30;
+	continuity_tag = "psych"
+	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "cJo" = (
@@ -69155,11 +69206,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "cKK" = (
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	custom_smartlight_preset = "default 4000k";
-	name = "4000k apc down";
-	pixel_y = -28
+/obj/structure/picture_frame/wooden{
+	pixel_y = -30;
+	continuity_tag = "psych"
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
@@ -69421,8 +69470,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/easel,
 /obj/effect/decal/cleanable/cobweb2,
-/obj/structure/sign/painting{
-	pixel_y = 30
+/obj/structure/picture_frame/metal{
+	pixel_y = 28;
+	continuity_tag = "library"
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
@@ -71641,11 +71691,12 @@
 /turf/simulated/floor/grass,
 /area/station/civilian/garden)
 "eCz" = (
-/obj/machinery/alarm{
-	pixel_y = 24
-	},
 /obj/machinery/light/smart{
 	dir = 1
+	},
+/obj/structure/picture_frame/metal{
+	pixel_y = 28;
+	continuity_tag = "church"
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/chapel)
@@ -82117,9 +82168,9 @@
 	network = list("SS13","Medical")
 	},
 /obj/structure/closet/secure_closet/CMO,
-/obj/machinery/windowtint{
-	id = "CMO";
-	pixel_y = 28
+/obj/structure/picture_frame/wooden{
+	pixel_y = 28;
+	continuity_tag = "cmo"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -129894,9 +129945,9 @@ lZb
 lXb
 aVd
 bJm
-bVy
-bEt
-bEt
+bEi
+bEi
+bEi
 cKK
 bMF
 bBy
@@ -130411,7 +130462,7 @@ bJm
 bXS
 cEm
 bEi
-bEi
+cKK
 bMF
 bBy
 cLu
@@ -136273,9 +136324,9 @@ aON
 aUJ
 bHk
 aLY
-aLY
+bHm
 aKv
-avm
+bEt
 ePF
 bsw
 bjx
@@ -136530,9 +136581,9 @@ aOi
 aWn
 aXI
 dOK
-bHm
+aLY
 aKv
-bPQ
+eCz
 bMe
 pkf
 bsd
