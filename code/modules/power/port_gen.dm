@@ -134,7 +134,7 @@
 			return FALSE
 
 	var/has_fuel = sheets + sheet_left
-	var/fuel_usage_rate = seconds_per_sheet * efficiency / power_output
+	var/fuel_usage_rate = 1 / (seconds_per_sheet * efficiency / power_output)
 
 	if(has_fuel >= fuel_usage_rate)
 		return TRUE
