@@ -434,7 +434,11 @@
 
 	if(!opened && allowed(user))
 		toggle_lock(user)
-	else if(POSSIBLE_TO_LOAD(I) || istype(I, /obj/item/weapon/grab))
+		return
+	else
+		allowed_fail(user)
+
+	if(POSSIBLE_TO_LOAD(I) || istype(I, /obj/item/weapon/grab))
 		if(istype(I, /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/grab = I
 			if(!ismob(grab.affecting) || grab.state < GRAB_AGGRESSIVE)
