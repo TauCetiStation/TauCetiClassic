@@ -51,7 +51,7 @@ const mapTwoByTwo = (a, c) => {
   return result;
 };
 
-const aggregateImplants = (items) => {
+const aggregateEmbedded = (items) => {
   if (!items) return items;
   const result = [];
   const foreignMap = {};
@@ -289,7 +289,7 @@ const BodyScannerMainOrgansExternal = (props) => {
           <Table.Cell textAlign="right">Дополнительные сведения</Table.Cell>
         </Table.Row>
         {props.organs.map((o, i) => {
-          const implants = aggregateImplants(o.implant);
+          const embedded = aggregateEmbedded(o.embedded);
           return (
             <Table.Row
               key={i}
@@ -306,7 +306,7 @@ const BodyScannerMainOrgansExternal = (props) => {
                     !!o.status.broken ||
                     !!o.open ||
                     !!o.germ_level ||
-                    !!o.unknown_implant) &&
+                    !!o.has_foreign) &&
                     'average') ||
                   (!!o.status.robotic && 'label')
                 }
@@ -363,23 +363,23 @@ const BodyScannerMainOrgansExternal = (props) => {
                       !!o.open && 'Открытый разрез',
                     ])}
                   </Box>
-                  {implants?.map((s, i) => {
+                  {embedded?.map((s, j) => {
                     if (s.type === 'implant') {
                       return (
-                        <Box key={i} color="good">
+                        <Box key={j} color="good">
                           {s.name}
                         </Box>
                       );
                     }
                     if (s.type === 'implant_unknown') {
                       return (
-                        <Box key={i} color="average">
+                        <Box key={j} color="average">
                           Неизвестный имплант
                         </Box>
                       );
                     }
                     return (
-                      <Box key={i} color="average">
+                      <Box key={j} color="average">
                         {s.count > 1
                           ? `${s.name || 'Инородный объект'} x${s.count}`
                           : s.name || 'Инородный объект'}

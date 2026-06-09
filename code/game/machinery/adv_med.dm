@@ -220,8 +220,8 @@
 			organData["stump"] = E.is_stump
 
 			var/list/embed_info = get_embedded_data(E)
-			organData["implant"] = embed_info["items"]
-			organData["unknown_implant"] = embed_info["has_unknown"]
+			organData["embedded"] = embed_info["items"]
+			organData["has_foreign"] = embed_info["has_foreign"]
 
 			var/list/organStatus = list()
 			if(E.status & ORGAN_BROKEN)
@@ -286,7 +286,7 @@
 
 /obj/machinery/body_scanconsole/proc/get_embedded_data(obj/item/organ/external/BP)
 	var/list/items = list()
-	var/has_unknown = FALSE
+	var/has_foreign = FALSE
 
 	for(var/obj/I in BP.embedded_objects)
 		var/list/entry = list()
@@ -298,11 +298,11 @@
 			else
 				entry["type"] = "implant_unknown"
 				entry["name"] = null
-				has_unknown = TRUE
+				has_foreign = TRUE
 		else
 			entry["type"] = "foreign"
 			entry["name"] = C_CASE(I, NOMINATIVE_CASE)
-			has_unknown = TRUE
+			has_foreign = TRUE
 
 		items.Add(list(entry))
 
@@ -311,9 +311,9 @@
 		entry["type"] = "foreign"
 		entry["name"] = C_CASE(BP.hidden, NOMINATIVE_CASE)
 		items.Add(list(entry))
-		has_unknown = TRUE
+		has_foreign = TRUE
 
-	return list("items" = items, "has_unknown" = has_unknown)
+	return list("items" = items, "has_foreign" = has_foreign)
 
 /obj/machinery/body_scanconsole/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
