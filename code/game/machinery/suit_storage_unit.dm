@@ -384,9 +384,8 @@
 		return
 	opened ? close() : open(user)
 
-/obj/machinery/suit_storage_unit/attack_hand(mob/user)
-	add_fingerprint(user)
-	user.SetNextMove(CLICK_CD_RAPID)
+/obj/machinery/suit_storage_unit/interact(mob/user)
+	..()
 	if(ultra_violet)
 		return FALSE
 	if(stat & BROKEN)
@@ -534,6 +533,7 @@
 			place_occupant(usr, usr)
 
 #undef POSSIBLE_TO_LOAD
+#undef IS_LOAD
 
 //The units themselves
 //unit for unit tests
