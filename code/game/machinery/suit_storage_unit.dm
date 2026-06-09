@@ -263,9 +263,6 @@
 		return FALSE
 	if(ultra_violet)
 		return FALSE
-	if(!allowed(user))
-		to_chat(user, "<span class='notice'>Access Denied</span>")
-		return FALSE
 	if(stat & (NOPOWER))
 		to_chat(user, "<span class='warning'>The [src] appears to be broken.</span>")
 		return FALSE
