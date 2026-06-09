@@ -7,7 +7,8 @@
 
 /obj/structure/easel
 	name = "easel"
-	desc = "Only for the finest of art!"
+	cases = list("мольберт", "мольберта", "мольберту", "мольберт", "мольбертом", "мольберте")
+	desc = "Что нам стоит отсек построить - нарисуем, будем жить!"
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "easel"
 	density = TRUE
@@ -26,13 +27,14 @@
 		painting.easel = src
 		canvas.forceMove(get_turf(src))
 		canvas.layer = layer + 0.1
-		user.visible_message("<span class='notice'>[user] puts \the [canvas] on \the [src].</span>", "<span class='notice'>You place \the [canvas] on \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] ставит [CASE(canvas, ACCUSATIVE_CASE)] на [CASE(src, ACCUSATIVE_CASE)].</span>", "<span class='notice'>Вы ставите [CASE(canvas, ACCUSATIVE_CASE)] на [CASE(src, ACCUSATIVE_CASE)].</span>")
 	else
 		return ..()
 
 /obj/item/canvas
 	name = "canvas"
-	desc = "Draw out your soul on this canvas!"
+	cases = list("холст", "холста", "холсту", "холст", "холстом", "холсте")
+	desc = "Излей всю душу на холст!"
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "11x11"
 	w_class = SIZE_NORMAL
@@ -58,18 +60,13 @@
 	pixel_x = 10
 	pixel_y = 9
 
-	var/list/fill_mask = list(
-							  				list(0, -1),
-							  list(-1, 0),               list(1, 0),
-							  				list(0, 1)
-							)
+	var/alist/fill_mask = alist(
+							  				NORTH = list(0, -1),
+							  WEST = list(-1, 0),               EAST = list(1, 0),
+							  				SOUTH = list(0, 1)
+							) //mask for fill function
 
-	var/list/draw_mask = list(
-							  list(-1, -1), list(0, -1), list(1, -1),
-							  list(-1, 0),               list(1, 0),
-							  list(-1, 1),  list(0, 1),  list(1, 1)
-							)
-	var/draw_size = 1
+	var/draw_size = 0
 
 
 //Stick to the easel like glue
@@ -106,6 +103,9 @@
 
 /obj/item/canvas/ui_interact(mob/user, datum/tgui/ui)
 	tgui_interact(user)
+
+/obj/item/canvas/proc/show(mob/user)
+	ui_interact(user)
 
 /obj/item/canvas/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -149,7 +149,7 @@
 				return
 
 			if(!color)
-				to_chat(user, "<span class='notice'>After looking at this particular dot on canvas, you can surely say it's color encoding is: [grid[x][y]].</span>")
+				to_chat(user, "<span class='notice'>После долгого рассматривания этой точки на [CASE(src, PREPOSITIONAL_CASE)], вы с точностью можете сказать, что её цвет: [grid[x][y]].</span>")
 				return FALSE
 
 			switch(button_type)
@@ -170,7 +170,7 @@
 
 		if("change_size")
 			var/new_size = text2num(params["size"])
-			draw_size = clamp(new_size, 1, 3)
+			draw_size = clamp(new_size, 0, 2)
 			. = TRUE
 
 		if("finalize")
@@ -178,21 +178,14 @@
 			. = TRUE
 			finalize(user)
 
-/obj/item/canvas/proc/draw_grid(x, y, color, iterator)
-	iterator--
-	grid[x][y] = color
-	if(iterator <= 0)
-		return
-
-	for(var/mask in draw_mask)
-		var/new_x = x + mask[1]
-		var/new_y = y + mask[2]
-		if(!check_in_grid(new_x, new_y)) continue
-
-		draw_grid(new_x, new_y, color, iterator)
+/obj/item/canvas/proc/draw_grid(x, y, color, pen_size)
+	for(var/x_offset in -pen_size to pen_size)
+		for(var/y_offset in -pen_size to pen_size)
+			if(!check_in_grid(x + x_offset, y + y_offset)) continue
+			grid[x + x_offset][y + y_offset] = color
 
 /obj/item/canvas/proc/fill_grid(x, y, color, background_color)
-	var/list/cells_to_check = list(list(x, y))
+	var/list/cells_to_check = list(list(x, y, null))
 	grid[x][y] = color
 
 	for(var/i in 1 to 1000)
@@ -203,14 +196,16 @@
 
 		var/iterate_x = cell[1]
 		var/iterate_y = cell[2]
+		var/bad_dir = cell[3]
 
-		for(var/mask in fill_mask)
+		for(var/check_dir in (global.cardinal - bad_dir))
+			var/mask = fill_mask[check_dir]
 			var/new_x = iterate_x + mask[1]
 			var/new_y = iterate_y + mask[2]
 			if(!check_in_grid(new_x, new_y)) continue
 			if(grid[new_x][new_y] != background_color) continue
 			grid[new_x][new_y] = color
-			cells_to_check += list(list(new_x, new_y))
+			cells_to_check += list(list(new_x, new_y, reverse_dir[check_dir]))
 
 /obj/item/canvas/proc/check_in_grid(x, y)
 	return (x >= 1) && (x <= width) && (y >= 1) && (y <= height)

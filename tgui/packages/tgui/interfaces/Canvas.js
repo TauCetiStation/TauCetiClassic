@@ -108,8 +108,8 @@ export const Canvas = (props, context) => {
               <Slider
                 width="50%"
                 value={data.draw_size}
-                minValue={1}
-                maxValue={3}
+                minValue={0}
+                maxValue={2}
                 step={1}
                 stepPixelSize={50}
                 onChange={(_e, value) => {

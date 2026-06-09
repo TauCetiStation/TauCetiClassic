@@ -9,12 +9,15 @@
 	icon = 'icons/obj/artstuff.dmi'
 	icon_state = "wooden_frame"
 	w_class = SIZE_TINY
-	var/obj/item/displayed
+	var/datum/weakref/displayed_weakref
 	var/frame_type = /obj/structure/picture_frame/wooden
 
 /obj/item/weapon/picture_frame/Destroy()
 	. = ..()
-	QDEL_NULL(displayed)
+	if(displayed_weakref)
+		var/obj/item/I = displayed_weakref?.resolve()
+		QDEL_NULL(I)
+		displayed_weakref = null
 
 /obj/item/weapon/picture_frame/wooden
 	name = "wooden picture frame"
@@ -27,18 +30,23 @@
 
 /obj/item/weapon/picture_frame/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/photo) || istype(I, /obj/item/canvas))
-		if(!displayed)
-			if(istype(I, /obj/item/canvas))
-				var/obj/item/canvas/Canvas = I
-				if(!Canvas.finalized)
-					return
-			user.unEquip(I)
-			I.forceMove(src)
-			displayed = I
-			update_icon()
-		else
-			to_chat(user, "<span class='notice'>\The [src] already contains a picture.</span>")
+		if(displayed_weakref)
+			to_chat(user, "<span class='notice'>[C_CASE(src, NOMINATIVE_CASE)] не пуста.</span>")
+			return
+
+		if(istype(I, /obj/item/canvas))
+			var/obj/item/canvas/Canvas = I
+			if(!Canvas.finalized)
+				to_chat(user, "<span class='notice'>[C_CASE(Canvas, NOMINATIVE_CASE)] не завершён.</span>")
+				return
+
+		if(!user.drop_from_inventory(I, src))
+			return ..()
+
+		displayed_weakref = WEAKREF(I)
+		update_icon()
 		return
+
 	if(iswrenching(I))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		if(frame_type == /obj/structure/picture_frame/wooden)
@@ -49,46 +57,49 @@
 			C.forceMove(get_turf(src))
 		qdel(src)
 		return
+
 	return ..()
 
 /obj/item/weapon/picture_frame/attack_hand(mob/user)
 	if(user.r_hand == src || user.l_hand == src)
-		if(displayed)
-			var/obj/item/I = displayed
-			user.put_in_hands(I)
-			to_chat(user, "<span class='notice'>You carefully remove the picture from \the [src].</span>")
-			displayed = null
-			update_icon()
-			return
+		var/obj/item/I = displayed_weakref?.resolve()
+		if(!I)
+			return ..()
+		if(!user.put_in_hands(I))
+			return ..()
+
+		to_chat(user, "<span class='notice'>Вы аккуратно достаёте [CASE(src, ACCUSATIVE_CASE)] из [CASE(src, GENITIVE_CASE)].</span>")
+		displayed_weakref = null
+		update_icon()
+		return
 	..()
 
 /obj/item/weapon/picture_frame/attack_self(mob/user)
 	user.examinate(src)
 
 /obj/item/weapon/picture_frame/examine(mob/user)
-	if((user.r_hand == src || user.l_hand == src) && displayed)
-		if(istype(displayed, /obj/item/canvas))
-			var/obj/item/canvas/Canvas = displayed
-			Canvas.ui_interact(user)
-		else
-			var/obj/item/weapon/photo/Photo = displayed
-			Photo.show(user)
+	var/obj/item/canvas/Canvas = displayed_weakref?.resolve()
+	if(Canvas && (user.r_hand == src || user.l_hand == src))
+		Canvas.show(user)
 	else
 		..()
 
 /obj/item/weapon/picture_frame/update_icon()
 	cut_overlays()
 	icon_state = initial(icon_state)
-	if(displayed)
-		if(istype(displayed, /obj/item/canvas))
-			var/obj/item/canvas/Canvas = displayed
-			icon_state = "[initial(icon_state)]_[Canvas.width]x[Canvas.height]"
-			var/mutable_appearance/MA = mutable_appearance(Canvas.generated_icon)
-			MA.pixel_x = Canvas.framed_offset_x
-			MA.pixel_y = Canvas.framed_offset_y
-			add_overlay(MA)
-		else
-			add_overlay(image(displayed.icon, "photo"))
+	if(!displayed_weakref)
+		return
+
+	var/obj/item/I = displayed_weakref?.resolve()
+	if(istype(I, /obj/item/canvas))
+		var/obj/item/canvas/Canvas = I
+		icon_state = "[initial(icon_state)]_[Canvas.width]x[Canvas.height]"
+		var/mutable_appearance/MA = mutable_appearance(Canvas.generated_icon)
+		MA.pixel_x = Canvas.framed_offset_x
+		MA.pixel_y = Canvas.framed_offset_y
+		add_overlay(MA)
+	else
+		add_overlay(image(I.icon, "photo"))
 
 /obj/item/weapon/picture_frame/proc/try_build(turf/on_wall)
 	if (!Adjacent(on_wall))
@@ -99,24 +110,24 @@
 	var/turf/T = get_turf(usr)
 	var/area/A = get_area(T)
 	if(!isfloorturf(T))
-		to_chat(usr, "<span class='warning'>You cannot place [src] on this spot!</span>")
+		to_chat(usr, "<span class='warning'>Сюда нельзя повесить [CASE(src, ACCUSATIVE_CASE)].</span>")
 		return
 
 	if(A.always_unpowered)
-		to_chat(usr, "<span class='warning'>You cannot place [src] in this area!</span>")
+		to_chat(usr, "<span class='warning'>Сюда нельзя повесить [CASE(src, ACCUSATIVE_CASE)].</span>")
 		return
 
 	if(gotwallitem(T, ndir))
-		to_chat(usr, "<span class='warning'>There's already an item on this wall!</span>")
+		to_chat(usr, "<span class='warning'>Сюда нельзя повесить [CASE(src, ACCUSATIVE_CASE)].</span>")
 		return
 
 
 	var/obj/structure/picture_frame/PF = new frame_type(T, reverse_dir[ndir], 1)
-	if(displayed)
-		var/obj/item/I = displayed
-		displayed = null
+	if(displayed_weakref)
+		var/obj/item/I = displayed_weakref?.resolve()
+		displayed_weakref = null
 		I.forceMove(PF)
-		PF.framed = I
+		PF.framed_weakref = WEAKREF(I)
 	PF.set_dir(ndir)
 	PF.update_icon()
 	PF.update_name()
@@ -133,9 +144,8 @@
 	max_integrity = 50
 	resistance_flags = CAN_BE_HIT
 
-	var/obj/item/framed
+	var/datum/weakref/framed_weakref
 	var/frame_type = /obj/item/weapon/picture_frame/wooden
-	var/screwed = FALSE
 
 /obj/structure/picture_frame/atom_init(mapload, ndir, building = 0)
 	. = ..()
@@ -146,7 +156,10 @@
 
 /obj/structure/picture_frame/Destroy()
 	. = ..()
-	QDEL_NULL(framed)
+	if(framed_weakref)
+		var/obj/item/I = framed_weakref?.resolve()
+		QDEL_NULL(I)
+		framed_weakref = null
 
 /obj/structure/picture_frame/wooden
 	name = "wooden picture frame"
@@ -159,35 +172,37 @@
 	max_integrity = 100
 
 /obj/structure/picture_frame/examine(mob/user)
-	if(in_range(src, user) && framed)
-		if(istype(framed, /obj/item/canvas))
-			var/obj/item/canvas/Canvas = framed
-			Canvas.ui_interact(user)
-		else
-			var/obj/item/weapon/photo/Photo = framed
-			Photo.show(user)
+	var/obj/item/canvas/Canvas = framed_weakref?.resolve()
+	if(Canvas && in_range(src, user))
+		Canvas.show(user)
 	else
 		..()
 
 /obj/structure/picture_frame/attackby(obj/item/weapon/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/photo) || istype(O, /obj/item/canvas))
-		if(!framed)
-			if(istype(O, /obj/item/canvas))
-				var/obj/item/canvas/Canvas = O
-				if(!Canvas.finalized)
-					return
-			user.unEquip(O)
-			O.forceMove(src)
-			framed = O
-			update_icon()
-			update_name()
-		else
-			to_chat(user, "<span class='notice'>\The [src] already contains a picture.</span>")
+		if(framed_weakref)
+			to_chat(user, "<span class='notice'>[C_CASE(src, NOMINATIVE_CASE)] не пуста.</span>")
+			return
+
+		if(istype(O, /obj/item/canvas))
+			var/obj/item/canvas/Canvas = O
+			if(!Canvas.finalized)
+				to_chat(user, "<span class='notice'>[C_CASE(Canvas, NOMINATIVE_CASE)] не завершён.</span>")
+				return
+
+		if(!user.drop_from_inventory(O, src))
+			return
+
+		framed_weakref = WEAKREF(O)
+		update_icon()
+		update_name()
 		return
+
 	if(iswrenching(O))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		deconstruct(TRUE, user)
 		return
+
 	else
 		..()
 
@@ -213,17 +228,19 @@
 
 /obj/structure/picture_frame/deconstruct(disassembled, mob/living/user)
 	var/turf/T = get_turf(user || loc)
-	if(framed && (flags & NODECONSTRUCT || !disassembled))
-		framed.forceMove(T)
-		framed = null
+	if(framed_weakref && (flags & NODECONSTRUCT || !disassembled))
+		var/obj/item/I = framed_weakref?.resolve()
+		I.forceMove(T)
+		framed_weakref = null
 	if(flags & NODECONSTRUCT)
 		return ..()
 	if(disassembled)
 		var/obj/item/weapon/picture_frame/F = new frame_type(T)
-		if(framed)
-			F.displayed = framed
-			framed.forceMove(F)
-			framed = null
+		if(framed_weakref)
+			var/obj/item/I = framed_weakref?.resolve()
+			F.displayed_weakref = WEAKREF(I)
+			I.forceMove(F)
+			framed_weakref = null
 		F.update_icon()
 		if(user && !issilicon(user))
 			user.put_in_hands(F)
@@ -235,30 +252,32 @@
 	..()
 
 /obj/structure/picture_frame/attack_hand(mob/user)
-	if(framed)
+	if(framed_weakref)
 		user.examinate(src)
 
 /obj/structure/picture_frame/update_icon()
 	cut_overlays()
 	icon_state = initial(icon_state)
-	if(framed)
+	if(framed_weakref)
+		var/obj/item/I = framed_weakref?.resolve()
 		var/mutable_appearance/MA
-		if(istype(framed, /obj/item/canvas))
-			var/obj/item/canvas/Canvas = framed
+		if(istype(I, /obj/item/canvas))
+			var/obj/item/canvas/Canvas = I
 			icon_state = "[initial(icon_state)]_[Canvas.width]x[Canvas.height]"
 			MA = mutable_appearance(Canvas.generated_icon)
 			MA.pixel_x = Canvas.framed_offset_x
 			MA.pixel_y = Canvas.framed_offset_y
 		else
-			MA = mutable_appearance(framed.icon, "photo")
+			MA = mutable_appearance(I.icon, "photo")
 		add_overlay(MA)
 
 /obj/structure/picture_frame/proc/update_name()
-	if(framed)
-		if(istype(framed, /obj/item/canvas))
-			var/obj/item/canvas/Canvas = framed
+	if(framed_weakref)
+		var/obj/item/I = framed_weakref?.resolve()
+		if(istype(I, /obj/item/canvas))
+			var/obj/item/canvas/Canvas = I
 			name = "painting - [Canvas.painting_name]"
 		else
-			name = "photo - [framed.name]"
+			name = "photo - [I.name]"
 	else
 		name = initial(name)
