@@ -523,7 +523,7 @@
 		data["occupant"] = list(
 			"name" = connected.occupant.name,
 			"stat" = connected.occupant.stat,
-			"isViableSubject" = !(NOCLONE in connected.occupant.mutations && connected.scan_level != 3),
+			"isViableSubject" = !((NOCLONE in connected.occupant.mutations) && connected.scan_level != 3),
 			"health" = connected.occupant.health,
 			"maxHealth" = connected.occupant.maxHealth,
 			"minHealth" = config.health_threshold_dead,
