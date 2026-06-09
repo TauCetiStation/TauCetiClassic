@@ -779,7 +779,7 @@
 		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks, target)
 
 		if(ismob(target))
-			if(!do_mob(user, target, delay, extra_checks = tool_check))
+			if(!do_mob(user, target, delay, extra_checks = tool_check, particle_type = particle_use_type))
 				return
 
 		else
