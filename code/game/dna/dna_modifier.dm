@@ -338,7 +338,8 @@
 	return arr
 
 /obj/machinery/computer/scan_consolenew/proc/start_irradiate(duration, action_type, buffer_id = 0)
-	if(!(action_type in list("pulseRadiation", "pulseUIRadiation", "pulseSERadiation", "transfer")))
+	var/static/list/valid_radiate_keys = list("pulseRadiation", "pulseUIRadiation", "pulseSERadiation", "transfer")
+	if(!(action_type in valid_radiate_keys))
 		audible_message("<span class='warning'>Something went wrong during irradiation process! Please contact technical support.</span>")
 		return
 
