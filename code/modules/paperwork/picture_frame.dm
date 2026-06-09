@@ -147,12 +147,85 @@
 	var/datum/weakref/framed_weakref
 	var/frame_type = /obj/item/weapon/picture_frame/wooden
 
+	var/continuity_tag
+
 /obj/structure/picture_frame/atom_init(mapload, ndir, building = 0)
 	. = ..()
 	if(building)
 		pixel_x = (ndir & 3)? 0 : (ndir == 4 ? 28 : -28)
 		pixel_y = (ndir & 3)? (ndir == 1 ? 28 : -30) : 0
 	update_icon()
+
+	if(mapload && continuity_tag)
+		AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/objects/picture_frames/[SSmapping.config.map_name]/[continuity_tag]", list(
+			"canvas_size" = new /datum/continuity_field/string(
+				in_list = list("11x11", "19x19", "23x19", "23x23", null)
+			),
+			"canvas_grid" = new /datum/continuity_field/listfield(
+				can_be_null = TRUE,
+				entry_config = new /datum/continuity_field/listfield(
+					entry_config = new /datum/continuity_field/string(
+						regex = @"^#[0-9a-f]{6}$"
+					)
+				)
+			),
+			"canvas_name" = new /datum/continuity_field/string(
+				can_be_null = TRUE,
+				max_length = 100
+			),
+		))
+
+/obj/structure/picture_frame/proc/Read_Memory(list/save_data)
+	var/can_size = save_data["canvas_size"]
+	var/can_grid = save_data["canvas_grid"]
+	var/can_name = save_data["canvas_name"]
+
+	if(!(can_size && can_grid))
+		return
+
+	var/canvas_type = /obj/item/canvas/twentythree_twentythree
+	switch(can_size)
+		if("11x11")
+			canvas_type = /obj/item/canvas
+		if("19x19")
+			canvas_type = /obj/item/canvas/nineteen_nineteen
+		if("23x19")
+			canvas_type = /obj/item/canvas/twentythree_nineteen
+		if("23x23")
+			canvas_type = /obj/item/canvas/twentythree_twentythree
+
+	var/obj/item/canvas/Canvas = new canvas_type
+	Canvas.grid = can_grid
+	Canvas.painting_name = can_name
+	Canvas.finalized = TRUE
+	Canvas.generate_proper_overlay()
+
+	Canvas.forceMove(src)
+	framed_weakref = WEAKREF(Canvas)
+	update_icon()
+	update_name()
+
+
+/obj/structure/picture_frame/proc/Write_Memory()
+	var/list/data = list(
+		"canvas_size" = null,
+		"canvas_grid" = null,
+		"canvas_name" = null,
+	)
+
+	if(!framed_weakref)
+		return data
+
+	var/obj/item/I = framed_weakref?.resolve()
+	if(!istype(I, /obj/item/canvas))
+		return data
+
+	var/obj/item/canvas/Canvas = I
+	data["canvas_size"] = "[Canvas.width]x[Canvas.height]"
+	data["canvas_grid"] = Canvas.grid
+	data["canvas_name"] = Canvas.painting_name
+
+	return data
 
 /obj/structure/picture_frame/Destroy()
 	. = ..()
