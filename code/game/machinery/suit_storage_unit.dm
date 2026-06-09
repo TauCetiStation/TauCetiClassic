@@ -469,7 +469,7 @@
 	if(POSSIBLE_TO_LOAD(something))
 		if(do_after(user, 0.1 SECONDS, FALSE, src))
 			to_chat(user, "You load the [something.name] into the storage compartment.")
-			if(something.loc == user)
+			if(something.loc == user || issilicon(user))
 				user.drop_from_inventory(something, src)
 				something.forceMove(src)
 			else
