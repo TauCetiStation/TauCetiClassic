@@ -69,11 +69,9 @@
 		return
 
 	for(var/obj/item/I in loc)
-		if(!do_after(user, 1 SECONDS, FALSE, target))
-			toggle_door()
-			return
-
-		target.equip_to_appropriate_slot(I, TRUE)
+		if(do_after(user, 1 SECONDS, FALSE, target))
+			target.equip_to_appropriate_slot(I, TRUE)
+			continue
 
 	toggle_door()
 
@@ -88,9 +86,7 @@
 			continue
 
 		if(!do_after(user, 1 SECONDS, FALSE, target))
-			toggle_door()
-			return
-
-		user.drop_from_inventory(I, loc, additional_pixel_x = rand(-6, 6), additional_pixel_y = rand(-6, 6))
+			user.drop_from_inventory(I, loc, additional_pixel_x = rand(-6, 6), additional_pixel_y = rand(-6, 6))
+			continue
 
 	toggle_door()
