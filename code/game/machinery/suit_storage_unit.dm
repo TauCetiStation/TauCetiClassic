@@ -888,7 +888,12 @@
 		SLOT_SHOES = null
 	)
 
-	var/obj/item/clothing/under/gown
+	var/obj/item/clothing/under/patient_gown/gown
+
+/obj/machinery/suit_storage_unit/surgery/atom_init()
+	. = ..()
+
+	gown = new(src)
 
 /obj/machinery/suit_storage_unit/surgery/Destroy()
 	gown = null
@@ -928,17 +933,26 @@
 	update_icon()
 
 /obj/machinery/suit_storage_unit/surgery/fast_equip(mob/living/target)
+	if(!ishuman(target))
+		return
+
+	if(get_insurance_type(target) == INSURANCE_NONE)
+		to_chat(target, "<span class='userdanger'>У вас отсутствует страховка!</span>")
+		return FALSE
+
 	var/obj/item/uniform = target?.get_equipped_item(SLOT_W_UNIFORM)
 	if(!gown && uniform)
 		if(target?.drop_from_inventory(uniform, src))
 			gown = uniform
 
-	for(var/slot in contents_by_slot)
+	for(var/i in global.undress_sequence.len to 1 step -1)
+		var/slot = global.undress_sequence[i]
+		if(!slot || !contents_by_slot[slot])
+			continue
+
 		if(!do_after(target, 0.1 SECONDS, FALSE, src))
 			continue
 
-		if(!contents_by_slot[slot])
-			continue
 		var/obj/item/I = contents_by_slot[slot]
 
 		if(target?.equip_to_slot_if_possible(I, slot, disable_warning = TRUE))
@@ -949,16 +963,25 @@
 
 		I.forceMove(loc)
 
+		contents_by_slot[slot] = null
+
 		playsound(src, 'sound/misc/riginternaloff.ogg', VOL_EFFECTS_MASTER, 15)
 
 	update_icon()
 
 /obj/machinery/suit_storage_unit/surgery/fast_unequip(mob/living/target)
-	for(var/slot in contents_by_slot)
+	if(!ishuman(target))
+		return
+
+	if(get_insurance_type(target) == INSURANCE_NONE)
+		to_chat(target, "<span class='userdanger'>У вас отсутствует страховка!</span>")
+		return FALSE
+
+	for(var/slot in global.undress_sequence)
 		if(contents_by_slot[slot])
 			continue
 		var/obj/item/I = target.get_equipped_item(slot)
-		if(!I || I.canremove)
+		if(!(I && I.canremove))
 			continue
 
 		if(!target.drop_from_inventory(I, src))
@@ -970,3 +993,19 @@
 			return
 
 		gown = null
+
+/obj/machinery/suit_storage_unit/surgery/attackby(obj/item/I, mob/user)
+	if(!opened)
+		return ..()
+
+	if(gown)
+		return ..()
+
+	if(istype(I, /obj/item/clothing/under))
+		if(!user.drop_from_inventory(I, src))
+			return ..()
+
+		gown = I
+		return
+
+	return ..()
