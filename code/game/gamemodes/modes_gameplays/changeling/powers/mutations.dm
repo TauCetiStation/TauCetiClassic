@@ -11,9 +11,7 @@
 	var/weapon_name_simple
 
 /obj/effect/proc_holder/changeling/weapon/can_sting(mob/user, mob/target)
-	if(world.time < user.next_move)
-		return FALSE
-	return ..()
+	return world.time >= user.next_move
 
 /obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
 	if(istype(user.get_active_hand(),weapon_type))
