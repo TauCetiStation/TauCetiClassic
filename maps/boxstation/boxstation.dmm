@@ -14249,8 +14249,11 @@
 	name = "E.V.A."
 	},
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "bluefull"
 	},
+/area/station/ai_monitored/eva)
+"ayg" = (
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "ayh" = (
 /obj/decal/boxingrope{
@@ -15449,19 +15452,21 @@
 /area/station/maintenance/eva)
 "aAp" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/decal/turf_decal/white{
-	icon_state = "siding_corner";
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_corner";
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aAq" = (
@@ -16127,9 +16132,6 @@
 /area/station/maintenance/eva)
 "aBD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/decal/turf_decal/white{
-	icon_state = "siding_corner"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
 	d1 = 1;
@@ -16137,9 +16139,20 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_corner"
+	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aBE" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
 /obj/effect/decal/turf_decal/white{
 	icon_state = "siding_corner";
 	dir = 8
@@ -16277,13 +16290,13 @@
 	},
 /area/station/civilian/toilet)
 "aBQ" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	dir = 8;
-	icon_state = "loadingarea"
-	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/metal{
 	icon_state = "siding_corner";
 	dir = 4
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "arrow2"
 	},
 /turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
@@ -16328,13 +16341,13 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "aBV" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	dir = 4;
-	icon_state = "loadingarea"
-	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/metal{
 	icon_state = "siding_corner";
 	dir = 1
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "arrow"
 	},
 /turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
@@ -16945,23 +16958,23 @@
 /turf/simulated/floor/wood,
 /area/station/maintenance/chapel)
 "aDm" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	dir = 8;
-	icon_state = "loadingarea"
-	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/metal{
 	icon_state = "siding_corner"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 4;
+	icon_state = "arrow"
 	},
 /turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "aDn" = (
-/obj/effect/decal/turf_decal/alpha/yellow{
-	dir = 4;
-	icon_state = "loadingarea"
-	},
-/obj/effect/decal/turf_decal/white{
+/obj/effect/decal/turf_decal/metal{
 	icon_state = "siding_corner";
 	dir = 8
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 4;
+	icon_state = "arrow2"
 	},
 /turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
@@ -17139,7 +17152,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "blue"
+	},
 /area/station/ai_monitored/eva)
 "aDH" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -17586,7 +17602,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "bluefull"
+	},
 /area/station/ai_monitored/eva)
 "aEE" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -17977,9 +17995,6 @@
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/science)
 "aFp" = (
-/obj/machinery/suit_storage_unit/globose/skrell/white{
-	filled = 1
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
@@ -17990,6 +18005,9 @@
 /obj/structure/fence/metal{
 	dir = 4;
 	color = "#b79044"
+	},
+/obj/machinery/suit_storage_unit/unathi{
+	filled = 1
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
@@ -18339,7 +18357,10 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "aFX" = (
-/turf/simulated/floor/smoothtile/dark,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aFY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -19682,7 +19703,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "blue"
+	},
 /area/station/ai_monitored/eva)
 "aID" = (
 /obj/machinery/disposal,
@@ -20210,7 +20234,6 @@
 /area/station/security/range)
 "aJD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/effect/decal/turf_decal/white{
 	icon_state = "siding_line";
 	dir = 4
@@ -20220,6 +20243,9 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -21849,7 +21875,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "blue"
+	},
 /area/station/ai_monitored/eva)
 "aMx" = (
 /obj/structure/cable,
@@ -21979,7 +22008,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "bluefull"
+	},
 /area/station/ai_monitored/eva)
 "aMG" = (
 /obj/item/clothing/gloves/insulated,
@@ -30232,7 +30263,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "bluecorner"
+	},
 /area/station/ai_monitored/eva)
 "bbm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -45830,7 +45864,7 @@
 	c_tag = "Central Hallway North-West"
 	},
 /turf/simulated/floor{
-	dir = 4;
+	dir = 1;
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
@@ -56909,14 +56943,14 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	dir = 8;
-	icon_state = "caution_white"
-	},
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "stand_clear_white";
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -74830,15 +74864,15 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "hNW" = (
-/obj/machinery/suit_storage_unit/unathi{
-	filled = 1
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 10;
 	icon_state = "warn"
+	},
+/obj/machinery/suit_storage_unit/globose/skrell/white{
+	filled = 1
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
@@ -75083,6 +75117,10 @@
 	color = "#b79044"
 	},
 /obj/machinery/telescience_jammer,
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_corner";
+	dir = 4
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
 "hYb" = (
@@ -75398,6 +75436,12 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"ioT" = (
+/turf/simulated/floor{
+	dir = 0;
+	icon_state = "blue"
+	},
+/area/station/ai_monitored/eva)
 "ipb" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -76687,6 +76731,9 @@
 	icon_state = "siding_line";
 	dir = 8
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "jyQ" = (
@@ -77427,13 +77474,13 @@
 	},
 /area/station/engineering/atmos)
 "kim" = (
-/obj/machinery/vending/eva,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/machinery/vending/eva,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
 "kiF" = (
@@ -79123,8 +79170,9 @@
 	},
 /area/shuttle/supply/station)
 "lQy" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 4;
+	icon_state = "loadingarea"
 	},
 /obj/effect/decal/turf_decal/white{
 	icon_state = "siding_corner";
@@ -79469,6 +79517,17 @@
 	icon_state = "white"
 	},
 /area/station/medical/storage)
+"mfz" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/ai_monitored/eva)
 "mfD" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
@@ -79847,6 +79906,15 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
+"myQ" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_corner"
+	},
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/eva)
 "myS" = (
 /obj/structure/sign/warning/docking,
 /turf/simulated/wall,
@@ -79989,7 +80057,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "blue"
+	},
 /area/station/ai_monitored/eva)
 "mIb" = (
 /obj/structure/cable{
@@ -80924,6 +80995,9 @@
 	dir = 8;
 	color = "#b79044"
 	},
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_line"
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
 "nHb" = (
@@ -81836,6 +81910,10 @@
 	dir = 8;
 	color = "#b79044"
 	},
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_line";
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
 "oCb" = (
@@ -82626,6 +82704,16 @@
 	icon_state = "barber"
 	},
 /area/station/medical/cmo)
+"pBK" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_corner";
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/eva)
 "pBZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/stool/bed/chair/metal/black{
@@ -82681,6 +82769,9 @@
 /obj/structure/fence/metal{
 	dir = 4;
 	color = "#b79044"
+	},
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_line"
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
@@ -82820,7 +82911,10 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "bluecorner"
+	},
 /area/station/ai_monitored/eva)
 "pRb" = (
 /turf/simulated/floor{
@@ -82918,6 +83012,10 @@
 	},
 /obj/machinery/telescience_jammer,
 /obj/effect/decal/cleanable/blood/oil,
+/obj/effect/decal/turf_decal/metal{
+	icon_state = "siding_corner";
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
 "pVE" = (
@@ -88506,7 +88604,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "bluecorner"
+	},
 /area/station/ai_monitored/eva)
 "wLi" = (
 /turf/simulated/wall,
@@ -116109,7 +116210,7 @@ aCu
 aLg
 aMD
 aCr
-aPE
+aMN
 aKx
 xYD
 aNU
@@ -116358,15 +116459,15 @@ aYi
 aCu
 chi
 aAi
-aFX
-aFX
+ayg
+ayg
 aIM
-kim
+aDH
 aMH
 pQA
-aCv
+ioT
 ayf
-aPE
+aPv
 aKx
 bbo
 aGZ
@@ -116615,15 +116716,15 @@ aYi
 aCu
 xTE
 aAi
-aFX
-aFX
+ayg
+ayg
 aIM
-aDH
+kim
 dsO
 mHR
 aDG
 ayf
-aMN
+aPv
 aKx
 bbo
 aGZ
@@ -116871,7 +116972,7 @@ alZ
 aYi
 hGb
 aCx
-aAi
+myQ
 aBQ
 aDm
 hXz
@@ -117137,7 +117238,7 @@ diY
 aIC
 aMw
 ijb
-aMN
+aML
 aKx
 bbo
 aGZ
@@ -117390,11 +117491,11 @@ lQy
 aBE
 aCp
 aCv
-aDG
-aIC
+aFX
+mfz
 bbl
 azT
-aPv
+aML
 aKx
 bbo
 aGZ
@@ -117651,7 +117752,7 @@ hKf
 hxY
 wJI
 azT
-aPv
+aML
 aKx
 bbo
 aGZ
@@ -118156,7 +118257,7 @@ alZ
 aYi
 hGb
 aCC
-aAi
+pBK
 aBV
 aDn
 pVu
@@ -118414,8 +118515,8 @@ aYi
 aCu
 hmQ
 aAi
-aFX
-aFX
+ayg
+ayg
 aIM
 lMY
 aGz
@@ -118671,8 +118772,8 @@ aYi
 aCu
 ckw
 aAi
-aFX
-aFX
+ayg
+ayg
 aIM
 rPZ
 aCu
