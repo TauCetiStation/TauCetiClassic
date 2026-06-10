@@ -386,6 +386,7 @@
 #include "code\datums\elements\cult_eyes.dm"
 #include "code\datums\elements\cult_halo.dm"
 #include "code\datums\elements\digitalcamo.dm"
+#include "code\datums\elements\sole_attachable.dm"
 #include "code\datums\elements\undertile.dm"
 #include "code\datums\elements\mutations\_mutation.dm"
 #include "code\datums\elements\mutations\godmode.dm"
