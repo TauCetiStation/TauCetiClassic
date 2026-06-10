@@ -84,7 +84,7 @@
 		if(!I.canremove)
 			continue
 
-		if(!do_after(user, 1 SECONDS, FALSE, target))
+		if(do_after(user, 1 SECONDS, FALSE, target))
 			user.drop_from_inventory(I, loc, additional_pixel_x = rand(-6, 6), additional_pixel_y = rand(-6, 6))
 			continue
 
