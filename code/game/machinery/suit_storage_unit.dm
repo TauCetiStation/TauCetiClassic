@@ -971,7 +971,7 @@
 		return ..()
 
 	if(gown)
-		return ..()
+		return
 
 	if(istype(I, /obj/item/clothing/under))
 		if(!user.drop_from_inventory(I, src))

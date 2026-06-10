@@ -469,18 +469,10 @@
 	},
 /area/station/security/main)
 "aaR" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
-	name = "Surgery Cleaner";
-	pixel_x = 4
-	},
-/obj/item/weapon/razor{
-	pixel_x = -4
-	},
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/medical2,
 /turf/simulated/floor,
 /area/station/medical/surgery)
 "aaS" = (
@@ -1455,6 +1447,14 @@
 	c_tag = "Surgery Operating 1";
 	dir = 4;
 	network = list("SS13","Medical")
+	},
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
+	name = "Surgery Cleaner";
+	pixel_x = 4
+	},
+/obj/item/weapon/razor{
+	pixel_x = -4
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -10289,9 +10289,17 @@
 	},
 /area/station/security/lobby)
 "aqU" = (
-/obj/structure/table,
 /obj/machinery/vending/wallmed2{
 	pixel_y = 32
+	},
+/obj/structure/table,
+/obj/item/weapon/reagent_containers/spray/cleaner{
+	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
+	name = "Surgery Cleaner";
+	pixel_x = 4
+	},
+/obj/item/weapon/razor{
+	pixel_x = -4
 	},
 /turf/simulated/floor{
 	icon_state = "whitehall"
@@ -35042,7 +35050,6 @@
 	pixel_y = 25
 	},
 /obj/machinery/body_scanconsole,
-/obj/structure/closet/secure_closet/medical2,
 /turf/simulated/floor,
 /area/station/medical/surgery2)
 "bke" = (
@@ -38384,7 +38391,6 @@
 	pixel_x = -27;
 	pixel_y = 9
 	},
-/obj/structure/closet/secure_closet/medical2,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitehall"
@@ -40850,10 +40856,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = 12
-	},
+/obj/machinery/iv_drip,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whitehall"
@@ -40999,7 +41002,9 @@
 	name = "Cloning Cell";
 	req_access = list(5)
 	},
-/obj/structure/fittingroom,
+/obj/machinery/suit_storage_unit/surgery{
+	filled = 0
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -54736,7 +54741,10 @@
 	},
 /area/station/medical/surgery)
 "bTz" = (
-/obj/machinery/iv_drip,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whitehall"
@@ -65867,23 +65875,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cAb" = (
-/obj/structure/table,
 /obj/machinery/camera{
 	c_tag = "Surgery Operating 2";
 	dir = 6;
 	network = list("SS13","Medical")
 	},
-/obj/item/weapon/reagent_containers/spray/cleaner{
-	desc = "Someone has crossed out the Space from Space Cleaner and written in Surgery. 'Do not remove under punishment of death!!!' is scrawled on the back.";
-	name = "Surgery Cleaner";
-	pixel_x = 4
-	},
-/obj/item/weapon/razor{
-	pixel_x = -4
-	},
 /obj/machinery/light/smart{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/medical2,
 /turf/simulated/floor,
 /area/station/medical/surgery2)
 "cAc" = (
@@ -78989,12 +78989,6 @@
 /area/station/maintenance/incinerator)
 "lWb" = (
 /obj/structure/fittingroom,
-/obj/structure/fence/metal{
-	dir = 1
-	},
-/obj/structure/fence/metal{
-	dir = 8
-	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
