@@ -993,5 +993,5 @@
 /obj/machinery/suit_storage_unit/surgery/dispense(atom/movable/selected)
 	. = ..()
 
-	if(. && selected == gown))
+	if(. && (selected == gown))
 		gown = null
