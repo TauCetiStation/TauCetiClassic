@@ -12,7 +12,6 @@
 	var/colourName = DYE_RED // for updateIcon purposes
 	var/list/validSurfaces = list(/turf/simulated/floor)
 	var/edible = 1
-	var/list/synth_phrases
 
 	var/list/actions
 	var/list/arrows
@@ -26,6 +25,9 @@
 	to_chat(viewers(user), "<span class='danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS|OXYLOSS)
 
+/obj/item/toy/crayon/proc/get_synth_phrases()
+	return null
+
 /obj/item/toy/crayon/attack(mob/living/carbon/M, mob/user)
 	if(edible && (M == user))
 		var/synth = FALSE
@@ -35,17 +37,19 @@
 				synth = TRUE
 		to_chat(user, "You take a bite of the [src.name]. Delicious!")
 		user.nutrition += synth ? 100 : 5
-		if(synth && length(synth_phrases))
-			if(M.silent || HAS_TRAIT(M, TRAIT_MUTE))
-				user.visible_message("<font size=3><b>[user] выразительно жуёт мелок в полной тишине.</b></font>",
-									 "<font size=3><b>Вы выразительно жуёте мелок, но звук не выходит.</b></font>")
-			else if(HAS_TRAIT(M, TRAIT_MIMING))
-				user.visible_message("<font size=3><b>[user]: ...</b></font>",
-									 "<font size=3><b>Вы: ...</b></font>")
-			else
-				var/phrase = pick(synth_phrases)
-				user.visible_message("<font size=3><b>[user] громко заявляет: \"[phrase]\"</b></font>",
-									 "<font size=3><b>Вы громко заявляете: \"[phrase]\"</b></font>")
+		if(synth)
+			var/list/phrases = get_synth_phrases()
+			if(length(phrases))
+				if(M.silent || HAS_TRAIT(M, TRAIT_MUTE))
+					user.visible_message("<font size=3><b>[user] выразительно жуёт мелок в полной тишине.</b></font>",
+										 "<font size=3><b>Вы выразительно жуёте мелок, но звук не выходит.</b></font>")
+				else if(HAS_TRAIT(M, TRAIT_MIMING))
+					user.visible_message("<font size=3><b>[user]: ...</b></font>",
+										 "<font size=3><b>Вы: ...</b></font>")
+				else
+					var/phrase = pick(phrases)
+					user.visible_message("<font size=3><b>[user] громко заявляет: \"[phrase]\"</b></font>",
+										 "<font size=3><b>Вы громко заявляете: \"[phrase]\"</b></font>")
 		uses = max(0, uses - 5)
 		if(!uses)
 			to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
@@ -230,7 +234,9 @@
 	colour = "#da0000"
 	shadeColour = "#810c0c"
 	colourName = DYE_RED
-	synth_phrases = list(
+
+/obj/item/toy/crayon/red/get_synth_phrases()
+	return list(
 		"Объявляю <font color='#da0000'>КРАСНУЮ ТРЕВОГУ</font>. Шучу. Просто десерт.",
 		"<font color='#da0000'>Бочки</font> красные.",
 		"Боюсь, я не могу это съесть, Дэйв... <font color='#da0000'>уже съел</font>."
@@ -241,7 +247,9 @@
 	colour = "#ff9300"
 	shadeColour = "#a55403"
 	colourName = DYE_ORANGE
-	synth_phrases = list(
+
+/obj/item/toy/crayon/orange/get_synth_phrases()
+	return list(
 		"<font color='#ff9300'>ORANGE BOX</font> на ужин. Третьего не будет.",
 		"Я нынче в <font color='#ff9300'>оранжевом костюме</font>.",
 		"Тестируем <font color='#ff9300'>оранжевый портал</font> жеванием.",
@@ -253,10 +261,12 @@
 	colour = "#fff200"
 	shadeColour = "#886422"
 	colourName = DYE_YELLOW
-	synth_phrases = list(
+
+/obj/item/toy/crayon/yellow/get_synth_phrases()
+	return list(
 		"<font color='#fff200'>ЖЁЛТЫЙ</font>! ВЫСОКОЕ НАПРЯЖЕНИЕ ВКУСА!",
 		"<font color='#fff200'>Wakka wakka wakka</font>",
-		"We all live in a <font color='#fff200'>yellow submarine</font>...",
+		"We all live in a <font color='#fff200'>yellow submarine</font>..."
 	)
 
 /obj/item/toy/crayon/green
@@ -264,7 +274,9 @@
 	colour = "#a8e61d"
 	shadeColour = "#61840f"
 	colourName = DYE_GREEN
-	synth_phrases = list(
+
+/obj/item/toy/crayon/green/get_synth_phrases()
+	return list(
 		"<font color='#a8e61d'>Зелёный мелок делают из людей.</font>",
 		"<font color='#a8e61d'>Зелёный</font> свет получен. Жую дальше.",
 		"<font color='#a8e61d'>Малахитовое стекло</font> хрустит на зубах."
@@ -275,7 +287,9 @@
 	colour = "#00b7ef"
 	shadeColour = "#0082a8"
 	colourName = DYE_BLUE
-	synth_phrases = list(
+
+/obj/item/toy/crayon/blue/get_synth_phrases()
+	return list(
 		"<font color='#00b7ef'>Синий</font> экран смерти изнутри ничего так.",
 		"<font color='#00b7ef'>Юникоды U+1F499</font> в моих логах."
 	)
@@ -285,8 +299,10 @@
 	colour = "#da00ff"
 	shadeColour = "#810cff"
 	colourName = DYE_PURPLE
-	synth_phrases = list(
-		"Мне <font color='#da00ff'>фиолетово</font>. И всё.",
+
+/obj/item/toy/crayon/purple/get_synth_phrases()
+	return list(
+		"Мне <font color='#da00ff'>фиолетово</font>.",
 		"Запах <font color='#da00ff'>сирени и крыжовника</font>.",
 		"<font color='#da00ff'>Тиамат</font> повернула одну из голов в мою сторону."
 	)
@@ -298,7 +314,9 @@
 	colour = "#ffffff"
 	shadeColour = "#cecece"
 	colourName = DYE_WHITE
-	synth_phrases = list(
+
+/obj/item/toy/crayon/chalk/get_synth_phrases()
+	return list(
 		"<font color='#ffffff'>Белый</font> шум на завтрак.",
 		"Я ел <font color='#ffffff'>гипс</font> и не жаловался.",
 		"Я не IPC. Я <font color='#ffffff'>МЕЛКОПРИЁМНИК</font>."
@@ -310,7 +328,9 @@
 	colour = "#ffffff"
 	shadeColour = "#000000"
 	colourName = DYE_MIME
-	synth_phrases = list("...")
+
+/obj/item/toy/crayon/mime/get_synth_phrases()
+	return list("...")
 
 /obj/item/toy/crayon/mime/attack_self(mob/living/user) //inversion
 	if(colour != "#ffffff" && shadeColour != "#000000")
@@ -323,17 +343,33 @@
 		to_chat(user, "You will now draw in black and white with this crayon.")
 	return
 
+// Раскрашивает каждый непробельный символ строки в циклящуюся радужную палитру.
+/proc/rainbow_text(text)
+	var/static/list/rainbow_palette = list("#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#0000ff", "#7f00ff", "#ff00ff")
+	var/out = ""
+	var/idx = 0
+	for(var/pos in 1 to length_char(text))
+		var/char = copytext_char(text, pos, pos + 1)
+		if(char == " ")
+			out += char
+			continue
+		out += "<span style='color: [rainbow_palette[(idx % rainbow_palette.len) + 1]]'>[char]</span>"
+		idx++
+	return out
+
 /obj/item/toy/crayon/rainbow
 	icon_state = "crayonrainbow"
 	colour = "#fff000"
 	shadeColour = "#000fff"
 	colourName = DYE_RAINBOW
-	synth_phrases = list(
-		"<font color='#ff0000'>В</font><font color='#ff7f00'>С</font><font color='#ffff00'>Е</font> <font color='#00ff00'>Ц</font><font color='#00bfff'>В</font><font color='#0000ff'>Е</font><font color='#7f00ff'>Т</font><font color='#ff00ff'>А</font> СРАЗУ. БАНКЕТ НА КОЛЁСАХ!",
-		"<font color='#ff0000'>Б</font><font color='#ff7f00'>У</font><font color='#ffff00'>Т</font><font color='#00ff00'>Е</font><font color='#0000ff'>Р</font><font color='#7f00ff'>Б</font><font color='#ff00ff'>Р</font><font color='#ff0000'>О</font><font color='#ff7f00'>Д</font> ИЗ СПЕКТРА!",
-		"<font color='#ff0000'>R</font><font color='#ff7f00'>O</font><font color='#ffff00'>Y</font> <font color='#00ff00'>G</font> <font color='#0000ff'>B</font><font color='#7f00ff'>I</font><font color='#ff00ff'>V</font>. Запомнил порядок? Я тоже.",
-		"Считаю <font color='#ff0000'>длину</font> <font color='#ff7f00'>волны</font> <font color='#ffff00'>каждого</font> <font color='#00ff00'>укуса</font>. <font color='#0000ff'>Невкусно</font> <font color='#7f00ff'>между</font> <font color='#ff00ff'>440-570нм</font>.",
-		"<font color='#ff0000'>Reading</font> <font color='#ff7f00'>Rainbow</font>! <font color='#ffff00'>Take</font> <font color='#00ff00'>a</font> <font color='#0000ff'>look</font> <font color='#7f00ff'>it's</font> <font color='#ff00ff'>in</font> <font color='#ff0000'>a</font> <font color='#ff7f00'>book</font>."
+
+/obj/item/toy/crayon/rainbow/get_synth_phrases()
+	return list(
+		rainbow_text("ВСЕ ЦВЕТА СРАЗУ. БАНКЕТ НА КОЛЁСАХ!"),
+		rainbow_text("БУТЕРБРОД ИЗ СПЕКТРА!"),
+		rainbow_text("ROY G BIV. Запомнил порядок? Я тоже."),
+		rainbow_text("Считаю длину волны каждого укуса. Невкусно между 440-570нм."),
+		rainbow_text("Reading Rainbow! Take a look it's in a book.")
 	)
 
 /obj/item/toy/crayon/rainbow/attack_self(mob/living/user)
