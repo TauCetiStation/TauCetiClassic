@@ -932,9 +932,13 @@
 		start_ultra_violet(user)
 	update_icon()
 
-/obj/machinery/suit_storage_unit/surgery/fast_equip(mob/living/target)
-	if(!ishuman(target))
+/obj/machinery/suit_storage_unit/surgery/fast_equip(mob/living/operator)
+	if(!ishuman(operator))
 		return
+
+	var/mob/living/target = operator
+	if(occupant && ishuman(occupant))
+		target = occupant
 
 	if(get_insurance_type(target) == INSURANCE_NONE)
 		to_chat(target, "<span class='userdanger'>У вас отсутствует страховка!</span>")
@@ -950,7 +954,7 @@
 		if(!slot || !contents_by_slot[slot])
 			continue
 
-		if(!do_after(target, 0.1 SECONDS, FALSE, src))
+		if(!do_after(operator, 0.1 SECONDS, FALSE, src))
 			continue
 
 		var/obj/item/I = contents_by_slot[slot]
@@ -964,9 +968,13 @@
 
 	update_icon()
 
-/obj/machinery/suit_storage_unit/surgery/fast_unequip(mob/living/target)
-	if(!ishuman(target))
+/obj/machinery/suit_storage_unit/surgery/fast_unequip(mob/living/operator)
+	if(!ishuman(operator))
 		return
+
+	var/mob/living/target = operator
+	if(occupant && ishuman(occupant))
+		target = occupant
 
 	if(get_insurance_type(target) == INSURANCE_NONE)
 		to_chat(target, "<span class='userdanger'>У вас отсутствует страховка!</span>")
