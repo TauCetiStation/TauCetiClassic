@@ -941,7 +941,7 @@
 		target = occupant
 
 	if(get_insurance_type(target) == INSURANCE_NONE)
-		to_chat(target, "<span class='userdanger'>У вас отсутствует страховка!</span>")
+		to_chat(operator, "<span class='userdanger'>У [target] отсутствует страховка!</span>")
 		return FALSE
 
 	var/obj/item/uniform = target?.get_equipped_item(SLOT_W_UNIFORM)
@@ -977,7 +977,7 @@
 		target = occupant
 
 	if(get_insurance_type(target) == INSURANCE_NONE)
-		to_chat(target, "<span class='userdanger'>У вас отсутствует страховка!</span>")
+		to_chat(operator, "<span class='userdanger'>У [target] отсутствует страховка!</span>")
 		return FALSE
 
 	for(var/slot in global.undress_sequence)
