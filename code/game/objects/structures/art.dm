@@ -60,12 +60,6 @@
 	pixel_x = 10
 	pixel_y = 9
 
-	var/alist/fill_mask = alist(
-							  				NORTH = list(0, -1),
-							  WEST = list(-1, 0),               EAST = list(1, 0),
-							  				SOUTH = list(0, 1)
-							) //mask for fill function
-
 	var/draw_size = 0
 
 
@@ -143,14 +137,14 @@
 
 			var/x = text2num(params["x"])
 			var/y = text2num(params["y"])
-
-			var/button_type = params["button_type"]
 			if(x < 1 || x > width || y < 1 || y > height)
 				return
 
 			if(!color)
 				to_chat(user, "<span class='notice'>После долгого рассматривания этой точки на [CASE(src, PREPOSITIONAL_CASE)], вы с точностью можете сказать, что её цвет: [grid[x][y]].</span>")
 				return FALSE
+
+			var/button_type = params["button_type"]
 
 			switch(button_type)
 				if("draw")
@@ -181,7 +175,9 @@
 /obj/item/canvas/proc/draw_grid(x, y, color, pen_size)
 	for(var/x_offset in -pen_size to pen_size)
 		for(var/y_offset in -pen_size to pen_size)
-			if(!check_in_grid(x + x_offset, y + y_offset)) continue
+			if(!check_in_grid(x + x_offset, y + y_offset))
+				continue
+
 			grid[x + x_offset][y + y_offset] = color
 
 /obj/item/canvas/proc/fill_grid(x, y, color, background_color)
@@ -199,13 +195,18 @@
 		var/bad_dir = cell[3]
 
 		for(var/check_dir in (global.cardinal - bad_dir))
-			var/mask = fill_mask[check_dir]
-			var/new_x = iterate_x + mask[1]
-			var/new_y = iterate_y + mask[2]
-			if(!check_in_grid(new_x, new_y)) continue
-			if(grid[new_x][new_y] != background_color) continue
+			var/new_x = iterate_x + X_OFFSET(1, check_dir)
+			var/new_y = iterate_y + Y_OFFSET(1, check_dir)
+
+			if(!check_in_grid(new_x, new_y))
+				continue
+			if(grid[new_x][new_y] != background_color)
+				continue
+
 			grid[new_x][new_y] = color
 			cells_to_check += list(list(new_x, new_y, reverse_dir[check_dir]))
+
+		CHECK_TICK
 
 /obj/item/canvas/proc/check_in_grid(x, y)
 	return (x >= 1) && (x <= width) && (y >= 1) && (y <= height)
