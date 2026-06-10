@@ -989,3 +989,9 @@
 		return FALSE
 	place_occupant(something, user)
 	return TRUE
+
+/obj/machinery/suit_storage_unit/surgery/dispense(atom/movable/selected)
+	. = ..()
+
+	if(. && selected == gown))
+		gown = null
