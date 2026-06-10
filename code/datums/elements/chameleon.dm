@@ -20,6 +20,8 @@ var/global/list/chameleon_blocked_disguises = list(
 	id_arg_index = 2
 	// name -> type for every disguise of this element's root_type (real sprites only).
 	var/list/choices
+	// name -> image, built lazily for the radial menu.
+	var/list/choice_images
 
 /datum/element/chameleon/Attach(datum/target, root_type)
 	. = ..()
@@ -31,12 +33,14 @@ var/global/list/chameleon_blocked_disguises = list(
 	I.verbs += /obj/item/proc/chameleon_change
 	RegisterSignal(target, COMSIG_ITEM_CHAMELEON_CHANGE, PROC_REF(on_change))
 	RegisterSignal(target, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp))
+	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
+	RegisterSignal(target, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
 
 /datum/element/chameleon/Detach(datum/source, ...)
 	var/obj/item/I = source
 	if(istype(I))
 		I.verbs -= /obj/item/proc/chameleon_change
-	UnregisterSignal(source, list(COMSIG_ITEM_CHAMELEON_CHANGE, COMSIG_ATOM_EMP_ACT))
+	UnregisterSignal(source, list(COMSIG_ITEM_CHAMELEON_CHANGE, COMSIG_ATOM_EMP_ACT, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	return ..()
 
 /datum/element/chameleon/proc/build_choices(root_type)
@@ -49,6 +53,17 @@ var/global/list/chameleon_blocked_disguises = list(
 			continue
 		choices[initial(A.name)] = t
 
+/datum/element/chameleon/proc/get_choice_images()
+	if(choice_images)
+		return choice_images
+	choice_images = list()
+	for(var/name in choices)
+		var/obj/item/A = choices[name]
+		var/ic = initial(A.icon_custom) || initial(A.icon)
+		var/state = initial(A.item_state_inventory) || initial(A.icon_state)
+		choice_images[name] = image(icon = ic, icon_state = state)
+	return choice_images
+
 /datum/element/chameleon/proc/on_change(datum/source, mob/user)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(disguise), source, user)
@@ -57,10 +72,31 @@ var/global/list/chameleon_blocked_disguises = list(
 	SIGNAL_HANDLER
 	reset(source)
 
+// One shared "Chameleon" action button per mob: worn chameleon items register in it.
+/datum/element/chameleon/proc/on_equipped(obj/item/I, mob/user, slot)
+	SIGNAL_HANDLER
+	if(slot == SLOT_IN_BACKPACK)
+		on_dropped(I, user)
+		return
+	var/datum/action/chameleon_outfit/action = locate() in user.actions
+	if(!action)
+		action = new(user) // target=user: update_action_buttons() deletes targetless actions
+		action.Grant(user)
+	action.items |= I
+
+/datum/element/chameleon/proc/on_dropped(obj/item/I, mob/user)
+	SIGNAL_HANDLER
+	var/datum/action/chameleon_outfit/action = locate() in user.actions
+	if(!action)
+		return
+	action.items -= I
+	if(!length(action.items))
+		qdel(action)
+
 /datum/element/chameleon/proc/disguise(obj/item/I, mob/user)
 	if(!(I in user) || user.incapacitated())
 		return
-	var/picked = input(user, "Select appearance to change it to", "Chameleon") as null|anything in choices
+	var/picked = show_radial_menu(user, I, get_choice_images(), require_near = TRUE, tooltips = TRUE)
 	if(!picked || !choices[picked])
 		return
 	if(!(I in user) || user.incapacitated())
@@ -101,3 +137,34 @@ var/global/list/chameleon_blocked_disguises = list(
 	set category = "Object"
 	set src in usr
 	SEND_SIGNAL(src, COMSIG_ITEM_CHAMELEON_CHANGE, usr)
+
+// Radial picker over every worn chameleon item, then the picked item's own disguise radial.
+/datum/action/chameleon_outfit
+	name = "Chameleon"
+	action_type = AB_GENERIC
+	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_ALIVE
+	button_overlay_icon = 'icons/obj/device.dmi'
+	button_overlay_state = "shield0"
+	var/list/obj/item/items = list()
+
+/datum/action/chameleon_outfit/Trigger()
+	if(!Checks())
+		return
+	INVOKE_ASYNC(src, PROC_REF(pick_item))
+
+/datum/action/chameleon_outfit/proc/pick_item()
+	var/list/choices = list()
+	var/list/by_name = list()
+	for(var/obj/item/I as anything in items)
+		var/name = I.name
+		while(by_name[name])
+			name = "[name] "
+		by_name[name] = I
+		choices[name] = image(icon = I.icon, icon_state = I.icon_state)
+	var/picked = show_radial_menu(owner, owner, choices, require_near = TRUE, tooltips = TRUE)
+	if(!picked)
+		return
+	var/obj/item/I = by_name[picked]
+	if(!I)
+		return
+	SEND_SIGNAL(I, COMSIG_ITEM_CHAMELEON_CHANGE, owner)
