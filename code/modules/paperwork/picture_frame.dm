@@ -35,9 +35,9 @@
 			return
 
 		if(istype(I, /obj/item/canvas))
-			var/obj/item/canvas/Canvas = I
-			if(!Canvas.finalized)
-				to_chat(user, "<span class='notice'>[C_CASE(Canvas, NOMINATIVE_CASE)] не завершён.</span>")
+			var/obj/item/canvas/C = I
+			if(!C.finalized)
+				to_chat(user, "<span class='notice'>[C_CASE(C, NOMINATIVE_CASE)] не завершён.</span>")
 				return
 
 		if(!user.drop_from_inventory(I, src))
@@ -78,9 +78,9 @@
 	user.examinate(src)
 
 /obj/item/weapon/picture_frame/examine(mob/user)
-	var/obj/item/canvas/Canvas = displayed_weakref?.resolve()
-	if(Canvas && (user.r_hand == src || user.l_hand == src))
-		Canvas.show(user)
+	var/obj/item/canvas/C = displayed_weakref?.resolve()
+	if(C && (user.r_hand == src || user.l_hand == src))
+		C.show(user)
 	else
 		..()
 
@@ -92,11 +92,11 @@
 
 	var/obj/item/I = displayed_weakref?.resolve()
 	if(istype(I, /obj/item/canvas))
-		var/obj/item/canvas/Canvas = I
-		icon_state = "[initial(icon_state)]_[Canvas.width]x[Canvas.height]"
-		var/mutable_appearance/MA = mutable_appearance(Canvas.generated_icon)
-		MA.pixel_x = Canvas.framed_offset_x
-		MA.pixel_y = Canvas.framed_offset_y
+		var/obj/item/canvas/C = I
+		icon_state = "[initial(icon_state)]_[C.width]x[C.height]"
+		var/mutable_appearance/MA = mutable_appearance(C.generated_icon)
+		MA.pixel_x = C.framed_offset_x
+		MA.pixel_y = C.framed_offset_y
 		add_overlay(MA)
 	else
 		add_overlay(image(I.icon, "photo"))
@@ -172,9 +172,9 @@
 	max_integrity = 100
 
 /obj/structure/picture_frame/examine(mob/user)
-	var/obj/item/canvas/Canvas = framed_weakref?.resolve()
-	if(Canvas && in_range(src, user))
-		Canvas.show(user)
+	var/obj/item/canvas/C = framed_weakref?.resolve()
+	if(C && in_range(src, user))
+		C.show(user)
 	else
 		..()
 
@@ -185,9 +185,9 @@
 			return
 
 		if(istype(O, /obj/item/canvas))
-			var/obj/item/canvas/Canvas = O
-			if(!Canvas.finalized)
-				to_chat(user, "<span class='notice'>[C_CASE(Canvas, NOMINATIVE_CASE)] не завершён.</span>")
+			var/obj/item/canvas/C = O
+			if(!C.finalized)
+				to_chat(user, "<span class='notice'>[C_CASE(C, NOMINATIVE_CASE)] не завершён.</span>")
 				return
 
 		if(!user.drop_from_inventory(O, src))
@@ -262,11 +262,11 @@
 		var/obj/item/I = framed_weakref?.resolve()
 		var/mutable_appearance/MA
 		if(istype(I, /obj/item/canvas))
-			var/obj/item/canvas/Canvas = I
-			icon_state = "[initial(icon_state)]_[Canvas.width]x[Canvas.height]"
-			MA = mutable_appearance(Canvas.generated_icon)
-			MA.pixel_x = Canvas.framed_offset_x
-			MA.pixel_y = Canvas.framed_offset_y
+			var/obj/item/canvas/C = I
+			icon_state = "[initial(icon_state)]_[C.width]x[C.height]"
+			MA = mutable_appearance(C.generated_icon)
+			MA.pixel_x = C.framed_offset_x
+			MA.pixel_y = C.framed_offset_y
 		else
 			MA = mutable_appearance(I.icon, "photo")
 		add_overlay(MA)
@@ -275,8 +275,8 @@
 	if(framed_weakref)
 		var/obj/item/I = framed_weakref?.resolve()
 		if(istype(I, /obj/item/canvas))
-			var/obj/item/canvas/Canvas = I
-			name = "painting - [Canvas.painting_name]"
+			var/obj/item/canvas/C = I
+			name = "painting - [C.painting_name]"
 		else
 			name = "photo - [I.name]"
 	else
