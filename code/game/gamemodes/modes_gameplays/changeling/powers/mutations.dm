@@ -10,10 +10,12 @@
 	var/weapon_type
 	var/weapon_name_simple
 
-/obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
+/obj/effect/proc_holder/changeling/weapon/can_sting(mob/user, mob/target)
 	if(world.time < user.next_move)
-		return
-	user.SetNextMove(CLICK_CD_MELEE)
+		return FALSE
+	return ..()
+
+/obj/effect/proc_holder/changeling/weapon/try_to_sting(mob/user, mob/target)
 	if(istype(user.get_active_hand(),weapon_type))
 		user.drop_from_inventory(user.get_active_hand()) // cuz changeling weapons are unremovable with standart procedure with canremove = 0, but we still need it
 		return
@@ -35,6 +37,7 @@
 		return FALSE
 	var/obj/item/W = new weapon_type(user)
 	user.put_in_active_hand(W)
+	user.SetNextMove(CLICK_CD_MELEE)
 	return W
 
 //Parent to space suits and armor.
