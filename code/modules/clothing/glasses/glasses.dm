@@ -379,7 +379,7 @@
 
 /obj/item/clothing/glasses/thermal/syndi/atom_init()
 	. = ..()
-	AddComponent(/datum/component/chameleon, /obj/item/clothing/glasses, list(/obj/item/clothing/glasses/chameleon))
+	AddElement(/datum/element/chameleon, /obj/item/clothing/glasses)
 
 /obj/item/clothing/glasses/thermal/monocle
 	name = "thermoncle"

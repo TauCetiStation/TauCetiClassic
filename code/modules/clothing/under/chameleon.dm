@@ -1,5 +1,6 @@
-// All chameleon gear shares /datum/component/chameleon. The component adds the
-// "Change Appearance" verb and handles EMP, so items only need to attach it.
+// All chameleon gear shares /datum/element/chameleon. The element adds the
+// "Change Appearance" verb and handles EMP, so items only attach it with their root type
+// (blocked disguises per root type live in chameleon_blocked_disguises).
 
 //*****************
 //**Cham Jumpsuit**
@@ -15,7 +16,7 @@
 
 /obj/item/clothing/under/chameleon/atom_init()
 	. = ..()
-	AddComponent(/datum/component/chameleon, /obj/item/clothing/under, list(/obj/item/clothing/under/chameleon, /obj/item/clothing/under/golem, /obj/item/clothing/under/gimmick))
+	AddElement(/datum/element/chameleon, /obj/item/clothing/under)
 
 //*****************
 //**Chameleon Hat**
@@ -31,7 +32,7 @@
 
 /obj/item/clothing/head/chameleon/atom_init()
 	. = ..()
-	AddComponent(/datum/component/chameleon, /obj/item/clothing/head, list(/obj/item/clothing/head/chameleon, /obj/item/clothing/head/helmet/space/golem, /obj/item/clothing/head/justice, /obj/item/clothing/head/collectable/tophat/badmin_magic_hat))
+	AddElement(/datum/element/chameleon, /obj/item/clothing/head)
 
 //******************
 //**Chameleon Suit**
@@ -46,7 +47,7 @@
 
 /obj/item/clothing/suit/chameleon/atom_init()
 	. = ..()
-	AddComponent(/datum/component/chameleon, /obj/item/clothing/suit, list(/obj/item/clothing/suit/chameleon, /obj/item/clothing/suit/space/space_ninja, /obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/justice, /obj/item/clothing/suit/greatcoat))
+	AddElement(/datum/element/chameleon, /obj/item/clothing/suit)
 
 //*******************
 //**Chameleon Shoes**
@@ -60,7 +61,7 @@
 
 /obj/item/clothing/shoes/chameleon/atom_init()
 	. = ..()
-	AddComponent(/datum/component/chameleon, /obj/item/clothing/shoes, list(/obj/item/clothing/shoes/chameleon, /obj/item/clothing/shoes/golem, /obj/item/clothing/shoes/syndigaloshes, /obj/item/clothing/shoes/cyborg))
+	AddElement(/datum/element/chameleon, /obj/item/clothing/shoes)
 
 //**********************
 //**Chameleon Backpack**
@@ -74,7 +75,7 @@
 
 /obj/item/weapon/storage/backpack/chameleon/atom_init()
 	. = ..()
-	AddComponent(/datum/component/chameleon, /obj/item/weapon/storage/backpack, list(/obj/item/weapon/storage/backpack/chameleon, /obj/item/weapon/storage/backpack/satchel/withwallet))
+	AddElement(/datum/element/chameleon, /obj/item/weapon/storage/backpack)
 
 //********************
 //**Chameleon Gloves**
@@ -89,7 +90,7 @@
 
 /obj/item/clothing/gloves/chameleon/atom_init()
 	. = ..()
-	AddComponent(/datum/component/chameleon, /obj/item/clothing/gloves, list(/obj/item/clothing/gloves/chameleon, /obj/item/clothing/gloves/black/strip, /obj/item/clothing/gloves/black/silence))
+	AddElement(/datum/element/chameleon, /obj/item/clothing/gloves)
 
 //******************
 //**Chameleon Mask**
@@ -104,7 +105,7 @@
 
 /obj/item/clothing/mask/chameleon/atom_init()
 	. = ..()
-	AddComponent(/datum/component/chameleon, /obj/item/clothing/mask, list(/obj/item/clothing/mask/chameleon))
+	AddElement(/datum/element/chameleon, /obj/item/clothing/mask)
 
 //*********************
 //**Chameleon Glasses**
@@ -120,7 +121,7 @@
 
 /obj/item/clothing/glasses/chameleon/atom_init()
 	. = ..()
-	AddComponent(/datum/component/chameleon, /obj/item/clothing/glasses, list(/obj/item/clothing/glasses/chameleon))
+	AddElement(/datum/element/chameleon, /obj/item/clothing/glasses)
 
 //*****************
 //**Chameleon Gun**
@@ -136,4 +137,4 @@
 
 /obj/item/weapon/gun/projectile/chameleon/atom_init()
 	. = ..()
-	AddComponent(/datum/component/chameleon, /obj/item/weapon/gun, list(/obj/item/weapon/gun/projectile/chameleon))
+	AddElement(/datum/element/chameleon, /obj/item/weapon/gun)

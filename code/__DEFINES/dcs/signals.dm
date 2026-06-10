@@ -253,6 +253,8 @@
 #define COMSIG_ITEM_MAKE_WET "item_make_wet"
 /// from obj/item/dry_process
 #define COMSIG_ITEM_MAKE_DRY "item_make_dry"
+/// from /obj/item/proc/chameleon_change() verb: (mob/user)
+#define COMSIG_ITEM_CHAMELEON_CHANGE "item_chameleon_change"
 /// from mob/carbon/swap_hand: (mob/user)
 #define COMSIG_ITEM_BECOME_ACTIVE "item_become_active"
 #define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"
