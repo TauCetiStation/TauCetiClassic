@@ -14254,7 +14254,9 @@
 	},
 /area/station/ai_monitored/eva)
 "ayg" = (
-/turf/simulated/floor/smoothtile/dark,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "ayh" = (
 /obj/decal/boxingrope{
@@ -16271,7 +16273,9 @@
 	icon_state = "arrow2";
 	dir = 8
 	},
-/turf/simulated/floor/smoothtile/dark,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "aBR" = (
 /obj/machinery/status_display{
@@ -16322,7 +16326,9 @@
 	icon_state = "arrow";
 	dir = 8
 	},
-/turf/simulated/floor/smoothtile/dark,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "aBW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -16939,7 +16945,9 @@
 	icon_state = "arrow";
 	dir = 4
 	},
-/turf/simulated/floor/smoothtile/dark,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "aDn" = (
 /obj/effect/decal/turf_decal/metal{
@@ -16950,7 +16958,9 @@
 	icon_state = "arrow2";
 	dir = 4
 	},
-/turf/simulated/floor/smoothtile/dark,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "aDo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -18376,7 +18386,9 @@
 	name = "Station Intercom (General)";
 	pixel_x = 31
 	},
-/turf/simulated/floor/smoothtile/dark,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "aGc" = (
 /obj/structure/table/woodentable,
@@ -65183,7 +65195,9 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/turf/simulated/floor/smoothtile/dark,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "cyf" = (
 /obj/machinery/door/firedoor,
@@ -77957,7 +77971,9 @@
 	dir = 4
 	},
 /obj/structure/closet/firecloset/full,
-/turf/simulated/floor/smoothtile/dark,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "kCZ" = (
 /turf/simulated/shuttle/floor/cargo{
@@ -83912,7 +83928,9 @@
 /obj/machinery/requests_console/eva{
 	pixel_x = -32
 	},
-/turf/simulated/floor/smoothtile/dark,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "qPb" = (
 /turf/simulated/floor{
