@@ -43,7 +43,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/vending, vending_consoles)
 		if((Vend.stat & BROKEN) || !(Vend.seller_account_number == global.cargo_account.account_number))
 			vending_status = 3
 
-		vending_data += list(list("name" = Vend.name, "status" = vending_status, "load" = amount_percent, "x" = Vend.x, "y" = Vend.y))
+		vending_data += list(list("name" = Vend.name, "ref" = REF(Vend), "status" = vending_status, "load" = amount_percent, "x" = Vend.x, "y" = Vend.y))
 
 	data["vendingMachines"] = vending_data
 

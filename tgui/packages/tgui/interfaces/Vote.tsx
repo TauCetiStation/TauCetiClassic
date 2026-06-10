@@ -1,18 +1,18 @@
-import { BooleanLike } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
-import { sanitizeText } from '../sanitize';
+import { useEffect, useState } from 'react';
+import { processedText } from 'tgui/process';
 import {
   Box,
   Button,
+  Divider,
+  Icon,
+  Modal,
+  NoticeBox,
   Section,
   Stack,
-  NoticeBox,
-  Divider,
-  Modal,
-  Icon,
-} from '../components';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Fragment } from 'inferno';
 
 type Poll = {
   name: string;
@@ -49,9 +49,15 @@ type Data = {
   polls: Poll[];
 };
 
-export const Vote = (_, context) => {
-  const { data } = useBackend<Data>(context);
+export const Vote = () => {
+  const { data } = useBackend<Data>();
   const { isAdmin, currentPoll, polls } = data;
+
+  const [infoModalOpen, setInfoModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!currentPoll) setInfoModalOpen(false);
+  }, [currentPoll]);
 
   const height = Math.min(
     730,
@@ -59,15 +65,17 @@ export const Vote = (_, context) => {
       (!currentPoll || isAdmin
         ? 45 + 26 * polls.filter((poll) => !poll.adminOnly || !!isAdmin).length
         : 0) +
-      (currentPoll ? 135 + 22 * currentPoll.choices.length : 23)
+      (currentPoll ? 135 + 22 * currentPoll.choices.length : 23),
   );
 
   return (
     <Window width={450} height={height}>
       <Window.Content>
-        <VoteInfoModal />
+        {infoModalOpen && (
+          <VoteInfoModal onClose={() => setInfoModalOpen(false)} />
+        )}
         <Stack fill vertical>
-          <Choices />
+          <Choices onModalOpen={() => setInfoModalOpen(true)} />
           {(!currentPoll || !!isAdmin) && <ListPolls />}
           {!!currentPoll && <Timer />}
         </Stack>
@@ -76,21 +84,11 @@ export const Vote = (_, context) => {
   );
 };
 
-const VoteInfoModal = (_, context) => {
-  const { data } = useBackend<Data>(context);
+const VoteInfoModal = ({ onClose }: { onClose: () => void }) => {
+  const { data } = useBackend<Data>();
   const { currentPoll } = data;
-  const [infoModalOpen, setinfoModalOpen] = useLocalState<boolean>(
-    context,
-    'infoModalOpen',
-    false
-  );
 
-  if (!infoModalOpen) return null;
-
-  if (!currentPoll) {
-    setinfoModalOpen(false);
-    return null;
-  }
+  if (!currentPoll) return null;
 
   return (
     <Modal>
@@ -114,44 +112,37 @@ const VoteInfoModal = (_, context) => {
       свой голос
       <br />
       {currentPoll.minimumWinPercentage ? (
-        <Fragment>
+        <>
           Необходимо набрать минимум{' '}
           <Box inline bold>
             {currentPoll.minimumWinPercentage * 100}%
           </Box>
           , чтобы вариант победил
-        </Fragment>
+        </>
       ) : (
         ''
       )}
       {currentPoll.description && (
-        <Fragment>
+        <>
           <hr />
           <Box
-            dangerouslySetInnerHTML={{
-              __html: sanitizeText(currentPoll.description),
-            }}
+            dangerouslySetInnerHTML={processedText(currentPoll.description)}
           />
-        </Fragment>
+        </>
       )}
       <hr />
-      <Button fluid align="center" onClick={() => setinfoModalOpen(false)}>
+      <Button fluid align="center" onClick={onClose}>
         Закрыть
       </Button>
     </Modal>
   );
 };
 
-const Choices = (_, context) => {
-  const { act, data } = useBackend<Data>(context);
+const Choices = ({ onModalOpen }: { onModalOpen: () => void }) => {
+  const { act, data } = useBackend<Data>();
   const { currentPoll } = data;
-  const [infoModalOpen, setInfoModalOpen] = useLocalState<boolean>(
-    context,
-    'infoModalOpen',
-    false
-  );
 
-  let anyChoiceMade = currentPoll?.choices.some((choice) => choice.selected);
+  const anyChoiceMade = currentPoll?.choices.some((choice) => choice.selected);
 
   return (
     <Stack.Item grow>
@@ -167,12 +158,13 @@ const Choices = (_, context) => {
               icon="info"
               color="transparent"
               disabled={!currentPoll}
-              onClick={() => setInfoModalOpen(true)}
+              onClick={onModalOpen}
             />
           ) : undefined
-        }>
+        }
+      >
         {!!currentPoll && currentPoll.choices.length !== 0 ? (
-          <Fragment>
+          <>
             {!currentPoll.showWarning ? (
               ''
             ) : (
@@ -188,17 +180,19 @@ const Choices = (_, context) => {
               <br />
               {currentPoll.choices.map((choice) => (
                 <Stack key={choice.ref} justify="space-between">
-                  <Box height="22px">
+                  <Box height="22px" width="260px">
                     <Button
-                      maxWidth="260px"
+                      maxWidth="230px"
                       ellipsis
+                      tooltip={choice.name}
                       disabled={!currentPoll.canRevote && anyChoiceMade}
                       selected={choice.selected}
                       onClick={() =>
                         act('putVote', {
                           choiceRef: choice.ref,
                         })
-                      }>
+                      }
+                    >
                       {choice.name.replace(/^\w/, (c) => c.toUpperCase())}
                     </Button>
                     {!!choice.selected && (
@@ -206,7 +200,6 @@ const Choices = (_, context) => {
                         name="vote-yea"
                         color="green"
                         ml={1}
-                        verticalAlign="super"
                       />
                     )}
                   </Box>
@@ -214,7 +207,7 @@ const Choices = (_, context) => {
                 </Stack>
               ))}
             </Stack>
-          </Fragment>
+          </>
         ) : (
           <NoticeBox info mb="0">
             {!currentPoll
@@ -227,8 +220,8 @@ const Choices = (_, context) => {
   );
 };
 
-const ListPolls = (_, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ListPolls = () => {
+  const { act, data } = useBackend<Data>();
   const { isAdmin, polls } = data;
 
   return (
@@ -240,7 +233,7 @@ const ListPolls = (_, context) => {
               (poll) =>
                 (!poll.adminOnly || !!isAdmin) && (
                   <Stack.Item key={poll.name}>
-                    <Stack horizontal>
+                    <Stack>
                       {!!isAdmin && (
                         <Stack.Item>
                           <Button
@@ -250,7 +243,8 @@ const ListPolls = (_, context) => {
                               act('toggleAdminOnly', {
                                 pollRef: poll.type,
                               })
-                            }>
+                            }
+                          >
                             {poll.adminOnly
                               ? 'Только админы'
                               : 'Разрешено всем'}
@@ -280,7 +274,7 @@ const ListPolls = (_, context) => {
                       </Stack.Item>
                     </Stack>
                   </Stack.Item>
-                )
+                ),
             )
           ) : (
             <NoticeBox info>Нет доступных голосований!</NoticeBox>
@@ -291,8 +285,8 @@ const ListPolls = (_, context) => {
   );
 };
 
-const Timer = (_, context) => {
-  const { act, data } = useBackend<Data>(context);
+const Timer = () => {
+  const { act, data } = useBackend<Data>();
   const { currentPoll, isAdmin } = data;
 
   return (
@@ -306,7 +300,8 @@ const Timer = (_, context) => {
             <Button
               color="red"
               disabled={!isAdmin}
-              onClick={() => act('cancelVote')}>
+              onClick={() => act('cancelVote')}
+            >
               Отменить голосование
             </Button>
           )}

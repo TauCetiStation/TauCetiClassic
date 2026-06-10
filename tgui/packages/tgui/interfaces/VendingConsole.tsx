@@ -1,14 +1,8 @@
-import { map } from 'common/collections';
-import { useBackend, useLocalState } from '../backend';
-import { Box, ProgressBar } from '../components';
+import { useState } from 'react';
+import { Box, ProgressBar } from 'tgui-core/components';
+import { useBackend } from '../backend';
+import { NanoMap, type NanoMapStaticPayload } from '../components';
 import { Window } from '../layouts';
-
-import {
-  NanoMap,
-  NanoMapMarkerIcon,
-  NanoMapStaticPayload,
-  NanoMapTrackData,
-} from '../components/NanoMap';
 
 const pickColor = (machine: VendingObject): string => {
   let color = 'green';
@@ -25,18 +19,6 @@ const pickColor = (machine: VendingObject): string => {
   }
 
   return color;
-};
-
-const pauseEvent = (e: MouseEvent) => {
-  if (e.stopPropagation) {
-    e.stopPropagation();
-  }
-  if (e.preventDefault) {
-    e.preventDefault();
-  }
-  e.cancelBubble = true;
-  e.returnValue = false;
-  return false;
 };
 
 const pickTitleForTooltip = (status: number): string => {
@@ -80,21 +62,18 @@ type Data = {
 
 type VendingObject = {
   name: string;
+  ref: string;
   x: number;
   y: number;
   status: number;
   load: number;
 };
 
-export const VendingConsole = (_: any, context: any) => {
-  const { act, data } = useBackend<Data>(context);
+export const VendingConsole = () => {
+  const { data } = useBackend<Data>();
   const { currentZ, nanomapPayload, vendingMachines } = data;
 
-  const [zLevel, setZLevel] = useLocalState<number>(
-    context,
-    'vendingConsoleZLevel',
-    currentZ
-  );
+  const [zLevel, setZLevel] = useState<number>(currentZ);
 
   const availableZLevels: number[] = [currentZ];
 
@@ -105,19 +84,28 @@ export const VendingConsole = (_: any, context: any) => {
           <NanoMap
             nanomapPayload={nanomapPayload}
             zLevel={zLevel}
-            setZLevel={setZLevel}
+            onZLevel={setZLevel}
             availableZLevels={availableZLevels}
             pixelsPerTurf={2}
-            controlsOnTop>
+            zoom={2}
+            controlsOnTop
+          >
             {vendingMachines.map((machine: VendingObject) => (
-              <NanoMapMarkerIcon
-                key={machine.name}
+              <NanoMap.Marker
+                key={machine.ref}
                 x={machine.x}
                 y={machine.y}
-                icon="circle"
                 tooltip={tooltipForMachine(machine)}
-                color={pickColor(machine)}
-              />
+              >
+                <div
+                  style={{
+                    width: '2px',
+                    height: '2px',
+                    backgroundColor: pickColor(machine),
+                    borderRadius: '50%',
+                  }}
+                />
+              </NanoMap.Marker>
             ))}
           </NanoMap>
         </Box>
