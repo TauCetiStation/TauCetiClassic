@@ -955,16 +955,11 @@
 
 		var/obj/item/I = contents_by_slot[slot]
 
-		if(target?.equip_to_slot_if_possible(I, slot, disable_warning = TRUE))
-			continue
-
-		if(I.forceMove(target?.loc))
-			continue
-
-		I.forceMove(loc)
+		if(!target?.equip_to_slot_if_possible(I, slot, disable_warning = TRUE))
+			if(!I.forceMove(target?.loc))
+				I.forceMove(loc)
 
 		contents_by_slot[slot] = null
-
 		playsound(src, 'sound/misc/riginternaloff.ogg', VOL_EFFECTS_MASTER, 15)
 
 	update_icon()

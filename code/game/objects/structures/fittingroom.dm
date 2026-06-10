@@ -23,16 +23,15 @@
 	icon_state = "back"
 	front = mutable_appearance(icon, "front")
 	front.layer = INFRONT_MOB_LAYER
+	add_overlay(front)
 	update_icon()
 
 /obj/structure/fittingroom/update_icon()
-	cut_overlay(front)
 	cut_overlay(door)
 
 	door = mutable_appearance(icon, isopen ? "open" : "closed")
 	door.layer = INFRONT_MOB_LAYER
 
-	add_overlay(front)
 	add_overlay(door)
 
 /obj/structure/fittingroom/proc/toggle_door()
