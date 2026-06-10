@@ -59,27 +59,27 @@
 	toggle_door()
 	switch(selection)
 		if("Одеться")
-			dress(target)
+			dress(user, target)
 		if("Раздеться")
-			undress(target)
+			undress(user, target)
 
-/obj/structure/fittingroom/proc/dress(mob/user)
-	if(user.loc != loc)
+/obj/structure/fittingroom/proc/dress(mob/user, mob/target)
+	if(target.loc != loc || !user.Adjacent(target))
 		toggle_door()
 		return
 
 	for(var/obj/item/I in loc)
-		if(!user.equip_to_appropriate_slot(I, TRUE))
-			continue
+		if(!do_after(user, 1 SECONDS, FALSE, target))
+			toggle_door()
+			return
 
-		addtimer(CALLBACK(src,PROC_REF(dress), user), 1 SECONDS)
-		return
+		target.equip_to_appropriate_slot(I, TRUE)
 
 	toggle_door()
 
 
-/obj/structure/fittingroom/proc/undress(mob/user)
-	if(user.loc != loc)
+/obj/structure/fittingroom/proc/undress(mob/user, mob/target)
+	if(target.loc != loc || !user.Adjacent(target))
 		toggle_door()
 		return
 
@@ -87,10 +87,10 @@
 		if(!I.canremove)
 			continue
 
-		if(!user.drop_from_inventory(I, loc, additional_pixel_x = rand(-6, 6), additional_pixel_y = rand(-6, 6)))
-			continue
+		if(!do_after(user, 1 SECONDS, FALSE, target))
+			toggle_door()
+			return
 
-		addtimer(CALLBACK(src,PROC_REF(undress), user), 1 SECONDS)
-		return
+		user.drop_from_inventory(I, loc, additional_pixel_x = rand(-6, 6), additional_pixel_y = rand(-6, 6))
 
 	toggle_door()

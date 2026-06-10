@@ -853,3 +853,120 @@
 	name = "Vox Engineer Suit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/vox/pressure
 	helmet_type = /obj/item/clothing/head/helmet/space/vox/pressure
+
+
+
+/obj/machinery/suit_storage_unit/surgery
+	name = "Medical Surgery Storage Unit"
+	req_access = list()
+	suit_type = null
+	mask_type = null
+
+	icon_state = "surgery"
+	icon = 'icons/obj/suit_storage/medical.dmi'
+
+	locked = FALSE
+
+	filled = TRUE
+
+	var/alist/contents_by_slot = alist(
+		SLOT_BACK = null,
+		SLOT_BELT = null,
+		SLOT_WEAR_ID = null,
+		SLOT_L_STORE = null,
+		SLOT_R_STORE = null,
+		SLOT_S_STORE = null,
+		SLOT_WEAR_SUIT = null,
+		SLOT_HEAD = null,
+		SLOT_WEAR_MASK = null,
+		SLOT_L_EAR = null,
+		SLOT_R_EAR = null,
+		SLOT_GLASSES = null,
+		SLOT_NECK = null,
+		SLOT_GLOVES = null,
+		SLOT_W_UNIFORM = null,
+		SLOT_SHOES = null
+	)
+
+	var/obj/item/clothing/under/gown
+
+/obj/machinery/suit_storage_unit/surgery/Destroy()
+	gown = null
+	contents_by_slot = null
+	..()
+
+/obj/machinery/suit_storage_unit/surgery/toggle_lock()
+	return
+
+/obj/machinery/suit_storage_unit/surgery/make_full()
+	if(!length(contents))
+		if(suit_type)
+			new suit_type(src)
+		if(helmet_type)
+			new helmet_type(src)
+		if(mask_type)
+			new mask_type(src)
+		if(boot_type)
+			new boot_type(src)
+		if(tank_type)
+			new tank_type(src)
+
+/obj/machinery/suit_storage_unit/surgery/place_occupant(mob/living/target, mob/user, obj/grab = null)
+	if(user != target)
+		if(do_after(user, 3 SECOND, target = src))
+			..()
+	else
+		..()
+
+	if(target.loc != src)
+		return
+	if((length(contents) - 1) <= 0) // - 1 because in content we place human, they couted too in content
+		to_chat(target, "<span class ='danger'>There are nothing here for you.</span>")
+	if(emagged)
+		to_chat(target, "<span class ='danger'>You feel like a terrible manipulators pulls you into [name].</span>")
+		start_ultra_violet(user)
+	update_icon()
+
+/obj/machinery/suit_storage_unit/surgery/fast_equip(mob/living/target)
+	var/obj/item/uniform = target?.get_equipped_item(SLOT_W_UNIFORM)
+	if(!gown && uniform)
+		if(target?.drop_from_inventory(uniform, src))
+			gown = uniform
+
+	for(var/slot in contents_by_slot)
+		if(!do_after(target, 0.1 SECONDS, FALSE, src))
+			continue
+
+		if(!contents_by_slot[slot])
+			continue
+		var/obj/item/I = contents_by_slot[slot]
+
+		if(target?.equip_to_slot_if_possible(I, slot, disable_warning = TRUE))
+			continue
+
+		if(I.forceMove(target?.loc))
+			continue
+
+		I.forceMove(loc)
+
+		playsound(src, 'sound/misc/riginternaloff.ogg', VOL_EFFECTS_MASTER, 15)
+
+	update_icon()
+
+/obj/machinery/suit_storage_unit/surgery/fast_unequip(mob/living/target)
+	for(var/slot in contents_by_slot)
+		if(contents_by_slot[slot])
+			continue
+		var/obj/item/I = target.get_equipped_item(slot)
+		if(!I || I.canremove)
+			continue
+
+		if(!target.drop_from_inventory(I, src))
+			continue
+		contents_by_slot[slot] = I
+
+	if(gown)
+		if(!target?.equip_to_slot_if_possible(gown, SLOT_W_UNIFORM, disable_warning = TRUE))
+			return
+
+		gown = null
