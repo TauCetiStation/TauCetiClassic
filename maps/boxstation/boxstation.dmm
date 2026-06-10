@@ -14252,9 +14252,6 @@
 	icon_state = "dark"
 	},
 /area/station/ai_monitored/eva)
-"ayg" = (
-/turf/simulated/floor/smoothtile/neutral,
-/area/station/ai_monitored/eva)
 "ayh" = (
 /obj/decal/boxingrope{
 	dir = 9
@@ -15465,9 +15462,7 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aAq" = (
 /obj/machinery/door/poddoor{
@@ -16142,18 +16137,14 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aBE" = (
 /obj/effect/decal/turf_decal/white{
 	icon_state = "siding_corner";
 	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aBF" = (
 /obj/structure/closet/l3closet/scientist,
@@ -16294,7 +16285,7 @@
 	icon_state = "siding_corner";
 	dir = 4
 	},
-/turf/simulated/floor/smoothtile/white,
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "aBR" = (
 /obj/machinery/status_display{
@@ -16345,7 +16336,7 @@
 	icon_state = "siding_corner";
 	dir = 1
 	},
-/turf/simulated/floor/smoothtile/neutral,
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "aBW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -16526,9 +16517,7 @@
 	dir = 4
 	},
 /obj/machinery/hologram/holopad,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aCq" = (
 /turf/simulated/wall/r_wall,
@@ -16569,9 +16558,7 @@
 /turf/simulated/wall/r_wall,
 /area/station/ai_monitored/eva)
 "aCv" = (
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aCw" = (
 /obj/machinery/light/small,
@@ -16965,7 +16952,7 @@
 /obj/effect/decal/turf_decal/white{
 	icon_state = "siding_corner"
 	},
-/turf/simulated/floor/smoothtile/white,
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "aDn" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -16976,7 +16963,7 @@
 	icon_state = "siding_corner";
 	dir = 8
 	},
-/turf/simulated/floor/smoothtile/neutral,
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "aDo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -17139,9 +17126,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aDF" = (
 /obj/machinery/atmospherics/components/unary/portables_connector,
@@ -17154,9 +17139,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aDH" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -17196,9 +17179,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aDK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -17605,9 +17586,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aEE" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -18360,7 +18339,7 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "aFX" = (
-/turf/simulated/floor/smoothtile/white,
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "aFY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -18403,7 +18382,7 @@
 	icon_state = "delivery"
 	},
 /obj/structure/closet/firecloset/full,
-/turf/simulated/floor/smoothtile/neutral,
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "aGc" = (
 /obj/structure/table/woodentable,
@@ -19703,9 +19682,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aID" = (
 /obj/machinery/disposal,
@@ -21138,7 +21115,9 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "aLh" = (
 /obj/structure/cable{
@@ -21870,9 +21849,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aMx" = (
 /obj/structure/cable,
@@ -21967,7 +21944,9 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "aME" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -22000,9 +21979,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "aMG" = (
 /obj/item/clothing/gloves/insulated,
@@ -22039,7 +22016,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "aMJ" = (
 /obj/machinery/atmospherics/components/binary/valve,
@@ -30253,9 +30232,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "bbm" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -56941,9 +56918,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "cat" = (
 /obj/machinery/portable_atmospherics/powered/pump,
@@ -65192,7 +65167,7 @@
 	dir = 8
 	},
 /obj/structure/closet/emcloset,
-/turf/simulated/floor/smoothtile/white,
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "cyf" = (
 /obj/machinery/door/firedoor,
@@ -70280,7 +70255,9 @@
 /obj/machinery/light_switch{
 	pixel_x = -27
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "djb" = (
 /obj/effect/decal/turf_decal{
@@ -70825,7 +70802,9 @@
 	},
 /obj/random/foods/food_trash,
 /obj/item/weapon/flora/random,
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "dNy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -74583,9 +74562,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "hyd" = (
 /obj/machinery/meter,
@@ -74822,9 +74799,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "hLb" = (
 /obj/machinery/gateway/center/station,
@@ -77911,7 +77886,7 @@
 	dir = 4
 	},
 /obj/structure/closet/firecloset/full,
-/turf/simulated/floor/smoothtile/neutral,
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "kCZ" = (
 /turf/simulated/shuttle/floor/cargo{
@@ -79155,9 +79130,7 @@
 	icon_state = "siding_corner";
 	dir = 1
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "lRb" = (
 /obj/structure/sign/warning/securearea,
@@ -80016,9 +79989,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "mIb" = (
 /obj/structure/cable{
@@ -81584,7 +81555,9 @@
 	icon_state = "siding_line";
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "onb" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red,
@@ -82113,15 +82086,20 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "oWh" = (
-/obj/effect/decal/turf_decal/white{
-	icon_state = "siding_line";
-	dir = 9
-	},
 /obj/machinery/disposal,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/simulated/floor,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/obj/effect/decal/turf_decal/white{
+	icon_state = "siding_line";
+	dir = 9
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
 /area/station/ai_monitored/eva)
 "oXb" = (
 /obj/machinery/hydroponics/constructable,
@@ -82842,9 +82820,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "pRb" = (
 /turf/simulated/floor{
@@ -83770,7 +83746,7 @@
 	icon_state = "delivery"
 	},
 /obj/structure/closet/emcloset,
-/turf/simulated/floor/smoothtile/white,
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "qPb" = (
 /turf/simulated/floor{
@@ -88530,9 +88506,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 9
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "wLi" = (
 /turf/simulated/wall,
@@ -117155,8 +117129,8 @@ clo
 aCu
 aCy
 pDH
-nsX
-lSp
+hMb
+mzY
 oWh
 dNk
 diY
@@ -117926,8 +117900,8 @@ aYi
 aCu
 aCB
 nGO
-hMb
-mzY
+nsX
+lSp
 oBl
 lXs
 omD
@@ -118440,8 +118414,8 @@ aYi
 aCu
 hmQ
 aAi
-ayg
-ayg
+aFX
+aFX
 aIM
 lMY
 aGz
@@ -118697,8 +118671,8 @@ aYi
 aCu
 ckw
 aAi
-ayg
-ayg
+aFX
+aFX
 aIM
 rPZ
 aCu
