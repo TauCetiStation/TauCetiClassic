@@ -890,11 +890,6 @@
 
 	var/obj/item/clothing/under/patient_gown/gown
 
-/obj/machinery/suit_storage_unit/surgery/atom_init()
-	. = ..()
-
-	gown = new(src)
-
 /obj/machinery/suit_storage_unit/surgery/Destroy()
 	gown = null
 	contents_by_slot = null
@@ -904,33 +899,7 @@
 	return
 
 /obj/machinery/suit_storage_unit/surgery/make_full()
-	if(!length(contents))
-		if(suit_type)
-			new suit_type(src)
-		if(helmet_type)
-			new helmet_type(src)
-		if(mask_type)
-			new mask_type(src)
-		if(boot_type)
-			new boot_type(src)
-		if(tank_type)
-			new tank_type(src)
-
-/obj/machinery/suit_storage_unit/surgery/place_occupant(mob/living/target, mob/user, obj/grab = null)
-	if(user != target)
-		if(do_after(user, 3 SECOND, target = src))
-			..()
-	else
-		..()
-
-	if(target.loc != src)
-		return
-	if((length(contents) - 1) <= 0) // - 1 because in content we place human, they couted too in content
-		to_chat(target, "<span class ='danger'>There are nothing here for you.</span>")
-	if(emagged)
-		to_chat(target, "<span class ='danger'>You feel like a terrible manipulators pulls you into [name].</span>")
-		start_ultra_violet(user)
-	update_icon()
+	gown = new(src)
 
 /obj/machinery/suit_storage_unit/surgery/fast_equip(mob/living/operator)
 	if(!ishuman(operator))
@@ -1011,4 +980,12 @@
 		gown = I
 		return
 
-	return ..()
+/obj/machinery/suit_storage_unit/surgery/MouseDrop_T(atom/something, mob/user)
+	add_fingerprint(user)
+	if(stat & BROKEN)
+		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
+		return FALSE
+	if(!opened || !ishuman(something))
+		return FALSE
+	place_occupant(something, user)
+	return TRUE
