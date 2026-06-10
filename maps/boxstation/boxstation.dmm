@@ -520,13 +520,15 @@
 /turf/environment/space,
 /area/space)
 "aaX" = (
-/obj/machinery/cryopod,
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
 /obj/machinery/camera{
 	c_tag = "Cryogenic Storage"
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutral"
+	icon_state = "white"
 	},
 /area/station/civilian/dormitories)
 "aaY" = (
@@ -15548,21 +15550,23 @@
 /turf/simulated/floor/plating,
 /area/station/security/range)
 "aAv" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /obj/structure/cable{
-	d1 = 4;
+	d1 = 1;
 	d2 = 8;
-	icon_state = "4-8"
+	icon_state = "1-8"
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutral"
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area/station/civilian/dormitories)
 "aAw" = (
 /obj/machinery/alarm{
@@ -16220,22 +16224,13 @@
 	},
 /area/station/hallway/primary/fore)
 "aBM" = (
-/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 4
-	},
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "neutral"
@@ -50921,17 +50916,18 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "apc left";
+	pixel_x = -28
+	},
+/obj/structure/cable,
 /turf/environment/space,
 /turf/simulated/floor{
 	dir = 9;
@@ -52055,11 +52051,12 @@
 	},
 /area/station/medical/genetics)
 "bNX" = (
-/obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_x = -30
+	},
+/obj/machinery/light/smart{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -52355,12 +52352,16 @@
 	pixel_x = 16;
 	pixel_y = -16
 	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_x = -30
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/machinery/light/smart{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -122268,17 +122269,17 @@ azs
 cea
 aBe
 awT
-aKN
+aaX
 aKN
 bIF
 bKV
 bMc
-bNX
-bOC
 azz
+bOC
+bNX
 bPy
 azz
-aAv
+azz
 aFj
 aFt
 jLK
@@ -122525,13 +122526,13 @@ cea
 cea
 aBe
 awT
-aaX
+azx
 azx
 bIN
 awT
 bMs
 bNY
-bOD
+aAv
 bOD
 bPI
 bQv
