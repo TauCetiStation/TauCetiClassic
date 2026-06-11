@@ -954,3 +954,67 @@ to destroy them and players will be able to make replacements.
 	req_components = list(
 		/obj/item/weapon/stock_parts/micro_laser = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1)
+
+/obj/item/weapon/circuitboard/suit_storage
+	name = "circut board (Suit Storage Unit)"
+	build_path = /obj/machinery/suit_storage_unit
+	board_type = "machine"
+	var/emagged = FALSE
+	origin_tech = "programming = 3; engineering = 3"
+	req_components = list(
+		/obj/item/weapon/stock_parts/manipulator = 4,
+		/obj/item/weapon/stock_parts/matter_bin = 2,
+		/obj/item/stack/cable_coil = 3,
+		/obj/item/weapon/stock_parts/console_screen = 1
+	)
+	var/list/names_of_suit_storage = list()
+	var/list/radial_icons = list()
+
+/obj/item/weapon/circuitboard/suit_storage/atom_init()
+	update_build_types()
+	return ..()
+
+/obj/item/weapon/circuitboard/suit_storage/proc/update_build_types()
+	names_of_suit_storage = list()
+	radial_icons = list()					// Force clear list befor add some
+	for(var/obj/machinery/suit_storage_unit/typepath as anything in typesof(/obj/machinery/suit_storage_unit))
+		switch(typepath::build_type)
+			if(SUIT_STORAGE_BUILD_NONE)
+				continue
+			if(SUIT_STORAGE_BUILD_DEFAULT)
+				if(emagged)
+					continue
+			if(SUIT_STORAGE_BUILD_SYNDIE)
+				if(!emagged)
+					continue
+
+		ASSERT(!names_of_suit_storage[typepath::name])
+		names_of_suit_storage[typepath::name] = typepath
+		radial_icons[typepath::name] = icon(typepath::icon, typepath::icon_state)
+
+/obj/item/weapon/circuitboard/suit_storage/proc/update_circut(obj/machinery/suit_storage_unit/typepath)
+	name = "circuit board ([typepath::name])"
+	build_path = typepath::type
+
+/obj/item/weapon/circuitboard/suit_storage/emag_act(mob/user)
+	if(emagged)
+		to_chat(user, "Circuit lock is already removed.")
+		return FALSE
+	to_chat(user, "<span class='notice'>You override the circuit lock and open controls.</span>")
+	emagged = TRUE
+	update_build_types()
+	return TRUE
+
+/obj/item/weapon/circuitboard/suit_storage/attackby(obj/item/I, mob/user, params)
+	if(isscrewing(I))
+		var/suit_storage_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
+		if(isnull(suit_storage_name))
+			return
+
+		var/obj/machinery/suit_storage_unit/suit_storage_type = names_of_suit_storage[suit_storage_name]
+
+		to_chat(user, "<span class='notice'>You set the board to [suit_storage_name].</span>")
+
+		update_circut(suit_storage_type)
+		return
+	return ..()

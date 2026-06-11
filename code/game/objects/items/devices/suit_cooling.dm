@@ -120,7 +120,7 @@
 			cell.forceMove(get_turf(loc))
 
 		cell.add_fingerprint(user)
-		cell.updateicon()
+		cell.update_icon()
 		cell = null
 
 		to_chat(user, "<span class='info'>You remove \the [cell].</span>")
