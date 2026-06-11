@@ -520,17 +520,13 @@
 /turf/environment/space,
 /area/space)
 "aaX" = (
-/obj/effect/decal/turf_decal{
-	dir = 4;
-	icon_state = "warn"
+/obj/structure/grille,
+/obj/item/weapon/shard,
+/obj/structure/window/thin/reinforced{
+	dir = 8
 	},
-/obj/machinery/camera{
-	c_tag = "Cryogenic Storage"
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/station/civilian/dormitories)
+/turf/simulated/floor/plating,
+/area/station/maintenance/dormitory)
 "aaY" = (
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -14770,6 +14766,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
 "azf" = (
@@ -14780,8 +14781,14 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/machinery/light_switch{
-	pixel_y = 24
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "apc top";
+	pixel_y = 28
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -19683,11 +19690,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -70272,16 +70274,10 @@
 	icon_state = "siding_line";
 	dir = 1
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
-	},
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/item/weapon/flora/random,
+/obj/machinery/light_switch{
+	pixel_x = -22
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "bluecorner"
@@ -75189,10 +75185,6 @@
 /obj/structure/closet/emcloset,
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
-	},
-/obj/machinery/camera{
-	c_tag = "Central Hallway North";
-	dir = 6
 	},
 /turf/simulated/floor{
 	dir = 9;
@@ -87426,6 +87418,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
+"uyP" = (
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_y = 32
+	},
+/obj/machinery/camera{
+	c_tag = "Central Hallway North";
+	dir = 6
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "blue"
+	},
+/area/station/hallway/primary/central)
 "uBq" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -88158,6 +88164,18 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/lobby)
+"wdN" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/machinery/camera{
+	c_tag = "Cryogenic Storage"
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/station/civilian/dormitories)
 "wdR" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -119381,7 +119399,7 @@ aCu
 aCu
 aCu
 aCu
-hZb
+uyP
 aMM
 aPy
 bDs
@@ -121177,7 +121195,7 @@ awT
 bQC
 bRg
 aef
-bzy
+aHA
 aeJ
 xqD
 aef
@@ -121434,9 +121452,9 @@ awT
 bQD
 bRi
 aef
-aHA
+bzy
 aeJ
-aco
+aaX
 aef
 aaa
 aGZ
@@ -122194,7 +122212,7 @@ azs
 cea
 aBe
 awT
-aaX
+wdN
 aKN
 bIF
 bKV
