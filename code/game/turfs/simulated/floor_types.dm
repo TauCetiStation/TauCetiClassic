@@ -50,6 +50,12 @@
 	icon_state = "center_8"
 	smooth = SMOOTH_TRUE
 
+/turf/simulated/floor/smoothtile/make_plating()
+	ChangeTurf(/turf/simulated/floor)
+	var/turf/simulated/floor/F = src
+	F.make_plating()
+	return
+
 /turf/simulated/floor/smoothtile/airless
 	icon = 'icons/turf/floors/smooth/floortile.dmi'
 	airless = TRUE
