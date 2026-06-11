@@ -11,6 +11,8 @@
 
 // Called when the item is in the active hand, and clicked; alternately, there is an 'Click On Held Object' verb or you can hit pagedown.
 /obj/item/proc/attack_self(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_NO_INTERACT)
 		return
 
@@ -19,6 +21,8 @@
 
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
 		return TRUE
 	return FALSE
