@@ -520,13 +520,15 @@
 /turf/environment/space,
 /area/space)
 "aaX" = (
-/obj/machinery/cryopod,
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
 /obj/machinery/camera{
 	c_tag = "Cryogenic Storage"
 	},
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "neutral"
+	icon_state = "white"
 	},
 /area/station/civilian/dormitories)
 "aaY" = (
@@ -14254,9 +14256,7 @@
 	},
 /area/station/ai_monitored/eva)
 "ayg" = (
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "ayh" = (
 /obj/decal/boxingrope{
@@ -16273,9 +16273,7 @@
 	icon_state = "arrow2";
 	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "aBR" = (
 /obj/machinery/status_display{
@@ -16326,9 +16324,7 @@
 	icon_state = "arrow";
 	dir = 8
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "aBW" = (
 /obj/effect/decal/cleanable/dirt,
@@ -16945,9 +16941,7 @@
 	icon_state = "arrow";
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "aDn" = (
 /obj/effect/decal/turf_decal/metal{
@@ -16958,9 +16952,7 @@
 	icon_state = "arrow2";
 	dir = 4
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "aDo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -17983,7 +17975,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/vending/eva,
+/obj/machinery/suit_storage_unit/unathi{
+	filled = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
 "aFq" = (
@@ -18386,9 +18380,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = 31
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "aGc" = (
 /obj/structure/table/woodentable,
@@ -65195,9 +65187,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "cyf" = (
 /obj/machinery/door/firedoor,
@@ -70291,6 +70281,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "bluecorner"
@@ -77495,9 +77486,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/unathi{
-	filled = 1
-	},
+/obj/machinery/vending/eva,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
 "kiF" = (
@@ -77971,9 +77960,7 @@
 	dir = 4
 	},
 /obj/structure/closet/firecloset/full,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "kCZ" = (
 /turf/simulated/shuttle/floor/cargo{
@@ -82241,7 +82228,6 @@
 	dir = 4;
 	color = "#b79044"
 	},
-/obj/item/weapon/flora/random,
 /obj/effect/decal/turf_decal{
 	dir = 5;
 	icon_state = "warn"
@@ -83928,9 +83914,7 @@
 /obj/machinery/requests_console/eva{
 	pixel_x = -32
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
 "qPb" = (
 /turf/simulated/floor{
@@ -122210,7 +122194,7 @@ azs
 cea
 aBe
 awT
-aKN
+aaX
 aKN
 bIF
 bKV
@@ -122467,7 +122451,7 @@ cea
 cea
 aBe
 awT
-aaX
+azx
 azx
 bIN
 awT
