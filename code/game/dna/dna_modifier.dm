@@ -417,17 +417,17 @@
 					else if(selected_se_block > DNA_SE_LENGTH / 2 && selected_se_block < DNA_SE_LENGTH)
 						real_SE_block--
 
-					connected.occupant.dna.SetSESubBlock(real_SE_block, selected_se_subblock, block)
-					connected.occupant.radiation += (radiation_intensity + radiation_duration) / max(1, connected.damage_coeff)
+				connected.occupant.dna.SetSESubBlock(real_SE_block, selected_se_subblock, block)
+				connected.occupant.radiation += (radiation_intensity + radiation_duration) / max(1, connected.damage_coeff)
+				domutcheck(connected.occupant, connected, block != null, 1)
+			else
+				connected.occupant.radiation += radiation_intensity * 2 + radiation_duration + connected.precision_coeff
+				if(prob(80 - radiation_duration))
+					randmutb(connected.occupant)
 					domutcheck(connected.occupant, connected, block != null, 1)
 				else
-					connected.occupant.radiation += radiation_intensity * 2 + radiation_duration + connected.precision_coeff
-					if(prob(80 - radiation_duration))
-						randmutb(connected.occupant)
-						domutcheck(connected.occupant, connected, block != null, 1)
-					else
-						randmuti(connected.occupant)
-						connected.occupant.UpdateAppearance()
+					randmuti(connected.occupant)
+					connected.occupant.UpdateAppearance()
 
 		if("transfer")
 			if(!connected.occupant || (NOCLONE in connected.occupant.mutations) || !connected.occupant.dna)
