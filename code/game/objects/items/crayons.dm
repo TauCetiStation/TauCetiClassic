@@ -48,7 +48,7 @@
 										 "<font size=3><b>Вы: ...</b></font>")
 				else
 					var/phrase = pick(phrases)
-					user.visible_message("<font size=3><b>[user] громко заявляет: \"[phrase]\"</b></font>",
+					user.audible_message("<font size=3><b>[user] громко заявляет: \"[phrase]\"</b></font>",
 										 "<font size=3><b>Вы громко заявляете: \"[phrase]\"</b></font>")
 		uses = max(0, uses - 5)
 		if(!uses)
@@ -343,7 +343,7 @@
 		to_chat(user, "You will now draw in black and white with this crayon.")
 	return
 
-// Раскрашивает каждый непробельный символ строки в циклящуюся радужную палитру.
+// Colors each non-space character of the text with a cycling rainbow palette.
 /proc/rainbow_text(text)
 	var/static/list/rainbow_palette = list("#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#0000ff", "#7f00ff", "#ff00ff")
 	var/out = ""
