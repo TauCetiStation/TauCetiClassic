@@ -53,7 +53,6 @@
 /turf/simulated/floor/smoothtile/make_plating()
 	ChangeTurf(/turf/simulated/floor/plating)
 
-
 /turf/simulated/floor/smoothtile/airless
 	icon = 'icons/turf/floors/smooth/floortile.dmi'
 	airless = TRUE
