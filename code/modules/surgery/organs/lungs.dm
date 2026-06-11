@@ -21,6 +21,7 @@
 	var/poison_type = "phoron"
 	var/last_successful_breath
 	var/breathing = FALSE
+	var/fractol_addiction = 0
 
 
 /obj/item/organ/internal/lungs/proc/handle_breath(datum/gas_mixture/breath, forced)
@@ -59,6 +60,11 @@
 	inhaling = inhale_pp >= druggy_inhale_pp ? inhaling : druggy_inhaling
 	inhale_pp = inhale_pp >= druggy_inhale_pp ? inhale_pp : druggy_inhale_pp
 
+	if(inhale_type == druggy_breath_type)
+		fractol_addiction++
+	else if(fractol_addiction > 0)
+		fractol_addiction--
+		inhale_type = druggy_breath_type
 
 	if(!owner)
 		return TRUE
