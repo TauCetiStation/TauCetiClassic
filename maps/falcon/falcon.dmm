@@ -17212,14 +17212,13 @@
 /turf/simulated/wall/r_wall,
 /area/station/bridge/nuke_storage)
 "hrp" = (
-/obj/structure/elevator/cargo,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+/obj/machinery/door/airlock/external{
+	name = "Supply Dock Airlock";
+	req_access = list(31)
 	},
-/turf/simulated/floor/airless{
-	icon_state = "asteroidfloor"
-	},
-/area/asteroid/mine/eva)
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "hrw" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper{
@@ -19843,7 +19842,14 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "jQf" = (
-)
+/obj/machinery/door/airlock/external{
+	dock_tag = "supply_dock";
+	name = "Supply Dock Airlock";
+	req_access = list(31)
+	},
+/obj/machinery/door/firedoor,
+/turf/simulated/floor/plating,
+/area/station/cargo/storage)
 "jQi" = (
 /obj/structure/sink{
 	dir = 8;
