@@ -82,6 +82,7 @@ var/global/list/airlock_overlays = list()
 	..()
 	airlock_list += src
 	wires = new(src)
+
 	if(glass && !inner_material)
 		inner_material = "glass"
 	if(dir)
@@ -171,6 +172,15 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/proc/regainMainPower()
 	if(secondsMainPowerLost > 0)
 		secondsMainPowerLost = 0
+
+/obj/machinery/door/airlock/proc/copy_electronics_access_to(obj/item/weapon/airlock_electronics/target)
+	if(!req_access)
+		check_access()
+	if(req_access.len)
+		target.conf_access = req_access
+	else if (req_one_access.len)
+		target.conf_access = req_one_access
+		target.one_access = 1
 
 /obj/machinery/door/airlock/proc/loseMainPower()
 	if(secondsMainPowerLost <= 0)
@@ -1171,6 +1181,17 @@ var/global/list/airlock_overlays = list()
 	assembly.created_name = name
 	assembly.update_state()
 
+/obj/machinery/door/airlock/proc/drop_electronics()
+	if(!electronics)
+		var/obj/item/weapon/airlock_electronics/AE = new (loc)
+		copy_electronics_access_to(AE)
+		return AE
+
+	var/obj/item/weapon/airlock_electronics/AE = electronics
+	electronics = null
+	AE.forceMove(loc)
+	return AE
+
 /obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
 	if(flags & NODECONSTRUCT)
 		return ..()
@@ -1180,31 +1201,19 @@ var/global/list/airlock_overlays = list()
 
 	if(!disassembled)
 		A.update_integrity(A.max_integrity * 0.5)
+		if(prob(75))
+			var/obj/item/weapon/airlock_electronics/AE = drop_electronics()
+			if(prob(25))
+				AE.make_broken()
 		return ..()
 
 	if(user)
 		to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 
-	var/obj/item/weapon/airlock_electronics/ae
-	if(electronics)
-		ae = electronics
-		electronics = null
-		ae.loc = loc
-	else
-		ae = new /obj/item/weapon/airlock_electronics(loc)
-		if(!req_access)
-			check_access()
-		if(req_access.len)
-			ae.conf_access = req_access
-		else if (req_one_access.len)
-			ae.conf_access = req_one_access
-			ae.one_access = 1
+	var/obj/item/weapon/airlock_electronics/AE = drop_electronics()
 
 	if(operating == -1)
-		ae.icon_state = "door_electronics_smoked"
-		ae.item_state_inventory = "door_electronics_smoked"
-		ae.item_state_world = "door_electronics_smoked_w"
-		ae.broken = TRUE
+		AE.make_broken()
 		operating = 0
 	..()
 

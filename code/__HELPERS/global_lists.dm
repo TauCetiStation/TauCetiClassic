@@ -307,6 +307,9 @@
 	for(var/datum/ringtone/Ring as anything in subtypesof(/datum/ringtone))
 		global.ringtones_by_names["[initial(Ring.name)]"] = new Ring
 
+	global.package_wrap_by_type = list()
+	for(var/package_wrap_type as anything in typesof(/datum/package_wrap))
+		global.package_wrap_by_type[package_wrap_type] = new package_wrap_type
 
 	global.elevator_saveables_list += subtypesof(/obj/item/weapon/ore)
 	global.elevator_saveables_list += subtypesof(/obj/item/weapon/reagent_containers/food/snacks/grown)

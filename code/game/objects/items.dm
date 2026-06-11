@@ -779,7 +779,7 @@
 		var/datum/callback/tool_check = CALLBACK(src, PROC_REF(tool_check_callback), user, amount, extra_checks, target)
 
 		if(ismob(target))
-			if(!do_mob(user, target, delay, extra_checks = tool_check))
+			if(!do_mob(user, target, delay, extra_checks = tool_check, particle_type = particle_use_type))
 				return
 
 		else
@@ -1098,7 +1098,7 @@
 	var/mob/living/carbon/human/H = user
 	SEND_SIGNAL(H, COMSIG_CLICK_CTRL_SHIFT, src)
 
-/obj/item/try_wrap_up(texture_name = "cardboard", details_name = null)
+/obj/item/try_wrap_up(wrap_type)
 	var/size = round(w_class)
 	if(size < SIZE_MINUSCULE || size > SIZE_BIG)
 		return null
@@ -1107,7 +1107,7 @@
 	P.w_class = w_class
 	P.icon_state = "deliverycrate[size]"
 
-	P.add_texture(texture_name, details_name)
+	P.add_texture(wrap_type)
 
 	forceMove(P)
 
