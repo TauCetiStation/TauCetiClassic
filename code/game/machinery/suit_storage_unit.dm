@@ -220,9 +220,6 @@
 	update_power_use()
 
 /obj/machinery/suit_storage_unit/Destroy()
-	QDEL_NULL(occupant)
-	QDEL_LIST(contents)
-	QDEL_NULL(ssu_type)
 	ssu_left?.update_connectors()
 	ssu_left = null
 	ssu_right?.update_connectors()
@@ -232,12 +229,15 @@
 /obj/machinery/suit_storage_unit/ex_act(severity)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
-			if(prob(50))
-				drop_from_contents() //So suits dont survive all the time
+			QDEL_NULL(occupant)
+			QDEL_LIST(contents)
+			QDEL_NULL(ssu_type)
 			qdel(src)
 		if(EXPLODE_HEAVY)
 			if(prob(50))
-				drop_from_contents()
+				QDEL_NULL(occupant)
+				QDEL_LIST(contents)
+				QDEL_NULL(ssu_type)
 				qdel(src)
 
 /obj/machinery/suit_storage_unit/proc/open(mob/user)
