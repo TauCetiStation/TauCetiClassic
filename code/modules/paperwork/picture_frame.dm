@@ -35,9 +35,9 @@
 			return
 
 		if(istype(I, /obj/item/canvas))
-			var/obj/item/canvas/C = I
-			if(!C.finalized)
-				to_chat(user, "<span class='notice'>[C_CASE(C, NOMINATIVE_CASE)] не завершён.</span>")
+			var/obj/item/canvas/target_canvas = I
+			if(!target_canvas.finalized)
+				to_chat(user, "<span class='notice'>[C_CASE(target_canvas, NOMINATIVE_CASE)] не завершён.</span>")
 				return
 
 		if(!user.drop_from_inventory(I, src))
@@ -53,8 +53,8 @@
 			new /obj/item/stack/sheet/wood(src.loc)
 		else
 			new /obj/item/stack/sheet/metal(src.loc)
-		for(var/obj/C in contents)
-			C.forceMove(get_turf(src))
+		for(var/obj/item in contents)
+			item.forceMove(get_turf(src))
 		qdel(src)
 		return
 
@@ -78,9 +78,9 @@
 	user.examinate(src)
 
 /obj/item/weapon/picture_frame/examine(mob/user)
-	var/obj/item/canvas/C = displayed_weakref?.resolve()
-	if(C && (user.r_hand == src || user.l_hand == src))
-		C.show(user)
+	var/obj/item/canvas/target_canvas = displayed_weakref?.resolve()
+	if(target_canvas && (user.r_hand == src || user.l_hand == src))
+		target_canvas.show(user)
 	else
 		..()
 
@@ -91,15 +91,11 @@
 		return
 
 	var/obj/item/I = displayed_weakref?.resolve()
+	var/obj/item/canvas/target_canvas = I
 	if(istype(I, /obj/item/canvas))
-		var/obj/item/canvas/C = I
-		icon_state = "[initial(icon_state)]_[C.width]x[C.height]"
-		var/mutable_appearance/MA = mutable_appearance(C.generated_icon)
-		MA.pixel_x = C.framed_offset_x
-		MA.pixel_y = C.framed_offset_y
-		add_overlay(MA)
-	else
-		add_overlay(image(I.icon, "photo"))
+		icon_state = "[initial(icon_state)]_[target_canvas.width]x[target_canvas.height]"
+
+	add_overlay(target_canvas.get_framed_picture())
 
 /obj/item/weapon/picture_frame/proc/try_build(turf/on_wall)
 	if (!Adjacent(on_wall))
@@ -122,15 +118,16 @@
 		return
 
 
-	var/obj/structure/picture_frame/PF = new frame_type(T, reverse_dir[ndir], 1)
+	var/obj/structure/picture_frame/target_frame = new frame_type(T, reverse_dir[ndir], 1)
 	if(displayed_weakref)
 		var/obj/item/I = displayed_weakref?.resolve()
 		displayed_weakref = null
-		I.forceMove(PF)
-		PF.framed_weakref = WEAKREF(I)
-	PF.set_dir(ndir)
-	PF.update_icon()
-	PF.update_name()
+		I.forceMove(target_frame)
+		target_frame.framed_weakref = WEAKREF(I)
+
+	target_frame.set_dir(ndir)
+	target_frame.update_icon()
+	target_frame.update_name()
 	qdel(src)
 
 /obj/structure/picture_frame
@@ -172,9 +169,9 @@
 	max_integrity = 100
 
 /obj/structure/picture_frame/examine(mob/user)
-	var/obj/item/canvas/C = framed_weakref?.resolve()
-	if(C && in_range(src, user))
-		C.show(user)
+	var/obj/item/canvas/target_canvas = framed_weakref?.resolve()
+	if(target_canvas && in_range(src, user))
+		target_canvas.show(user)
 	else
 		..()
 
@@ -185,9 +182,9 @@
 			return
 
 		if(istype(O, /obj/item/canvas))
-			var/obj/item/canvas/C = O
-			if(!C.finalized)
-				to_chat(user, "<span class='notice'>[C_CASE(C, NOMINATIVE_CASE)] не завершён.</span>")
+			var/obj/item/canvas/target_canvas = O
+			if(!target_canvas.finalized)
+				to_chat(user, "<span class='notice'>[C_CASE(target_canvas, NOMINATIVE_CASE)] не завершён.</span>")
 				return
 
 		if(!user.drop_from_inventory(O, src))
@@ -235,15 +232,15 @@
 	if(flags & NODECONSTRUCT)
 		return ..()
 	if(disassembled)
-		var/obj/item/weapon/picture_frame/F = new frame_type(T)
+		var/obj/item/weapon/picture_frame/target_frame = new frame_type(T)
 		if(framed_weakref)
 			var/obj/item/I = framed_weakref?.resolve()
-			F.displayed_weakref = WEAKREF(I)
-			I.forceMove(F)
+			target_frame.displayed_weakref = WEAKREF(I)
+			I.forceMove(target_frame)
 			framed_weakref = null
-		F.update_icon()
+		target_frame.update_icon()
 		if(user && !issilicon(user))
-			user.put_in_hands(F)
+			user.put_in_hands(target_frame)
 	else
 		if(frame_type == /obj/item/weapon/picture_frame/wooden)
 			new /obj/item/stack/sheet/wood(T)
@@ -258,25 +255,22 @@
 /obj/structure/picture_frame/update_icon()
 	cut_overlays()
 	icon_state = initial(icon_state)
-	if(framed_weakref)
-		var/obj/item/I = framed_weakref?.resolve()
-		var/mutable_appearance/MA
-		if(istype(I, /obj/item/canvas))
-			var/obj/item/canvas/C = I
-			icon_state = "[initial(icon_state)]_[C.width]x[C.height]"
-			MA = mutable_appearance(C.generated_icon)
-			MA.pixel_x = C.framed_offset_x
-			MA.pixel_y = C.framed_offset_y
-		else
-			MA = mutable_appearance(I.icon, "photo")
-		add_overlay(MA)
+	if(!framed_weakref)
+		return
+
+	var/obj/item/I = framed_weakref?.resolve()
+	var/obj/item/canvas/target_canvas = I
+	if(istype(I, /obj/item/canvas))
+		icon_state = "[initial(icon_state)]_[target_canvas.width]x[target_canvas.height]"
+
+	add_overlay(target_canvas.get_framed_picture())
 
 /obj/structure/picture_frame/proc/update_name()
 	if(framed_weakref)
 		var/obj/item/I = framed_weakref?.resolve()
 		if(istype(I, /obj/item/canvas))
-			var/obj/item/canvas/C = I
-			name = "painting - [C.painting_name]"
+			var/obj/item/canvas/target_canvas = I
+			name = "painting - [target_canvas.painting_name]"
 		else
 			name = "photo - [I.name]"
 	else

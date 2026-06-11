@@ -101,6 +101,13 @@
 /obj/item/canvas/proc/show(mob/user)
 	ui_interact(user)
 
+/obj/item/canvas/proc/get_framed_picture()
+	var/mutable_appearance/MA = mutable_appearance(generated_icon)
+	MA.pixel_x = framed_offset_x
+	MA.pixel_y = framed_offset_y
+
+	return MA
+
 /obj/item/canvas/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
