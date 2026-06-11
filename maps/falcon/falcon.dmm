@@ -19842,6 +19842,8 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/atmos)
+"jQf" = (
+)
 "jQi" = (
 /obj/structure/sink{
 	dir = 8;
@@ -21175,6 +21177,15 @@
 	icon_state = "whitebluefull"
 	},
 /area/station/medical/sleeper)
+"kXA" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
+/obj/structure/elevator/cargo,
+/turf/simulated/floor/airless{
+	icon_state = "asteroidfloor"
+	},
+/area/asteroid/mine/eva)
 "kXB" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -64959,7 +64970,7 @@ iiV
 abJ
 hrp
 tMy
-xbK
+jQf
 lVb
 rTU
 kek
@@ -65473,7 +65484,7 @@ akS
 abH
 hrp
 smt
-xbK
+jQf
 qRj
 bkM
 idm
@@ -67016,9 +67027,9 @@ vlw
 gih
 aof
 gpH
-hrp
+kXA
 xXf
-hrp
+kXA
 tUm
 ncx
 pQv
