@@ -14250,7 +14250,7 @@
 /turf/simulated/floor{
 	icon_state = "bluefull"
 	},
-/area/station/ai_monitored/eva)
+/area/station/hallway/primary/central)
 "ayg" = (
 /turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
@@ -16517,8 +16517,19 @@
 /turf/simulated/wall/r_wall,
 /area/station/gateway)
 "aCr" = (
-/turf/simulated/wall,
-/area/station/ai_monitored/eva)
+/obj/machinery/status_display{
+	layer = 4;
+	pixel_y = 32
+	},
+/obj/machinery/camera{
+	c_tag = "Central Hallway North";
+	dir = 6
+	},
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "blue"
+	},
+/area/station/hallway/primary/central)
 "aCs" = (
 /obj/structure/table,
 /obj/item/device/plant_analyzer,
@@ -17143,7 +17154,7 @@
 	dir = 6;
 	icon_state = "blue"
 	},
-/area/station/ai_monitored/eva)
+/area/station/hallway/primary/central)
 "aDH" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -21113,7 +21124,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/ai_monitored/eva)
+/area/station/hallway/primary/central)
 "aLh" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -21945,7 +21956,7 @@
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/ai_monitored/eva)
+/area/station/hallway/primary/central)
 "aME" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
@@ -75425,7 +75436,7 @@
 	dir = 0;
 	icon_state = "blue"
 	},
-/area/station/ai_monitored/eva)
+/area/station/hallway/primary/central)
 "ipb" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -80086,7 +80097,7 @@
 	dir = 4;
 	icon_state = "blue"
 	},
-/area/station/ai_monitored/eva)
+/area/station/hallway/primary/central)
 "mIb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -82980,7 +82991,7 @@
 	dir = 4;
 	icon_state = "bluecorner"
 	},
-/area/station/ai_monitored/eva)
+/area/station/hallway/primary/central)
 "pRb" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -87418,20 +87429,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
-"uyP" = (
-/obj/machinery/status_display{
-	layer = 4;
-	pixel_y = 32
-	},
-/obj/machinery/camera{
-	c_tag = "Central Hallway North";
-	dir = 6
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "blue"
-	},
-/area/station/hallway/primary/central)
 "uBq" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -116058,9 +116055,9 @@ aCu
 aCu
 aCu
 aCu
-aCr
-aCr
-aCr
+aMR
+aMR
+aMR
 beK
 aKx
 bbo
@@ -116317,7 +116314,7 @@ hNW
 aCu
 aLg
 aMD
-aCr
+aMR
 ops
 bDW
 xYD
@@ -119399,7 +119396,7 @@ aCu
 aCu
 aCu
 aCu
-uyP
+aCr
 aMM
 aPy
 bDs
