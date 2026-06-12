@@ -1,17 +1,16 @@
 /datum/emote/clickable/help_replicator
 	key = "help"
-	message_1p = "You asked for help."
-	message_3p = "requests assistance."
+	message_1p = "Вы просите помощи."
+	message_3p = "нуждается в помощи."
 	cooldown = 10 SECONDS
 	duration = 7 SECONDS
 	message_type = SHOWMSG_AUDIO
 
 	cloud = "cloud-medic"
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_one_hand_usable),
-		EMOTE_STATE(is_not_species, ZOMBIE)
-	)
+
+	required_stat = CONSCIOUS
+	require_usable_hand = TRUE
+	blocklist_traits = list(ELEMENT_TRAIT_ZOMBIE)
 
 	// to-do: (replicators) add a sound here. the sound should be pleasant and musical
 
@@ -40,22 +39,20 @@
 /datum/emote/replicator/beep
 	key = "beep"
 
-	message_1p = "You beep."
-	message_3p = "beeps."
+	message_1p = "Вы пикаете."
+	message_3p = "пикает."
 
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "flickers."
+	message_impaired_production = "издаёт слабый звук."
+	message_impaired_reception = "мерцает."
 
-	message_miming = "makes robot noises."
-	message_muzzled = "makes a weak noise."
+	message_miming = "изображает звуки робота."
+	message_muzzled = "издаёт слабый звук."
 
 	message_type = SHOWMSG_AUDIO
 
 	sound = 'sound/machines/twobeep.ogg'
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
 
 	cloud = "robot0"
 
@@ -74,15 +71,15 @@
 /datum/emote/replicator/beep/exclamation
 	key = "beep!"
 
-	message_1p = "You beep!"
-	message_3p = "beeps!"
+	message_1p = "Вы пикаете!"
+	message_3p = "пикает!"
 
 	cloud = "robot2"
 
 /datum/emote/replicator/beep/question
 	key = "beep?"
 
-	message_1p = "You beep?"
-	message_3p = "beeps?"
+	message_1p = "Вы пикаете?"
+	message_3p = "пикает?"
 
 	cloud = "robot1"

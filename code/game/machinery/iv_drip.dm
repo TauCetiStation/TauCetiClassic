@@ -62,22 +62,20 @@
 		src.attached = null
 		update_icon()
 		return
-		
+
 	if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
 		return
-		
+
 	if(ishuman(over_object))
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
 		src.attached = over_object
 		update_icon()
 
-
 /obj/machinery/iv_drip/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/reagent_containers))
+	if (istype(W, /obj/item/weapon/reagent_containers/glass/beaker) || istype(W, /obj/item/weapon/reagent_containers/blood) || istype(W, /obj/item/weapon/reagent_containers/glass/bottle))
 		if(!isnull(src.beaker))
 			to_chat(user, "There is already a reagent container loaded!")
 			return
-
 		user.drop_from_inventory(W, src)
 		src.beaker = W
 		to_chat(user, "You attach \the [W] to \the [src].")
@@ -132,7 +130,7 @@
 			if(NOCLONE in T.mutations)
 				return
 
-			if(T.species && T.species.flags[NO_BLOOD])
+			if(HAS_TRAIT(T, TRAIT_NO_BLOOD))
 				return
 
 			// If the human is losing too much blood, beep.

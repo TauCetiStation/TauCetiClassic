@@ -3,6 +3,7 @@
 	desc = "A data cartridge for portable microcomputers."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
+	item_state_world = "cart_world"
 	item_state = "electronic"
 	w_class = SIZE_MINUSCULE
 
@@ -41,26 +42,31 @@
 /obj/item/weapon/cartridge/engineering
 	name = "Power-ON Cartridge"
 	icon_state = "cart-e"
+	item_state_world = "cart-e_world"
 	access_engine = 1
 
 /obj/item/weapon/cartridge/atmos
 	name = "BreatheDeep Cartridge"
 	icon_state = "cart-a"
+	item_state_world = "cart-a_world"
 	access_atmos = 1
 
 /obj/item/weapon/cartridge/medical
 	name = "Med-U Cartridge"
 	icon_state = "cart-m"
+	item_state_world = "cart-m_world"
 	access_medical = 1
 
 /obj/item/weapon/cartridge/chemistry
 	name = "ChemWhiz Cartridge"
 	icon_state = "cart-chem"
+	item_state_world = "cart-chem_world"
 	access_reagent_scanner = 1
 
 /obj/item/weapon/cartridge/security
 	name = "R.O.B.U.S.T. Cartridge"
 	icon_state = "cart-s"
+	item_state_world = "cart-s_world"
 	access_security = 1
 
 /obj/item/weapon/cartridge/security/atom_init()
@@ -70,6 +76,7 @@
 /obj/item/weapon/cartridge/detective
 	name = "D.E.T.E.C.T. Cartridge"
 	icon_state = "cart-s"
+	item_state_world = "cart-s_world"
 	access_security = 1
 	access_medical = 1
 
@@ -78,22 +85,26 @@
 	name = "CustodiPRO Cartridge"
 	desc = "The ultimate in clean-room design."
 	icon_state = "cart-j"
+	item_state_world = "cart-j_world"
 	access_janitor = 1
 
 /obj/item/weapon/cartridge/lawyer
 	name = "P.R.O.V.E. Cartridge"
 	icon_state = "cart-s"
+	item_state_world = "cart-s_world"
 	access_security = 1
 
 /obj/item/weapon/cartridge/clown
 	name = "Honkworks 5.0"
 	icon_state = "cart-clown"
+	item_state_world = "cart-clown_world"
 	access_clown = 1
 	charges = 5
 
 /obj/item/weapon/cartridge/mime
 	name = "Gestur-O 1000"
 	icon_state = "cart-mi"
+	item_state_world = "cart-mi_world"
 	access_mime = 1
 	charges = 5
 /*
@@ -111,6 +122,7 @@
 	name = "Signal Ace 2"
 	desc = "Complete with integrated radio signaler!"
 	icon_state = "cart-tox"
+	item_state_world = "cart-tox_world"
 	access_reagent_scanner = 1
 	access_atmos = 1
 
@@ -122,6 +134,7 @@
 	name = "Space Parts & Space Vendors Cartridge"
 	desc = "Perfect for the Quartermaster on the go!"
 	icon_state = "cart-q"
+	item_state_world = "cart-q_world"
 	access_quartermaster = 1
 
 /obj/item/weapon/cartridge/quartermaster/atom_init()
@@ -131,11 +144,13 @@
 /obj/item/weapon/cartridge/head
 	name = "Easy-Record DELUXE"
 	icon_state = "cart-h"
+	item_state_world = "cart-h_world"
 	access_status_display = 1
 
 /obj/item/weapon/cartridge/hop
 	name = "HumanResources9001"
 	icon_state = "cart-h"
+	item_state_world = "cart-h_world"
 	access_status_display = 1
 	access_quartermaster = 1
 	access_janitor = 1
@@ -148,6 +163,7 @@
 /obj/item/weapon/cartridge/hos
 	name = "R.O.B.U.S.T. DELUXE"
 	icon_state = "cart-hos"
+	item_state_world = "cart-hos_world"
 	access_status_display = 1
 	access_security = 1
 
@@ -158,6 +174,7 @@
 /obj/item/weapon/cartridge/ce
 	name = "Power-On DELUXE"
 	icon_state = "cart-ce"
+	item_state_world = "cart-ce_world"
 	access_status_display = 1
 	access_engine = 1
 	access_atmos = 1
@@ -165,6 +182,7 @@
 /obj/item/weapon/cartridge/cmo
 	name = "Med-U DELUXE"
 	icon_state = "cart-cmo"
+	item_state_world = "cart-cmo_world"
 	access_status_display = 1
 	access_reagent_scanner = 1
 	access_medical = 1
@@ -172,6 +190,7 @@
 /obj/item/weapon/cartridge/rd
 	name = "Signal Ace DELUXE"
 	icon_state = "cart-rd"
+	item_state_world = "cart-rd_world"
 	access_status_display = 1
 	access_reagent_scanner = 1
 	access_atmos = 1
@@ -184,6 +203,7 @@
 	name = "Value-PAK Cartridge"
 	desc = "Now with 200% more value!"
 	icon_state = "cart-c"
+	item_state_world = "cart-c_world"
 	access_quartermaster = 1
 	access_janitor = 1
 	access_engine = 1
@@ -196,6 +216,7 @@
 /obj/item/weapon/cartridge/syndicate
 	name = "Detomatix Cartridge"
 	icon_state = "cart"
+	item_state_world = "cart_world"
 	access_remote_door = 1
 	access_detonate_pda = 1
 	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!!	//don't ask about the name, testing.

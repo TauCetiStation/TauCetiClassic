@@ -74,7 +74,7 @@
 	if(istype(A, /obj/structure/forcefield_node))
 		if(locate(/obj/machinery/power/replicator_generator) in A.loc)
 			return
-		var/obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/replicate_spell = locate() in src
+		var/obj/effect/proc_holder/spell/no_target/replicator_construct/replicate/replicate_spell = locate() in src.mind.spell_list
 		if(replicate_spell)
 			replicate_spell.Click()
 		return
@@ -167,7 +167,8 @@ ADD_TO_GLOBAL_LIST(/obj/item/mine/replicator, replicator_mines)
 	fake_disintegrating = FALSE
 
 /obj/item/mine/replicator
-	name = "mine"
+	name = ""
+	cases = list("mine", "mine", "mine", "mine", "mine", "mine")
 	desc = "A floating barely visible crystal of immense energy. You can imagine it hurts to step onto."
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "trap"
@@ -190,7 +191,6 @@ ADD_TO_GLOBAL_LIST(/obj/item/mine/replicator, replicator_mines)
 	qdel(src)
 
 /obj/item/mine/replicator/examine(mob/living/user)
-	. = ..()
 	if(!isreplicator(user))
 		return
 	to_chat(user, "<span class='notice'>At least if you are not elegant enough to dance around it's trappings.</span>")
@@ -210,12 +210,8 @@ ADD_TO_GLOBAL_LIST(/obj/item/mine/replicator, replicator_mines)
 	if(!iscarbon(AM) && !issilicon(AM) && !istype(AM, /obj/mecha))
 		return
 
-	AM.visible_message("<span class='danger'>[AM] steps on [src]!</span>")
+	AM.visible_message("<span class='danger'>[AM] steps on \a [CASE(src, ACCUSATIVE_CASE)]!</span>")
 	trigger_act(AM)
-
-/obj/item/mine/replicator/atom_init()
-	. = ..()
-	name = "mine ([rand(0, 999)])"
 
 /obj/item/mine/replicator/proc/do_audiovisual_effects(atom/movable/AM)
 	playsound(src, 'sound/misc/mining_reward_0.ogg', VOL_EFFECTS_MASTER)
@@ -224,7 +220,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/mine/replicator, replicator_mines)
 
 	flick_overlay_view(I, AM, 12)
 
-	audible_message("<b>[src]</b> <i>buzzes.</i>", "You see a light flicker.", hearing_distance = 7, ignored_mobs = observer_list)
+	audible_message("<b>[C_CASE(src, NOMINATIVE_CASE)]</b> <i>buzzes.</i>", "You see a light flicker.", hearing_distance = 7, ignored_mobs = observer_list)
 
 /obj/item/mine/replicator/trigger_act(atom/movable/AM)
 	if(!armed)
@@ -281,7 +277,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/mine/replicator, replicator_mines)
 		FR.object_communicate(src, "!", "Mine trigger event at [A.name].", transfer=TRUE)
 
 /obj/item/mine/replicator/disarm()
-	new /obj/item/weapon/stock_parts/capacitor/adv/super/quadratic(loc)
+	new /obj/item/weapon/reagent_containers/food/snacks/bluespacewaffle(loc)
 	qdel(src)
 
 /obj/item/mine/replicator/try_disarm(obj/item/I, mob/user)
@@ -291,10 +287,12 @@ ADD_TO_GLOBAL_LIST(/obj/item/mine/replicator, replicator_mines)
 	being_disarmed = TRUE
 	update_icon()
 
-	user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarming [src].</span>")
-	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
-	if(I.use_tool(src, user, erase_time, volume = 50))
-		user.visible_message("<span class='notice'>[user] finishes disarming [src].</span>", "<span class='notice'>You finish disarming [src].</span>")
+	user.visible_message("<span class='notice'>[user] starts disarming \a [CASE(src, ACCUSATIVE_CASE)].</span>", "<span class='notice'>You start disarming \a [CASE(src, ACCUSATIVE_CASE)].</span>")
+	var/erase_time = !is_skill_competent(user, list(/datum/skill/engineering = SKILL_LEVEL_PRO)) ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
+	if(!length(global.alive_replicators) > 0)
+		erase_time = SKILL_TASK_TRIVIAL
+	if(I.use_tool(src, user, erase_time, volume = 50, quality = QUALITY_PULSING))
+		user.visible_message("<span class='notice'>[user] finishes disarming \a [CASE(src, ACCUSATIVE_CASE)].</span>", "<span class='notice'>You finish disarming \a [CASE(src, ACCUSATIVE_CASE)].</span>")
 
 		disarm()
 		return

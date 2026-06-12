@@ -157,13 +157,8 @@
 		if(!L.can_attach())
 			return
 		BP = new L.bodypart_type()
-		if(L.part == HEAD && !target.has_organ(O_EYES))
-			var/obj/item/organ/internal/eyes/ipc/cameras = new(null)
-			cameras.insert_organ(target)
 		target.remove_from_mob(tool)
-		qdel(tool)
-
-	if(isbodypart(tool))
+	else if(isbodypart(tool))
 		BP = tool
 
 	if(!BP)
@@ -174,13 +169,19 @@
 
 	user.remove_from_mob(tool)
 	BP.insert_organ(target, surgically = TRUE)
-	target.update_body()
+
+	if(istype(tool, /obj/item/robot_parts))
+		qdel(tool)
+	target.update_body(BP.body_zone)
 	target.updatehealth()
 	target.UpdateDamageIcon(BP)
 	target.op_stage.bodyparts -= target_zone
 
 	if(istype(BP, /obj/item/organ/external/head))
 		var/obj/item/organ/external/head/B = BP
+		if(istype(BP, /obj/item/organ/external/head/robot) && !target.has_organ(O_EYES))
+			var/obj/item/organ/internal/eyes/ipc/cameras = new(null)
+			cameras.insert_organ(target)
 		if (B.brainmob && B.brainmob.mind)
 			B.brainmob.mind.transfer_to(target)
 			target.dna = B.brainmob.dna
@@ -205,7 +206,7 @@
 		target.g_grad = B.g_grad
 		target.b_grad = B.b_grad
 		target.hair_painted = B.hair_painted
-		target.update_hair()
+		target.update_body(BP_HEAD, update_preferences = TRUE)
 		target.timeofdeath = min(target.timeofdeath, world.time - DEFIB_TIME_LIMIT) // so they cannot be defibbed
 		ADD_TRAIT(target, TRAIT_NO_CLONE, GENERIC_TRAIT) // so they cannot be cloned
 

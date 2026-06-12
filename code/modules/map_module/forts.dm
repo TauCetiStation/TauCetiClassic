@@ -86,7 +86,7 @@
 	teammate.AssignToRole(M.mind, msg_admins = FALSE)
 
 	if(rank == FORTS_ROLE_COMMANDER)
-		var/obj/item/weapon/card/id/captains_spare/card = new 
+		var/obj/item/weapon/card/id/captains_spare/card = new
 		card.assignment = FORTS_ROLE_COMMANDER
 		card.assign(M.real_name)
 		M.equip_to_appropriate_slot(card)
@@ -207,5 +207,5 @@ var/global/forts_points_multiplier = 1
 		MM.announce("Скорость получения очков вернулась в норму!")
 	else
 		MM.announce("Скорость получения очков увеличина в [forts_points_multiplier] [pluralize_russian(forts_points_multiplier, "раз", "раза", "раз")]!")
- 
+
 	message_admins("[key_name(src)] changed points multiplier to [forts_points_multiplier].")

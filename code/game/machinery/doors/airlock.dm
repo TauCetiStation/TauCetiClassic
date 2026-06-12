@@ -82,6 +82,7 @@ var/global/list/airlock_overlays = list()
 	..()
 	airlock_list += src
 	wires = new(src)
+
 	if(glass && !inner_material)
 		inner_material = "glass"
 	if(dir)
@@ -139,7 +140,7 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/bumpopen(mob/living/simple_animal/user)
 	..(user)
 
-/obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+/obj/machinery/door/airlock/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, origin)
 	return !density || (check_access(ID) && !locked && hasPower())
 
 /obj/machinery/door/airlock/proc/isElectrified()
@@ -171,6 +172,15 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/proc/regainMainPower()
 	if(secondsMainPowerLost > 0)
 		secondsMainPowerLost = 0
+
+/obj/machinery/door/airlock/proc/copy_electronics_access_to(obj/item/weapon/airlock_electronics/target)
+	if(!req_access)
+		check_access()
+	if(req_access.len)
+		target.conf_access = req_access
+	else if (req_one_access.len)
+		target.conf_access = req_one_access
+		target.one_access = 1
 
 /obj/machinery/door/airlock/proc/loseMainPower()
 	if(secondsMainPowerLost <= 0)
@@ -226,6 +236,8 @@ var/global/list/airlock_overlays = list()
 // returns 1 if shocked, 0 otherwise
 // The preceding comment was borrowed from the grille's shock script
 /obj/machinery/door/airlock/proc/shock(mob/user, prb)
+	if(!Adjacent(user))
+		return 0
 	if(!hasPower())		// unpowered, no shock
 		return 0
 	if(hasShocked)
@@ -443,23 +455,23 @@ var/global/list/airlock_overlays = list()
 	if(isWireCut(AIRLOCK_WIRE_IDSCAN))
 		t1 += text("IdScan wire is cut.<br>\n")
 	else if(aiDisabledIdScanner)
-		t1 += text("IdScan disabled. <A href='?src=\ref[];aiEnable=1'>Enable?</a><br>\n", src)
+		t1 += text("IdScan disabled. <A href='byond://?src=\ref[];aiEnable=1'>Enable?</a><br>\n", src)
 	else
-		t1 += text("IdScan enabled. <A href='?src=\ref[];aiDisable=1'>Disable?</a><br>\n", src)
+		t1 += text("IdScan enabled. <A href='byond://?src=\ref[];aiDisable=1'>Disable?</a><br>\n", src)
 
 	if(emergency)
-		t1 += text("Emergency access override is enabled. <A href='?src=\ref[];aiDisable=11'>Disable?</a><br>\n", src)
+		t1 += text("Emergency access override is enabled. <A href='byond://?src=\ref[];aiDisable=11'>Disable?</a><br>\n", src)
 	else
-		t1 += text("Emergency access override is disabled. <A href='?src=\ref[];aiEnable=11'>Enable?</a><br>\n", src)
+		t1 += text("Emergency access override is disabled. <A href='byond://?src=\ref[];aiEnable=11'>Enable?</a><br>\n", src)
 
 	if(isWireCut(AIRLOCK_WIRE_MAIN_POWER1))
 		t1 += text("Main Power Input wire is cut.<br>\n")
 	if(isWireCut(AIRLOCK_WIRE_MAIN_POWER2))
 		t1 += text("Main Power Output wire is cut.<br>\n")
 	if(!secondsMainPowerLost)
-		t1 += text("<A href='?src=\ref[];aiDisable=2'>Temporarily disrupt main power?</a>.<br>\n", src)
+		t1 += text("<A href='byond://?src=\ref[];aiDisable=2'>Temporarily disrupt main power?</a>.<br>\n", src)
 	if(!secondsBackupPowerLost)
-		t1 += text("<A href='?src=\ref[];aiDisable=3'>Temporarily disrupt backup power?</a>.<br>\n", src)
+		t1 += text("<A href='byond://?src=\ref[];aiDisable=3'>Temporarily disrupt backup power?</a>.<br>\n", src)
 
 	if(isWireCut(AIRLOCK_WIRE_BACKUP_POWER1))
 		t1 += text("Backup Power Input wire is cut.<br>\n")
@@ -469,51 +481,51 @@ var/global/list/airlock_overlays = list()
 	if(isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 		t1 += text("Door bolt drop wire is cut.<br>\n")
 	else if(!locked)
-		t1 += text("Door bolts are up. <A href='?src=\ref[];aiDisable=4'>Drop them?</a><br>\n", src)
+		t1 += text("Door bolts are up. <A href='byond://?src=\ref[];aiDisable=4'>Drop them?</a><br>\n", src)
 	else
 		t1 += text("Door bolts are down.")
 		if(hasPower())
-			t1 += text(" <A href='?src=\ref[];aiEnable=4'>Raise?</a><br>\n", src)
+			t1 += text(" <A href='byond://?src=\ref[];aiEnable=4'>Raise?</a><br>\n", src)
 		else
 			t1 += text(" Cannot raise door bolts due to power failure.<br>\n")
 
 	if(isWireCut(AIRLOCK_WIRE_LIGHT))
 		t1 += text("Door bolt lights wire is cut.<br>\n")
 	else if(!lights)
-		t1 += text("Door lights are off. <A href='?src=\ref[];aiEnable=10'>Enable?</a><br>\n", src)
+		t1 += text("Door lights are off. <A href='byond://?src=\ref[];aiEnable=10'>Enable?</a><br>\n", src)
 	else
-		t1 += text("Door lights are on. <A href='?src=\ref[];aiDisable=10'>Disable?</a><br>\n", src)
+		t1 += text("Door lights are on. <A href='byond://?src=\ref[];aiDisable=10'>Disable?</a><br>\n", src)
 
 	if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
 		t1 += text("Electrification wire is cut.<br>\n")
 	if(secondsElectrified == -1)
-		t1 += text("Door is electrified indefinitely. <A href='?src=\ref[];aiDisable=5'>Un-electrify</a><br>\n", src)
+		t1 += text("Door is electrified indefinitely. <A href='byond://?src=\ref[];aiDisable=5'>Un-electrify</a><br>\n", src)
 	else if(secondsElectrified>0)
-		t1 += text("Door is electrified temporarily ([]s). <A href='?src=\ref[];aiDisable=5'>Un-electrify</a><br>\n", secondsElectrified, src)
+		t1 += text("Door is electrified temporarily ([]s). <A href='byond://?src=\ref[];aiDisable=5'>Un-electrify</a><br>\n", secondsElectrified, src)
 	else
-		t1 += text("Door is not electrified. <A href='?src=\ref[];aiEnable=5'>Electrify temporarily (30s)</a> <A href='?src=\ref[];aiEnable=6'>Electrify indefinitely</a><br>\n", src, src)
+		t1 += text("Door is not electrified. <A href='byond://?src=\ref[];aiEnable=5'>Electrify temporarily (30s)</a> <A href='byond://?src=\ref[];aiEnable=6'>Electrify indefinitely</a><br>\n", src, src)
 
 	if(isWireCut(AIRLOCK_WIRE_SAFETY))
 		t1 += text("Door force sensors not responding</a><br>\n")
 	else if(safe)
-		t1 += text("Door safeties operating normally.  <A href='?src=\ref[];aiDisable=8'> Override?</a><br>\n",src)
+		t1 += text("Door safeties operating normally.  <A href='byond://?src=\ref[];aiDisable=8'> Override?</a><br>\n",src)
 	else
-		t1 += text("Danger.  Door safeties disabled.  <A href='?src=\ref[];aiEnable=8'> Restore?</a><br>\n",src)
+		t1 += text("Danger.  Door safeties disabled.  <A href='byond://?src=\ref[];aiEnable=8'> Restore?</a><br>\n",src)
 
 	if(isWireCut(AIRLOCK_WIRE_SPEED))
 		t1 += text("Door timing circuitry not responding</a><br>\n")
 	else if(normalspeed)
-		t1 += text("Door timing circuitry operating normally.  <A href='?src=\ref[];aiDisable=9'> Override?</a><br>\n",src)
+		t1 += text("Door timing circuitry operating normally.  <A href='byond://?src=\ref[];aiDisable=9'> Override?</a><br>\n",src)
 	else
-		t1 += text("Warning.  Door timing circuitry operating abnormally.  <A href='?src=\ref[];aiEnable=9'> Restore?</a><br>\n",src)
+		t1 += text("Warning.  Door timing circuitry operating abnormally.  <A href='byond://?src=\ref[];aiEnable=9'> Restore?</a><br>\n",src)
 
 	if(welded)
 		t1 += text("Door appears to have been welded shut.<br>\n")
 	else if(!locked)
 		if(density)
-			t1 += text("<A href='?src=\ref[];aiEnable=7'>Open door</a><br>\n", src)
+			t1 += text("<A href='byond://?src=\ref[];aiEnable=7'>Open door</a><br>\n", src)
 		else
-			t1 += text("<A href='?src=\ref[];aiDisable=7'>Close door</a><br>\n", src)
+			t1 += text("<A href='byond://?src=\ref[];aiDisable=7'>Close door</a><br>\n", src)
 
 	var/datum/browser/popup = new(user, "airlock", "Airlock Control")
 	popup.set_content(t1)
@@ -734,13 +746,7 @@ var/global/list/airlock_overlays = list()
 
 				if(5)
 					// Un-electrify door
-					if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-						to_chat(usr, "Can't un-electrify the airlock - The electrification wire is cut.")
-					else if(secondsElectrified == -1)
-						secondsElectrified = 0
-					else if(secondsElectrified > 0)
-						secondsElectrified = 0
-					diag_hud_set_electrified()
+					unelectrify(usr)
 
 				if(7)
 					// Close door
@@ -781,11 +787,7 @@ var/global/list/airlock_overlays = list()
 
 				if(11)
 					// Emergency access
-					if(emergency)
-						emergency = 0
-						update_icon()
-					else
-						to_chat(usr, "Emergency access is already disabled!")
+					enable_emergency_access(usr)
 
 		else if(href_list["aiEnable"])
 			var/code = text2num(href_list["aiEnable"])
@@ -828,17 +830,7 @@ var/global/list/airlock_overlays = list()
 
 				if(6)
 					// Electrify door indefinitely
-					if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-						to_chat(usr, "The electrification wire has been cut.<br>\n")
-					else if(secondsElectrified == -1)
-						to_chat(usr, "The door is already indefinitely electrified.<br>\n")
-					else if(secondsElectrified)
-						to_chat(usr, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
-					else
-						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [COORD(src)]</font>"
-						secondsElectrified = -1
-						diag_hud_set_electrified()
+					electrify(usr)
 
 				if(7)
 					// Open door
@@ -879,14 +871,48 @@ var/global/list/airlock_overlays = list()
 
 				if(11)
 					// Emergency access
-					if(!emergency)
-						emergency = 1
-						update_icon()
-					else
-						to_chat(usr, "Emergency access is already disabled!")
+					disable_emergency_access(usr)
 
 	if(!no_window)
 		updateUsrDialog()
+
+/obj/machinery/door/airlock/proc/electrify(mob/user)
+	// Electrify door indefinitely
+	if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
+		to_chat(user, "The electrification wire has been cut.<br>\n")
+	else if(secondsElectrified == -1)
+		to_chat(user, "The door is already indefinitely electrified.<br>\n")
+	else if(secondsElectrified > 0)
+		to_chat(user, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
+	else
+		shockedby += "\[[time_stamp()]\][user](ckey:[user.ckey])"
+		user.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [COORD(src)]</font>"
+		secondsElectrified = -1
+		diag_hud_set_electrified()
+
+/obj/machinery/door/airlock/proc/unelectrify(mob/user)
+	// Un-electrify door
+	if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
+		to_chat(user, "Can't un-electrify the airlock - The electrification wire is cut.")
+	else if(secondsElectrified == -1)
+		secondsElectrified = 0
+	else if(secondsElectrified > 0)
+		secondsElectrified = 0
+	diag_hud_set_electrified()
+
+/obj/machinery/door/airlock/proc/enable_emergency_access(mob/user)
+	if(emergency)
+		emergency = FALSE
+		update_icon()
+	else
+		to_chat(user, "Emergency access is already disabled!")
+
+/obj/machinery/door/airlock/proc/disable_emergency_access(mob/user)
+	if(!emergency)
+		emergency = TRUE
+		update_icon()
+	else
+		to_chat(user, "Emergency access is already disabled!")
 
 /obj/machinery/door/airlock/try_open(mob/user, obj/item/tool = null)
 	if(isElectrified() && !issilicon(user) && !isobserver(user))
@@ -896,7 +922,7 @@ var/global/list/airlock_overlays = list()
 	..()
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/device/detective_scanner) || istype(C, /obj/item/taperoll))
+	if(istype(C, /obj/item/taperoll))
 		return
 
 	if(iswelding(C) && !(operating > 0))
@@ -906,7 +932,7 @@ var/global/list/airlock_overlays = list()
 				return
 			user.visible_message("[user] begins [welded? "unwelding":"welding"] [src]'s shutters with [W].",
 			                     "<span class='notice'>You begin [welded? "remove welding from":"welding"] [src]'s shutters with [W]...</span>")
-			if(W.use_tool(src, user, SKILL_TASK_EASY, volume = 100))
+			if(W.use_tool(src, user, SKILL_TASK_EASY, volume = 100, quality = QUALITY_WELDING))
 				welded = !welded
 				update_icon()
 				user.visible_message("[user] [welded ? "welds" : "unwelds"] [src]'s shutters with [W].",
@@ -936,7 +962,7 @@ var/global/list/airlock_overlays = list()
 		if(beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
 			if(user.is_busy(src)) return
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
-			if(C.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100))
+			if(C.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_PRYING))
 				deconstruct(TRUE, user)
 				return
 		else if(hasPower())
@@ -1155,6 +1181,17 @@ var/global/list/airlock_overlays = list()
 	assembly.created_name = name
 	assembly.update_state()
 
+/obj/machinery/door/airlock/proc/drop_electronics()
+	if(!electronics)
+		var/obj/item/weapon/airlock_electronics/AE = new (loc)
+		copy_electronics_access_to(AE)
+		return AE
+
+	var/obj/item/weapon/airlock_electronics/AE = electronics
+	electronics = null
+	AE.forceMove(loc)
+	return AE
+
 /obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
 	if(flags & NODECONSTRUCT)
 		return ..()
@@ -1164,29 +1201,19 @@ var/global/list/airlock_overlays = list()
 
 	if(!disassembled)
 		A.update_integrity(A.max_integrity * 0.5)
+		if(prob(75))
+			var/obj/item/weapon/airlock_electronics/AE = drop_electronics()
+			if(prob(25))
+				AE.make_broken()
 		return ..()
 
 	if(user)
 		to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 
-	var/obj/item/weapon/airlock_electronics/ae
-	if(electronics)
-		ae = electronics
-		electronics = null
-		ae.loc = loc
-	else
-		ae = new /obj/item/weapon/airlock_electronics(loc)
-		if(!req_access)
-			check_access()
-		if(req_access.len)
-			ae.conf_access = req_access
-		else if (req_one_access.len)
-			ae.conf_access = req_one_access
-			ae.one_access = 1
+	var/obj/item/weapon/airlock_electronics/AE = drop_electronics()
 
 	if(operating == -1)
-		ae.icon_state = "door_electronics_smoked"
-		ae.broken = TRUE
+		AE.make_broken()
 		operating = 0
 	..()
 

@@ -58,13 +58,16 @@
 #define ui_borg_show_foto "SOUTH+1:6,WEST+1"
 #define ui_borg_namepick "EAST:-6,NORTH:-6"
 
-#define ui_monkey_mask "CENTER-3:14,SOUTH:5"	//monkey
-#define ui_monkey_back "CENTER-2:14,SOUTH:5"	//monkey
+// Monkey
+#define ui_monkey_mask "CENTER-4:14,SOUTH:5"
+#define ui_monkey_neck "CENTER-3:14,SOUTH:5"
+#define ui_monkey_back "CENTER-2:14,SOUTH:5"
 
 #define ui_alien_head "CENTER-4:12,SOUTH:5"
 #define ui_alien_oclothing "CENTER-3:14,SOUTH:5"
 
 //Lower right, persistant menu
+#define ui_crawl "EAST-4:20,SOUTH:5"
 #define ui_crafting "EAST-4:22,SOUTH:5"
 #define ui_drop_throw "EAST-1:28,SOUTH+1:7"
 #define ui_pull_resist "EAST-2:26,SOUTH+1:7"
@@ -132,7 +135,8 @@
 #define ui_iclothing "WEST:6,SOUTH+1:7"
 #define ui_oclothing "WEST+1:8,SOUTH+1:7"
 #define ui_gloves "WEST+2:10,SOUTH+1:7"
-#define ui_glasses "WEST:6,SOUTH+2:9"
+#define ui_glasses "WEST:6,SOUTH+3:11"
+#define ui_neck "WEST:6,SOUTH+2:9"
 #define ui_mask "WEST+1:8,SOUTH+2:9"
 #define ui_l_ear "WEST+2:10,SOUTH+2:9"
 #define ui_r_ear "WEST+2:10,SOUTH+3:11"
@@ -169,3 +173,7 @@
 #define HUD_COPY_ICON	1
 #define HUD_COPY_COLOR	2
 #define HUD_COPY_ALPHA	4
+
+//Parallax
+#define PARALLAX_CLASSIC "parallax_classic"
+#define PARALLAX_HEAVEN "parallax_heaven"

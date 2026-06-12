@@ -50,6 +50,7 @@
 	spawn()
 		if(client)
 			animate(client, color = null, time = 0)
+			hud_used.set_parallax(current_parallax)
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src
@@ -225,7 +226,16 @@
 	return 0
 
 /mob/proc/Life()
+	// SHOULD_CALL_PARENT(TRUE) // need to do a pass at every life() call and see if adding ..() everywhere can break something
 	set waitfor = 0
+
+	// forces a full overlay update
+	// todo: this flag is not actively used at this moment, maybe we should remove it or replace some regenerate_icons()-calls with it
+	// for humans direct parts update is more preferable than full regeneration (ex. update_body())
+	if(regenerate_icons_next_tick)
+		regenerate_icons_next_tick = FALSE
+		regenerate_icons()
+
 	return
 
 /mob/proc/incapacitated(restrained_type = ARMS)
@@ -341,21 +351,27 @@
 		return
 
 	face_atom(A)
+	looks_at_log(A)
 	A.examine(src)
 	SEND_SIGNAL(A, COMSIG_PARENT_POST_EXAMINE, src)
 	SEND_SIGNAL(src, COMSIG_PARENT_POST_EXAMINATE, A)
+	if(stat == CONSCIOUS)
+		last_examined = A.name
+
+/mob/proc/looks_at_log(atom/A)
 	if(!show_examine_log)
 		return
 	var/mob/living/carbon/human/H = src
 	if(ishuman(src))
-		if(H.head && H.head.flags_inv && HIDEEYES)
+		if(H.head && H.head.flags_inv & HIDEEYES)
 			return
-		if(H.wear_mask && H.wear_mask.flags_inv && HIDEEYES)
+		if(H.wear_mask && H.wear_mask.flags_inv & HIDEEYES)
 			return
 	if(!A.z) //no message if we examine something in a backpack
 		return
-	if(stat == CONSCIOUS)
-		last_examined = A.name
+	if(!A.name)
+		return
+
 	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
@@ -411,7 +427,7 @@
 
 		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	//Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
 			to_chat(usr, "You have been dead for[pluralcheck] [deathtimeseconds] seconds.")
-			to_chat(usr, "You must wait 30 minutes to respawn!")
+			to_chat(usr, "You must wait [config.deathtime_required / 600] minutes to respawn!")
 			return
 		else
 			to_chat(usr, "You can respawn now, enjoy your new life!")
@@ -437,10 +453,8 @@
 
 	// New life, new quality.
 	client.prefs.selected_quality_name = null
-
 	M.key = key
 	M.name = M.key
-//	M.Login()	//wat
 	return
 
 /mob/verb/cancel_camera()
@@ -481,7 +495,7 @@
 /mob/proc/pull_damage()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if((H.health - H.halloss) <= config.health_threshold_softcrit)
+		if((H.health - H.getHalLoss()) <= config.health_threshold_softcrit)
 			for(var/bodypart_name in H.bodyparts_by_name)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart_name]
 				if(H.lying)
@@ -625,8 +639,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	//endwhile - reset the pixel offsets to zero
 	is_dizzy = FALSE
 	if(client)
-		client.pixel_x = 0
-		client.pixel_y = 0
+		client.restore_default_pixel_values()
 
 // jitteriness - copy+paste of dizziness
 
@@ -698,7 +711,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					if(Master)
 						stat(null)
 						for(var/datum/controller/subsystem/SS in Master.subsystems)
-							if(SS.flags & SS_SHOW_IN_MC_TAB)
+							if(client.holder.MC_ss_show_all || SS.flags & SS_SHOW_IN_MC_TAB)
 								SS.stat_entry()
 					cameranet.stat_entry()
 
@@ -751,7 +764,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		if(buckled.buckle_lying != -1)
 			lying = buckled.buckle_lying
 		canmove = canmove && buckled.buckle_movable
-		anchored = anchored || buckled.buckle_movable
+		anchored = anchored || !buckled.buckle_movable
 
 		if(istype(buckled, /obj/vehicle))
 			var/obj/vehicle/V = buckled
@@ -784,9 +797,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(!no_transform && lying != lying_prev)
 		update_transform()
-	if(update_icon)	//forces a full overlay update
-		update_icon = FALSE
-		regenerate_icons()
 
 
 /mob/proc/facedir(ndir)
@@ -836,8 +846,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 		update_canmove()
 
 /mob/proc/add_status_flags(add_flags)
-	if(add_flags & GODMODE)
-		stuttering = 0
 	if(add_flags & FAKEDEATH)
 		update_canmove()
 	status_flags |= add_flags
@@ -845,6 +853,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 // ========== CRAWLING ==========
 /mob/proc/SetCrawling(value)
 	crawling = value
+	if(hud_used)
+		crawl_hud_icon?.update_icon(src)
 	if(value)
 		pass_flags |= PASSCRAWL
 	else
@@ -853,6 +863,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/adjustDrugginess(amount)
 	druggy = max(druggy + amount, 0)
 	updateDrugginesOverlay()
+	SEND_SIGNAL(src, COMSIG_HUMAN_ON_ADJUST_DRUGINESS, src)
 
 /mob/proc/setDrugginess(amount)
 	druggy = max(amount, 0)
@@ -867,27 +878,19 @@ note dizziness decrements automatically in the mob's Life() proc.
 		clear_alert("high")
 
 // ========== STUTTERING ==========
+// todo: move it to status effects
 /mob/proc/Stuttering(amount)
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	stuttering = max(stuttering, amount, 0)
 
 /mob/proc/AdjustStuttering(amount)
-	if(status_flags & GODMODE)
+	if(amount > 0 && HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return
 	stuttering = max(stuttering + amount, 0)
 
-/mob/proc/setStuttering(amount)
-	if(status_flags & GODMODE)
-		return
-	stuttering = max(amount, 0)
-
-//========== Shock Stage =========
-/mob/proc/AdjustShockStage(amount)
-	return
-
-/mob/proc/SetShockStage(amount)
-	return
+/mob/proc/resetStuttering(amount)
+	stuttering = 0
 
 //======= Bodytemperature =======
 /mob/proc/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY)
@@ -962,16 +965,16 @@ note dizziness decrements automatically in the mob's Life() proc.
 		var/obj/item/organ/external/BP
 
 		for(var/obj/item/organ/external/limb in H.bodyparts) //Grab the organ holding the implant.
-			if(selection in limb.implants)
+			if(selection in limb.embedded_objects)
 				BP = limb
 				break
 
-		BP.implants -= selection
+		BP.embedded_objects -= selection
 		H.sec_hud_set_implants()
 		for(var/datum/wound/wound in BP.wounds)
 			wound.embedded_objects -= selection
 
-		H.AdjustShockStage(20)
+		H.adjustHalLoss(20)
 		BP.take_damage((selection.w_class * 3), null, DAM_EDGE, "Embedded object extraction")
 
 		if(prob(selection.w_class * 5) && BP.sever_artery()) // I'M SO ANEMIC I COULD JUST -DIE-.

@@ -32,18 +32,16 @@
 
 /datum/emote/clickable/help
 	key = "help"
-	message_1p = "You asked for help."
-	message_3p = "needs help."
+	message_1p = "Вы просите помощи."
+	message_3p = "нуждается в помощи."
 	cooldown = 10 SECONDS
 	duration = 7 SECONDS
 	message_type = SHOWMSG_AUDIO
 
 	cloud = "cloud-medic"
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-		EMOTE_STATE(is_one_hand_usable),
-		EMOTE_STATE(is_not_species, ZOMBIE)
-	)
+	required_stat = CONSCIOUS
+	require_usable_hand = TRUE
+	blocklist_traits = list(ELEMENT_TRAIT_ZOMBIE)
 
 /datum/emote/clickable/help/add_cloud(mob/user)
 	. = ..()

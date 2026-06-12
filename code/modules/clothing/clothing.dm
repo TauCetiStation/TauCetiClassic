@@ -6,6 +6,7 @@
 	var/rig_restrict_helmet = 0 // Stops the user from equipping a rig helmet without attaching it to the suit first.
 	var/gang //Is this a gang outfit?
 	var/species_restricted_locked = FALSE
+	var/list/potentially_protected_organs = list() //These organs can be protected by armor if it has high protective properties
 
 	/*
 		Sprites used when the clothing item is refit. This is done by setting icon_override.
@@ -26,6 +27,12 @@
 	var/can_be_modded = FALSE //modding hardsuits with modkits
 
 	var/flashbang_protection = FALSE
+
+
+/obj/item/clothing/atom_init()
+	. = ..()
+	if(body_parts_covered & UPPER_TORSO)
+		potentially_protected_organs |= O_HEART
 
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)
@@ -86,7 +93,7 @@
 			species_restricted = list(target_species)
 
 	if(target_species == VOX)
-		flags &= ~BLOCKHAIR
+		render_flags &= ~HIDE_ALL_HAIR
 
 	//Set icon
 	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
@@ -177,8 +184,23 @@
 
 /obj/item/clothing/examine(mob/user)
 	..()
+	var/check_stats = armor[MELEE] >= PROTECTION_REQUIRED_FOR_ORGANS || armor[BULLET] >= PROTECTION_REQUIRED_FOR_ORGANS || armor[LASER] >= PROTECTION_REQUIRED_FOR_ORGANS || armor[ENERGY] >= PROTECTION_REQUIRED_FOR_ORGANS
+	if(potentially_protected_organs.len && check_stats)
+		to_chat(user, "<a href='byond://?src=\ref[src];show_organ_protection=1'>Show vital organs protection</a>")
 	for(var/obj/item/clothing/accessory/A in accessories)
 		to_chat(user, "[bicon(A)] \A [A] is attached to it.")
+
+/obj/item/clothing/Topic(href, href_list)
+	..()
+	if(href_list["show_organ_protection"])
+		if(armor[MELEE] >= PROTECTION_REQUIRED_FOR_ORGANS)
+			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>impacts.</b></span>")
+		if(armor[BULLET] >= PROTECTION_REQUIRED_FOR_ORGANS)
+			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>bullets.</b></span>")
+		if(armor[LASER] >= PROTECTION_REQUIRED_FOR_ORGANS)
+			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>lasers.</b></span>")
+		if(armor[ENERGY] >= PROTECTION_REQUIRED_FOR_ORGANS)
+			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>energy weapons.</b></span>")
 
 /obj/item/clothing/proc/attach_accessory(obj/item/clothing/accessory/A, mob/user)
 	if(can_attach_accessory(A))
@@ -219,8 +241,6 @@
 	w_class = SIZE_SMALL
 	throwforce = 2
 	slot_flags = SLOT_FLAGS_EARS
-
-	sprite_sheet_slot = SPRITE_SHEET_EARS
 
 /obj/item/clothing/ears/attack_hand(mob/user)
 	if (!user) return
@@ -336,6 +356,10 @@ BLIND     // can't see anything
 
 	dyed_type = DYED_GLOVES
 
+	/// Detective Work, used for allowing a given atom to leave its fibers/fingerprints on stuff.
+	var/can_leave_fibers = TRUE
+	var/can_leave_fingerprints = FALSE
+
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
 		//why is this not part of the powercell code?
@@ -355,6 +379,14 @@ BLIND     // can't see anything
 	slot_flags = SLOT_FLAGS_HEAD
 	w_class = SIZE_TINY
 	sprite_sheet_slot = SPRITE_SHEET_HEAD
+
+//Neck
+/obj/item/clothing/neck
+	name = "neck"
+	icon = 'icons/obj/clothing/neck.dmi'
+	slot_flags = SLOT_FLAGS_NECK
+	w_class = SIZE_TINY
+	sprite_sheet_slot = SPRITE_SHEET_NECK
 
 //Mask
 /obj/item/clothing/mask
@@ -421,7 +453,8 @@ BLIND     // can't see anything
 	name = "space helmet"
 	icon_state = "space"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
-	flags = HEADCOVERSEYES | BLOCKHAIR | HEADCOVERSMOUTH | PHORONGUARD
+	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | PHORONGUARD
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_pressure = STOPS_PRESSUREDMAGE
 	item_state = "space"
 	permeability_coefficient = 0.01
@@ -446,7 +479,7 @@ BLIND     // can't see anything
 	throw_range = 2
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	flags = PHORONGUARD | BLOCKUNIFORM
+	flags = PHORONGUARD
 	flags_pressure = STOPS_PRESSUREDMAGE
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
@@ -454,7 +487,8 @@ BLIND     // can't see anything
 	slowdown = 1.5
 	equip_time = 100 // Bone White - time to equip/unequip. see /obj/item/attack_hand (items.dm) and /obj/item/clothing/mob_can_equip (clothing.dm)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	render_flags = parent_type::render_flags | HIDE_TAIL | HIDE_UNIFORM
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
@@ -499,6 +533,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_FLAGS_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	w_class = SIZE_SMALL
+	flags = HEAR_TALK //for webbing vest contents
 	var/has_sensor = 1//For the crew computer 2 = unable to change mode
 	var/sensor_mode = SUIT_SENSOR_OFF
 		/*
@@ -556,51 +591,56 @@ BLIND     // can't see anything
 		if(SUIT_SENSOR_TRACKING)
 			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
 
-/obj/item/clothing/under/proc/set_sensors(mob/usr)
-	var/mob/M = usr
+/obj/item/clothing/under/hear_talk(mob/M, text, verb, datum/language/speaking)
+	for(var/obj/item/clothing/accessory/A in accessories)
+		if(A.flags & (HEAR_TALK | HEAR_PASS_SAY | HEAR_TA_SAY))
+			A.hear_talk(M, text, verb, speaking)
+
+/obj/item/clothing/under/proc/set_sensors(mob/user)
+	var/mob/M = user
 	if (istype(M, /mob/dead)) return
-	if (usr.incapacitated())
+	if (user.incapacitated())
 		return
 	if(has_sensor >= 2)
-		to_chat(usr, "The controls are locked.")
+		to_chat(user, "The controls are locked.")
 		return 0
 	if(has_sensor <= 0)
-		to_chat(usr, "This suit does not have any sensors.")
+		to_chat(user, "This suit does not have any sensors.")
 		return 0
 
 	var/list/modes = list("Off", "Binary sensors", "Vitals tracker", "Tracking beacon")
 	var/switchMode = input("Select a sensor mode:", "Suit Sensor Mode", modes[sensor_mode + 1]) in modes
-	if(get_dist(usr, src) > 1)
-		to_chat(usr, "You have moved too far away.")
+	if(get_dist(user, src) > 1)
+		to_chat(user, "You have moved too far away.")
 		return
 	sensor_mode = modes.Find(switchMode) - 1
 
-	if (src.loc == usr)
+	if (loc == user)
 		switch(sensor_mode)
 			if(SUIT_SENSOR_OFF)
-				to_chat(usr, "You disable your suit's remote sensing equipment.")
+				to_chat(user, "You disable your suit's remote sensing equipment.")
 			if(SUIT_SENSOR_BINARY)
-				to_chat(usr, "Your suit will now report whether you are live or dead.")
+				to_chat(user, "Your suit will now report whether you are live or dead.")
 			if(SUIT_SENSOR_VITAL)
-				to_chat(usr, "Your suit will now report your vital lifesigns.")
+				to_chat(user, "Your suit will now report your vital lifesigns.")
 			if(SUIT_SENSOR_TRACKING)
-				to_chat(usr, "Your suit will now report your vital lifesigns as well as your coordinate position.")
+				to_chat(user, "Your suit will now report your vital lifesigns as well as your coordinate position.")
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M
 			C.update_suit_sensors()
 
-	else if (istype(src.loc, /mob))
+	else if (istype(loc, /mob))
 		switch(sensor_mode)
 			if(SUIT_SENSOR_OFF)
-				M.visible_message("<span class='warning'>[usr] disables [src.loc]'s remote sensing equipment.</span>", viewing_distance = 1)
+				M.visible_message("<span class='warning'>[user] disables [loc]'s remote sensing equipment.</span>", viewing_distance = 1)
 			if(SUIT_SENSOR_BINARY)
-				M.visible_message("[usr] turns [src.loc]'s remote sensors to binary.", viewing_distance = 1)
+				M.visible_message("[user] turns [loc]'s remote sensors to binary.", viewing_distance = 1)
 			if(SUIT_SENSOR_VITAL)
-				M.visible_message("[usr] sets [src.loc]'s sensors to track vitals.", viewing_distance = 1)
+				M.visible_message("[user] sets [loc]'s sensors to track vitals.", viewing_distance = 1)
 			if(SUIT_SENSOR_TRACKING)
-				M.visible_message("[usr] sets [src.loc]'s sensors to maximum.", viewing_distance = 1)
-		if(iscarbon(src.loc))
-			var/mob/living/carbon/C = src.loc
+				M.visible_message("[user] sets [loc]'s sensors to maximum.", viewing_distance = 1)
+		if(iscarbon(loc))
+			var/mob/living/carbon/C = loc
 			C.update_suit_sensors()
 
 /obj/item/clothing/under/verb/toggle()
@@ -619,7 +659,7 @@ BLIND     // can't see anything
 
 	if(copytext(item_state,-2) != "_d")
 		basecolor = item_state
-	if((basecolor + "_d") in icon_states('icons/mob/uniform.dmi'))
+	if(icon_exists('icons/mob/uniform.dmi', "[basecolor]_d"))
 		item_state = item_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
 		update_inv_mob()
 	else

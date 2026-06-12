@@ -22,6 +22,9 @@
 	// disable default mice/drone spawners
 	var/disable_default_spawners = FALSE
 
+	var/map_lobby_image
+	var/map_lobby_music
+
 /datum/map_module/New()
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -45,6 +48,10 @@
 		log_debug("[gamemode] mode forced.")
 		master_mode = gamemode
 
+	if(map_lobby_image)
+		log_debug("Title screen changed.")
+		change_lobbyscreen(map_lobby_image)
+
 	if(player_verbs)
 		setup_temp_player_verbs(player_verbs, "Map")
 
@@ -53,6 +60,12 @@
 
 	if(default_event_message || default_event_name)
 		SSevents.setup_custom_event(default_event_message, default_event_name)
+
+// analogue of gamemodes can_start() for map modules, you can combine it with spawners lobby
+// you can check any conditions like necessary spawners registrations and prevent round start
+// returns FALSE for proper start or error message
+/datum/map_module/proc/prevent_start()
+	return FALSE
 
 /datum/map_module/proc/stat_entry(mob/M)
 	return

@@ -21,7 +21,7 @@
 		shake_camera(L, 3, 2)
 
 /obj/item/projectile/bullet/weakbullet // "rubber" bullets
-	damage = 10
+	damage = 3
 	stun = 0
 	weaken = 0
 	agony = 40
@@ -37,19 +37,26 @@
 	name = "shotgun slug"
 	damage = 30
 	armor_multiplier = 0.4
+	close_range_impact_force = 1
 
 /obj/item/projectile/bullet/pellet
 	name = "pellet"
 	damage = 14
 	dispersion = 2.5
 	armor_multiplier = 1.25
+	close_range_impact_force = 1
 
 /obj/item/projectile/bullet/weakbullet/beanbag		//because beanbags are not bullets
 	name = "beanbag"
 	agony = 95
+	close_range_impact_force = 1
 
 /obj/item/projectile/bullet/weakbullet/rubber
 	name = "rubber bullet"
+
+/obj/item/projectile/bullet/weakbullet/nl_rifle
+	stutter = 10
+	agony = 55
 
 /obj/item/projectile/bullet/smg //.45 ACP
 	damage = 20
@@ -70,12 +77,35 @@
 	hitscan = 1
 	armor_multiplier = 0.7
 
+/obj/item/projectile/bullet/peabullet
+	name = "pea bullet"
+	damage = 3
+	agony = 10
+
+/obj/item/projectile/bullet/peabullet/in_fire
+	damage = 8
+	agony = 15
+	weaken = 1
+	incendiary = 2
+
+/obj/item/projectile/bullet/peabullet/virus
+	name = "virus pea bullet"
+	damage = 15
+	agony = 15
+	weaken = 1
+
+/obj/item/projectile/bullet/peabullet/virus/in_fire
+	damage = 18
+	agony = 20
+	stun = 3
+	incendiary = 5
+
 /obj/item/projectile/bullet/midbullet2 // 9x19
 	damage = 25
 
 /obj/item/projectile/bullet/revbullet //.357
-	damage = 60
-	armor_multiplier = 1.5
+	damage = 35
+	armor_multiplier = 0.6
 
 /obj/item/projectile/bullet/rifle1
 	damage = 40
@@ -223,7 +253,7 @@
 	stun = 0
 	weaken = 0
 	stutter = 10
-	agony = 80
+	agony = 20
 	embed = 0
 	sharp = 0
 	dispersion = 2.0
@@ -233,7 +263,7 @@
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 /obj/item/projectile/bullet/a762
-	damage = 50
+	damage = 30
 	embed = 0
 
 /obj/item/projectile/bullet/incendiary
@@ -246,6 +276,7 @@
 	damage = 7
 	incendiary = 2
 	dispersion = 2.0
+	close_range_impact_force = 1
 
 /obj/item/projectile/bullet/chameleon
 	damage = 1 // stop trying to murderbone with a fake gun dumbass!!!

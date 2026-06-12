@@ -30,8 +30,11 @@
 	fizzle(user)
 	action(user)
 	holder_reaction(user)
-	if(!religion.get_tech(RTECH_REUSABLE_RUNE))
+	if(!is_reusable())
 		qdel(holder)
+
+/datum/rune/proc/is_reusable()
+	return religion.get_tech(RTECH_REUSABLE_RUNE)
 
 /datum/rune/proc/holder_reaction(mob/living/carbon/user)
 	if(istype(holder, /obj/effect/rune))
@@ -55,6 +58,9 @@
 
 /datum/rune/cult/teleport
 	var/delay = 1 SECONDS
+
+/datum/rune/cult/teleport/is_reusable()
+	return FALSE
 
 /datum/rune/cult/teleport/proc/teleporting(turf/target, mob/user)
 	playsound(user, 'sound/magic/Teleport_diss.ogg', VOL_EFFECTS_MASTER)
@@ -85,7 +91,12 @@
 	if(!destination)
 		var/area/A = locate(religion.area_type)
 		destination = get_turf(pick(A.contents))
-	teleporting(destination	, user)
+		if(!religion.get_tech(RTECH_COOLDOWN_REDUCTION))
+			if(do_after(user, 20, target = user))
+				teleporting(destination	, user)
+		else
+			if(do_after(user, 10, target = user))
+				teleporting(destination	, user)
 
 /datum/rune/cult/teleport/teleport_to_heaven/proc/create_from_heaven(turf/target, mob/user)
 	if(isenvironmentturf(target))
@@ -200,6 +211,9 @@
 		qdel(statue)
 	return ..()
 
+/datum/rune/cult/capture_area/is_reusable()
+	return FALSE
+
 /datum/rune/cult/capture_area/can_action(mob/living/carbon/user)
 	var/datum/religion/cult/R = global.cult_religion
 	if(R.capturing_area)
@@ -249,7 +263,7 @@
 
 	statue = new(rune_turf, holder)
 	var/religify_compelted = R.religify_area(area.type, CALLBACK(src, PROC_REF(capture_iteration)), null, TRUE)
-	religion.send_message_to_members("Захват [area] [religify_compelted ? "удался" : "провален"].", pick(religion.deity_names))
+	religion.send_message_to_members("Захват [CASE(area, GENITIVE_CASE)] [religify_compelted ? "удался" : "провален"].", pick(religion.deity_names))
 	message_admins("Capture of [area] [religify_compelted ? "successful" : "failed"].")
 	R.capturing_area = FALSE
 
@@ -258,7 +272,8 @@
 		return FALSE
 
 	if((100*i)/all_items.len % 25 == 0)
-		religion.send_message_to_members("Захват [get_area(holder)] завершен на [round((100*i)/all_items.len, 0.1)]%", font_size = 2)
+		var/area/A = get_area(holder) //for cases
+		religion.send_message_to_members("Захват [CASE(A, GENITIVE_CASE)] завершен на [round((100*i)/all_items.len, 0.1)]%", font_size = 2)
 
 	INVOKE_ASYNC(src, PROC_REF(capture_effect), i, all_items)
 	sleep(per_obj_cd)

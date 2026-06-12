@@ -4,7 +4,7 @@
 	icon_state = "fuel_compressor1"
 	density = TRUE
 	anchored = TRUE
-	layer = 4
+	layer = MOB_LAYER // idk why
 
 /obj/machinery/fusion_fuel_compressor/MouseDrop_T(atom/movable/target, mob/user)
 	if(user.incapacitated())

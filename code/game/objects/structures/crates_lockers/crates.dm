@@ -40,6 +40,9 @@
 	if(climbable)
 		structure_shaken()
 
+	if(spawn_filling)
+		spawn_infill_particle()
+
 	return 1
 
 /obj/structure/closet/crate/close()
@@ -315,9 +318,15 @@
 	icon_opened = "crateopen"
 	icon_closed = "crate"
 
+/obj/structure/closet/crate/loot
+	desc = "Что же может оказаться внутри?"
+	name = "Abandoned crate"
+	icon_closed = "treasure"
+	icon_opened = "treasureopen"
+
 /obj/structure/closet/crate/rcd/PopulateContents()
 	for(var/i in 1 to 3)
-		new /obj/item/weapon/rcd_ammo(src)
+		new /obj/item/weapon/rcd_ammo/huge(src)
 	new /obj/item/weapon/rcd(src)
 
 /obj/structure/closet/crate/solar
@@ -383,6 +392,21 @@
 	for(var/i in 1 to 4)
 		new /obj/item/clothing/head/radiation(src)
 
+/obj/structure/closet/crate/surplus_crate
+	icon_state = "syndicrate"
+	icon_opened = "syndicrateopen"
+	icon_closed = "syndicrate"
+
+/obj/structure/closet/crate/surplus_crate_team
+	icon_state = "gorlexcrate"
+	icon_opened = "gorlexcrateopen"
+	icon_closed = "gorlexcrate"
+
+/obj/structure/closet/crate/surplus_crate_super
+	icon_state = "gorlex_weaponcrate"
+	icon_opened = "gorlex_weaponcrateopen"
+	icon_closed = "gorlex_weaponcrate"
+
 /obj/structure/closet/crate/secure/weapon
 	desc = "A secure weapons crate."
 	name = "Weapons crate"
@@ -433,6 +457,8 @@
 	icon_opened = "woodseccrateopen"
 	icon_closed = "woodseccrate"
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/closet/crate/secure/bin
 	desc = "A secure bin."
 	name = "Secure bin"
@@ -471,6 +497,9 @@
 					break
 	return
 
+/obj/structure/closet/crate/large/spawn_infill_particle(min_x = -10, min_y = -13, max_x = 10, max_y = -1)
+	. = ..()
+
 /obj/structure/closet/crate/secure/large
 	name = "large crate"
 	desc = "A hefty metal crate with an electronic locking system."
@@ -498,6 +527,9 @@
 					M.forceMove(src)
 					break
 	return
+
+/obj/structure/closet/crate/secure/large/spawn_infill_particle(min_x = -10, min_y = -13, max_x = 10, max_y = -1)
+	. = ..()
 
 //fluff variant
 /obj/structure/closet/crate/secure/large/reinforced
@@ -584,3 +616,22 @@
 							I.reagents.add_reagent(pick(contraband_reagents), reagents_to_add)
 						else if(length(danger_reagents))
 							I.reagents.add_reagent(pick(danger_reagents), reagents_to_add)
+
+/obj/structure/closet/crate/mailcrate
+	desc = "Ящик с почтовой корреспонденцией."
+	name = "Mail Crate"
+	icon_state = "mailcrate"
+	icon_opened = "mailcrateopen"
+	icon_closed = "mailcrate"
+
+/obj/structure/closet/crate/try_wrap_up(wrap_type)
+	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
+	P.icon_state = "deliverycrate"
+	P.add_texture(wrap_type)
+
+	forceMove(P)
+
+	return P
+
+/obj/structure/closet/crate/spawn_infill_particle(min_x = -12, min_y = -9, max_x = 12, max_y = 0)
+	. = ..()

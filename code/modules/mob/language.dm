@@ -35,13 +35,20 @@
 	if(!istype(M))
 		return
 
+	if(isnull(M.languages[src]))
+		to_chat(M, "<span class='warning'>You do not know this language.</span>")
+		return
+
 	// Can't speak and not native.
 	if(M.languages[src] == LANGUAGE_CAN_UNDERSTAND)
 		return
 
 	if(M.default_language == name)
 		// Please make Galactic Common a language one day? ~Luduk
-		to_chat(M, "<span class='notice'>Now speaking in Galactic Common by default.</span>")
+		if(ismonkey(M))
+			to_chat(M, "<span class='notice'>You try your best to mimic human speech...</span>")
+		else
+			to_chat(M, "<span class='notice'>Now speaking in Galactic Common by default.</span>")
 		M.default_language = null
 		M.check_languages()
 		return
@@ -236,7 +243,7 @@
 	speech_verb = "enunciates"
 	colour = "say_quote"
 	key = list("2")
-	allowed_speak = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
+	allowed_speak = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX, PLUVIAN)
 	syllables = list("lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit",
 					 "sed", "do", "eiusmod", "tempor", "incididunt", "ut", "labore", "et", "dolore",
 					 "magna", "aliqua", "ut", "enim", "ad", "minim", "veniam", "quis", "nostrud",
@@ -255,7 +262,7 @@
 	speech_verb = "growls"
 	colour = "rough"
 	key = list("3")
-	allowed_speak = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
+	allowed_speak = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX, PLUVIAN)
 	syllables = list ("gra","ba","ba","breg","bra","rag","dur","ra","ro","gro","go","ber","bar","geg","gra")
 	accents = list(
 		"х" = "г",
@@ -279,9 +286,20 @@
 	desc = "Standart language made of gestures. Common language of deaf and muted people."
 	colour = "rough"
 	key = list("4")
-	allowed_speak = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX)
+	allowed_speak = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN, VOX, PLUVIAN)
 	signlang_verb = list("makes signs with hands", "gestures", "waves hands", "gesticulates")
 	flags = SIGNLANG
+
+/datum/language/monkey
+	name = LANGUAGE_MONKEY
+	desc = "A primitive language of grunts and hoots shared among the monkey population of known space."
+	speech_verb = "hoots"
+	ask_verb = "screeches"
+	exclaim_verb = "shrieks"
+	colour = "monkey"
+	syllables = list("УУ", "У-А", "УУУ", "АА", "АУ", "УА", "ААА", "ИИ", "ОО")
+	flags = RESTRICTED
+	space_chance = 40
 
 /datum/language/xenomorph
 	name = LANGUAGE_XENOMORPH
@@ -430,7 +448,7 @@
 			link_class = "class='good'"
 
 		if(languages[L] != LANGUAGE_CAN_UNDERSTAND)
-			lang_name = "<a href='?src=\ref[L];usr=\ref[src]'[link_class]>[lang_name]</a>"
+			lang_name = "<a href='byond://?src=\ref[L];usr=\ref[src]'[link_class]>[lang_name]</a>"
 
 		dat += "<b>[lang_name] "
 		for(var/l_key in L.key)

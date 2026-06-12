@@ -37,7 +37,7 @@
 	max_n2 = 0
 	minbodytemp = 0
 	var/hulk_powers = list()
-	var/mob/living/original_body
+	var/mob/living/origin
 	var/health_regen = 1.5
 
 	animalistic = FALSE
@@ -113,7 +113,7 @@
 	for(var/spell in hulk_powers)
 		AddSpell(new spell(src))
 
-/mob/living/simple_animal/hulk/unathi/Login()
+/mob/living/simple_animal/hulk/unathi/LateLogin()
 	..()
 	to_chat(src, "<span class='notice'>Вы можете есть конечности (Левая кнопка мыши).</span>")
 
@@ -186,8 +186,8 @@
 
 	if(mind && original_body)
 		mind.transfer_to(original_body)
-		original_body.attack_log = attack_log
-		original_body.attack_log += "\[[time_stamp()]\]<font color='blue'> ======HUMAN LIFE======</font>"
+		origin.attack_log = attack_log
+		origin.attack_log += "\[[time_stamp()]\]<font color='blue'> ======HUMAN LIFE======</font>"
 	qdel(src)
 
 /mob/living/simple_animal/hulk/MobBump(mob/M)

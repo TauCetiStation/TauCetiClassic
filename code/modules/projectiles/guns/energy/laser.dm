@@ -10,18 +10,20 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 	slot_flags = SLOT_FLAGS_BACK
 	can_be_holstered = FALSE
-
-/obj/item/weapon/gun/energy/laser/atom_init()
-	. = ..()
-	if(power_supply)
-		power_supply.maxcharge = 1500
-		power_supply.charge = 1500
+	cell_type = /obj/item/weapon/stock_parts/cell/energy_weapon
 
 /obj/item/weapon/gun/energy/laser/practice
 	name = "practice laser gun"
 	desc = "Модифицированная версия стандартной лазерной винтовки, стреляет менее концентрированными энергетическими зарядами, предназначенными для стрельбы по мишеням."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = FALSE
+
+/obj/item/weapon/gun/energy/laser/big //the bigger version of lasrifle with bigger powercell
+	name = "extended-capacity laser rifle"
+	desc = "Стандартное оружие, предназначенное для убийства с помощью концентрированных энергетических зарядов. Этот экземпляр имеет батарейку повышенной емкости и обладает большим размером."
+	m_amt = 4000
+	cell_type = /obj/item/weapon/stock_parts/cell/energy_weapon/extended
+	flags_2 = CANT_BE_INSERTED
 
 /obj/item/weapon/gun/energy/laser/selfcharging
 	name = "selfcharging laser gun"
@@ -74,19 +76,8 @@
 	origin_tech = null
 	charge_rate = 50
 
-/obj/item/weapon/gun/energy/laser/scatter
-	name = "scatter laser gun"
-	icon_state = "oldlaser"
-	desc = "Лазерная пушка, оснащенная комплектом преломления, который создает несколько энергетических зарядов."
-	can_be_holstered = TRUE
-	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
-
-/obj/item/weapon/gun/energy/laser/scatter/attack_self(mob/living/user)
-	..()
-	update_icon()
-
-/obj/item/weapon/gun/energy/laser/scatter/alien
-	name = "scatter laser rife"
+/obj/item/weapon/gun/energy/laser/scatter_alien
+	name = "scatter laser rifle"
 	icon_state = "subegun"
 	desc = "Лазерная пушка, оснащенная комплектом преломления, который создает несколько энергетических зарядов."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
@@ -99,6 +90,8 @@
 	item_state = null
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
+	cell_type = /obj/item/weapon/stock_parts/cell/energy_weapon/extended
+	flags_2 = CANT_BE_INSERTED
 
 	fire_delay = 20
 

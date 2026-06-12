@@ -4,6 +4,7 @@
 	amount_per_transfer_from_this = 10
 	icon = 'icons/obj/items.dmi'
 	icon_state = "combat_hypo"
+	item_state = "combat_hypo"
 	volume = 60
 	list_reagents = list("stimulants" = 5, "bicaridine" = 15, "oxycodone" = 15, "kelotane" = 15, "doctorsdelight" = 10)
 /obj/item/weapon/reagent_containers/hypospray/combat/atom_init()
@@ -16,6 +17,7 @@
 	name = "first-aid kit"
 	icon_state = "bezerk"
 	item_state = "firstaid-syndi"
+	item_state_world = "bezerk_w"
 	desc = "I hope you've got insurance."
 	max_w_class = SIZE_SMALL
 
@@ -30,6 +32,9 @@
 	new /obj/item/weapon/storage/pill_bottle/tramadol(src)
 	new /obj/item/stack/medical/suture(src)
 	new /obj/item/device/healthanalyzer(src)
+
+/obj/item/weapon/storage/firstaid/small_firstaid_kit
+	item_state_world = null
 
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
 	name = "Combat first-aid small kit"
@@ -184,7 +189,7 @@
 	icon_state = "pain_hypo"
 	volume = 100
 	list_reagents = list("tramadol" = 25, "paracetamol" = 25, "oxycodone" = 25, "inaprovaline" = 25)
-	
+
 /obj/item/weapon/reagent_containers/hypospray/combat/bone
 	name = "Bone-repair hypospray"
 	desc = "A modified air-needle autoinjector, used by operatives trained in medical practices to quickly heal injuries in the field. This one is filled with reagents which will mend the bones."

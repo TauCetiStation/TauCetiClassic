@@ -17,11 +17,12 @@
 <title>Permissions Panel</title>
 <script type='text/javascript' src='search.js'></script>
 <link rel='stylesheet' type='text/css' href='panels.css'>
+[get_browse_zoom_style(usr.client)]
 </head>
 <body onload='selectTextField();updateSearch();'>
 <div id='main'><table id='searchable' cellspacing='0'>
 <tr class='title'>
-<th style='width:125px;text-align:right;'>CKEY <a class='small' href='?src=\ref[src];editrights=add'>\[+\]</a></th>
+<th style='width:125px;text-align:right;'>CKEY <a class='small' href='byond://?src=\ref[src];editrights=add'>\[+\]</a></th>
 <th style='width:125px;'>RANK</th><th style='width:100%;'>PERMISSIONS</th>
 </tr>
 "}
@@ -36,14 +37,14 @@
 			rights = "*none*"
 
 		output += "<tr>"
-		output += "<td style='text-align:right;'>[adm_ckey] <a class='small' href='?src=\ref[src];editrights=remove_admin;ckey=[adm_ckey]'>\[-\]</a></td>"
-		output += "<td><a href='?src=\ref[src];editrights=rank;ckey=[adm_ckey]'>[rank]</a></td>"
-		output += "<td><a class='small' href='?src=\ref[src];editrights=get_new_rights;ckey=[adm_ckey]'>[rights]</a></td>"
+		output += "<td style='text-align:right;'>[adm_ckey] <a class='small' href='byond://?src=\ref[src];editrights=remove_admin;ckey=[adm_ckey]'>\[-\]</a></td>"
+		output += "<td><a href='byond://?src=\ref[src];editrights=rank;ckey=[adm_ckey]'>[rank]</a></td>"
+		output += "<td><a class='small' href='byond://?src=\ref[src];editrights=get_new_rights;ckey=[adm_ckey]'>[rights]</a></td>"
 		output += "</tr>"
 
 	for(var/ment_ckey in mentor_ckeys)
 		output += "<tr>"
-		output += "<td style='text-align:right;'>[ment_ckey] <a class='small' href='?src=\ref[src];editrights=remove_mentor;ckey=[ment_ckey]'>\[-\]</a></td>"
+		output += "<td style='text-align:right;'>[ment_ckey] <a class='small' href='byond://?src=\ref[src];editrights=remove_mentor;ckey=[ment_ckey]'>\[-\]</a></td>"
 		output += "<td>Mentor</td>"
 		output += "<td></td>"
 		output += "</tr>"
@@ -54,7 +55,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=editrights;size=600x500")
+	usr << browse(output,"window=editrights;[get_browse_size_parameter(usr.client, 600, 500)]")
 
 /datum/admins/proc/add_admin()
 	if(!usr.client)
@@ -91,7 +92,7 @@
 
 		admin_datums -= adm_ckey
 		D.disassociate()
-		
+
 		message_admins("[key_name_admin(usr)] removed [adm_ckey] from the admins list")
 		log_admin("[key_name(usr)] removed [adm_ckey] from the admins list")
 
@@ -158,6 +159,7 @@ var elements = document.getElementsByName('rights');
 	window.location='?src=\ref[src];editrights=permissions;ckey=[adm_ckey];new_rights='+new_rights+';'
 }
 </script>
+[get_browse_zoom_style(usr)]
 </head>
 <fieldset>
 <legend>Check all needed flags.</legend>
@@ -173,7 +175,7 @@ var elements = document.getElementsByName('rights');
 <input type="button" value="Apply" onclick="send_rights()" />
 </html>
 "}
-	usr << browse(output,"window=change_permissions;size=250x380;")
+	usr << browse(output,"window=change_permissions;[get_browse_size_parameter(usr, 250, 380)];")
 
 
 /datum/admins/proc/change_permissions(adm_ckey, new_rights)
@@ -333,33 +335,24 @@ var elements = document.getElementsByName('rights');
 			log_query.Execute()
 			to_chat(usr, "<span class='notice'>Admin rank changed.</span>")
 
-/client/proc/add_round_admin()
-	set category = "Admin"
-	set name = "Round Admin"
-	set desc = "Add or remove temporary admin"
-
+/client/proc/add_temp_admin(rank, flags)
 	if(!check_rights(R_PERMISSIONS))
 		return
 
-	var/client/target = input("Select client to add (or remove) [ADMIN_RANK_ROUND] rank for the duration of the round.") as null|anything in clients
-
+	var/client/target = input("Select client to add/remove [rank] for the duration of the round.") as null|anything in clients
 	if(!target)
 		return
 
 	if(!target.holder)
-		var/confirm = tgui_alert(usr, "You want to grant permissions for [target.ckey], are you sure?", "Confirmation", list("Yes", "No"))
-		if (confirm != "Yes")
-			return
-
-		new /datum/admins(ADMIN_RANK_ROUND, (R_ADMIN | R_BAN), target.ckey)
+		new /datum/admins(rank, flags, target.ckey)
 		target.holder = admin_datums[target.ckey]
 		target.holder.associate(target)
 
-		message_admins("[key_name_admin(usr)] added [key_name_admin(target)] to the admins list as [ADMIN_RANK_ROUND]")
-		log_admin("[key_name(usr)] added [key_name(target)] to the admins list as [ADMIN_RANK_ROUND]")
+		message_admins("[key_name_admin(usr)] added [key_name_admin(target)] to the admins list as [rank]")
+		log_admin("[key_name(usr)] added [key_name(target)] to the admins list as [rank]")
 
-	else if(target.holder && target.holder.rank == ADMIN_RANK_ROUND)
-		var/confirm = tgui_alert(usr, "You want to remove [ADMIN_RANK_ROUND] permissions from [target.ckey], are you sure?", "Confirmation", list("Yes", "No"))
+	else if(target.holder && target.holder.rank == rank)
+		var/confirm = tgui_alert(usr, "Remove temporary permissions from [target.ckey]?", "Confirmation", list("Yes", "No"))
 		if (confirm != "Yes")
 			return
 
@@ -367,7 +360,22 @@ var elements = document.getElementsByName('rights');
 		admin_datums -= target.ckey
 		D.disassociate()
 
-		message_admins("[key_name_admin(usr)] removed [ADMIN_RANK_ROUND] [key_name_admin(target)] from the admins list")
-		log_admin("[key_name(usr)] removed [ADMIN_RANK_ROUND] [key_name(target)] from the admins list")
+		message_admins("[key_name_admin(usr)] removed temporary permissions ([rank]) from [target.ckey]")
+		log_admin("[key_name(usr)] removed temporary permissions ([rank]) from [target.ckey]")
 	else
 		to_chat(usr, "<span class='alert'>Wrong client!</span>")
+
+/client/proc/add_round_admin()
+	set category = "Admin"
+	set name = "Round Admin / Event Maker"
+	set desc = "Add or remove temporary admin"
+
+	var/choice = tgui_alert(usr, "Choose rank to give.", "Confirmation", list(ADMIN_RANK_ROUND, ADMIN_RANK_EVENT_MAKER, "Return"))
+	if(choice == "Return" || !choice)
+		return
+
+	switch(choice)
+		if(ADMIN_RANK_ROUND)
+			add_temp_admin(ADMIN_RANK_ROUND, (R_ADMIN | R_BAN))
+		if(ADMIN_RANK_EVENT_MAKER)
+			add_temp_admin(ADMIN_RANK_EVENT_MAKER, (R_ADMIN | R_BAN | R_FUN | R_EVENT | R_SPAWN | R_BUILDMODE | R_SERVER | R_REJUVINATE | R_VAREDIT ))

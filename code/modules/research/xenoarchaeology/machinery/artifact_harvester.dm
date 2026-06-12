@@ -52,15 +52,15 @@
 		if(harvesting || draining)
 			if(harvesting)
 				dat += "Please wait. Harvesting in progress ([round((inserted_battery.stored_charge/inserted_battery.capacity)*100)]%).<br>"
-				dat += "<A href='?src=\ref[src];stopharvest=1'>Halt early</A><BR>"
+				dat += "<A href='byond://?src=\ref[src];stopharvest=1'>Halt early</A><BR>"
 			if(draining)
 				dat += "Please wait. Energy dump in progress ([round((inserted_battery.stored_charge/inserted_battery.capacity)*100)]%).<br>"
 		else if(inserted_battery)
 			dat += "<b>[inserted_battery.name]</b> inserted, charge level: [round(inserted_battery.stored_charge,1)]/[inserted_battery.capacity] ([round((inserted_battery.stored_charge/inserted_battery.capacity)*100)]%)<BR>"
 			dat += "<b>Energy signature ID:</b>[inserted_battery.battery_effect ? (inserted_battery.battery_effect.artifact_id == "" ? "???" : "[inserted_battery.battery_effect.artifact_id]") : "NA"]<BR>"
-			dat += "<A href='?src=\ref[src];ejectbattery=1'>Eject battery</a><BR>"
-			dat += "<A href='?src=\ref[src];drainbattery=1'>Drain battery of all charge</a><BR>"
-			dat += "<A href='?src=\ref[src];harvest=1'>Begin harvesting</a><BR>"
+			dat += "<A href='byond://?src=\ref[src];ejectbattery=1'>Eject battery</a><BR>"
+			dat += "<A href='byond://?src=\ref[src];drainbattery=1'>Drain battery of all charge</a><BR>"
+			dat += "<A href='byond://?src=\ref[src];harvest=1'>Begin harvesting</a><BR>"
 
 		else
 			dat += "No battery inserted.<BR>"
@@ -68,7 +68,7 @@
 		dat += "<B><font color=red>Unable to locate analysis pad.</font><BR></b>"
 	//
 	dat += "<HR>"
-	dat += "<A href='?src=\ref[src];refresh=1'>Refresh</A>"
+	dat += "<A href='byond://?src=\ref[src];refresh=1'>Refresh</A>"
 
 	var/datum/browser/popup = new(user, "artharvester", name, 450, 500)
 	popup.set_content(dat)

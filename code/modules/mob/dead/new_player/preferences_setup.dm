@@ -14,9 +14,10 @@
 	randomize_hair_color("gradient")
 	randomize_eyes_color()
 	randomize_skin_color()
-	underwear = rand(1,underwear_m.len)
-	undershirt = rand(1,undershirt_t.len)
-	socks = rand(1,socks_t.len)
+	underwear = rand(0, underwear_t.len)
+	undershirt = rand(0, undershirt_t.len)
+	undershirt_print = prob(50) ? pick(undershirt_prints_t) : null
+	socks = rand(0, socks_t.len)
 	backbag = 2
 	use_skirt = pick(TRUE, FALSE)
 	var/datum/species/S = all_species[species]
@@ -32,48 +33,11 @@
 		b_facial = b_hair
 		return
 
-	var/red
-	var/green
-	var/blue
+	var/list/colors_rgb = random_hair_color()
 
-	var/col = pick ("blonde", "black", "chestnut", "copper", "brown", "wheat", "old", "punk")
-	switch(col)
-		if("blonde")
-			red = 255
-			green = 255
-			blue = 0
-		if("black")
-			red = 0
-			green = 0
-			blue = 0
-		if("chestnut")
-			red = 153
-			green = 102
-			blue = 51
-		if("copper")
-			red = 255
-			green = 153
-			blue = 0
-		if("brown")
-			red = 102
-			green = 51
-			blue = 0
-		if("wheat")
-			red = 255
-			green = 255
-			blue = 153
-		if("old")
-			red = rand (100, 255)
-			green = red
-			blue = red
-		if("punk")
-			red = rand (0, 255)
-			green = rand (0, 255)
-			blue = rand (0, 255)
-
-	red = max(min(red + rand (-25, 25), 255), 0)
-	green = max(min(green + rand (-25, 25), 255), 0)
-	blue = max(min(blue + rand (-25, 25), 255), 0)
+	var/red = colors_rgb[1]
+	var/green = colors_rgb[2]
+	var/blue = colors_rgb[3]
 
 	switch(target)
 		if("hair")
@@ -90,101 +54,18 @@
 			b_grad = blue
 
 /datum/preferences/proc/randomize_eyes_color()
-	var/red
-	var/green
-	var/blue
+	var/list/colors_rgb = random_eye_color()
 
-	var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
-	switch(col)
-		if("black")
-			red = 0
-			green = 0
-			blue = 0
-		if("grey")
-			red = rand (100, 200)
-			green = red
-			blue = red
-		if("brown")
-			red = 102
-			green = 51
-			blue = 0
-		if("chestnut")
-			red = 153
-			green = 102
-			blue = 0
-		if("blue")
-			red = 51
-			green = 102
-			blue = 204
-		if("lightblue")
-			red = 102
-			green = 204
-			blue = 255
-		if("green")
-			red = 0
-			green = 102
-			blue = 0
-		if("albino")
-			red = rand (200, 255)
-			green = rand (0, 150)
-			blue = rand (0, 150)
-
-	red = max(min(red + rand (-25, 25), 255), 0)
-	green = max(min(green + rand (-25, 25), 255), 0)
-	blue = max(min(blue + rand (-25, 25), 255), 0)
-
-	r_eyes = red
-	g_eyes = green
-	b_eyes = blue
+	r_eyes = colors_rgb[1]
+	g_eyes = colors_rgb[2]
+	b_eyes = colors_rgb[3]
 
 /datum/preferences/proc/randomize_skin_color()
-	var/red
-	var/green
-	var/blue
+	var/list/colors_rgb = random_skin_color()
 
-	var/col = pick ("black", "grey", "brown", "chestnut", "blue", "lightblue", "green", "albino")
-	switch(col)
-		if("black")
-			red = 0
-			green = 0
-			blue = 0
-		if("grey")
-			red = rand (100, 200)
-			green = red
-			blue = red
-		if("brown")
-			red = 102
-			green = 51
-			blue = 0
-		if("chestnut")
-			red = 153
-			green = 102
-			blue = 0
-		if("blue")
-			red = 51
-			green = 102
-			blue = 204
-		if("lightblue")
-			red = 102
-			green = 204
-			blue = 255
-		if("green")
-			red = 0
-			green = 102
-			blue = 0
-		if("albino")
-			red = rand (200, 255)
-			green = rand (0, 150)
-			blue = rand (0, 150)
-
-	red = max(min(red + rand (-25, 25), 255), 0)
-	green = max(min(green + rand (-25, 25), 255), 0)
-	blue = max(min(blue + rand (-25, 25), 255), 0)
-
-	r_skin = red
-	g_skin = green
-	b_skin = blue
-
+	r_skin = colors_rgb[1]
+	g_skin = colors_rgb[2]
+	b_skin = colors_rgb[3]
 
 /datum/preferences/proc/update_preview_icon()		//seriously. This is horrendous.
 	// Determine what job is marked as 'High' priority, and dress them up as such.
@@ -221,6 +102,58 @@
 	if(S)
 		S.after_job_equip(mannequin, previewJob, TRUE)
 
+	// The mannequin is reused across slot switches, so clear display traits before reapplying.
+	REMOVE_TRAIT(mannequin, TRAIT_FAT, INNATE_TRAIT)
+	if((QUIRK_FATNESS in all_quirks))
+		ADD_TRAIT(mannequin, TRAIT_FAT, INNATE_TRAIT)
+	mannequin.update_body()
+	mannequin.update_inv_w_uniform()
+	mannequin.update_inv_wear_suit()
+
+	var/obj/item/clothing/preview_uniform = istype(mannequin.w_uniform, /obj/item/clothing) ? mannequin.w_uniform : null
+	var/obj/item/clothing/preview_suit = istype(mannequin.wear_suit, /obj/item/clothing) ? mannequin.wear_suit : null
+	if(gear && gear.len)
+		for(var/thing in gear)
+			var/datum/gear/G = gear_datums[thing]
+			if(!G)
+				continue
+			if(G.whitelisted && G.whitelisted != species)
+				continue
+			var/metadata = get_gear_metadata(G)
+			var/obj/item/spawned_item = G.spawn_item(mannequin, metadata)
+			if(!spawned_item)
+				continue
+			if(istype(spawned_item, /obj/item/clothing/accessory))
+				// Clothing accessories attach to worn clothing, not to a body slot
+				if(preview_uniform && preview_uniform.can_attach_accessory(spawned_item))
+					preview_uniform.attach_accessory(spawned_item, mannequin)
+				else if(preview_suit && preview_suit.can_attach_accessory(spawned_item))
+					preview_suit.attach_accessory(spawned_item, mannequin)
+				else
+					qdel(spawned_item)
+			else
+				var/target_slot = _preview_slot_from_flags(spawned_item.slot_flags)
+				if(target_slot)
+					mannequin.replace_in_slot(target_slot, spawned_item)
+				else if(!mannequin.equip_to_appropriate_slot(spawned_item))
+					qdel(spawned_item)
+
+	mannequin.update_inv_back()
 	COMPILE_OVERLAYS(mannequin)
 	parent.show_character_previews(new /mutable_appearance(mannequin))
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+
+/proc/_preview_slot_from_flags(slot_flags)
+	if(slot_flags & SLOT_FLAGS_BACK)     return SLOT_BACK
+	if(slot_flags & SLOT_FLAGS_OCLOTHING) return SLOT_WEAR_SUIT
+	if(slot_flags & SLOT_FLAGS_ICLOTHING) return SLOT_W_UNIFORM
+	if(slot_flags & SLOT_FLAGS_GLOVES)   return SLOT_GLOVES
+	if(slot_flags & SLOT_FLAGS_EYES)     return SLOT_GLASSES
+	if(slot_flags & SLOT_FLAGS_EARS)     return SLOT_L_EAR
+	if(slot_flags & SLOT_FLAGS_MASK)     return SLOT_WEAR_MASK
+	if(slot_flags & SLOT_FLAGS_HEAD)     return SLOT_HEAD
+	if(slot_flags & SLOT_FLAGS_FEET)     return SLOT_SHOES
+	if(slot_flags & SLOT_FLAGS_ID)       return SLOT_WEAR_ID
+	if(slot_flags & SLOT_FLAGS_BELT)     return SLOT_BELT
+	if(slot_flags & SLOT_FLAGS_NECK)     return SLOT_NECK
+	return null

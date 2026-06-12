@@ -5,10 +5,19 @@
 	icon_state = "cutout_basic"
 	w_class = SIZE_NORMAL
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
-		"Traitor", "Nuke Op", "Cultist","Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Deathsquad Officer", "Ian")
+		"Traitor", "Nuke Op", "Cultist","Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Deathsquad Officer", "Vox Raider", "Ian")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 	var/painting = FALSE
 	var/static/list/coloring
+
+/obj/item/cardboard_cutout/atom_init()
+	. = ..()
+	AddComponent(/datum/component/tactical, null, TRUE)
+	var/datum/twohanded_component_builder/TCB = new
+	TCB.require_twohands = TRUE
+	TCB.force_wielded = 5
+	TCB.force_unwielded = 2
+	AddComponent(/datum/component/twohanded, TCB)
 
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
 	if(user.a_intent == INTENT_HELP || pushed_over)
@@ -72,6 +81,7 @@
 			"Shadowling" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_shadowling"),
 			"Xenomorph" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_fukken_xeno"),
 			"Deathsquad Officer" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_deathsquad"),
+			"Vox Raider" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_voxraider"),
 			"Ian" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_ian")
 			)
 
@@ -91,7 +101,7 @@
 		return
 	if(!user.Adjacent(src))
 		return
-	if(!do_after(user, 10, FALSE, src, FALSE))
+	if(!do_after(user, 10, FALSE, src))
 		return
 	user.visible_message("<span class='notice'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
 	alpha = 255
@@ -143,6 +153,14 @@
 			name = pick(commando_names)
 			desc = "A cardboard cutout of a death commando."
 			icon_state = "cutout_deathsquad"
+		if("Vox Raider")
+			var/sounds = rand(2, 8)
+			var/newname = ""
+			for(var/i in 1 to sounds)
+				newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
+			name = capitalize(newname)
+			desc = "A cardboard cutout of a vox raider."
+			icon_state = "cutout_voxraider"
 		if("Ian")
 			name = "Ian"
 			desc = "A cardboard cutout of the HoP's beloved corgi."

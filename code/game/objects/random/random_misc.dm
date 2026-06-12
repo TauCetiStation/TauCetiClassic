@@ -24,7 +24,7 @@
 		/obj/item/device/guitar,\
 		/obj/item/device/harmonica,\
 		/obj/item/device/violin,\
-		/obj/item/device/guitar/electric\
+		/obj/item/device/synth\
 	)
 
 /obj/random/misc/storage
@@ -150,7 +150,7 @@
 /obj/random/misc/disk
 	name = "Random Disk"
 	desc = "This is a random disk pack."
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/disks.dmi'
 	icon_state = "datadisk0"
 
 /obj/random/misc/disk/item_to_spawn()

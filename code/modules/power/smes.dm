@@ -98,7 +98,7 @@
 /obj/machinery/power/smes/proc/update_cells()
 	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
 		cell.charge = cell.maxcharge * charge / capacity
-		cell.updateicon()
+		cell.update_icon()
 
 /obj/machinery/power/smes/exchange_parts()
 	update_cells()
@@ -164,7 +164,7 @@
 			return
 
 		var/turf/T = get_turf(user)
-		if(T.intact) // is the floor plating removed ?
+		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 			to_chat(user, "<span class='warning'>You must first remove the floor plating!</span>")
 			return
 
@@ -529,7 +529,7 @@
 	output_level = 0
 
 /proc/rate_control(S, V, C, Min = 1, Max = 5, Limit = null)
-	var/href = "<A href='?src=\ref[S];rate control=1;[V]"
+	var/href = "<A href='byond://?src=\ref[S];rate control=1;[V]"
 	var/rate = "[href]=-[Max]'>-</A>[href]=-[Min]'>-</A> [(C ? C : 0)] [href]=[Min]'>+</A>[href]=[Max]'>+</A>"
 	if(Limit)
 		return "[href]=-[Limit]'>-</A>" + rate + "[href]=[Limit]'>+</A>"

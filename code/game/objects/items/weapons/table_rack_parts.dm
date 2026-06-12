@@ -32,6 +32,7 @@
 		else
 			to_chat(user, "<span class='warning'>You need at least four rods to do this.</span>")
 		return TRUE
+
 	return FALSE
 
 /obj/item/weapon/table_parts/attackby(obj/item/I, mob/user, params)
@@ -69,6 +70,7 @@
 /*
  * Reinforced Table Parts
  */
+
 /obj/item/weapon/table_parts/reinforced
 	build_time = SKILL_TASK_AVERAGE
 
@@ -79,14 +81,37 @@
 	return FALSE
 
 /*
- * Glass Table Parts
+ * Reinforced Glass Table Parts
  */
-/obj/item/weapon/table_parts/glass/attack_tools(obj/item/W, mob/user)
+
+/obj/item/weapon/table_parts/rglass
+	build_time = SKILL_TASK_AVERAGE
+
+/obj/item/weapon/table_parts/rglass/attack_tools(obj/item/W, mob/user)
 	if(iswrenching(W))
 		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
 
+/*
+ * Glass Table Parts
+ */
+
+/obj/item/weapon/table_parts/glass/attack_tools(obj/item/W, mob/user)
+	if(iswrenching(W))
+		deconstruct(TRUE, user)
+		return TRUE
+
+	else if(istype(W, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = W
+		if (R.use(2))
+			new /obj/item/weapon/table_parts/rglass( user.loc )
+			to_chat(user, "<span class='notice'>You reinforce the [name].</span>")
+			qdel(src)
+		else
+			to_chat(user, "<span class='warning'>You need at least two rods to do this.</span>")
+		return TRUE
+	return FALSE
 
 /*
  * Wooden Table Parts
@@ -143,6 +168,29 @@
 	var/turf/simulated/T = get_turf(user)
 	if(T.CanPass(null, T))
 		var/obj/structure/rack/R = new /obj/structure/rack( T )
+		to_chat(user, "<span class='notice'>You assemble [src].</span>")
+		R.add_fingerprint(user)
+		qdel(src)
+	else
+		to_chat(user, "<span class='warning'>You can't put it here!</span>")
+
+
+
+/obj/item/weapon/mangal_parts/attackby(obj/item/I, mob/user, params)
+	if(iswrenching(I))
+		deconstruct(TRUE, user)
+		return
+	return ..()
+
+/obj/item/weapon/mangal_parts/deconstruct(disassembled, user = FALSE)
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(get_turf(user || src))
+	..()
+
+/obj/item/weapon/mangal_parts/attack_self(mob/user)
+	var/turf/simulated/T = get_turf(user)
+	if(T.CanPass(null, T))
+		var/obj/structure/mangal/R = new /obj/structure/mangal( T )
 		to_chat(user, "<span class='notice'>You assemble [src].</span>")
 		R.add_fingerprint(user)
 		qdel(src)

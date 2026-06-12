@@ -17,10 +17,9 @@
 	var/volume = 0
 	var/nutriment_factor = 0
 	var/diet_flags = DIET_ALL
-	var/custom_metabolism = REAGENTS_METABOLISM
+	var/custom_metabolism = REAGENTS_METABOLISM // todo: rename as reagent_metabolism
 	var/taste_strength = 1 //how easy it is to taste - the more the easier
 	var/taste_message = "bitterness" //life's bitter by default. Cool points for using a span class for when you're tasting <span class='userdanger'>LIQUID FUCKING DEATH</span>
-	var/list/restrict_species = list(IPC) // Species that simply can not digest this reagent.
 	var/list/flags = list()
 
 	var/overdose = 0 // if var/overdose = 0, reagent has no overdose
@@ -114,25 +113,19 @@
 	SEND_SIGNAL(src, COMSIG_REAGENT_REACTION_TURF, T, volume)
 	return
 
-/datum/reagent/proc/on_mob_life(mob/living/M)
+/datum/reagent/proc/on_mob_life(mob/living/M, remove_amount)
 	if(!M || !holder)
 		return
-	//Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
-	// hey, so, how is your ghost runtime doing? ~Luduk
-	if(!isliving(M))
+
+	if(!on_general_digest(M)) // You can't overdose on what you can't digest
 		return
-	if(!check_digesting(M)) // You can't overdose on what you can't digest
-		return FALSE
 
 	if((overdose > 0) && (volume >= overdose))//Overdosing, wooo
 		M.adjustToxLoss(overdose_dam)
 
 	if(allergen && allergen[ALLERGY_INGESTION] && ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.trigger_allergy(id, custom_metabolism * H.get_metabolism_factor())
-		return FALSE
-
-	return TRUE
+		H.trigger_allergy(id, remove_amount)
 
 /datum/reagent/proc/on_move(mob/M)
 	return
@@ -151,32 +144,30 @@
 /datum/reagent/proc/on_update(atom/A)
 	return
 
-/// Everything under now does. end EUGH
-
-/datum/reagent/proc/check_digesting(mob/living/M)
-	var/species_name = M.get_species()
-	if(restrict_species && (species_name in restrict_species))
-		return FALSE
-
-	var/should_general_digest = TRUE
-	if(species_name in all_species)
-		var/datum/species/specimen = all_species[species_name]
-		should_general_digest = specimen.call_digest_proc(M, src)
-
-	if(should_general_digest)
-		on_general_digest(M)
-	return TRUE
-
 /datum/reagent/proc/on_general_digest(mob/living/M)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+
+	// todo: legacy code, rewrite these individual handlers to allergies, general traits, and maybe (like on tg) organs with signals
+	// if you want to fully disable metabolism for some species - just add them zero metabolism_mod
+	switch(M.get_species())
+		if(SKRELL)
+			. = on_skrell_digest(M)
+		if(UNATHI)
+			. = on_unathi_digest(M)
+		if(DIONA)
+			. = on_diona_digest(M)
+		if(VOX, VOX_ARMALIS)
+			. = on_vox_digest(M)
+		if(SERPENTID)
+			. = on_serpentid_digest(M)
+		else
+			return TRUE
+	return .
 
 /datum/reagent/proc/on_skrell_digest(mob/living/M)
 	return TRUE
 
 /datum/reagent/proc/on_unathi_digest(mob/living/M)
-	return TRUE
-
-/datum/reagent/proc/on_tajaran_digest(mob/living/M)
 	return TRUE
 
 /datum/reagent/proc/on_diona_digest(mob/living/M)
@@ -185,20 +176,10 @@
 /datum/reagent/proc/on_vox_digest(mob/living/M)
 	return TRUE
 
-/datum/reagent/proc/on_abductor_digest(mob/living/M)
-	return TRUE
-
-/datum/reagent/proc/on_skeleton_digest(mob/living/M)
+// huh, serpentids can digest only one reagent
+// we probably should move it somewhere else and disable species metabolism
+/datum/reagent/proc/on_serpentid_digest(mob/living/M)
 	return FALSE
-
-/datum/reagent/proc/on_shadowling_digest(mob/living/M)
-	return TRUE
-
-/datum/reagent/proc/on_golem_digest(mob/living/M)
-	return FALSE
-
-/datum/reagent/proc/on_slime_digest(mob/living/M)
-	return TRUE
 
 // Handles holy reagents.
 /datum/reagent/proc/handle_religions()

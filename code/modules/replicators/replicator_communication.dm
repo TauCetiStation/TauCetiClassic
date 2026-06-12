@@ -106,7 +106,7 @@
 
 		var/jump_button = ""
 		if(announcer && isreplicator(M))
-			jump_button = " <a href='?src=\ref[announcer];replicator_jump=1'>(JMP)</a>"
+			jump_button = " <a href='byond://?src=\ref[announcer];replicator_jump=1'>(JMP)</a>"
 
 		if(isobserver(M))
 			speaker_name = "[FOLLOW_LINK(M, announcer)] [speaker_name]"
@@ -142,9 +142,9 @@
 		var/datum/role/replicator/R = r
 		if(!R.antag)
 			continue
-		var/jump_button = transfer ? " <a href='?src=\ref[drone];replicator_jump=1'>(JMP)</a>" : ""
-		var/dismantle_button = dismantle ? " <a href='?src=\ref[drone];replicator_kill=1'>(KILL)</a>" : ""
-		var/objection_button = objection_time > 0 ? " <a href='?src=\ref[drone];replicator_objection=1;id='>(OBJ)</a>" : ""
+		var/jump_button = transfer ? " <a href='byond://?src=\ref[drone];replicator_jump=1'>(JMP)</a>" : ""
+		var/dismantle_button = dismantle ? " <a href='byond://?src=\ref[drone];replicator_kill=1'>(KILL)</a>" : ""
+		var/objection_button = objection_time > 0 ? " <a href='byond://?src=\ref[drone];replicator_objection=1;id='>(OBJ)</a>" : ""
 		var/processed_message = "<b>[drone.name]</b> <span class='replicator'>\[???\]</span> requests, <span class='message'><span class='replicator'>\"[message]\"</span></span>[jump_button][dismantle_button][objection_button]"
 
 		send_to_chat(R.antag.current, processed_message, message, speaker=drone)

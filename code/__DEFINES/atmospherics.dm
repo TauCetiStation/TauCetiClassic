@@ -6,6 +6,7 @@
 #define TM50C 223.15   // -50degC
 #define T0C 273.15	// 0degC
 #define T20C 293.15	// 20degC
+#define T150C 443.15// 150degC
 #define TCMB 2.7	// -270.3degC
 
 #define PIPE_SIMPLE_STRAIGHT        0

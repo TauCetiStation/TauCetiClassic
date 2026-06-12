@@ -6,6 +6,14 @@
 // Converts 255 RGB color values to float and returns that as matrix, where color applied into contrast row.
 #define RGB_CONTRAST(r, g, b) list(1,0,0, 0,1,0, 0,0,1, r/255, g/255, b/255)
 
+//Returns the hex value of a decimal number
+//len == length of returned string
+#define num2hex(X, len) num2text(X, len, 16)
+
+//Returns an integer given a hex input, supports negative values "-ff"
+//skips preceding invalid characters
+#define hex2num(X) text2num(X, 16)
+
 //"fancy" math for calculating time in ms from tick_usage percentage and the length of ticks
 //percent_of_tick_used * (ticklag * 100(to convert to ms)) / 100(percent ratio)
 //collapsed to percent_of_tick_used * tick_lag
@@ -27,11 +35,17 @@
 
 #define CLAMP01(x) (clamp(x, 0, 1))
 
-#define SIGN(x) (x < 0 ? -1 : 1)
+/// Gets the sign of x, returns -1 if negative, 0 if 0, 1 if positive
+#define SIGN(x) sign(x)
+
+// Performs a linear interpolation between a and b.
+// Note that amount=0 returns a, amount=1 returns b, and
+// amount=0.5 returns the mean of a and b.
+#define LERP(a, b, amount) lerp(a, b, amount)
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 
-#define CEIL(x) (-round(-(x)))
+#define CEIL(x) ceil(x)
 
 // Similar to clamp but the bottom rolls around to the top and vice versa. min is inclusive, max is exclusive
 #define WRAP(val, min, max) ( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) )
@@ -75,13 +89,16 @@
 
 #define IS_MULTIPLE(x, y) ((x) % (y) == 0)
 
-// Performs a linear interpolation between a and b.
-// Note that amount=0 returns a, amount=1 returns b, and
-// amount=0.5 returns the mean of a and b.
-#define LERP(a, b, amount) ( amount ? ((a) + ((b) - (a)) * (amount)) : a )
-
 // Returns the nth root of x.
 #define ROOT(n, x) ((x) ** (1 / (n)))
+
+/// Converts a probability/second chance to probability/seconds_per_tick chance
+/// For example, if you want an event to happen with a 10% per second chance, but your proc only runs every 5 seconds, do `if(prob(100*SPT_PROB_RATE(0.1, 5)))` or `if(prob(100*SPT_PROB_RATE(0.1, seconds_per_tick)))`
+#define SPT_PROB_RATE(prob_per_second, seconds_per_tick) (1 - (1 - (prob_per_second)) ** (seconds_per_tick))
+
+/// Like SPT_PROB_RATE but easier to use, simply put `if(SPT_PROB(10, 5))` or `if(SPT_PROB(10, seconds_per_tick))`
+#define SPT_PROB(prob_per_second_percent, seconds_per_tick) (prob(100*SPT_PROB_RATE((prob_per_second_percent)/100, (seconds_per_tick))))
+// )
 
 // The quadratic formula. Returns a list with the solutions, or an empty list
 // if they are imaginary.

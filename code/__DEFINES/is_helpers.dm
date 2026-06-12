@@ -3,6 +3,10 @@
 // Example: isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
 // Bad example: isabductor(A) istype(A, /mob/living/carbon/human/abductor)
 
+// META
+
+#define isweakref(D) (istype(D, /datum/weakref))
+
 // TURFS
 
 #define isenvironmentturf(A) (istype(A, /turf/environment))
@@ -23,7 +27,11 @@
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
-#define isskeleton(A) (A.get_species() in list(SKELETON, SKELETON_UNATHI, SKELETON_TAJARAN, SKELETON_SKRELL, SKELETON_VOX))
+#define ispluvian(A) (A.get_species() == PLUVIAN)
+
+#define isskeleton(A) HAS_TRAIT(A, ELEMENT_TRAIT_SKELETON) // replace with trait checks, zombie too
+
+#define iszombie(A) HAS_TRAIT(A, ELEMENT_TRAIT_ZOMBIE) // below is different macro to check for the role
 
 // CARBON
 #define isxenoqueen(A) (istype(A, /mob/living/carbon/xenomorph/humanoid/queen))
@@ -118,6 +126,8 @@
 
 #define istagger(A) (istype(A, /obj/item/device/tagger))
 
+#define isdiagnostichud(A) (istype(A, /obj/item/clothing/glasses/hud/diagnostic))
+
 // GOONCHAT PORT
 
 #define isatom(A) (istype(A, /atom))
@@ -155,13 +165,35 @@
 
 #define issignaling(I)  I.get_quality(QUALITY_SIGNALLING)
 
-#define iscoil(A) (istype(A, /obj/item/stack/cable_coil))
+#define iscoil(A) 		(istype(A, /obj/item/stack/cable_coil))
 
 // OBJECTS
 
-#define isitem(A) (istype(A, /obj/item))
+#define isitem(A)		(istype(A, /obj/item))
 
-#define isunder(A) (istype(A, /obj/item/clothing/under))
+#define isunder(A)		 istype(A, /obj/item/clothing/under)
+
+#define isspacesuit(A) 	 istype(A, /obj/item/clothing/suit/space)
+
+#define isspacehelmet(A) istype(A,/obj/item/clothing/head/helmet/space)
+
+#define ishardsuit(A) 	 istype(A, /obj/item/clothing/suit/space/rig)
+
+#define ishardhelmet(A)  istype(A,/obj/item/clothing/head/helmet/space/rig)
+
+#define isbreathmask(A)  istype(A,/obj/item/clothing/mask)
+
+#define ismagboots(A)	 istype(A, /obj/item/clothing/shoes/magboots)
+
+#define istank(A) 		 istype(A, /obj/item/weapon/tank)
+
+#define issuitcooling(A) istype(A, /obj/item/device/suit_cooling_unit)
+
+#define ismedical(A)	 istype(A, /obj/item/weapon/storage/firstaid)
+
+#define iscanister(A)	 istype(A, /obj/machinery/portable_atmospherics/canister)
+
+#define issuitstorage(A) istype(A, /obj/machinery/suit_storage_unit)
 
 // ROLES / ANTAG
 
@@ -199,8 +231,6 @@
 
 #define istraitor(H) isrole(TRAITOR, H)
 
-#define isimposter(H) isrole(IMPOSTER, H)
-
 #define iselitesyndie(H) isrole(SYNDIESQUADIE, H)
 
 #define ismalf(H) isrole(MALF, H)
@@ -218,8 +248,6 @@
 #define isERT(H) isrole(RESPONDER, H)
 
 #define isrolezombie(H) isrole(ZOMBIE, H)
-
-#define iszombie(H) (H.get_species() in global.all_zombie_species_names)
 
 #define isalien(H) isrole(XENOMORPH, H)
 
@@ -250,3 +278,15 @@
 #define isblobshield(A) (istype(A, /obj/structure/blob/shield))
 
 #define isblobresource(A) (istype(A, /obj/structure/blob/resource))
+
+// IMPLANTS
+
+#define ismindshielded(L) (locate(/obj/item/weapon/implant/mind_protect/mindshield) in L.implants)
+
+#define isloyal(L) (locate(/obj/item/weapon/implant/mind_protect/loyalty) in L.implants)
+
+#define ismindprotect(L) (locate(/obj/item/weapon/implant/mind_protect) in L.implants)
+
+#define isimplantedobedience(L) (locate(/obj/item/weapon/implant/obedience) in L.implants)
+
+#define isimplantedblueshield(L) (locate(/obj/item/weapon/implant/blueshield) in L.implants)

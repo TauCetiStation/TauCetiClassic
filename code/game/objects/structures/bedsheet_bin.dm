@@ -141,69 +141,126 @@ LINEN BINS
 	name = "linen bin"
 	desc = "A linen bin. It looks rather cosy."
 	icon = 'icons/obj/structures.dmi'
-	icon_state = "linenbin-full"
+	icon_state = "linenbin"
 	anchored = TRUE
-	var/amount = 20
+	pass_flags = PASSTABLE
+	var/sheets_capacity = 10
 	var/list/sheets = list()
-	var/obj/item/hidden = null
+	var/obj/item/weapon/storage/internal/bedsheetbin/hidden
 
+/obj/item/weapon/storage/internal/bedsheetbin/can_be_inserted(obj/item/W, stop_messages = FALSE)
+	. = ..()
+	if(loc && istype(loc, /obj/structure/bedsheetbin))
+		var/obj/structure/bedsheetbin/B = loc
+		if(!B.sheets || !B.sheets.len)
+			if(!stop_messages)
+				to_chat(usr, "<span class='warning'>There is no bedsheets to hide something under!</span>")
+			return FALSE
+	if(contents.len)
+		if(!stop_messages)
+			to_chat(usr, "<span class='warning'>There is already something under the sheets.</span>")
+		return FALSE
+
+/obj/structure/bedsheetbin/atom_init()
+	. = ..()
+	hidden = new/obj/item/weapon/storage/internal/bedsheetbin(src)
+	hidden.set_slots(slots = 1, slot_size = SIZE_SMALL)
+
+/obj/structure/bedsheetbin/full/atom_init()
+	. = ..()
+	for(var/i in 1 to sheets_capacity)
+		sheets += new /obj/item/weapon/bedsheet(src)
+	update_icon()
 
 /obj/structure/bedsheetbin/examine(mob/user)
 	..()
-	if(amount < 1)
-		to_chat(user, "There are no bed sheets in the bin.")
-		return
-	if(amount == 1)
-		to_chat(user, "There is one bed sheet in the bin.")
-		return
-	to_chat(user, "There are [amount] bed sheets in the bin.")
-
+	switch(sheets.len)
+		if(0)
+			to_chat(user, "There are no bed sheets in the bin.")
+		if(1)
+			to_chat(user, "There is one bed sheet in the bin.")
+		else
+			to_chat(user, "There are [sheets.len] bed sheets in the bin.")
 
 /obj/structure/bedsheetbin/update_icon()
-	if(amount == 0)
-		icon_state = "linenbin-empty"
-	else if(amount < initial(amount) / 2)
-		icon_state = "linenbin-half"
+	if(!sheets.len)
+		icon_state = "[initial(icon_state)]"
+	else if(sheets.len < sheets_capacity / 2)
+		icon_state = "[initial(icon_state)]-half"
 	else
-		icon_state = "linenbin-full"
+		icon_state = "[initial(icon_state)]-full"
+	return ..()
 
-/obj/structure/bedsheetbin/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/bedsheet))
-		user.drop_from_inventory(I, src)
-		sheets.Add(I)
-		amount++
-		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+/obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
+	if(isscrewing(I))
+		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
+		if(I.use_tool(src, user, SKILL_TASK_EASY, volume = 50))
+			playsound(loc, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+			deconstruct()
+	else if(iswrenching(I))
+		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] \the [src].</span>")
+		if(I.use_tool(src, user, SKILL_TASK_EASY, volume = 50))
+			playsound(loc, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
+			anchored = !anchored
+			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
+	else if(istype(I, /obj/item/weapon/bedsheet))
+		if(sheets.len < sheets_capacity)
+			user.drop_from_inventory(I, src)
+			sheets.Add(I)
+			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+		else
+			to_chat(user, "<span class='warning'>The [src] is full!</span>")
+	else if(isitem(I) && user.a_intent != INTENT_HARM)
+		hidden.attackby(I, user, params)
+	else
+		return ..()
+	update_icon()
 
-	else if(amount && !hidden && I.w_class < SIZE_NORMAL)	//make sure there's sheets to hide it among, make sure nothing else is hidden in there.
-		user.drop_from_inventory(I, src)
-		hidden = I
-		to_chat(user, "<span class='notice'>You hide [I] among the sheets.</span>")
+/obj/structure/bedsheetbin/MouseDrop(obj/over_object as obj)
+	if (hidden && hidden.handle_mousedrop(usr, over_object))
+		..(over_object)
 
-
+/obj/structure/bedsheetbin/hear_talk(mob/M, msg, verb, datum/language/speaking)
+	if(hidden)
+		hidden.hear_talk(M, msg, verb, speaking)
+	..()
 
 /obj/structure/bedsheetbin/attack_paw(mob/living/user)
 	return attack_hand(user)
 
-
 /obj/structure/bedsheetbin/attack_hand(mob/living/user)
-	if(amount >= 1)
-		amount--
-
+	if(sheets.len)
 		var/obj/item/weapon/bedsheet/B
-		if(sheets.len > 0)
-			B = sheets[sheets.len]
-			sheets.Remove(B)
-
-		else
-			B = new /obj/item/weapon/bedsheet(loc)
-
+		B = sheets[sheets.len]
+		sheets.Remove(B)
 		user.try_take(B, loc)
 		to_chat(user, "<span class='notice'>You take [B] out of [src].</span>")
-
-		if(hidden)
-			hidden.forceMove(loc)
-			to_chat(user, "<span class='notice'>[hidden] falls out of [B]!</span>")
-			hidden = null
-
-
+		if(hidden && hidden.contents.len)
+			hidden.hide_from(user)
+			for(var/obj/item/I in hidden.contents)
+				visible_message("<span class='notice'>[I] falls out of [B]!</span>")
+				hidden.remove_from_storage(I, loc)
+		update_icon()
 	add_fingerprint(user)
+
+/obj/structure/bedsheetbin/deconstruct()
+	new /obj/item/stack/sheet/metal(loc, 2)
+	if(hidden && hidden.contents.len)
+		for(var/obj/item/I in hidden.contents)
+			visible_message("<span class='notice'>[I] falls out of [src]!</span>")
+			hidden.remove_from_storage(I, loc)
+	if(sheets.len)
+		for(var/obj/item/weapon/bedsheet/B in sheets)
+			sheets.Remove(B)
+			B.forceMove(loc)
+	..()
+
+/obj/structure/bedsheetbin/Destroy()
+	. = ..()
+	if(hidden && hidden.contents.len)
+		for(var/obj/item/I in hidden.contents)
+			QDEL_NULL(I)
+	QDEL_NULL(hidden)
+	if(sheets.len)
+		for(var/obj/item/weapon/bedsheet/B in sheets)
+			QDEL_NULL(B)

@@ -82,6 +82,7 @@
 	name = "wet floor sign"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "caution"
+	item_state_world = "caution_world"
 	force = 1.0
 	throwforce = 3.0
 	throw_speed = 1
@@ -93,6 +94,9 @@
 	desc = "This cone is trying to warn you of something!"
 	name = "warning cone"
 	icon_state = "cone"
+	item_state_world = "cone_world"
+	body_parts_covered = HEAD
+	slot_flags = SLOT_FLAGS_HEAD
 
 /obj/item/weapon/rack_parts
 	name = "rack parts"
@@ -103,6 +107,17 @@
 	m_amt = 3750
 
 	max_integrity = 100
+	resistance_flags = CAN_BE_HIT
+
+/obj/item/weapon/mangal_parts
+	name = "mangal parts"
+	desc = "Складной мангал."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "mangal_parts"
+	flags = CONDUCT
+	m_amt = 5000
+
+	max_integrity = 50
 	resistance_flags = CAN_BE_HIT
 
 // base shard object
@@ -176,7 +191,7 @@
 		return ..()
 
 /obj/item/weapon/shard/Crossed(atom/movable/AM)
-	if(ismob(AM) && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP))
+	if(ismob(AM) && !HAS_TRAIT(AM, TRAIT_LIGHT_STEP) && !HAS_TRAIT(AM, TRAIT_NO_MINORCUTS))
 		var/mob/M = AM
 		to_chat(M, "<span class='warning'><B>You step on the [src]!</B></span>")
 		playsound(src, on_step_sound, VOL_EFFECTS_MASTER)
@@ -189,18 +204,15 @@
 			if(H.wear_suit && (H.wear_suit.body_parts_covered & LEGS) && H.wear_suit.pierce_protection & LEGS)
 				return
 
-			if(H.species.flags[NO_MINORCUTS])
-				return
-
 			if(H.buckled)
 				return
 
 			if(!H.shoes)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
-				if(BP.is_robotic())
+				if(BP.is_robotic_part())
 					return
 				BP.take_damage(5, 0)
-				if(!H.species.flags[NO_PAIN])
+				if(!HAS_TRAIT(H, TRAIT_NO_PAIN))
 					H.Stun(1)
 					H.Weaken(3)
 				H.updatehealth()
@@ -211,24 +223,22 @@
 						"<span class='danger'>[user] is slitting \his throat with the shard of glass! It looks like \he's trying to commit suicide.</span>"))
 	return (BRUTELOSS)
 
-/obj/item/weapon/shard/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/weapon/shard/afterattack(atom/target, mob/living/user, proximity, params)
 	if(!proximity)
 		return
 	if(isturf(target))
 		return
+	if(HAS_TRAIT(user, TRAIT_NO_MINORCUTS))
+		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !H.species.flags[NO_MINORCUTS]) //specflags please..
+		if(!H.gloves)
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
 			BP.take_damage(force / 2, null, damage_flags())
-	else if(ismonkey(user))
-		var/mob/living/carbon/monkey/M = user
-		var/datum/species/S = all_species[M.get_species()]
-		if(S && S.flags[NO_MINORCUTS])
-			return
-		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
-		M.adjustBruteLoss(force / 2)
+	else if(istype(user))
+		to_chat(user, "<span class='warning'>[src] cuts into your hand!</span>")
+		user.adjustBruteLoss(force / 2)
 
 // phoron shard object
 /obj/item/weapon/shard/phoron
@@ -362,6 +372,17 @@
 	table_type = /obj/structure/table/reinforced
 	debris = list(/obj/item/stack/sheet/metal, /obj/item/stack/rods)
 
+/obj/item/weapon/table_parts/rglass
+	name = "reinforced glass table parts"
+	desc = "No longer fragile"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "rglass_tableparts"
+	m_amt = 2500
+	g_amt = 3750
+	flags = CONDUCT
+	table_type = /obj/structure/table/rglass
+	debris = list(/obj/item/stack/rods, /obj/item/stack/sheet/glass)
+
 /obj/item/weapon/table_parts/stall
 	name = "stall table parts"
 	desc = "Stall table parts."
@@ -433,11 +454,13 @@
 /obj/item/weapon/module/card_reader
 	name = "card reader module"
 	icon_state = "card_mod"
+	item_state_world = "card_mod_w"
 	desc = "An electronic module for reading data and ID cards."
 
 /obj/item/weapon/module/power_control
 	name = "power control module"
 	icon_state = "power_mod"
+	item_state_world = "power_mod_w"
 	desc = "Heavy-duty switching circuits for power control."
 	m_amt = 50
 	g_amt = 50
@@ -445,16 +468,19 @@
 /obj/item/weapon/module/id_auth
 	name = "ID authentication module"
 	icon_state = "id_mod"
+	item_state_world = "id_mod_w"
 	desc = "A module allowing secure authorization of ID cards."
 
 /obj/item/weapon/module/cell_power
 	name = "power cell regulator module"
 	icon_state = "power_mod"
+	item_state_world = "power_mod_w"
 	desc = "A converter and regulator allowing the use of power cells."
 
 /obj/item/weapon/module/cell_power
 	name = "power cell charger module"
 	icon_state = "power_mod"
+	item_state_world = "power_mod_w"
 	desc = "Charging circuits for power cells."
 
 /obj/item/weapon/syntiflesh

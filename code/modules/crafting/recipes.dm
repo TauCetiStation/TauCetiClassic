@@ -347,3 +347,14 @@
 	result = /obj/item/weapon/kitchenknife/makeshift_shiv/phoron
 	time = 10
 
+/datum/crafting_recipe/ricehat
+	name = "Rice hat"
+	reqs = list(/obj/item/weapon/reagent_containers/food/snacks/grown/wheat = 3)
+	result = /obj/item/clothing/head/ricehat
+	time = 10
+
+/datum/crafting_recipe/wooden_sticks
+	name = "wooden sticks"
+	reqs = list(/obj/item/stack/sheet/wood = 3)
+	result = /obj/item/weapon/kitchen/utensil/fork/sticks
+	time = 10

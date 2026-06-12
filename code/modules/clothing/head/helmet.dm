@@ -37,7 +37,7 @@
 		holochip.deactivate_holomap()
 	..()
 
-/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user)
+/obj/item/clothing/head/helmet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/holochip))
 		if(flags & ABSTRACT)
 			return    //You can't insert holochip in abstract item.
@@ -65,6 +65,20 @@
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You remove the [holochip] from the [src]</span>")
 
+	if(!issignaler(I)) //Eh, but we don't want people making secbots out of space helmets.
+		return ..()
+
+	var/obj/item/device/assembly/signaler/S = I
+	if(!S.secured)
+		to_chat(user, "<span class='notice'>The signaler not secured.</span>")
+		return ..()
+
+	var/obj/item/weapon/secbot_assembly/A = new /obj/item/weapon/secbot_assembly
+	user.put_in_hands(A)
+	to_chat(user, "<span class='notice'>You add \the [I] to the helmet.</span>")
+	qdel(I)
+	qdel(src)
+
 /obj/item/clothing/head/helmet/psyamp
 	name = "psychic amplifier"
 	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot."
@@ -77,18 +91,6 @@
 	name = "warden's helmet"
 	desc = "It's a special helmet issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "helmet_warden"
-
-/obj/item/clothing/head/helmet/HoS
-	name = "head of security's hat"
-	desc = "The hat of the Head of Security. For showing the officers who's in charge."
-	icon_state = "hoshat"
-	item_state = "hoshat"
-	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
-	flags_inv = HIDEEARS
-	body_parts_covered = 0
-	siemens_coefficient = 0.8
-	force = 0
-	hitsound = list()
 
 /obj/item/clothing/head/helmet/riot
 	name = "riot helmet"
@@ -151,7 +153,8 @@
 	name = "SWAT helmet"
 	desc = "They're often used by highly trained Swat Members."
 	icon_state = "swat"
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	item_state = "swat"
 	armor = list(melee = 80, bullet = 75, laser = 50,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -176,8 +179,9 @@
 	name = "gladiator helmet"
 	desc = "Ave, Imperator, morituri te salutant."
 	icon_state = "gladiator"
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	item_state = "gladiator"
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	siemens_coefficient = 1
 
@@ -187,8 +191,8 @@
 	icon_state = "swathelm"
 	item_state = "helmet"
 	flags = HEADCOVERSEYES
-	armor = list(melee = 62, bullet = 60, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
+	armor = list(melee = 62, bullet = 60, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
 	siemens_coefficient = 0.7
 
 /obj/item/clothing/head/helmet/tactical/marinad
@@ -285,14 +289,16 @@
 	icon_state = "crusader"
 	armor = list(melee = 50, bullet = 30, laser = 20, energy = 20, bomb = 20, bio = 0, rad = 10)
 	siemens_coefficient = 1.2
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/police
 	name = "police helmet"
 	desc = "Latest fashion of law enforcement organizations. It's big. Like, really big."
 	icon_state = "police_helmet"
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 
 /obj/item/clothing/head/helmet/police/heavy

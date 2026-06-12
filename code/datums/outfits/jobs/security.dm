@@ -22,6 +22,10 @@
 /datum/outfit/job/hos/pre_equip(mob/living/carbon/human/H)
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_HF_AGENT))
 		implants += /obj/item/weapon/implant/obedience
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
+		l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc/hos
+
+
 
 // WARDEN OUTFIT
 /datum/outfit/job/warden
@@ -45,7 +49,6 @@
 
 /datum/outfit/job/warden/pre_equip(mob/living/carbon/human/H)
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
-		implants += /obj/item/weapon/implant/mind_protect/loyalty
 		implants += /obj/item/weapon/implant/dexplosive
 		head = /obj/item/clothing/head/soft/nt_pmc_cap
 		uniform = /obj/item/clothing/under/tactical
@@ -70,7 +73,7 @@
 
 	l_hand_back = /obj/item/weapon/storage/box/evidence
 	l_pocket = /obj/item/weapon/lighter/zippo
-	r_pocket_back = /obj/item/device/detective_scanner
+	backpack_contents = list(/obj/item/weapon/storage/briefcase/crimekit)
 
 // OFFICER OUTFIT
 /datum/outfit/job/officer
@@ -91,7 +94,6 @@
 
 /datum/outfit/job/officer/pre_equip(mob/living/carbon/human/H)
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_ELITE_SECURITY))
-		implants += /obj/item/weapon/implant/mind_protect/loyalty
 		implants += /obj/item/weapon/implant/dexplosive
 		uniform = /obj/item/clothing/under/syndicate
 		uniform_f = /obj/item/clothing/under/syndicate
@@ -109,7 +111,7 @@
 	belt = /obj/item/device/pda/forensic
 	l_ear = /obj/item/device/radio/headset/headset_sec
 
-	r_pocket_back = /obj/item/device/detective_scanner
+	backpack_contents = list(/obj/item/weapon/storage/briefcase/crimekit)
 	l_hand_back = /obj/item/weapon/storage/box/evidence
 
 // CADET OUTFIT
@@ -135,20 +137,3 @@
 		uniform = /obj/item/clothing/under/syndicate/tacticool
 		uniform_f = /obj/item/clothing/under/syndicate/tacticool
 		l_ear = /obj/item/device/radio/headset/headset_sec/nt_pmc
-
-/datum/outfit/job/blueshield
-	name = OUTFIT_JOB_NAME("Blueshield Officer")
-
-	uniform = /obj/item/clothing/under/rank/blueshield
-	shoes = /obj/item/clothing/shoes/boots
-	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
-
-	l_ear = /obj/item/device/radio/headset/headset_int/blueshield
-	belt = /obj/item/device/pda/blueshield
-
-	r_pocket = /obj/item/device/flash
-	r_pocket_back = /obj/item/weapon/handcuffs
-	l_pocket = /obj/item/weapon/pinpointer/heads
-
-	implants = list(
-		/obj/item/weapon/implant/mind_protect/loyalty, /obj/item/weapon/implant/blueshield)

@@ -133,17 +133,17 @@
 	dat += text("Current unclaimed points: [points]<br>")
 
 	if(istype(inserted_id))
-		dat += text("You have [inserted_id.mining_points] mining points collected. <A href='?src=\ref[src];choice=eject'>Eject ID</a><br>")
-		dat += text("<A href='?src=\ref[src];choice=claim'>Claim points</a><br>")
+		dat += text("You have [inserted_id.mining_points] mining points collected. <A href='byond://?src=\ref[src];choice=eject'>Eject ID</a><br>")
+		dat += text("<A href='byond://?src=\ref[src];choice=claim'>Claim points</a><br>")
 	else
-		dat += text("No ID inserted.  <A href='?src=\ref[src];choice=insert'>Insert ID</a><br>")
+		dat += text("No ID inserted.  <A href='byond://?src=\ref[src];choice=insert'>Insert ID</a><br>")
 
 	for(var/O in stack_list)
 		s = stack_list[O]
 		if(s.get_amount() > 0)
 			if(O == stack_list[1])
 				dat += "<br>"		//just looks nicer
-			dat += text("[capitalize(s.name)]: [s.get_amount()] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
+			dat += text("[capitalize(s.name)]: [s.get_amount()] <A href='byond://?src=\ref[src];release=[s.type]'>Release</A><br>")
 
 	dat += text("<br><div class='Section'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
 
@@ -470,7 +470,6 @@
 
 /obj/item/mining_rig_pack/atom_init()
 	..()
-	new /obj/item/clothing/head/helmet/space/rig/mining(src.loc)
 	new	/obj/item/clothing/suit/space/rig/mining(src.loc)
 	return INITIALIZE_HINT_QDEL
 
@@ -753,7 +752,7 @@
 				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
 			else
 				to_chat(user, "<span class='info'>You begin to weld some cracks on the [src].</span>")
-				if(W.use_tool(src, user, 20, volume = 50))
+				if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
 					health += 15
 					to_chat(user, "<span class='info'>You have repaired [src]'s armor.</span>")
 			return

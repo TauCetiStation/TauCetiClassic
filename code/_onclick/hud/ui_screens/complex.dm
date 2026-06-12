@@ -51,6 +51,7 @@
 		/atom/movable/screen/inventory/uniform,
 		/atom/movable/screen/inventory/suit,
 		/atom/movable/screen/inventory/mask,
+		/atom/movable/screen/inventory/neck,
 		/atom/movable/screen/inventory/gloves,
 		/atom/movable/screen/inventory/eyes,
 		/atom/movable/screen/inventory/l_ear,
@@ -156,7 +157,7 @@
 		/atom/movable/screen/gun/run,
 		/atom/movable/screen/gun/item,
 	)
-	
+
 /atom/movable/screen/complex/gun/action()
 	usr.client.ToggleGunMode()
 

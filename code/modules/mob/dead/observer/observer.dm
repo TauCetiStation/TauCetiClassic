@@ -118,6 +118,12 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	QDEL_NULL(adminMulti)
 	return ..()
 
+/mob/dead/observer/Life()
+	if(client)
+		var/turf/T = get_turf(src)
+		if(T && last_z != T.z)
+			update_z(T.z)
+
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/MouseDrop(atom/over)
 	if(!usr || !over) return
@@ -133,9 +139,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	if(href_list["track"])
 		var/atom/target = locate(href_list["track"])
-		if(target != src)
-			ManualFollow(target)
-			return
+		Follow(target)
+		return
 
 	if(href_list["x"] && href_list["y"] && href_list["z"])
 		var/tx = text2num(href_list["x"])
@@ -202,14 +207,14 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(stat == DEAD)
 		if(fake_death)
-			var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
+			var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another [config.deathtime_required / 600] minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
 			if(response != "Ghost")
 				return	//didn't want to ghost after-all
 			ghostize(can_reenter_corpse = FALSE)
 		else
 			ghostize(can_reenter_corpse = TRUE)
 	else
-		var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
+		var/response = tgui_alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another [config.deathtime_required / 600] minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?", list("Stay in body","Ghost"))
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
 
@@ -370,6 +375,16 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 
 // This is the ghost's follow verb with an argument
+/mob/dead/observer/proc/Follow(atom/target)
+	if(!target || target == src)
+		return
+	if(ismovable(target))
+		ManualFollow(target)
+	else
+		var/turf/T = get_turf(target)
+		if(T)
+			abstract_move(T)
+
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
 	if (!istype(target))
 		return
@@ -643,13 +658,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/dead/observer/proc/updateghostsight()
 	switch(lighting_alpha)
 		if (LIGHTING_PLANE_ALPHA_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+			set_lighting_alpha(LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+			set_lighting_alpha(LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
 		if (LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)
-			lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+			set_lighting_alpha(LIGHTING_PLANE_ALPHA_INVISIBLE)
 		else
-			lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
+			set_lighting_alpha(LIGHTING_PLANE_ALPHA_VISIBLE)
 	update_sight()
 
 

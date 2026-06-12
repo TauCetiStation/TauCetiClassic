@@ -182,6 +182,7 @@
 /obj/item/weapon/gun/tesla/atom_init()
 	. = ..()
 	update_icon()
+	AddComponent(/datum/component/serial_number)
 
 /obj/item/weapon/gun/tesla/proc/charge(mob/living/user)
 	set waitfor = FALSE
@@ -547,6 +548,13 @@
 /obj/item/weapon/gun/energy/gun/portal/emp_act(severity)
 	return
 
+/obj/item/weapon/gun/energy/gun/portal/loaded/atom_init()
+	. = ..()
+	var/obj/item/device/assembly/signaler/anomaly/C = new(src)
+	firing_core = C
+	modifystate = 2
+	update_icon()
+
 /obj/item/weapon/gun/energy/retro
 	name ="retro phaser"
 	icon_state = "retro"
@@ -554,12 +562,7 @@
 	desc = "Устаревшая модель стандартного лазерного оружия, больше не используемая ни службами безопасности, ни военными силами НаноТрейзен. Тем не менее, он все еще достаточно смертоносен и прост в обслуживании, что делает его любимым среди пиратов и других преступников."
 	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/phaser)
-
-/obj/item/weapon/gun/energy/retro/atom_init()
-	. = ..()
-	if(power_supply)
-		power_supply.maxcharge = 1500
-		power_supply.charge = 1500
+	cell_type = /obj/item/weapon/stock_parts/cell/energy_weapon
 
 /obj/item/weapon/gun/medbeam
 	name = "prototype medical retrosynchronizer"
@@ -577,6 +580,7 @@
 /obj/item/weapon/gun/medbeam/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	AddComponent(/datum/component/serial_number)
 
 /obj/item/weapon/gun/medbeam/Destroy()
 	LoseTarget()

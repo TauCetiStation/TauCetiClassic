@@ -37,6 +37,8 @@
 
 	var/global/list/rock_side_overlays
 
+	hit_particle_type = /particles/tool/digging
+
 /turf/simulated/mineral/atom_init(mapload)
 	. = ..()
 	icon_state = "rock"
@@ -53,6 +55,9 @@
 	return .
 
 /turf/simulated/mineral/atom_init_late()
+	if(!istype(src)) // someone already made us as cave turf
+		return
+	..()
 	MineralSpread()
 	update_overlays()
 
@@ -197,8 +202,11 @@
 		if (!isturf(T))
 			return
 
+		var/particleType = /particles/tool/digging
+
 		var/obj/item/weapon/pickaxe/P = W
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
+			particleType = /particles/tool/drill_mineral
 			var/obj/item/weapon/pickaxe/drill/D = P
 			if(!(istype(D, /obj/item/weapon/pickaxe/drill/borgdrill) || istype(D, /obj/item/weapon/pickaxe/drill/jackhammer)))	//borgdrill & jackhammer can't lose energy and crit fail
 				if(D.state)
@@ -227,7 +235,7 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(P.use_tool(src, user, 50, volume = 100))
+		if(P.use_tool(src, user, 50, volume = 100, particle_type = particleType))
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				var/obj/item/organ/external/BPHand = H.get_bodypart(H.hand ? BP_L_ARM : BP_R_ARM)
@@ -326,6 +334,7 @@
 
 
 /turf/simulated/mineral/proc/GetDrilled(artifact_fail = 0, mineral_drop_coefficient = 1.0)
+	new /obj/effect/abstract/particle_holder(src, /particles/tool/digging, PARTICLE_FADEOUT|PARTICLE_FLICK)
 	playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)
 	// var/destroyed = 0 //used for breaking strange rocks
 	if (mineral && ore_amount)
@@ -457,7 +466,16 @@
 	. = ..()
 
 /turf/simulated/mineral/random/caves
+	mineralChance = 5
+
+/turf/simulated/mineral/random/caves/high_chance
+	icon_state = "rock_cave_highchance"
 	mineralChance = 25
+	mineralSpawnChanceList = list("Phoron" = 25, "Silver" = 15, "Gold" = 15, "Uranium" = 10, "Platinum" = 5, "Diamond" = 10)
+
+/turf/simulated/mineral/random/caves/high_chance/atom_init()
+	icon_state = "rock"
+	return ..()
 
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
@@ -648,6 +666,7 @@
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init_late()
+	..()
 	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
@@ -687,7 +706,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='warning'>You start digging.</span>")
-		if(W.use_tool(src, user, 3.5 SECONDS, volume = 100))
+		if(W.use_tool(src, user, 3.5 SECONDS, volume = 100, particle_type = /particles/tool/digging))
 			if((user.loc == T && user.get_active_hand() == W))
 				to_chat(user, "<span class='notice'>You dug a hole.</span>")
 				gets_dug()

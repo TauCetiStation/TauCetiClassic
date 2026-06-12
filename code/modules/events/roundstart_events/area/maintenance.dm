@@ -12,14 +12,7 @@
 /datum/event/feature/area/maintenance_spawn/start()
 	for(var/i in 1 to nums)
 		var/area/area = get_area_by_type(pick_n_take(targeted_areas))
-		var/list/all_turfs = get_area_turfs(area, FALSE, black_list=list(/turf/simulated/wall, /turf/simulated/wall/r_wall))
-		// to prevent spawn in glass or grinds
-		for(var/turf/T in all_turfs)
-			if(T.contents.len == 1) // any turfs has a single instance of lighting_object, for at some optimization, i need to skip such turfs
-				continue
-			if(!T.CanPass(null, T))
-				all_turfs -= T
-
+		var/list/all_turfs = get_area_turfs(area, FALSE, ignore_blocked = TRUE)
 		if(length(all_turfs))
 			spawn_atom(pick(possible_types), pick(all_turfs))
 

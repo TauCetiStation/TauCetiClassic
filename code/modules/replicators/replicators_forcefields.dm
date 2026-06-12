@@ -11,9 +11,11 @@
 
 	name = "forcefield"
 
-	underlays.Cut()
-	var/image/I = SSenvironment.turf_image[z]
-	underlays += I
+/turf/simulated/floor/plating/airless/catwalk/forcefield/update_icon(propogate=1) // remove it when we adapt catwalk to SSsmoothing
+	if(environment_underlay)
+		underlays -= environment_underlay
+	environment_underlay = SSenvironment.turf_image[z]
+	underlays |= environment_underlay
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield/Destroy()
 	playsound(src, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
@@ -30,8 +32,6 @@
 
 	to_chat(user, "<span class='notice'>A crystallic field of flickering lights. Flowers, that grow no longer.</span>")
 
-/turf/simulated/floor/plating/airless/catwalk/forcefield/update_icon(propogate=1)
-	return
 
 /turf/simulated/floor/plating/airless/catwalk/forcefield/ChangeTurf(newtype)
 	if(newtype != type)

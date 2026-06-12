@@ -11,6 +11,8 @@
 	damage_deflection = 15
 	resistance_flags = CAN_BE_HIT
 
+	hit_particle_type = /particles/tool/digging/metal
+
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/opened = 0
@@ -21,6 +23,8 @@
 	var/lastbang
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
+
+	var/spawn_filling = FALSE
 
 /obj/structure/closet/atom_init(mapload)
 	. = ..()
@@ -37,6 +41,9 @@
 
 /obj/structure/closet/Destroy()
 	closet_list -= src
+
+	if(spawn_filling)
+		spawn_infill_particle()
 	return ..()
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
@@ -87,7 +94,7 @@
 	for(var/obj/item/I in src.loc)
 		if(itemcount >= storage_capacity)
 			break
-		if(!I.anchored)
+		if(!I.anchored && !istype(I, /obj/item/weapon/paper/sticker))
 			I.forceMove(src)
 			itemcount++
 
@@ -119,6 +126,10 @@
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	density = FALSE
 	SSdemo.mark_dirty(src)
+
+	if(spawn_filling)
+		spawn_infill_particle()
+
 	return 1
 
 /obj/structure/closet/proc/close()
@@ -178,6 +189,9 @@
 	else if(istagger(W))
 		return
 
+	else if(istype(W, /obj/item/weapon/paper/sticker))
+		return
+
 	else
 		attack_hand(user)
 
@@ -187,9 +201,8 @@
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.isOn())
 			return FALSE
-		if(WT.use(0, user) && W.use_tool(src, user, 20, volume = 100))
+		if(WT.use(0, user) && W.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING))
 			if(opened)
-				new /obj/item/stack/sheet/metal(loc)
 				user.visible_message("[user] cut apart [src] with [WT].",
 				                     "<span class='notice'>You cut apart [src] with [WT].</span>")
 				deconstruct(TRUE)
@@ -297,3 +310,22 @@
 		visible_message("<span class='danger'>[user] successfully broke out of [src]!</span>")
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open()
+
+/obj/structure/closet/try_wrap_up(wrap_type)
+	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
+	P.icon_state = "deliverycloset"
+	P.add_texture(wrap_type)
+
+	welded = TRUE
+
+	forceMove(P)
+
+	return P
+
+/obj/structure/closet/proc/spawn_infill_particle(min_x = -5, min_y = -13, max_x = 5, max_y = 7)
+	if(!isturf(loc))
+		return
+
+	var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(get_turf(src), /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	Holder.modify_particles_value("position", generator("box", list(min_x, min_y, 0), list(max_x, max_y, 0)))
+	spawn_filling = FALSE

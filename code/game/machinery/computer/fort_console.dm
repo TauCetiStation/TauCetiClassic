@@ -67,7 +67,7 @@
 
 	html += "</div><div class='Section__title'>Purchase list</div><div class='Section'>"
 	for(var/datum/fort_console_lot/lot as anything in shoplist)
-		html += "<a href='?src=[REF(src)];purchase=[REF(lot)]' [lot.unlocked ? "" : "class='disabled'"] title='[lot.desc]'>[lot.name] ([lot.price] points)</a><br>"
+		html += "<a href='byond://?src=[REF(src)];purchase=[REF(lot)]' [lot.unlocked ? "" : "class='disabled'"] title='[lot.desc]'>[lot.name] ([lot.price] points)</a><br>"
 	html += "</div>"
 
 	var/datum/browser/popup = new(user, "fort_console", "Command Computer", 400, 700)
@@ -236,6 +236,21 @@
 
 	return C
 
+/datum/fort_console_lot/plasteel
+	name = "Plasteel 5x20"
+	desc = "5x20 plasteel lists"
+	price = 90
+
+	order = 14
+
+/datum/fort_console_lot/plasteel/purchase()
+	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/engi
+	for(var/i in 1 to 5)
+		var/obj/item/stack/sheet/plasteel/S = new(C)
+		S.set_amount(20)
+
+	return C
+
 // 20-30
 /datum/fort_console_lot/rcd_ammo
 	name = "RCD ammunition 1x10"
@@ -247,7 +262,7 @@
 /datum/fort_console_lot/rcd_ammo/purchase()
 	var/obj/structure/closet/crate/C = new /obj/structure/closet/crate/scicrate
 	for(var/i in 1 to 10)
-		new /obj/item/weapon/rcd_ammo/bluespace(C)
+		new /obj/item/weapon/rcd_ammo/huge(C)
 
 	return C
 
@@ -291,6 +306,16 @@
 
 /datum/fort_console_lot/rocket_piercing/purchase()
 	. = new /obj/structure/storage_box/rocket/piercing
+
+/datum/fort_console_lot/shieldgen
+	name = "Shield Generator"
+	desc = "Crate containing a shield generator capable of protecting a 5x5 area from missiles. Does not interfere with the movement of humans. Explode when struck by an EMP."
+	price = 250
+
+	order = 35
+
+/datum/fort_console_lot/shieldgen/purchase()
+	. = new /obj/machinery/forts_shieldgen
 
 // 50-60
 /datum/fort_console_lot/drill

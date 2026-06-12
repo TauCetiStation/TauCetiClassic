@@ -8,6 +8,7 @@
 		/atom/movable/screen/inventory/hand/r,
 		/atom/movable/screen/inventory/hand/l,
 		/atom/movable/screen/inventory/craft,
+		/atom/movable/screen/inventory/crawl,
 		/atom/movable/screen/drop,
 		/atom/movable/screen/swap/first,
 		/atom/movable/screen/swap/second,
@@ -27,8 +28,6 @@
 		/atom/movable/screen/nutrition,
 	))
 
-
-	leap_icon?.add_to_hud(hud)
 
 /mob/living/carbon/human/verb/toggle_hotkey_verbs()
 	set category = "OOC"

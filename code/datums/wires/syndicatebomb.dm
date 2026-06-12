@@ -17,7 +17,7 @@ var/global/const/SYNDIEBOMB_WIRE_ACTIVATE = 16   // Will start a bombs timer if 
 /datum/wires/syndicatebomb/additional_checks_and_effects(mob/living/user)
 	return isdrone(user)
 
-/datum/wires/syndicatebomb/update_cut(index, mended)
+/datum/wires/syndicatebomb/update_cut(index, mended, mob/user)
 	var/obj/machinery/syndicatebomb/S = holder
 
 	switch(index)

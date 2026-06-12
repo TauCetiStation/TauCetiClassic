@@ -191,46 +191,6 @@
 		R.on = 0
 
 
-//RECALL IMPLANT
-/obj/item/weapon/implant/abductor
-	name = "recall implant"
-	desc = "Returns you to the mothership."
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "implant"
-	item_action_types = list(/datum/action/item_action/hands_free/activate_implant)
-	var/obj/machinery/abductor/pad/home
-	var/cooldown = 30 SECONDS
-
-/datum/action/item_action/hands_free/activate_implant
-	name = "Activate Implant"
-	check_flags = AB_CHECK_INSIDE
-
-/obj/item/weapon/implant/abductor/attack_self()
-	var/turf/T = get_turf(src)
-	if(SEND_SIGNAL(T, COMSIG_ATOM_INTERCEPT_TELEPORT))
-		to_chat(imp_in, "<span class='warning'>WARNING! Bluespace interference has been detected in the location, preventing teleportation! Teleportation is canceled!</span>")
-		return FALSE
-	if(cooldown >= initial(cooldown))
-		if(imp_in.buckled)
-			imp_in.buckled.unbuckle_mob()
-		home.Retrieve(imp_in)
-		cooldown = 0
-		INVOKE_ASYNC(src, PROC_REF(start_recharge), imp_in)
-	else
-		to_chat(imp_in, "<span class='warning'>You must wait [(300 - cooldown) / 10] seconds to use [src] again!</span>")
-	return
-
-/obj/item/weapon/implant/abductor/proc/start_recharge(mob/user = usr)
-	var/datum/action/item_action/hands_free/activate_implant/A = locate(/datum/action/item_action/hands_free/activate_implant) in item_actions
-	var/atom/movable/screen/cooldown_overlay/cooldowne = start_cooldown(A.button, initial(cooldown))
-	while(cooldown < initial(cooldown))
-		sleep(1)
-		cooldown++
-		if(cooldowne)
-			cooldowne.tick()
-	to_chat(imp_in, "<span class='warning'>Your [name] recharged!</span>")
-	qdel(cooldowne)
-
 //ALIEN DECLONER
 /obj/item/weapon/gun/energy/decloner/alien
 	name = "alien weapon"
@@ -489,34 +449,46 @@
 /obj/item/weapon/scalpel/alien
 	name = "alien scalpel"
 	icon = 'icons/obj/abductor.dmi'
+	item_state_world = null
 	toolspeed = 0.3
 
 /obj/item/weapon/hemostat/alien
 	name = "alien hemostat"
 	icon = 'icons/obj/abductor.dmi'
+	item_state_world = null
 	toolspeed = 0.3
 
 /obj/item/weapon/retractor/alien
 	name = "alien retractor"
 	icon = 'icons/obj/abductor.dmi'
+	item_state_world = null
 	toolspeed = 0.3
 
 /obj/item/weapon/circular_saw/alien
 	name = "alien saw"
 	icon = 'icons/obj/abductor.dmi'
+	item_state_world = null
 	icon_state = "saw"
 	toolspeed = 0.3
 
 /obj/item/weapon/surgicaldrill/alien
 	name = "alien drill"
 	icon = 'icons/obj/abductor.dmi'
+	item_state_world = null
 	toolspeed = 0.3
 
 /obj/item/weapon/cautery/alien
 	name = "alien cautery"
 	icon = 'icons/obj/abductor.dmi'
+	item_state_world = null
 	toolspeed = 0.3
 
+/obj/item/weapon/bonegel/alien
+	name = "alien ectoplasm"
+	desc = "Contains ecotplasm. In the case of ingestion can cause to stomach pains."
+	icon = 'icons/obj/abductor.dmi'
+	icon_state = "ectoplasm"
+	item_state_world = null
 
 // OPERATING TABLE / BEDS / LOCKERS	/ OTHER
 /obj/machinery/optable/abductor
@@ -545,7 +517,7 @@
 	if(!istype(C))
 		return
 	C.SetNextMove(CLICK_CD_MELEE)
-	C.StopGrabs()
+	victim.StopGrabs()
 
 	holding = !holding
 
@@ -611,12 +583,6 @@
 	icon_state  = "abductor"
 	icon_opened = "abductoropen"
 	icon_closed = "abductor"
-
-/obj/item/weapon/bonegel/alien
-	name = "alien ectoplasm"
-	desc = "Contains ecotplasm. In the case of ingestion can cause to stomach pains."
-	icon = 'icons/obj/abductor.dmi'
-	icon_state = "ectoplasm"
 
 /obj/item/weapon/paper/abductor
 	name = "Dissection Guide"

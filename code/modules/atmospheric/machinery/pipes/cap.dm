@@ -22,13 +22,11 @@
 	if(!check_icon_cache())
 		return
 
-	alpha = 255
-
 	cut_overlays()
 	add_overlay(icon_manager.get_atmos_icon("pipe", , pipe_color, "cap[icon_connect_type]"))
 
 /obj/machinery/atmospherics/pipe/cap/visible
-	level = PIPE_VISIBLE_LEVEL
+	undertile = FALSE
 	icon_state = "cap"
 
 /obj/machinery/atmospherics/pipe/cap/visible/scrubbers
@@ -53,9 +51,8 @@
 	color = PIPE_COLOR_ORANGE
 
 /obj/machinery/atmospherics/pipe/cap/hidden
-	level = PIPE_HIDDEN_LEVEL
+	undertile = TRUE
 	icon_state = "cap"
-	alpha = 128
 
 /obj/machinery/atmospherics/pipe/cap/hidden/scrubbers
 	name = "scrubbers pipe endcap"

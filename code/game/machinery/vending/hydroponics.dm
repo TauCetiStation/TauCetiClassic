@@ -40,6 +40,7 @@
 		/obj/item/seeds/bananaseed = 3,
 		/obj/item/seeds/berryseed = 3,
 		/obj/item/seeds/cabbageseed = 3,
+		/obj/item/seeds/cucumberseed = 3,
 		/obj/item/seeds/carrotseed = 3,
 		/obj/item/seeds/cherryseed = 3,
 		/obj/item/seeds/chantermycelium = 3,
@@ -76,6 +77,7 @@
 		/obj/item/seeds/nettleseed = 2,
 		/obj/item/seeds/reishimycelium = 2,
 		/obj/item/seeds/reishimycelium = 2,
+		/obj/item/seeds/laughweedseed = 2,
 	)
 	premium = list(
 		/obj/item/toy/waterflower = 1,

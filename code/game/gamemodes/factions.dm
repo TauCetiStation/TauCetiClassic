@@ -121,11 +121,10 @@
 		log_mode("Mind already had a role of [initial_role]!")
 		return null
 	var/role_type = get_initrole_type()
-	var/datum/role/newRole = new role_type(null, src)
-	newRole.is_roundstart_role = !laterole
-	if(!newRole.AssignToRole(M, laterole = laterole))
-		newRole.Drop()
+	var/datum/role/newRole = new role_type(M, src, FALSE, laterole)
+	if(QDELETED(newRole))
 		return null
+	newRole.is_roundstart_role = !laterole
 	return newRole
 
 // Basically, these are the new members of the faction during the round
@@ -139,9 +138,8 @@
 		log_mode("Mind already had a role of [late_role]!")
 		return (M.GetRole(late_role))
 	var/role_type = get_role_type()
-	var/datum/role/R = new role_type(null, src) // Add him to our roles
-	if(!R.AssignToRole(M, laterole = laterole))
-		R.Drop()
+	var/datum/role/R = new role_type(M, src, FALSE, laterole) // Add him to our roles
+	if(QDELETED(R))
 		return null
 	return R
 
@@ -159,6 +157,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	members += R
 	R.faction = src
+	update_my_alt_appearance_for(R.antag.current)
 
 /datum/faction/proc/remove_role(datum/role/R)
 	SHOULD_CALL_PARENT(TRUE)
@@ -166,8 +165,9 @@
 	R.faction = null
 	if(leader == R)
 		leader = null
+	update_my_alt_appearance_for(R.antag.current)
 
-/datum/faction/proc/AppendObjective(objective_type,duplicates=0)
+/datum/faction/proc/AppendObjective(objective_type, duplicates = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!duplicates && locate(objective_type) in objective_holder.GetObjectives())
 		return null
@@ -311,7 +311,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	var/dat = ""
 	dat += GetFactionHeader()
-	dat += " <a href='?src=\ref[src];destroyfac=1'>\[Destroy\]</A>"
+	dat += " <a href='byond://?src=\ref[src];destroyfac=1'>\[Destroy\]</A>"
 	var/fac_objects = objective_holder.GetObjectiveString(FALSE, FALSE, M)
 	if(fac_objects)
 		dat += "<br><ul><b>Faction objectives:</b><br>"
@@ -415,7 +415,7 @@
 			continue
 		. += M
 
-/datum/faction/proc/check_crew()
+/datum/faction/proc/check_crew(for_alien = FALSE)
 	var/total_human = 0
 	for(var/mob/living/carbon/human/H as anything in human_list)
 		var/turf/human_loc = get_turf(H)
@@ -425,5 +425,16 @@
 			continue
 		if(!H.mind || !H.client)
 			continue
+		if(for_alien)
+			if(!H.species.flags[FACEHUGGABLE])
+				continue
 		total_human++
 	return total_human
+
+/datum/faction/proc/update_my_alt_appearance_for(mob/M)
+	if(!M)
+		return
+
+	for(var/datum/atom_hud/alternate_appearance/basic/faction/AA in global.active_alternate_appearances)
+		if(istype(src, AA.faction_type))
+			AA.update_alt_appearance(M)

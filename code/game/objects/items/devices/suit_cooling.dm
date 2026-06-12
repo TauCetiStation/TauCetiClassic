@@ -29,7 +29,7 @@
 
 /obj/item/device/suit_cooling_unit/atom_init()
 	. = ..()
-	cell = new(src) // comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
+	cell = new /obj/item/weapon/stock_parts/cell/high(src)
 
 /obj/item/device/suit_cooling_unit/Destroy()
 	QDEL_NULL(cell)
@@ -120,7 +120,7 @@
 			cell.forceMove(get_turf(loc))
 
 		cell.add_fingerprint(user)
-		cell.updateicon()
+		cell.update_icon()
 		cell = null
 
 		to_chat(user, "<span class='info'>You remove \the [cell].</span>")

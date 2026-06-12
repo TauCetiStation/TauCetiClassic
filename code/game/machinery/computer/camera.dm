@@ -17,7 +17,6 @@
 	var/obj/machinery/camera/active_camera = null
 	var/last_pic = 1.0
 	var/list/network = list("SS13")
-	var/mapping = 0//For the overview file, interesting bit of code.
 
 	/// The turf where the camera was last updated.
 	var/turf/last_camera_turf
@@ -26,9 +25,6 @@
 	// Stuff needed to render the map
 	var/map_name
 	var/atom/movable/screen/map_view/cam_screen
-	/// All the plane masters that need to be applied.
-	var/list/cam_plane_masters
-	var/atom/movable/screen/background/cam_background
 
 	var/camera_cache = null
 
@@ -38,18 +34,9 @@
 	// and definitely NOT with a square bracket or even a number.
 	// I wasted 6 hours on this. :agony:
 	map_name = "camera_console_\ref[src]_map"
-	// Initialize map objects
-	cam_screen = new
-	cam_screen.name = "screen"
-	cam_screen.assigned_map = map_name
-	cam_screen.del_on_map_removal = FALSE
-	cam_screen.screen_loc = "[map_name]:1,1"
-	cam_plane_masters = list()
-	for(var/plane in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/blackness)
-		cam_plane_masters += plane
-	cam_background = new
-	cam_background.assigned_map = map_name
-	cam_background.del_on_map_removal = FALSE
+
+	cam_screen = new(null, map_name, "clear", global.default_plane_masters.Copy())
+
 	var/obj/item/weapon/circuitboard/security/board = circuit
 	if(istype(C))
 		var/list/circuitboard_network = board.network
@@ -60,8 +47,6 @@
 
 /obj/machinery/computer/security/Destroy()
 	qdel(cam_screen)
-	cam_plane_masters.Cut()
-	qdel(cam_background)
 	return ..()
 
 /obj/machinery/computer/security/ui_interact(mob/user)
@@ -89,25 +74,10 @@
 		if(length(concurrent_users) == 1 && is_living)
 			playsound(src, 'sound/machines/terminal_on.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 			use_power(active_power_usage)
-		// Register map objects
-		user.client.register_map_obj(cam_screen)
 
-		for(var/plane in cam_plane_masters)
-			var/atom/movable/screen/plane_master/instance = new plane()
-
-			if(instance.blend_mode_override)
-				instance.blend_mode = instance.blend_mode_override
-			instance.assigned_map = map_name
-			instance.del_on_map_removal = FALSE
-			instance.screen_loc = "[map_name]:CENTER"
-
-			instance.apply_effects(user)
-			user.client.register_map_obj(instance)
-
-		user.client.register_map_obj(cam_background)
-		// Open UI
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
+		cam_screen.show_to(user.client)
 
 /obj/machinery/computer/security/tgui_state(mob/user)
 	return global.machinery_state
@@ -127,10 +97,15 @@
 		return TRUE
 
 /obj/machinery/computer/security/proc/switch_to_camera(obj/machinery/camera/camera_to_switch)
+	if(active_camera)
+		active_camera.client_computers -= src
+		active_camera.update_icon()
 	active_camera = camera_to_switch
+	active_camera.client_computers += src
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
 
 	update_active_camera_screen()
+	active_camera.set_active()
 
 //Camera control: moving.
 /obj/machinery/computer/security/proc/jump_on_click(mob/user,A)
@@ -190,8 +165,8 @@
 	var/size_y = bbox[4] - bbox[2] + 1
 
 	cam_screen.vis_contents = visible_turfs
-	cam_background.icon_state = "clear"
-	cam_background.fill_rect(1, 1, size_x, size_y)
+	cam_screen.set_background("clear")
+	cam_screen.update_size(size_x, size_y)
 
 /obj/machinery/computer/security/tgui_close(mob/user)
 	. = ..()
@@ -199,11 +174,16 @@
 	var/is_living = isliving(user)
 	// Living creature or not, we remove you anyway.
 	concurrent_users -= user_ref
-	// Unregister map objects
+
+	// clean map objects from user
 	if(user.client)
-		user.client.clear_map(map_name)
+		cam_screen.hide_from(user.client)
+
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
+		if(active_camera)
+			active_camera.client_computers -= src
+			active_camera.update_icon()
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal_off.ogg', VOL_EFFECTS_MASTER, 25, FALSE)
@@ -211,8 +191,8 @@
 
 /obj/machinery/computer/security/proc/show_camera_static()
 	cam_screen.vis_contents.Cut()
-	cam_background.icon_state = "scanline2"
-	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
+	cam_screen.set_background("scanline2")
+	cam_screen.update_size(DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
 
 /obj/machinery/computer/security/proc/can_access_camera(obj/machinery/camera/C)
 	var/list/shared_networks = src.network & C.network
@@ -243,23 +223,29 @@
 	var/list/data = list()
 	data["activeCamera"] = null
 	if(!QDELETED(active_camera))
-		data["activeCamera"] = list(
-			name = active_camera.c_tag,
-			status = active_camera.status,
-		)
+		data["activeCamera"] = serialize_camera(active_camera)
 	return data
+
+/obj/machinery/computer/security/proc/serialize_camera(obj/machinery/camera/camera)
+	return list(
+		name = camera.c_tag,
+		x = camera.x,
+		y = camera.y,
+		z = camera.z,
+		status = camera.status
+	)
 
 /obj/machinery/computer/security/tgui_static_data(mob/user)
 	var/list/data = list()
+	data["nanomapPayload"] = SSmapping.tgui_nanomap_payload()
 	data["mapRef"] = map_name
+	// Cameras
 	var/list/cameras = get_cached_cameras()
 	data["cameras"] = list()
 	for(var/i in cameras)
 		var/obj/machinery/camera/C = cameras[i]
 		if(!QDELETED(C))
-			data["cameras"] += list(list(
-				name = C.c_tag,
-			))
+			data["cameras"] += list(serialize_camera(C))
 
 	return data
 
@@ -293,6 +279,7 @@
 	light_color = "#ffffbb"
 	network = list("thunder")
 	density = FALSE
+	circuit = /obj/item/weapon/circuitboard/security/telescreen
 
 /obj/machinery/computer/security/telescreen/update_icon()
 	icon_state = initial(icon_state)
@@ -309,6 +296,7 @@
 	state_broken_preset = null
 	state_nopower_preset = null
 	light_color = "#ea4444"
+	circuit = /obj/item/weapon/circuitboard/security/entertainment
 
 /obj/machinery/computer/security/wooden_tv
 	name = "security camera monitor"
@@ -317,6 +305,7 @@
 	state_broken_preset = null
 	state_nopower_preset = null
 	light_color = "#3550b6"
+	circuit = /obj/item/weapon/circuitboard/security/wooden_tv
 
 /obj/machinery/computer/security/wooden_tv/miami
 	name = "security camera monitor"
@@ -325,12 +314,14 @@
 	state_broken_preset = null
 	state_nopower_preset = null
 	light_color = "#f535aa"
+	circuit = /obj/item/weapon/circuitboard/security/wooden_tv/miami
 
 /obj/machinery/computer/security/mining
 	name = "outpost camera monitor"
 	desc = "Used to access the various cameras on the outpost."
 	icon_state = "miningcameras"
 	network = list("MINE")
+	circuit = /obj/item/weapon/circuitboard/security/mining
 
 /obj/machinery/computer/security/engineering
 	name = "alarms monitoring cameras"
@@ -340,11 +331,13 @@
 	state_nopower_preset = "power0"
 	network = list("Power Alarms","Atmosphere Alarms","Fire Alarms")
 	light_color = "#b88b2e"
+	circuit = /obj/item/weapon/circuitboard/security/engineering
 
 /obj/machinery/computer/security/engineering/drone
 	name = "drone monitoring cameras"
 	desc = "Used to monitor drones and engineering borgs."
 	network = list("Engineering Robots")
+	circuit = /obj/item/weapon/circuitboard/security/engineering/drone
 
 /obj/machinery/computer/security/nuclear
 	name = "head mounted camera monitor"
@@ -354,11 +347,13 @@
 	state_nopower_preset = "tcboss0"
 	network = list("NUKE")
 	light_color = "#a91515"
+	circuit = /obj/item/weapon/circuitboard/security/nuclear
 
 /obj/machinery/computer/security/nuclear/shiv
 	name = "pilot camera monitor"
 	desc = "Console used by fighter pilot to monitor the battlefield."
 	network = list("shiv")
+	circuit = /obj/item/weapon/circuitboard/security/nuclear/shiv
 
 /obj/machinery/computer/security/abductor_ag
 	name = "agent observation monitor"
@@ -369,6 +364,7 @@
 	state_nopower_preset = null
 	light_color = "#642850"
 	network = list()
+	circuit = /obj/item/weapon/circuitboard/security/abductor_ag
 	var/team
 
 /obj/machinery/computer/security/abductor_ag/attack_hand(mob/user)
@@ -387,6 +383,7 @@
 	state_nopower_preset = null
 	network = list("SS13", "SECURITY UNIT")
 	light_color = "#642850"
+	circuit = /obj/item/weapon/circuitboard/security/abductor_hu
 
 /obj/machinery/computer/security/bodycam
 	name = "bodycam monitoring computer"
@@ -396,5 +393,6 @@
 	state_nopower_preset = "laptop0"
 	network = list("SECURITY UNIT")
 	req_one_access = list(access_hos)
+	circuit = /obj/item/weapon/circuitboard/security/bodycam
 
 #undef DEFAULT_MAP_SIZE

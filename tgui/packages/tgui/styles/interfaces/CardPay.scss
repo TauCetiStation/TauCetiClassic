@@ -1,187 +1,199 @@
 .cardpay_window-titlebar {
-	background: #D0D2DD !important;
-	border-radius: 5px 5px 0px 0px;
-	box-shadow: 0px 0px 0px rgba(1,1,1,0) !important;
-	border-bottom: transparent !important;
+  background: hsl(230.8, 16%, 84.1%) !important;
+  border-radius: 5px 5px 0px 0px;
+  box-shadow: 0px 0px 0px rgba(1, 1, 1, 0) !important;
+  border-bottom: transparent !important;
 
-	.TitleBar__title{
-		font-weight: bold;
-		color: #333344;
-		left: 15px;
-	}
-	.TitleBar__close {
-		background: transparent !important;
-		color: #333344;
-		font-weight: bold;
-	}
-	.TitleBar__statusIcon {
-		color: transparent !important;
-	}
+  .TitleBar__title {
+    font-weight: bold;
+    color: hsl(240, 14.3%, 23.3%);
+    left: 15px;
+  }
+  .TitleBar__close {
+    background: transparent !important;
+    color: hsl(240, 14.3%, 23.3%);
+    font-weight: bold;
+  }
+  .TitleBar__statusIcon {
+    color: transparent !important;
+  }
 }
 
 .cardpay_window-contents {
-	background: #D0D2DD !important;
-	border-radius: 0px 0px 15px 15px;
+  background: hsl(230.8, 16%, 84.1%) !important;
+  border-radius: 0px 0px 15px 15px;
 }
 
 .cardpay_monitor {
-	width: 208px;
-	height: 50px;
-	background: #111111;
-	border-bottom: 2px solid #E8E9EF;
-	border-top: 3px solid #9497AB;
-	padding: 0px;
-	padding-top: 4px;
-	padding-left: -20px;
-	margin-bottom: 5px;
+  width: 208px;
+  height: 50px;
+  background: hsl(0, 0%, 6.7%);
+  border-bottom: 2px solid hsl(231.4, 17.9%, 92.4%);
+  border-top: 3px solid hsl(232.2, 12%, 62.5%);
+  padding: 0px;
+  padding-top: 4px;
+  padding-left: -20px;
+  margin-bottom: 5px;
 }
 
 .cardpay_button {
-	height: 48px;
-	width: 48px;
-	background: #9497AB;
-	outline: #1B1C23 solid 3px; 
-	border: 4px solid;
-	border-top: 2px solid;
-	padding: 0px;
-	margin-left: 2.5px;
-	&:hover {
-		border-top-width: 4px;
-		background: #9497AB !important;
-	}
+  height: 48px;
+  width: 48px;
+  background: hsl(232.2, 12%, 62.5%);
+  outline: hsl(232.5, 12.9%, 12.2%) solid 3px;
+  border: 4px solid;
+  border-top: 2px solid;
+  padding: 0px;
+  margin-left: 2.5px;
+  &:hover {
+    border-top-width: 4px;
+    background: hsl(232.2, 12%, 62.5%) !important;
+  }
 }
 
 .cardpay_button--normal {
-	background: #9497AB;
-	border-color: #9497AB;
-	border-top-color: #B9BBCB;
+  background: hsl(232.2, 12%, 62.5%);
+  border-color: hsl(232.2, 12%, 62.5%);
+  border-top-color: hsl(233.3, 14.8%, 76.1%);
 }
 
 .cardpay_button--normal.Button--selected {
-	height: 48px;
-	width: 48px;
-	background: #9497AB;
-	outline: #1B1C23 solid 3px; 
-	border: 4px solid #9497AB;
-	border-top: 6px solid #B9BBCB;
-	padding: 0px;
-	margin-left: 2.5px;
-	&:hover {
-		border-top-width: 8px;
-		background: #9497AB !important;
-	}
+  height: 48px;
+  width: 48px;
+  background: hsl(232.2, 12%, 62.5%);
+  outline: hsl(232.5, 12.9%, 12.2%) solid 3px;
+  border: 4px solid hsl(232.2, 12%, 62.5%);
+  border-top: 6px solid hsl(233.3, 14.8%, 76.1%);
+  padding: 0px;
+  margin-left: 2.5px;
+  &:hover {
+    border-top-width: 8px;
+    background: hsl(232.2, 12%, 62.5%) !important;
+  }
 }
 
 .cardpay_button--red {
-	background: #991000;
-	border-color: #991000;
-	border-top-color: #ca201a;
-	&:hover {
-		background: #991000 !important;
-	}
+  background: hsl(6.3, 100%, 30%);
+  border-color: hsl(6.3, 100%, 30%);
+  border-top-color: hsl(2, 77.2%, 44.7%);
+  &:hover {
+    background: hsl(6.3, 100%, 30%) !important;
+  }
 }
 
 .cardpay_button--green {
-	top:-2px;
-	background: #105735;
-	border-color: #105735;
-	border-top-color: #1a9f66;
-	&:hover {
-		background: #105735 !important;
-	}
+  top: -2px;
+  background: hsl(151.3, 68.9%, 20.2%);
+  border-color: hsl(151.3, 68.9%, 20.2%);
+  border-top-color: hsl(154.3, 71.9%, 36.3%);
+  &:hover {
+    background: hsl(151.3, 68.9%, 20.2%) !important;
+  }
 }
 
 .cardpay_button-inside {
-	height: 40px;
-	width: 40px;
-	background: #D0D2DD;
-	border-bottom: 5px solid;
-	border-radius: 5px;
-	text-align: center;
-	font-size: 35px;
-	font-weight: bold;
-	padding-top: 7px;
-	margin: 0px;
-	margin-top: -2px;
-	position: absolute;
+  height: 40px;
+  width: 40px;
+  background: hsl(230.8, 16%, 84.1%);
+  border-bottom: 5px solid;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 35px;
+  font-weight: bold;
+  padding-top: 7px;
+  margin: 0px;
+  margin-top: -2px;
+  position: absolute;
 }
 
 .cardpay_button-inside--normal {
-	background: #D0D2DD;
-	border-bottom-color: #E8E9EF;
-	color: #333344;
+  background: hsl(230.8, 16%, 84.1%);
+  border-bottom-color: hsl(231.4, 17.9%, 92.4%);
+  color: hsl(240, 14.3%, 23.3%);
 }
 
 .cardpay_button-inside--red {
-	background: #e81b1d;
-	border-bottom-color: #e13a3b;
-	color: #e81b1d;
-	text-shadow: 0px -1px 1px #e13a3b, 0px -3px 5px #e13a3b, 0px 1px 1px #991000, 0px 1px 5px #991000;
-	box-shadow: inset 0px 0px 10px #e13a3b;
+  background: hsl(359.4, 81.7%, 50.8%);
+  border-bottom-color: hsl(359.6, 73.6%, 55.5%);
+  color: hsl(359.4, 81.7%, 50.8%);
+  text-shadow:
+    0px -1px 1px hsl(359.6, 73.6%, 55.5%),
+    0px -3px 5px hsl(359.6, 73.6%, 55.5%),
+    0px 1px 1px hsl(6.3, 100%, 30%),
+    0px 1px 5px hsl(6.3, 100%, 30%);
+  box-shadow: inset 0px 0px 10px hsl(359.6, 73.6%, 55.5%);
 }
 
 .cardpay_button-inside--green {
-	background: #009853;
-	border-bottom-color: #05a05b;
-	color: #009853;
-	text-shadow: 0px -1px 1px #02b46a, 0px -3px 5px #02b46a, 0px 1px 1px #105735, 0px 1px 5px #105735;
-	box-shadow: inset 0px 0px 10px #05a05b;
+  background: hsl(152.8, 100%, 29.8%);
+  border-bottom-color: hsl(153.3, 93.9%, 32.4%);
+  color: hsl(152.8, 100%, 29.8%);
+  text-shadow:
+    0px -1px 1px hsl(155.1, 97.8%, 35.7%),
+    0px -3px 5px hsl(155.1, 97.8%, 35.7%),
+    0px 1px 1px hsl(151.3, 68.9%, 20.2%),
+    0px 1px 5px hsl(151.3, 68.9%, 20.2%);
+  box-shadow: inset 0px 0px 10px hsl(153.3, 93.9%, 32.4%);
 }
 
-
 .cardpay_switch {
-	height: 24px;
-	width: 64px;
-	background: #9497AB;
-	border-bottom: 1px solid #E8E9EF;
-	border-top: 2px solid #474A5B;
-	border-radius: 5px;
-	padding: 0px;
-	padding-left: 1px;
-	margin-left: 2.5px;
-	&:hover, &:focus {
-		background: #9497AB !important;
-	}
-	&:hover {
-		padding-left: 3px;
-	}
+  height: 24px;
+  width: 64px;
+  background: hsl(232.2, 12%, 62.5%);
+  border-bottom: 1px solid hsl(231.4, 17.9%, 92.4%);
+  border-top: 2px solid hsl(231, 12.3%, 31.8%);
+  border-radius: 5px;
+  padding: 0px;
+  padding-left: 1px;
+  margin-left: 2.5px;
+  &:hover,
+  &:focus {
+    background: hsl(232.2, 12%, 62.5%) !important;
+  }
+  &:hover {
+    padding-left: 3px;
+  }
 }
 
 .cardpay_switch.Button--selected {
-	padding-left: 41px;
-	&:hover {
-		padding-left: 39px;
-	}
+  padding-left: 41px;
+  &:hover {
+    padding-left: 39px;
+  }
 }
 
 .cardpay_switch-inside {
-	height: 22px;
-	width: 22px;
-	background: #D0D2DD;
-	border-bottom: 5px #E8E9EF solid;
-	border-radius: 5px;
-	text-align: center;
-	font-size: 13px;
-	font-weight: bold;
-	color: #D0D2DD;
-	text-shadow: 0px -1px 1px #E8E9EF, 0px -3px 5px #E8E9EF, 0px 1px 1px #474A5B, 0px 1px 5px #474A5B;
-	position: absolute;
+  height: 22px;
+  width: 22px;
+  background: hsl(230.8, 16%, 84.1%);
+  border-bottom: 5px hsl(231.4, 17.9%, 92.4%) solid;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
+  color: hsl(230.8, 16%, 84.1%);
+  text-shadow:
+    0px -1px 1px hsl(231.4, 17.9%, 92.4%),
+    0px -3px 5px hsl(231.4, 17.9%, 92.4%),
+    0px 1px 1px hsl(231, 12.3%, 31.8%),
+    0px 1px 5px hsl(231, 12.3%, 31.8%);
+  position: absolute;
 }
 
 .cardpay_resethole {
-	height: 9px;
-	width: 9px;
-	background: #9497AB;
-	border-top: 2px solid #474A5B;
-	border-bottom: 2px solid #E8E9EF;
-	border-radius: 10px;
-	padding: 0px;
-	margin-left: 2.5px;
-	&:focus {
-		background: #9497AB !important;
-	}
-	&:hover {
-		border-top-width: 3px;
-		background: #767989 !important;
-	}
+  height: 9px;
+  width: 9px;
+  background: hsl(232.2, 12%, 62.5%);
+  border-top: 2px solid hsl(231, 12.3%, 31.8%);
+  border-bottom: 2px solid hsl(231.4, 17.9%, 92.4%);
+  border-radius: 10px;
+  padding: 0px;
+  margin-left: 2.5px;
+  &:focus {
+    background: hsl(232.2, 12%, 62.5%) !important;
+  }
+  &:hover {
+    border-top-width: 3px;
+    background: hsl(230.5, 7.5%, 50%) !important;
+  }
 }

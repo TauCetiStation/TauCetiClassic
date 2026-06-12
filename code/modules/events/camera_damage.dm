@@ -6,7 +6,7 @@
 	var/severity_range = 0
 	switch(severity)
 		if(EVENT_LEVEL_MUNDANE)
-			severity_range = rand(0, 7)
+			severity_range = 7
 		if(EVENT_LEVEL_MODERATE)
 			severity_range = rand(7, 15)
 		if(EVENT_LEVEL_MAJOR)
@@ -21,13 +21,13 @@
 /datum/event/camera_damage/proc/acquire_random_camera(remaining_attempts = 5)
 	if(!cameranet.cameras.len)
 		return
-	if(!remaining_attempts)
+	if(remaining_attempts < 1)
 		return
 
 	var/obj/machinery/camera/C = pick(cameranet.cameras)
 	if(is_valid_camera(C))
 		return C
-	return acquire_random_camera(remaining_attempts--)
+	return acquire_random_camera(remaining_attempts - 1)
 
 /datum/event/camera_damage/proc/is_valid_camera(obj/machinery/camera/C)
 	// Only return a functional camera, not installed in a silicon, and that exists somewhere players have access

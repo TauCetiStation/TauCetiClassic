@@ -1,7 +1,7 @@
 /datum/spawner/fort_team
 	name = "Fort Team"
 	desc = "Отстраивайте и защищайте форт своей команды, уничтожьте форт команды противников!"
-	wiki_ref = "Forst"
+	wiki_ref = "Forts"
 
 	lobby_spawner = TRUE
 	positions = INFINITY

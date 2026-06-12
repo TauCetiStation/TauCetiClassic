@@ -1,55 +1,50 @@
 /datum/emote/larva/whimper
 	key = "whimper"
 
-	message_1p = "You whimper."
-	message_3p = "whimpers sadly."
+	message_1p = "Вы скулите."
+	message_3p = "жалобно скулит."
 
-	message_muzzled = "shakes violently and makes a very weak noise."
+	message_muzzled = "сильно извивается, издавая едва слышимый звук."
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/larva/roar
 	key = "roar"
 
-	message_1p = "You roar."
-	message_3p = "roars like a little predator."
+	message_1p = "Вы ревёте."
+	message_3p = "ревёт, как маленький хищник."
 
-	message_muzzled = "shakes violently and makes a very weak noise."
+	message_muzzled = "сильно извивается, издавая едва слышимый звук."
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/larva/hiss
 	key = "hiss"
 
-	message_1p = "You hiss."
-	message_3p = "hisses softly."
+	message_1p = "Вы шипите."
+	message_3p = "тихо шипит."
 
-	message_muzzled = "shakes violently and makes a very weak noise."
+	message_muzzled = "сильно извивается, издавая едва слышимый звук."
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS
+
 
 /datum/emote/larva/growl
 	key = "growl"
 
-	message_1p = "You growl."
-	message_3p = "growls softly."
+	message_1p = "Вы рычите."
+	message_3p = "тихо рычит."
 
-	message_muzzled = "shakes violently and makes a very weak noise."
+	message_muzzled = "сильно извивается, издавая едва слышимый звук."
 
 	message_type = SHOWMSG_AUDIO
 
-	state_checks = list(
-		EMOTE_STATE(is_stat, CONSCIOUS),
-	)
+	required_stat = CONSCIOUS

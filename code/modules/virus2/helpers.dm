@@ -57,7 +57,7 @@
 		var/armor = H.getarmor(target_zone, MELEE)
 		var/bioarmor = H.getarmor(target_zone, BIO)
 
-		return max((100 - max(armor, bioarmor/2)), 0) / 2
+		return max(((100 - max(armor, bioarmor * 0.8)) * max(0.3, 0.02 * M.getBruteLoss())), 0)
 	return 100
 
 //Checks if table-passing table can reach target (5 tile radius)
@@ -110,6 +110,7 @@
 		var/datum/disease2/disease/D = disease.getcopy()
 //		log_debug("Adding virus")
 		M.virus2["[D.uniqueID]"] = D
+		D.register_host(M)
 		M.med_hud_set_status()
 
 /obj/machinery/hydroponics/proc/infect_planttray_virus2(datum/disease2/disease/source)
@@ -118,7 +119,15 @@
 	if(!can_be_infected(source))
 		return
 	var/datum/disease2/disease/D = source.getcopy()
+	//boost growing in hydroponic tray
+	D.stageprob *= 10
+	D.speed *= 10
+	D.cooldown_mul *= 10
+	for(var/datum/disease2/effectholder/holder in D.effects)
+		holder.chance *= 10
+
 	virus2["[D.uniqueID]"] = D
+	D.register_host(src)
 
 //Infects mob M with random lesser disease, if he doesn't have one
 /proc/infect_mob_random_lesser(mob/living/carbon/M)
@@ -148,13 +157,13 @@
 		for (var/ID in virus2)
 //			log_debug("Attempting virus [ID]")
 			var/datum/disease2/disease/V = virus2[ID]
-			if(V.spreadtype != vector) continue
-
+			if(V.spreadtype != vector)
+				continue
 			if (vector == DISEASE_SPREAD_AIRBORNE)
 				if(airborne_can_reach(get_turf(src), get_turf(victim)))
 //					log_debug("In range, infecting")
 					infect_virus2(victim,V)
-				else
+//				else
 //					log_debug("Could not reach target")
 
 			if (vector == DISEASE_SPREAD_CONTACT)

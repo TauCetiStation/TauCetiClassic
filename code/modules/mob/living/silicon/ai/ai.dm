@@ -37,7 +37,7 @@ var/global/list/ai_verbs_default = list(
 	density = TRUE
 	canmove = FALSE
 	status_flags = CANSTUN|CANPARALYSE
-	shouldnt_see = list(/obj/effect/rune)
+	shouldnt_see = list(/obj/effect/rune, /obj/item/mine/replicator)
 	w_class = SIZE_HUMAN
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/camera = null
@@ -326,7 +326,7 @@ var/global/list/ai_verbs_default = list(
 				var/cameratext
 				if (alarm.cameras)
 					for (var/obj/machinery/camera/I in alarm.cameras)
-						cameratext += "<br>---- <A HREF=?src=\ref[src];switchcamera=\ref[I]>[I.c_tag]</A>"
+						cameratext += "<br>---- <A href=byond://?src=\ref[src];switchcamera=\ref[I]>[I.c_tag]</A>"
 				dat += "-- [alarm.area.name] [cameratext ? cameratext : "No Camera"]"
 
 				if (alarm.sources.len > 1)
@@ -388,12 +388,12 @@ var/global/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/confirm = tgui_alert(src, "Are you sure you want to call the shuttle?", "Confirm Shuttle Call", list("Yes", "No"))
+	var/confirm = tgui_alert(src, "Вы уверены, что хотите вызвать экстренный шаттл?", "Подтвердите вызов шаттла", list("Да", "Нет"))
 
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	if(confirm == "Yes")
+	if(confirm == "Да")
 		call_shuttle_proc(src)
 
 	// hack to display shuttle timer
@@ -620,7 +620,7 @@ var/global/list/ai_verbs_default = list(
 
 	var/cameratext = ""
 	for (var/obj/machinery/camera/C in cameralist)
-		cameratext += "[(cameratext == "")? "" : "|"]<A HREF=?src=\ref[src];switchcamera=\ref[C]>[C.c_tag]</A>"
+		cameratext += "[(cameratext == "")? "" : "|"]<A href=byond://?src=\ref[src];switchcamera=\ref[C]>[C.c_tag]</A>"
 
 	queueAlarm("--- [class] alarm detected in [A.name]! ([(cameratext)? cameratext : "No Camera"])", class)
 
@@ -834,7 +834,7 @@ var/global/list/ai_verbs_default = list(
 		if(user.is_busy()) return
 		if(anchored)
 			user.visible_message("<span class='notice'>\The [user] starts to unbolt \the [src] from the plating...</span>")
-			if(!W.use_tool(src, user, 40, volume = 50))
+			if(!W.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 				user.visible_message("<span class='notice'>\The [user] decides not to unbolt \the [src].</span>")
 				return
 			user.visible_message("<span class='notice'>\The [user] finishes unfastening \the [src]!</span>")
@@ -842,7 +842,7 @@ var/global/list/ai_verbs_default = list(
 			return
 		else
 			user.visible_message("<span class='notice'>\The [user] starts to bolt \the [src] to the plating...</span>")
-			if(!W.use_tool(src, user, 40, volume = 50))
+			if(!W.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 				user.visible_message("<span class='notice'>\The [user] decides not to bolt \the [src].</span>")
 				return
 			user.visible_message("<span class='notice'>\The [user] finishes fastening down \the [src]!</span>")
@@ -948,3 +948,6 @@ var/global/list/ai_verbs_default = list(
 		pixel_y = 8
 	else
 		pixel_y = 0
+
+/mob/living/silicon/ai/is_antag()
+	return laws?.zeroth

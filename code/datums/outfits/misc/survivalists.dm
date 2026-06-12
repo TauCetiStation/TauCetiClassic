@@ -5,7 +5,7 @@
 	glasses = /obj/item/clothing/glasses/welding
 	shoes = /obj/item/clothing/shoes/boots/work
 	belt = /obj/item/weapon/storage/belt/utility/cool
-	head = /obj/item/clothing/head/hardhat/white
+	head = /obj/item/clothing/head/hardhat/yellow/visor
 	back = /obj/item/weapon/storage/backpack/industrial
 	gloves = /obj/item/clothing/gloves/insulated
 	id = /obj/item/weapon/card/id/old_station/eng
@@ -30,11 +30,10 @@
 	gloves = /obj/item/clothing/gloves/latex/nitrile
 	head = /obj/item/clothing/head/beret/paramed
 	belt = /obj/item/weapon/storage/belt/medical/full
-	suit = /obj/item/clothing/suit/storage/labcoat/cmo
+	suit = /obj/item/clothing/suit/storage/labcoat
 	id = /obj/item/weapon/card/id/old_station/med
 	glasses = /obj/item/clothing/glasses/hud/health
 	back = /obj/item/weapon/storage/backpack/medic
-
 
 	l_hand = /obj/item/weapon/storage/firstaid/adv
 	suit_store = /obj/item/device/healthanalyzer

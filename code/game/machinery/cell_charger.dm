@@ -26,7 +26,7 @@
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
 
-/obj/machinery/cell_charger/proc/updateicon()
+/obj/machinery/cell_charger/update_icon()
 	icon_state = "ccharger[charging ? 1 : 0]"
 
 	if(charging && !(stat & (BROKEN|NOPOWER)) )
@@ -66,10 +66,11 @@
 				return
 
 			user.drop_from_inventory(W, src)
+			add_fingerprint(user)
 			charging = W
 			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
 			chargelevel = -1
-		updateicon()
+		update_icon()
 	else if(iswrenching(W))
 		if(charging)
 			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
@@ -91,13 +92,14 @@
 
 	if(charging)
 		usr.put_in_hands(charging)
+		add_fingerprint(user)
 		charging.add_fingerprint(user)
-		charging.updateicon()
+		charging.update_icon()
 
 		charging = null
 		user.visible_message("[user] removes the cell from the charger.", "You remove the cell from the charger.")
 		chargelevel = -1
-		updateicon()
+		update_icon()
 
 /obj/machinery/cell_charger/attack_ai(mob/user)
 	if(IsAdminGhost(user)) // why not?
@@ -121,7 +123,7 @@
 	power_used = charging.give(recharge_coeff*power_used*CELLRATE*efficiency)
 	use_power(power_used)
 
-	updateicon()
+	update_icon()
 
 /obj/machinery/cell_charger/deconstruct(disassembled = TRUE)
 	if(charging)

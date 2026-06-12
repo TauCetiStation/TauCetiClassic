@@ -27,7 +27,7 @@
 				if(!iszombie(H))
 					message = stars(message, 40)
 
-	if(!(sdisabilities & DEAF || ear_deaf) && client && client.prefs.show_runechat)
+	if(!(sdisabilities & DEAF || ear_deaf) && client?.prefs.show_runechat)
 		var/list/span_list = list()
 		if(copytext_char(message, -2) == "!!")
 			span_list.Add("yell")
@@ -53,7 +53,7 @@
 		if((client.prefs.chat_toggles & CHAT_GHOSTEARS) && (speaker in view(src)))
 			message = "<b>[message]</b>"
 
-	if(sdisabilities & DEAF || ear_deaf)
+	if((sdisabilities & DEAF || ear_deaf) && !((REMOTE_TALK in mutations)))
 		if(speaker == src)
 			message = "<span class='warning'>You cannot hear yourself speak!</span>"
 		else
@@ -61,7 +61,7 @@
 	else
 		if(isliving(src))
 			message = highlight_traitor_codewords(message, src.mind)
-		if(language)
+		if(language && !(REMOTE_TALK in mutations))
 			message = "[track]<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [language.format_message(message, verb)]</span>"
 		else
 			message = "[track]<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>"
@@ -73,10 +73,10 @@
 	if(!client)
 		if(!remote_hearers)
 			return FALSE
-
+		var/runechat_message = message
 		message = process_speech(message, verb, language, alt_name, italics, speaker, used_radio, speech_sound, sound_vol)
 		if(message)
-			telepathy_eavesdrop(speaker, message, "has heard", language)
+			telepathy_eavesdrop(speaker, message, "has heard", language, runechat_message)
 
 		return FALSE
 
@@ -88,6 +88,8 @@
 	if(!message)
 		return FALSE
 
+	if(length(remote_hearers))
+		telepathy_eavesdrop(speaker, message, "has heard", language)
 	to_chat(src, message)
 
 	if(ishuman(speaker))
@@ -268,7 +270,8 @@
 	else
 		to_chat(src, "[part_a][speaker_name][part_b][formatted][part_c]")
 
-	telepathy_eavesdrop(speaker, "[speaker_name][formatted]", "has heard", language)
+	if(speaker != src)
+		telepathy_eavesdrop(speaker, "[speaker_name] [formatted]", "has heard", language, "[speaker_name] [formatted]")
 
 /mob/proc/hear_signlang(message, verb = "gestures", datum/language/language, mob/speaker = null)
 	var/speaker_name = speaker.name
@@ -289,7 +292,7 @@
 	show_runechat_message(speaker, null, runechat_message, null, SHOWMSG_VISUAL)
 	show_message(message, SHOWMSG_VISUAL)
 
-	telepathy_eavesdrop(speaker, message, "has seen", language)
+	telepathy_eavesdrop(speaker, message, "has seen", language, runechat_message)
 
 /mob/proc/hear_sleep(message, datum/language/language)
 	var/heard = ""
@@ -314,4 +317,4 @@
 
 	to_chat(src, heard)
 
-	telepathy_eavesdrop(src, message, pick("has seen", "has heard"))
+	telepathy_eavesdrop(src, message, pick("has seen", "has heard"), null, message)

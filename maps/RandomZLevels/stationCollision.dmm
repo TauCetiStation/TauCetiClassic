@@ -25,6 +25,16 @@
 "ag" = (
 /turf/simulated/floor/plating/airless,
 /area/awaymission/stationcollision/northblock)
+"ah" = (
+/obj/effect/decal/turf_decal{
+	dir = 10;
+	icon_state = "warn"
+	},
+/obj/machinery/suit_storage_unit/medical{
+	filled = 1
+	},
+/turf/simulated/floor,
+/area/awaymission/stationcollision/gateroom)
 "ai" = (
 /obj/machinery/power/solar/fake,
 /turf/environment/space,
@@ -709,7 +719,7 @@
 	},
 /obj/item/clothing/shoes/syndigaloshes,
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/item/weapon/gun/projectile/automatic/silenced,
+/obj/item/weapon/gun/projectile/automatic/pistol/silenced,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -1097,9 +1107,9 @@
 /area/awaymission/stationcollision/research)
 "dl" = (
 /obj/machinery/door/poddoor{
+	dir = 4;
 	id = "Narsiedoor";
-	name = "Blast Doors";
-	dir = 4
+	name = "Blast Doors"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1132,8 +1142,8 @@
 /area/awaymission/stationcollision/northblock)
 "dq" = (
 /obj/machinery/door/airlock/highsecurity{
-	name = "Security Airlock";
-	dir = 4
+	dir = 4;
+	name = "Security Airlock"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -1188,8 +1198,8 @@
 /area/awaymission/stationcollision/research)
 "dv" = (
 /obj/machinery/door/airlock/hatch{
-	name = "High-Security Airlock";
-	dir = 4
+	dir = 4;
+	name = "High-Security Airlock"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2476,8 +2486,8 @@
 /area/awaymission/stationcollision/midblock)
 "gN" = (
 /obj/machinery/door/airlock/sandstone{
-	name = "Airlock";
-	dir = 4
+	dir = 4;
+	name = "Airlock"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -2529,8 +2539,8 @@
 /area/awaymission/stationcollision/arrivalblock)
 "gV" = (
 /obj/machinery/door/airlock/external{
-	welded = 1;
-	dir = 4
+	dir = 4;
+	welded = 1
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/stationcollision/arrivalblock)
@@ -2948,9 +2958,9 @@
 /area/awaymission/stationcollision/arrivalblock)
 "if" = (
 /obj/machinery/door/airlock/security/glass{
+	dir = 4;
 	name = "Glass Airlock";
-	req_access = list(0);
-	dir = 4
+	req_access = list(0)
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -3835,13 +3845,11 @@
 	},
 /area/awaymission/stationcollision/southblock)
 "le" = (
-/obj/machinery/suit_storage_unit/standard_unit,
-/obj/effect/decal/turf_decal{
-	dir = 5;
-	icon_state = "warn"
+/obj/machinery/suit_storage_unit/syndicate_unit/abandoned{
+	filled = 1
 	},
 /turf/simulated/floor,
-/area/awaymission/stationcollision/gateroom)
+/area/awaymission/stationcollision/northblock)
 "lf" = (
 /obj/effect/landmark{
 	name = "awaystart"
@@ -3860,10 +3868,12 @@
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
 "lh" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/turf_decal{
-	dir = 9;
+	dir = 5;
 	icon_state = "warn"
+	},
+/obj/machinery/suit_storage_unit/security{
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
@@ -3895,18 +3905,22 @@
 	},
 /area/awaymission/stationcollision/southblock)
 "ll" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/turf_decal{
-	dir = 4;
+	dir = 9;
 	icon_state = "warn"
+	},
+/obj/machinery/suit_storage_unit/engine{
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
 "lm" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/turf_decal{
-	dir = 8;
+	dir = 4;
 	icon_state = "warn"
+	},
+/obj/machinery/suit_storage_unit/security{
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
@@ -3956,18 +3970,22 @@
 	},
 /area/awaymission/stationcollision/southblock)
 "lu" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/turf_decal{
-	dir = 6;
+	dir = 8;
 	icon_state = "warn"
+	},
+/obj/machinery/suit_storage_unit/engine/atmos{
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
 "lv" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/turf_decal{
-	dir = 10;
+	dir = 6;
 	icon_state = "warn"
+	},
+/obj/machinery/suit_storage_unit/medical{
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/awaymission/stationcollision/gateroom)
@@ -5671,7 +5689,7 @@ an
 ek
 eA
 ef
-fc
+le
 aj
 gl
 cE
@@ -6813,9 +6831,9 @@ jQ
 jQ
 kw
 kS
-le
-ll
-lu
+lh
+lm
+lv
 jz
 lY
 ml
@@ -7077,9 +7095,9 @@ jU
 jU
 kA
 kV
-lh
-lm
-lv
+ll
+lu
+ah
 jz
 ma
 mm

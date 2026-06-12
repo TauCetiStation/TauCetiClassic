@@ -11,7 +11,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/uses = 20 						// Numbers of crystals
 	// List of items not to shove in their hands.
 	var/active = 0
-	var/uplink_type = "traitor" //0 - traitor uplink, 1 - nuke
+	var/uplink_type = UPLINK_TYPE_TRAITOR
 	var/list/uplink_items = list()
 	var/list/extra_purchasable = list()
 
@@ -132,7 +132,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 // If true, it accesses trigger() and returns 1. If it fails, it returns false. Use this to see if you need to close the
 // current item's menu.
 /obj/item/device/uplink/hidden/proc/check_trigger(mob/user, value, target)
-	if(value == target)
+	if(value == target) // lol
 		trigger(user)
 		return 1
 	return 0
@@ -175,7 +175,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 /obj/item/device/radio/uplink/atom_init()
 	. = ..()
 	hidden_uplink = new(src)
-	hidden_uplink.uplink_type = "nuclear"
+	hidden_uplink.uplink_type = UPLINK_TYPE_NUCLEAR
 
 	hidden_uplink.extra_purchasable += create_uplink_sales(rand(2,3), "Discounts", TRUE, get_uplink_items(hidden_uplink))
 

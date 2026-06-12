@@ -24,10 +24,8 @@
 		this["checked"] = (user in spawner.registered_candidates)
 		this["blocked"] = spawner.blocked
 
-		this["amount"] = ""
-		if(spawner.register_only)
-			this["amount"] += "[length(spawner.registered_candidates)]/"
-		this["amount"] += "[spawner.positions == INFINITY ? "∞" : spawner.positions]"
+		this["registered_candidates"] = length(spawner.registered_candidates)
+		this["positions"] = "[spawner.positions == INFINITY ? "∞" : spawner.positions]"
 
 		if(spawner.faction)
 			this["playing"] = length(spawner.faction.get_active_members())

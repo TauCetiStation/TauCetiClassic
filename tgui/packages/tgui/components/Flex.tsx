@@ -16,26 +16,9 @@ export interface FlexProps extends BoxProps {
 }
 
 export const computeFlexProps = (props: FlexProps) => {
-  const {
-    className,
-    direction,
-    wrap,
-    align,
-    justify,
-    inline,
-    ...rest
-  } = props;
+  const { className, direction, wrap, align, justify, inline, ...rest } = props;
   return {
-    className: classes([
-      'Flex',
-      Byond.IS_LTE_IE10 && (
-        direction === 'column'
-          ? 'Flex--iefix--column'
-          : 'Flex--iefix'
-      ),
-      inline && 'Flex--inline',
-      className,
-    ]),
+    className: classes(['Flex', inline && 'Flex--inline', className]),
     style: {
       ...rest.style,
       'flex-direction': direction,
@@ -47,9 +30,7 @@ export const computeFlexProps = (props: FlexProps) => {
   };
 };
 
-export const Flex = props => (
-  <Box {...computeFlexProps(props)} />
-);
+export const Flex = (props) => <Box {...computeFlexProps(props)} />;
 
 Flex.defaultHooks = pureComponentHooks;
 
@@ -75,12 +56,7 @@ export const computeFlexItemProps = (props: FlexItemProps) => {
     ...rest
   } = props;
   return {
-    className: classes([
-      'Flex__item',
-      Byond.IS_LTE_IE10 && 'Flex__item--iefix',
-      Byond.IS_LTE_IE10 && grow > 0 && 'Flex__item--iefix--grow',
-      className,
-    ]),
+    className: classes(['Flex__item', className]),
     style: {
       ...style,
       'flex-grow': grow !== undefined && Number(grow),
@@ -93,9 +69,7 @@ export const computeFlexItemProps = (props: FlexItemProps) => {
   };
 };
 
-const FlexItem = props => (
-  <Box {...computeFlexItemProps(props)} />
-);
+const FlexItem = (props) => <Box {...computeFlexItemProps(props)} />;
 
 FlexItem.defaultHooks = pureComponentHooks;
 

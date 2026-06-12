@@ -9,7 +9,7 @@ var/global/metahelps
 
 	//todo: possible a way to add some metahelps ID's in personal ignore list
 
-	var/msg = "[help.greeting] <a href=?src=\ref[src];metahelp=[help.id]>(Читать)</a>"
+	var/msg = "[help.greeting] <a href=byond://?src=\ref[src];metahelp=[help.id]>(Читать)</a>"
 
 	to_chat(src, "<font color='purple'><span class='ooc'><span class='prefix'>OOC-INFO:</span> <span class='message'>[msg]</span></span></font>")
 
@@ -39,6 +39,7 @@ var/global/metahelps
 						display: none;
 					}
 				</style>
+				[get_browse_zoom_style(usr)]
 			</head>
 			<body>
 				<script type="text/javascript">
@@ -53,7 +54,7 @@ var/global/metahelps
 		</html>
 		"}
 
-	usr << browse("[popup_content]", "window=metahelp_[help.id];size=700x500")
+	usr << browse("[popup_content]", "window=metahelp_[help.id];[get_browse_size_parameter(usr, 700, 500)]")
 
 /datum/metahelp
 	var/id = "your_unique_id"
