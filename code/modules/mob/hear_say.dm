@@ -138,7 +138,7 @@
 	if(!repeats)
 		return
 	var/instrumental_sound = H.get_instrumental_voice()
-	playsound_local(H, instrumental_sound, VOL_EFFECTS_MASTER, 80)
+	playsound_local(source, instrumental_sound, VOL_EFFECTS_MASTER, 80)
 	addtimer(CALLBACK(src, PROC_REF(play_instrumental_voice), H, repeats - 1), 0.3 SECONDS)
 
 /mob/living/carbon/human/proc/get_instrumental_voice()
