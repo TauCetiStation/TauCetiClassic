@@ -11,8 +11,7 @@
 	initial_skills = list(
 		/datum/skill/civ_mech = SKILL_LEVEL_MASTER,
 		/datum/skill/firearms = SKILL_LEVEL_TRAINED,
-		/datum/skill/research = SKILL_LEVEL_NOVICE,
-		/datum/skill/engineering = SKILL_LEVEL_NOVICE,
+		/datum/skill/research = SKILL_LEVEL_NOVICE
 	)
 
 /datum/skillset/cargotech

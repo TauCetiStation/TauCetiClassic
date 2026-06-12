@@ -167,6 +167,8 @@
 						ChangeTurf(/turf/simulated/floor/plating/airless/asteroid/cave)
 					else
 						new/turf/simulated/floor/plating/airless/asteroid/cave(src)
+					if(prob(50))
+						new /obj/structure/plasticflaps/plant(src)
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
@@ -393,6 +395,9 @@
 
 	var/turf/N = ChangeTurf(basetype)
 	N.update_overlays_full()
+
+	if(prob(10))
+		new /obj/structure/plasticflaps/plant(src)
 
 	if(prob(CRATE_DROP_CHANCE))
 		visible_message("<span class='notice'>An old dusty crate was buried within!</span>")
