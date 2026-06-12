@@ -92,7 +92,6 @@
 	var/lying_current = 0
 	var/crawling_intent = CRAWL_INTENT_STANDING
 	var/crawling = FALSE //For crawling
-	var/force_crawl_timer = FALSE
 	var/canmove = 1
 	var/lastpuke = 0
 	var/unacidable = 0
