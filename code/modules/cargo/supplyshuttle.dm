@@ -84,10 +84,3 @@ var/global/list/mechtoys = list(
 /obj/structure/plasticflaps/mining
 	name = "Airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps."
-
-/obj/structure/plasticflaps/plant
-	name = "asteroid lians"
-	icon_state = "space_lians"
-	flags = NODECONSTRUCT
-
-	max_integrity = 5

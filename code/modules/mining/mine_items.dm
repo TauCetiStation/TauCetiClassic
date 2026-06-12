@@ -1233,6 +1233,13 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		SSair?.mark_for_update(T)
 	return ..()
 
+/obj/structure/fans/tiny/asteroid_lians
+	name = "asteroid lians"
+	icon_state = "space_lians"
+
+	resistance_flags = CAN_BE_HIT
+	max_integrity = 5
+
 //Signs
 /obj/structure/sign/mining
 	name = "nanotrasen mining corps sign"
