@@ -348,6 +348,11 @@
 	if((istype(target, /obj/mecha) || ismachinery(target) || isrobot(target)) && uses >= 10)
 		target.color = normalize_color(colour)
 		uses -= 10
+	if(issuitstorage(target))
+		var/obj/machinery/suit_storage_unit/SS = target
+		SS.overlay_color = normalize_color(colour)
+		SS.update_icon()
+		uses -= 10
 	if(istype(target, /obj/machinery/camera))
 		var/obj/machinery/camera/C = target
 		if(do_after(user, 20, target = C))		//can_move = TRUE, when reworking

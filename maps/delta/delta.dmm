@@ -2357,12 +2357,11 @@
 	},
 /area/station/security/hos)
 "adT" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/security/hos,
-/obj/item/clothing/head/helmet/space/rig/security/hos,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
+	},
+/obj/machinery/suit_storage_unit/security/hos{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -2964,7 +2963,6 @@
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "red"
@@ -3244,7 +3242,6 @@
 /obj/machinery/alarm{
 	pixel_y = -32
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -4795,6 +4792,9 @@
 /obj/effect/decal/turf_decal/alpha/red{
 	icon_state = "bot_old"
 	},
+/obj/machinery/alarm{
+	pixel_y = 22
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5977,7 +5977,6 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "recharge_floor"
 	},
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -7017,13 +7016,6 @@
 /area/station/security/armoury)
 "alv" = (
 /obj/structure/rack,
-/obj/item/weapon/gun/energy/laser{
-	pixel_y = -3
-	},
-/obj/item/weapon/gun/energy/laser,
-/obj/item/weapon/gun/energy/laser{
-	pixel_y = 3
-	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "delivery"
 	},
@@ -7031,11 +7023,12 @@
 /obj/structure/window/thin/reinforced{
 	dir = 8
 	},
-/obj/item/weapon/gun/energy/laser{
-	pixel_y = 3
+/obj/item/weapon/gun/energy/laser/big{
+	pixel_y = 2
 	},
-/obj/item/weapon/gun/energy/laser{
-	pixel_y = 3
+/obj/item/weapon/gun/energy/laser/big,
+/obj/item/weapon/gun/energy/laser/big{
+	pixel_y = -2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -7397,38 +7390,30 @@
 /turf/simulated/floor,
 /area/station/security/range)
 "amc" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/security,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/security,
 /obj/effect/decal/turf_decal/alpha/red{
 	icon_state = "bot_old"
 	},
-/obj/machinery/alarm{
-	pixel_y = 22
+/obj/machinery/suit_storage_unit/security{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
 /area/station/security/armoury)
 "amd" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/security,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/security,
-/obj/effect/decal/turf_decal/alpha/red{
-	icon_state = "bot_old"
+/obj/structure/stool/bed/chair/office/light{
+	dir = 8
 	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
+/obj/machinery/power/apc{
+	custom_smartlight_preset = "MedBay";
+	name = "Medbay down APC";
+	pixel_y = -27
 	},
+/obj/structure/cable,
 /turf/simulated/floor{
-	icon_state = "dark"
+	icon_state = "bluechecker"
 	},
-/area/station/security/armoury)
+/area/station/medical/cmo)
 "ame" = (
 /obj/structure/rack,
 /obj/item/weapon/circuitboard/autolathe,
@@ -7737,7 +7722,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/effect/spawner/aspect/mech/gygax/ultra,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -8988,6 +8972,18 @@
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
+"apc" = (
+/obj/effect/decal/turf_decal/alpha/red{
+	icon_state = "bot_old"
+	},
+/obj/machinery/suit_storage_unit/medical/paramedic{
+	filled = 1
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/station/medical/storage)
 "apd" = (
 /obj/structure/table,
 /turf/simulated/floor,
@@ -11267,27 +11263,16 @@
 	},
 /area/station/security/range)
 "asD" = (
-/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "redcorner"
 	},
 /area/station/security/main)
 "asE" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/security,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/security,
-/obj/machinery/door/window/brigdoor/westright,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/suit_storage_unit/security{
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -11551,6 +11536,7 @@
 	c_tag = "Armory South";
 	network = list("SS13","Security")
 	},
+/obj/effect/spawner/aspect/mech/gygax,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -15320,21 +15306,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "azC" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/engineering,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/engineering,
-/obj/machinery/light/smart{
-	dir = 1
-	},
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 22
-	},
 /obj/effect/decal/turf_decal{
 	dir = 3;
 	icon_state = "warn"
+	},
+/obj/machinery/suit_storage_unit/engine{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -17358,14 +17335,62 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot_old"
-	},
 /obj/machinery/power/apc{
 	custom_smartlight_preset = "MedBay";
 	dir = 4;
 	name = "Medbay right APC";
 	pixel_x = 27
+	},
+/obj/structure/rack,
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = 10;
+	pixel_y = 10
+	},
+/obj/item/weapon/tank/emergency_oxygen/double{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/obj/item/device/sensor_device{
+	pixel_x = 10;
+	pixel_y = 5
+	},
+/obj/item/device/sensor_device{
+	pixel_x = -10;
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/hud/health{
+	pixel_x = -10
+	},
+/obj/item/clothing/glasses/hud/health{
+	pixel_x = 10
+	},
+/obj/item/weapon/storage/belt/medical{
+	pixel_x = 10;
+	pixel_y = -5
+	},
+/obj/item/weapon/storage/belt/medical{
+	pixel_x = -10;
+	pixel_y = -5
+	},
+/obj/machinery/door/window/eastright{
+	dir = 8;
+	name = "Paramedic equipment";
+	req_access = list(70)
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 1
+	},
+/obj/structure/window/thin/reinforced,
+/obj/item/device/gps/medical{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/item/device/gps/medical{
+	pixel_x = -8;
+	pixel_y = 11
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -22371,7 +22396,6 @@
 	dir = 1;
 	icon_state = "box_corners_white"
 	},
-/obj/effect/spawner/aspect/mech/ff_engi,
 /turf/simulated/floor{
 	icon_state = "neutralfull"
 	},
@@ -22937,11 +22961,15 @@
 /area/station/engineering/chiefs_office)
 "bVQ" = (
 /obj/structure/rack,
-/obj/item/weapon/tank/jetpack/carbondioxide,
-/obj/item/weapon/tank/jetpack/carbondioxide,
-/obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
+	},
+/obj/item/weapon/tank/jetpack/carbondioxide{
+	pixel_x = -5
+	},
+/obj/item/weapon/tank/jetpack/carbondioxide,
+/obj/item/weapon/tank/jetpack/carbondioxide{
+	pixel_x = 5
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -23185,29 +23213,6 @@
 /obj/item/clothing/suit/storage/hazardvest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
-"bYy" = (
-/obj/structure/rack,
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "east_science_hazard";
-	name = "Biohazard Shutter";
-	opacity = 0
-	},
-/obj/item/clothing/suit/space/rig/science,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/head/helmet/space/rig/science,
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/station/rnd/telesci)
 "bYD" = (
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 10
@@ -24024,13 +24029,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/recycleroffice)
-"cin" = (
-/obj/effect/spawner/aspect/mech/gygax,
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "red"
-	},
-/area/station/security/main)
 "ciq" = (
 /obj/structure/stool/bed/chair/metal/yellow{
 	dir = 4
@@ -24296,14 +24294,9 @@
 	dir = 4
 	},
 /obj/structure/cable{
-	d1 = 1;
+	d1 = 4;
 	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 4;
-	icon_state = "1-4"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor{
 	icon_state = "bluechecker"
@@ -24688,14 +24681,26 @@
 /turf/simulated/floor/engine/airmix,
 /area/station/engineering/atmos)
 "cpL" = (
-/obj/machinery/light/smart{
+/obj/structure/window/thin/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "whitepurplecorner"
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "east_science_hazard";
+	name = "Biohazard Shutter";
+	opacity = 0
 	},
-/area/station/rnd/hallway)
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/machinery/suit_storage_unit/science{
+	filled = 1
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/rnd/telesci)
 "cpR" = (
 /turf/simulated/wall,
 /area/station/cargo/storage)
@@ -26203,6 +26208,9 @@
 	pixel_y = 28
 	},
 /obj/effect/spawner/aspect/mech/phazon,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
 "cIm" = (
@@ -27382,8 +27390,9 @@
 	},
 /area/station/rnd/robotics)
 "cWR" = (
-/obj/structure/closet/malf/suits,
-/obj/item/clothing/glasses/night,
+/obj/machinery/suit_storage_unit/nasa{
+	filled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -27892,23 +27901,14 @@
 /turf/simulated/floor/carpet,
 /area/station/bridge)
 "dfo" = (
-/obj/structure/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot_old"
+	icon_state = "delivery"
 	},
-/obj/machinery/power/apc{
-	custom_smartlight_preset = "MedBay";
-	dir = 1;
-	name = "Medbay top APC";
-	pixel_y = 27
+/obj/machinery/suit_storage_unit/medical{
+	filled = 1
 	},
-/turf/simulated/floor{
-	icon_state = "neutral"
-	},
-/area/station/medical/cmo)
+/turf/simulated/floor,
+/area/station/ai_monitored/eva)
 "dft" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -29229,17 +29229,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "dvV" = (
-/obj/structure/rack,
-/obj/item/weapon/tank/jetpack/oxygen,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/clothing/suit/armor/captain,
-/obj/item/clothing/head/helmet/space/capspace,
 /obj/effect/decal/turf_decal{
 	dir = 10;
 	icon_state = "warn"
 	},
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/suit_storage_unit/captain{
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/station/bridge/captain_quarters)
@@ -32217,33 +32212,16 @@
 	},
 /area/station/security/checkpoint/engi)
 "ejI" = (
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/weapon/tank/emergency_oxygen/double,
-/obj/item/clothing/suit/space/rig/medical,
-/obj/item/clothing/head/helmet/space/rig/medical,
-/obj/item/device/sensor_device,
-/obj/machinery/door/window/southright{
-	dir = 4;
-	name = "Paramedic equipment";
-	req_access = list(70)
-	},
-/obj/item/weapon/storage/belt/medical,
-/obj/item/clothing/glasses/hud/health,
-/obj/structure/window/thin/reinforced,
-/obj/item/device/gps/medical,
-/obj/effect/decal/turf_decal/alpha/red{
+/obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/machinery/suit_storage_unit/medical/cmo{
+	filled = 1
+	},
 /turf/simulated/floor{
-	dir = 8;
 	icon_state = "neutral"
 	},
-/area/station/medical/storage)
+/area/station/medical/cmo)
 "ejJ" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/fulltile/reinforced{
@@ -32276,9 +32254,11 @@
 	name = "Biohazard Shutter";
 	opacity = 0
 	},
-/obj/machinery/suit_storage_unit/science,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/machinery/suit_storage_unit/globose/science{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -32629,24 +32609,29 @@
 	},
 /area/station/cargo/miningoffice)
 "eoW" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/security,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/security,
-/obj/machinery/door/window/brigdoor/westleft,
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/turf/simulated/floor,
-/area/station/ai_monitored/eva)
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-4"
+	},
+/turf/simulated/floor{
+	icon_state = "bluechecker"
+	},
+/area/station/medical/cmo)
 "epa" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -36284,11 +36269,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
 "fjH" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/rig/atmos,
-/obj/item/clothing/head/helmet/space/rig/atmos,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -41645,27 +41625,6 @@
 	icon_state = "whitebluecorner"
 	},
 /area/station/medical/reception)
-"gxj" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/medical,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 4
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/medical,
-/obj/machinery/door/window/brigdoor/westright{
-	req_access = list(5)
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/turf/simulated/floor,
-/area/station/ai_monitored/eva)
 "gxk" = (
 /obj/machinery/alarm{
 	pixel_x = -28;
@@ -41686,9 +41645,11 @@
 	},
 /area/station/engineering/atmos/supermatter)
 "gxv" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/suit_storage_unit/globose/skrell/black{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -45042,14 +45003,12 @@
 	},
 /area/station/hallway/primary/port)
 "hoM" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/engineering,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/engineering,
 /obj/effect/decal/turf_decal{
 	dir = 6;
 	icon_state = "warn"
+	},
+/obj/machinery/suit_storage_unit/engine{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -46504,13 +46463,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-"hDb" = (
-/obj/machinery/atmospherics/pipe/simple/visible/fuel,
-/obj/effect/spawner/aspect/mech/ff_engi,
-/turf/simulated/floor{
-	icon_state = "neutralfull"
-	},
-/area/station/engineering/atmos)
 "hDc" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -54939,9 +54891,16 @@
 "jBE" = (
 /obj/structure/table/reinforced,
 /obj/structure/sign/poster/official/report_crimes{
-	pixel_y = 32
+	pixel_x = 32
 	},
 /obj/item/clothing/gloves/insulated,
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/obj/item/device/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = 22
+	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -57158,7 +57117,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "kcS" = (
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -57412,7 +57370,6 @@
 /obj/effect/landmark{
 	name = "lightsout"
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -58702,15 +58659,11 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/hop_office)
 "kuF" = (
-/obj/structure/rack,
-/obj/item/clothing/head/helmet/space/skrell/black,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/skrell/black,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/skrell/white,
-/obj/item/clothing/head/helmet/space/skrell/white,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/suit_storage_unit/globose/skrell/white{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -59265,11 +59218,13 @@
 	},
 /area/station/hallway/secondary/entry)
 "kCb" = (
-/obj/item/weapon/flora/random,
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
+	},
+/obj/machinery/suit_storage_unit/engine/chief{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -62664,23 +62619,11 @@
 	},
 /area/station/ai_monitored/eva)
 "lrS" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/engineering,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/engineering,
-/obj/machinery/door/window/brigdoor/eastright{
-	req_access = list(11)
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/suit_storage_unit/engine{
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -63215,12 +63158,6 @@
 	},
 /area/station/rnd/hallway)
 "lzo" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/rig/engineering/chief,
-/obj/item/clothing/glasses/welding/superior/cheif_eng,
-/obj/item/clothing/head/helmet/space/rig/engineering/chief,
 /obj/structure/sign/warning/electricshock{
 	pixel_y = -32
 	},
@@ -64099,6 +64036,9 @@
 "lKv" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor{
 	icon_state = "bluechecker"
@@ -66286,11 +66226,6 @@
 	},
 /area/station/medical/surgeryobs)
 "mlG" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/rig/science/rd,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/head/helmet/space/rig/science/rd,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28;
@@ -66304,6 +66239,9 @@
 /obj/effect/decal/turf_decal{
 	dir = 9;
 	icon_state = "warn"
+	},
+/obj/machinery/suit_storage_unit/science/rd{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -67619,11 +67557,6 @@
 	},
 /area/station/rnd/xenobiology)
 "mBy" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/medical/cmo,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/medical/cmo,
 /obj/effect/decal/turf_decal{
 	dir = 10;
 	icon_state = "warn"
@@ -68052,7 +67985,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	icon_state = "yellowfull"
 	},
@@ -76942,23 +76874,11 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos/supermatter)
 "oRV" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/atmos,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 8
-	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/atmos,
-/obj/machinery/door/window/brigdoor/eastleft{
-	req_access = list(24)
-	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/suit_storage_unit/engine/atmos{
+	filled = 1
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -78826,6 +78746,9 @@
 /area/station/hallway/primary/starboard)
 "pqq" = (
 /obj/structure/closet/firecloset,
+/obj/machinery/light/smart{
+	dir = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurplecorner"
@@ -82128,7 +82051,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/spawner/aspect/mech/ripley_engi,
 /turf/simulated/floor{
 	icon_state = "yellowfull"
 	},
@@ -86895,7 +86817,6 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
-/obj/effect/spawner/aspect/mech/ripley_mine,
 /turf/simulated/floor{
 	icon_state = "neutralchoco"
 	},
@@ -90227,6 +90148,7 @@
 	name = "Engineering down APC";
 	pixel_y = -27
 	},
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -90614,12 +90536,11 @@
 	},
 /area/station/hallway/primary/fore)
 "shX" = (
-/obj/structure/rack,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/suit/space/unathi/rig_cheap,
-/obj/item/clothing/head/helmet/space/unathi/helmet_cheap,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/suit_storage_unit/unathi{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "graychoco"
@@ -91562,11 +91483,9 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/atmos,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/atmos,
+/obj/machinery/suit_storage_unit/engine/atmos{
+	filled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -92081,12 +92000,7 @@
 	},
 /area/station/medical/storage)
 "szY" = (
-/obj/structure/rack,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/atmos,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/atmos,
 /turf/simulated/floor{
 	icon_state = "blackchoco"
 	},
@@ -94412,12 +94326,6 @@
 	icon_state = "blackchoco"
 	},
 /area/station/medical/cryo)
-"tge" = (
-/obj/effect/spawner/aspect/mech/ripley_mine,
-/turf/simulated/floor{
-	icon_state = "neutralchoco"
-	},
-/area/station/cargo/miningoffice)
 "tgi" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -100340,26 +100248,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "uGb" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/medical,
-/obj/structure/window/thin/reinforced,
-/obj/structure/window/thin/reinforced{
-	dir = 8
+/obj/machinery/suit_storage_unit/engine/atmos{
+	filled = 1
 	},
-/obj/structure/window/thin/reinforced{
-	dir = 1
+/turf/simulated/floor{
+	icon_state = "blackchoco"
 	},
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/medical,
-/obj/machinery/door/window/brigdoor/eastleft{
-	req_access = list(5)
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
-	},
-/turf/simulated/floor,
-/area/station/ai_monitored/eva)
+/area/station/engineering/atmos/atmos_office)
 "uGd" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/wrench,
@@ -100842,6 +100737,9 @@
 "uND" = (
 /obj/structure/closet/fireaxecabinet{
 	pixel_x = 32
+	},
+/obj/machinery/suit_storage_unit/engine/atmos{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "blackchoco"
@@ -101693,7 +101591,6 @@
 	},
 /area/station/civilian/dormitories/courtroom)
 "uYY" = (
-/obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/decal/turf_decal{
 	dir = 5;
 	icon_state = "warn"
@@ -102850,19 +102747,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
-"voC" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/spawner/aspect/mech/ripley_engi,
-/turf/simulated/floor{
-	icon_state = "neutralfull"
-	},
-/area/station/engineering/engine)
 "voI" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -108263,13 +108147,6 @@
 "wHE" = (
 /turf/simulated/wall,
 /area/station/security/main)
-"wIa" = (
-/obj/effect/spawner/aspect/mech/medical,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "whiteblue"
-	},
-/area/station/medical/sleeper)
 "wIf" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -112115,6 +111992,7 @@
 	on = 0;
 	pixel_y = 6
 	},
+/obj/item/clothing/glasses/welding/superior/cheif_eng,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
@@ -112358,7 +112236,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/effect/spawner/aspect/mech/medical,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "whiteblue"
@@ -114579,14 +114456,12 @@
 	},
 /area/station/rnd/xenobiology)
 "yid" = (
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/suit/space/rig/engineering,
-/obj/item/clothing/mask/breath,
-/obj/item/clothing/head/helmet/space/rig/engineering,
 /obj/effect/decal/turf_decal{
 	dir = 10;
 	icon_state = "warn"
+	},
+/obj/machinery/suit_storage_unit/engine{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -138079,7 +137954,7 @@ dup
 dup
 nRV
 bOD
-hDb
+cmG
 xqQ
 bme
 oJD
@@ -140387,7 +140262,7 @@ bmj
 itq
 stm
 uND
-fjH
+uGb
 rsf
 ewN
 nnZ
@@ -140425,9 +140300,9 @@ bau
 nkc
 dij
 qfJ
-voC
+blI
 mGk
-voC
+blI
 qfJ
 blI
 qFo
@@ -144817,7 +144692,7 @@ bOA
 muH
 tVQ
 vHf
-jwK
+cpL
 svQ
 vxf
 kiL
@@ -145845,7 +145720,7 @@ bOA
 saw
 bks
 vHf
-bYy
+jwK
 svQ
 vxf
 kiL
@@ -146617,7 +146492,7 @@ nHE
 prx
 sBT
 iQn
-cpL
+frF
 rzd
 iFV
 gZd
@@ -150459,7 +150334,7 @@ bXp
 hvB
 bCO
 jQJ
-uGb
+dfo
 oRV
 lrS
 rTk
@@ -151487,9 +151362,9 @@ pym
 xZC
 iWg
 baa
-gxj
+dfo
 asE
-eoW
+asE
 rTk
 uUR
 aVg
@@ -151518,7 +151393,7 @@ vhk
 eyM
 lmd
 wBR
-dfo
+ejI
 clp
 mAu
 rqe
@@ -152033,9 +151908,9 @@ rSa
 rSa
 wBR
 wjL
-kjZ
+eoW
 lKv
-lKv
+amd
 wBR
 kqz
 oeh
@@ -154345,8 +154220,8 @@ mne
 sBD
 gys
 bpV
-ejI
-ejI
+apc
+apc
 mAx
 lRD
 sBD
@@ -155367,7 +155242,7 @@ mMZ
 gMr
 acj
 xBh
-wIa
+wlv
 mMZ
 gMr
 lwH
@@ -155624,7 +155499,7 @@ uhm
 cCo
 mRc
 czh
-wIa
+wlv
 mMZ
 gMr
 lwH
@@ -160696,8 +160571,8 @@ sDB
 twC
 nsI
 vxm
-tge
-tge
+vxm
+vxm
 jWU
 wTB
 lGt
@@ -169178,7 +169053,7 @@ ahy
 amq
 aeR
 aeK
-cin
+ahY
 aik
 afL
 ajC
@@ -171245,7 +171120,7 @@ akt
 akt
 akt
 uNw
-amd
+amc
 aia
 ahq
 alx
@@ -172266,7 +172141,7 @@ ahY
 ait
 ajA
 ahY
-cin
+ahY
 wHE
 akx
 akH

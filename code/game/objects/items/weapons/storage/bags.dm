@@ -133,6 +133,10 @@
 	can_hold = list() // any
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
 
+
+/obj/item/weapon/storage/bag/plasticbag/coal
+	startswith = list(/obj/item/weapon/ore/coal = 7)
+
 // -----------------------------
 //        Mining Satchel
 // -----------------------------
