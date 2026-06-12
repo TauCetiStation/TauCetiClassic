@@ -89,3 +89,5 @@ var/global/list/mechtoys = list(
 	name = "asteroid lians"
 	icon_state = "space_lians"
 	flags = NODECONSTRUCT
+
+	max_integrity = 5
