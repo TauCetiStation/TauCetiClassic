@@ -1361,4 +1361,4 @@
 	if(traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
 		to_chat(src, "<span class='danger'>I'm in so much pain! I can't get up!</span>")
 		return FALSE
-	. = ..()
+	return ..()
