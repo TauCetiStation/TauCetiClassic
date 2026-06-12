@@ -193,7 +193,7 @@
 	icon_state = "pbag"
 	my_icon_state = "pbag"
 	pixel_y = 0
-	get_up(TRUE)
+	get_up(has_do_after_delay = FALSE)
 
 /mob/living/pbag/verb/user_hang()
 	set name = "Hang Bag"

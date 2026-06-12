@@ -141,7 +141,7 @@
 /obj/structure/stool/bed/roller/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
 		if(M.crawling)
-			M.get_up(TRUE)
+			M.get_up(has_do_after_delay = FALSE, look_at_intent = FALSE)
 			M.layer = 4.0
 		density = TRUE
 		icon_state = "up"

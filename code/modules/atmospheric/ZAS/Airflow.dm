@@ -218,10 +218,10 @@ Contains helper procs for airflow, handled in /connection_group.
 
 	if(airflow_speed > 10)
 		var/airflow_paralysis = round(airflow_speed * vsc.airflow_stun)
-		apply_status_effect(/datum/status_effect/force_crawl, airflow_paralysis SECONDS)
+		Paralyse(airflow_paralysis)
+		Stun(airflow_paralysis + 3)
 	else
-		Stun(round(airflow_speed * vsc.airflow_stun / 4))
-		apply_status_effect(/datum/status_effect/force_crawl, vsc.airflow_stun SECONDS)
+		Stun(round(airflow_speed * vsc.airflow_stun / 2))
 	..()
 
 /zone/proc/movables()

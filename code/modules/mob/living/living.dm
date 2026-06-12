@@ -1051,28 +1051,35 @@
 		return
 	lay_down()
 
-/mob/living/proc/lay_down()
-	if(crawling)
-		return
+/mob/living/proc/lay_down(change_crawling_intent = TRUE)
+	if(change_crawling_intent)
+		crawling_intent = CRAWL_INTENT_CRAWLING
 	if(!crawl_can_use())
 		to_chat(src, "<span class='notice'>You can't crawl here!</span>")
+		return
+	if(crawling)
 		return
 	SetCrawling(TRUE)
 	update_canmove()
 	to_chat(src, "<span class='notice'>You are now crawling.</span>")
 	return
 
-/mob/living/proc/get_up(ignore_do_after, do_after_can_move = FALSE)
-	if(!is_can_get_up(ignore_do_after, do_after_can_move))
+/mob/living/proc/get_up(has_do_after_delay = TRUE, do_after_can_move = FALSE, look_at_intent = TRUE, change_crawling_intent = TRUE)
+	if(change_crawling_intent)
+		crawling_intent = CRAWL_INTENT_STANDING
+	if(!is_can_get_up(has_do_after_delay, do_after_can_move, look_at_intent))
 		return
 	SetCrawling(FALSE)
 	update_canmove()
 	to_chat(src, "<span class='notice'>You are now getting up.</span>")
 
-/mob/living/proc/is_can_get_up(ignore_do_after = FALSE, do_after_can_move = FALSE)
+
+/mob/living/proc/is_can_get_up(has_do_after_delay = TRUE, do_after_can_move = FALSE, look_at_intent = TRUE)
 	if(!crawling)
 		return FALSE
 	if(has_status_effect(/datum/status_effect/force_crawl))
+		return FALSE
+	if(look_at_intent && (crawling_intent == CRAWL_INTENT_CRAWLING))
 		return FALSE
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
@@ -1082,7 +1089,7 @@
 	if(!has_bodypart(BP_L_LEG) && !has_bodypart(BP_L_LEG))
 		to_chat(src, "<span class='danger'>WAIT, where are the legs?</span>")
 		return FALSE
-	if(!ignore_do_after)
+	if(has_do_after_delay)
 		if(!do_after(src, 1 SECOND, target = src, can_move = do_after_can_move))
 			return FALSE
 	if(!crawl_can_use())
@@ -1096,6 +1103,7 @@
 		Stun(1)
 		to_chat(src, "<span class='danger'>Ouch!</span>")
 		return FALSE
+	layer = 4.0
 	return TRUE
 
 //called when the mob receives a bright flash

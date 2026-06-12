@@ -24,3 +24,6 @@
 #define LIGHT_DAMAGE_TAKEN 10
 
 #define HUMAN_DEFAULT_SKIN_TONE /datum/skin_tone/albino::name
+
+#define CRAWL_INTENT_STANDING 0
+#define CRAWL_INTENT_CRAWLING 1

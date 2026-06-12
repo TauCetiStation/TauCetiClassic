@@ -17,12 +17,12 @@
 
 /datum/status_effect/force_crawl/on_apply()
 	. = ..()
-	owner.lay_down()
+	owner.lay_down(change_crawling_intent = FALSE)
 	owner.drop_l_hand()
 	owner.drop_r_hand()
 
 /datum/status_effect/force_crawl/on_remove()
-	owner.get_up(FALSE, TRUE)
+	owner.get_up(do_after_can_move = TRUE, change_crawling_intent = FALSE)
 	return ..()
 
 //STUN EFFECTS

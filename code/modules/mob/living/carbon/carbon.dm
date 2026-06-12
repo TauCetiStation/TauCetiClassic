@@ -625,7 +625,7 @@
 				AdjustSleeping(-10 SECONDS)
 				if (!M.lying)
 					if((!IsSleeping()) || ((src.crawling) && (crawl_can_use())))
-						get_up(TRUE)
+						get_up(has_do_after_delay = FALSE)
 					M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
 				else
