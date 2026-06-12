@@ -1098,7 +1098,6 @@
 		return FALSE
 	if(has_do_after_delay)
 		if(!do_after(src, 1 SECOND, target = src, can_move = do_after_can_move))
-			to_chat(world, "05")
 			return FALSE
 	return TRUE
 
