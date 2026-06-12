@@ -38359,9 +38359,6 @@
 	pixel_x = 7;
 	pixel_y = 10
 	},
-/obj/structure/sign/painting{
-	pixel_x = -30
-	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
 "bpT" = (
@@ -55728,9 +55725,6 @@
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/structure/sign/painting{
-	pixel_y = 30
-	},
 /obj/structure/table/woodentable,
 /obj/item/jar/candy{
 	pixel_x = 6;
@@ -55739,6 +55733,9 @@
 /obj/item/weapon/flora/deskleaf{
 	pixel_x = -8;
 	pixel_y = 2
+	},
+/obj/item/portrait/captain{
+	pixel_y = 32
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood17"
@@ -55899,12 +55896,12 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "bWV" = (
-/obj/structure/sign/painting{
-	pixel_y = 30
-	},
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line";
 	dir = 1
+	},
+/obj/item/portrait{
+	pixel_y = 32
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood17"
@@ -67477,9 +67474,6 @@
 /obj/structure/stool/bed/psych,
 /obj/item/weapon/bedsheet/psych,
 /obj/item/toy/plushie/tuxedo_cat,
-/obj/structure/sign/painting{
-	pixel_x = 30
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
@@ -69141,17 +69135,6 @@
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
-"cKK" = (
-/obj/effect/decal/turf_decal/wood/dark{
-	icon_state = "siding_wood_line"
-	},
-/obj/structure/sign/painting{
-	pixel_y = -30
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wood17"
-	},
-/area/station/medical/psych)
 "cKM" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
 /turf/simulated/floor,
@@ -85460,6 +85443,13 @@
 /obj/item/clothing/suit/straight_jacket,
 /obj/structure/closet/secure_closet/psycho,
 /obj/item/device/taperecorder,
+/obj/item/canvas,
+/obj/item/canvas,
+/obj/item/canvas,
+/obj/item/weapon/storage/fancy/crayons,
+/obj/item/painting_frame,
+/obj/item/painting_frame,
+/obj/item/painting_frame,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -130676,7 +130666,7 @@ bVy
 bdk
 bEt
 bEt
-cKK
+dKw
 cJT
 bBy
 cGq
