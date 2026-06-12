@@ -63,7 +63,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		new_credits_per_kwh = round(new_credits_per_kwh * (rand(8, 12) / 10))
 
 	terminal.master = src
-	connect_to_network()
+	try_connect()
 
 /obj/machinery/power/meter/Destroy()
 	if(terminal)
@@ -157,6 +157,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		if(terminal)
 			to_chat(user, "<span class='notice'>Cut terminal first!</span>")
 			return
+		if(user.is_busy()) return
+		var/obj/item/weapon/weldingtool/W = I
+		if(!W.use(0,user))
+			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
+			return
+		to_chat(user, "You start slicing the brackets of the [src].")
 		if(I.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
 			if(anchored)
 				anchored = FALSE
@@ -186,8 +192,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 			return
 		terminal.master = src
 		stat &= ~BROKEN
-		connect_to_network()
-		update_icon()
+		try_connect()
 		return
 
 	// building and linking a terminal
@@ -233,7 +238,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 			// build the terminal and link it to the network
 			make_terminal(T)
-			terminal.connect_to_network()
 		return
 
 	// disassembling the terminal
@@ -264,6 +268,25 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 
 	return ..()
 
+/obj/machinery/power/meter/proc/try_connect()
+	if(!can_operate())
+		stat |= BROKEN
+		return
+
+	for(var/obj/machinery/power/meter/M in (powernet.nodes - src))
+		stat |= BROKEN
+		return
+
+	for(var/obj/machinery/power/terminal/Term in powernet.nodes)
+		if(Term.master && istype(Term.master, /obj/machinery/power/meter))
+			stat |= BROKEN
+			return
+
+	terminal.connect_to_network()
+	connect_to_network()
+
+	update_icon()
+
 // create a terminal object pointing towards the SMES
 // wires will attach to this
 /obj/machinery/power/meter/make_terminal(turf/T)
@@ -287,23 +310,16 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/power/meter, power_meters)
 		return FALSE
 
 	if(!terminal)
+		stat |= BROKEN
 		return FALSE
 
 	if(!powernet || !terminal.powernet)
+		stat |= BROKEN
 		return FALSE
 
 	if(powernet == terminal.powernet)
 		stat |= BROKEN
 		return FALSE
-
-	for(var/obj/machinery/power/meter/M in (powernet.nodes - src))
-		stat |= BROKEN
-		return FALSE
-
-	for(var/obj/machinery/power/terminal/Term in powernet.nodes)
-		if(Term.master && istype(Term.master, /obj/machinery/power/meter))
-			stat |= BROKEN
-			return FALSE
 
 	return paid
 
