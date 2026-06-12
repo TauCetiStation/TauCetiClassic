@@ -1069,6 +1069,18 @@
 		crawling_intent = CRAWL_INTENT_STANDING
 	if(!is_can_get_up(has_do_after_delay, do_after_can_move, look_at_intent))
 		return
+	if(!crawl_can_use())
+		playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
+		else
+			take_overall_damage(5, used_weapon = "Table")
+		Stun(1)
+		to_chat(src, "<span class='danger'>Ouch!</span>")
+		return
+	layer = 4.0
 	SetCrawling(FALSE)
 	update_canmove()
 	to_chat(src, "<span class='notice'>You are now getting up.</span>")
@@ -1081,29 +1093,13 @@
 		return FALSE
 	if(look_at_intent && (crawling_intent == CRAWL_INTENT_CRAWLING))
 		return FALSE
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		if(C.traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
-			to_chat(C, "<span class='danger'>I'm in so much pain! I can't get up!</span>")
-			return FALSE
 	if(!has_bodypart(BP_L_LEG) && !has_bodypart(BP_L_LEG))
 		to_chat(src, "<span class='danger'>WAIT, where are the legs?</span>")
 		return FALSE
 	if(has_do_after_delay)
 		if(!do_after(src, 1 SECOND, target = src, can_move = do_after_can_move))
+			to_chat(world, "05")
 			return FALSE
-	if(!crawl_can_use())
-		playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-			BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
-		else
-			take_overall_damage(5, used_weapon = "Table")
-		Stun(1)
-		to_chat(src, "<span class='danger'>Ouch!</span>")
-		return FALSE
-	layer = 4.0
 	return TRUE
 
 //called when the mob receives a bright flash
