@@ -33722,8 +33722,8 @@
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/toy/plushie/tuxedo_cat,
 /obj/structure/closet/secure_closet/psycho,
-/turf/simulated/floor/wood{
-	icon_state = "wood14"
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
 	},
 /area/station/medical/psych)
 "bhn" = (
@@ -77272,8 +77272,8 @@
 /area/shuttle/supply/station)
 "jYw" = (
 /obj/structure/curtain/black,
-/turf/simulated/floor/wood{
-	icon_state = "wood14"
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
 	},
 /area/station/medical/psych)
 "jYz" = (
@@ -82015,8 +82015,8 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wood14"
+/turf/simulated/floor{
+	icon_state = "showroomfloor"
 	},
 /area/station/medical/psych)
 "oEd" = (
