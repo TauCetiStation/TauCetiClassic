@@ -885,7 +885,7 @@
 /datum/reagent/lipozine
 	name = "Lipozine" // The anti-nutriment.
 	id = "lipozine"
-	description = "A chemical compound that causes a powerful fat-burning reaction."
+	description = "A chemical compound that causes an accelerated fat-burning reaction."
 	reagent_state = LIQUID
 	nutriment_factor = 10 * REAGENTS_METABOLISM
 	color = "#bbeda4" // rgb: 187, 237, 164
@@ -897,7 +897,7 @@
 		return
 
 	M.nutrition = max(M.nutrition - nutriment_factor, 0)
-	M.overeatduration = 0
+	M.overeatduration -= 16
 
 /datum/reagent/stimulants
 	name = "Stimulants"
