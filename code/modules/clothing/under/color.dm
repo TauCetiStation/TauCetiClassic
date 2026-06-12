@@ -3,13 +3,14 @@
 	name = "polychromic jumpsuit"
 	desc = "A jumpsuit with custom coloring."
 	icon = 'icons/mob/uniform_poly.dmi'
-	icon_state = "w_std"
+	icon_state = "world_base_standard"
 	item_state = "white"
 	flags = ONESIZEFITSALL|HEAR_TALK
-	poly = TRUE
-	poly_style = "std"
-	poly_pattern = null
 	poly_colors = list("#ffffff", "#ffffff")
+
+/obj/item/clothing/under/color/polychromic/atom_init()
+	poly_style = global.poly_styles_by_key[POLY_STYLE_STD]
+	. = ..()
 
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
