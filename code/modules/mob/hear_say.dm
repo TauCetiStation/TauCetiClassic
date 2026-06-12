@@ -107,14 +107,15 @@
 				H.remove_language(L.name)
 
 	if(!(sdisabilities & DEAF) && !ear_deaf)
+		var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 		if((HAS_TRAIT(speaker, TRAIT_MELODIUS_VOICE) || speech_sound) && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			if(HAS_TRAIT(speaker, TRAIT_MELODIUS_VOICE) && ishuman(speaker))
 				var/mob/living/carbon/human/H = speaker
 				var/sounds = clamp(round(length_char(not_processed_message)/3), 1, 5)
-				play_instrumental_voice(H, sounds)
+				play_instrumental_voice(H, sounds, source)
 
 			else
-				playsound_local(speaker, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
+				playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
 
 	. = TRUE
 
@@ -133,7 +134,7 @@
 	var/mob/living/carbon/human/H = speaker
 	H.handle_socialization(src)
 
-/mob/proc/play_instrumental_voice(mob/living/carbon/human/H, repeats = 1)
+/mob/proc/play_instrumental_voice(mob/living/carbon/human/H, repeats = 1, turf/source)
 	if(!repeats)
 		return
 	var/instrumental_sound = H.get_instrumental_voice()
@@ -142,13 +143,13 @@
 
 /mob/living/carbon/human/proc/get_instrumental_voice()
 	var/static/list/sound_by_gender_species = list(
-		"[TAJARAN][FEMALE]" = global.tajaran_female_voices,
-		"[TAJARAN][MALE]" = global.tajaran_male_voices,
-		"[SKRELL][FEMALE]" = global.skrell_female_voices,
-		"[SKRELL][MALE]" = global.skrell_male_voices,
-		"[UNATHI][FEMALE]" = global.unathi_female_voices,
-		"[UNATHI][MALE]" = global.unathi_male_voices,
-		"[DIONA][NEUTER]" = global.diona_voices,
+		"[TAJARAN][FEMALE]" = global.SOUNDIN_TAJARAN_FEMALE_VOICES,
+		"[TAJARAN][MALE]" = global.SOUNDIN_TAJARAN_MALE_VOICES,
+		"[SKRELL][FEMALE]" = global.SOUNDIN_SKRELL_FEMALE_VOICES,
+		"[SKRELL][MALE]" = global.SOUNDIN_SKRELL_MALE_VOICES,
+		"[UNATHI][FEMALE]" = global.SOUNDIN_UNATHI_FEMALE_VOICES,
+		"[UNATHI][MALE]" = global.SOUNDIN_UNATHI_MALE_VOICES,
+		"[DIONA][NEUTER]" = global.SOUNDIN_DIONA_VOICES,
 	)
 
 	var/hash = "[get_species()][gender]"
@@ -156,8 +157,8 @@
 	if(sound_by_gender_species[hash])
 		return pick(sound_by_gender_species[hash])
 	if(istype(species, /datum/species/machine))
-		return get_sound_by_voice(src, global.ipc_male_voices, global.ipc_female_voices)
-	return get_sound_by_voice(src, global.human_male_voices, global.human_female_voices)
+		return get_sound_by_voice(src, global.SOUNDIN_IPC_MALE_VOICES, global.SOUNDIN_IPC_FEMALE_VOICES)
+	return get_sound_by_voice(src, global.SOUNDIN_HUMAN_MALE_VOICES, global.SOUNDIN_HUMAN_FEMALE_VOICES)
 
 /mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 
