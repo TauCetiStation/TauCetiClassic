@@ -47,7 +47,7 @@
 		user.put_in_hands(cell)
 
 		cell.add_fingerprint(user)
-		cell.updateicon()
+		cell.update_icon()
 
 		cell = null
 		toggle(FALSE)
