@@ -49,6 +49,7 @@
 	M.mind.original = M
 	M.mind.assigned_role = "MODE"
 	M.mind.special_role = "Response Team"
+	M.mind.is_ert_leader = is_leader
 	if(!(M.mind in SSticker.minds))
 		SSticker.minds += M.mind//Adds them to regular mind list.
 	M.loc = get_turf(spawnloc)

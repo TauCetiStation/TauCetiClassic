@@ -176,6 +176,10 @@
 
 	. = ..()
 
+	if(!(get_species() in list(DIONA, PODMAN)))
+		add_language(LANGUAGE_MONKEY)
+		default_language = LANGUAGE_MONKEY
+
 	monkey_list += src
 	update_icons()
 
@@ -298,6 +302,9 @@
 
 	if(speak_emote.len)
 		verb = pick(speak_emote)
+
+	if(!speaking && default_language)
+		speaking = all_languages[default_language]
 
 	message = capitalize(trim_left(message))
 

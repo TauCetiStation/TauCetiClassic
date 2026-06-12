@@ -243,12 +243,15 @@
 	return FALSE
 
 /obj/item/clothing/mask/facehugger/proc/unequip_head(obj/item/clothing/I, mob/living/carbon/C)
-	var/obj/item/clothing/head/helmet/space/rig/R = I
-	if(istype(R) && !R.canremove)	//if the helmet is attached to the rig, facehugger will not be able to remove it
-		R.canremove = TRUE
-	if(C.unEquip(I))
-		return TRUE
-	return FALSE
+	if(ishardhelmet(I) && ishuman(C))
+		var/mob/living/carbon/human/H = C
+		var/obj/item/clothing/head/helmet/space/rig/helmet = I
+		var/obj/item/clothing/suit/space/rig/rig = helmet.rig_connect
+		rig.move_helmet(H)
+	else
+		C.unEquip(I)
+
+	return TRUE
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/carbon/C)
 	if(!CanHug(C, FALSE))
@@ -321,6 +324,9 @@
 			new_embryo.baby = new_xeno
 			new_embryo.controlled_by_ai = FALSE
 			new_xeno.key = FH.key
+			var/datum/action/embryo_kick/kick_action = new(new_embryo)
+			new_embryo.kick_action_ref = WEAKREF(kick_action)
+			kick_action.Grant(new_xeno)
 			qdel(current_hugger)
 		target.unEquip(src)
 		target.add_status_flags(XENO_HOST)

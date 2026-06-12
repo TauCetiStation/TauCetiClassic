@@ -40,16 +40,22 @@ var/global/can_call_ert
 	if(SSticker.ert_call_in_progress)
 		to_chat(usr, "<span class='warning'>Центральное Командование уже отправило отряд быстрого реагирования!</span>")
 		return
-	if(tgui_alert(usr, "Вы хотите отправить отряд быстрого реагирования?",, list("Да","Нет")) != "Да")
+	var/yesno = tgui_alert(usr, "Вы хотите отправить отряд быстрого реагирования?",, list("Да","Нет","Отказать в ОБР"))
+	if(yesno == "Нет")
 		return
-	if(code_name_eng[security_level] != "red") // Allow admins to reconsider if the alert level isn't Red
+	if(yesno == "Отказать в ОБР")
+		var/datum/announcement/centcomm/noert/announcement = new
+		announcement.play()
+		return
+	if(yesno == "Да")
+		if(code_name_eng[security_level] != "red") // Allow admins to reconsider if the alert level isn't Red
 
-		if(tgui_alert(usr, "На станции не введён красный код. Вы всё ещё хотите отправить отряд быстрого реагирования?",, list("Да","Нет")) != "Да")
+			if(tgui_alert(usr, "На станции не введён красный код. Вы всё ещё хотите отправить отряд быстрого реагирования?",, list("Да","Нет")) != "Да")
+				return
+
+		if(SSticker.ert_call_in_progress)
+			to_chat(usr, "<span class='warning'>Похоже, кто-то уже опередил вас!</span>")
 			return
-
-	if(SSticker.ert_call_in_progress)
-		to_chat(usr, "<span class='warning'>Похоже, кто-то уже опередил вас!</span>")
-		return
 
 	message_admins("[key_name_admin(usr)] is dispatching an Emergency Response Team.")
 	log_admin("[key_name(usr)] used Dispatch Response Team with objective.")

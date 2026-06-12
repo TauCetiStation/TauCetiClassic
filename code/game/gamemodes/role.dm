@@ -48,14 +48,14 @@
 	var/moveset_type
 
 // Initializes the role. Adds the mind to the parent role, adds the mind to the faction, and informs the gamemode the mind is in a role.
-/datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE)
+/datum/role/New(datum/mind/M, datum/faction/fac, override = FALSE, laterole = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	AssignToFaction(fac)
-
-	if(M && !AssignToRole(M, override))
+	if(M && !AssignToRole(M, override, laterole = laterole))
 		Drop()
 		return
+
+	AssignToFaction(fac)
 
 	objectives.owner = M
 	..()
@@ -124,14 +124,13 @@
 
 // Drops the antag mind from the parent role, informs the gamemode the mind now doesn't have a role, and deletes the role datum.
 /datum/role/proc/Drop(msg_admins = TRUE)
-	if(antag)
-		RemoveFromRole(antag, msg_admins)
-
 	if(faction && (src in faction.members))
 		faction.remove_role(src)
 
 	if(!faction)
 		SSticker.mode.orphaned_roles.Remove(src)
+
+	RemoveFromRole(antag, msg_admins)
 
 	qdel(src)
 

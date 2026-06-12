@@ -9,6 +9,8 @@
 	var/image/lot_lock_image
 	var/mutable_appearance/texture_overlay
 	var/mutable_appearance/details
+	var/datum/package_wrap/wrap
+
 	flags = NOBLUDGEON
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -28,6 +30,12 @@
 	if(lot_number)
 		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
 		qdel(Lot)
+
+	var/turf/T = get_turf(src)
+	if(T)
+		var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(T, /particles/package_wrap, PARTICLE_FADEOUT|PARTICLE_FLICK)
+		Holder.modify_particles_value("color", color ? color : (wrap.pieces_color ? pickweight(wrap.pieces_color) : "#ffffff"))
+
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
@@ -65,23 +73,23 @@
 		var/obj/item/toy/crayon/Crayon = W
 		color = Crayon.colour
 
-/obj/structure/bigDelivery/proc/add_texture(new_texture, new_details = null)
+/obj/structure/bigDelivery/proc/add_texture(wrap_type)
+	wrap = global.package_wrap_by_type[wrap_type]
 	cut_overlay(texture_overlay)
 
-	if(new_texture)
-		texture_overlay = mutable_appearance(icon = icon, icon_state = new_texture)
+	if(wrap.texture)
+		texture_overlay = mutable_appearance(icon = icon, icon_state = wrap.texture)
 		texture_overlay.blend_mode = BLEND_MULTIPLY
 		texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
 
-	add_overlay(texture_overlay)
-
+		add_overlay(texture_overlay)
 
 	cut_overlay(details)
 
-	if(new_details)
-		details = mutable_appearance(icon = icon, icon_state = new_details)
+	if(wrap.details)
+		details = mutable_appearance(icon = icon, icon_state = wrap.details)
 
-	add_overlay(details)
+		add_overlay(details)
 
 /obj/item/smallDelivery
 	desc = "A small wrapped package."
@@ -94,6 +102,7 @@
 	var/texture_name = "cardboard"
 	var/mutable_appearance/texture_overlay
 	var/mutable_appearance/details
+	var/datum/package_wrap/wrap
 
 	max_integrity = 5
 	damage_deflection = 0
@@ -105,12 +114,21 @@
 			AM.add_fingerprint(user)
 		else
 			AM.forceMove(src.loc)
+		if(isitem(AM))
+			var/obj/item/I = AM
+			I.on_found(user)
 
 /obj/item/smallDelivery/Destroy()
 	dump()
 	if(lot_number)
 		var/datum/shop_lot/Lot = global.online_shop_lots["[lot_number]"]
 		qdel(Lot)
+
+	var/turf/T = get_turf(src)
+	if(T)
+		var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(T, /particles/package_wrap, PARTICLE_FADEOUT|PARTICLE_FLICK)
+		Holder.modify_particles_value("color", color ? color : (wrap.pieces_color ? pickweight(wrap.pieces_color) : "#ffffff"))
+
 	return ..()
 
 /obj/item/smallDelivery/attack_self(mob/user)
@@ -152,23 +170,23 @@
 	else
 		return ..()
 
-/obj/item/smallDelivery/proc/add_texture(new_texture, new_details = null)
+/obj/item/smallDelivery/proc/add_texture(wrap_type)
+	wrap = global.package_wrap_by_type[wrap_type]
 	cut_overlay(texture_overlay)
 
-	if(new_texture)
-		texture_overlay = mutable_appearance(icon = icon, icon_state = new_texture)
+	if(wrap.texture)
+		texture_overlay = mutable_appearance(icon = icon, icon_state = wrap.texture)
 		texture_overlay.blend_mode = BLEND_MULTIPLY
 		texture_overlay.add_filter("alpha_mask", 1, alpha_mask_filter(icon = icon(icon, icon_state)))
 
-	add_overlay(texture_overlay)
-
+		add_overlay(texture_overlay)
 
 	cut_overlay(details)
 
-	if(new_details)
-		details = mutable_appearance(icon = icon, icon_state = new_details)
+	if(wrap.details)
+		details = mutable_appearance(icon = icon, icon_state = wrap.details)
 
-	add_overlay(details)
+		add_overlay(details)
 
 
 /obj/item/weapon/packageWrap
@@ -179,9 +197,7 @@
 	w_class = SIZE_SMALL
 	var/amount = 25.0
 
-	var/texture_name = "cardboard"
-	var/details_name = null
-
+	var/package_wrap_type = /datum/package_wrap/cardboard
 
 /obj/item/weapon/packageWrap/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity) return
@@ -209,7 +225,7 @@
 		var/obj/item/I = target
 		if (src.amount > 1)
 			I.add_fingerprint(usr)
-			I = I.try_wrap_up(texture_name, details_name)
+			I = I.try_wrap_up(package_wrap_type)
 			if(!I)
 				return
 			if(!istype(I.loc, /turf))
@@ -222,7 +238,7 @@
 	else if (istype(O, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/C = target
 		if (src.amount > 3 && !C.opened)
-			if(!C.try_wrap_up(texture_name, details_name))
+			if(!C.try_wrap_up(package_wrap_type))
 				return
 
 			src.amount -= 3
@@ -238,7 +254,7 @@
 			to_chat(user, "<span class='notice'>You cannot wrap a welded closet.</span>")
 			return
 		else if (!C.opened)
-			if(!C.try_wrap_up(texture_name, details_name))
+			if(!C.try_wrap_up(package_wrap_type))
 				return
 
 			src.amount -= 3
@@ -263,7 +279,7 @@
 		to_chat(user, "[target] не даёт себя упаковать.")
 		return
 
-	if(!H.try_wrap_up(texture_name, details_name))
+	if(!H.try_wrap_up(package_wrap_type))
 		return
 
 	src.amount -= 3
@@ -286,8 +302,8 @@
 	cases = list("подарочная бумага", "подарочной бумаги", "подарочной бумаге", "подарочную бумагу", "подарочной бумагой", "подарочной бумаге")
 	icon_state = "wrap_paper"
 
-	texture_name = "present"
-	details_name = "bow"
+	package_wrap_type = /datum/package_wrap/present
+
 
 /obj/item/device/tagger
 	name = "tagger"

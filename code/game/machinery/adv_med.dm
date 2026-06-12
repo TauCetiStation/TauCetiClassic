@@ -219,20 +219,9 @@
 			organData["broken"] = E.min_broken_damage
 			organData["stump"] = E.is_stump
 
-			var/list/implantData = list()
-			var/has_unknown_implant = FALSE
-			for(var/obj/item/weapon/implant/I in E.embedded_objects)
-				var/list/implantSubData = list()
-				implantSubData["name"] = C_CASE(I, NOMINATIVE_CASE)
-
-				if(!is_known_implant(I))
-					has_unknown_implant = TRUE
-					implantSubData["name"] = null
-
-				implantData.Add(list(implantSubData))
-
-			organData["implant"] = implantData
-			organData["unknown_implant"] = has_unknown_implant
+			var/list/embed_info = get_embedded_data(E)
+			organData["embedded"] = embed_info["items"]
+			organData["has_foreign"] = embed_info["has_foreign"]
 
 			var/list/organStatus = list()
 			if(E.status & ORGAN_BROKEN)
@@ -288,11 +277,43 @@
 		occupantData["nearsighted"] = HAS_TRAIT(occupant, TRAIT_NEARSIGHT)
 
 	data["occupant"] = occupantData
+	data["canPopout"] = hasHUD(user, "medical")
 
 	return data
 
 /obj/machinery/body_scanconsole/proc/is_known_implant(obj/item/weapon/implant/I)
 	return I.legal
+
+/obj/machinery/body_scanconsole/proc/get_embedded_data(obj/item/organ/external/BP)
+	var/list/items = list()
+	var/has_foreign = FALSE
+
+	for(var/obj/I in BP.embedded_objects)
+		var/list/entry = list()
+
+		if(istype(I, /obj/item/weapon/implant))
+			if(is_known_implant(I))
+				entry["type"] = "implant"
+				entry["name"] = C_CASE(I, NOMINATIVE_CASE)
+			else
+				entry["type"] = "implant_unknown"
+				entry["name"] = null
+				has_foreign = TRUE
+		else
+			entry["type"] = "foreign"
+			entry["name"] = C_CASE(I, NOMINATIVE_CASE)
+			has_foreign = TRUE
+
+		items.Add(list(entry))
+
+	if(BP.hidden)
+		var/list/entry = list()
+		entry["type"] = "foreign"
+		entry["name"] = C_CASE(BP.hidden, NOMINATIVE_CASE)
+		items.Add(list(entry))
+		has_foreign = TRUE
+
+	return list("items" = items, "has_foreign" = has_foreign)
 
 /obj/machinery/body_scanconsole/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
 	. = ..()
@@ -304,6 +325,8 @@
 			connected.eject()
 		if("print_p")
 			print_scan()
+		if("popout_scan")
+			popout_scan()
 
 	return TRUE
 
@@ -407,14 +430,20 @@
 		if(BP.germ_level >= INFECTION_LEVEL_ONE)
 			infected = "[get_germ_level_name(BP.germ_level)]:"
 
-		var/unknown_body = 0
-		for(var/obj/item/weapon/implant/I in BP.embedded_objects)
-			if(is_known_implant(I))
-				imp += "[I] имплантирован:"
-			else
-				unknown_body++
-		if(unknown_body || BP.hidden)
-			imp += "Обнаружен инородный предмет:"
+		var/list/embed_info = get_embedded_data(BP)
+		var/list/foreign_names = list()
+		for(var/list/entry in embed_info["items"])
+			switch(entry["type"])
+				if("implant")
+					imp += "[entry["name"]] имплантирован:"
+				if("implant_unknown")
+					imp += "Неизвестный имплант:"
+				if("foreign")
+					var/name = entry["name"]
+					foreign_names[name] = (foreign_names[name] || 0) + 1
+		for(var/name in foreign_names)
+			var/count = foreign_names[name]
+			imp += count > 1 ? "[name] x[count]:" : "[name]:"
 
 		if(!AN && !open && !infected && !imp)
 			AN = "Не обнаружено:"
@@ -465,6 +494,52 @@
 		dat += "Обнаружено смещение сетчатки.<BR>"
 
 	return dat
+
+/obj/machinery/body_scanconsole/proc/popout_scan()
+	if(!do_skill_checks(usr))
+		return
+
+	if(!connected || !connected.occupant || !hasHUD(usr, "medical"))
+		return
+
+	new /datum/body_scanconsole_tguidataholder(usr, tgui_data())
+
+/datum/body_scanconsole_tguidataholder
+	var/list/saved_tgui_data
+
+/datum/body_scanconsole_tguidataholder/New(mob/user, list/data)
+	. = ..()
+	saved_tgui_data = data
+	saved_tgui_data["isPopout"] = TRUE
+	tgui_interact(user)
+
+/datum/body_scanconsole_tguidataholder/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BodyScanner", "Результаты сканирования [saved_tgui_data["occupant"]["name"]]", 690, 600)
+		ui.open()
+
+/datum/body_scanconsole_tguidataholder/tgui_static_data(mob/user)
+	return saved_tgui_data
+
+/datum/body_scanconsole_tguidataholder/tgui_state(mob/user)
+	return global.conscious_state
+
+/datum/body_scanconsole_tguidataholder/tgui_status(mob/user, datum/tgui_state/state)
+	. = ..()
+	if(. < UI_DISABLED)
+		return
+
+	if(!hasHUD(user, "medical"))
+		return UI_CLOSE
+	return UI_INTERACTIVE
+
+/datum/body_scanconsole_tguidataholder/tgui_close(mob/user)
+	qdel(src)
+
+/datum/body_scanconsole_tguidataholder/Destroy(force, ...)
+	SStgui.close_uis(src)
+	. = ..()
 
 /obj/machinery/body_scanconsole/vox/is_known_implant(obj/item/weapon/implant/I)
 	return istype(I, /obj/item/weapon/implant/cortical)
