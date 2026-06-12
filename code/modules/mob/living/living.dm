@@ -1052,7 +1052,7 @@
 	lay_down()
 
 /mob/living/proc/lay_down(change_crawling_intent = TRUE)
-	if(change_crawling_intent)
+	if(change_crawling_intent && crawl_can_use())
 		crawling_intent = CRAWL_INTENT_CRAWLING
 	if(!crawl_can_use())
 		to_chat(src, "<span class='notice'>You can't crawl here!</span>")
@@ -1065,7 +1065,7 @@
 	return
 
 /mob/living/proc/get_up(has_do_after_delay = TRUE, do_after_can_move = FALSE, look_at_intent = TRUE, change_crawling_intent = TRUE)
-	if(change_crawling_intent)
+	if(change_crawling_intent && crawl_can_use())
 		crawling_intent = CRAWL_INTENT_STANDING
 	if(!is_can_get_up(has_do_after_delay, do_after_can_move, look_at_intent))
 		return
