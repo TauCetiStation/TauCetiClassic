@@ -56214,6 +56214,7 @@
 /area/station/engineering/engine)
 "bYh" = (
 /obj/item/weapon/cigbutt,
+/obj/item/weapon/cigbutt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bYi" = (
