@@ -897,7 +897,7 @@
 		return
 
 	M.nutrition = max(M.nutrition - nutriment_factor, 0)
-	M.overeatduration -= 16
+	M.overeatduration = max(M.overeatduration - 16, 0)
 
 /datum/reagent/stimulants
 	name = "Stimulants"
