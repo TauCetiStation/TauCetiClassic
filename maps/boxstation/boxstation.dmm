@@ -55038,8 +55038,8 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/obj/item/weapon/flora/random,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/structure/coatrack,
 /turf/simulated/floor/wood{
 	icon_state = "wood17"
 	},
@@ -78585,6 +78585,16 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"liL" = (
+/obj/machinery/door/firedoor,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "delivery"
+	},
+/obj/structure/ballot_box{
+	desc = "Урна для почты доверия."
+	},
+/turf/simulated/floor,
+/area/station/medical/hallway)
 "ljb" = (
 /obj/structure/sign/directions/security{
 	dir = 1;
@@ -129637,7 +129647,7 @@ bUF
 aSW
 bRs
 cEK
-cHZ
+liL
 bFo
 cLH
 cKy
