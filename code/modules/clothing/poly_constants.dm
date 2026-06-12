@@ -1,12 +1,6 @@
 // Polychromic jumpsuit system — shared constants used across clothing, prefs, and UI.
 // Style/pattern key #defines live in code/__DEFINES/clothing.dm (included before consumers).
-
-var/global/list/poly_style_display = list(
-	POLY_STYLE_JOB  = "Job Default",
-	POLY_STYLE_STD  = "Poly-Standard",
-	POLY_STYLE_BELT = "Poly-Belt",
-	POLY_STYLE_TURT = "Poly-Turtleneck"
-)
+// Per-style behavior lives in the /datum/poly_style datums (poly_styles.dm).
 
 var/global/list/poly_pattern_display = list(
 	"1"               = "Vey Med",
@@ -19,11 +13,9 @@ var/global/list/poly_pattern_display = list(
 
 var/global/list/poly_valid_styles = list(POLY_STYLE_JOB, POLY_STYLE_STD, POLY_STYLE_BELT, POLY_STYLE_TURT)
 
-// White-base styles support base color tinting (the "_w" greyscale sprites).
-var/global/list/poly_white_base_styles = list(POLY_STYLE_STD, POLY_STYLE_BELT, POLY_STYLE_TURT)
-
-/proc/is_poly_white_base(style)
-	return (style in poly_white_base_styles)
+/proc/is_poly_white_base(key)
+	var/datum/poly_style/S = global.poly_styles_by_key[key]
+	return S ? S.white_base : FALSE
 
 /proc/sanitize_poly_color(color, default = "#ffffff")
 	for(var/key in poly_color_palette)

@@ -127,7 +127,7 @@
 				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks ? socks_t[socks] : "None"]</a><br>"
 			. += "Backpack Type: <a href ='byond://?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
 			. += "Using skirt uniform: <a href ='byond://?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
-			. += "Jumpsuit Style: <a href='byond://?_src_=prefs;preference=jumpsuit_style;task=input'>[poly_style_display[jumpsuit_style] || jumpsuit_style]</a><br>"
+			. += "Jumpsuit Style: <a href='byond://?_src_=prefs;preference=jumpsuit_style;task=input'>[poly_style_name(jumpsuit_style)]</a><br>"
 			if(jumpsuit_style != POLY_STYLE_JOB)
 				. += "<table style='margin-left:8px;border-spacing:0 2px'>"
 				if(species != VOX)
@@ -498,11 +498,12 @@
 
 				if("jumpsuit_style")
 					// Vox has no belt/turt sprites, so offer them only the white-base styles.
-					var/list/style_choices = list()
-					for(var/key in poly_style_display)
+					var/list/style_choices = list("Job Default" = POLY_STYLE_JOB)
+					for(var/key in global.poly_styles_by_key)
 						if(species == VOX && (key == POLY_STYLE_BELT || key == POLY_STYLE_TURT))
 							continue
-						style_choices[poly_style_display[key]] = key
+						var/datum/poly_style/S = global.poly_styles_by_key[key]
+						style_choices[S.display_name] = key
 					var/choice = input(user, "Choose jumpsuit style:", "Character Preference") as null|anything in style_choices
 					if(choice)
 						jumpsuit_style = style_choices[choice]

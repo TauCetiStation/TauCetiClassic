@@ -98,7 +98,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/socks = 1						//socks type
 	var/backbag = 2						//backpack type
 	var/use_skirt = FALSE				//using skirt uniform version
-	var/jumpsuit_style = "job"			//polychromic jumpsuit style ("job" = use job default)
+	var/jumpsuit_style = POLY_STYLE_JOB	//polychromic jumpsuit style (POLY_STYLE_JOB = use job default)
 	var/jumpsuit_pattern = null			//polychromic jumpsuit pattern
 	var/jumpsuit_color = "#ffffff"		//polychromic jumpsuit accent color
 	var/jumpsuit_base_color = "#ffffff"	//polychromic jumpsuit base color (for white-base styles)
@@ -560,13 +560,14 @@ var/global/list/datum/preferences/preferences_datums = list()
 		popup.set_content(dat)
 		popup.open()
 
-/datum/preferences/proc/spawn_custom_jumpsuit(atom/location)
-	if(!jumpsuit_style || jumpsuit_style == POLY_STYLE_JOB)
+/datum/preferences/proc/spawn_custom_jumpsuit()
+	var/datum/poly_style/style = global.poly_styles_by_key[jumpsuit_style]
+	if(!style)                                  // "job" or unset = no polychromic jumpsuit
 		return null
-	var/obj/item/clothing/under/color/polychromic/J = new(location)
-	J.poly_style = jumpsuit_style
-	J.poly_pattern = (jumpsuit_style == POLY_STYLE_TURT) ? POLY_PATTERN_TURT : jumpsuit_pattern
-	var/base_col = is_poly_white_base(jumpsuit_style) ? jumpsuit_base_color : "#ffffff"
+	var/obj/item/clothing/under/color/polychromic/J = new()
+	J.poly_style = style
+	J.poly_pattern = style.forced_pattern || jumpsuit_pattern
+	var/base_col = style.white_base ? jumpsuit_base_color : "#ffffff"
 	J.poly_colors = list(base_col, jumpsuit_color)
 	J.update_icon()
 	return J
