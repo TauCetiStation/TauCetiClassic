@@ -1180,19 +1180,13 @@ var/global/list/tourette_bad_words= list(
 			Weaken(1)
 
 	if(traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
-		if(!crawling)
-			addtimer(CALLBACK(src, PROC_REF(knockdown_by_pain)), 7.5 SECOND)
+		apply_status_effect(/datum/status_effect/force_crawl, 7.5 SECONDS)
 		if(prob(10))
 			to_chat(src, "<span class='danger'>[pick("You black out!", "You feel like you could die any moment now.", "You're about to lose consciousness.")]</span>")
 			AdjustSleeping(10)
 
 	if(prob(15) && message)
 		to_chat(src, message)
-
-/mob/living/carbon/human/proc/knockdown_by_pain()
-	if(crawling || traumatic_shock <= TRAUMATIC_SHOCK_CRITICAL)
-		return
-	apply_status_effect(/datum/status_effect/force_crawl, 3 SECONDS)
 
 #undef HUMAN_CRIT_MAX_OXYLOSS
 

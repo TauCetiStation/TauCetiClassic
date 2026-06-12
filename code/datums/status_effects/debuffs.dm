@@ -2,7 +2,7 @@
 
 /datum/status_effect/force_crawl
 	id = "force_crawl"
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/force_crawl
 
 /atom/movable/screen/alert/status_effect/force_crawl
