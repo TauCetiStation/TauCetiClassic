@@ -1,28 +1,28 @@
-import { filter, sortBy, map, uniqBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { classes } from 'common/react';
-import { createSearch } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { Button, ByondUi, Input, Section, Box, Stack } from '../components';
+import { sortBy } from 'es-toolkit';
+import { uniq } from 'es-toolkit/compat';
+import { useState } from 'react';
+import {
+  Box,
+  Button,
+  ByondUi,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+import { useBackend } from '../backend';
+import { NanoMap, type NanoMapStaticPayload } from '../components/NanoMap';
 import { Window } from '../layouts';
 
-import {
-  NanoMap,
-  NanoMapMarkerIcon,
-  NanoMapStaticPayload,
-} from '../components/NanoMap';
-
-const pauseEvent = (e: MouseEvent) => {
-  if (e.stopPropagation) {
-    e.stopPropagation();
-  }
-  if (e.preventDefault) {
-    e.preventDefault();
-  }
-  e.cancelBubble = true;
-  e.returnValue = false;
+function pauseEvent(
+  e: React.MouseEvent | React.PointerEvent | React.WheelEvent,
+) {
+  if (e.stopPropagation) e.stopPropagation();
+  if (e.preventDefault && e.cancelable) e.preventDefault();
   return false;
-};
+}
 
 type Data = {
   mapRef: string;
@@ -44,14 +44,14 @@ type CameraObject = {
  * active camera.
  */
 export const prevNextCamera = (
-  cameras: [CameraObject],
-  activeCamera: CameraObject
+  cameras: CameraObject[],
+  activeCamera: CameraObject,
 ) => {
   if (!activeCamera) {
     return [];
   }
   const index = cameras.findIndex(
-    (camera) => camera.name === activeCamera.name
+    (camera) => camera.name === activeCamera.name,
   );
   return [cameras[index - 1]?.name, cameras[index + 1]?.name];
 };
@@ -63,61 +63,52 @@ export const prevNextCamera = (
  */
 export const selectCameras = (
   cameras: CameraObject[],
-  searchText = '',
-  zLevel = undefined
-): [CameraObject] => {
-  const testSearch = createSearch(
-    searchText,
-    (camera: CameraObject) => camera.name
-  );
-  return flow([
-    // Null camera filter
-    filter((camera: CameraObject) => camera?.name),
-    // Optional search term
-    searchText && filter(testSearch),
-    // Optional zlevel filter
-    zLevel && filter((camera: CameraObject) => camera.z === zLevel),
-    // Slightly expensive, but way better than sorting in BYOND
-    sortBy((camera) => camera.name),
-  ])(cameras);
+  searchText?: string,
+  zLevel?: number,
+): CameraObject[] => {
+  let queriedCameras = cameras.filter((camera) => camera?.name);
+  if (searchText && searchText.trim() !== '') {
+    const testSearch = createSearch(
+      searchText,
+      (camera: CameraObject) => camera.name,
+    );
+    queriedCameras = queriedCameras.filter(testSearch);
+  }
+  if (zLevel !== undefined) {
+    queriedCameras = queriedCameras.filter(
+      (camera: CameraObject) => camera.z === zLevel,
+    );
+  }
+  return sortBy(queriedCameras, [(camera) => camera.name]);
 };
 
-export const CameraConsole = (_, context: any) => {
+export const CameraConsole = () => {
   Byond.winget('mapwindow.map', 'style').then((style) => {
     Byond.winset(mapRef, 'style', style);
   });
 
-  const [isMinimapShown, setMinimapShown] = useLocalState(
-    context,
-    'isMinimapShown',
-    false
-  );
-
-  const { act, data } = useBackend<Data>(context);
+  const { act, data } = useBackend<Data>();
   const { mapRef, activeCamera } = data;
   const cameras = selectCameras(data.cameras);
   const [prevCameraName, nextCameraName] = prevNextCamera(
     cameras,
-    activeCamera
+    activeCamera,
   );
 
   return (
-    <Window width={800} height={600}>
+    <Window width={890} height={600}>
       <Window.Content>
         <Stack fill>
-          <Stack.Item>
-            <CameraConsoleContent
-              isMinimapShown={isMinimapShown}
-              setMinimapShown={setMinimapShown}
-            />
+          <Stack.Item grow={2}>
+            <CameraConsoleContent />
           </Stack.Item>
-          <Stack.Item grow>
+          <Stack.Item grow={3}>
             <Stack vertical fill>
               <Stack.Item>
                 <Stack fill>
                   <Stack.Item grow mx="5px" mt="8px" mb="2px">
                     <b>Camera: </b>
-                    {(activeCamera && activeCamera.name) || '—'}
+                    {activeCamera?.name || '—'}
                   </Stack.Item>
                   <Stack.Item>
                     <Button
@@ -145,7 +136,6 @@ export const CameraConsole = (_, context: any) => {
               </Stack.Item>
               <Stack.Item grow>
                 <ByondUi
-                  updateProp={isMinimapShown} // For size updates
                   position="relative"
                   height="100%"
                   params={{
@@ -162,21 +152,24 @@ export const CameraConsole = (_, context: any) => {
   );
 };
 
-export const CameraConsoleContent = (_: any, context: any) => {
-  const { data } = useBackend<Data>(context);
+export const CameraConsoleContent = () => {
+  const { data } = useBackend<Data>();
 
-  const availableZLevels = flow([
-    map((camera: CameraObject) => camera.z),
-    uniqBy(),
-    sortBy(),
-  ])(data.cameras);
+  const availableZLevels = (() => {
+    const zLevels = data.cameras
+      .map((camera: CameraObject) => camera.z)
+      .filter((z) => z !== undefined);
+    return uniq(zLevels).toSorted();
+  })();
 
-  const [zLevel, setZLevel] = useLocalState<number>(
-    context,
-    'zLevel',
-    availableZLevels.at(0)
-  );
-  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+  const propZLevel = availableZLevels.at(0);
+
+  if (propZLevel === undefined) {
+    return <NoticeBox info>No cameras available.</NoticeBox>;
+  }
+
+  const [zLevel, setZLevel] = useState<number>(propZLevel);
+  const [searchText, setSearchText] = useState<string>('');
 
   const cameras = selectCameras(data.cameras, searchText, zLevel);
 
@@ -188,7 +181,7 @@ export const CameraConsoleContent = (_: any, context: any) => {
           cameras={cameras}
         />
       </Stack.Item>
-      <Stack.Item>
+      <Stack.Item grow>
         <CameraMinimapContent
           zLevel={zLevel}
           setZLevel={setZLevel}
@@ -200,16 +193,13 @@ export const CameraConsoleContent = (_: any, context: any) => {
   );
 };
 
-export const CameraMinimapContent = (
-  props: {
-    zLevel: number;
-    setZLevel: (_: number) => void;
-    availableZLevels: number[];
-    cameras: CameraObject[];
-  },
-  context: any
-) => {
-  const { act, data } = useBackend<Data>(context);
+export const CameraMinimapContent = (props: {
+  zLevel: number;
+  setZLevel: (_: number) => void;
+  availableZLevels: number[];
+  cameras: CameraObject[];
+}) => {
+  const { act, data } = useBackend<Data>();
   const { activeCamera, nanomapPayload } = data;
   const { zLevel, setZLevel, availableZLevels, cameras } = props;
 
@@ -217,11 +207,12 @@ export const CameraMinimapContent = (
     <Box height="100%" overflow="hidden">
       <NanoMap
         zLevel={zLevel}
-        setZLevel={setZLevel}
+        onZLevel={setZLevel}
         nanomapPayload={nanomapPayload}
-        availableZLevels={availableZLevels}>
+        availableZLevels={availableZLevels}
+      >
         {cameras.map((camera: CameraObject) => (
-          <NanoMapMarkerIcon
+          <NanoMap.MarkerIcon
             key={camera.name}
             x={camera.x}
             y={camera.y}
@@ -234,7 +225,7 @@ export const CameraMinimapContent = (
                   ? 'blue'
                   : 'red'
             }
-            onClick={(e: MouseEvent) => {
+            onClick={(e: React.MouseEvent) => {
               act('switch_camera', { name: camera.name });
               pauseEvent(e);
             }}
@@ -245,8 +236,11 @@ export const CameraMinimapContent = (
   );
 };
 
-export const CameraConsoleListContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const CameraConsoleListContent = (props: {
+  setSearchText: (_: string) => void;
+  cameras: CameraObject[];
+}) => {
+  const { act, data } = useBackend<Data>();
   const { setSearchText, cameras } = props;
   const { activeCamera } = data;
   return (
@@ -257,7 +251,7 @@ export const CameraConsoleListContent = (props, context) => {
           fluid
           mt={1}
           placeholder="Search for a camera"
-          onInput={(_: Event, value: string) => setSearchText(value)}
+          onChange={setSearchText}
         />
       </Stack.Item>
       <Stack.Item grow>
@@ -282,7 +276,8 @@ export const CameraConsoleListContent = (props, context) => {
                 act('switch_camera', {
                   name: camera.name,
                 })
-              }>
+              }
+            >
               {camera.name}
             </div>
           ))}
