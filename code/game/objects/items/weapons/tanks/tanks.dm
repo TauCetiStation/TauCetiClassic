@@ -1,6 +1,5 @@
 #define TANK_MIN_RELEASE_PRESSURE 0
 #define TANK_MAX_RELEASE_PRESSURE (3*ONE_ATMOSPHERE)
-#define TANK_DEFAULT_RELEASE_PRESSURE 24
 
 /obj/item/weapon/tank
 	name = "tank"
@@ -123,7 +122,7 @@
 	var/list/data = list()
 	data["tankPressure"] = round(air_contents.return_pressure() ? air_contents.return_pressure() : 0)
 	data["releasePressure"] = round(distribute_pressure ? distribute_pressure : 0)
-	data["defaultReleasePressure"] = round(TANK_DEFAULT_RELEASE_PRESSURE)
+	data["defaultReleasePressure"] = initial(distribute_pressure)
 	data["minReleasePressure"] = round(TANK_MIN_RELEASE_PRESSURE)
 	data["maxReleasePressure"] = round(TANK_MAX_RELEASE_PRESSURE)
 	data["connected"] = FALSE
@@ -166,6 +165,7 @@
 				distribute_pressure = clamp(round(pressure), TANK_MIN_RELEASE_PRESSURE, TANK_MAX_RELEASE_PRESSURE)
 		if("internal")
 			toggle_internals()
+			. = TRUE
 
 /obj/item/weapon/tank/proc/toggle_internals()
 	if(!iscarbon(loc))
@@ -311,4 +311,3 @@
 
 #undef TANK_MIN_RELEASE_PRESSURE
 #undef TANK_MAX_RELEASE_PRESSURE
-#undef TANK_DEFAULT_RELEASE_PRESSURE

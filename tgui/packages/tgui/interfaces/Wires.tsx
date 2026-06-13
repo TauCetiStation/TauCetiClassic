@@ -1,9 +1,23 @@
+import { Box, Button, LabeledList, Section } from 'tgui-core/components';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
-export const Wires = (props, context) => {
-  const { act, data } = useBackend(context);
+type Data = {
+  wires: {
+    wire: string;
+    color: string;
+    label?: string;
+    cut: boolean;
+    attached: boolean;
+  }[];
+  status: (
+    | string
+    | { label: string; act: string; act_params?: Record<string, unknown> }
+  )[];
+};
+
+export const Wires = () => {
+  const { act, data } = useBackend<Data>();
   const wires = data.wires || [];
   const statuses = data.status || [];
   return (
@@ -14,7 +28,8 @@ export const Wires = (props, context) => {
         wires.length * 25 +
         (statuses.length > 0 ? 35 : 0) +
         statuses.length * 12
-      }>
+      }
+    >
       <Window.Content>
         <Section>
           <LabeledList>
@@ -28,29 +43,32 @@ export const Wires = (props, context) => {
                 buttons={
                   <>
                     <Button
-                      content={wire.cut ? 'Соединить' : 'Перерезать'}
                       onClick={() =>
                         act('cut', {
                           wire: wire.wire,
                         })
                       }
-                    />
+                    >
+                      {wire.cut ? 'Соединить' : 'Перерезать'}
+                    </Button>
                     <Button
-                      content="Пульс"
                       onClick={() =>
                         act('pulse', {
                           wire: wire.wire,
                         })
                       }
-                    />
+                    >
+                      Пульс
+                    </Button>
                     <Button
-                      content={wire.attached ? 'Отсоединить' : 'Присоединить'}
                       onClick={() =>
                         act('attach', {
                           wire: wire.wire,
                         })
                       }
-                    />
+                    >
+                      {wire.attached ? 'Отсоединить' : 'Присоединить'}
+                    </Button>
                   </>
                 }
               />
@@ -59,21 +77,22 @@ export const Wires = (props, context) => {
         </Section>
         {!!statuses.length && (
           <Section>
-            {statuses.map((status) =>
+            {statuses.map((status, i) =>
               typeof status === 'string' ? (
                 <Box key={status}>{status}</Box>
               ) : (
                 <Button
-                  key={status}
-                  content={status.label}
+                  key={i}
                   onClick={() =>
                     act(
                       status.act,
-                      status.act_params ? status.act_params : undefined
+                      status.act_params ? status.act_params : undefined,
                     )
                   }
-                />
-              )
+                >
+                  {status.label}
+                </Button>
+              ),
             )}
           </Section>
         )}

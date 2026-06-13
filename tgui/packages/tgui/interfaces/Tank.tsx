@@ -1,15 +1,33 @@
-import { useBackend } from '../backend';
 import {
   Button,
   LabeledList,
   NumberInput,
   ProgressBar,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-export const Tank = (props, context) => {
-  const { act, data } = useBackend(context);
+type Data = {
+  tankPressure: number;
+  releasePressure: number;
+  defaultReleasePressure: number;
+  minReleasePressure: number;
+  maxReleasePressure: number;
+  connected: boolean;
+};
+
+export const Tank = () => {
+  const { act, data } = useBackend<Data>();
+  const {
+    tankPressure,
+    releasePressure,
+    defaultReleasePressure,
+    minReleasePressure,
+    maxReleasePressure,
+    connected,
+  } = data;
+
   return (
     <Window width={400} height={120}>
       <Window.Content>
@@ -17,19 +35,20 @@ export const Tank = (props, context) => {
           <LabeledList>
             <LabeledList.Item label="Pressure">
               <ProgressBar
-                value={data.tankPressure / 1013}
+                value={tankPressure / 1013}
                 ranges={{
                   good: [0.35, Infinity],
                   average: [0.15, 0.35],
                   bad: [-Infinity, 0.15],
-                }}>
-                {data.tankPressure + ' kPa'}
+                }}
+              >
+                {tankPressure} kPa
               </ProgressBar>
             </LabeledList.Item>
             <LabeledList.Item label="Pressure Regulator">
               <Button
                 icon="fast-backward"
-                disabled={data.ReleasePressure === data.minReleasePressure}
+                disabled={releasePressure === minReleasePressure}
                 onClick={() =>
                   act('pressure', {
                     pressure: 'min',
@@ -38,12 +57,14 @@ export const Tank = (props, context) => {
               />
               <NumberInput
                 animated
-                value={parseFloat(data.releasePressure)}
-                width="65px"
+                value={releasePressure}
+                step={1}
+                tickWhileDragging
+                width="100px"
                 unit="kPa"
-                minValue={data.minReleasePressure}
-                maxValue={data.maxReleasePressure}
-                onChange={(e, value) =>
+                minValue={minReleasePressure}
+                maxValue={maxReleasePressure}
+                onChange={(value) =>
                   act('pressure', {
                     pressure: value,
                   })
@@ -51,7 +72,7 @@ export const Tank = (props, context) => {
               />
               <Button
                 icon="fast-forward"
-                disabled={data.ReleasePressure === data.maxReleasePressure}
+                disabled={releasePressure === maxReleasePressure}
                 onClick={() =>
                   act('pressure', {
                     pressure: 'max',
@@ -60,8 +81,7 @@ export const Tank = (props, context) => {
               />
               <Button
                 icon="undo"
-                content=""
-                disabled={data.ReleasePressure === data.defaultReleasePressure}
+                disabled={releasePressure === defaultReleasePressure}
                 onClick={() =>
                   act('pressure', {
                     pressure: 'reset',
@@ -69,9 +89,8 @@ export const Tank = (props, context) => {
                 }
               />
               <Button
-                icon={data.connected ? 'toggle-on' : 'toggle-off'}
-                content=""
-                selected={data.connected ? 'selected' : null}
+                icon={connected ? 'toggle-on' : 'toggle-off'}
+                selected={connected}
                 onClick={() => act('internal')}
               />
             </LabeledList.Item>

@@ -1,9 +1,17 @@
+import { Button, LabeledList, Section } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
-export const TransferValve = (props, context) => {
-  const { act, data } = useBackend(context);
+type Data = {
+  attachmentOne: string | null;
+  attachmentTwo: string | null;
+  valveAttachment: string | null;
+  valveOpen: BooleanLike;
+};
+
+export const TransferValve = () => {
+  const { act, data } = useBackend<Data>();
   const { attachmentOne, attachmentTwo, valveAttachment, valveOpen } = data;
   return (
     <Window width={400} height={180}>
@@ -13,27 +21,31 @@ export const TransferValve = (props, context) => {
           buttons={
             <Button
               icon={valveOpen ? 'toggle-on' : 'toggle-off'}
-              content={valveOpen ? 'Opened' : 'Closed'}
               tooltip={valveOpen ? 'Close' : 'Open'}
               disabled={!attachmentOne || !attachmentTwo}
               selected={valveOpen}
               onClick={() => act('open')}
-            />
-          }>
+            >
+              {valveOpen ? 'Opened' : 'Closed'}
+            </Button>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Left tank">
               <Button
-                content={!attachmentTwo ? 'None' : attachmentTwo}
                 tooltip={!attachmentTwo ? 'Attach' : 'Detach'}
                 onClick={() => act('leftTank')}
-              />
+              >
+                {!attachmentTwo ? 'None' : attachmentTwo}
+              </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Valve attachment">
               <Button
-                content={!valveAttachment ? 'None' : valveAttachment}
                 tooltip={!valveAttachment ? 'Attach' : 'Detach'}
                 onClick={() => act('device')}
-              />
+              >
+                {!valveAttachment ? 'None' : valveAttachment}
+              </Button>
               {!!valveAttachment && (
                 <Button
                   tooltip="View"
@@ -44,10 +56,11 @@ export const TransferValve = (props, context) => {
             </LabeledList.Item>
             <LabeledList.Item label="Right tank">
               <Button
-                content={!attachmentOne ? 'None' : attachmentOne}
                 tooltip={!attachmentOne ? 'Attach' : 'Detach'}
                 onClick={() => act('rightTank')}
-              />
+              >
+                {!attachmentOne ? 'None' : attachmentOne}
+              </Button>
             </LabeledList.Item>
           </LabeledList>
         </Section>
