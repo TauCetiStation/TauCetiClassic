@@ -46270,7 +46270,7 @@
 	id = "Medical_Psychiatry";
 	name = "Privacy Shutters";
 	pixel_y = -25;
-	pixel_x = -10
+	pixel_x = -6
 	},
 /obj/machinery/computer/shop{
 	department = "Medical";
@@ -46280,11 +46280,7 @@
 /obj/machinery/windowtint{
 	id = "Psych";
 	pixel_y = -27;
-	pixel_x = 8
-	},
-/obj/machinery/firealarm{
-	dir = 1;
-	pixel_y = -22
+	pixel_x = 6
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
@@ -55018,6 +55014,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/coatrack,
 /obj/machinery/light_switch{
+	pixel_y = 24;
+	pixel_x = -10
+	},
+/obj/machinery/firealarm{
 	pixel_y = 24
 	},
 /turf/simulated/floor/wood{
