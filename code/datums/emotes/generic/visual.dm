@@ -1,8 +1,8 @@
 /datum/emote/pray
 	key = "pray"
 
-	message_1p = "You pray."
-	message_3p = "prays."
+	message_1p = "Вы молитесь."
+	message_3p = "молится."
 
 	message_type = SHOWMSG_VISUAL
 
@@ -16,8 +16,8 @@
 /datum/emote/blink
 	key = "blink"
 
-	message_1p = "You blink."
-	message_3p = "blinks."
+	message_1p = "Вы моргаете."
+	message_3p = "моргает."
 
 	message_type = SHOWMSG_VISUAL
 
@@ -27,8 +27,8 @@
 /datum/emote/shiver
 	key = "shiver"
 
-	message_1p = "You shiver."
-	message_3p = "shivers."
+	message_1p = "Вы дрожите."
+	message_3p = "дрожит."
 
 	message_type = SHOWMSG_VISUAL
 
@@ -38,8 +38,8 @@
 /datum/emote/drool
 	key = "drool"
 
-	message_1p = "You drool."
-	message_3p = "drools."
+	message_1p = "Вы пускаете слюни."
+	message_3p = "пускает слюни."
 
 	message_type = SHOWMSG_VISUAL
 
@@ -49,8 +49,8 @@
 /datum/emote/eyebrow
 	key = "eyebrow"
 
-	message_1p = "You raise an eyebrow."
-	message_3p = "raises an eyebrow."
+	message_1p = "Вы приподнимаете бровь."
+	message_3p = "приподнимает бровь."
 
 	message_type = SHOWMSG_VISUAL
 
@@ -60,8 +60,8 @@
 /datum/emote/nod
 	key = "nod"
 
-	message_1p = "You nod."
-	message_3p = "nods."
+	message_1p = "Вы киваете."
+	message_3p = "кивает."
 
 	message_type = SHOWMSG_VISUAL
 
@@ -72,7 +72,7 @@
 /datum/emote/shake
 	key = "shake"
 
-	message_1p = "You shake your head."
+	message_1p = "Вы качаете головой."
 
 	message_type = SHOWMSG_VISUAL
 
@@ -80,14 +80,14 @@
 	blocklist_traits = list(ELEMENT_TRAIT_ZOMBIE)
 
 /datum/emote/shake/get_emote_message_3p(mob/user)
-	return "shakes [P_THEIR(user)] head."
+	return "качает головой."
 
 
 /datum/emote/twitch
 	key = "twitch"
 
-	message_1p = "You twitch."
-	message_3p = "twitches."
+	message_1p = "Вы дёргаетесь."
+	message_3p = "дёргается."
 
 	message_type = SHOWMSG_VISUAL
 
@@ -97,8 +97,8 @@
 /datum/emote/collapse
 	key = "collapse"
 
-	message_1p = "You collapse!"
-	message_3p = "collapses!"
+	message_1p = "Вы падаете!"
+	message_3p = "падает!"
 
 	message_type = SHOWMSG_VISUAL
 
@@ -114,8 +114,8 @@
 /datum/emote/faint
 	key = "faint"
 
-	message_1p = "You faint!"
-	message_3p = "faints!"
+	message_1p = "Вы теряете сознание!"
+	message_3p = "теряет сознание!"
 
 	message_type = SHOWMSG_VISUAL
 
@@ -133,13 +133,13 @@
 /datum/emote/deathgasp
 	key = "deathgasp"
 
-	message_1p = "You seize up and fall limp, your eyes dead and lifeless..."
+	message_1p = "Вы бьётесь в короткой агонии и обмякаете, ваш остекленевший взгляд устремляется в пустоту..."
 
-	message_impaired_reception = "You hear a thud."
+	message_impaired_reception = "Вы слышите глухой удар."
 
 	message_type = SHOWMSG_VISUAL
 
 	required_intentional_stat = CONSCIOUS
 
 /datum/emote/deathgasp/get_emote_message_3p(mob/user)
-	return "seizes up and falls limp, [P_THEIR(user)] eyes dead and lifeless..."
+	return "бьется в короткой агонии и обмякает, остекленевший взгляд устремляется в пустоту..."
