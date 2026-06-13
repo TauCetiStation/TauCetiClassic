@@ -86,8 +86,6 @@ export const VendingConsole = () => {
             zLevel={zLevel}
             onZLevel={setZLevel}
             availableZLevels={availableZLevels}
-            pixelsPerTurf={2}
-            zoom={2}
             controlsOnTop
           >
             {vendingMachines.map((machine: VendingObject) => (

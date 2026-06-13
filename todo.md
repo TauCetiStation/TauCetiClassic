@@ -35,6 +35,7 @@
 - chat styles
 - https://github.com/TauCetiStation/TauCetiClassic/pull/13188
 - tgui/packages/tgui/components/SegmentDisplay.js
+- drag + window scale (core v6 fixed?)
 
 конфиги:
 - STORAGE_CDN_IFRAME

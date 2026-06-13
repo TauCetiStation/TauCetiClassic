@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { processedText } from 'tgui/process';
 import {
   Box,
   Button,
@@ -13,6 +12,7 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { processedText } from '../process';
 
 type Poll = {
   name: string;
@@ -196,11 +196,7 @@ const Choices = ({ onModalOpen }: { onModalOpen: () => void }) => {
                       {choice.name.replace(/^\w/, (c) => c.toUpperCase())}
                     </Button>
                     {!!choice.selected && (
-                      <Icon
-                        name="vote-yea"
-                        color="green"
-                        ml={1}
-                      />
+                      <Icon name="vote-yea" color="green" ml={1} />
                     )}
                   </Box>
                   <Box mr={15}>{choice.votes}</Box>

@@ -197,7 +197,14 @@ export function NanoMap(props: NanoMapProps) {
 
   const handlePointerDown = (e: React.PointerEvent) => {
     // only start drag if clicking on the map itself
+    // filter child elements
     if (!(e.target instanceof Element) || e.target.closest('[data-not-map]')) {
+      return;
+    }
+
+    // filter parent elements
+    const path = e.nativeEvent.composedPath() || [e.target];
+    if (containerRef.current && !path.includes(containerRef.current)) {
       return;
     }
 
@@ -317,7 +324,10 @@ export function NanoMap(props: NanoMapProps) {
             nanomapPayload={props.nanomapPayload}
             zLevel={props.zLevel}
             availableZLevels={props.availableZLevels}
-            onZLevel={props.onZLevel}
+            onZLevel={(z) => {
+              props.stopTracking?.();
+              props.onZLevel(z);
+            }}
             zoom={zoom}
             onZoom={(newZoom) => handleZoomChange(newZoom, centerX, centerY)}
             onReset={() => {
@@ -348,8 +358,12 @@ function NanoMapZoomer(props: NanoMapZoomerProps) {
   const levelName = (zLevel: number): string =>
     props.nanomapPayload[zLevel]?.name ?? `UNKNOWN ${props.zLevel}`;
 
-  const levelNames = useMemo(
-    () => props.availableZLevels?.map(levelName) ?? [levelName(props.zLevel)],
+  const levelValues = useMemo(
+    () =>
+      props.availableZLevels?.map((zLevel) => ({
+        displayText: levelName(zLevel),
+        value: zLevel,
+      })) ?? [{ displayText: levelName(props.zLevel), value: props.zLevel }],
     [props.availableZLevels],
   );
 
@@ -374,18 +388,13 @@ function NanoMapZoomer(props: NanoMapZoomerProps) {
         />
       </Stack.Item>
 
-      {levelNames.length > 1 && (
+      {levelValues.length > 1 && (
         <Stack.Item>
           <Dropdown
             over={!props.controlsOnTop}
             selected={levelName(props.zLevel)}
-            options={levelNames}
-            onSelected={(val: string) => {
-              const index = levelNames.indexOf(val);
-              if (index !== -1) {
-                props.onZLevel(index);
-              }
-            }}
+            options={levelValues}
+            onSelected={props.onZLevel}
           />
         </Stack.Item>
       )}
@@ -393,7 +402,7 @@ function NanoMapZoomer(props: NanoMapZoomerProps) {
   );
 }
 
-type BoxProps = React.ComponentProps<typeof Box>;
+type BoxProps = React.ComponentProps<typeof Box<HTMLDivElement>>;
 
 type NanoMapMarkerProps = {
   x: number;

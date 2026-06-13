@@ -1,38 +1,25 @@
-import { InfernoNode } from 'inferno';
-import { useBackend, useLocalState } from '../backend';
+import { sortBy } from 'es-toolkit';
+import { uniq } from 'es-toolkit/compat';
+import { useEffect, useMemo, useState } from 'react';
 import {
-  Stack,
-  Section,
-  Icon,
-  Tabs,
   Box,
-  Table,
+  Icon,
   Input,
+  Section,
+  Stack,
+  Table,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { createSearch } from 'tgui-core/string';
+import { useBackend } from '../backend';
+import { NanoMap, type NanoMapStaticPayload } from '../components';
 import { Window } from '../layouts';
-import { flow } from 'common/fp';
-import { filter, sortBy, map, uniqBy } from 'common/collections';
 
-import {
-  NanoMap,
-  NanoMapMarkerIcon,
-  NanoMapStaticPayload,
-  NanoMapTrackData,
-} from '../components/NanoMap';
+type BoxProps = React.ComponentProps<typeof Box>;
 
-import { createSearch } from 'common/string';
-import { BoxProps } from '../components/Box';
-
-const pauseEvent = (e: MouseEvent) => {
-  if (e.stopPropagation) {
-    e.stopPropagation();
-  }
-  if (e.preventDefault) {
-    e.preventDefault();
-  }
-  e.cancelBubble = true;
-  e.returnValue = false;
+const pauseEvent = (e: React.MouseEvent) => {
+  if (e.stopPropagation) e.stopPropagation();
+  if (e.preventDefault && e.cancelable) e.preventDefault();
   return false;
 };
 
@@ -43,8 +30,7 @@ const createAbbreviation = (text: string): string => {
     return text;
   }
 
-  const abbreviation =
-    words.map((word) => word.charAt(0).toUpperCase()).join('.') + '.';
+  const abbreviation = `${words.map((word) => word.charAt(0).toUpperCase()).join('.')}.`;
 
   return abbreviation;
 };
@@ -118,58 +104,35 @@ type Data = {
 export const selectMembers = (
   crewMembers: CrewMember[],
   searchText: string = '',
-  zLevel?: number
-): [CrewMember] => {
-  const testSearch = createSearch(
-    searchText,
-    (crewMember: CrewMember) =>
-      crewMember.name +
-      crewMember.assignment +
-      (crewMember.position?.area ?? '')
-  );
-  return flow([
-    filter((crewMember: CrewMember) => crewMember?.name),
-    // Optional search term
-    searchText && filter(testSearch),
-    // Optional zlevel filter
-    zLevel &&
-      filter(
-        (crewMember: CrewMember) =>
-          !crewMember.position || crewMember.position.z === zLevel
-      ),
-    // Slightly expensive, but way better than sorting in BYOND
-    sortBy((crewMember: CrewMember) => crewMember.name),
-  ])(crewMembers);
+  zLevel?: number,
+): CrewMember[] => {
+  let queriedCrewMembers = crewMembers.filter((crewMember) => crewMember?.name);
+  if (searchText) {
+    const testSearch = createSearch(
+      searchText,
+      (crewMember: CrewMember) =>
+        crewMember.name +
+        crewMember.assignment +
+        (crewMember.position?.area ?? ''),
+    );
+    queriedCrewMembers = queriedCrewMembers.filter(testSearch);
+  }
+  if (zLevel) {
+    queriedCrewMembers = queriedCrewMembers.filter(
+      (crewMember) => !crewMember.position || crewMember.position.z === zLevel,
+    );
+  }
+  return sortBy(queriedCrewMembers, [(crewMember) => crewMember.name]);
 };
 
 export const CrewMonitor = (_: any, context: any) => {
-  const { act, data } = useBackend<Data>(context);
-
+  const { data } = useBackend<Data>();
   const { crewMembers, currentZ } = data;
 
-  const [searchText, setSearchText] = useLocalState<string>(
-    context,
-    'crewMonitorSearchText',
-    ''
-  );
-
-  const [zLevel, setZLevel] = useLocalState<number>(
-    context,
-    'crewMonitorZLevel',
-    currentZ
-  );
-
-  const [hoveredMemberRef, hoverMemberRef] = useLocalState<string>(
-    context,
-    'crewMonitorHoveredMember',
-    ''
-  );
-
-  const [selectedMemberRef, selectMemberRef] = useLocalState<string>(
-    context,
-    'crewMonitorSelectedMember',
-    ''
-  );
+  const [searchText, setSearchText] = useState<string>('');
+  const [zLevel, setZLevel] = useState<number>(currentZ);
+  const [hoveredMemberRef, hoverMemberRef] = useState<string>('');
+  const [selectedMemberRef, selectMemberRef] = useState<string>('');
 
   const filteredCrewMembers = selectMembers(crewMembers, searchText, zLevel);
 
@@ -177,7 +140,7 @@ export const CrewMonitor = (_: any, context: any) => {
     <Window width={820} height={600}>
       <Window.Content>
         <Stack fill>
-          <Stack.Item grow>
+          <Stack.Item minWidth={25}>
             <CrewMonitorDataContent
               crewMembers={filteredCrewMembers}
               searchText={searchText}
@@ -188,7 +151,7 @@ export const CrewMonitor = (_: any, context: any) => {
               selectMemberRef={selectMemberRef}
             />
           </Stack.Item>
-          <Stack.Item>
+          <Stack.Item grow>
             <CrewMonitorMapContent
               crewMembers={filteredCrewMembers}
               zLevel={zLevel}
@@ -205,18 +168,15 @@ export const CrewMonitor = (_: any, context: any) => {
   );
 };
 
-const CrewMonitorDataContent = (
-  props: {
-    crewMembers: CrewMember[];
-    searchText: string;
-    setSearchText: (value: string) => void;
-    hoveredMemberRef: string;
-    hoverMemberRef: (value: string) => void;
-    selectedMemberRef: string;
-    selectMemberRef: (value: string) => void;
-  },
-  context: any
-) => {
+const CrewMonitorDataContent = (props: {
+  crewMembers: CrewMember[];
+  searchText: string;
+  setSearchText: (value: string) => void;
+  hoveredMemberRef: string;
+  hoverMemberRef: (value: string) => void;
+  selectedMemberRef: string;
+  selectMemberRef: (value: string) => void;
+}) => {
   const {
     crewMembers,
     searchText,
@@ -230,11 +190,7 @@ const CrewMonitorDataContent = (
   return (
     <Stack vertical fill>
       <Stack.Item>
-        <Input
-          fluid
-          onInput={(e, value) => setSearchText(value)}
-          placeholder="Search.."
-        />
+        <Input fluid onChange={setSearchText} placeholder="Search..." />
       </Stack.Item>
       <Stack.Item grow>
         <Section fill scrollable textAlign="center">
@@ -246,7 +202,7 @@ const CrewMonitorDataContent = (
             </Table.Row>
             {crewMembers.map((crewMember: CrewMember) => {
               const { icon, color } = pickCrewIcon(crewMember);
-              let highlightColor: string;
+              let highlightColor: string = '';
               if (crewMember.ref === selectedMemberRef) {
                 highlightColor = 'yellow';
               } else if (crewMember.ref === hoveredMemberRef) {
@@ -260,14 +216,18 @@ const CrewMonitorDataContent = (
                   onMouseLeave={() => hoverMemberRef('')}
                   onMouseDown={() =>
                     selectMemberRef(
-                      selectedMemberRef === crewMember.ref ? '' : crewMember.ref
+                      selectedMemberRef === crewMember.ref
+                        ? ''
+                        : crewMember.ref,
                     )
                   }
-                  backgroundColor={highlightColor}
-                  textColor={!!highlightColor && 'black'}>
+                  backgroundColor={highlightColor ?? undefined}
+                  textColor={!!highlightColor && 'black'}
+                >
                   <Table.Cell verticalAlign="middle">
                     <Tooltip
-                      content={`${crewMember.name} (${crewMember.assignment})`}>
+                      content={`${crewMember.name} (${crewMember.assignment})`}
+                    >
                       <Box m={0.5}>
                         <Stack vertical>
                           <Stack.Item>{crewMember.name}</Stack.Item>
@@ -284,7 +244,8 @@ const CrewMonitorDataContent = (
                       m={0.5}
                       textAlign="center"
                       width="100%"
-                      height="100%">
+                      height="100%"
+                    >
                       <Tooltip
                         content={
                           crewMember.vitals ? (
@@ -298,7 +259,8 @@ const CrewMonitorDataContent = (
                               Alive
                             </Box>
                           )
-                        }>
+                        }
+                      >
                         <Icon name={icon} color={color} size={2} />
                       </Tooltip>
                     </Box>
@@ -325,19 +287,16 @@ const CrewMonitorDataContent = (
   );
 };
 
-const CrewMonitorMapContent = (
-  props: {
-    crewMembers: CrewMember[];
-    zLevel: number;
-    setZLevel: (number: number) => void;
-    hoveredMemberRef: string;
-    hoverMemberRef: (val: string) => void;
-    selectedMemberRef: string;
-    selectMemberRef: (value: string) => void;
-  },
-  context: any
-) => {
-  const { data } = useBackend<Data>(context);
+const CrewMonitorMapContent = (props: {
+  crewMembers: CrewMember[];
+  zLevel: number;
+  setZLevel: (number: number) => void;
+  hoveredMemberRef: string;
+  hoverMemberRef: (val: string) => void;
+  selectedMemberRef: string;
+  selectMemberRef: (value: string) => void;
+}) => {
+  const { data } = useBackend<Data>();
   const { currentZ, nanomapPayload } = data;
   const allCrewMembers = data.crewMembers;
   const {
@@ -350,13 +309,15 @@ const CrewMonitorMapContent = (
     selectMemberRef,
   } = props;
 
-  const availableZLevels: number[] = flow([
-    filter((crewMember: CrewMember) => crewMember.position),
-    map((crewMember: CrewMember) => crewMember.position?.z),
-    (zLevels: number[]) => zLevels.concat(currentZ),
-    uniqBy(),
-    sortBy(),
-  ])(allCrewMembers);
+  const availableZLevels = ((crewMembers: CrewMember[]) => {
+    let zLevels = crewMembers
+      .filter((crewMember: CrewMember) => crewMember.position)
+      .map((crewMember: CrewMember) => crewMember.position?.z)
+      .filter((z) => z !== undefined)
+      .concat(currentZ);
+    zLevels = uniq(zLevels);
+    return zLevels.toSorted();
+  })(allCrewMembers);
 
   const tooltipForMember = (crewMember: CrewMember) => (
     <Box textAlign="center">
@@ -365,59 +326,66 @@ const CrewMonitorMapContent = (
     </Box>
   );
 
-  let trackData: NanoMapTrackData | undefined;
-  if (selectedMemberRef.length > 0) {
-    let foundCrewmember = allCrewMembers.find(
-      (crewMember: CrewMember) => crewMember.ref === selectedMemberRef
+  const trackPosition = useMemo(() => {
+    if (!selectedMemberRef) return undefined;
+    const foundCrewmember = allCrewMembers.find(
+      (crewMember: CrewMember) => crewMember.ref === selectedMemberRef,
     );
-    if (foundCrewmember && foundCrewmember.position) {
-      trackData = {
-        trackX: foundCrewmember.position.x,
-        trackY: foundCrewmember.position.y,
-        trackZ: foundCrewmember.position.z,
-        stopTracking: () => selectMemberRef(''),
+    if (foundCrewmember?.position) {
+      return {
+        x: foundCrewmember.position.x,
+        y: foundCrewmember.position.y,
+        z: foundCrewmember.position.z,
       };
     }
-  }
+  }, [selectedMemberRef, allCrewMembers]);
+
+  useEffect(() => {
+    if (trackPosition) {
+      setZLevel(trackPosition.z);
+    }
+  }, [trackPosition?.z, setZLevel]);
 
   return (
     <Box width="100%" height="100%" overflow="hidden">
       <NanoMap
         nanomapPayload={nanomapPayload}
-        zLevel={zLevel}
-        setZLevel={setZLevel}
+        centerX={trackPosition?.x || undefined}
+        centerY={trackPosition?.y || undefined}
+        zLevel={trackPosition?.z || zLevel}
+        stopTracking={() => selectMemberRef('')}
+        zoom={trackPosition ? 4 : undefined}
+        onZLevel={setZLevel}
         availableZLevels={availableZLevels}
-        pixelsPerTurf={2}
-        trackData={trackData}
-        controlsOnTop>
-        {crewMembers
-          .filter((crewMember: CrewMember) => crewMember.position)
-          .map((crewMember: CrewMember) => {
-            let { color, icon } = pickCrewIcon(crewMember);
+        controlsOnTop
+      >
+        {crewMembers.map((crewMember: CrewMember) => {
+          if (!crewMember.position) return null;
+          let { color, icon } = pickCrewIcon(crewMember);
 
-            if (crewMember.ref === hoveredMemberRef) {
-              color = 'white';
-            }
+          if (crewMember.ref === hoveredMemberRef) {
+            color = 'white';
+          }
 
-            return (
-              <NanoMapMarkerIcon
-                onMouseEnter={() => hoverMemberRef(crewMember.ref)}
-                onMouseLeave={() => hoverMemberRef('')}
-                onMouseDown={(e: MouseEvent) => {
-                  selectMemberRef(
-                    selectedMemberRef === crewMember.ref ? '' : crewMember.ref
-                  );
-                  pauseEvent(e);
-                }}
-                key={crewMember.name}
-                x={crewMember.position.x}
-                y={crewMember.position.y}
-                icon={icon}
-                tooltip={tooltipForMember(crewMember)}
-                color={color}
-              />
-            );
-          })}
+          return (
+            <NanoMap.MarkerIcon
+              onMouseEnter={() => hoverMemberRef(crewMember.ref)}
+              onMouseLeave={() => hoverMemberRef('')}
+              onMouseDown={(e: React.MouseEvent) => {
+                selectMemberRef(
+                  selectedMemberRef === crewMember.ref ? '' : crewMember.ref,
+                );
+                pauseEvent(e);
+              }}
+              key={crewMember.name}
+              x={crewMember.position.x}
+              y={crewMember.position.y}
+              icon={icon}
+              tooltip={tooltipForMember(crewMember)}
+              color={color}
+            />
+          );
+        })}
       </NanoMap>
     </Box>
   );
