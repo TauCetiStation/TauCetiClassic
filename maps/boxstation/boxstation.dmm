@@ -19188,16 +19188,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "aHG" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/structure/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -31314,16 +31315,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/wood/dark{
-	icon_state = "siding_wood_corner";
-	dir = 8
-	},
-/obj/effect/decal/turf_decal/wood/dark{
-	icon_state = "siding_wood_corner";
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
+	},
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line";
+	dir = 8
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood17"
@@ -31909,14 +31906,14 @@
 /turf/environment/space,
 /area/space)
 "bej" = (
-/obj/structure/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
 /obj/machinery/power/apc{
-	dir = 8;
-	name = "apc left";
-	pixel_x = -28
+	dir = 4;
+	name = "apc right";
+	pixel_x = 28
+	},
+/obj/structure/cable{
+	d2 = 8;
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -32107,11 +32104,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
-	},
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
@@ -33075,15 +33067,9 @@
 	},
 /area/station/hallway/primary/port)
 "bgc" = (
-/obj/structure/mirror{
-	pixel_y = 32
-	},
-/obj/structure/sink{
-	pixel_y = 24
-	},
+/obj/structure/table/glass,
 /obj/structure/dryer{
-	dir = 4;
-	pixel_x = -6
+	pixel_y = 24
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -33124,7 +33110,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bgg" = (
-/obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -43819,9 +43804,9 @@
 	},
 /obj/effect/landmark/start/psychiatrist,
 /obj/machinery/light/smart,
-/obj/machinery/firealarm{
+/obj/machinery/alarm{
 	dir = 1;
-	pixel_y = -22
+	pixel_y = -23
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
@@ -45251,6 +45236,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light/small,
+/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -46290,13 +46277,14 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/machinery/light_switch{
-	pixel_y = -27;
-	pixel_x = 7
-	},
 /obj/machinery/windowtint{
 	id = "Psych";
-	pixel_y = -27
+	pixel_y = -27;
+	pixel_x = 8
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -22
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/medical/psych)
@@ -53298,10 +53286,6 @@
 	dir = 1
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/turf_decal/wood{
-	dir = 1;
-	icon_state = "spline_fancy"
-	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -53898,12 +53882,10 @@
 	},
 /area/station/medical/hallway)
 "bRt" = (
-/obj/machinery/light/small,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/item/weapon/flora/random,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -54621,10 +54603,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "bTh" = (
-/obj/structure/bedsheetbin/full{
-	pixel_y = 11
+/obj/machinery/camera{
+	c_tag = "Medbay Toilet";
+	dir = 8;
+	network = list("SS13","Medical")
 	},
-/obj/machinery/washing_machine,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -55032,11 +55015,11 @@
 	icon_state = "siding_wood_line";
 	dir = 9
 	},
-/obj/machinery/alarm{
-	pixel_y = 23
-	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/coatrack,
+/obj/machinery/light_switch{
+	pixel_y = 24
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wood17"
 	},
@@ -67412,12 +67395,8 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/wood/dark{
-	icon_state = "siding_wood_end";
-	dir = 8
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wood17"
+/turf/simulated/floor{
+	icon_state = "whitebluefull"
 	},
 /area/station/medical/psych)
 "cEf" = (
@@ -69255,14 +69234,9 @@
 	},
 /area/station/bridge/hop_office)
 "cLg" = (
-/obj/machinery/camera{
-	c_tag = "Medbay Toilet";
-	dir = 8;
-	network = list("SS13","Medical")
-	},
-/obj/machinery/alarm{
-	dir = 1;
-	pixel_y = -22
+/obj/machinery/washing_machine,
+/obj/structure/bedsheetbin/full{
+	pixel_y = 11
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -77227,6 +77201,16 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/turf/simulated/floor/plating,
+/area/station/maintenance/medbay)
+"jTk" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "jTr" = (
@@ -85922,6 +85906,19 @@
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/plating,
 /area/station/maintenance/atmos)
+"swd" = (
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -22
+	},
+/obj/machinery/light/small,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/medical/medbreak)
 "sxb" = (
 /obj/item/seeds/ambrosiavulgarisseed,
 /obj/item/seeds/carrotseed,
@@ -89373,6 +89370,17 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"xOa" = (
+/obj/structure/mirror{
+	pixel_y = 32
+	},
+/obj/structure/sink{
+	pixel_y = 24
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/station/medical/medbreak)
 "xOi" = (
 /obj/structure/sign/poster/calendar{
 	pixel_y = -32
@@ -128102,11 +128110,11 @@ aaa
 aah
 aaa
 aaa
-aah
-aaa
 aaa
 aah
 aaa
+aaa
+aah
 aaa
 aaa
 aaa
@@ -128374,7 +128382,7 @@ ckA
 ckA
 ckA
 aah
-aaa
+aah
 aaa
 aaa
 aaa
@@ -131185,7 +131193,7 @@ cJT
 bBy
 cLu
 bFo
-aaa
+aah
 aah
 ckA
 rpb
@@ -131957,8 +131965,8 @@ jqb
 cLs
 bFo
 aaa
-aah
 aaa
+aah
 aaa
 aaa
 aaa
@@ -132209,13 +132217,13 @@ bST
 bgB
 bgB
 cGc
-bgB
+jTk
 cEh
 fuO
 bFo
 aaa
-aah
 aaa
+aah
 aaa
 aaa
 aaa
@@ -132471,8 +132479,8 @@ cak
 cak
 bFo
 aaa
-aah
 aaa
+aah
 aaa
 aaa
 aaa
@@ -133230,9 +133238,9 @@ bLD
 aoF
 bKN
 bCa
-bSn
-cBO
-cKP
+bHY
+xOa
+swd
 bHY
 bHY
 bHY
@@ -133487,14 +133495,14 @@ sBb
 bKu
 bQi
 bRt
-bHY
-bTh
-cLg
+bSn
+cBO
+cKP
 cLt
 cHo
 bHY
 cLG
-bFo
+jpO
 bFo
 bFo
 bFo
@@ -133745,14 +133753,14 @@ bPv
 bRN
 chb
 bHY
-bHY
-bHY
+cLg
+bTh
 bHY
 bgs
 bHY
 bBy
+lDb
 bFo
-aaa
 aaa
 aaa
 aaa
@@ -134002,14 +134010,14 @@ bHY
 bHY
 bHY
 bHY
-bej
-jhb
+bHY
+bHY
 bHY
 bHY
 bHY
 cFU
+cak
 bFo
-aaa
 aaa
 aaa
 aaa
@@ -134265,8 +134273,8 @@ sjs
 aHG
 cIQ
 cGe
+jhb
 bFo
-aaa
 aaa
 aaa
 aaa
@@ -134518,12 +134526,12 @@ bFo
 bFo
 aGG
 cak
-cbz
-cbz
-cbz
-cbz
-cbz
-aaa
+cak
+bej
+cak
+dsN
+bFo
+bFo
 aaa
 aaa
 aaa
@@ -134773,13 +134781,13 @@ jGb
 mKb
 cak
 bFo
-ubb
-baG
-csA
-cAL
-cBh
-cuo
-bSY
+aGG
+cak
+cbz
+cbz
+cbz
+cbz
+cbz
 aaa
 aaa
 aaa
@@ -135030,12 +135038,12 @@ kCb
 lub
 cak
 bFo
-lOb
-dsN
-cbz
-cKv
-iUO
-cEB
+ubb
+baG
+csA
+cAL
+cBh
+cuo
 bSY
 aah
 aah
@@ -135288,12 +135296,12 @@ cak
 cak
 bFo
 lOb
+cak
 cbz
-cbz
-cEy
-cfB
-cil
-cbz
+cKv
+iUO
+cEB
+bSY
 aaa
 aaa
 aah
@@ -135546,10 +135554,10 @@ bTA
 bFo
 lOb
 cbz
-cKi
-cer
-cfC
-bkt
+cbz
+cEy
+cfB
+cil
 cbz
 aah
 aah
@@ -135803,10 +135811,10 @@ bFo
 bFo
 lOb
 cbz
-cKh
+cKi
 cer
-cfB
-cer
+cfC
+bkt
 cbz
 aaa
 aaa
@@ -136060,10 +136068,10 @@ cak
 mUb
 lOb
 cbz
-ccR
-cew
-cfD
-cya
+cKh
+cer
+cfB
+cer
 cbz
 aaa
 aaa
@@ -136317,10 +136325,10 @@ bFo
 bFo
 lOb
 cbz
-cbz
-cbz
-cbz
-cbz
+ccR
+cew
+cfD
+cya
 cbz
 aaa
 aaa
@@ -136573,12 +136581,12 @@ bFo
 tVb
 tDb
 aFC
-bFP
-bFo
-aah
-aah
-aah
-aah
+cbz
+cbz
+cbz
+cbz
+cbz
+cbz
 aah
 aah
 aah
@@ -136830,7 +136838,7 @@ bFo
 lOb
 cak
 bFP
-cak
+bFP
 bFo
 aaa
 aaa
