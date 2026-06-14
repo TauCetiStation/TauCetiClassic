@@ -24,6 +24,7 @@
 	var/collection_mode = 1  //0 = pick one at a time, 1 = pick all on tile
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 	var/list/use_sound // sound played when used. null for no sound.
+	var/animated = TRUE // plays a small squish animation when opened or when contents change
 
 	var/storage_ui_path = /datum/storage_ui/default
 	var/datum/storage_ui/storage_ui = null
@@ -176,6 +177,7 @@
 	if (length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 
+	animate_parent()
 	prepare_ui()
 	storage_ui.on_open(user)
 	show_to(user)
@@ -325,14 +327,24 @@
 	return TRUE
 
 /obj/item/weapon/storage/proc/update_ui_after_item_insertion()
+	animate_parent()
 	prepare_ui()
 	if(storage_ui)
 		storage_ui.on_insertion(usr)
 
 /obj/item/weapon/storage/proc/update_ui_after_item_removal()
+	animate_parent()
 	prepare_ui()
 	if(storage_ui)
 		storage_ui.on_post_remove(usr)
+
+// Spiffy squish animation to represent opening and shuffling contents.
+/obj/item/weapon/storage/proc/animate_parent()
+	if(!animated)
+		return
+	var/matrix/old_matrix = transform
+	animate(src, time = 1.5, loop = 0, transform = transform.Scale(1.07, 0.9))
+	animate(time = 2, transform = old_matrix)
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
 /obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
