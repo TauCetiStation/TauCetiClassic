@@ -36,6 +36,55 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 	circuit = /obj/item/weapon/circuitboard/computer/cargo/request
 	requestonly = TRUE
 
+// Hook for subtypes to inject extra menu entries into the main console screen. Default: nothing.
+/obj/machinery/computer/cargo/proc/extra_menu_html(mob/user)
+	return ""
+
+// QM console: lets the quartermaster request the persistent Cargo Guard edict for future shifts.
+/obj/machinery/computer/cargo/qm/extra_menu_html(mob/user)
+	. = ""
+	if(!global.available_edicts[EDICT_CARGO_GUARD])
+		return
+	var/n = get_edict_value(EDICT_CARGO_GUARD)
+	. += "<HR><B>Указ «ЧОП Карго»</B><BR>"
+	. += "Слотов ЧОП: [n] из [CARGO_GUARD_MAX]. Содержание к концу смены: [n * CARGO_GUARD_PRICE]$.<BR>"
+	if(n >= CARGO_GUARD_MAX)
+		return . + "Достигнут максимум слотов.<BR>"
+	if(global.cargo_guard_edict_requested)
+		return . + "Заявка на +1 слот в этой смене уже оформлена.<BR>"
+	if(world.time - global.round_start_time >= CARGO_GUARD_REQUEST_WINDOW)
+		return . + "<font color='gray'>Окно заявки закрыто (первые 15 минут смены).</font><BR>"
+	. += "Для +1 слота держать к концу смены: [(n + 1) * CARGO_GUARD_PRICE]$.<BR>"
+	. += "<A href='byond://?src=\ref[src];request_cargo_guard=1'>ЗАПРОСИТЬ +1 ЧОП НА БУДУЩИЕ СМЕНЫ</A><BR>"
+
+/obj/machinery/computer/cargo/qm/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+	if(href_list["request_cargo_guard"])
+		request_cargo_guard(usr)
+		updateUsrDialog()
+
+/obj/machinery/computer/cargo/qm/proc/request_cargo_guard(mob/user)
+	if(!global.available_edicts[EDICT_CARGO_GUARD] || global.cargo_guard_edict_requested)
+		return
+	if(get_edict_value(EDICT_CARGO_GUARD) >= CARGO_GUARD_MAX)
+		return
+	if(world.time - global.round_start_time >= CARGO_GUARD_REQUEST_WINDOW)
+		return
+
+	global.cargo_guard_edict_requested = TRUE
+	new /obj/item/weapon/paper/cargo_guard_request(get_turf(src))
+	var/obj/item/weapon/paper/cargo_guard_request/copy = new
+	var/obj/machinery/faxmachine/F = print_to_command_fax(copy)
+	var/copy_line
+	if(F)
+		copy_line = "Копия распечатана на факсе командования ([F.department])."
+	else
+		qdel(copy)
+		copy_line = "<font color='red'>Командный факс не найден — копия не распечатана.</font>"
+	temp = "Заявка на +1 ЧОП оформлена. Квартирмейстер должен лично доставить эту форму на ЦК к концу смены живым и не под арестом, а карго — удержать на счету нужную сумму. [copy_line]<BR><BR><A href='byond://?src=\ref[src];mainmenu=1'>OK</A>"
+
 /obj/machinery/computer/cargo/atom_init()
 	. = ..()
 	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
@@ -73,6 +122,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 		if(!requestonly)
 			dat += "<A href='byond://?src=\ref[src];viewcentcom=1'>View Centcom message</A><BR><BR>"
 
+		dat += extra_menu_html(user)
 
 	var/datum/browser/popup = new(user, "computer", name, 500, 600)
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/cargo))
