@@ -582,84 +582,6 @@ var/global/list/poly_color_palette = list(
 )
 
 
-/proc/make_poly_overlay(state, color_hex = null, icon_file = 'icons/mob/uniform_poly.dmi')
-	var/mutable_appearance/overlay = mutable_appearance(icon_file, state)
-	if(color_hex)
-		overlay.color = color_luminance_max(color_hex, 12)
-	overlay.appearance_flags |= RESET_COLOR
-	return overlay
-
-/obj/item/clothing/under/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
-	if(!poly_style || !length(poly_colors))
-		return ..()
-	if(sprite_sheet_slot == SPRITE_SHEET_HELD)
-		return ..()
-	var/datum/poly_style/eff = poly_style.get_effective(H)
-	// Blank KEEP_TOGETHER container: the caller's update_height filter covers the flattened
-	// stack as one unit, while each layer keeps its own color. The container itself must stay
-	// colorless — a parent color would multiply onto the flattened children, base tinting the pattern.
-	var/mutable_appearance/MA = new()
-	MA.layer = layer
-	MA.appearance_flags = KEEP_TOGETHER
-	MA.add_overlay(make_poly_overlay(eff.get_mob_base_state(src, H), poly_colors[1], poly_style.icon))
-	MA.add_overlay(get_poly_mob_overlays(eff, H, bloodied_icon_state))
-	return MA
-
-/obj/item/clothing/under/proc/get_poly_mob_overlays(datum/poly_style/eff, mob/living/carbon/human/H, bloodied_icon_state)
-	. = list()
-	var/detail_state = eff.get_mob_detail_state(src, H)
-	if(detail_state)
-		. += make_poly_overlay(detail_state)
-	var/pattern_state = eff.get_mob_pattern_state(src, H)
-	if(pattern_state && length(poly_colors) >= 2)
-		. += make_poly_overlay(pattern_state, poly_colors[2])
-	if(dirt_overlay && bloodied_icon_state)
-		var/mutable_appearance/blood = make_poly_overlay(bloodied_icon_state, null, 'icons/effects/blood.dmi')
-		blood.color = dirt_overlay.color
-		. += blood
-
-/obj/item/clothing/under/proc/get_poly_inventory_overlays()
-	. = list()
-	if(poly_pattern && length(poly_colors) >= 2)
-		var/pat_state = poly_style.get_inventory_pattern_state(src)
-		if(pat_state)
-			. += make_poly_overlay(pat_state, poly_colors[2])
-	if(dirt_overlay)
-		var/mutable_appearance/blood = make_poly_overlay("uniformblood", null, 'icons/effects/blood.dmi')
-		blood.color = dirt_overlay.color
-		. += blood
-
-/obj/item/clothing/under/proc/get_poly_world_overlays()
-	. = list()
-	if(poly_pattern && length(poly_colors) >= 2)
-		var/pat_state = poly_style.get_world_pattern_state(src)
-		if(pat_state)
-			. += make_poly_overlay(pat_state, poly_colors[2])
-	if(dirt_overlay)
-		var/mutable_appearance/blood = make_poly_overlay("uniformblood", null, 'icons/effects/blood.dmi')
-		blood.color = dirt_overlay.color
-		. += blood
-
-/obj/item/clothing/under/update_icon()
-	..()
-	cut_overlays()
-	if(!poly_style || !length(poly_colors))
-		return
-	icon = poly_style.icon
-	color = color_luminance_max(poly_colors[1], 12)
-	if(flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)
-		icon_state = poly_style.get_inventory_state()
-		add_overlay(get_poly_inventory_overlays())
-		return
-	icon_state = poly_style.get_world_state()
-	add_overlay(get_poly_world_overlays())
-
-/obj/item/clothing/under/update_world_icon()
-	if(poly_style && length(poly_colors))
-		update_icon()
-		return
-	..()
-
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
 	if(slot == SLOT_W_UNIFORM && fresh_laundered_until > world.time)
@@ -770,14 +692,6 @@ var/global/list/poly_color_palette = list(
 	if(!can_rollsuit(usr))
 		return
 
-	if(poly_style)                          // polychromic uses rolled_down + per-style sprites
-		if(!poly_style.can_roll)
-			to_chat(usr, "<span class='notice'>You cannot roll down a turtleneck!</span>")
-			return
-		rolled_down = !rolled_down
-		update_inv_mob()
-		return
-
 	if(copytext(item_state,-2) != "_d")
 		basecolor = item_state
 	if(icon_exists('icons/mob/uniform.dmi', "[basecolor]_d"))
@@ -787,22 +701,6 @@ var/global/list/poly_color_palette = list(
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 
 /obj/item/clothing/under/wash_act(w_color)
-	if(poly_style && w_color)
-		var/static/list/dye_to_hex = list(
-			"red"    = "#cc4444",
-			"orange" = "#cc7722",
-			"yellow" = "#daa520",
-			"green"  = "#228b22",
-			"blue"   = "#4169e1",
-			"purple" = "#7b3fa0",
-			"white"  = "#ffffff",
-			"mime"   = "#c8c8c8"
-		)
-		var/hex = dye_to_hex[w_color]
-		if(hex)
-			poly_colors = list(poly_colors[1], hex)
-			update_icon()
-			return
 	. = ..()
 	fresh_laundered_until = world.time + 5 MINUTES
 

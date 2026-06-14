@@ -99,6 +99,10 @@ Please contact me on #coderbus IRC. ~Carn x
 */
 
 /obj/item/proc/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
+	var/list/worn_override = list()
+	if(SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAY, worn_override, H, sprite_sheet_slot, layer, bloodied_icon_state) & COMPONENT_WORN_OVERLAY_OVERRIDE)
+		return worn_override[1]
+
 	var/icon_path = def_icon_path
 
 	var/t_state
