@@ -231,6 +231,9 @@
 #define COMSIG_ITEM_EQUIPPED "item_equip"
 ///from base of obj/item/dropped(): (mob/user)
 #define COMSIG_ITEM_DROPPED "item_drop"
+///from base of obj/item/get_standing_overlay(): (list/result, mob/wearer, sprite_sheet_slot, layer, bloodied_icon_state). Handler puts a replacement appearance into result[1].
+#define COMSIG_ITEM_GET_WORN_OVERLAY "item_get_worn_overlay"
+	#define COMPONENT_WORN_OVERLAY_OVERRIDE 1
 /// from base of mob/ShiftClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_SHIFTCLICKWITH "item_shiftclickwith"
 /// from base of mob/MiddleShiftClickOn(): (atom/target, mob/user)
