@@ -66,6 +66,9 @@
 
 	var/mob/M = usr
 	add_fingerprint(M)
+	if(istype(over_object, /obj/item/weapon/storage) && over_object != src)
+		dump_into(over_object, M)
+		return
 	if(isturf(over_location) && over_object != M)
 		if(M.incapacitated())
 			return
@@ -101,6 +104,52 @@
 		return
 
 	return ..()
+
+// Dumps all contents into another storage container via drag and drop.
+/obj/item/weapon/storage/proc/dump_into(obj/item/weapon/storage/target, mob/M)
+	if(target == src || M.incapacitated())
+		return
+
+	if(istype(src, /obj/item/weapon/storage/lockbox))
+		var/obj/item/weapon/storage/lockbox/L = src
+		if(L.locked)
+			return
+
+	// Don't dump into a container nested inside ourselves.
+	var/atom/check = target.loc
+	while(check)
+		if(check == src)
+			return
+		check = check.loc
+
+	if(!M.Adjacent(target) || !(loc == M || Adjacent(M)))
+		return
+
+	if(!contents.len)
+		to_chat(M, "<span class='notice'>[src] is empty.</span>")
+		return
+
+	var/inserted = 0
+	for(var/obj/item/I in contents.Copy())
+		if(!target.can_be_inserted(I, stop_messages = TRUE))
+			continue
+		remove_from_storage(I, null, NoUpdate = TRUE)
+		target.handle_item_insertion(I, prevent_warning = TRUE, NoUpdate = TRUE)
+		I.add_fingerprint(M)
+		inserted++
+
+	if(!inserted)
+		to_chat(M, "<span class='notice'>You fail to dump anything from [src] into [target].</span>")
+		return
+
+	finish_bulk_removal()
+	target.update_ui_after_item_insertion()
+	target.add_fingerprint(M)
+	if(length(use_sound))
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
+	M.visible_message(
+		"<span class='notice'>[M] dumps the contents of [src] into [target].</span>",
+		"<span class='notice'>You dump the contents of [src] into [target].</span>")
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list(  )
