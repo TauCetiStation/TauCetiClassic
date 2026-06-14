@@ -130,8 +130,24 @@
 		to_chat(M, "<span class='notice'>[src] is empty.</span>")
 		return
 
+	// Collect what actually fits before we commit to the transfer.
+	var/list/to_dump = list()
+	for(var/obj/item/I in contents)
+		if(target.can_be_inserted(I, stop_messages = TRUE))
+			to_dump += I
+
+	if(!to_dump.len)
+		to_chat(M, "<span class='notice'>You fail to dump anything from [src] into [target].</span>")
+		return
+
+	to_chat(M, "<span class='notice'>You start dumping the contents of [src] into [target]...</span>")
+	if(!do_after(M, 0.5 SECONDS, target = target))
+		return
+
 	var/inserted = 0
-	for(var/obj/item/I in contents.Copy())
+	for(var/obj/item/I in to_dump)
+		if(QDELETED(I) || I.loc != src)
+			continue
 		if(!target.can_be_inserted(I, stop_messages = TRUE))
 			continue
 		remove_from_storage(I, null, NoUpdate = TRUE)
