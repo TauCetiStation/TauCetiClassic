@@ -633,10 +633,6 @@
 
 /obj/mecha/attackby(obj/item/weapon/W, mob/user)
 
-	if(istype(W, /obj/item/weapon/card/emag))
-		emag_act(user)
-		return
-
 	if(isMMI(W))
 		if(mmi_move_inside(W,user))
 			to_chat(user, "[src]-MMI interface initialized successfuly")
