@@ -229,6 +229,7 @@
 	if(eyecheck() >= FLASHES_FULL_PROTECTION)
 		flash_eyes()
 
+	var/weapon_message = "Explosive Blast"
 	var/bomb_protection = getarmor(null, BOMB)
 	var/b_loss = null //brute damage
 	var/f_loss = null //burn (fire) damage
@@ -262,14 +263,13 @@
 
 	// focus most of the blast on one organ
 	var/obj/item/organ/external/BP = pick(bodyparts)
-	apply_damage(b_loss * 0.9, BRUTE, BP, bomb_protection, used_weapon = "Explosive blast")
-	apply_damage(f_loss * 0.9, BURN, BP, bomb_protection, used_weapon = "Explosive blast")
+	apply_damage(b_loss * 0.9, BRUTE, BP, bomb_protection, used_weapon = weapon_message)
+	apply_damage(f_loss * 0.9, BURN, BP, bomb_protection, used_weapon = weapon_message)
 
 	// distribute the remaining 10% on all limbs equally
-	b_loss *= 0.1
-	f_loss *= 0.1
+	b_loss *= 0.5
+	f_loss *= 0.5
 
-	var/weapon_message = "Explosive Blast"
 	take_overall_damage(b_loss, f_loss, used_weapon = weapon_message)
 
 /mob/living/carbon/human/airlock_crush_act()
