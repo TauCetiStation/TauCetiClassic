@@ -1,19 +1,27 @@
 /*
- * Cargo Guard edict ("ЧОП Карго") lifecycle.
+ * Cargo Guard edict ("ЧОП Карго").
  *
- * setup_cargo_guard_edict()   - called at round start: resets the request flag and, if the edict
- *                               is active this shift, spawns the reminder sheets (QM office + bridge).
- * resolve_cargo_guard_edict() - called at round end (ticker/declare_completion): activates or
- *                               revokes the edict in the DB based on what happened this shift.
+ * on_round_start() - resets the per-round request state, (re)starts the request window and, if the
+ *                    edict is active this shift, spawns the reminder sheets (QM office + bridge).
+ * on_round_end()   - activates or revokes the edict in the DB based on what happened this shift.
  *
  * "End of shift / shuttle arrival at CentComm" is the round-end moment: players who escaped on the
  * emergency shuttle are on a CentComm z-level (is_centcom_level), which is how we read "alive on the
  * shuttle at CC".
  */
+/datum/edict/cargo_guard
+	name = EDICT_CARGO_GUARD
+
+	// Request window: the QM may request another slot only while this cooldown is running (first
+	// CARGO_GUARD_REQUEST_WINDOW of the shift). Started fresh every round in on_round_start().
+	COOLDOWN_DECLARE(request_window)
+	// Set once the QM console prints a request this round, to prevent re-printing.
+	var/requested = FALSE
 
 // Round start: refresh per-round state and lay out the reminder paperwork when the law is in force.
-/proc/setup_cargo_guard_edict()
-	global.cargo_guard_edict_requested = FALSE
+/datum/edict/cargo_guard/on_round_start()
+	requested = FALSE
+	COOLDOWN_START(src, request_window, CARGO_GUARD_REQUEST_WINDOW)
 
 	if(!is_edict_active(EDICT_CARGO_GUARD))
 		return
@@ -29,10 +37,8 @@
 // Round end: recompute the edict's value - the number of Cargo Guard slots - per the scaling rules.
 // Below the population floor the law cannot change at all. Any failure is a FULL reset to 0; growth
 // is at most +1 per shift and is gated on the QM requesting it and cargo affording the next slot.
-/proc/resolve_cargo_guard_edict()
-	if(!global.available_edicts[EDICT_CARGO_GUARD])
-		return
-	if(edict_living_player_count() < CARGO_GUARD_MIN_POP)
+/datum/edict/cargo_guard/on_round_end()
+	if(num_players() < CARGO_GUARD_MIN_POP)
 		return
 
 	var/n = get_edict_value(EDICT_CARGO_GUARD)
@@ -44,13 +50,13 @@
 			set_edict_value(EDICT_CARGO_GUARD, 0)
 			return
 		// 2. More security escaped than cargo -> full reset.
-		var/cargo = edict_count_escapees_with_role(list(JOB_QM, JOB_CARGO_TECH, JOB_MINER, JOB_RECYCLER, JOB_CARGO_PSC))
-		var/security = edict_count_escapees_with_role(list(JOB_OFFICER, JOB_HOS, JOB_WARDEN))
+		var/cargo = count_escapees_with_role(list(JOB_QM, JOB_CARGO_TECH, JOB_MINER, JOB_RECYCLER, JOB_CARGO_PSC))
+		var/security = count_escapees_with_role(list(JOB_OFFICER, JOB_HOS, JOB_WARDEN))
 		if(cargo < security)
 			set_edict_value(EDICT_CARGO_GUARD, 0)
 			return
 		// 3. Command delivered the stamped repeal and arrested the guard -> full reset.
-		if(cargo_guard_command_revoke_satisfied())
+		if(command_revoke_satisfied())
 			set_edict_value(EDICT_CARGO_GUARD, 0)
 			return
 
@@ -63,7 +69,7 @@
 
 // The QM personally delivered the request form to CentComm, alive and not under arrest. Returns the
 // QM mob (used as the actor for the DB record), or null.
-/proc/find_qm_with_form_at_centcom()
+/datum/edict/cargo_guard/proc/find_qm_with_form_at_centcom()
 	for(var/mob/living/carbon/human/H in global.human_list)
 		if(H.stat == DEAD || !H.mind)
 			continue
@@ -80,7 +86,7 @@
 
 // Command revocation: an edict sheet stamped by Captain + HoS sits at CentComm, both of them are
 // alive at CC, and every living cargo guard is handcuffed aboard the emergency shuttle.
-/proc/cargo_guard_command_revoke_satisfied()
+/datum/edict/cargo_guard/proc/command_revoke_satisfied()
 	var/sheet_delivered = FALSE
 	for(var/obj/item/weapon/paper/cargo_guard_edict/P in global.cargo_guard_edict_papers)
 		var/turf/T = get_turf(P)
@@ -92,25 +98,16 @@
 	if(!sheet_delivered)
 		return FALSE
 
-	if(!edict_head_alive_at_centcom(JOB_CAPTAIN))
+	if(!head_alive_at_centcom(JOB_CAPTAIN))
 		return FALSE
-	if(!edict_head_alive_at_centcom(JOB_HOS))
+	if(!head_alive_at_centcom(JOB_HOS))
 		return FALSE
 
-	return all_cargo_guards_arrested_on_shuttle()
-
-// --- helpers ---
-
-// Living players present at round end (excludes lobby/observers). Used for the population floor.
-/proc/edict_living_player_count()
-	. = 0
-	for(var/mob/M in global.mob_list)
-		if(M.client && M.mind && M.stat != DEAD && !isnewplayer(M))
-			.++
+	return all_guards_arrested_on_shuttle()
 
 // Counts connected players with one of the given roles who escaped: alive and on a CentComm
 // z-level at round end. SSD/abandoned bodies (no client) are not counted.
-/proc/edict_count_escapees_with_role(list/roles)
+/datum/edict/cargo_guard/proc/count_escapees_with_role(list/roles)
 	. = 0
 	for(var/mob/living/carbon/human/H in global.human_list)
 		if(H.stat == DEAD || !H.mind || !H.client)
@@ -121,7 +118,7 @@
 		if(T && is_centcom_level(T.z))
 			.++
 
-/proc/edict_head_alive_at_centcom(role)
+/datum/edict/cargo_guard/proc/head_alive_at_centcom(role)
 	for(var/mob/living/carbon/human/H in global.human_list)
 		if(H.stat == DEAD || !H.mind)
 			continue
@@ -134,7 +131,7 @@
 
 // TRUE only if there is at least one living cargo guard and EVERY living guard is handcuffed aboard
 // the escape shuttle. Dead guards are ignored (already neutralized); one free living guard blocks it.
-/proc/all_cargo_guards_arrested_on_shuttle()
+/datum/edict/cargo_guard/proc/all_guards_arrested_on_shuttle()
 	var/found = FALSE
 	for(var/mob/living/carbon/human/H in global.human_list)
 		if(!H.mind || H.mind.assigned_role != JOB_CARGO_PSC)

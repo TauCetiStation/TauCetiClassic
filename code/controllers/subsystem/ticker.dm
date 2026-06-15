@@ -279,8 +279,6 @@ SUBSYSTEM_DEF(ticker)
 	round_start_time = world.time
 	round_start_realtime = world.realtime
 
-	setup_cargo_guard_edict()
-
 	if(establish_db_connection("erro_round"))
 		var/DBQuery/query_round_game_mode = dbcon.NewQuery("UPDATE erro_round SET start_datetime = Now(), map_name = '[sanitize_sql(SSmapping.config.map_name)]' WHERE id = [global.round_id]")
 		query_round_game_mode.Execute()
@@ -551,7 +549,7 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, "<span class='notice bold'>OOC-канал включен для всех!</span>")
 		ooc_allowed = TRUE
 
-	resolve_cargo_guard_edict()
+	SEND_SIGNAL(src, COMSIG_TICKER_DECLARE_COMPLETION)
 
 	var/station_evacuated
 	if(SSshuttle.location > 0)
