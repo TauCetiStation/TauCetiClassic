@@ -266,9 +266,9 @@
 	apply_damage(b_loss * 0.9, BRUTE, BP, bomb_protection, used_weapon = weapon_message)
 	apply_damage(f_loss * 0.9, BURN, BP, bomb_protection, used_weapon = weapon_message)
 
-	// distribute the remaining 10% on all limbs equally
-	b_loss *= 0.5
-	f_loss *= 0.5
+	// minor "behind the armor" damage from the blast wave across the entire body
+	b_loss *= 0.25
+	f_loss *= 0.25
 
 	take_overall_damage(b_loss, f_loss, used_weapon = weapon_message)
 
