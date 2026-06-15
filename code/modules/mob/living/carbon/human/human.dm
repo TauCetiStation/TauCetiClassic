@@ -226,7 +226,7 @@
 		rig_setup_stat(rig)
 
 /mob/living/carbon/human/ex_act(severity)
-	if(eyecheck() >= FLASHES_FULL_PROTECTION)
+	if(eyecheck() <= FLASHES_FULL_PROTECTION)
 		flash_eyes()
 
 	var/weapon_message = "Explosive Blast"
