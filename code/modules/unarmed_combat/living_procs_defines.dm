@@ -280,6 +280,7 @@
 		var/mob/living/carbon/human/H = src
 		BP = H.get_bodypart(ran_zone(BP))
 		armor_block = run_armor_check(BP, MELEE)
+		H.try_groin_agony(BP, armor_block)
 
 	if(damSound)
 		playsound(src, damSound, VOL_EFFECTS_MASTER)

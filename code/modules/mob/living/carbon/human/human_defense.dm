@@ -1,4 +1,6 @@
 #define PROTECTION_TO_MULTIPLE(p) ((100 - min(p, 100)) * 0.01)
+#define GROIN_AGONY_CHANCE 35
+#define GROIN_AGONY_DAMAGE 100
 /mob/living/carbon/proc/can_catch_item()
 	if(!in_throw_mode)
 		return
@@ -227,6 +229,22 @@
 
 	return protection
 
+/mob/living/carbon/human/proc/try_groin_agony(obj/item/organ/external/BP, armor)
+	if(gender != MALE)
+		return
+	if(!BP || BP.body_zone != BP_GROIN)
+		return
+	if(armor > 0)
+		return
+	if(!prob(GROIN_AGONY_CHANCE))
+		return
+
+	apply_effect(GROIN_AGONY_DAMAGE, AGONY, 0)
+	visible_message("<span class='userdanger'>[src] doubles over in pain!</span>")
+
+#undef GROIN_AGONY_CHANCE
+#undef GROIN_AGONY_DAMAGE
+
 /mob/living/carbon/human/proc/check_head_coverage()
 
 	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform)
@@ -330,6 +348,7 @@
 
 	var/impact_direction = get_impact_direction_from(user)
 	var/datum/wound/created_wound = apply_damage(force_with_melee_skill, I.damtype, BP, armor, damage_flags, I, impact_direction = impact_direction)
+	try_groin_agony(BP, armor)
 
 	//Melee weapon embedded object code.
 	if(I.damtype == BRUTE && !I.anchored && I.can_embed && !I.is_robot_module())
