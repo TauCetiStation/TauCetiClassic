@@ -9,7 +9,7 @@
 		fail("Monkey does not have PASSTABLE by default.")
 		qdel(monkey)
 		qdel(table)
-		return
+		return FALSE
 
 	monkey.SetCrawling(TRUE)
 
@@ -17,7 +17,7 @@
 		fail("Monkey does not have PASSCRAWL after SetCrawling(TRUE).")
 		qdel(monkey)
 		qdel(table)
-		return
+		return FALSE
 
 	var/initial_layer = monkey.layer
 
@@ -25,13 +25,13 @@
 		fail("Crawling monkey cannot pass table.")
 		qdel(monkey)
 		qdel(table)
-		return
+		return FALSE
 
 	if(monkey.layer != initial_layer)
 		fail("CanPass changed crawling monkey layer to [monkey.layer], expected [initial_layer].")
 		qdel(monkey)
 		qdel(table)
-		return
+		return FALSE
 
 	table.Crossed(monkey)
 
@@ -39,19 +39,19 @@
 		fail("Crawling monkey layer is [monkey.layer], expected [BELOW_CONTAINERS_LAYER] under table.")
 		qdel(monkey)
 		qdel(table)
-		return
+		return FALSE
 
 	if(!table.CheckExit(monkey, null))
 		fail("Crawling monkey cannot exit table.")
 		qdel(monkey)
 		qdel(table)
-		return
+		return FALSE
 
 	if(monkey.layer != BELOW_CONTAINERS_LAYER)
 		fail("CheckExit changed crawling monkey layer to [monkey.layer], expected [BELOW_CONTAINERS_LAYER].")
 		qdel(monkey)
 		qdel(table)
-		return
+		return FALSE
 
 	table.Uncrossed(monkey)
 
@@ -59,8 +59,9 @@
 		fail("Crawling monkey layer is [monkey.layer], expected [MOB_LAYER] after leaving table.")
 		qdel(monkey)
 		qdel(table)
-		return
+		return FALSE
 
 	qdel(monkey)
 	qdel(table)
 	pass("Crawling monkeys change table layer only after crossing state changes.")
+	return TRUE
