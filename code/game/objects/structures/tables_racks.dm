@@ -130,12 +130,11 @@
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover,/obj/item/projectile))
 		return (check_cover(mover,target))
-	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return 1
-	// todo: we should not change mover properties here, this method is only for attempt to pass
-	// part of future mob layer / crawl refactoring
+	// PASSCRAWL должен идти раньше PASSTABLE: у обезьянок PASSTABLE есть всегда,
+	// но при ползании они должны попадать именно в логику прохода под столом.
 	if(buckled_mob != mover && iscarbon(mover) && mover.checkpass(PASSCRAWL))
-		mover.layer = 2.7
+		return 1
+	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
 		return 1
@@ -174,10 +173,11 @@
 	return 1
 
 /obj/structure/table/CheckExit(atom/movable/O, target)
-	if(istype(O) && O.checkpass(PASSTABLE))
-		return 1
+	// CheckExit только проверяет возможность выхода. Движение может сорваться
+	// об стену или другой блокер, поэтому слой здесь менять нельзя.
 	if(buckled_mob != O && iscarbon(O) && O.checkpass(PASSCRAWL))
-		O.layer = 4.0
+		return 1
+	if(istype(O) && O.checkpass(PASSTABLE))
 		return 1
 	if (flipped)
 		if (get_dir(loc, target) == dir)
@@ -185,6 +185,20 @@
 		else
 			return 1
 	return 1
+
+/obj/structure/table/Crossed(atom/movable/AM)
+	. = ..()
+	// Crossed вызывается после успешного входа на тайл стола,
+	// поэтому только здесь безопасно прятать ползущего моба под стол.
+	if(buckled_mob != AM && iscarbon(AM) && AM.checkpass(PASSCRAWL))
+		AM.layer = BELOW_CONTAINERS_LAYER
+
+/obj/structure/table/Uncrossed(atom/movable/AM)
+	. = ..()
+	// Uncrossed вызывается после успешного ухода со стола,
+	// поэтому обычный слой моба возвращаем здесь.
+	if(buckled_mob != AM && iscarbon(AM) && AM.checkpass(PASSCRAWL))
+		AM.layer = MOB_LAYER
 
 /obj/structure/table/proc/laser_cut(obj/item/I, mob/user)
 	user.do_attack_animation(src)
