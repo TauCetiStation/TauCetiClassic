@@ -263,7 +263,7 @@
 	// focus most of the blast on one organ
 	var/obj/item/organ/external/BP = pick(bodyparts)
 	apply_damage(b_loss * 0.9, BRUTE, BP, bomb_protection, used_weapon = "Explosive blast")
-	apply_damage(f_loss * 0.9, BRUTE, BP, bomb_protection, used_weapon = "Explosive blast")
+	apply_damage(f_loss * 0.9, BURN, BP, bomb_protection, used_weapon = "Explosive blast")
 
 	// distribute the remaining 10% on all limbs equally
 	b_loss *= 0.1
