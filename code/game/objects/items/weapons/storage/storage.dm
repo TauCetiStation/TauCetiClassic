@@ -116,14 +116,16 @@
 		if(L.locked)
 			return
 
-	// Don't dump into a container nested inside ourselves.
+	// Block dumping into a container nested inside us (e.g. a box that sits in this very bag) to avoid item dupes.
 	var/atom/check = target.loc
 	while(check)
 		if(check == src)
 			return
 		check = check.loc
 
-	if(!M.Adjacent(target) || !(loc == M || Adjacent(M)))
+	// User must reach the target, and the source must be in their hands/inventory or within reach on the ground.
+	var/source_in_reach = (loc == M) || Adjacent(M)
+	if(!M.Adjacent(target) || !source_in_reach)
 		return
 
 	if(!contents.len)
@@ -193,7 +195,7 @@
 	if (length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 
-	animate_parent()
+	squish()
 	prepare_ui()
 	storage_ui.on_open(user)
 	show_to(user)
@@ -343,24 +345,21 @@
 	return TRUE
 
 /obj/item/weapon/storage/proc/update_ui_after_item_insertion()
-	animate_parent()
+	squish()
 	prepare_ui()
 	if(storage_ui)
 		storage_ui.on_insertion(usr)
 
 /obj/item/weapon/storage/proc/update_ui_after_item_removal()
-	animate_parent()
+	squish()
 	prepare_ui()
 	if(storage_ui)
 		storage_ui.on_post_remove(usr)
 
 // Spiffy squish animation to represent opening and shuffling contents.
-/obj/item/weapon/storage/proc/animate_parent()
-	if(!animated)
-		return
-	var/matrix/old_matrix = transform
-	animate(src, time = 1.5, loop = 0, transform = transform.Scale(1.07, 0.9))
-	animate(time = 2, transform = old_matrix)
+/obj/item/weapon/storage/proc/squish()
+	if(animated)
+		do_squish_animation()
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
 /obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
