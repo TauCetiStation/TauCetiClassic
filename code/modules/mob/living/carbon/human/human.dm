@@ -230,7 +230,7 @@
 		flash_eyes()
 
 	var/weapon_message = "Explosive Blast"
-	var/bomb_protection = getarmor(null, BOMB)
+	var/bomb_protection = run_armor_check(null, BOMB)
 	var/b_loss = null //brute damage
 	var/f_loss = null //burn (fire) damage
 	switch (severity)
@@ -263,8 +263,8 @@
 
 	// focus most of the blast on one organ
 	var/obj/item/organ/external/BP = pick(bodyparts)
-	apply_damage(b_loss * 0.9, BRUTE, BP, bomb_protection, used_weapon = weapon_message)
-	apply_damage(f_loss * 0.9, BURN, BP, bomb_protection, used_weapon = weapon_message)
+	apply_damage(b_loss * 0.9, BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
+	apply_damage(f_loss * 0.9, BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
 
 	// minor "behind the armor" damage from the blast wave across the entire body
 	b_loss *= 0.25
