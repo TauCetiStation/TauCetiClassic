@@ -44451,7 +44451,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bAw" = (
-/turf/simulated/wall/green,
+/turf/simulated/wall,
 /area/station/medical/patients_rooms)
 "bAy" = (
 /turf/simulated/floor{
@@ -46319,9 +46319,6 @@
 /obj/item/weapon/storage/backpack/santabag,
 /turf/simulated/floor/wood,
 /area/station/civilian/theatre)
-"bDV" = (
-/turf/simulated/wall/green,
-/area/station/medical/medbreak)
 "bDW" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -48806,9 +48803,7 @@
 /obj/item/weapon/storage/fancy/donut_box{
 	pixel_y = 8
 	},
-/obj/structure/table/reinforced{
-	damage_deflection = ы
-	},
+/obj/structure/table/reinforced,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -49781,9 +49776,6 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/primary/port)
-"bKc" = (
-/turf/simulated/wall/r_wall/green,
-/area/station/medical/cmo)
 "bKd" = (
 /obj/machinery/newscaster{
 	pixel_x = 30
@@ -129837,7 +129829,7 @@ bAw
 bAw
 bAw
 bAw
-bKc
+bJm
 flb
 eUb
 dMb
@@ -130094,7 +130086,7 @@ bAw
 bCZ
 bGA
 bIc
-bKc
+bJm
 gTb
 fSb
 fNb
@@ -130351,7 +130343,7 @@ bAw
 bCf
 bFb
 aiH
-bKc
+bJm
 lSb
 bKW
 bVC
@@ -130608,7 +130600,7 @@ bAw
 bxt
 bGe
 bAq
-bKc
+bJm
 mbb
 bKW
 lZb
@@ -130865,7 +130857,7 @@ aTq
 bGi
 bFj
 bIk
-bKc
+bJm
 pqb
 oDb
 oCb
@@ -131122,7 +131114,7 @@ bFn
 bCe
 bGP
 bIr
-bKc
+bJm
 aAZ
 pBb
 pzb
@@ -131379,9 +131371,9 @@ aTq
 dqo
 iyQ
 gax
-bKc
-bKc
-bKc
+bJm
+bJm
+bJm
 bJm
 bJm
 bJm
@@ -132660,16 +132652,16 @@ bII
 bMC
 anG
 hKb
-bDV
-bDV
+bHY
+bHY
 bJV
-bDV
-bDV
-bDV
-bDV
-bDV
-bDV
-bDV
+bHY
+bHY
+bHY
+bHY
+bHY
+bHY
+bHY
 bgc
 bgh
 cGE
@@ -132926,7 +132918,7 @@ bNR
 bIw
 bCm
 bDS
-bDV
+bHY
 bgd
 bgg
 bHY
@@ -133440,7 +133432,7 @@ sBb
 bKu
 bQi
 bRt
-bDV
+bHY
 bTh
 cLg
 bHY
@@ -133688,7 +133680,7 @@ cJo
 bxi
 bOc
 aSl
-bDV
+bHY
 bER
 bHQ
 bKA
@@ -133697,7 +133689,7 @@ bNU
 bPv
 bRN
 chb
-bDV
+bHY
 bHY
 bHY
 bHY
@@ -133945,16 +133937,16 @@ nOb
 bxi
 bxi
 bxi
-bDV
+bHY
 jCH
-bDV
-bDV
-bDV
-bDV
-bDV
-bDV
-bDV
-bDV
+bHY
+bHY
+bHY
+bHY
+bHY
+bHY
+bHY
+bHY
 bej
 cak
 cGc
