@@ -10,12 +10,7 @@
 	var/sound_path = "sound/musical_instruments/piano"
 
 /obj/structure/device/piano/unable_to_play(mob/living/user)
-    if(isrobot(user))
-        var/mob/living/silicon/robot/R = user
-        if(R.incapacitated() || !Adjacent(R) || !anchored)
-            return TRUE
-
-    return ..()
+	return ..() || !Adjacent(user) || !anchored
 
 /obj/structure/device/piano/atom_init()
 	. = ..()
