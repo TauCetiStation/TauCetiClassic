@@ -46,9 +46,8 @@
 /obj/item/device/synth/unable_to_play(mob/living/user)
 	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user
-		if(R.incapacitated())
-			return TRUE
-		return (R.module_active != src)
+		if(R.module_active != src)
+			return FALSE
 
 	return ..() || loc != user
 
