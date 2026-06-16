@@ -7,7 +7,7 @@
 	// dynamic lighting subsystem uses lighting_object's for luminosity
 	luminosity = 0
 
-	var/turf/basetype = /turf/environment/space
+	var/basetype = /turf/environment/space
 	var/can_deconstruct = FALSE
 
 	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
@@ -339,10 +339,29 @@
 	if(turf_type)
 		ChangeTurf(turf_type)
 
+/turf/proc/get_base_turf_type()
+	if(islist(basetype))
+		var/list/base_turfs = basetype
+		if(base_turfs.len)
+			return base_turfs[base_turfs.len]
+		return /turf/environment/space
+	return basetype
+
 //Creates a new turf
 /turf/proc/ChangeTurf(path, list/arguments = list())
 	if (!path)
 		return
+
+	var/new_basetype
+	if(islist(path))
+		var/list/base_turfs = path
+		if(!base_turfs.len)
+			return
+		path = base_turfs[base_turfs.len]
+		if(base_turfs.len > 1)
+			new_basetype = base_turfs.Copy(1, base_turfs.len)
+		else
+			new_basetype = path
 
 	clean_turf_decals()
 
@@ -356,6 +375,8 @@
 			path = env_turf_type
 
 	if (path == type)
+		if(new_basetype)
+			basetype = new_basetype
 		return src
 
 	// Back all this data up, so we can set it after the turf replace.
@@ -440,7 +461,7 @@
 
 	W.levelupdate()
 
-	basetype = old_basetype
+	basetype = new_basetype || old_basetype
 
 	queue_smooth_neighbors(W)
 
@@ -471,7 +492,7 @@
 	return W
 
 /turf/proc/MoveTurf(turf/target, move_unmovable = 0)
-	if(type != basetype || move_unmovable)
+	if(type != get_base_turf_type() || move_unmovable)
 		. = target.ChangeTurf(src.type)
 		ChangeTurf(basetype)
 	else

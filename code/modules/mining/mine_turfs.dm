@@ -605,7 +605,8 @@
 
 	var/turf/t
 	if(SSticker.current_state > GAME_STATE_SETTING_UP)
-		t = new basetype(T)
+		var/base_turf = get_base_turf_type()
+		t = new base_turf(T)
 	else
 		t = T.ChangeTurf(basetype)
 	spawn(2)
