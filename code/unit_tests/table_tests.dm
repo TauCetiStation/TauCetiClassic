@@ -14,25 +14,21 @@
 		return FALSE
 
 	var/obj/structure/table/existing_table = new(T)
-	var/mob/living/carbon/human/user = new(T)
 	var/obj/item/weapon/table_parts/parts = new(T)
 
-	if(parts.can_place(get_turf(user)))
+	if(parts.can_place(T))
 		fail("Table parts can be placed on a turf that already contains a table.")
 		qdel(parts)
-		qdel(user)
 		qdel(existing_table)
 		return FALSE
 
 	if(existing_table.loc != T)
 		fail("Existing table was moved or deleted while checking table parts placement.")
 		qdel(parts)
-		qdel(user)
 		qdel(existing_table)
 		return FALSE
 
 	qdel(parts)
-	qdel(user)
 	qdel(existing_table)
 
 	pass("Table parts cannot be placed on an existing table.")
