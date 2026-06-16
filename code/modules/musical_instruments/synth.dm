@@ -54,9 +54,7 @@
 /obj/item/device/synth/attack_self(mob/living/user)
 	if(unable_to_play(user))
 		return
-
-	if(MP)
-		MP.interact(user)
+	MP.interact(user)
 
 /obj/item/device/synth/examine(mob/user)
 	. = ..()
