@@ -340,12 +340,26 @@
 		ChangeTurf(turf_type)
 
 /turf/proc/get_base_turf_type()
+	var/base_turfs = get_base_turf_stack()
+	if(islist(base_turfs))
+		return base_turfs[base_turfs.len]
+	return base_turfs
+
+/turf/proc/get_base_turf_stack(include_self = FALSE)
+	var/list/base_turfs
 	if(islist(basetype))
-		var/list/base_turfs = basetype
-		if(base_turfs.len)
-			return base_turfs[base_turfs.len]
-		return /turf/environment/space
-	return basetype
+		base_turfs = basetype.Copy()
+	else if(basetype)
+		base_turfs = list(basetype)
+	else
+		base_turfs = list(/turf/environment/space)
+
+	if(include_self && base_turfs[base_turfs.len] != type)
+		base_turfs += type
+
+	if(base_turfs.len == 1)
+		return base_turfs[1]
+	return base_turfs
 
 //Creates a new turf
 /turf/proc/ChangeTurf(path, list/arguments = list())
@@ -493,7 +507,11 @@
 
 /turf/proc/MoveTurf(turf/target, move_unmovable = 0)
 	if(type != get_base_turf_type() || move_unmovable)
+		var/target_basetype = target.get_base_turf_stack(TRUE)
 		. = target.ChangeTurf(src.type)
+		var/turf/moved_turf = .
+		if(moved_turf)
+			moved_turf.basetype = target_basetype
 		ChangeTurf(basetype)
 	else
 		return target
