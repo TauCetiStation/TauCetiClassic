@@ -340,15 +340,18 @@
 		ChangeTurf(turf_type)
 
 /turf/proc/get_base_turf_type()
-	var/base_turfs = get_base_turf_stack()
-	if(islist(base_turfs))
+	if(islist(basetype))
+		var/list/base_turfs = basetype
+		if(!base_turfs.len)
+			return /turf/environment/space
 		return base_turfs[base_turfs.len]
-	return base_turfs
+	return basetype
 
 /turf/proc/get_base_turf_stack(include_self = FALSE)
 	var/list/base_turfs
 	if(islist(basetype))
-		base_turfs = basetype.Copy()
+		var/list/base_stack = basetype
+		base_turfs = base_stack.Copy()
 	else if(basetype)
 		base_turfs = list(basetype)
 	else
