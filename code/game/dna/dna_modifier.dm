@@ -758,6 +758,12 @@
 				if("saveDisk")
 					if(!buffer_save_disk(bufferId))
 						return FALSE
+
+	// TODO: Temporary meassure, move this to parent class
+	if(last_keyboard_sound <= world.time && iscarbon(usr))
+		playsound(src, pick(SOUNDIN_KEYBOARD), VOL_EFFECTS_MASTER, null, FALSE)
+		last_keyboard_sound = world.time + 8
+
 	return TRUE
 
 /////////////////////////// DNA MACHINES
