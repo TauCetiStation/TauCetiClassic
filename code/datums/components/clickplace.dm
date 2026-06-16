@@ -72,6 +72,18 @@
 		return FALSE
 	return TRUE
 
+/datum/component/clickplace/proc/get_click_offset(atom/place_on, list/click_params)
+	if(!click_params || !click_params[ICON_X] || !click_params[ICON_Y])
+		return null
+
+	var/icon_size = world.icon_size
+	var/half_icon_size = icon_size * 0.5
+
+	return list(
+		clamp(text2num(click_params[ICON_X]) + place_on.pixel_x, 0, icon_size) - half_icon_size,
+		clamp(text2num(click_params[ICON_Y]) + place_on.pixel_y, 0, icon_size) - half_icon_size
+	)
+
 /datum/component/clickplace/proc/try_place_click(datum/source, obj/item/I,  mob/living/user, params)
 	if(istype(I, /obj/item/weapon/grab))
 		try_slam(I)
@@ -80,23 +92,19 @@
 		return NONE
 
 	var/list/click_params = params2list(params)
-	//Center the icon where the user clicked.
-	if(!click_params || !click_params[ICON_X] || !click_params[ICON_Y])
+	var/atom/A = parent
+	var/list/final_offset = get_click_offset(A, click_params)
+	if(!final_offset)
 		return
 
-	var/icon_size = world.icon_size
-	var/half_icon_size = icon_size * 0.5
+	var/old_pixel_x = I.pixel_x
+	var/old_pixel_y = I.pixel_y
 
-	var/atom/A = parent
-
-	var/p_x = text2num(click_params[ICON_X]) + A.pixel_x
-	var/p_y = text2num(click_params[ICON_Y]) + A.pixel_y
-
-	p_x = clamp(p_x, 0, icon_size) - half_icon_size - I.pixel_x
-	p_y = clamp(p_y, 0, icon_size) - half_icon_size - I.pixel_y
-
-	if(!user.drop_from_inventory(I, A.loc, additional_pixel_x=p_x, additional_pixel_y=p_y))
+	if(!user.drop_from_inventory(I, A.loc, additional_pixel_x = final_offset[1] - old_pixel_x, additional_pixel_y = final_offset[2] - old_pixel_y))
 		return FALSE
+	if(!QDELETED(I) && I.loc)
+		I.pixel_x = final_offset[1]
+		I.pixel_y = final_offset[2]
 
 	if(on_place)
 		on_place.Invoke(A, I, user, params)
