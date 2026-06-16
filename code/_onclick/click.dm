@@ -78,6 +78,25 @@
 		cob_click(client, modifiers)
 		return
 
+	if(table_blocks_under_interaction(src, A))
+		var/allow_under_table_click = FALSE
+		if(modifiers[SHIFT_CLICK] && modifiers[MIDDLE_CLICK])
+			allow_under_table_click = TRUE
+		else if(modifiers[SHIFT_CLICK] && modifiers[CTRL_CLICK])
+			return
+		else if(modifiers[MIDDLE_CLICK])
+			allow_under_table_click = TRUE
+		else if(modifiers[SHIFT_CLICK])
+			allow_under_table_click = TRUE
+		else if(modifiers[ALT_CLICK])
+			return
+		else if(modifiers[CTRL_CLICK])
+			allow_under_table_click = TRUE
+		else
+			return
+		if(!allow_under_table_click)
+			return
+
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, A, params) & COMPONENT_CANCEL_CLICK)
 		return
 
