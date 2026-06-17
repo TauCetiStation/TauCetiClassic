@@ -44,7 +44,18 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	new/datum/stack_recipe("plastic knife", /obj/item/weapon/kitchenknife/plastic, 1, build_outline = TRUE), \
 	new/datum/stack_recipe("plastic bag", /obj/item/weapon/storage/bag/plasticbag, 3, build_outline = TRUE), \
 	new/datum/stack_recipe("plastic noticeboard", /obj/item/noticeboard_frame/plastic, 10, time = 20, build_outline = TRUE), \
-	new/datum/stack_recipe("sign backing", /obj/item/sign_backing, 4, build_outline = TRUE)
+	new/datum/stack_recipe("sign backing", /obj/item/sign_backing, 4, build_outline = TRUE), \
+	null, \
+		new/datum/stack_recipe_list("curtains", list(
+			new/datum/stack_recipe("curtain", /obj/structure/curtain, 5, max_per_place = 1, build_outline = TRUE),
+
+			new/datum/stack_recipe("black curtain", /obj/structure/curtain/black, 5, max_per_place = 1, build_outline = TRUE),
+			new/datum/stack_recipe("plastic curtain", /obj/structure/curtain/medical, 5, max_per_place = 1, build_outline = TRUE),
+			new/datum/stack_recipe("privacy curtain", /obj/structure/curtain/open/privacy, 5, max_per_place = 1, build_outline = TRUE),
+			new/datum/stack_recipe("shower curtain", /obj/structure/curtain/open/shower, 5, max_per_place = 1, build_outline = TRUE),
+			new/datum/stack_recipe("engineering shower curtain", /obj/structure/curtain/open/shower/engineering, 5, max_per_place = 1, build_outline = TRUE),
+			new/datum/stack_recipe("security shower curtain", /obj/structure/curtain/open/shower/security, 5, max_per_place = 1, build_outline = TRUE),
+		), 5)
 	)
 
 var/global/list/datum/stack_recipe/gold_recipes = list ( \

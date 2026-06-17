@@ -5,6 +5,7 @@
 	layer = INFRONT_MOB_LAYER
 	opacity = TRUE
 	density = FALSE
+	anchored = TRUE
 
 	resistance_flags = CAN_BE_HIT
 
@@ -24,6 +25,37 @@
 	new /obj/item/stack/sheet/mineral/plastic (loc, 2)
 	new /obj/item/stack/rods (loc, 1)
 	..()
+
+/obj/structure/curtain/attackby(obj/item/I, mob/user)
+	. = ..()
+	if(.)
+		return
+
+	if(istype(I, /obj/item/weapon/screwdriver))
+		if(user.is_busy())
+			return
+		if(anchored)
+			return
+		if(I.use_tool(src, user, 10, volume = 100))
+
+			deconstruct(TRUE)
+			return
+
+	if(iswrenching(I))
+		if(user.is_busy())
+			return
+
+		if(anchored)
+			if(I.use_tool(src, user, 10, volume = 100, quality = QUALITY_WRENCHING))
+				anchored = FALSE
+				to_chat(user, "<span class='notice'>You unfasten \the [src] with \the [I].</span>")
+				return
+		else
+			if(I.use_tool(src, user, 10, volume = 100, quality = QUALITY_WRENCHING))
+				anchored = TRUE
+				to_chat(user, "<span class='notice'>You fasten \the [src] to the floor with \the [I].</span>")
+				return
+
 
 /obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -70,3 +102,4 @@
 
 /obj/structure/curtain/open/shower/security
 	color = "#aa0000"
+
