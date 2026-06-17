@@ -210,7 +210,6 @@
 /turf/simulated/shuttle
 	name = "shuttle"
 	icon = 'icons/turf/shuttle.dmi'
-	basetype = list(/turf/environment/space, /turf/simulated/shuttle/plating/airless)
 	thermal_conductivity = 0.05
 	layer = 2
 
