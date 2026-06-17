@@ -21,30 +21,6 @@
 	if(new_next_move > next_move)
 		next_move = new_next_move
 
-/proc/allow_under_table_click(list/modifiers)
-	var/static/list/click_permission_precedence = list(
-		list(SHIFT_CLICK, MIDDLE_CLICK) = TRUE,
-		list(SHIFT_CLICK, CTRL_CLICK) = FALSE,
-		list(MIDDLE_CLICK) = TRUE,
-		list(SHIFT_CLICK) = TRUE,
-		list(ALT_CLICK) = FALSE,
-		list(CTRL_CLICK) = TRUE
-	)
-
-	for(var/list/required_modifiers in click_permission_precedence)
-		var/permission = click_permission_precedence[required_modifiers]
-		var/matches_modifiers = TRUE
-
-		for(var/modifier in required_modifiers)
-			if(!modifiers[modifier])
-				matches_modifiers = FALSE
-				break
-
-		if(matches_modifiers)
-			return permission
-
-	return FALSE
-
 /*
 	Before anything else, defer these calls to a per-mobtype handler.  This allows us to
 	remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.
@@ -100,9 +76,6 @@
 
 	if(client.cob && client.cob.in_building_mode)
 		cob_click(client, modifiers)
-		return
-
-	if(is_under_table_surface_interaction(src, A) && !allow_under_table_click(modifiers))
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, A, params) & COMPONENT_CANCEL_CLICK)
