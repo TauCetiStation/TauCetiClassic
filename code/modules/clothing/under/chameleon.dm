@@ -1,5 +1,5 @@
-// All chameleon gear shares /datum/element/chameleon. The element adds the
-// "Change Appearance" action button and handles EMP, so items only attach it with their
+// All chameleon gear shares /datum/element/chameleon. The element wires the item into the
+// shared "Chameleon" action button and handles EMP, so items only attach it with their
 // root type (blocked disguises per root type live in chameleon_blocked_disguises).
 
 //*****************
