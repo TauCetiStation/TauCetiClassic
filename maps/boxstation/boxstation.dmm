@@ -56640,6 +56640,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "bZB" = (
@@ -70675,6 +70676,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "dFb" = (
@@ -71482,6 +71484,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "evP" = (
@@ -75254,16 +75257,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
-"idJ" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 20
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "ieb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -76671,12 +76664,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
-"jvG" = (
-/obj/machinery/door/airlock/external{
-	name = "Arrival Airlock"
-	},
-/turf/simulated/floor/grid_floor,
-/area/station/hallway/secondary/entry)
 "jwb" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/machinery/door/window/eastleft{
@@ -80282,6 +80269,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "mSi" = (
@@ -88760,6 +88748,9 @@
 	dock_tag = "specops_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
@@ -99616,7 +99607,7 @@ apT
 apT
 dCb
 aml
-jvG
+baY
 aro
 aro
 mQU
@@ -99873,7 +99864,7 @@ aYx
 cKo
 bwe
 aJK
-jvG
+baY
 aro
 aNG
 mQU
@@ -121945,7 +121936,7 @@ aef
 aef
 aOe
 aMS
-idJ
+aPE
 aKx
 aRR
 aGZ
