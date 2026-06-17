@@ -237,9 +237,9 @@
 
 /obj/item/toy/crayon/red/get_synth_phrases()
 	return list(
-		"Объявляю <font color='#da0000'>КРАСНУЮ ТРЕВОГУ</font>. Шучу. Просто десерт.",
-		"<font color='#da0000'>Бочки</font> красные.",
-		"Боюсь, я не могу это съесть, Дэйв... <font color='#da0000'>уже съел</font>."
+		"Объявляю <span style='color: #da0000'>КРАСНУЮ ТРЕВОГУ</span>. Шучу. Просто десерт.",
+		"<span style='color: #da0000'>Бочки</span> красные.",
+		"Боюсь, я не могу это съесть, Дэйв... <span style='color: #da0000'>уже съел</span>."
 	)
 
 /obj/item/toy/crayon/orange
@@ -250,10 +250,10 @@
 
 /obj/item/toy/crayon/orange/get_synth_phrases()
 	return list(
-		"<font color='#ff9300'>ORANGE BOX</font> на ужин. Третьего не будет.",
-		"Я нынче в <font color='#ff9300'>оранжевом костюме</font>.",
-		"Тестируем <font color='#ff9300'>оранжевый портал</font> жеванием.",
-		"<font color='#ff9300'>Hey, apple!</font>"
+		"<span style='color: #ff9300'>ORANGE BOX</span> на ужин. Третьего не будет.",
+		"Я нынче в <span style='color: #ff9300'>оранжевом костюме</span>.",
+		"Тестируем <span style='color: #ff9300'>оранжевый портал</span> жеванием.",
+		"<span style='color: #ff9300'>Hey, apple!</span>"
 	)
 
 /obj/item/toy/crayon/yellow
@@ -264,9 +264,9 @@
 
 /obj/item/toy/crayon/yellow/get_synth_phrases()
 	return list(
-		"<font color='#fff200'>ЖЁЛТЫЙ</font>! ВЫСОКОЕ НАПРЯЖЕНИЕ ВКУСА!",
-		"<font color='#fff200'>Wakka wakka wakka</font>",
-		"We all live in a <font color='#fff200'>yellow submarine</font>..."
+		"<span style='color: #fff200'>ЖЁЛТЫЙ</span>! ВЫСОКОЕ НАПРЯЖЕНИЕ ВКУСА!",
+		"<span style='color: #fff200'>Wakka wakka wakka</span>",
+		"We all live in a <span style='color: #fff200'>yellow submarine</span>..."
 	)
 
 /obj/item/toy/crayon/green
@@ -277,9 +277,9 @@
 
 /obj/item/toy/crayon/green/get_synth_phrases()
 	return list(
-		"<font color='#a8e61d'>Зелёный мелок делают из людей.</font>",
-		"<font color='#a8e61d'>Зелёный</font> свет получен. Жую дальше.",
-		"<font color='#a8e61d'>Малахитовое стекло</font> хрустит на зубах."
+		"<span style='color: #a8e61d'>Зелёный мелок делают из людей.</span>",
+		"<span style='color: #a8e61d'>Зелёный</span> свет получен. Жую дальше.",
+		"<span style='color: #a8e61d'>Малахитовое стекло</span> хрустит на зубах."
 	)
 
 /obj/item/toy/crayon/blue
@@ -290,8 +290,8 @@
 
 /obj/item/toy/crayon/blue/get_synth_phrases()
 	return list(
-		"<font color='#00b7ef'>Синий</font> экран смерти изнутри ничего так.",
-		"<font color='#00b7ef'>Юникоды U+1F499</font> в моих логах."
+		"<span style='color: #00b7ef'>Синий</span> экран смерти изнутри ничего так.",
+		"<span style='color: #00b7ef'>Юникоды U+1F499</span> в моих логах."
 	)
 
 /obj/item/toy/crayon/purple
@@ -302,9 +302,9 @@
 
 /obj/item/toy/crayon/purple/get_synth_phrases()
 	return list(
-		"Мне <font color='#da00ff'>фиолетово</font>.",
-		"Запах <font color='#da00ff'>сирени и крыжовника</font>.",
-		"<font color='#da00ff'>Тиамат</font> повернула одну из голов в мою сторону."
+		"Мне <span style='color: #da00ff'>фиолетово</span>.",
+		"Запах <span style='color: #da00ff'>сирени и крыжовника</span>.",
+		"<span style='color: #da00ff'>Тиамат</span> повернула одну из голов в мою сторону."
 	)
 
 /obj/item/toy/crayon/chalk
@@ -317,9 +317,9 @@
 
 /obj/item/toy/crayon/chalk/get_synth_phrases()
 	return list(
-		"<font color='#ffffff'>Белый</font> шум на завтрак.",
-		"Я ел <font color='#ffffff'>гипс</font> и не жаловался.",
-		"Я не IPC. Я <font color='#ffffff'>МЕЛКОПРИЁМНИК</font>."
+		"<span style='color: #ffffff'>Белый</span> шум на завтрак.",
+		"Я ел <span style='color: #ffffff'>гипс</span> и не жаловался.",
+		"Я не IPC. Я <span style='color: #ffffff'>МЕЛКОПРИЁМНИК</span>."
 	)
 
 /obj/item/toy/crayon/mime
