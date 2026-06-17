@@ -135,7 +135,10 @@
 	// todo: we should not change mover properties here, this method is only for attempt to pass
 	// part of future mob layer / crawl refactoring
 	if(buckled_mob != mover && iscarbon(mover) && mover.checkpass(PASSCRAWL))
-		mover.layer = 2.7
+		var/turf/mover_turf = get_turf(mover)
+		if(mover.layer > CONTAINER_STRUCTURE_LAYER && mover_turf && mover_turf.has_container_layer_movable())
+			return 1
+		mover.layer = BELOW_CONTAINERS_LAYER
 		return 1
 	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
 		return 1
@@ -177,7 +180,10 @@
 	if(istype(O) && O.checkpass(PASSTABLE))
 		return 1
 	if(buckled_mob != O && iscarbon(O) && O.checkpass(PASSCRAWL))
-		O.layer = 4.0
+		var/turf/target_turf = get_turf(target)
+		if(target_turf && target_turf.has_container_layer_movable())
+			return 1
+		O.layer = MOB_LAYER
 		return 1
 	if (flipped)
 		if (get_dir(loc, target) == dir)
