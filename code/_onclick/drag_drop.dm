@@ -12,7 +12,7 @@
 
 /mob/proc/CanUseMouseDrop(atom/over, atom/with)
 	if(istype(over, /atom/movable/screen)) // let hud check everything
-return !table_blocks_under_interaction(src, with)
+		return !table_blocks_under_interaction(src, with)
 	if(table_blocks_under_interaction(src, over, TRUE) || table_blocks_under_interaction(src, with))
 		return FALSE
 	return !incapacitated() && in_interaction_vicinity(over) && in_interaction_vicinity(with) && over.Adjacent(with)
