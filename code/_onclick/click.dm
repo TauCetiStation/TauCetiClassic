@@ -23,17 +23,16 @@
 
 /proc/allow_under_table_click(list/modifiers)
 	var/static/list/click_permission_precedence = list(
-		list(list(SHIFT_CLICK, MIDDLE_CLICK), TRUE),
-		list(list(SHIFT_CLICK, CTRL_CLICK), FALSE),
-		list(list(MIDDLE_CLICK), TRUE),
-		list(list(SHIFT_CLICK), TRUE),
-		list(list(ALT_CLICK), FALSE),
-		list(list(CTRL_CLICK), TRUE)
+		list(SHIFT_CLICK, MIDDLE_CLICK) = TRUE,
+		list(SHIFT_CLICK, CTRL_CLICK) = FALSE,
+		list(MIDDLE_CLICK) = TRUE,
+		list(SHIFT_CLICK) = TRUE,
+		list(ALT_CLICK) = FALSE,
+		list(CTRL_CLICK) = TRUE
 	)
 
-	for(var/list/click_permission in click_permission_precedence)
-		var/list/required_modifiers = click_permission[1]
-		var/permission = click_permission[2]
+	for(var/list/required_modifiers in click_permission_precedence)
+		var/permission = click_permission_precedence[required_modifiers]
 		var/matches_modifiers = TRUE
 
 		for(var/modifier in required_modifiers)
