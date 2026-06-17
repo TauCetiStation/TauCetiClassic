@@ -253,8 +253,10 @@
 #define COMSIG_ITEM_MAKE_WET "item_make_wet"
 /// from obj/item/dry_process
 #define COMSIG_ITEM_MAKE_DRY "item_make_dry"
-/// from /obj/item/proc/chameleon_change() verb: (mob/user)
-#define COMSIG_ITEM_CHAMELEON_CHANGE "item_chameleon_change"
+/// from /datum/action/item_action/Activate(): (mob/user, datum/action/source)
+#define COMSIG_ITEM_ACTION_TRIGGER "item_action_trigger"
+	// Return this if the press was handled and the item's attack_self should be skipped
+	#define COMPONENT_ACTION_HANDLED 1
 /// from mob/carbon/swap_hand: (mob/user)
 #define COMSIG_ITEM_BECOME_ACTIVE "item_become_active"
 #define COMSIG_ITEM_BECOME_INACTIVE "item_become_inactive"

@@ -1,6 +1,6 @@
 // All chameleon gear shares /datum/element/chameleon. The element adds the
-// "Change Appearance" verb and handles EMP, so items only attach it with their root type
-// (blocked disguises per root type live in chameleon_blocked_disguises).
+// "Change Appearance" action button and handles EMP, so items only attach it with their
+// root type (blocked disguises per root type live in chameleon_blocked_disguises).
 
 //*****************
 //**Cham Jumpsuit**
