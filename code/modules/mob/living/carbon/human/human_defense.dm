@@ -1,5 +1,5 @@
 #define PROTECTION_TO_MULTIPLE(p) ((100 - min(p, 100)) * 0.01)
-#define GROIN_AGONY_CHANCE 35
+#define GROIN_AGONY_CHANCE 30
 #define GROIN_AGONY_DAMAGE 100
 /mob/living/carbon/proc/can_catch_item()
 	if(!in_throw_mode)
