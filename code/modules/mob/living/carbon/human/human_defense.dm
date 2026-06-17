@@ -236,6 +236,8 @@
 		return
 	if(armor > 0)
 		return
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN))
+		return
 	if(!prob(GROIN_AGONY_CHANCE))
 		return
 
