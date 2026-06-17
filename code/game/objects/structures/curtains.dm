@@ -36,7 +36,7 @@
 			return
 		if(anchored)
 			return
-		if(I.use_tool(src, user, 10, volume = 100))
+		if(I.use_tool(src, user, 1 SECOND, volume = 100))
 			deconstruct(TRUE)
 			return
 
@@ -45,12 +45,12 @@
 			return
 
 		if(anchored)
-			if(I.use_tool(src, user, 10, volume = 100, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 1 SECOND, volume = 100, quality = QUALITY_WRENCHING))
 				anchored = FALSE
 				to_chat(user, "<span class='notice'>You unfasten \the [src] with \the [I].</span>")
 				return
 		else
-			if(I.use_tool(src, user, 10, volume = 100, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 1 SECOND, volume = 100, quality = QUALITY_WRENCHING))
 				anchored = TRUE
 				to_chat(user, "<span class='notice'>You fasten \the [src] to the floor with \the [I].</span>")
 				return
@@ -101,4 +101,3 @@
 
 /obj/structure/curtain/open/shower/security
 	color = "#aa0000"
-
