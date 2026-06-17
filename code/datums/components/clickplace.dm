@@ -84,6 +84,21 @@
 		clamp(text2num(click_params[ICON_Y]) + place_on.pixel_y, 0, icon_size) - half_icon_size
 	)
 
+/datum/component/clickplace/proc/can_animate_clickplace_drop(obj/item/I, mob/living/user, atom/target)
+	if(!target)
+		return FALSE
+	if(!(user.get_active_hand() == I || user.get_inactive_hand() == I))
+		return FALSE
+	if(target == user || target.loc == user)
+		return FALSE
+	if(!target.Adjacent(user))
+		return FALSE
+	if(user.prevent_item_animations())
+		return FALSE
+	if(I.is_invis_anim)
+		return FALSE
+	return TRUE
+
 /datum/component/clickplace/proc/try_place_click(datum/source, obj/item/I,  mob/living/user, params)
 	if(istype(I, /obj/item/weapon/grab))
 		try_slam(I)
@@ -96,13 +111,17 @@
 	var/list/final_offset = get_click_offset(A, click_params)
 	if(!final_offset)
 		return
+	var/atom/drop_target = A.loc
 
 	var/old_pixel_x = I.pixel_x
 	var/old_pixel_y = I.pixel_y
+	var/pixel_delta_x = final_offset[1] - old_pixel_x
+	var/pixel_delta_y = final_offset[2] - old_pixel_y
+	var/animate_drop = can_animate_clickplace_drop(I, user, drop_target)
 
-	if(!user.drop_from_inventory(I, A.loc, additional_pixel_x = final_offset[1] - old_pixel_x, additional_pixel_y = final_offset[2] - old_pixel_y))
+	if(!user.drop_from_inventory(I, drop_target, additional_pixel_x = pixel_delta_x, additional_pixel_y = pixel_delta_y, putdown_anim = animate_drop))
 		return FALSE
-	if(!QDELETED(I) && I.loc)
+	if(!animate_drop && !QDELETED(I) && I.loc)
 		I.pixel_x = final_offset[1]
 		I.pixel_y = final_offset[2]
 
