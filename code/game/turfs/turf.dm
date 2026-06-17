@@ -7,7 +7,8 @@
 	// dynamic lighting subsystem uses lighting_object's for luminosity
 	luminosity = 0
 
-	var/basetype = /turf/environment/space
+	// Either a turf type or a list of turf types, sorted bottom layer to top.
+	var/list/basetype = /turf/environment/space
 	var/can_deconstruct = FALSE
 
 	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
@@ -339,25 +340,34 @@
 	if(turf_type)
 		ChangeTurf(turf_type)
 
+/turf/proc/normalize_base_turf_stack(list/base_turfs)
+	var/list/normalized_turfs = list()
+	for(var/base_turf in base_turfs)
+		if(!base_turf || normalized_turfs.Find(base_turf))
+			continue
+		normalized_turfs += base_turf
+
+	if(!normalized_turfs.len)
+		normalized_turfs += /turf/environment/space
+
+	return normalized_turfs
+
 /turf/proc/get_base_turf_type()
 	if(islist(basetype))
-		var/list/base_turfs = basetype
-		if(!base_turfs.len)
-			return /turf/environment/space
+		var/list/base_turfs = normalize_base_turf_stack(basetype)
 		return base_turfs[base_turfs.len]
 	return basetype
 
 /turf/proc/get_base_turf_stack(include_self = FALSE)
 	var/list/base_turfs
 	if(islist(basetype))
-		var/list/base_stack = basetype
-		base_turfs = base_stack.Copy()
+		base_turfs = normalize_base_turf_stack(basetype)
 	else if(basetype)
 		base_turfs = list(basetype)
 	else
 		base_turfs = list(/turf/environment/space)
 
-	if(include_self && base_turfs[base_turfs.len] != type)
+	if(include_self && !base_turfs.Find(type))
 		base_turfs += type
 
 	if(base_turfs.len == 1)
@@ -371,9 +381,7 @@
 
 	var/new_basetype
 	if(islist(path))
-		var/list/base_turfs = path
-		if(!base_turfs.len)
-			return
+		var/list/base_turfs = normalize_base_turf_stack(path)
 		path = base_turfs[base_turfs.len]
 		if(base_turfs.len > 1)
 			new_basetype = base_turfs.Copy(1, base_turfs.len)
@@ -510,7 +518,7 @@
 
 /turf/proc/MoveTurf(turf/target, move_unmovable = 0)
 	if(type != get_base_turf_type() || move_unmovable)
-		var/target_basetype = target.get_base_turf_stack(TRUE)
+		var/target_basetype = target.get_base_turf_stack(target.type != type)
 		. = target.ChangeTurf(src.type)
 		var/turf/moved_turf = .
 		if(moved_turf)
