@@ -10,7 +10,7 @@
 /*
  * Tables
  */
-/proc/table_blocks_under_interaction(mob/user, atom/target, include_table_surface = FALSE)
+/proc/is_under_table_surface_interaction(mob/user, atom/target, include_table_surface = FALSE)
 	if(!iscarbon(user) || !user.checkpass(PASSCRAWL) || !target)
 		return FALSE
 

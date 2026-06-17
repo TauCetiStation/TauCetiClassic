@@ -102,7 +102,7 @@
 		cob_click(client, modifiers)
 		return
 
-	if(table_blocks_under_interaction(src, A) && !allow_under_table_click(modifiers))
+	if(is_under_table_surface_interaction(src, A) && !allow_under_table_click(modifiers))
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICK, A, params) & COMPONENT_CANCEL_CLICK)

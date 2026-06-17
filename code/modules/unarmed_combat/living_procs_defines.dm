@@ -140,7 +140,7 @@
 
 /// This proc checks whether src can be attacked by attacker at all.
 /mob/living/proc/can_be_attacked(mob/living/attacker)
-	if(table_blocks_under_interaction(attacker, src))
+	if(is_under_table_surface_interaction(attacker, src))
 		return FALSE
 
 	// Why does this exist? ~Luduk
