@@ -37,7 +37,6 @@
 		if(anchored)
 			return
 		if(I.use_tool(src, user, 10, volume = 100))
-
 			deconstruct(TRUE)
 			return
 
