@@ -130,15 +130,11 @@
 /obj/structure/table/CanPass(atom/movable/mover, turf/target, height=0)
 	if(istype(mover,/obj/item/projectile))
 		return (check_cover(mover,target))
-	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return 1
-	// todo: we should not change mover properties here, this method is only for attempt to pass
-	// part of future mob layer / crawl refactoring
+	// PASSCRAWL must be checked before PASSTABLE: monkeys always have PASSTABLE,
+	// but crawling should still use the under-table behavior.
 	if(buckled_mob != mover && iscarbon(mover) && mover.checkpass(PASSCRAWL))
-		var/turf/mover_turf = get_turf(mover)
-		if(mover.layer > CONTAINER_STRUCTURE_LAYER && mover_turf && mover_turf.has_container_layer_movable())
-			return 1
-		mover.layer = BELOW_CONTAINERS_LAYER
+		return 1
+	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
 	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
 		return 1
@@ -177,13 +173,11 @@
 	return 1
 
 /obj/structure/table/CheckExit(atom/movable/O, target)
-	if(istype(O) && O.checkpass(PASSTABLE))
-		return 1
+	// CheckExit only decides whether leaving may be attempted. Do not restore
+	// the mob layer here, because the movement can still be blocked.
 	if(buckled_mob != O && iscarbon(O) && O.checkpass(PASSCRAWL))
-		var/turf/target_turf = get_turf(target)
-		if(target_turf && target_turf.has_container_layer_movable())
-			return 1
-		O.layer = MOB_LAYER
+		return 1
+	if(istype(O) && O.checkpass(PASSTABLE))
 		return 1
 	if (flipped)
 		if (get_dir(loc, target) == dir)
@@ -191,6 +185,24 @@
 		else
 			return 1
 	return 1
+
+/obj/structure/table/Crossed(atom/movable/AM)
+	. = ..()
+	// Crossed runs after successfully entering the table tile, so the crawling
+	// carbon mob can be safely rendered below the table here.
+	if(buckled_mob != AM && iscarbon(AM) && AM.checkpass(PASSCRAWL))
+		AM.layer = BELOW_CONTAINERS_LAYER
+
+/obj/structure/table/Uncrossed(atom/movable/AM)
+	. = ..()
+	// Uncrossed runs after successfully leaving this table. If the new tile also
+	// has a table, keep the mob below containers until the new table processes it.
+	var/turf/target_turf = get_turf(AM)
+	if(buckled_mob == AM || !iscarbon(AM) || !AM.checkpass(PASSCRAWL))
+		return
+	if(target_turf && (locate(/obj/structure/table) in target_turf))
+		return
+	AM.layer = MOB_LAYER
 
 /obj/structure/table/proc/laser_cut(obj/item/I, mob/user)
 	user.do_attack_animation(src)

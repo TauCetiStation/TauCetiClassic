@@ -253,12 +253,6 @@
 			return FALSE
 	return TRUE
 
-/turf/proc/has_container_layer_movable()
-	for(var/atom/movable/on_turf as anything in contents)
-		if(on_turf.layer == CONTAINER_STRUCTURE_LAYER)
-			return TRUE
-	return FALSE
-
 /turf/Entered(atom/movable/AM)
 	if(!istype(AM, /atom/movable))
 		return
