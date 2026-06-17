@@ -108,25 +108,13 @@
 
 // Dumps all contents into another storage container via drag and drop.
 /obj/item/weapon/storage/proc/dump_into(obj/item/weapon/storage/target, mob/M)
-	if(target == src || M.incapacitated())
+	if(target == src || !M.CanUseMouseDrop(target, src))
 		return
 
 	if(istype(src, /obj/item/weapon/storage/lockbox))
 		var/obj/item/weapon/storage/lockbox/L = src
 		if(L.locked)
 			return
-
-	// Block dumping into a container nested inside us (e.g. a box that sits in this very bag) to avoid item dupes.
-	var/atom/check = target.loc
-	while(check)
-		if(check == src)
-			return
-		check = check.loc
-
-	// User must reach the target, and the source must be in their hands/inventory or within reach on the ground.
-	var/source_in_reach = (loc == M) || Adjacent(M)
-	if(!M.Adjacent(target) || !source_in_reach)
-		return
 
 	if(!contents.len)
 		to_chat(M, "<span class='notice'>[src] is empty.</span>")
@@ -135,6 +123,8 @@
 	// Collect what actually fits before we commit to the transfer.
 	var/list/to_dump = list()
 	for(var/obj/item/I in contents)
+		if(I == target)
+			continue
 		if(target.can_be_inserted(I, stop_messages = TRUE))
 			to_dump += I
 
