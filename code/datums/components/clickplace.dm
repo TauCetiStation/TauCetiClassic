@@ -85,19 +85,11 @@
 	)
 
 /datum/component/clickplace/proc/can_animate_clickplace_drop(obj/item/I, mob/living/user, atom/target)
-	if(!target)
-		return FALSE
 	if(!(user.get_active_hand() == I || user.get_inactive_hand() == I))
 		return FALSE
 	if(target == user || target.loc == user)
 		return FALSE
-	if(!target.Adjacent(user))
-		return FALSE
-	if(user.prevent_item_animations())
-		return FALSE
-	if(I.is_invis_anim)
-		return FALSE
-	return TRUE
+	return I.can_do_putdown_animation(target, user)
 
 /datum/component/clickplace/proc/try_place_click(datum/source, obj/item/I,  mob/living/user, params)
 	if(istype(I, /obj/item/weapon/grab))
