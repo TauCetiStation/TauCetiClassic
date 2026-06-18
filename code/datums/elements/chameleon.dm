@@ -91,12 +91,16 @@ var/global/list/chameleon_blocked_disguises = list(
 		qdel(action)
 
 /datum/element/chameleon/proc/disguise(obj/item/I, mob/user)
-	if(!(I in user) || user.incapacitated())
+	if(!(I in user))
+		return
+	if(user.incapacitated())
 		return
 	var/picked = show_radial_menu(user, I, get_choice_images(), require_near = TRUE, tooltips = TRUE)
 	if(!picked || !choices[picked])
 		return
-	if(!(I in user) || user.incapacitated())
+	if(!(I in user))
+		return
+	if(user.incapacitated())
 		return
 	var/obj/item/A = choices[picked]
 	// initial(): reading a live/new'd sample is corrupted by update_world_icon() (icon_state -> "_w")
@@ -157,5 +161,7 @@ var/global/list/chameleon_blocked_disguises = list(
 		return
 	var/obj/item/I = by_name[picked]
 	if(!I)
+		return
+	if(!(I in items) || !(I in owner) || owner.incapacitated())
 		return
 	SEND_SIGNAL(I, COMSIG_ITEM_ACTION_TRIGGER, owner)
