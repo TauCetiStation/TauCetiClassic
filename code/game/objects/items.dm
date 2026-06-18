@@ -61,7 +61,6 @@
 		/obj/machinery/autolathe
 	)
 	var/can_be_holstered = FALSE
-	var/toolspeed = 1
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
 	// optional world/inventory icon_state overrides
@@ -754,8 +753,6 @@
 	else if(required_skills) //default check for item
 		skill_bonus = apply_skill_bonus(user, 1, required_skills, skills_speed_bonus)
 
-
-	delay *= toolspeed
 	delay *= max(skill_bonus, 0.1)
 
 	if(!isnull(quality))
@@ -763,7 +760,7 @@
 		if(qual_mod <= 0)
 			return
 
-		delay *= 1 / qual_mod
+		delay *= qual_mod
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)

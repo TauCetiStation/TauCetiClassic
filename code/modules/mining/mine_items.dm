@@ -171,7 +171,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "pickaxe"
 	w_class = SIZE_NORMAL
 	m_amt = 3750 //one sheet, but where can you make them?
-	toolspeed = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 	usesound = 'sound/items/pickaxe.ogg'
@@ -181,31 +180,41 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 	var/excavation_amount = 100
 
+	qualities = list(
+		QUALITY_ROCK_DRILL = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
+	)
+
 /obj/item/weapon/pickaxe/silver
 	name = "silver pickaxe"
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
-	toolspeed = 0.7
 	origin_tech = "materials=3"
 	desc = "This makes no metallurgic sense."
+	qualities = list(
+		QUALITY_ROCK_DRILL = 0.7
+	)
 
 /obj/item/weapon/pickaxe/gold
 	name = "golden pickaxe"
 	icon_state = "gpickaxe"
 	item_state = "gpickaxe"
-	toolspeed = 0.2 // hi MiNeCrAfT golden pickaxe
 	mineral_multiply_coefficient = 0.6 // for speed balance
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
+	qualities = list(
+		QUALITY_ROCK_DRILL = 0.2 // hi MiNeCrAfT golden pickaxe
+	)
 
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	toolspeed = 0.25
 	mineral_multiply_coefficient = 1.3
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
+	qualities = list(
+		QUALITY_ROCK_DRILL = 0.25
+	)
 
 /*****************************Sledgehammer********************************/
 /obj/item/weapon/sledgehammer
@@ -279,7 +288,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "expshovel"
 	item_state_world = "expshovel_world"
 	force = 10.0
-	toolspeed = 0.1
 	origin_tech = "materials=2;engineering=3"
 	qualities = list(
 		QUALITY_PRYING = 0.1
@@ -332,13 +340,15 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	usesound = 'sound/items/drill.ogg'
 	hitsound = list('sound/items/drill_hit.ogg')
 	drill_verb = "drill"
-	toolspeed = 0.55
 	mineral_multiply_coefficient = 1.0
 	var/drill_cost = 35
 	var/state = 0
 	var/obj/item/weapon/stock_parts/cell/power_supply
 	var/cell_type = /obj/item/weapon/stock_parts/cell/high
 	var/effectively_mode = FALSE
+	qualities = list(
+		QUALITY_ROCK_DRILL = 0.5
+	)
 
 /obj/item/weapon/pickaxe/drill/atom_init()
 	. = ..()
@@ -410,11 +420,11 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/pickaxe/drill/proc/update_mode_stats()
 	if(effectively_mode)
-		toolspeed *= 1.25 // slow down drilling speed
+		qualities[QUALITY_ROCK_DRILL] *= 1.25 // slow down drilling speed
 		drill_cost *= 2
 		mineral_multiply_coefficient += 0.25
 	else
-		toolspeed = initial(toolspeed)
+		qualities[QUALITY_ROCK_DRILL] = initial(qualities[QUALITY_ROCK_DRILL])
 		drill_cost = initial(drill_cost)
 		mineral_multiply_coefficient -= 0.25
 
@@ -422,11 +432,13 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
-	toolspeed = 0.8 // Drills 3 tiles in front of user
 	mineral_multiply_coefficient = 0.8
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
+	qualities = list(
+		QUALITY_ROCK_DRILL = 0.8 // Drills 3 tiles in front of user
+	)
 
 /obj/item/weapon/pickaxe/drill/jackhammer/attackby(obj/item/I, mob/user, params)
 	return
@@ -435,21 +447,23 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "diamond mining drill"
 	icon_state = "diamond_drill"
 	item_state = "d_drill"
-	toolspeed = 0.3 // Digs through walls, girders, and can dig up sand
 	mineral_multiply_coefficient = 1.2
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
 	drill_verb = "drilling"
-
+	qualities = list(
+		QUALITY_ROCK_DRILL = 0.3 // Digs through walls, girders, and can dig up sand
+	)
 
 /obj/item/weapon/pickaxe/drill/borgdrill
 	name = "cyborg mining drill"
 	icon_state = "diamond_drill"
 	item_state = "jackhammer"
-	toolspeed = 0.4
 	mineral_multiply_coefficient = 1.2
-	desc = ""
 	drill_verb = "drilling"
+	qualities = list(
+		QUALITY_ROCK_DRILL = 0.4
+	)
 
 /obj/item/weapon/pickaxe/drill/borgdrill/attackby(obj/item/I, mob/user, params)
 	return

@@ -138,6 +138,9 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	var/on_step_sound = 'sound/effects/glass_step.ogg'
+	qualities = list(
+		QUALITY_CUTTING = 1.5
+	)
 
 /obj/item/weapon/shard/atom_init()
 	var/icon_variant = pick("large", "medium", "small")
@@ -509,6 +512,10 @@
 	m_amt = 15000
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
+	qualities = list(
+		QUALITY_PRYING = 1.2,
+		QUALITY_SAW_OPEN = 1.2
+	)
 
 /obj/item/weapon/hatchet/atom_init()
 	. = ..()

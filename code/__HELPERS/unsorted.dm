@@ -1204,16 +1204,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /obj/item/weapon/shovel/can_puncture()
 	return TRUE
 
-/proc/is_surgery_tool(obj/item/W)
-	return (	\
-	istype(W, /obj/item/weapon/scalpel)			||	\
-	istype(W, /obj/item/weapon/hemostat)		||	\
-	istype(W, /obj/item/weapon/retractor)		||	\
-	istype(W, /obj/item/weapon/cautery)			||	\
-	istype(W, /obj/item/weapon/bonegel)			||	\
-	istype(W, /obj/item/weapon/bonesetter)
-	)
-
 /proc/get_surg_chance(atom/location)
 	// please make this an obj var ~Luduk
 	if(locate(/obj/machinery/optable) in location)

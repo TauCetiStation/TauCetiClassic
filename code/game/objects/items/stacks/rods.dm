@@ -14,7 +14,8 @@
 	usesound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	qualities = list(
-		QUALITY_PRYING = 0.5
+		QUALITY_PRYING = 1.5,
+		QUALITY_FIX_BONE = 1.5
 	)
 
 /obj/item/stack/rods/update_icon()

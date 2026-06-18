@@ -61,11 +61,14 @@
 	else if(!prob(rel_val))
 		w_class += 1
 	if(mark > 0)
-		toolspeed -= 0.2 * (mark - 1)
+		for(var/modifi_quality in qualities)
+			qualities[modifi_quality] -= 0.2 * (mark - 1)
 	while(!prob(reliability))
-		if(toolspeed > 3)
-			break
-		toolspeed += 0.2
+		for(var/modifi_quality in qualities)
+			if(qualities[modifi_quality] > 3)
+				break
+		for(var/modifi_quality in qualities)
+			qualities[modifi_quality] += 0.2
 
 /obj/item/weapon/stock_parts/set_prototype_qualities(rel_val=100, mark=0)
 	..()
@@ -135,11 +138,13 @@
 
 /obj/item/weapon/weldingtool/set_prototype_qualities(rel_val=100, mark=0)
 	if(mark)
-		toolspeed -= 0.5 * (mark - 1)
+		for(var/modifi_quality in qualities)
+			qualities[modifi_quality] -= 0.5 * (mark - 1)
 		max_fuel *= mark
 	if(!prob(reliability))
 		max_fuel /= 2
-		toolspeed = max(toolspeed + 0.5, 3)
+		for(var/modifi_quality in qualities)
+			qualities[modifi_quality] = max(qualities[modifi_quality] + 0.5, 3)
 
 /obj/item/clothing/mask/gas/welding/set_prototype_qualities(rel_val=100, mark=0)
 	if(!prob(reliability))

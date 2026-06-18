@@ -10,6 +10,9 @@
 	var/possible_transfer_amounts = list(5,10,15,25,30)
 	var/list/list_reagents = null
 	var/volume = 30
+	qualities = list(
+		QUALITY_DROP_LIQUID = 1
+	)
 
 /obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
@@ -38,21 +41,6 @@
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent == INTENT_HARM) // Since we usually splash mobs or whatever, now we will also hit them.
 		..()
-
-/obj/item/weapon/reagent_containers/afterattack(atom/target, mob/user, proximity, params)
-	if(!target.reagents || !proximity) return FALSE
-
-	if(ishuman(target))
-		var/mob/living/carbon/human/H = target
-		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
-		if(BP.open)
-			// Checks if mob is lying down on table for surgery
-			if(can_operate(H, user))
-				do_surgery(H, user, src)
-				return TRUE
-			else
-				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than \a [src]!</span>")
-			return FALSE
 
 /obj/item/weapon/reagent_containers/proc/treat_organ(mob/living/carbon/human/target)
 	var/trans = reagents.trans_to(target, amount_per_transfer_from_this)

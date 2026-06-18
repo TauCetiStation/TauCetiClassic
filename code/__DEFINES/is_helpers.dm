@@ -155,7 +155,7 @@
 
 #define iswelding(I) 	I.get_quality(QUALITY_WELDING)
 
-#define iscutter(I) 	I.get_quality(QUALITY_CUTTING)
+#define iscutter(I) 	I.get_quality(QUALITY_CUTTING) // also use in surgery like scalpel and etc
 
 #define isscrewing(I) 	I.get_quality(QUALITY_SCREWING)
 
@@ -166,6 +166,47 @@
 #define issignaling(I)  I.get_quality(QUALITY_SIGNALLING)
 
 #define iscoil(A) 		(istype(A, /obj/item/stack/cable_coil))
+
+#define isrockdrill(I) 	I.get_quality(QUALITY_ROCK_DRILL)
+
+#define isdropliquid(I) I.get_quality(QUALITY_DROP_LIQUID)
+
+// SURGERY HELPERS
+
+#define isclamp(I) 		I.get_quality(QUALITY_CLAMP)
+
+#define isretract(I) 	I.get_quality(QUALITY_RETRACT)
+
+#define issawopen(I) 	I.get_quality(QUALITY_SAW_OPEN)
+
+#define isdrillopen(I)  I.get_quality(QUALITY_DRILL_OPEN)
+
+#define isboneset(I) 	I.get_quality(QUALITY_BONE_SET)
+
+#define isfixbone(I) 	I.get_quality(QUALITY_FIX_BONE)
+
+#define isfixvein(I) 	I.get_quality(QUALITY_FIX_VEIN)
+
+#define iscautery(I)	I.get_quality(QUALITY_CAUTER)
+
+#define isorganicsurgery(I) (  iscutter(I)\
+							|| isclamp(I)\
+							|| isretract(I)\
+							|| issawopen(I)\
+							|| isdrillopen(I)\
+							|| isboneset(I)\
+							|| isfixbone(I)\
+							|| isfixvein(I)\
+							|| iscautery(I)\
+							|| isdropliquid(I))
+
+#define issynteticsurgery(I) (  iscutter(I)\
+							 || iswrenching(I)\
+							 || iswelding(I)\
+							 || isscrewing(I)\
+							 || isprying(I)\
+							 || ispulsing(I)\
+							 || iscoil(A))
 
 // OBJECTS
 
