@@ -1207,10 +1207,10 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
 		if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
-			if(name == "environmental regulation system")
+			if(src.name == "environmental regulation system")
 				new /obj/item/weapon/tank/air(src.loc)
 			qdel(src)
-	return ..()
+			return ..()
 
 /obj/structure/fans/tiny
 	name = "tiny fan"
@@ -1230,16 +1230,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(T)
 		SSair?.mark_for_update(T)
 	return ..()
-
-/obj/structure/fans/tiny/holo_wall
-	name = "Atmospheric Alarm"
-	desc = "The words flicker as if they mean nothing."
-	icon = 'icons/obj/decals.dmi'
-	icon_state = "doors"
-
-/obj/structure/fans/tiny/holo_wall/atom_init()
-	..()
-	QDEL_IN(src, 10 SECONDS)
 
 //Signs
 /obj/structure/sign/mining

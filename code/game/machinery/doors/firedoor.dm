@@ -158,8 +158,7 @@
 	if(density)
 		INVOKE_ASYNC(src, PROC_REF(open))
 		if(alarmed)
-			new /obj/structure/fans/tiny/holo_wall(loc)
-			addtimer(CALLBACK(src, PROC_REF(close)), 9 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(close)), 10 SECONDS)
 	else
 		INVOKE_ASYNC(src, PROC_REF(close))
 
