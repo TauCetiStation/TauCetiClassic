@@ -46,3 +46,25 @@
 		if(!role.faction)
 			continue
 		add_faction_member(role.faction, R, TRUE)
+
+/obj/item/weapon/antag_spawner/borg_tele/afterattack(atom/target, mob/user, proximity, params)
+    if(!proximity)
+        return ..()
+
+    var/obj/item/device/uplink/U = null
+    if(istype(target, /obj/item/device/uplink))   // сам объект аплинка (включая /hidden)
+        U = target
+    else if(istype(target, /obj/item))            // предмет со встроенным hidden_uplink (КПК/гарнитура/...)
+        var/obj/item/I = target
+        U = I.hidden_uplink
+
+    if(!U)                                        // кликнули не по аплинку — обычное поведение
+        return ..()
+
+    if(used)
+        to_chat(user, "<span class='notice'>This teleporter is already used.</span>")
+        return
+
+    U.uses += TC_cost
+    qdel(src)
+    to_chat(user, "<span class='notice'>Teleporter refunded.</span>")
