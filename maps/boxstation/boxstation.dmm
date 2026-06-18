@@ -15861,6 +15861,9 @@
 	name = "Escape Airlock";
 	req_access = list(1)
 	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/exit)
 "aBc" = (
@@ -70193,6 +70196,9 @@
 	dock_tag = "escape_shuttle";
 	locked = 1;
 	name = "Escape Airlock"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/exit)
