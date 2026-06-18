@@ -52,7 +52,7 @@
 	var/obj/item/weapon/tank/tank = target
 
 	if(T.internal == tank)
-		T.internal = null
+		tank.close_internals(T)
 		tank.update_actions_icons(T)
 	..()
 
@@ -175,41 +175,46 @@
 		if("internal")
 			toggle_internals()
 
-/obj/item/weapon/tank/proc/toggle_internals()
-	if(!iscarbon(loc))
-		return
-	if(internal_switch > world.time)
-		return
-	var/internalsound
-	var/mob/living/carbon/C = loc
-	if(C.internal == src)
-		C.internal = null
-		to_chat(usr, "<span class='notice'>You close the tank release valve.</span>")
-		internalsound = 'sound/misc/internaloff.ogg'
-		if(ishuman(C)) // Because only human can wear a spacesuit
-			var/mob/living/carbon/human/H = C
-			if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
-				internalsound = 'sound/misc/riginternaloff.ogg'
-		playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
-	else
-		if(istype(C.wear_mask, /obj/item/clothing/mask/breath))
-			var/obj/item/clothing/mask/breath/M = C.wear_mask
-			if(M.hanging) // if mask on face but pushed down
-				M.attack_self() // adjust it back
+/obj/item/weapon/tank/proc/close_internals(mob/C)
+	C.internal = null
+	to_chat(usr, "<span class='notice'>You close the tank release valve.</span>")
+	var/internalsound = 'sound/misc/internaloff.ogg'
+	if(ishuman(C)) // Because only human can wear a spacesuit
+		var/mob/living/carbon/human/H = C
+		if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
+			internalsound = 'sound/misc/riginternaloff.ogg'
+	playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
+
+/obj/item/weapon/tank/proc/open_internals(mob/C)
+	if(istype(C.wear_mask, /obj/item/clothing/mask/breath))
+		var/obj/item/clothing/mask/breath/M = C.wear_mask
+		if(M.hanging) // if mask on face but pushed down
+			M.attack_self() // adjust it back
 		if(C.wear_mask && (C.wear_mask.flags & MASKINTERNALS))
 			C.internal = src
 			to_chat(usr, "<span class='notice'>You open \the [src] valve.</span>")
-			internalsound = 'sound/misc/internalon.ogg'
+			var/internalsound = 'sound/misc/internalon.ogg'
 			if(ishuman(C)) // Because only human can wear a spacesuit
 				var/mob/living/carbon/human/H = C
 				if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 					internalsound = 'sound/misc/riginternalon.ogg'
 			playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
-		else
-			to_chat(usr, "<span class='notice'>You need something to connect to \the [src].</span>")
+	else
+		to_chat(usr, "<span class='notice'>You need something to connect to \the [src].</span>")
+
+/obj/item/weapon/tank/proc/toggle_internals()
+	if(!iscarbon(loc))
+		return
+	if(internal_switch > world.time)
+		return
+	var/mob/living/carbon/C = loc
+	if(C.internal == src)
+		close_internals(C)
+	else
+		open_internals(C)
+
 	internal_switch = world.time + 16
 	update_actions_icons(C)
-
 
 /obj/item/weapon/tank/proc/update_actions_icons(mob/living/carbon/C, turn_off = FALSE)
 	for(var/datum/action/item_action/hands_free/toggle_internals/TI in C.actions)
