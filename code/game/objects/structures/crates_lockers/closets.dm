@@ -81,7 +81,7 @@
 	for(var/obj/I in src)
 		I.forceMove(src.loc)
 
-/obj/structure/closet/proc/collect_contents()
+/obj/structure/closet/proc/collect_contents(min_x = -5, min_y = -13, max_x = 5, max_y = 7)
 	var/itemcount = 0
 
 	//Cham Projector Exception
@@ -95,6 +95,12 @@
 		if(itemcount >= storage_capacity)
 			break
 		if(!I.anchored && !istype(I, /obj/item/weapon/paper/sticker))
+			if((I.pixel_x > max_x) || (I.pixel_x < min_x) || (I.pixel_y > max_y) || (I.pixel_y < min_y))
+				var/list/new_coords = get_box_and_section_intercection_coordinates_list_or_null(0, I.pixel_x, 0, I.pixel_y, min_x, max_x, min_y, max_y)
+				if(!isnull(new_coords))
+					I.pixel_x = ROUNDSTRICT(new_coords[1])
+					I.pixel_y = ROUNDSTRICT(new_coords[2])
+
 			I.forceMove(src)
 			itemcount++
 
