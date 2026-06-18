@@ -671,6 +671,18 @@
 			. = 0
 		electrocution_animation(4 SECONDS)
 
+	if(.)
+		if(!(can_remember() && prob(50))) //electrocuting people makes them randomly tell things they know
+			return
+
+		var/memory_key = pick(mind.key_memories)
+		var/memory = mind.get_key_memory(memory_key)
+
+		say("[memory]!")
+
+		if(prob(25))
+			mind.clear_key_memory(memory_key)
+
 /mob/living/carbon/human/Topic(href, href_list)
 	if(href_list["skill"])
 		update_skills(href_list)
