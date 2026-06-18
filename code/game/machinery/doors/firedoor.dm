@@ -4,6 +4,7 @@
 	icon = 'icons/obj/doors/DoorHazard.dmi'
 	icon_state = "door_open"
 	var/base_state = "door"
+	req_one_access = list(access_atmospherics, access_engine_equip, access_paramedic)
 	opacity = 0
 	glass = 0
 	always_transparent = TRUE
