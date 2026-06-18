@@ -61,6 +61,10 @@ var/global/bomb_set
 			explode()
 
 /obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
+	if(isdrone(user))
+		to_chat(user, "<span class='warning'>Это слишком сложно для тебя.</span>")
+		return
+
 	if(isscrewing(O))
 		add_fingerprint(user)
 		if(removal_stage == 5)
