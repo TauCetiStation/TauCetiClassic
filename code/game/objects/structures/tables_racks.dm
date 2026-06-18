@@ -173,8 +173,6 @@
 	return 1
 
 /obj/structure/table/CheckExit(atom/movable/O, target)
-	// CheckExit only decides whether leaving may be attempted. Do not restore
-	// the mob layer here, because the movement can still be blocked.
 	if(buckled_mob != O && iscarbon(O) && O.checkpass(PASSCRAWL))
 		return 1
 	if(istype(O) && O.checkpass(PASSTABLE))
