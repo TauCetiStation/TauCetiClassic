@@ -19082,6 +19082,9 @@
 	dir = 4;
 	dock_tag = "pod1"
 	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/chapel)
 "aHu" = (
@@ -28375,6 +28378,10 @@
 	dir = 8;
 	network = list("MiniSat")
 	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 25
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -28518,6 +28525,9 @@
 	dir = 4;
 	dock_tag = "pod2"
 	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/medbay)
 "aYo" = (
@@ -28631,6 +28641,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/binary/pump/on,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 22
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -59486,6 +59500,9 @@
 	dir = 4;
 	dock_tag = "pod4"
 	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/engineering)
 "ciZ" = (
@@ -60918,6 +60935,9 @@
 	req_one_access = list(11,24)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor/grid_floor,
@@ -70342,6 +70362,9 @@
 	dir = 4;
 	dock_tag = "pod3"
 	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/dormitory)
 "doK" = (
@@ -72327,6 +72350,7 @@
 	req_access = list(67)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/grid_floor,
 /area/station/cargo/recycleroffice)
 "ftb" = (
