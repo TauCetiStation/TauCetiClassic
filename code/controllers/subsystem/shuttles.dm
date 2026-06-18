@@ -502,6 +502,7 @@ SUBSYSTEM_DEF(shuttle)
 		var/turf/picked_loc = pick_n_take(clear_turfs)
 
 		var/obj/structure/closet/crate/mailcrate/Crate = new(picked_loc)
+		Crate.spawn_filling = TRUE
 		for(var/datum/mail_order/Order in mail_orders)
 			var/obj/item/Item = generate_mail_item(Order, picked_loc)
 			if(Item)

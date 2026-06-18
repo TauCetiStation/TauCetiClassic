@@ -868,7 +868,7 @@
 	if(opened && !wiresexposed && (!issilicon(attacker)))
 		var/datum/robot_component/cell_component = components["power cell"]
 		if(cell)
-			cell.updateicon()
+			cell.update_icon()
 			cell.add_fingerprint(attacker)
 			attacker.put_in_active_hand(cell)
 			to_chat(attacker, "You remove \the [cell].")
@@ -1211,3 +1211,6 @@
 					return
 				F.attackby(B, src)
 				break
+
+/mob/living/silicon/robot/is_antag()
+	return emagged || laws?.zeroth

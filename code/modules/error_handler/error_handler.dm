@@ -8,7 +8,6 @@ var/global/total_runtimes_skipped = 0
 
 /world/Error(exception/E, datum/e_src)
 	total_runtimes++
-
 	if(!istype(E)) //Something threw an unusual exception
 		world.log << "\[[time_stamp()]] Uncaught exception: [E]"
 		return ..()

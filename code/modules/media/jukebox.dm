@@ -210,8 +210,10 @@ var/global/loopModeNames=list("Shuffle", "Single", "Once")
 	updateUsrDialog()
 
 /obj/machinery/media/jukebox/process()
-	if(!playlist && config.media_base_url)
-		var/url="[config.media_base_url]/index.php?playlist=[playlist_id]"
+	if(!playlist && config.media_base_urls)
+		var/url="[config.media_base_urls[1]]/media.php?playlist=[playlist_id]"
+		if(config.media_secret)
+			url+= "&key=[config.media_secret]"
 		//testing("[src] - Updating playlist from [url]...")
 		var/response = world.Export(url)
 		playlist=list()

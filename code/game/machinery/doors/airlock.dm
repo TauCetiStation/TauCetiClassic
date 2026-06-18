@@ -82,6 +82,7 @@ var/global/list/airlock_overlays = list()
 	..()
 	airlock_list += src
 	wires = new(src)
+
 	if(glass && !inner_material)
 		inner_material = "glass"
 	if(dir)
@@ -171,6 +172,15 @@ var/global/list/airlock_overlays = list()
 /obj/machinery/door/airlock/proc/regainMainPower()
 	if(secondsMainPowerLost > 0)
 		secondsMainPowerLost = 0
+
+/obj/machinery/door/airlock/proc/copy_electronics_access_to(obj/item/weapon/airlock_electronics/target)
+	if(!req_access)
+		check_access()
+	if(req_access.len)
+		target.conf_access = req_access
+	else if (req_one_access.len)
+		target.conf_access = req_one_access
+		target.one_access = 1
 
 /obj/machinery/door/airlock/proc/loseMainPower()
 	if(secondsMainPowerLost <= 0)
@@ -736,13 +746,7 @@ var/global/list/airlock_overlays = list()
 
 				if(5)
 					// Un-electrify door
-					if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-						to_chat(usr, "Can't un-electrify the airlock - The electrification wire is cut.")
-					else if(secondsElectrified == -1)
-						secondsElectrified = 0
-					else if(secondsElectrified > 0)
-						secondsElectrified = 0
-					diag_hud_set_electrified()
+					unelectrify(usr)
 
 				if(7)
 					// Close door
@@ -783,11 +787,7 @@ var/global/list/airlock_overlays = list()
 
 				if(11)
 					// Emergency access
-					if(emergency)
-						emergency = 0
-						update_icon()
-					else
-						to_chat(usr, "Emergency access is already disabled!")
+					enable_emergency_access(usr)
 
 		else if(href_list["aiEnable"])
 			var/code = text2num(href_list["aiEnable"])
@@ -830,17 +830,7 @@ var/global/list/airlock_overlays = list()
 
 				if(6)
 					// Electrify door indefinitely
-					if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
-						to_chat(usr, "The electrification wire has been cut.<br>\n")
-					else if(secondsElectrified == -1)
-						to_chat(usr, "The door is already indefinitely electrified.<br>\n")
-					else if(secondsElectrified)
-						to_chat(usr, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
-					else
-						shockedby += "\[[time_stamp()]\][usr](ckey:[usr.ckey])"
-						usr.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [COORD(src)]</font>"
-						secondsElectrified = -1
-						diag_hud_set_electrified()
+					electrify(usr)
 
 				if(7)
 					// Open door
@@ -881,14 +871,48 @@ var/global/list/airlock_overlays = list()
 
 				if(11)
 					// Emergency access
-					if(!emergency)
-						emergency = 1
-						update_icon()
-					else
-						to_chat(usr, "Emergency access is already disabled!")
+					disable_emergency_access(usr)
 
 	if(!no_window)
 		updateUsrDialog()
+
+/obj/machinery/door/airlock/proc/electrify(mob/user)
+	// Electrify door indefinitely
+	if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
+		to_chat(user, "The electrification wire has been cut.<br>\n")
+	else if(secondsElectrified == -1)
+		to_chat(user, "The door is already indefinitely electrified.<br>\n")
+	else if(secondsElectrified > 0)
+		to_chat(user, "The door is already electrified. You can't re-electrify it while it's already electrified.<br>\n")
+	else
+		shockedby += "\[[time_stamp()]\][user](ckey:[user.ckey])"
+		user.attack_log += "\[[time_stamp()]\] <font color='red'>Electrified the [name] at [COORD(src)]</font>"
+		secondsElectrified = -1
+		diag_hud_set_electrified()
+
+/obj/machinery/door/airlock/proc/unelectrify(mob/user)
+	// Un-electrify door
+	if(isWireCut(AIRLOCK_WIRE_ELECTRIFY))
+		to_chat(user, "Can't un-electrify the airlock - The electrification wire is cut.")
+	else if(secondsElectrified == -1)
+		secondsElectrified = 0
+	else if(secondsElectrified > 0)
+		secondsElectrified = 0
+	diag_hud_set_electrified()
+
+/obj/machinery/door/airlock/proc/enable_emergency_access(mob/user)
+	if(emergency)
+		emergency = FALSE
+		update_icon()
+	else
+		to_chat(user, "Emergency access is already disabled!")
+
+/obj/machinery/door/airlock/proc/disable_emergency_access(mob/user)
+	if(!emergency)
+		emergency = TRUE
+		update_icon()
+	else
+		to_chat(user, "Emergency access is already disabled!")
 
 /obj/machinery/door/airlock/try_open(mob/user, obj/item/tool = null)
 	if(isElectrified() && !issilicon(user) && !isobserver(user))
@@ -1157,6 +1181,17 @@ var/global/list/airlock_overlays = list()
 	assembly.created_name = name
 	assembly.update_state()
 
+/obj/machinery/door/airlock/proc/drop_electronics()
+	if(!electronics)
+		var/obj/item/weapon/airlock_electronics/AE = new (loc)
+		copy_electronics_access_to(AE)
+		return AE
+
+	var/obj/item/weapon/airlock_electronics/AE = electronics
+	electronics = null
+	AE.forceMove(loc)
+	return AE
+
 /obj/machinery/door/airlock/deconstruct(disassembled = TRUE, mob/user)
 	if(flags & NODECONSTRUCT)
 		return ..()
@@ -1166,31 +1201,19 @@ var/global/list/airlock_overlays = list()
 
 	if(!disassembled)
 		A.update_integrity(A.max_integrity * 0.5)
+		if(prob(75))
+			var/obj/item/weapon/airlock_electronics/AE = drop_electronics()
+			if(prob(25))
+				AE.make_broken()
 		return ..()
 
 	if(user)
 		to_chat(user, "<span class='notice'>You remove the airlock electronics.</span>")
 
-	var/obj/item/weapon/airlock_electronics/ae
-	if(electronics)
-		ae = electronics
-		electronics = null
-		ae.loc = loc
-	else
-		ae = new /obj/item/weapon/airlock_electronics(loc)
-		if(!req_access)
-			check_access()
-		if(req_access.len)
-			ae.conf_access = req_access
-		else if (req_one_access.len)
-			ae.conf_access = req_one_access
-			ae.one_access = 1
+	var/obj/item/weapon/airlock_electronics/AE = drop_electronics()
 
 	if(operating == -1)
-		ae.icon_state = "door_electronics_smoked"
-		ae.item_state_inventory = "door_electronics_smoked"
-		ae.item_state_world = "door_electronics_smoked_w"
-		ae.broken = TRUE
+		AE.make_broken()
 		operating = 0
 	..()
 

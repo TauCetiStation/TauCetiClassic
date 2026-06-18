@@ -189,6 +189,29 @@
 		new /obj/item/weapon/throwing_star(src)
 	make_exact_fit()
 
+/obj/item/weapon/storage/box/syndie_kit/romerol
+	name = "Red box"
+	desc = "A small red box, though with additional metal fasteners, which makes it seem that it is very, very important. But... How would it get into your hands if it`s really important?"
+
+/obj/item/weapon/storage/box/syndie_kit/romerol/atom_init()
+	. = ..()
+	new /obj/item/weapon/reagent_containers/glass/beaker/vial/romerol(src)
+	new /obj/item/weapon/reagent_containers/syringe(src)
+	new /obj/item/weapon/reagent_containers/dropper(src)
+	new /obj/item/weapon/reagent_containers/hypospray/combat/zombie(src)
+
+	var/garanted_item = pick(/obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol, /obj/item/weapon/grenade/chem_grenade/romerol, /obj/item/weapon/implanter/zombie)
+	new garanted_item (src)
+
+	if(prob(50))
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol(src)
+		new /obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol(src)
+	if(prob(50))
+		new /obj/item/weapon/grenade/chem_grenade/romerol(src)
+	if(prob(30))
+		new /obj/item/weapon/implanter/zombie(src)
+	make_exact_fit()
+
 /obj/item/weapon/storage/box/syndie_kit/cutouts
 	name = "box (G)"
 
@@ -205,7 +228,6 @@
 /obj/item/weapon/storage/box/syndie_kit/rig/atom_init()
 	. = ..()
 
-	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
 	new /obj/item/clothing/suit/space/rig/syndi(src)
 	make_exact_fit()
 
@@ -215,7 +237,6 @@
 /obj/item/weapon/storage/box/syndie_kit/heavy_rig/atom_init()
 	. = ..()
 
-	new /obj/item/clothing/head/helmet/space/rig/syndi/heavy(src)
 	new /obj/item/clothing/suit/space/rig/syndi/heavy(src)
 	make_exact_fit()
 
@@ -433,7 +454,6 @@
 	/obj/item/weapon/grenade/chem_grenade/acid = 3,
 	/obj/item/weapon/grenade/chem_grenade/incendiary = 2,
 	/obj/item/weapon/card/emag,
-	/obj/item/clothing/head/helmet/space/rig/syndi/hazmat,
 	/obj/item/clothing/suit/space/rig/syndi/hazmat,
 	)
 

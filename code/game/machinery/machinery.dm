@@ -225,6 +225,24 @@ Class Procs:
 				L.client.perspective = MOB_PERSPECTIVE
 	occupant = null
 
+/obj/machinery/proc/place_occupant(mob/living/target, mob/user, obj/grab = null)
+	if(occupant) return
+	var/mob/M = target
+	M.stop_pulling()
+	M.forceMove(src)
+	occupant = M
+	M.throw_alert("inside", /atom/movable/screen/alert/inside, new_master = src)
+	QDEL_NULL(grab)
+
+/obj/machinery/proc/eject_occupant(mob/living/target)
+	if(target.client)
+		target.client.eye = target
+		target.client.perspective = MOB_PERSPECTIVE
+	target.clear_alert("inside")
+	target.forceMove(get_turf(src))
+	occupant = null
+
+
 /obj/machinery/proc/close_machine(mob/living/target = null)
 	state_open = 0
 	density = TRUE
@@ -339,12 +357,7 @@ Class Procs:
 /obj/machinery/Topic(href, href_list)
 	..()
 
-	if(usr.can_use_topic(src) != STATUS_INTERACTIVE || !can_interact_with(usr))
-		usr.unset_machine(src)
-		return FALSE
-
-	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !allowed(usr))
-		allowed_fail(usr)
+	if(!can_still_interact_with(usr))
 		return FALSE
 
 	usr.set_machine(src)
