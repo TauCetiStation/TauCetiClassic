@@ -7,6 +7,9 @@
 	icon_state = "down"
 	anchored = FALSE
 	type_roller = /obj/item/roller/roller_holder_surg
+	qualities = list(
+		QUALITY_OPERATE_TABLE = 95
+		)
 
 /obj/item/roller/roller_holder_surg
 	name = "roller bed rack"

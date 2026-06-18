@@ -76,8 +76,6 @@
 	*/
 	var/list/sprite_sheets_obj = null
 
-    /// A list of all tool qualities that src exhibits. To-Do: Convert all our tools to such a system.
-	var/list/qualities
 	// This thing can be used to stab eyes out.
 	var/stab_eyes = FALSE
 
@@ -1028,7 +1026,7 @@
 
 	return ..()
 
-/obj/item/proc/get_quality(quality)
+/obj/proc/get_quality(quality)
 	if(!qualities)
 		return 0
 	return qualities[quality]

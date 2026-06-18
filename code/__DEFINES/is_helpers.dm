@@ -173,6 +173,8 @@
 
 // SURGERY HELPERS
 
+#define iscanoptable(O) O.get_quality(QUALITY_OPERATE_TABLE)
+
 #define isclamp(I) 		I.get_quality(QUALITY_CLAMP)
 
 #define isretract(I) 	I.get_quality(QUALITY_RETRACT)

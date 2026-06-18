@@ -18,6 +18,8 @@
 
 #define QUALITY_DROP_LIQUID "drop_liquid" // for reaget_containers
 
+#define QUALITY_OPERATE_TABLE "operate_table" // for surgery tables
+
 #define QUALITY_SURGERY_TOOL"surgery_tool" 	// to check on /try_operate(), can this item operate
 #define QUALITY_CLAMP		"clamp"			// like hemostat/cutters
 #define QUALITY_RETRACT 	"retract"		// like retractor/screwdriver/fork

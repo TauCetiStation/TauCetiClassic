@@ -33,6 +33,9 @@
 	var/flipped = 0
 	var/flipable = TRUE
 	var/canconnect = TRUE
+	qualities = list(
+		QUALITY_OPERATE_TABLE = 70
+	)
 
 /obj/structure/table/atom_init()
 	. = ..()

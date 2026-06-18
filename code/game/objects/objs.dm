@@ -23,6 +23,9 @@
 
 	uses_integrity = TRUE
 
+	/// A list of all tool qualities that src exhibits. To-Do: Convert all our tools to such a system.
+	var/list/qualities = null
+
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
 /obj/process()
