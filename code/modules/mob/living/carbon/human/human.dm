@@ -672,7 +672,7 @@
 		electrocution_animation(4 SECONDS)
 
 	if(.)
-		if(!(can_remember() && prob(50))) //electrocuting people makes them randomly tell things they know
+		if(!(can_remember() && prob(25))) //electrocuting people makes them randomly tell things they know
 			return
 
 		var/memory_key = pick(mind.key_memories)
