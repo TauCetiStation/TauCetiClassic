@@ -50,9 +50,10 @@
 
 /datum/action/item_action/hands_free/toggle_internals/Remove(mob/T)
 	var/obj/item/weapon/tank/tank = target
-	if(owner.internal == tank)
-		owner.internal = null
-		tank.update_actions_icons(owner)
+	if(ishuman(T) || ismonkey(T))
+		if(T.internal == tank)
+			T.internal = null
+			tank.update_actions_icons(T)
 	..()
 
 /obj/item/weapon/tank/examine(mob/user)
