@@ -22,38 +22,39 @@
 	var/obj/item/clothing/shoes/S = target
 	if(!can_attach_to(S, user))
 		return
-	S.AddComponent(/datum/component/noslip_sole, src)
+	forceMove(S)
+	S.AddElement(/datum/element/noslip_sole)
 	to_chat(user, "<span class='notice'>You fit \the [src] onto \the [S].</span>")
 	playsound(S, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 
-// Lives on the shoe; the sole hides inside it, grants NOSLIP and pops back off on alt-click.
-/datum/component/noslip_sole
-	dupe_mode = COMPONENT_DUPE_UNIQUE
-	var/obj/item/noslip_sole/sole
+// The sole obj hides inside the shoe; this element just grants NOSLIP and wires alt-click to pry it
+// back off, so the shoe carries no sole-specific code or state of its own.
+/datum/element/noslip_sole
+	element_flags = ELEMENT_DETACH
 
-/datum/component/noslip_sole/Initialize(obj/item/noslip_sole/attached_sole)
-	if(!istype(parent, /obj/item/clothing/shoes))
-		return COMPONENT_INCOMPATIBLE
-	sole = attached_sole
-	var/obj/item/clothing/shoes/S = parent
-	sole.forceMove(S)
+/datum/element/noslip_sole/Attach(datum/target)
+	. = ..()
+	if(!istype(target, /obj/item/clothing/shoes))
+		return ELEMENT_INCOMPATIBLE
+	var/obj/item/clothing/shoes/S = target
 	S.flags |= NOSLIP
-	RegisterSignal(parent, COMSIG_ATOM_ALTCLICK, PROC_REF(on_altclick))
+	RegisterSignal(S, COMSIG_ATOM_ALTCLICK, PROC_REF(on_altclick))
 
-/datum/component/noslip_sole/Destroy(force, silent)
-	var/obj/item/clothing/shoes/S = parent
-	if(istype(S))
-		S.flags &= ~NOSLIP
-	sole = null
-	return ..()
+/datum/element/noslip_sole/Detach(obj/item/clothing/shoes/S)
+	. = ..()
+	S.flags &= ~NOSLIP
+	UnregisterSignal(S, COMSIG_ATOM_ALTCLICK)
 
-/datum/component/noslip_sole/proc/on_altclick(obj/item/clothing/shoes/S, mob/user)
+/datum/element/noslip_sole/proc/on_altclick(obj/item/clothing/shoes/S, mob/user)
 	SIGNAL_HANDLER
-	if(!user.Adjacent(S) || user.incapacitated())
+	if(!user.Adjacent(S))
 		return
-	var/obj/item/noslip_sole/released = sole
-	released.forceMove(get_turf(S))
-	user.put_in_hands(released)
-	to_chat(user, "<span class='notice'>You pry \the [released] off \the [S].</span>")
-	qdel(src)
+	if(user.incapacitated())
+		return
+	var/obj/item/noslip_sole/sole = locate() in S
+	if(!sole)
+		return
+	user.put_in_hands(sole)
+	to_chat(user, "<span class='notice'>You pry \the [sole] off \the [S].</span>")
+	S.RemoveElement(/datum/element/noslip_sole)
 	return COMPONENT_CANCEL_ALTCLICK
