@@ -188,8 +188,6 @@
 
 /obj/structure/table/Crossed(atom/movable/AM)
 	. = ..()
-	// Crossed runs after successfully entering the table tile, so the crawling
-	// carbon mob can be safely rendered below the table here.
 	if(buckled_mob != AM && iscarbon(AM) && AM.checkpass(PASSCRAWL))
 		AM.layer = BELOW_CONTAINERS_LAYER
 
