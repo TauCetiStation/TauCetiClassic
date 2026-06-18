@@ -206,7 +206,7 @@
 							 || isscrewing(I)\
 							 || isprying(I)\
 							 || ispulsing(I)\
-							 || iscoil(A))
+							 || iscoil(I))
 
 // OBJECTS
 
