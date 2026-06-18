@@ -193,8 +193,6 @@
 
 /obj/structure/table/Uncrossed(atom/movable/AM)
 	. = ..()
-	// Uncrossed runs after successfully leaving this table. If the new tile also
-	// has a table, keep the mob below containers until the new table processes it.
 	var/turf/target_turf = get_turf(AM)
 	if(buckled_mob == AM || !iscarbon(AM) || !AM.checkpass(PASSCRAWL))
 		return
