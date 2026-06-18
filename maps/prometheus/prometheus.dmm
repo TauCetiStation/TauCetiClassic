@@ -49276,13 +49276,23 @@
 "lsZ" = (
 /obj/structure/rack,
 /obj/item/ammo_box/shotgun/beanbag{
-	pixel_y = 2
+	pixel_y = 2;
+	pixel_x = -3
 	},
 /obj/item/ammo_box/shotgun/beanbag{
-	pixel_y = -2
+	pixel_y = -2;
+	pixel_x = -3
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/ammo_box/magazine/plasma{
+	pixel_y = -2;
+	pixel_x = 10
+	},
+/obj/item/ammo_box/magazine/plasma{
+	pixel_y = 2;
+	pixel_x = 10
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -83895,19 +83905,13 @@
 	},
 /area/station/civilian/hydroponics)
 "ucF" = (
-/obj/structure/rack,
-/obj/item/ammo_box/magazine/plasma{
-	pixel_y = 2
-	},
-/obj/item/ammo_box/magazine/plasma{
-	pixel_y = -2
-	},
 /obj/machinery/light/small/emergency{
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/structure/closet/secure_closet/tactical_armor,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

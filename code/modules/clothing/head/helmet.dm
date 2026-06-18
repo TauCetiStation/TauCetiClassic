@@ -192,6 +192,7 @@
 	item_state = "helmet"
 	flags = HEADCOVERSEYES
 	flags_inv = HIDEEARS
+	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	armor = list(melee = 80, bullet = 60, laser = 50,energy = 10, bomb = 25, bio = 10, rad = 0)
 	siemens_coefficient = 0.7
 

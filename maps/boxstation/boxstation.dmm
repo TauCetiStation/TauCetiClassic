@@ -3203,6 +3203,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/machinery/recharger/wallcharger{
+	pixel_y = -30
+	},
 /turf/simulated/floor,
 /area/station/security/armoury)
 "aft" = (
@@ -3350,8 +3353,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/structure/table,
-/obj/machinery/recharger,
+/obj/structure/closet/secure_closet/tactical_armor,
 /turf/simulated/floor,
 /area/station/security/armoury)
 "afB" = (
