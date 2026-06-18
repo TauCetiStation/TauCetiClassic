@@ -52,13 +52,13 @@
         return ..()
 
     var/obj/item/device/uplink/U = null
-    if(istype(target, /obj/item/device/uplink))   // сам объект аплинка (включая /hidden)
+    if(istype(target, /obj/item/device/uplink))
         U = target
-    else if(istype(target, /obj/item))            // предмет со встроенным hidden_uplink (КПК/гарнитура/...)
+    else if(istype(target, /obj/item))
         var/obj/item/I = target
         U = I.hidden_uplink
 
-    if(!U)                                        // кликнули не по аплинку — обычное поведение
+    if(!U)
         return ..()
 
     if(used)
