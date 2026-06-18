@@ -19,7 +19,7 @@
 	l_ear = /obj/item/device/radio/headset/headset_cargo
 	belt = /obj/item/device/pda/cargo
 
-// The Cargo Guard ("ЧОП Карго") outfit lives with its edict: code/modules/edicts/cargo_guard/outfit.dm
+// The Cargo Guard outfit lives with its edict: code/modules/edicts/cargo_guard/outfit.dm
 
 // MINER OUTFIT
 /datum/outfit/job/mining
