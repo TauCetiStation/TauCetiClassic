@@ -652,6 +652,14 @@
 		H.equip_or_collect(new /obj/item/ammo_box/magazine/l13(H), SLOT_IN_BACKPACK)
 		H.equip_or_collect(new /obj/item/ammo_box/magazine/l13/lethal(H), SLOT_IN_BACKPACK)
 
+	H.add_language(LANGUAGE_SOLCOMMON)
+	H.forced_language = LANGUAGE_SOLCOMMON
+
+	for(var/datum/language/language as anything in H.languages)
+		if(language.name == H.forced_language)
+			continue
+		H.remove_language(language.name)
+
 /datum/outfit/responders/solgov/medic
 	name = "Responders: SolGov Outer Systems Guardian Medic"
 	head = /obj/item/clothing/head/helmet/solgov/medic
