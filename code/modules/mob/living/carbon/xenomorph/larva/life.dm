@@ -5,11 +5,10 @@
 	if (notransform)
 		return
 
-	for(var/obj/item/weapon/larva_bite/G in src)
-		G.process()
+
+
 	if(istype(loc, /obj/item/alien_embryo))
 		larva_in_embryo = TRUE
-		SetSleeping(5 SECONDS)
 
 	..()
 

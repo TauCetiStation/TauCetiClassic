@@ -129,7 +129,7 @@
 	if(.)
 		return
 
-	if(user.is_busy() || issilicon(user))
+	if(user.is_busy() || isAI(user))
 		return
 	if(holding && do_after(user, 20, target = src))
 		user.put_in_hands(holding)
