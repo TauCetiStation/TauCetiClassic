@@ -185,11 +185,13 @@
 
 #define isboneset(I) 	I.get_quality(QUALITY_BONE_SET)
 
-#define isfixbone(I) 	I.get_quality(QUALITY_FIX_BONE)
+#define ismendingbone(I)I.get_quality(QUALITY_MENDING_BONE)
 
 #define isfixvein(I) 	I.get_quality(QUALITY_FIX_VEIN)
 
 #define iscautery(I)	I.get_quality(QUALITY_CAUTER)
+
+#define ismendingipc(I) I.get_quality(QUALITY_MENDING_IPC)
 
 #define isorganicsurgery(I) (  iscutter(I)\
 							|| isclamp(I)\
@@ -197,7 +199,7 @@
 							|| issawopen(I)\
 							|| isdrillopen(I)\
 							|| isboneset(I)\
-							|| isfixbone(I)\
+							|| ismendingbone(I)\
 							|| isfixvein(I)\
 							|| iscautery(I)\
 							|| isdropliquid(I))

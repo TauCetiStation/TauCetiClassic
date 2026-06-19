@@ -1,13 +1,13 @@
 ///////////////////ORGAN STATUS DEFINES///////////////////
-#define ORGAN_CUT_AWAY   1
-#define ORGAN_ATTACHABLE 2
-#define ORGAN_BLEEDING   4
-#define ORGAN_BROKEN     8
-#define ORGAN_SPLINTED   16
-#define ORGAN_ROBOT      32
-#define ORGAN_DEAD       64
-#define ORGAN_MUTATED    128
-#define ORGAN_ARTERY_CUT 256
+#define ORGAN_CUT_AWAY   (0<<2)
+#define ORGAN_ATTACHABLE (1<<2)
+#define ORGAN_BLEEDING   (2<<2)
+#define ORGAN_BROKEN     (3<<2)
+#define ORGAN_SPLINTED   (4<<2)
+#define ORGAN_ROBOT      (5<<2)
+#define ORGAN_DEAD       (6<<2)
+#define ORGAN_MUTATED    (7<<2)
+#define ORGAN_ARTERY_CUT (8<<2)
 
 #define DROPLIMB_EDGE  0
 #define DROPLIMB_BLUNT 1

@@ -1,5 +1,17 @@
 #define PICK_DAMAGE_STATE "[pick(0, 0, 1, 1, 1, 2, 2, 2, 3, 3)][pick(0, 0, 1, 1, 1, 2, 2, 2, 3, 3)]"
 
+#define BP_NORMAL_STATE 	  		0
+#define BP_SCALPEL_OPEN_STATE 		1
+#define BP_RETRACTOR_OPEN_STATE 	2
+#define BP_SAW_INTERNALS_OPEN_STATE 3
+
+#define BP_GEL 	    (0 << 2)
+#define BP_SET 	    (1 << 2)
+#define BP_VEIN     (2 << 2)
+#define BP_BLEED    (3 << 2)
+#define BP_KIT 	    (4 << 2)
+
+
 /****************************************************
 				BODYPARTS
 ****************************************************/
@@ -53,13 +65,14 @@
 	var/max_pumped = 60
 
 	// Joint/state stuff.
-	var/cannot_amputate               // Impossible to amputate.
+	var/cannot_amputate = FALSE       // Impossible to amputate.
 	var/artery_name = "artery"        // Flavour text for cartoid artery, aorta, etc.
 	var/arterial_bleed_severity = 1   // Multiplier for bleeding in a limb.
 
 	// Surgery vars.
-	var/open = 0
-	var/stage = 0
+	var/open = BP_NORMAL_STATE
+	var/max_open_state = BP_RETRACTOR_OPEN_STATE
+	var/stage = 0  // use binary flags
 	var/cavity = 0
 	var/trauma_kit = FALSE
 	var/burn_kit = FALSE
@@ -880,14 +893,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_TORSO_LAYER
 	regen_bodypart_penalty = 150
 
+	max_open_state = BP_SAW_INTERNALS_OPEN_STATE
 	cannot_amputate = TRUE
 
 	max_damage = 75
 	min_broken_damage = 35
 	vital = TRUE
 	w_class = SIZE_BIG // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
-
-/obj/item/organ/external/chest
 
 /obj/item/organ/external/groin
 	name = "groin"
@@ -1034,6 +1046,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_HEAD_LAYER
 	regen_bodypart_penalty = 100
+
+	max_open_state = BP_SAW_INTERNALS_OPEN_STATE
 
 	max_damage = 75
 	min_broken_damage = 35

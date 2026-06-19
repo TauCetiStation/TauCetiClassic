@@ -20,12 +20,16 @@
 
 #define QUALITY_OPERATE_TABLE "operate_table" // for surgery tables
 
-#define QUALITY_SURGERY_TOOL"surgery_tool" 	// to check on /try_operate(), can this item operate
-#define QUALITY_CLAMP		"clamp"			// like hemostat/cutters
-#define QUALITY_RETRACT 	"retract"		// like retractor/screwdriver/fork
-#define QUALITY_SAW_OPEN	"saw_open"		// like circut_saw/crowbar
-#define QUALITY_DRILL_OPEN 	"drill_open"	// like surgical_drill/pen
-#define QUALITY_BONE_SET	"bone_set"		// like bonesetter/wrench
-#define QUALITY_FIX_BONE	"fix_bone"		// like bone_gel/rods/alien_bone_gel
-#define QUALITY_FIX_VEIN	"fix_vein"		// like fix_ovein/cable
-#define QUALITY_CAUTER		"cauter"		// like cautery/welding_tool
+#define QUALITY_SURGERY_TOOL "surgery_tool" 	// to check on /try_operate(), can this item operate
+#define QUALITY_CLAMP		 "clamp"			// like hemostat/cutters
+#define QUALITY_RETRACT 	 "retract"		// like retractor/screwdriver/fork
+#define QUALITY_SAW_OPEN	 "saw_open"		// like circut_saw/crowbar
+#define QUALITY_DRILL_OPEN 	 "drill_open"	// like surgical_drill/pen
+#define QUALITY_BONE_SET	 "bone_set"		// like bonesetter/wrench
+#define QUALITY_MENDING_BONE "mending"		// like bone_gel/rods/alien_bone_gel
+#define QUALITY_FIX_VEIN	 "fix_vein"		// like fix_ovein/cable
+#define QUALITY_CAUTER		 "cauter"		// like cautery/welding_tool
+
+// Special IPC surgery
+
+#define QUALITY_MENDING_IPC "mending_IPC" // for nanopaste/bongel/wrench

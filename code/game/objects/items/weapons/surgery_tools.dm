@@ -217,7 +217,8 @@
 	usesound = 'sound/items/surgery/Bone_Gel.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	qualities = list(
-		QUALITY_FIX_BONE = 1
+		QUALITY_MENDING_BONE = 1,
+		QUALITY_MENDING_IPC = 1.3
 	)
 
 /obj/item/weapon/FixOVein

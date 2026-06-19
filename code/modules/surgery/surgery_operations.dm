@@ -4,9 +4,8 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/glue_bone
-	allowed_tools = list(
-	/obj/item/weapon/bonegel = 100,	\
-	/obj/item/stack/rods = 50
+	allowed_qualities = list(
+	QUALITY_MENDING_BONE
 	)
 	can_infect = 1
 	blood_level = 1
@@ -39,9 +38,8 @@
 	"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>")
 
 /datum/surgery_step/set_bone
-	allowed_tools = list(
-	/obj/item/weapon/bonesetter = 100,	\
-	/obj/item/weapon/wrench = 75		\
+	allowed_qualities = list(
+	QUALITY_BONE_SET
 	)
 
 	min_duration = 60
@@ -77,9 +75,8 @@
 	BP.take_damage(5, 0, used_weapon = tool)
 
 /datum/surgery_step/mend_skull
-	allowed_tools = list(
-	/obj/item/weapon/bonesetter = 100,	\
-	/obj/item/weapon/wrench = 75		\
+	allowed_qualities = list(
+	QUALITY_BONE_SET
 	)
 
 	min_duration = 60
@@ -110,9 +107,8 @@
 	H.disfigured = 1
 
 /datum/surgery_step/finish_bone
-	allowed_tools = list(
-	/obj/item/weapon/bonegel = 100,	\
-	/obj/item/stack/rods = 50
+	allowed_qualities = list(
+	QUALITY_MENDING_BONE
 	)
 	can_infect = 1
 	blood_level = 1
@@ -163,10 +159,8 @@
 	return target_zone == BP_HEAD && BP.open
 
 /datum/surgery_step/brain/saw_skull
-	allowed_tools = list(
-	/obj/item/weapon/circular_saw = 100,
-	/obj/item/weapon/hatchet = 75,
-	/obj/item/weapon/crowbar = 50
+	allowed_qualities = list(
+	QUALITY_SAW_OPEN
 	)
 
 	min_duration = 50
@@ -193,10 +187,8 @@
 	BP.take_damage(max(10, tool.force), 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/brain/cut_brain
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50,
+	allowed_qualities = list(
+	QUALITY_CUTTING
 	)
 	allowed_species = list("exclude", IPC, DIONA)
 
@@ -223,10 +215,8 @@
 	BP.take_damage(50, 0, DAM_SHARP|DAM_EDGE,  tool)
 
 /datum/surgery_step/brain/saw_spine
-	allowed_tools = list(
-	/obj/item/weapon/circular_saw = 100,
-	/obj/item/weapon/hatchet = 75,
-	/obj/item/weapon/crowbar = 50
+	allowed_qualities = list(
+	QUALITY_SAW_OPEN
 	)
 
 	min_duration = 50
@@ -268,7 +258,7 @@
 		user:bloody_hands(target, 0)
 
 /datum/surgery_step/brain/insert_brain
-	allowed_tools = list(
+	allowed_qualities = list(
 	/obj/item/organ/internal/brain = 100
 	)
 	allowed_species = list("exclude", IPC, DIONA)
@@ -334,10 +324,8 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/brain/bone_chips
-	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,
-	/obj/item/weapon/wirecutters = 75,
-	/obj/item/weapon/kitchen/utensil/fork = 50
+	allowed_qualities = list(
+	QUALITY_CLAMP
 	)
 
 	min_duration = 80
@@ -364,9 +352,8 @@
 	BP.take_damage(30, 0, DAM_SHARP, tool)
 
 /datum/surgery_step/brain/hematoma
-	allowed_tools = list(
-	/obj/item/weapon/FixOVein = 100,
-	/obj/item/stack/cable_coil = 75
+	allowed_qualities = list(
+	QUALITY_FIX_VEIN
 	)
 
 	min_duration = 90
@@ -399,9 +386,8 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/brain/mend_skull
-	allowed_tools = list(
-	/obj/item/weapon/bonegel = 100,
-	/obj/item/stack/rods = 50
+	allowed_qualities = list(
+	QUALITY_MENDING_BONE
 	)
 
 	min_duration = 20
@@ -435,10 +421,8 @@
 	return isslime(target) && target.stat == DEAD
 
 /datum/surgery_step/slime/cut_flesh
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50,
+	allowed_qualities = list(
+	QUALITY_CUTTING
 	)
 
 	min_duration = 30
@@ -461,10 +445,8 @@
 	"<span class='warning'>Your hand slips, tearing [target]'s flesh with \the [tool]!</span>")
 
 /datum/surgery_step/slime/cut_innards
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50,
+	allowed_qualities = list(
+	QUALITY_CUTTING
 	)
 
 	min_duration = 30
@@ -487,10 +469,8 @@
 	"<span class='warning'>Your hand slips, tearing [target]'s innards with \the [tool]!</span>")
 
 /datum/surgery_step/slime/saw_core
-	allowed_tools = list(
-	/obj/item/weapon/circular_saw = 100,
-	/obj/item/weapon/hatchet = 75,
-	/obj/item/weapon/crowbar = 50
+	allowed_qualities = list(
+	QUALITY_SAW_OPEN
 	)
 
 	min_duration = 50
@@ -529,53 +509,9 @@
 	priority = 2
 	can_infect = 1
 
-/datum/surgery_step/eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
-		return 0
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
-		return 0
-	if (BP.is_stump)
-		return FALSE
-	return target_zone == O_EYES
-
-/datum/surgery_step/eye/cut_open
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,		\
-	/obj/item/weapon/kitchenknife = 75,	\
-	/obj/item/weapon/shard = 50, 		\
-	)
-
-	min_duration = 90
-	max_duration = 110
-
-/datum/surgery_step/eye/cut_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.eyes == 0
-
-/datum/surgery_step/eye/cut_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts to separate the corneas on [target]'s eyes with \the [tool].", \
-	"You start to separate the corneas on [target]'s eyes with \the [tool].")
-	..()
-
-/datum/surgery_step/eye/cut_open/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] has separated the corneas on [target]'s eyes with \the [tool].</span>" , \
-	"<span class='notice'>You have separated the corneas on [target]'s eyes with \the [tool].</span>",)
-	target.op_stage.eyes = 1
-	target.blinded += 1.5
-
-/datum/surgery_step/eye/cut_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, slicing [target]'s eyes wth \the [tool]!</span>" , \
-	"<span class='warning'>Your hand slips, slicing [target]'s eyes wth \the [tool]!</span>" )
-	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-	IO.take_damage(5, 0)
-
 /datum/surgery_step/eye/lift_eyes
-	allowed_tools = list(
-	/obj/item/weapon/retractor = 100,	        \
-	/obj/item/weapon/kitchen/utensil/fork = 75,	\
-	/obj/item/weapon/screwdriver = 50
+	allowed_qualities = list(
+	QUALITY_RETRACT
 	)
 
 	min_duration = 30
@@ -603,12 +539,8 @@
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/eye/mend_eyes
-	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,             \
-	/obj/item/stack/cable_coil = 75,            \
-	/obj/item/weapon/wirecutters = 75,           \
-	/obj/item/weapon/kitchen/utensil/fork = 50,  \
-	/obj/item/device/assembly/mousetrap = 10	//I don't know. Don't ask me. But I'm leaving it because hilarity.
+	allowed_qualities = list(
+	QUALITY_CLAMP
 	)
 
 	min_duration = 80
@@ -643,11 +575,8 @@
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/eye/cauterize
-	allowed_tools = list(
-	/obj/item/weapon/cautery = 100,			\
-	/obj/item/clothing/mask/cigarette = 75,	\
-	/obj/item/weapon/lighter = 50,			\
-	/obj/item/weapon/weldingtool = 50
+	allowed_qualities = list(
+	QUALITY_CAUTER
 	)
 
 	min_duration = 70
@@ -677,7 +606,7 @@
 
 /datum/surgery_step/organ_manipulation/place_eye
 	priority = 2
-	allowed_tools = list(/obj/item/organ/internal/eyes = 100)
+	allowed_qualities = list(/obj/item/organ/internal/eyes = 100)
 
 	allowed_species = list("exclude", IPC, DIONA)
 
@@ -729,10 +658,8 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/eye/manipulation/remove
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,		\
-	/obj/item/weapon/kitchenknife = 75,	\
-	/obj/item/weapon/shard = 50, 		\
+	allowed_qualities = list(
+	QUALITY_CUTTING
 	)
 
 	allowed_species = list("exclude", IPC, DIONA)
@@ -797,11 +724,8 @@
 	return target_zone == O_EYES
 
 /datum/surgery_step/ipc/eye/screw_open
-	allowed_tools = list(
-	/obj/item/weapon/screwdriver = 100,
-	/obj/item/weapon/scalpel = 75,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50
+	allowed_qualities = list(
+	QUALITY_SCREWING
 	)
 
 	min_duration = 90
@@ -832,10 +756,8 @@
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/ipc/eye/mend_cameras
-	allowed_tools = list(
-	/obj/item/stack/nanopaste = 100,
-	/obj/item/weapon/bonegel = 30,
-	/obj/item/weapon/wrench = 70
+	allowed_qualities = list(
+	QUALITY_MENDING_IPC
 	)
 
 	min_duration = 80
@@ -873,11 +795,8 @@
 	target.blinded += 3.0
 
 /datum/surgery_step/ipc/eye/close_shut
-	allowed_tools = list(
-	/obj/item/weapon/screwdriver = 100,
-	/obj/item/weapon/scalpel = 75,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50,
+	allowed_qualities = list(
+	QUALITY_SCREWING,
 	)
 
 	min_duration = 70
@@ -929,10 +848,8 @@
 	return target_zone == O_MOUTH
 
 /datum/surgery_step/face/cut_face
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,		\
-	/obj/item/weapon/kitchenknife = 75,	\
-	/obj/item/weapon/shard = 50, 		\
+	allowed_qualities = list(
+	QUALITY_CUTTING
 	)
 
 	min_duration = 90
@@ -959,12 +876,8 @@
 	target.losebreath += 10
 
 /datum/surgery_step/face/mend_vocal
-	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,             \
-	/obj/item/stack/cable_coil = 75,            \
-	/obj/item/weapon/wirecutters = 75,           \
-	/obj/item/weapon/kitchen/utensil/fork = 50,  \
-	/obj/item/device/assembly/mousetrap = 10	//I don't know. Don't ask me. But I'm leaving it because hilarity.
+	allowed_qualities = list(
+	QUALITY_CLAMP
 	)
 
 	min_duration = 70
@@ -989,10 +902,8 @@
 	target.losebreath += 10
 
 /datum/surgery_step/face/fix_face
-	allowed_tools = list(
-	/obj/item/weapon/retractor = 100, 	\
-	/obj/item/weapon/kitchen/utensil/fork = 75,	\
-	/obj/item/weapon/screwdriver = 50
+	allowed_qualities = list(
+	QUALITY_RETRACT
 	)
 
 	min_duration = 80
@@ -1018,11 +929,8 @@
 	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/face/cauterize
-	allowed_tools = list(
-	/obj/item/weapon/cautery = 100,			\
-	/obj/item/clothing/mask/cigarette = 75,	\
-	/obj/item/weapon/lighter = 50,			\
-	/obj/item/weapon/weldingtool = 50
+	allowed_qualities = list(
+	QUALITY_CAUTER
 	)
 
 	min_duration = 70
@@ -1072,11 +980,8 @@
 	return target_zone == O_MOUTH
 
 /datum/surgery_step/ipc/face/screw_face
-	allowed_tools = list(
-	/obj/item/weapon/screwdriver = 100,
-	/obj/item/weapon/scalpel = 75,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50
+	allowed_qualities = list(
+	QUALITY_SCREWING
 	)
 
 	min_duration = 90
@@ -1103,10 +1008,8 @@
 	BP.take_damage(6, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/face/pry_screen
-	allowed_tools = list(
-	/obj/item/weapon/crowbar = 100,
-	/obj/item/weapon/hatchet = 75,
-	/obj/item/weapon/circular_saw = 50
+	allowed_qualities = list(
+	QUALITY_PRYING
 	)
 
 	min_duration = 30
@@ -1132,10 +1035,8 @@
 	BP.take_damage(12, 0, used_weapon = tool)
 
 /datum/surgery_step/ipc/face/fix_screen
-	allowed_tools = list(
-	/obj/item/stack/nanopaste = 100,
-	/obj/item/weapon/bonegel = 30,
-	/obj/item/weapon/wrench = 70
+	allowed_qualities = list(
+	QUALITY_MENDING_IPC
 	)
 
 	min_duration = 70
@@ -1166,11 +1067,8 @@
 		BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/face/close_shut
-	allowed_tools = list(
-	/obj/item/weapon/screwdriver = 100,
-	/obj/item/weapon/scalpel = 75,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50,
+	allowed_qualities = list(
+	QUALITY_SCREWING
 	)
 
 	min_duration = 70
@@ -1223,10 +1121,8 @@
 	return 1
 
 /datum/surgery_step/gender_reassignment/reshape_genitals
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,		\
-	/obj/item/weapon/kitchenknife = 75,	\
-	/obj/item/weapon/shard = 50, 		\
+	allowed_qualities = list(
+	QUALITY_CUTTING
 	)
 
 	min_duration = 110
@@ -1269,21 +1165,10 @@
 	can_infect = 1
 
 /datum/surgery_step/generic/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
-		return FALSE
-	if (target_zone == O_EYES)	//there are specific steps for eye surgery
-		return FALSE
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
-		return FALSE
-	if (BP.is_stump)
-		return FALSE
-	if (!BP.is_flesh())
-		return FALSE
-	return TRUE
+
 
 /datum/surgery_step/generic/cut_with_laser
-	allowed_tools = list(
+	allowed_qualities = list(
 	/obj/item/weapon/scalpel/laser3 = 95, \
 	/obj/item/weapon/scalpel/laser2 = 85, \
 	/obj/item/weapon/scalpel/laser1 = 75, \
@@ -1322,7 +1207,7 @@
 	BP.take_damage(7.5, 12.5, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/incision_manager
-	allowed_tools = list(
+	allowed_qualities = list(
 	/obj/item/weapon/scalpel/manager = 100
 	)
 
@@ -1357,51 +1242,9 @@
 	"<span class='warning'>Your hand jolts as the system sparks, ripping a gruesome hole in [target]'s [BP.name] with \the [tool]!</span>")
 	BP.take_damage(20, 15, DAM_SHARP|DAM_EDGE, tool)
 
-/datum/surgery_step/generic/cut_open
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,		\
-	/obj/item/weapon/kitchenknife = 75,	\
-	/obj/item/weapon/shard = 50, 		\
-	)
-
-	min_duration = 90
-	max_duration = 110
-
-/datum/surgery_step/generic/cut_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-		return BP.open == 0 && target_zone != O_MOUTH
-
-/datum/surgery_step/generic/cut_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] starts the incision on [target]'s [BP.name] with \the [tool].", \
-	"You start the incision on [target]'s [BP.name] with \the [tool].")
-	target.custom_pain("You feel a horrible pain as if from a sharp knife in your [BP.name]!",1)
-	..()
-
-/datum/surgery_step/generic/cut_open/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='notice'>[user] has made an incision on [target]'s [BP.name] with \the [tool].</span>", \
-	"<span class='notice'>You have made an incision on [target]'s [BP.name] with \the [tool].</span>",)
-	BP.open = 1
-	var/datum/reagents/R = target.reagents
-	if(!R.has_reagent("metatrombine"))
-		BP.status |= ORGAN_BLEEDING
-	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
-
-/datum/surgery_step/generic/cut_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, slicing open [target]'s [BP.name] in the wrong place with \the [tool]!</span>", \
-	"<span class='warning'>Your hand slips, slicing open [target]'s [BP.name] in the wrong place with \the [tool]!</span>")
-	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-
 /datum/surgery_step/generic/clamp_bleeders
-	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,             \
-	/obj/item/stack/cable_coil = 75,            \
-	/obj/item/weapon/wirecutters = 75,           \
-	/obj/item/weapon/kitchen/utensil/fork = 50,  \
-	/obj/item/device/assembly/mousetrap = 20
+	allowed_qualities = list(
+	QUALITY_CLAMP
 	)
 
 	min_duration = 40
@@ -1432,10 +1275,8 @@
 	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/retract_skin
-	allowed_tools = list(
-	/obj/item/weapon/retractor = 100,           \
-	/obj/item/weapon/kitchen/utensil/fork = 75,	\
-	/obj/item/weapon/screwdriver = 50
+	allowed_qualities = list(
+	QUALITY_RETRACT
 	)
 
 	min_duration = 30
@@ -1487,12 +1328,8 @@
 	BP.take_damage(12, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/cauterize
-	allowed_tools = list(
-	/obj/item/stack/medical/suture = 100,
-	/obj/item/weapon/cautery = 100,
-	/obj/item/clothing/mask/cigarette = 75,
-	/obj/item/weapon/lighter = 50,
-	/obj/item/weapon/weldingtool = 50
+	allowed_qualities = list(
+	QUALITY_CAUTER
 	)
 
 	min_duration = 70
@@ -1524,10 +1361,8 @@
 	BP.take_damage(0, 3, used_weapon = tool)
 
 /datum/surgery_step/generic/cut_limb
-	allowed_tools = list(
-	/obj/item/weapon/circular_saw = 100, \
-	/obj/item/weapon/hatchet = 75,       \
-	/obj/item/weapon/crowbar = 50
+	allowed_qualities = list(
+	QUALITY_SAW_OPEN
 	)
 
 	min_duration = 110
@@ -1583,11 +1418,8 @@
 	return TRUE
 
 /datum/surgery_step/ipc/generic/screw_open
-	allowed_tools = list(
-	/obj/item/weapon/screwdriver = 100,
-	/obj/item/weapon/scalpel = 75,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50
+	allowed_qualities = list(
+	QUALITY_SCREWING
 	)
 
 	min_duration = 90
@@ -1620,10 +1452,8 @@
 	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/generic/pry_open
-	allowed_tools = list(
-	/obj/item/weapon/crowbar = 100,
-	/obj/item/weapon/hatchet = 75,
-	/obj/item/weapon/circular_saw = 50
+	allowed_qualities = list(
+	QUALITY_PRYING
 	)
 
 	min_duration = 30
@@ -1655,11 +1485,8 @@
 	BP.take_damage(12, 0, used_weapon = tool)
 
 /datum/surgery_step/ipc/generic/close_shut
-	allowed_tools = list(
-	/obj/item/weapon/screwdriver = 100,
-	/obj/item/weapon/scalpel = 75,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50,
+	allowed_qualities = list(
+	QUALITY_SCREWING
 	)
 
 	min_duration = 70
@@ -1739,9 +1566,8 @@
 	"<span class='notice'>You take [obj_to_remove] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
 
 /datum/surgery_step/cavity/make_space
-	allowed_tools = list(
-	/obj/item/weapon/surgicaldrill = 100,	\
-	/obj/item/weapon/pen = 75
+	allowed_qualities = list(
+	QUALITY_DRILL_OPEN
 	)
 
 	min_duration = 60
@@ -1773,11 +1599,8 @@
 
 /datum/surgery_step/cavity/close_space
 	priority = 2
-	allowed_tools = list(
-	/obj/item/weapon/cautery = 100,			\
-	/obj/item/clothing/mask/cigarette = 75,	\
-	/obj/item/weapon/lighter = 50,			\
-	/obj/item/weapon/weldingtool = 50
+	allowed_qualities = list(
+	QUALITY_CAUTER
 	)
 
 	min_duration = 60
@@ -1809,7 +1632,7 @@
 
 /datum/surgery_step/cavity/place_item
 	priority = 0
-	allowed_tools = list(/obj/item = 100)
+	allowed_qualities = list(/obj/item = 100)
 
 	min_duration = 80
 	max_duration = 100
@@ -1860,10 +1683,8 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/cavity/implant_removal
-	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,	\
-	/obj/item/weapon/wirecutters = 75,	\
-	/obj/item/weapon/kitchen/utensil/fork = 50
+	allowed_qualities = list(
+	QUALITY_CLAMP
 	)
 
 	min_duration = 80
@@ -1985,10 +1806,8 @@
 
 
 /datum/surgery_step/limb/cut
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,		\
-	/obj/item/weapon/kitchenknife = 75,	\
-	/obj/item/weapon/shard = 50, 		\
+	allowed_qualities = list(
+	QUALITY_CUTTING
 	)
 
 	min_duration = 80
@@ -2017,10 +1836,8 @@
 
 
 /datum/surgery_step/limb/mend
-	allowed_tools = list(
-	/obj/item/weapon/retractor = 100,           \
-	/obj/item/weapon/kitchen/utensil/fork = 75,	\
-	/obj/item/weapon/screwdriver = 50
+	allowed_qualities = list(
+	QUALITY_RETRACT
 	)
 
 	min_duration = 80
@@ -2049,11 +1866,8 @@
 
 
 /datum/surgery_step/limb/prepare
-	allowed_tools = list(
-	/obj/item/weapon/cautery = 100,			\
-	/obj/item/clothing/mask/cigarette = 75,	\
-	/obj/item/weapon/lighter = 50,			\
-	/obj/item/weapon/weldingtool = 50
+	allowed_qualities = list(
+	QUALITY_CAUTER
 	)
 
 	min_duration = 60
@@ -2082,7 +1896,7 @@
 
 
 /datum/surgery_step/limb/attach
-	allowed_tools = list(
+	allowed_qualities = list(
 	/obj/item/organ/external = 100,
 	/obj/item/robot_parts = 100,
 	)
@@ -2203,7 +2017,7 @@
 
 
 /datum/surgery_step/ipc/limb/cut_wires
-	allowed_tools = list(
+	allowed_qualities = list(
 	/obj/item/weapon/wirecutters = 100,
 	/obj/item/weapon/kitchenknife = 75,
 	/obj/item/weapon/shard = 50
@@ -2234,7 +2048,7 @@
 		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
 
 /datum/surgery_step/ipc/limb/ipc_prepare
-	allowed_tools = list(
+	allowed_qualities = list(
 	/obj/item/weapon/wrench = 100,
 	/obj/item/weapon/bonesetter = 75
 	)
@@ -2280,10 +2094,8 @@
 	return target_zone == BP_CHEST
 
 /datum/surgery_step/lipoplasty/cut_fat
-	allowed_tools = list(
-	/obj/item/weapon/circular_saw = 100, \
-	/obj/item/weapon/hatchet = 75,       \
-	/obj/item/weapon/crowbar = 50
+	allowed_qualities = list(
+	QUALITY_SAW_OPEN
 	)
 
 	min_duration = 110
@@ -2326,10 +2138,8 @@
 	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/lipoplasty/remove_fat
-	allowed_tools = list(
-	/obj/item/weapon/retractor = 100,           \
-	/obj/item/weapon/kitchen/utensil/fork = 75,	\
-	/obj/item/weapon/screwdriver = 50
+	allowed_qualities = list(
+	QUALITY_RETRACT
 	)
 
 	min_duration = 50
@@ -2385,7 +2195,7 @@
 
 /datum/surgery_step/fix_vein
 	priority = 2
-	allowed_tools = list(
+	allowed_qualities = list(
 	/obj/item/weapon/FixOVein = 100, \
 	/obj/item/stack/cable_coil = 75
 	)
@@ -2449,7 +2259,7 @@
 	return FALSE
 
 /datum/surgery_step/groin_organs/fixing
-	allowed_tools = list(
+	allowed_qualities = list(
 	/obj/item/stack/medical/advanced/bruise_pack= 100,
 	/obj/item/stack/medical/bruise_pack = 20,
 	/obj/item/stack/medical/bruise_pack/tajaran = 70
@@ -2549,10 +2359,8 @@
 			IO.take_damage(dam_amt,0)
 
 /datum/surgery_step/groin_organs/fixing_robot //For artificial organs
-	allowed_tools = list(
-	/obj/item/stack/nanopaste = 100,
-	/obj/item/weapon/bonegel = 30,
-	/obj/item/weapon/wrench = 70
+	allowed_qualities = list(
+	QUALITY_MENDING_IPC
 	)
 
 	allowed_species = null // Allows the surgery on prosthetic organs for all species, whereas previously it was only allowed for IPC
@@ -2625,7 +2433,7 @@
 	return target_zone == O_MOUTH
 
 /datum/surgery_step/plastic_surgery/retract_face
-	allowed_tools = list(
+	allowed_qualities = list(
 	/obj/item/weapon/retractor = 100,           \
 	/obj/item/weapon/kitchen/utensil/fork = 75, \
 	/obj/item/weapon/screwdriver = 50
@@ -2654,7 +2462,7 @@
 	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/plastic_surgery/adjust_vocal
-	allowed_tools = list(
+	allowed_qualities = list(
 	/obj/item/weapon/hemostat = 100, 	\
 	/obj/item/stack/cable_coil = 75, 	\
 	/obj/item/weapon/wirecutters = 75,           \
@@ -2698,10 +2506,8 @@
 
 //reshape_face
 /datum/surgery_step/plastic_surgery/reshape_face
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,		\
-	/obj/item/weapon/kitchenknife = 75,	\
-	/obj/item/weapon/shard = 50, 		\
+	allowed_qualities = list(
+	QUALITY_CUTTING
 	)
 
 	min_duration = 110
@@ -2733,11 +2539,8 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/plastic_surgery/cauterize
-	allowed_tools = list(
-	/obj/item/weapon/cautery = 100,			\
-	/obj/item/clothing/mask/cigarette = 75,	\
-	/obj/item/weapon/lighter = 50,			\
-	/obj/item/weapon/weldingtool = 50
+	allowed_qualities = list(
+	QUALITY_CAUTER
 	)
 
 	min_duration = 70
@@ -2769,12 +2572,106 @@
 	"<span class='warning'>Your hand slips, leaving a small burn on [target]'s face with \the [tool]!</span>")
 	BP.take_damage(0, 4, used_weapon = tool)
 
+/datum/surgery_step/cut
+	allowed_qualities = list(QUALITY_CUTTING)
+
+	can_infect = TRUE
+
+	min_duration = 9 SECONDS
+	max_duration = 11 SECONDS
+
+/datum/surgery_step/cut/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	if(..())
+		switch(target_zone)
+			if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
+				var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+				if(BP.open == BP_SAW_INTERNALS_OPEN_STATE)
+					return TRUE
+				return BP.open == BP_NORMAL_STATE
+			if(O_EYES)
+				return target.op_stage.eyes == 0
+			if(O_MOUTH)
+				return target_zone == O_MOUTH
+
+
+/datum/surgery_step/cut/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	switch(target_zone)
+		if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
+			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+			user.visible_message("[user] starts the incision on [target]'s [BP.name] with \the [tool].", \
+			"You start the incision on [target]'s [BP.name] with \the [tool].")
+			target.custom_pain("You feel a horrible pain as if from a sharp knife in your [BP.name]!",1)
+		if(O_EYES)
+			user.visible_message("[user] starts to separate the corneas on [target]'s eyes with \the [tool].", \
+								"You start to separate the corneas on [target]'s eyes with \the [tool].")
+	..()
+
+/datum/surgery_step/cut/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	switch(target_zone)
+		if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
+			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+			user.visible_message("<span class='notice'>[user] has made an incision on [target]'s [BP.name] with \the [tool].</span>", \
+			"<span class='notice'>You have made an incision on [target]'s [BP.name] with \the [tool].</span>",)
+			BP.open = 1
+			var/datum/reagents/R = target.reagents
+			if(!R.has_reagent("metatrombine"))
+				BP.status |= ORGAN_BLEEDING
+			BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
+		if(O_EYES)
+			user.visible_message("<span class='notice'>[user] has separated the corneas on [target]'s eyes with \the [tool].</span>" , \
+			"<span class='notice'>You have separated the corneas on [target]'s eyes with \the [tool].</span>",)
+			target.op_stage.eyes = 1
+			target.blinded += 1.5
+
+/datum/surgery_step/cut/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	switch(target_zone)
+		if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
+			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+			user.visible_message("<span class='warning'>[user]'s hand slips, slicing open [target]'s [BP.name] in the wrong place with \the [tool]!</span>", \
+			"<span class='warning'>Your hand slips, slicing open [target]'s [BP.name] in the wrong place with \the [tool]!</span>")
+			BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
+		if(O_EYES)
+			var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
+			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+			user.visible_message("<span class='warning'>[user]'s hand slips, slicing [target]'s eyes wth \the [tool]!</span>" , \
+			"<span class='warning'>Your hand slips, slicing [target]'s eyes wth \the [tool]!</span>" )
+			BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
+			IO.take_damage(5, 0)
+
+/datum/surgery_step/clamp
+	allowed_qualities = list(QUALITY_CLAMP)
+
+/datum/surgery_step/retract
+	allowed_qualities = list(QUALITY_RETRACT)
+
+/datum/surgery_step/saw_open
+	allowed_qualities = list(QUALITY_SAW_OPEN)
+
+/datum/surgery_step/drill_open
+	allowed_qualities = list(QUALITY_DRILL_OPEN)
+
+/datum/surgery_step/bone_set
+	allowed_qualities = list(QUALITY_BONE_SET)
+
+/datum/surgery_step/mend_bones
+	allowed_qualities = list(QUALITY_MENDING_BONE)
+
+/datum/surgery_step/fix_veins
+	allowed_qualities = list(QUALITY_FIX_VEIN)
+
+/datum/surgery_step/cutery
+	allowed_qualities = list(QUALITY_CAUTER)
+
+
+
+
+
 /* SURGERY STEPS */
 /datum/surgery_step
 	var/priority = 0	//steps with higher priority would be attempted first
 
 	//type path referencing tools that can be used for this step, and how well are they suited for it
-	var/list/allowed_tools = null
+	var/list/allowed_qualities = null
 	// type paths referencing mutantraces that this step applies to.
 	var/list/allowed_species = list("exclude", IPC)
 
@@ -2794,9 +2691,11 @@
 
 // returns how well tool is suited for this step
 /datum/surgery_step/proc/tool_quality(obj/item/tool)
-	for(var/T in allowed_tools)
-		if(istype(tool, T))
-			return allowed_tools[T]
+	for(var/quality in allowed_qualities)
+		if(tool.get_quality(quality) >= 1)
+			return (tool.get_quality(quality) - 1) * 100 // like (1.7 - 1)*100 = 70% to lose
+		else if(tool.get_quality(quality) <= 1)
+			return (tool.get_quality(quality) + 1) * 100 // like (0.3 + 1)*100 = 130% to win
 	return FALSE
 
 // Checks if this step applies to the mutantrace of the user.
@@ -2808,7 +2707,15 @@
 
 // checks whether this step can be applied with the given user and target
 /datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return FALSE
+	if (!ishuman(target))
+		return FALSE
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	if (!BP)
+		return FALSE
+	if (BP.is_stump)
+		return FALSE
+	if (!BP.is_flesh())
+		return FALSE
 
 /datum/surgery_step/proc/prepare_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return TRUE
@@ -3022,7 +2929,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/add_tissue
-	allowed_tools = list(
+	allowed_qualities = list(
 	/obj/item/stack/medical/advanced/bruise_pack = 100,
 	/obj/item/stack/medical/advanced/ointment = 100
 	)
@@ -3075,10 +2982,8 @@
 	tool.update_icon()
 
 /datum/surgery_step/set_tissue
-	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,
-	/obj/item/weapon/wirecutters = 75,
-	/obj/item/weapon/kitchen/utensil/fork = 50
+	allowed_qualities = list(
+	QUALITY_CLAMP
 	)
 
 	min_duration = 60

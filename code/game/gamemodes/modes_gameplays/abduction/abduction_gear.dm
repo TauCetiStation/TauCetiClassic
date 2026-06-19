@@ -501,7 +501,7 @@
 	icon_state = "ectoplasm"
 	item_state_world = null
 	qualities = list(
-		QUALITY_FIX_BONE = 0.3
+		QUALITY_MENDING_BONE = 0.3
 	)
 
 // OPERATING TABLE / BEDS / LOCKERS	/ OTHER
