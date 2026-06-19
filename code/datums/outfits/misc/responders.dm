@@ -633,6 +633,7 @@
 	ID.assignment = assignment
 	ID.rank = assignment
 	ID.sec_hud_icon = assignment
+	ID.access = list(access_maint_tunnels, access_external_airlocks)
 
 	H.sec_hud_set_ID()
 
@@ -703,6 +704,7 @@
 	ID.assignment = assignment
 	ID.rank = assignment
 	ID.sec_hud_icon = assignment
+	ID.access = list(access_maint_tunnels, access_external_airlocks)
 
 	H.sec_hud_set_ID()
 
