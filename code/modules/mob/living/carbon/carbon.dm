@@ -360,8 +360,18 @@
 
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	var/turf/oldLoc = loc
+	var/was_under_container_layer = layer <= CONTAINER_STRUCTURE_LAYER
 
 	. = ..()
+
+	if(. && crawling && isturf(oldLoc) && isturf(loc))
+		var/turf/currentLoc = loc
+		var/old_loc_has_container_layer = oldLoc.has_container_layer_movable()
+		var/current_loc_has_container_layer = currentLoc.has_container_layer_movable()
+		if(current_loc_has_container_layer)
+			layer = (!old_loc_has_container_layer || was_under_container_layer) ? BELOW_CONTAINERS_LAYER : MOB_LAYER
+		else if(old_loc_has_container_layer && was_under_container_layer)
+			layer = MOB_LAYER
 
 	if(!. || ISDIAGONALDIR(Dir))
 		return .

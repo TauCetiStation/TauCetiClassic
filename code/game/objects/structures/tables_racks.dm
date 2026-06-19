@@ -133,10 +133,6 @@
 	// PASSCRAWL must be checked before PASSTABLE: monkeys always have PASSTABLE,
 	// but crawling should still use the under-table behavior.
 	if(buckled_mob != mover && iscarbon(mover) && mover.checkpass(PASSCRAWL))
-		var/turf/mover_turf = get_turf(mover)
-		if(mover.layer > CONTAINER_STRUCTURE_LAYER && mover_turf && mover_turf.has_container_layer_movable())
-			return 1
-		mover.layer = BELOW_CONTAINERS_LAYER
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
@@ -178,10 +174,6 @@
 
 /obj/structure/table/CheckExit(atom/movable/O, target)
 	if(buckled_mob != O && iscarbon(O) && O.checkpass(PASSCRAWL))
-		var/turf/target_turf = get_turf(target)
-		if(target_turf && target_turf.has_container_layer_movable())
-			return 1
-		O.layer = MOB_LAYER
 		return 1
 	if(istype(O) && O.checkpass(PASSTABLE))
 		return 1
