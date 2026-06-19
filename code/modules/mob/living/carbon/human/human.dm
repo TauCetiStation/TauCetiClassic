@@ -258,14 +258,13 @@
 			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 15
 				ear_deaf += 60
-			if (prob(50) && !prob(bomb_protection))
+			if(prob(50) && !prob(bomb_protection))
 				Paralyse(10)
 
-	// focus most of the blast on one organ
-	var/obj/item/organ/external/BP = pick(bodyparts)
-	apply_damage(b_loss * 0.9, BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
-	apply_damage(f_loss * 0.9, BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
-
+	for(var/i in 1 to 3)
+		var/obj/item/organ/external/BP = pick(bodyparts)
+		apply_damage(b_loss * rand(0.25, 1), BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
+		apply_damage(f_loss * rand(0.25, 1), BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
 
 	// minor "behind the armor" damage from the blast wave across the entire body
 	b_loss *= 0.25
