@@ -143,7 +143,7 @@
 	var/mutable_appearance/I
 	ssu_left = locate(/obj/machinery/suit_storage_unit) in get_step(src, WEST)
 	if(!QDELETED(ssu_left))
-		if(ssu_left)
+		if(ssu_left && !istype(ssu_left, /obj/machinery/suit_storage_unit/surgery))
 			if(ssu_left.icon == src.icon)
 				I = mutable_appearance(icon = overlays_file, icon_state = "left_connect_[initial(icon_state)]")
 			else
@@ -154,7 +154,7 @@
 
 	ssu_right = locate(/obj/machinery/suit_storage_unit) in get_step(src, EAST)
 	if(!QDELETED(ssu_right))
-		if(ssu_right)
+		if(ssu_right && !istype(ssu_right, /obj/machinery/suit_storage_unit/surgery))
 			if(ssu_right.icon == src.icon)
 				I = mutable_appearance(icon = overlays_file, icon_state = "right_connect_[initial(icon_state)]")
 			else
@@ -966,6 +966,8 @@
 
 		gown = null
 
+	update_icon()
+
 /obj/machinery/suit_storage_unit/surgery/attackby(obj/item/I, mob/user)
 	if(!opened)
 		return ..()
@@ -995,3 +997,32 @@
 
 	if(. && (selected == gown))
 		gown = null
+
+/obj/machinery/suit_storage_unit/surgery/update_icon()
+	if(length(suit_storage_overlays))
+		cut_overlay(suit_storage_overlays)
+		LAZYCLEARLIST(suit_storage_overlays)
+	if(stat & BROKEN)
+		icon_state = "[initial(icon_state)]_broken"
+
+	if(gown)
+		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "uniform")
+
+	var/mutable_appearance/door_I = null
+	if(!(stat & BROKEN))
+		door_I = mutable_appearance(icon = overlays_file, icon_state = "[opened ? "door_open_[icon_state]" : "door_closed_[icon_state]"]")
+	if(overlay_color)
+		var/mutable_appearance/unit_color = mutable_appearance(icon = overlays_file, icon_state = "[stat & BROKEN ? "suitholder_broken_color" : "suitholder_color"]")
+		door_I?.color = overlay_color
+		unit_color.color = overlay_color
+		suit_storage_overlays += unit_color
+	if(door_I)
+		suit_storage_overlays += door_I
+	if(!opened)
+		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "[locked ? "lock_closed_surgery" : "lock_open_surgery"]")
+	if(ultra_violet)
+		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "lock_closed_surgery")
+		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "[emagged ? "termalclean_emag_surgery" : "termalclean_surgery"]")
+	if(panel_open)
+		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "panel_open")
+	add_overlay(suit_storage_overlays)
