@@ -637,6 +637,9 @@ var/global/const/INGEST = 2
 	splash.reaction(target, TOUCH)
 	splash.clear_reagents()
 
+/datum/reagents/proc/get_free_space()
+	return maximum_volume - total_volume
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 // Convenience proc to create a reagents holder for an atom

@@ -12,7 +12,8 @@
 
 /obj/machinery/sleeper
 	name = "Sleeper"
-	desc = "Used for the rapid introduction of chemicals from the internal storage."
+	cases = list("медкапсула", "медкапсулы", "медкапсуле", "медкапсулу", "медкапсулой", "медкапсуле")
+	desc = "Медицинская капсула для обеспечения пациента реагентами и фильтрации крови."
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeper-open"
 	layer = BELOW_CONTAINERS_LAYER
@@ -21,19 +22,30 @@
 	state_open = 1
 	light_color = "#7bf9ff"
 	allowed_checks = ALLOWED_CHECK_TOPIC
-	var/obj/item/weapon/reagent_containers/glass/beaker = null
-	var/filtering = 0
-	var/efficiency = 1
-	var/min_health = -25
-	var/list/available_chems
-	var/list/possible_chems = list(
-		list("tricordrazine", "paracetamol", "stoxin", "dexalin", "bicaridine", "kelotane"),
-		list("imidazoline"),
-		list("anti_toxin", "ryetalyn" ,"dermaline", "arithrazine"),
-		list("dexalinp", "alkysine")
-	)
-	var/upgraded = FALSE
 	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
+
+
+	var/obj/item/weapon/reagent_containers/glass/beaker/dialysis = null
+	var/dialyzing = FALSE
+	var/list/dialysis_report
+	var/dialysis_cost = 1
+
+
+	var/obj/item/weapon/reagent_containers/glass/beaker/cryo = null
+	var/freezing = FALSE
+	COOLDOWN_DECLARE(clonexadon_consumption)
+	var/freeze_cost = 15
+
+
+	var/list/regular_beakers = list()
+	var/regular_injection_cost = 1
+
+	var/list/premium_beakers = list()
+	var/premium_injection_cost = 3
+
+	var/medical_access = FALSE
+
+	var/upgraded = FALSE
 
 /obj/machinery/sleeper/upgraded
 	upgraded = TRUE
@@ -52,8 +64,40 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 	RefreshParts()
+
 	if(mapload)
-		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+		populate_beakers()
+
+/obj/machinery/sleeper/proc/populate_beakers()
+	dialysis = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	if(prob(25))//random blood from previous shift
+		dialysis.reagents.add_reagent("blood", rand(1, 150))
+		dialysis.update_icon()
+
+	cryo = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	if(prob(25))//random cryoxadone from previous shift
+		cryo.reagents.add_reagent("cryoxadone", rand(1, 50))
+		cryo.update_icon()
+
+	var/obj/item/weapon/reagent_containers/glass/beaker/large/Beaker = new(src)
+	Beaker.reagents.add_reagent("dexalinp", 150)
+	Beaker.update_icon()
+	premium_beakers[Beaker] = 0
+
+	Beaker = new(src)
+	Beaker.reagents.add_reagent("tricordrazine", 150)
+	Beaker.update_icon()
+	premium_beakers[Beaker] = 0
+
+	Beaker = new(src)
+	Beaker.reagents.add_reagent("hyronalin", 150)
+	Beaker.update_icon()
+	premium_beakers[Beaker] = 0
+
+	Beaker = new(src)
+	Beaker.reagents.add_reagent("specialwhiskey", 150)
+	Beaker.update_icon()
+	premium_beakers[Beaker] = 0
 
 /obj/machinery/sleeper/RefreshParts()
 	..()
@@ -65,12 +109,6 @@
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		I += M.rating
 
-	efficiency = initial(efficiency)* E
-	min_health = initial(min_health) * E
-	available_chems = list()
-	for(var/i in 1 to min(I, possible_chems.len))
-		available_chems |= possible_chems[i]
-
 /obj/machinery/sleeper/allow_drop()
 	return 0
 
@@ -78,7 +116,7 @@
 	if(user.incapacitated() || !iscarbon(target) || target.buckled)
 		return
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
 		return
 	close_machine(target)
 
@@ -86,7 +124,7 @@
 	if(user.incapacitated() || !Adjacent(user))
 		return
 	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You can not comprehend what to do with this.</span>")
+		to_chat(user, "<span class='warning'>Вы не можете понять, что с этим делать.</span>")
 		return
 	if(occupant && is_operational())
 		open_machine()
@@ -96,19 +134,6 @@
 		return
 	close_machine(target)
 
-/obj/machinery/sleeper/process()
-	if(ishuman(occupant))
-		var/mob/living/carbon/human/H = occupant
-		if(filtering > 0)
-			if(beaker)
-				if(beaker.reagents.total_volume < beaker.reagents.maximum_volume)
-					H.blood_trans_to(beaker, 1)
-					playsound(src, 'sound/machines/dialysis.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
-					for(var/datum/reagent/x in src.occupant.reagents.reagent_list)
-						H.reagents.trans_to(beaker, 3)
-						H.blood_trans_to(beaker, 1)
-	return
-
 /obj/machinery/sleeper/deconstruct(disassembled)
 	for(var/atom/movable/A as anything in contents)
 		A.forceMove(get_turf(src))
@@ -117,22 +142,11 @@
 /obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
 	..()
 	if(M.environment_smash)
-		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
+		visible_message("<span class='danger'>[M.name] рвёт [CASE(src, ACCUSATIVE_CASE)] на части!</span>")
 		qdel(src)
 	return
 
 /obj/machinery/sleeper/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/weapon/reagent_containers/glass))
-		if(!beaker)
-			beaker = I
-			user.drop_from_inventory(I, src)
-			user.visible_message("[user] adds \a [I] to \the [src]!", "You add \a [I] to \the [src]!")
-			updateUsrDialog()
-			return
-		else
-			to_chat(user, "<span class='warning'>The sleeper has a beaker already.</span>")
-			return
-
 	if(!state_open && !occupant)
 		if(default_deconstruction_screwdriver(user, "sleeper-o", "sleeper", I))
 			return
@@ -146,8 +160,6 @@
 		return
 
 /obj/machinery/sleeper/ex_act(severity)
-	if(filtering)
-		toggle_filter()
 	switch(severity)
 		if(EXPLODE_HEAVY)
 			if(prob(50))
@@ -161,8 +173,16 @@
 	qdel(src)
 
 /obj/machinery/sleeper/emp_act(severity)
-	if(filtering)
-		toggle_filter()
+	if(dialyzing)
+		stop_dialyzing()
+	else
+		dialyzing = TRUE
+
+	if(freezing)
+		stop_freezing()
+	else
+		freezing = TRUE
+
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
 		return
@@ -170,19 +190,26 @@
 		go_out()
 	..(severity)
 
-/obj/machinery/sleeper/proc/toggle_filter()
-	if(filtering)
-		filtering = 0
-	else
-		filtering = 1
-
 /obj/machinery/sleeper/proc/go_out()
-	if(filtering)
-		toggle_filter()
 	if(!occupant)
 		return
+
+	if(freezing)
+		stop_freezing()
+
+	if(dialyzing)
+		stop_dialyzing()
+
+	stop_injections()
+
 	for(var/atom/movable/O in src)
-		if(O == beaker)
+		if(O in regular_beakers)
+			continue
+		if(O in premium_beakers)
+			continue
+		if(O == cryo)
+			continue
+		if(O == dialysis)
 			continue
 		O.loc = loc
 	if(occupant.client)
@@ -203,140 +230,442 @@
 		A.forceMove(get_turf(src))
 	return ..()
 
-/obj/machinery/sleeper/verb/remove_beaker()
-	set name = "Remove Beaker"
-	set category = "Object"
-	set src in oview(1)
-	if(usr.incapacitated())
-		return
-	if(beaker)
-		filtering = 0
-		beaker.loc = usr.loc
-		beaker = null
-	add_fingerprint(usr)
-	return
-
-/obj/machinery/sleeper/ui_interact(mob/user)
-	var/dat = "<div class='Section__title'>Sleeper Status</div>"
-
-	dat += "<div class='Section'>"
-	if(!occupant)
-		dat += "Sleeper Unoccupied"
-	else
-		dat += "[occupant.name] => "
-		switch(occupant.stat)	//obvious, see what their status is
-			if(0)
-				dat += "<span class='good'>Conscious</span>"
-			if(1)
-				dat += "<span class='average'>Unconscious</span>"
-			else
-				dat += "<span class='bad'>DEAD</span>"
-
-		dat += "<br />"
-
-		dat +=  "<div class='line'><div class='statusLabel'>Health:</div><div class='progressBar'><div style='width: [occupant.health]%;' class='progressFill bggood'></div></div><div class='statusValue'>[occupant.health]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Brute Damage:</div><div class='progressBar'><div style='width: [occupant.getBruteLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getBruteLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Resp. Damage:</div><div class='progressBar'><div style='width: [occupant.getOxyLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getOxyLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Toxin Content:</div><div class='progressBar'><div style='width: [occupant.getToxLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getToxLoss()]%</div></div>"
-		dat +=  "<div class='line'><div class='statusLabel'>\> Burn Severity:</div><div class='progressBar'><div style='width: [occupant.getFireLoss()]%;' class='progressFill bgbad'></div></div><div class='statusValue'>[occupant.getFireLoss()]%</div></div>"
-
-		var/occupant_paralysis = occupant.AmountParalyzed()
-		dat += "<HR><div class='line'><div class='statusLabel'>Paralysis Summary:</div><div class='statusValue'>[round(occupant_paralysis)]% [occupant_paralysis ? "([round(occupant_paralysis / 4)] seconds left)" : ""]</div></div>"
-		if(occupant.reagents.reagent_list.len)
-			for(var/datum/reagent/R in occupant.reagents.reagent_list)
-				dat += text("<div class='line'><div class='statusLabel'>[R.name]:</div><div class='statusValue'>[] units</div></div>", round(R.volume, 0.1))
-
-	dat += "</div>"
-
-	dat += "<A href='byond://?src=\ref[src];refresh=1'>Scan</A>"
-
-	dat += "<A href='byond://?src=\ref[src];[state_open ? "close=1'>Close</A>" : "open=1'>Open</A>"]"
-
-	dat += "<h3>Beaker</h3>"
-
-	if(src.beaker)
-		dat += "<A href='byond://?src=\ref[src];removebeaker=1'>Remove Beaker</A>"
-		if(filtering)
-			dat += "<A href='byond://?src=\ref[src];togglefilter=1'>Stop Dialysis</A>"
-			dat += text("<BR>Output Beaker has [] units of free space remaining<BR><HR>", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
-		else
-			dat += "<A href='byond://?src=\ref[src];togglefilter=1'>Start Dialysis</A>"
-			dat += text("<BR>Output Beaker has [] units of free space remaining", src.beaker.reagents.maximum_volume - src.beaker.reagents.total_volume)
-	else
-		dat += "<BR>No Dialysis Output Beaker is present."
-
-	dat += "<h3>Injector</h3>"
-
-	if(src.occupant)
-		dat += "<A href='byond://?src=\ref[src];inject=inaprovaline'>Inject Inaprovaline</A>"
-	else
-		dat += "<span class='disabled'>Inject Inaprovaline</span>"
-	if(occupant && occupant.health > min_health)
-		for(var/re in available_chems)
-			var/datum/reagent/C = chemical_reagents_list[re]
-			if(C)
-				dat += "<BR><A href='byond://?src=\ref[src];inject=[C.id]'>Inject [C.name]</A>"
-	else
-		for(var/re in available_chems)
-			var/datum/reagent/C = chemical_reagents_list[re]
-			if(C)
-				dat += "<BR><span class='disabled'>Inject [C.name]</span>"
-
-	var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 605)	//Set up the popup browser window
-	popup.set_content(dat)
-	popup.open()
-
-/obj/machinery/sleeper/Topic(href, href_list)
-	. = ..()
-	if(!. || usr == occupant)
-		return FALSE
-
-	if(href_list)
-		playsound(src, 'sound/machines/select.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
-	if(href_list["refresh"])
-		updateUsrDialog()
-	else if(href_list["open"])
-		open_machine()
-	else if(href_list["close"])
-		close_machine()
-	else if(href_list["removebeaker"])
-		remove_beaker()
-	else if(href_list["togglefilter"])
-		toggle_filter()
-	else if(occupant && occupant.stat != DEAD)
-		if(href_list["inject"] == "inaprovaline" || (occupant.health > min_health && (href_list["inject"] in available_chems)))
-			inject_chem(usr, href_list["inject"])
-		else
-			to_chat(usr, "<span class='notice'>ERROR: Subject is not in stable condition for auto-injection.</span>")
-			playsound(src, 'sound/machines/synth_no.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
-	else
-		to_chat(usr, "<span class='notice'>ERROR: Subject cannot metabolise chemicals.</span>")
-		playsound(src, 'sound/machines/synth_no.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
-	updateUsrDialog()
-
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)
 		..()
 		playsound(src, 'sound/machines/sleeper_open.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
-		if(beaker)
-			beaker.loc = src
 
 /obj/machinery/sleeper/close_machine(mob/target)
 	if(state_open && !panel_open)
-		to_chat(target, "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>")
+		to_chat(target, "<span class='notice'><b>Вы чувствуете лёгкий холод и погружаетесь в себя.</b></span>")
 		playsound(src, 'sound/machines/sleeper_close.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 		..(target)
-
-/obj/machinery/sleeper/proc/inject_chem(mob/user, chem)
-	if(occupant && occupant.reagents)
-		if(occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency)
-			occupant.reagents.add_reagent(chem, 10)
-		var/units = round(occupant.reagents.get_reagent_amount(chem))
-		to_chat(user, "<span class='notice'>Occupant now has [units] unit\s of [chem] in their bloodstream.</span>")
-		playsound(src, 'sound/machines/sleeper_inject.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 /obj/machinery/sleeper/update_icon()
 	if(state_open)
 		icon_state = "sleeper-open"
 	else
 		icon_state = "sleeper"
+
+/obj/machinery/sleeper/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/sleeper/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Sleeper", C_CASE(src, NOMINATIVE_CASE), 690, 600)
+		ui.open()
+
+/obj/machinery/sleeper/tgui_data(mob/user)
+	var/list/data = list()
+
+	data["valid_occupant"] = ishuman(occupant)
+	data["occupied"] = occupant
+
+	if(!occupant)
+		return data
+
+	if(!ishuman(occupant))
+		return data
+
+	var/mob/living/carbon/human/H = occupant
+	data["insurance_type"] = get_insurance_type(H)
+
+	data["medical_access"] = medical_access
+
+	data["dialyzing"] = dialyzing
+	if(dialyzing)
+		data["dialysis_report"] = dialysis_report
+
+	data["freezing"] = freezing
+
+	data["dialysis_beaker"] = dialysis
+	if(dialysis)
+		data["dialysis_fill"] = round(dialysis.reagents.total_volume / dialysis.volume * 100)
+
+	data["cryo_beaker"] = cryo
+	if(cryo)
+		data["cryo_fill"] = round(cryo.reagents.total_volume / cryo.volume * 100)
+
+	var/list/regular = list()
+	for(var/i in 1 to regular_beakers.len)
+		var/obj/item/weapon/reagent_containers/glass/beaker/B = regular_beakers[i]
+		regular += list("id" = i, "name" = B.reagents.get_master_reagent_name(), "amount" = round(B.reagents.total_volume / B.volume * 100), "injecting_amount" = regular_beakers[B])
+
+	data["regular_beakers"] = regular
+
+	var/list/premium = list()
+	for(var/i in 1 to premium_beakers.len)
+		var/obj/item/weapon/reagent_containers/glass/beaker/B = premium_beakers[i]
+		regular += list("id" = i, "name" = B.reagents.get_master_reagent_name(), "amount" = round(B.reagents.total_volume / B.volume * 100), "injecting_amount" = premium_beakers[B])
+
+	data["premium_beakers"] = premium
+
+	return data
+
+/obj/machinery/sleeper/tgui_act(action, list/params, datum/tgui/ui, datum/tgui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("open")
+			open_machine()
+			return TRUE
+
+		if("close")
+			close_machine()
+			return TRUE
+
+		if("dialyze")
+			dialysis = TRUE
+			return TRUE
+
+		if("freeze")
+			freezing = TRUE
+			return TRUE
+
+		if("access")
+			if(medical_access)
+				medical_access = FALSE
+				return TRUE
+
+			try_access_beakers(usr)
+			return TRUE
+
+		if("eject_dialyzing_beaker")
+			if(!access_medical)
+				return
+
+			if(!dialysis)
+				return
+
+			stop_dialyzing()
+			eject_beaker(dialysis, usr)
+			dialysis = null
+			return TRUE
+
+		if("put_dialyzing_beaker")
+			if(!access_medical)
+				return
+
+			if(dialysis)
+				return
+
+			dialysis = try_put_beaker(usr)
+			return TRUE
+
+		if("eject_cryo_beaker")
+			if(!access_medical)
+				return
+
+			if(!cryo)
+				return
+
+			stop_freezing()
+			eject_beaker(cryo, usr)
+			cryo = null
+			return TRUE
+
+		if("put_cryo_beaker")
+			if(!access_medical)
+				return
+
+			if(cryo)
+				return
+
+			cryo = try_put_beaker(usr)
+			return TRUE
+
+		if("eject_beaker")
+			if(!access_medical)
+				return
+
+			var/beaker_type = params["beaker_type"]
+			if(!beaker_type)
+				return
+
+			var/beaker_id = text2num(params["beaker_id"])
+			if(!beaker_id)
+				return
+
+			switch(beaker_type)
+				if("regular")
+					var/beaker = regular_beakers[beaker_id]
+					if(!beaker)
+						return
+
+					eject_beaker(beaker, usr)
+					regular_beakers -= beaker
+					return TRUE
+
+				if("premium")
+					var/beaker = premium_beakers[beaker_id]
+					if(!beaker)
+						return
+
+					eject_beaker(beaker, usr)
+					premium_beakers -= beaker
+					return TRUE
+
+		if("put_beaker")
+			if(!access_medical)
+				return
+
+			var/beaker_type = params["beaker_type"]
+			if(!beaker_type)
+				return
+
+			switch(beaker_type)
+				if("regular")
+					if(regular_beakers.len >= 5)
+						return
+
+					var/beaker = try_put_beaker(usr)
+					if(!beaker)
+						return
+
+					regular_beakers[beaker] = 0
+					return TRUE
+
+				if("premium")
+					if(premium_beakers.len >= 5)
+						return
+
+					var/beaker = try_put_beaker(usr)
+					if(!beaker)
+						return
+
+					premium_beakers[beaker] = 0
+					return TRUE
+
+		if("change_injection_amount")
+			var/beaker_type = params["beaker_type"]
+			if(!beaker_type)
+				return
+
+			var/beaker_id = text2num(params["beaker_id"])
+			if(!beaker_id)
+				return
+
+			var/injection_amount = text2num(params["new_injection_amount"])
+			if(!injection_amount)
+				return
+
+			injection_amount = clamp(injection_amount, 0, 5)
+
+			switch(beaker_type)
+				if("regular")
+					var/beaker = regular_beakers[beaker_id]
+					if(!beaker)
+						return
+
+					regular_beakers[beaker] = injection_amount
+					return TRUE
+
+				if("premium")
+					var/beaker = premium_beakers[beaker_id]
+					if(!beaker)
+						return
+
+					regular_beakers[beaker] = injection_amount
+					return TRUE
+
+	return TRUE
+
+/obj/machinery/sleeper/proc/try_access_beakers(mob/user)
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/H = user
+
+	var/obj/item/I = H.get_active_hand()
+	if(!I)
+		return
+
+	if(!istype(I, /obj/item/weapon/card/id))
+		return
+
+	var/obj/item/weapon/card/id/card = I
+	if(access_medical in card.access)
+		medical_access = TRUE
+
+/obj/machinery/sleeper/proc/eject_beaker(obj/item/weapon/beaker, mob/user)
+	if(!ishuman(user))
+		beaker.forceMove(get_turf(src))
+		return
+
+	var/mob/living/carbon/human/H = user
+	beaker.forceMove(get_turf(H))
+	H.put_in_hands(beaker)
+
+
+/obj/machinery/sleeper/proc/try_put_beaker(mob/user)
+	if(!ishuman(usr))
+		return null
+
+	var/mob/living/carbon/human/H = user
+
+	var/obj/item/I = H.get_active_hand()
+	if(!I)
+		return null
+
+	if(!istype(I, /obj/item/weapon/reagent_containers/glass/beaker))
+		return null
+
+	return H.drop_from_inventory(I, src)
+
+
+/obj/machinery/sleeper/process()
+	if(!occupant)
+		return
+
+	if(!ishuman(occupant))
+		return
+
+	if(freezing)
+		freeze_occupant()
+		return
+
+	if(dialyzing)
+		filter_blood()
+
+	inject_from_beakers()
+	return
+
+
+
+/obj/machinery/sleeper/proc/freeze_occupant()
+	if(!cryo)
+		stop_freezing()
+		return
+
+	if(!COOLDOWN_FINISHED(src, clonexadon_consumption))
+		return
+
+	var/mob/living/carbon/human/H = occupant
+	if(get_insurance_type(H) != INSURANCE_PREMIUM)
+		return
+
+	if(!try_take_money(freeze_cost))
+		playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER)
+		stop_freezing()
+		return
+
+	COOLDOWN_START(src, clonexadon_consumption, 5 SECONDS)
+
+	if(!cryo.reagents.remove_reagent("cryoxadone", 1))
+		stop_freezing()
+		return
+
+	if(!H.has_status_effect(STATUS_EFFECT_STASIS_BAG))
+		H.apply_status_effect(STATUS_EFFECT_STASIS_BAG, null, TRUE)
+
+/obj/machinery/sleeper/proc/stop_freezing()
+	freezing = FALSE
+	COOLDOWN_RESET(src, clonexadon_consumption)
+
+	var/mob/living/carbon/human/H = occupant
+	if(H.has_status_effect(STATUS_EFFECT_STASIS_BAG))
+		H.remove_status_effect(STATUS_EFFECT_STASIS_BAG)
+
+
+
+/obj/machinery/sleeper/proc/filter_blood()
+	if(!dialysis)
+		stop_dialyzing()
+		return
+
+	var/mob/living/carbon/human/H = occupant
+	if(get_insurance_type(H) == INSURANCE_NONE)
+		return
+
+	if(!try_take_money(dialysis_cost))
+		playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER)
+		stop_freezing()
+		return
+
+	if(!dialysis.reagents.get_free_space())
+		stop_dialyzing()
+		return
+
+	var/datum/reagent/R = H.blood_get()
+	dialysis_report = params2list(R.data["trace_chem"])
+	if(!dialysis_report.len)
+		stop_dialyzing()
+		return
+
+	H.blood_trans_to(dialysis, 1)
+	playsound(src, 'sound/machines/dialysis.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+	for(var/datum/reagent/x in H.reagents.reagent_list)
+		H.reagents.trans_to(dialysis, 3)
+		H.blood_trans_to(dialysis, 1)
+
+/obj/machinery/sleeper/proc/stop_dialyzing()
+	dialyzing = FALSE
+
+
+
+/obj/machinery/sleeper/proc/inject_from_beakers()
+	var/mob/living/carbon/human/H = occupant
+	if(get_insurance_type(H) == INSURANCE_NONE)
+		return
+
+	for(var/obj/item/weapon/reagent_containers/glass/beaker/B in regular_beakers)
+		var/inject_amount = regular_beakers[B]
+		if(!inject_amount)
+			continue
+
+		if(!try_take_money(inject_amount * regular_injection_cost))
+			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER)
+			stop_injections()
+			return
+
+		B.reagents.trans_to(H, inject_amount)
+		playsound(src, 'sound/machines/sleeper_inject.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+
+	if(get_insurance_type(H) != INSURANCE_PREMIUM)
+		return
+
+	for(var/obj/item/weapon/reagent_containers/glass/beaker/B in premium_beakers)
+		var/inject_amount = premium_beakers[B]
+		if(!inject_amount)
+			continue
+
+		if(!try_take_money(inject_amount * premium_injection_cost))
+			playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER)
+			stop_injections()
+			return
+
+		B.reagents.trans_to(H, inject_amount)
+		playsound(src, 'sound/machines/sleeper_inject.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+
+/obj/machinery/sleeper/proc/stop_injections()
+	for(var/obj/item/weapon/reagent_containers/glass/beaker/B in regular_beakers)
+		regular_beakers[B] = 0
+
+	for(var/obj/item/weapon/reagent_containers/glass/beaker/B in premium_beakers)
+		premium_beakers[B] = 0
+
+
+/obj/machinery/sleeper/proc/try_take_money(amount_needed = 0)
+	if(!occupant || !ishuman(occupant))
+		return FALSE
+
+	var/mob/living/carbon/human/H = occupant
+	var/datum/data/record/R = find_record("fingerprint", md5(H.dna.uni_identity), data_core.general)
+	if(!R)
+		return FALSE
+
+	var/datum/money_account/MA = get_account(R.fields["acc_number"])
+	if(!MA)
+		return FALSE
+
+	if(MA.money < amount_needed)
+		return FALSE
+
+	if(amount_needed > 0)
+		charge_to_account(MA.account_number, global.department_accounts["Medical"].account_number, "Оплата за операцию в [CASE(src, PREPOSITIONAL_CASE)]", name, -amount_needed)
+		charge_to_account(global.department_accounts["Medical"].account_number, MA.account_number, "Оплата за операцию в [CASE(src, PREPOSITIONAL_CASE)]", name, amount_needed)
+
+	return TRUE

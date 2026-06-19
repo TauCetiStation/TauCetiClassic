@@ -26665,7 +26665,9 @@
 	},
 /area/station/civilian/hydroponics)
 "aVi" = (
-/obj/machinery/life_assist/hemodialysis,
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
