@@ -25817,9 +25817,7 @@
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "aTJ" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/life_assist/hemodialysis,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -26666,9 +26664,7 @@
 	},
 /area/station/civilian/hydroponics)
 "aVi" = (
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/life_assist/hemodialysis,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -40355,7 +40351,7 @@
 	pixel_x = -27;
 	pixel_y = 1
 	},
-/obj/machinery/iv_drip,
+/obj/machinery/life_assist/artificial_ventilation,
 /obj/machinery/life_assist/cardiopulmonary_bypass,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
@@ -42767,9 +42763,7 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "bxw" = (
-/obj/machinery/computer/med_data{
-	dir = 4
-	},
+/obj/machinery/life_assist/hemodialysis,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whiteblue"
@@ -45797,9 +45791,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/machinery/sleeper{
-	dir = 8
-	},
+/obj/machinery/life_assist/hemodialysis,
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
@@ -51727,10 +51719,10 @@
 	},
 /area/station/hallway/primary/starboard)
 "bNw" = (
-/obj/machinery/life_assist/artificial_ventilation,
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
+/obj/machinery/life_assist/hemodialysis,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteblue"
