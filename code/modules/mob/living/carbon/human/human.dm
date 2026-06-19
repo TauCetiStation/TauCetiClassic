@@ -261,9 +261,10 @@
 			if (prob(50) && !prob(bomb_protection))
 				Paralyse(10)
 
-	for(var/obj/item/organ/external/BP in bodyparts)
-		apply_damage(rand(b_loss * 0.75, b_loss * 0.25), BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
-		apply_damage(rand(f_loss * 0.75, f_loss * 0.25), BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
+	// focus most of the blast on one organ
+	var/obj/item/organ/external/BP = pick(bodyparts)
+	apply_damage(b_loss * 0.9, BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
+	apply_damage(f_loss * 0.9, BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
 
 
 	// minor "behind the armor" damage from the blast wave across the entire body
