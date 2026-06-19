@@ -71,12 +71,11 @@
 	hud_types = list(DATA_HUD_MEDICAL)
 
 
-/obj/item/clothing/glasses/hud/health/vox
-	name = "health scanner HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
-	icon_state = "healthhud"
-	item_state_world = "healthhud_w"
-	body_parts_covered = 0
+/obj/item/clothing/glasses/hud/health/advanced
+	name = "advanced health scanner HUD"
+	icon_state = "advhealthud"
+	item_state_world = "advhealthud_w"
+	hud_types = list(DATA_HUD_MEDICAL_ADV)
 
 
 /obj/item/clothing/glasses/hud/security

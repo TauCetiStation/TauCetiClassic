@@ -341,3 +341,22 @@
 
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
+
+/obj/item/clothing/head/helmet/solgov
+	desc = "Reinforced helmet of space border guards."
+	icon_state = "SG_helmet"
+	item_state = "SG_helmet"
+	flags = HEADCOVERSEYES
+	flags_inv = HIDEEARS
+	armor = list(melee = 60, bullet = 50, laser = 45, energy = 30, bomb = 40, bio = 0, rad = 0)
+
+/obj/item/clothing/head/helmet/solgov/leader
+	name = "OSG beret"
+	desc = "Sturdy kevlar beret in protective colors, issued to Outer Systems Guard officers."
+	icon_state = "SG_beret"
+	item_state = "SG_beret"
+
+/obj/item/clothing/head/helmet/solgov/medic
+	icon_state = "SG_medhelmet"
+	item_state = "SG_medhelmet"
+

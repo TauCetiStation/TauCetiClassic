@@ -97,3 +97,11 @@
 	disallow_job = TRUE
 
 	skillset_type = /datum/skillset/clown
+
+/datum/role/solgov
+	name = "Outer Systems Guard"
+	id = "Outer Systems Guard"
+	disallow_job = TRUE
+
+	skillset_type = /datum/skillset/solgov_operative
+

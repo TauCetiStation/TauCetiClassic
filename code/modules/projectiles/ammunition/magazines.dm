@@ -151,6 +151,11 @@
 	caliber = "shotgun"
 	max_ammo = 5
 
+/obj/item/ammo_box/magazine/internal/shot/masterkey
+	ammo_type = /obj/item/ammo_casing/shotgun/dart
+	caliber = "shotgun"
+	max_ammo = 3
+
 ///////////EXTERNAL MAGAZINES////////////////
 /obj/item/ammo_box/magazine/stechkin
 	name = "magazine (9mm)"
@@ -674,3 +679,34 @@
 
 /obj/item/ammo_box/magazine/pea/virus/in_fire
 	ammo_type = /obj/item/ammo_casing/pea/virus/in_fire
+
+/obj/item/ammo_box/magazine/em22
+	name = "EM22 magazine (3.30)"
+	cases = list("магазин EM22 (3.30)", "магазина EM22 (3.30)", "магазину EM22 (3.30)", "магазин EM22 (3.30)", "магазином EM22 (3.30)", "магазине EM22 (3.30)")
+	icon_state = "em22_mag"
+	item_state_inventory = "em22_mag"
+	item_state_world = "em22_mag_w"
+	origin_tech = "combat=3"
+	ammo_type = /obj/item/ammo_casing/a330
+	caliber = "3.30"
+	max_ammo = 30
+	multiple_sprites = TWO_STATES
+	overlay = "em22_mag"
+
+/obj/item/ammo_box/magazine/em22/ap
+	name = "EM22 magazine (3.30 AP)"
+	cases = list("магазин EM22 (3.30 AP)", "магазина EM22 (3.30 AP)", "магазину EM22 (3.30 AP)", "магазин EM22 (3.30 AP)", "магазином EM22 (3.30 AP)", "магазине EM22 (3.30 AP)")
+	icon_state = "em22_mag_ap"
+	item_state_inventory = "em22_mag_ap"
+	item_state_world = "em22_mag_ap_w"
+	ammo_type = /obj/item/ammo_casing/a330/ap
+	overlay = "em22_ap_mag"
+
+/obj/item/ammo_box/magazine/em22/nonlethal
+	name = "EM22 magazine (3.30 NL)"
+	cases = list("магазин EM22 (3.30 NL)", "магазина EM22 (3.30 NL)", "магазину EM22 (3.30 NL)", "магазин EM22 (3.30 NL)", "магазином EM22 (3.30 NL)", "магазине EM22 (3.30 NL)")
+	icon_state = "em22_mag_nl"
+	item_state_inventory = "em22_mag_nl"
+	item_state_world = "em22_mag_nl_w"
+	ammo_type = /obj/item/ammo_casing/a330/nl
+	overlay = "em22_nl_mag"

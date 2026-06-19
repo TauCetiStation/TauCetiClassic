@@ -103,6 +103,10 @@
 /obj/item/projectile/bullet/midbullet2 // 9x19
 	damage = 25
 
+/obj/item/projectile/bullet/ap
+	damage = 15
+	armor_multiplier = 0.2
+
 /obj/item/projectile/bullet/revbullet //.357
 	damage = 35
 	armor_multiplier = 0.6

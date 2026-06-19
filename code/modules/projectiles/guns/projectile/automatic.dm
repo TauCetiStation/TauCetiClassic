@@ -455,3 +455,69 @@
 	if(!using_gl)
 		return ..()
 	launcher.attack_self(user)
+
+/obj/item/weapon/gun/projectile/automatic/em22
+	name = "EM-22"
+	desc = "Автомат EM-22 с подствольным дробовиком."
+	cases = list("автомат EM-22", "автомата EM-22", "автомату EM-22", "автомат EM-22", "автоматом EM-22", "автомате EM-22")
+	icon_state = "em22_masterkey"
+	item_state = "em22_masterkey"
+	initial_mag = /obj/item/ammo_box/magazine/em22
+	suitable_mags = list(/obj/item/ammo_box/magazine/em22, /obj/item/ammo_box/magazine/em22/nonlethal, /obj/item/ammo_box/magazine/em22/ap)
+	fire_sound = /obj/item/weapon/gun/projectile/automatic/borg
+	w_class = SIZE_NORMAL
+	two_hand_weapon = DESIRABLE_TWOHAND
+	recoil = LOW_RECOIL
+	fire_delay = 2
+	spread_increase = 0.5
+	spread_max = 1.5
+	var/using_mk = FALSE
+	var/obj/item/weapon/gun/projectile/shotgun/masterkey/mk
+	item_action_types = list(/datum/action/item_action/hands_free/masterkey)
+
+
+/obj/item/weapon/gun/projectile/automatic/em22/atom_init()
+	. = ..()
+	AddComponent(/datum/component/automatic_fire, fire_delay)
+
+/datum/action/item_action/hands_free/masterkey
+	name = "Toggle Masterkey shotgun"
+
+/datum/action/item_action/hands_free/masterkey/Activate()
+	var/obj/item/weapon/gun/projectile/automatic/em22/em = target
+	em.toggle_mk(usr)
+
+/obj/item/weapon/gun/projectile/automatic/em22/examine(mob/user)
+	. = ..()
+	to_chat(user, "It's [mk.name] is [mk.get_ammo() ? "loaded" : "unloaded"].")
+
+/obj/item/weapon/gun/projectile/automatic/em22/proc/toggle_mk(mob/user)
+	using_mk = !using_mk
+	if(using_mk)
+		user.visible_message("<span class='warning'>[user] нажимает на кнопку, активируя [CASE(mk, NOMINATIVE_CASE)]!</span>",\
+		"<span class='warning'>Вы активируете [CASE(mk, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
+		"You hear an ominous click.")
+	else
+		user.visible_message("<span class='notice'>[user] нажимает на кнопку, принимая решение прекратить все взрывать.</span>",\
+		"<span class='notice'>Вы деактивируете [CASE(mk, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
+		"You hear a click.")
+	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
+
+/obj/item/weapon/gun/projectile/automatic/em22/atom_init()
+	. = ..()
+	mk = new (src)
+
+/obj/item/weapon/gun/projectile/automatic/em22/afterattack(atom/target, mob/user, proximity, params)
+	if(!using_mk)
+		return ..()
+	mk.afterattack(target, user, proximity, params)
+
+/obj/item/weapon/gun/projectile/automatic/em22/attackby(obj/item/I, mob/user, params)
+	if(!using_mk)
+		return ..()
+	mk.attackby(I, user)
+
+/obj/item/weapon/gun/projectile/automatic/em22/attack_self(mob/user)
+	if(!using_mk)
+		return ..()
+	mk.attack_self(user)

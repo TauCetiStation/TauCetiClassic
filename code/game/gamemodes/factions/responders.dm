@@ -50,3 +50,8 @@
 	name = "Space Circus"
 	ID = "Space Circus"
 	initroletype = /datum/role/emag_clown
+
+/datum/faction/responders/solgov_osg
+	name = "SolGov Outer Systems Guard"
+	ID = "SolGov Outer Systems Guard"
+	initroletype = /datum/role/solgov

@@ -75,3 +75,11 @@
 	probability = 20
 	faction = /datum/faction/responders/clowns
 	fixed_objective = /datum/objective/custom/clowns
+
+/datum/response_team/solgov_osg
+	name = "SolGov Outer Systems Guard"
+	spawner = /datum/spawner/responders/solgov_osg
+	spawners_amount = 5
+	probability = 20
+	faction = /datum/faction/responders/solgov_osg
+
