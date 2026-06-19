@@ -1054,6 +1054,8 @@
 /mob/living/proc/lay_down(change_crawling_intent = TRUE)
 	if(change_crawling_intent && crawl_can_use())
 		crawling_intent = CRAWL_INTENT_CRAWLING
+		if(has_status_effect(/datum/status_effect/force_crawl))
+			to_chat(src, "<span class='notice'>You will try to crawl after the status-effect ends.</span>")
 	if(!crawl_can_use())
 		to_chat(src, "<span class='notice'>You can't crawl here!</span>")
 		return
@@ -1067,6 +1069,8 @@
 /mob/living/proc/get_up(has_do_after_delay = TRUE, do_after_can_move = FALSE, look_at_intent = TRUE, change_crawling_intent = TRUE)
 	if(change_crawling_intent && crawl_can_use())
 		crawling_intent = CRAWL_INTENT_STANDING
+		if(has_status_effect(/datum/status_effect/force_crawl))
+			to_chat(src, "<span class='notice'>You will try to get up after the status-effect ends.</span>")
 	if(!is_can_get_up(has_do_after_delay, do_after_can_move, look_at_intent))
 		return
 	if(!crawl_can_use())
