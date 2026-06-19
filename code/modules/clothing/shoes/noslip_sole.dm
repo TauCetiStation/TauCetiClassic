@@ -10,8 +10,8 @@
 	if(istype(S, /obj/item/clothing/shoes/magboots))
 		to_chat(user, "<span class='warning'>The soles won't fit over the magnetic boots.</span>")
 		return FALSE
-	if(S.flags & NOSLIP)
-		to_chat(user, "<span class='warning'>\The [S] already have good grip.</span>")
+	if(locate(/obj/item/noslip_sole) in S)
+		to_chat(user, "<span class='warning'>\The [S] already have soles attached.</span>")
 		return FALSE
 	return TRUE
 
