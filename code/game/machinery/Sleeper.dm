@@ -279,7 +279,7 @@
 	var/list/report = list()
 	if(dialyzing)
 		for(var/R in dialysis_report)
-			report += "[R] ([round(dialysis_report[R])] ю.)"
+			report += "[R] ([round(text2num(dialysis_report[R]))] ю.)"
 
 	data["dialysis_report"] = report.len ? report : null
 
