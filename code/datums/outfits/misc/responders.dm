@@ -709,8 +709,7 @@
 
 /obj/item/weapon/storage/belt/security/solgov
 	startswith = list(/obj/item/weapon/melee/telebaton, /obj/item/device/flash, /obj/item/weapon/grenade/flashbang = 2,
-	/obj/item/ammo_box/magazine/wjpp = 2,
-	/obj/item/ammo_box/magazine/wjpp/rubber = 1,)
+	/obj/item/ammo_box/magazine/wjpp/rubber = 3,)
 
 /obj/item/weapon/storage/belt/security/ert
 	startswith = list(/obj/item/weapon/melee/baton, /obj/item/device/flash, /obj/item/weapon/grenade/flashbang = 2, /obj/item/weapon/handcuffs = 3)
