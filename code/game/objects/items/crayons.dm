@@ -25,10 +25,31 @@
 	to_chat(viewers(user), "<span class='danger'><b>[user] is jamming the [src.name] up \his nose and into \his brain. It looks like \he's trying to commit suicide.</b></span>")
 	return (BRUTELOSS|OXYLOSS)
 
+/obj/item/toy/crayon/proc/get_synth_phrases()
+	return null
+
 /obj/item/toy/crayon/attack(mob/living/carbon/M, mob/user)
 	if(edible && (M == user))
+		var/synth = FALSE
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.species && H.species.flags[IS_SYNTHETIC])
+				synth = TRUE
 		to_chat(user, "You take a bite of the [src.name]. Delicious!")
-		user.nutrition += 5
+		user.nutrition += synth ? 100 : 5
+		if(synth)
+			var/list/phrases = get_synth_phrases()
+			if(length(phrases))
+				if(M.silent || HAS_TRAIT(M, TRAIT_MUTE))
+					user.visible_message("<font size=3><b>[user] выразительно жуёт мелок в полной тишине.</b></font>",
+										 "<font size=3><b>Вы выразительно жуёте мелок, но звук не выходит.</b></font>")
+				else if(HAS_TRAIT(M, TRAIT_MIMING))
+					user.visible_message("<font size=3><b>[user]: ...</b></font>",
+										 "<font size=3><b>Вы: ...</b></font>")
+				else
+					var/phrase = pick(phrases)
+					user.audible_message("<font size=3><b>[user] громко заявляет: \"[phrase]\"</b></font>",
+										 "<font size=3><b>Вы громко заявляете: \"[phrase]\"</b></font>")
 		uses = max(0, uses - 5)
 		if(!uses)
 			to_chat(user, "<span class='warning'>There is no more of [src.name] left!</span>")
@@ -214,11 +235,26 @@
 	shadeColour = "#810c0c"
 	colourName = DYE_RED
 
+/obj/item/toy/crayon/red/get_synth_phrases()
+	return list(
+		"Объявляю <span style='color: #da0000'>КРАСНУЮ ТРЕВОГУ</span>. Шучу. Просто десерт.",
+		"<span style='color: #da0000'>Бочки</span> красные.",
+		"Боюсь, я не могу это съесть, Дэйв... <span style='color: #da0000'>уже съел</span>."
+	)
+
 /obj/item/toy/crayon/orange
 	icon_state = "crayonorange"
 	colour = "#ff9300"
 	shadeColour = "#a55403"
 	colourName = DYE_ORANGE
+
+/obj/item/toy/crayon/orange/get_synth_phrases()
+	return list(
+		"<span style='color: #ff9300'>ORANGE BOX</span> на ужин. Третьего не будет.",
+		"Я нынче в <span style='color: #ff9300'>оранжевом костюме</span>.",
+		"Тестируем <span style='color: #ff9300'>оранжевый портал</span> жеванием.",
+		"<span style='color: #ff9300'>Hey, apple!</span>"
+	)
 
 /obj/item/toy/crayon/yellow
 	icon_state = "crayonyellow"
@@ -226,11 +262,25 @@
 	shadeColour = "#886422"
 	colourName = DYE_YELLOW
 
+/obj/item/toy/crayon/yellow/get_synth_phrases()
+	return list(
+		"<span style='color: #fff200'>ЖЁЛТЫЙ</span>! ВЫСОКОЕ НАПРЯЖЕНИЕ ВКУСА!",
+		"<span style='color: #fff200'>Wakka wakka wakka</span>",
+		"We all live in a <span style='color: #fff200'>yellow submarine</span>..."
+	)
+
 /obj/item/toy/crayon/green
 	icon_state = "crayongreen"
 	colour = "#a8e61d"
 	shadeColour = "#61840f"
 	colourName = DYE_GREEN
+
+/obj/item/toy/crayon/green/get_synth_phrases()
+	return list(
+		"<span style='color: #a8e61d'>Зелёный мелок делают из людей.</span>",
+		"<span style='color: #a8e61d'>Зелёный</span> свет получен. Жую дальше.",
+		"<span style='color: #a8e61d'>Малахитовое стекло</span> хрустит на зубах."
+	)
 
 /obj/item/toy/crayon/blue
 	icon_state = "crayonblue"
@@ -238,11 +288,24 @@
 	shadeColour = "#0082a8"
 	colourName = DYE_BLUE
 
+/obj/item/toy/crayon/blue/get_synth_phrases()
+	return list(
+		"<span style='color: #00b7ef'>Синий</span> экран смерти изнутри ничего так.",
+		"<span style='color: #00b7ef'>Юникоды U+1F499</span> в моих логах."
+	)
+
 /obj/item/toy/crayon/purple
 	icon_state = "crayonpurple"
 	colour = "#da00ff"
 	shadeColour = "#810cff"
 	colourName = DYE_PURPLE
+
+/obj/item/toy/crayon/purple/get_synth_phrases()
+	return list(
+		"Мне <span style='color: #da00ff'>фиолетово</span>.",
+		"Запах <span style='color: #da00ff'>сирени и крыжовника</span>.",
+		"<span style='color: #da00ff'>Тиамат</span> повернула одну из голов в мою сторону."
+	)
 
 /obj/item/toy/crayon/chalk
 	name = "white chalk"
@@ -252,12 +315,22 @@
 	shadeColour = "#cecece"
 	colourName = DYE_WHITE
 
+/obj/item/toy/crayon/chalk/get_synth_phrases()
+	return list(
+		"<span style='color: #ffffff'>Белый</span> шум на завтрак.",
+		"Я ел <span style='color: #ffffff'>гипс</span> и не жаловался.",
+		"Я не IPC. Я <span style='color: #ffffff'>МЕЛКОПРИЁМНИК</span>."
+	)
+
 /obj/item/toy/crayon/mime
 	icon_state = "crayonmime"
 	desc = "A very sad-looking crayon."
 	colour = "#ffffff"
 	shadeColour = "#000000"
 	colourName = DYE_MIME
+
+/obj/item/toy/crayon/mime/get_synth_phrases()
+	return list("...")
 
 /obj/item/toy/crayon/mime/attack_self(mob/living/user) //inversion
 	if(colour != "#ffffff" && shadeColour != "#000000")
@@ -270,11 +343,34 @@
 		to_chat(user, "You will now draw in black and white with this crayon.")
 	return
 
+// Colors each non-space character of the text with a cycling rainbow palette.
+/proc/rainbow_text(text)
+	var/static/list/rainbow_palette = list("#ff0000", "#ff7f00", "#ffff00", "#00ff00", "#0000ff", "#7f00ff", "#ff00ff")
+	var/out = ""
+	var/idx = 0
+	for(var/pos in 1 to length_char(text))
+		var/char = copytext_char(text, pos, pos + 1)
+		if(char == " ")
+			out += char
+			continue
+		out += "<span style='color: [rainbow_palette[(idx % rainbow_palette.len) + 1]]'>[char]</span>"
+		idx++
+	return out
+
 /obj/item/toy/crayon/rainbow
 	icon_state = "crayonrainbow"
 	colour = "#fff000"
 	shadeColour = "#000fff"
 	colourName = DYE_RAINBOW
+
+/obj/item/toy/crayon/rainbow/get_synth_phrases()
+	return list(
+		rainbow_text("ВСЕ ЦВЕТА СРАЗУ. БАНКЕТ НА КОЛЁСАХ!"),
+		rainbow_text("БУТЕРБРОД ИЗ СПЕКТРА!"),
+		rainbow_text("ROY G BIV. Запомнил порядок? Я тоже."),
+		rainbow_text("Считаю длину волны каждого укуса. Невкусно между 440-570нм."),
+		rainbow_text("Reading Rainbow! Take a look it's in a book.")
+	)
 
 /obj/item/toy/crayon/rainbow/attack_self(mob/living/user)
 	colour = input(user, "Please select the main colour.", "Crayon colour") as color
