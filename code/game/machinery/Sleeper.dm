@@ -80,25 +80,29 @@
 		cryo.reagents.add_reagent("cryoxadone", rand(1, 50))
 		cryo.update_icon()
 
+	var/list/basic_reagents = list("tricordrazine", "dermaline", "bicaridine", "alkysine", "paracetamol")
+
+	//Basic reagents
+	add_roundstart_chemical(pick_n_take(basic_reagents), rand(50, 150), regular_beakers)
+
+	if(prob(50))
+		add_roundstart_chemical(pick_n_take(basic_reagents), rand(50, 150), regular_beakers)
+
+	if(prob(25))
+		add_roundstart_chemical(pick_n_take(basic_reagents), rand(50, 150), regular_beakers)
+
+
+	//Premium reagents
+	add_roundstart_chemical("dexalinp", 150, premium_beakers)
+	add_roundstart_chemical("dextromethorphan", 100, premium_beakers)
+	add_roundstart_chemical("hyronalin", 150, premium_beakers)
+	add_roundstart_chemical("specialwhiskey", 100, premium_beakers)
+
+/obj/machinery/sleeper/proc/add_roundstart_chemical(chemical_id, amount, beaker_list)
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/Beaker = new(src)
-	Beaker.reagents.add_reagent("dexalinp", 150)
+	Beaker.reagents.add_reagent(chemical_id, amount)
 	Beaker.update_icon()
-	premium_beakers[Beaker] = 0
-
-	Beaker = new(src)
-	Beaker.reagents.add_reagent("tricordrazine", 150)
-	Beaker.update_icon()
-	premium_beakers[Beaker] = 0
-
-	Beaker = new(src)
-	Beaker.reagents.add_reagent("hyronalin", 150)
-	Beaker.update_icon()
-	premium_beakers[Beaker] = 0
-
-	Beaker = new(src)
-	Beaker.reagents.add_reagent("specialwhiskey", 150)
-	Beaker.update_icon()
-	premium_beakers[Beaker] = 0
+	beaker_list[Beaker] = 0
 
 /obj/machinery/sleeper/RefreshParts()
 	..()
