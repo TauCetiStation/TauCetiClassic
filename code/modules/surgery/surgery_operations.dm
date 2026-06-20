@@ -150,14 +150,6 @@
 	priority = 2
 	blood_level = 1
 
-/datum/surgery_step/brain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
-		return FALSE
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if(isnull(BP))
-		return FALSE
-	return target_zone == BP_HEAD && BP.open
-
 /datum/surgery_step/brain/saw_skull
 	allowed_qualities = list(
 	QUALITY_SAW_OPEN
@@ -194,9 +186,6 @@
 
 	min_duration = 80
 	max_duration = 100
-
-/datum/surgery_step/brain/cut_brain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.skull == 1 && target.has_brain() && target.op_stage.brain_cut == 0
 
 /datum/surgery_step/brain/cut_brain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts separating connections to [target]'s brain with \the [tool].",
@@ -428,9 +417,6 @@
 	min_duration = 30
 	max_duration = 50
 
-/datum/surgery_step/slime/cut_flesh/can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.brain_cut == 0
-
 /datum/surgery_step/slime/cut_flesh/begin_step(mob/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts cutting through [target]'s flesh with \the [tool].",
 	"You start cutting through [target]'s flesh with \the [tool].")
@@ -451,9 +437,6 @@
 
 	min_duration = 30
 	max_duration = 50
-
-/datum/surgery_step/slime/cut_innards/can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.brain_cut == 1
 
 /datum/surgery_step/slime/cut_innards/begin_step(mob/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts cutting [target]'s silky innards apart with \the [tool].",
@@ -667,9 +650,6 @@
 	min_duration = 110
 	max_duration = 150
 
-/datum/surgery_step/eye/manipulation/remove/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.eyes == 2
-
 /datum/surgery_step/eye/manipulation/remove/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts disconnect eyes inside the incision on [target]'s [BP.name] with \the [tool].", \
@@ -836,16 +816,6 @@
 	clothless = 0
 	priority = 2
 	can_infect = 0
-
-/datum/surgery_step/face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
-		return 0
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
-		return 0
-	if (BP.is_stump)
-		return FALSE
-	return target_zone == O_MOUTH
 
 /datum/surgery_step/face/cut_face
 	allowed_qualities = list(
@@ -1160,87 +1130,6 @@
 //////////////////////////////////////////////////////////////////
 //						COMMON STEPS							//
 //////////////////////////////////////////////////////////////////
-
-/datum/surgery_step/generic
-	can_infect = 1
-
-/datum/surgery_step/generic/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-
-
-/datum/surgery_step/generic/cut_with_laser
-	allowed_qualities = list(
-	/obj/item/weapon/scalpel/laser3 = 95, \
-	/obj/item/weapon/scalpel/laser2 = 85, \
-	/obj/item/weapon/scalpel/laser1 = 75, \
-	/obj/item/weapon/melee/energy/sword = 5
-	)
-
-	priority = 2
-	min_duration = 70
-	max_duration = 90
-
-/datum/surgery_step/generic/cut_with_laser/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-		return BP.open == 0 && target_zone != O_MOUTH
-
-/datum/surgery_step/generic/cut_with_laser/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] starts the bloodless incision on [target]'s [BP.name] with \the [tool].", \
-	"You start the bloodless incision on [target]'s [BP.name] with \the [tool].")
-	target.custom_pain("You feel a horrible, searing pain in your [BP.name]!",1)
-	..()
-
-/datum/surgery_step/generic/cut_with_laser/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='notice'>[user] has made a bloodless incision on [target]'s [BP.name] with \the [tool].</span>", \
-	"<span class='notice'>You have made a bloodless incision on [target]'s [BP.name] with \the [tool].</span>",)
-	//Could be cleaner ...
-	BP.open = 1
-	BP.take_damage(1, 1, DAM_SHARP|DAM_EDGE, tool)
-	BP.strap()
-
-/datum/surgery_step/generic/cut_with_laser/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips as the blade sputters, searing a long gash in [target]'s [BP.name] with \the [tool]!</span>", \
-	"<span class='warning'>Your hand slips as the blade sputters, searing a long gash in [target]'s [BP.name] with \the [tool]!</span>")
-	BP.take_damage(7.5, 12.5, DAM_SHARP|DAM_EDGE, tool)
-
-/datum/surgery_step/generic/incision_manager
-	allowed_qualities = list(
-	/obj/item/weapon/scalpel/manager = 100
-	)
-
-	priority = 2
-	min_duration = 80
-	max_duration = 120
-
-/datum/surgery_step/generic/incision_manager/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-		return BP.open == 0 && target_zone != O_MOUTH
-
-/datum/surgery_step/generic/incision_manager/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] starts to construct a prepared incision on and within [target]'s [BP.name] with \the [tool].", \
-	"You start to construct a prepared incision on and within [target]'s [BP.name] with \the [tool].")
-	target.custom_pain("You feel a horrible, searing pain in your [BP.name] as it is pushed apart!",1)
-	..()
-
-/datum/surgery_step/generic/incision_manager/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='notice'>[user] has constructed a prepared incision on and within [target]'s [BP.name] with \the [tool].</span>", \
-	"<span class='notice'>You have constructed a prepared incision on and within [target]'s [BP.name] with \the [tool].</span>",)
-	BP.open = 1
-	BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
-	BP.strap()
-	BP.open = 2
-
-/datum/surgery_step/generic/incision_manager/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand jolts as the system sparks, ripping a gruesome hole in [target]'s [BP.name] with \the [tool]!</span>", \
-	"<span class='warning'>Your hand jolts as the system sparks, ripping a gruesome hole in [target]'s [BP.name] with \the [tool]!</span>")
-	BP.take_damage(20, 15, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/generic/clamp_bleeders
 	allowed_qualities = list(
@@ -2101,12 +1990,6 @@
 	min_duration = 110
 	max_duration = 150
 
-/datum/surgery_step/lipoplasty/cut_fat/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!..())
-		return FALSE
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	return BP && BP.open == 1 && target.op_stage.lipoplasty == 0
-
 /datum/surgery_step/lipoplasty/cut_fat/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!target.has_quirk(/datum/quirk/fatness))
 		user.visible_message("[user] begins to cut away [target]'s excess fat with \the [tool].",
@@ -2580,28 +2463,66 @@
 	min_duration = 9 SECONDS
 	max_duration = 11 SECONDS
 
-/datum/surgery_step/cut/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/cut/can_use(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
+
+/////////////////////////////////////
+///     SLIME SURGERY CUT         ///
+/////////////////////////////////////
+//Must be first, to invoke ..()
+
+	if(isslime(target))
+		var/mob/living/carbon/slime/victim_slime = target
+		if(victim_slime.stat == DEAD && victim_slime.op_stage.brain_cut < 2)
+			return TRUE
+
+	var/mob/living/carbon/human/surgery_victim = target
 	if(!..())
 		return FALSE
 
-	switch(target_zone)
-		if(O_EYES)
-			if(target.op_stage.eyes == 0)
-				return TRUE
-		if(O_MOUTH)
-			return TRUE
-		if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
-			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-			switch(BP.open)
-				if(BP_NORMAL_STATE)						// open part
+/////////////////////////////////////
+///     ORGANIC SURGERY CUT       ///
+/////////////////////////////////////
+
+	if(ORGANIC)
+		switch(target_zone)
+			if(O_EYES)
+				if(surgery_victim.op_stage.eyes < 2) // make binary
 					return TRUE
-				if(BP_SCALPEL_OPEN_STATE)				// Fat surgery
-					if(target.op_stage.lipoplasty == 0)
+			if(O_MOUTH)
+				if(surgery_victim.op_stage.face == 0)
+					return TRUE
+			if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
+				var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
+				switch(BP.open)
+					if(BP_NORMAL_STATE)						// open part
 						return TRUE
-				if(BP_SAW_INTERNALS_OPEN_STATE)			// detach internal organ
+					if(BP_SCALPEL_OPEN_STATE)				// Fat surgery
+						if(surgery_victim.op_stage.lipoplasty == 0)
+							return TRUE
+					if(BP_SAW_INTERNALS_OPEN_STATE)			// detach internal organ
+						if(BP_HEAD)
+							if(target.op_stage.skull == 1 && target.has_brain() && target.op_stage.brain_cut == 0) // must bi binary in brain
+								return TRUE
+							else
+								return FALSE
+
+						return TRUE
+						// target.op_stage.skull == 1 && target.has_brain() && target.op_stage.brain_cut == 0  << CUT BRAINCORE
+				if(!BP.is_stump) // make it binary next
 					return TRUE
 
+/////////////////////////////////////
+///       IPC SURGERY CUT         ///
+/////////////////////////////////////
+	else if(IPC)
+		can_infect = FALSE
+		switch(target_zone)
+			if(BP_HEAD, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
+				if(!surgery_victim.op_stage.bodyparts[target_zone]) // ipc/limb/cut_wires/
+					return TRUE
+			if(BP_CHEST)
 
+			if(O_EYES)
 
 /datum/surgery_step/cut/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	switch(target_zone)
@@ -2619,13 +2540,16 @@
 	switch(target_zone)
 		if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
 			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-			user.visible_message("<span class='notice'>[user] has made an incision on [target]'s [BP.name] with \the [tool].</span>", \
-			"<span class='notice'>You have made an incision on [target]'s [BP.name] with \the [tool].</span>",)
-			BP.open = 1
 			var/datum/reagents/R = target.reagents
-			if(!R.has_reagent("metatrombine"))
+			if(!R.has_reagent("metatrombine") || !laser_scalpel)
 				BP.status |= ORGAN_BLEEDING
+			user.visible_message("<span class='notice'>[user] has made a [BP.status & ORGAN_BLEEDING ? null : "bloodless"] incision on [target]'s [BP.name] with \the [tool].</span>", \
+								 "<span class='notice'>You have made a [BP.status & ORGAN_BLEEDING ? null : "bloodless"] incision on [target]'s [BP.name] with \the [tool].</span>",)
+
+			BP.open = BP_SCALPEL_OPEN_STATE
 			BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
+			BP.strap() // we dont apply ORGAN_BLEEDING early, and idn, need we this or not on case
+
 		if(O_EYES)
 			user.visible_message("<span class='notice'>[user] has separated the corneas on [target]'s eyes with \the [tool].</span>" , \
 			"<span class='notice'>You have separated the corneas on [target]'s eyes with \the [tool].</span>",)
@@ -2638,7 +2562,11 @@
 			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 			user.visible_message("<span class='warning'>[user]'s hand slips, slicing open [target]'s [BP.name] in the wrong place with \the [tool]!</span>", \
 			"<span class='warning'>Your hand slips, slicing open [target]'s [BP.name] in the wrong place with \the [tool]!</span>")
-			BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
+			if(laser_scalpel)
+				BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
+			else
+				BP.take_damage(7.5, 12.5, DAM_SHARP|DAM_EDGE, tool)
+
 		if(O_EYES)
 			var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
 			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)

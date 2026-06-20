@@ -1,6 +1,6 @@
 #define IO_SEPARATED (0 << 2)
-#define IO_ (1 << 2)
-#define IO_ (2 << 2)
+#define IO_ (1<<2)
+#define IO_ (2<<2)
 
 
 /****************************************************

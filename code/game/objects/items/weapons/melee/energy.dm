@@ -67,6 +67,9 @@
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	edge = 1
+	qualities = list(
+		QUALITY_CUTTING = 1.5
+	)
 	var/hacked
 
 	var/can_combine = TRUE
