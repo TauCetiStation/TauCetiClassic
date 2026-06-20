@@ -45794,7 +45794,9 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/machinery/life_assist/hemodialysis,
+/obj/machinery/sleeper{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "whitebluefull"
 	},
