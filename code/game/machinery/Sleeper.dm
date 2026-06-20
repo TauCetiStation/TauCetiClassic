@@ -292,7 +292,7 @@
 	data["freezing"] = freezing
 
 	if(freezing)
-		data["freezing_time"] = time2text(world.time - freezing_start_time, "mm:ss")
+		data["freezing_time"] = freezing_start_time ? time2text(world.time - freezing_start_time, "mm:ss") : "00:00"
 
 	data["dialysis_beaker"] = dialysis ? list("name" = dialysis.reagents.get_master_reagent_name(), "amount" = round(dialysis.reagents.total_volume / dialysis.volume * 100)) : null
 
@@ -561,6 +561,7 @@
 
 	var/mob/living/carbon/human/H = occupant
 	if(get_insurance_type(H) != INSURANCE_PREMIUM)
+		stop_freezing()
 		return
 
 	if(!try_take_money(freeze_cost))
@@ -598,11 +599,12 @@
 
 	var/mob/living/carbon/human/H = occupant
 	if(get_insurance_type(H) == INSURANCE_NONE)
+		stop_dialyzing()
 		return
 
 	if(!try_take_money(dialysis_cost))
 		playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER)
-		stop_freezing()
+		stop_dialyzing()
 		return
 
 	if(!dialysis.reagents.get_free_space())
@@ -610,6 +612,7 @@
 		return
 
 	var/datum/reagent/R = H.blood_get()
+	world.log << R.data["trace_chem"]
 	dialysis_report = params2list(R.data["trace_chem"])
 	if(!dialysis_report.len)
 		stop_dialyzing()
