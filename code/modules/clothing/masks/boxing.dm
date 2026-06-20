@@ -10,12 +10,13 @@
 
 /obj/item/clothing/mask/balaclava/tactical
 	name = "tactical balaclava"
-	desc = "Designed to both hide identities and keep your face comfy and warm."
+	desc = "Designed to both hide identities and keep your face comfy and warm. Now with the ability to connect a oxygen tank!"
 	icon_state = "swatclava"
 	item_state = "balaclava"
 	render_flags = parent_type::render_flags | HIDE_ALL_HAIR
 	flags_inv = HIDEFACE
 	w_class = SIZE_TINY
+	flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 /obj/item/clothing/mask/balaclava/richard
 	name = "cock mask"
