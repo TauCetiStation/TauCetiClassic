@@ -34,7 +34,7 @@
 	var/obj/item/weapon/reagent_containers/glass/beaker/cryo = null
 	var/freezing = FALSE
 	COOLDOWN_DECLARE(clonexadon_consumption)
-	var/freeze_cost = 15
+	var/freeze_cost = 5
 	var/freezing_start_time = 0
 
 
@@ -275,8 +275,13 @@
 	data["medical_access"] = medical_access
 
 	data["dialyzing"] = dialyzing
+
+	var/list/report = list()
 	if(dialyzing)
-		data["dialysis_report"] = dialysis_report
+		for(var/R in dialysis_report)
+			report += "[R] ([round(dialysis_report[R])] ю.)"
+
+	data["dialysis_report"] = report.len ? report : null
 
 	data["freezing"] = freezing
 
@@ -607,19 +612,17 @@
 		stop_dialyzing()
 		return
 
-	H.blood_trans_to(dialysis, 1)
-	for(var/datum/reagent/R in dialysis)
-		if(R.id != "blood")
-			continue
-		dialysis_report = params2list(R.data["trace_chem"])
+	dialysis.reagents.del_reagent("blood")
+	H.take_blood(dialysis, 1)
+	dialysis_report = params2list(dialysis.reagents.get_data("blood")["trace_chem"])
 
-	if(!dialysis_report.len)
+	if(!dialysis_report || !dialysis_report.len)
 		stop_dialyzing()
 		return
+
 	playsound(src, 'sound/machines/dialysis.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	for(var/datum/reagent/x in H.reagents.reagent_list)
 		H.reagents.trans_to(dialysis, 3)
-		H.blood_trans_to(dialysis, 1)
 
 /obj/machinery/sleeper/proc/stop_dialyzing()
 	dialyzing = FALSE
