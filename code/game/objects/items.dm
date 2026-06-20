@@ -1031,6 +1031,39 @@
 		return 0
 	return qualities[quality]
 
+/proc/get_technic_quality(quality)
+	var/technic_quality = list(
+		QUALITY_CUTTING,
+		QUALITY_PRYING,
+		QUALITY_WRENCHING,
+		QUALITY_SCREWING,
+		QUALITY_WELDING,
+		QUALITY_PULSING,
+		QUALITY_ROCK_DRILL
+	)
+	if(!(quality in technic_quality))
+		return FALSE
+	else
+		return quality
+
+/proc/get_surg_quality(quality)
+	var/surg_qualites = list(
+		QUALITY_SURG_CUTTING,
+		QUALITY_CLAMP,
+		QUALITY_RETRACT,
+		QUALITY_SAW_OPEN,
+		QUALITY_DRILL_OPEN,
+		QUALITY_BONE_SET,
+		QUALITY_MENDING_BONE,
+		QUALITY_FIX_VEIN,
+		QUALITY_CAUTER,
+		QUALITY_DROP_LIQUID
+	)
+	if(!(quality in surg_qualites))
+		return FALSE
+	else
+		return quality
+
 /obj/item/proc/get_dye_type(w_color)
 	if(!dyed_type)
 		return

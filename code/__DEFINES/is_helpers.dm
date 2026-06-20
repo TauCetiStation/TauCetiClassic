@@ -175,6 +175,8 @@
 
 #define iscanoptable(O) O.get_quality(QUALITY_OPERATE_TABLE)
 
+#define issurgcutt(I)   I.get_quality(QUALITY_SURG_CUTTING)
+
 #define isclamp(I) 		I.get_quality(QUALITY_CLAMP)
 
 #define isretract(I) 	I.get_quality(QUALITY_RETRACT)
@@ -193,7 +195,7 @@
 
 #define ismendingipc(I) I.get_quality(QUALITY_MENDING_IPC)
 
-#define isorganicsurgery(I) (  iscutter(I)\
+#define isorganicsurgery(I) (  issurgcutt(I)\
 							|| isclamp(I)\
 							|| isretract(I)\
 							|| issawopen(I)\

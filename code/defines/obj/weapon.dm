@@ -139,7 +139,8 @@
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	var/on_step_sound = 'sound/effects/glass_step.ogg'
 	qualities = list(
-		QUALITY_CUTTING = 1.5
+		QUALITY_CUTTING = 1.5,
+		QUALITY_SURG_CUTTING = 1.2
 	)
 
 /obj/item/weapon/shard/atom_init()

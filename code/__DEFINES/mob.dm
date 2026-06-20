@@ -52,7 +52,7 @@
 #define BP_KIT 	    (4<<2)
 
 // Slime and plastick surgery
-#define DEFAULT     0
+#define NORMAL      0
 #define CUTTED      1
 #define PREPARED    2
 

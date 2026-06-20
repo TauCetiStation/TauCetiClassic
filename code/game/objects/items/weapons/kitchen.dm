@@ -152,7 +152,8 @@
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	qualities = list(
-		QUALITY_CUTTING = 1
+		QUALITY_CUTTING = 1,
+		QUALITY_SURG_CUTTING = 1.5
 		)
 	sweep_step = 2
 

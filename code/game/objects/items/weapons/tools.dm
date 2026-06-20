@@ -117,6 +117,7 @@
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 	qualities = list(
 		QUALITY_CUTTING = 1,
+		QUALITY_SURG_CUTTING = 1.7,
 		QUALITY_CLAMP = 1.7
 	)
 
@@ -655,7 +656,8 @@
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	sharp = 1
 	qualities = list(
-		QUALITY_CUTTING = 0.3
+		QUALITY_CUTTING = 0.3,
+		QUALITY_SURG_CUTTING = 1.7
 	)
 	item_action_types = list(/datum/action/item_action/hands_free/change_mode)
 
@@ -675,7 +677,8 @@
 		to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
 	else
 		qualities = list(
-			QUALITY_CUTTING = 0.3
+			QUALITY_CUTTING = 0.3,
+			QUALITY_SURG_CUTTING = 1.7
 		)
 		sharp = 1
 		icon_state = "jaws_cutter"

@@ -23,11 +23,28 @@
 	var/skills_speed_bonus = -0.30 // -30% for each surplus level
 
 // returns how well tool is suited for this step
-/datum/surgery_step/proc/tool_quality(obj/item/tool)
-	for(var/T in allowed_tools)
-		if(istype(tool, T))
-			return allowed_tools[T]
+/datum/surgery_step/proc/tool_quality(obj/item/tool, mob/M)
+	for(var/quality in allowed_qualities)
+
+		if(get_suiteble_quality(quality, allowed_qualities, M))
+
+			if(tool.get_quality(quality) > 1)
+				return (tool.get_quality(quality) - 1) * 100 // like (1.7 - 1)*100 = 70% to lose
+			else if(tool.get_quality(quality) <= 1)
+				return (tool.get_quality(quality) + 1) * 100 // like (0.3 + 1)*100 = 130% to win
+
 	return FALSE
+
+/datum/surgery_step/proc/get_suiteble_quality(quality, list/allowed_qualities, mob/living/carbon/C)
+	if(isslime(C))
+		return get_surg_quality(quality)
+
+
+	var/mob/living/carbon/human/H = C
+	if(H.species.flags[IS_SYNTHETIC] || H.species.flags[TRAIT_NO_BLOOD])
+		return get_technic_quality(quality)
+	else
+		return get_surg_quality(quality)
 
 // Checks if this step applies to the mutantrace of the user.
 /datum/surgery_step/proc/is_valid_mutantrace(mob/living/carbon/human/target)
@@ -184,7 +201,7 @@
 			return FALSE
 
 		//check if tool is right or close enough and if this step is possible
-		if(S.tool_quality(tool) && S.can_use(user, M, target_zone, tool) && S.is_valid_mutantrace(M))
+		if(S.tool_quality(tool, M) && S.can_use(user, M, target_zone, tool) && S.is_valid_mutantrace(M))
 			if(!S.prepare_step(user, M, target_zone, tool))	//for some kind of checks
 				return TRUE
 

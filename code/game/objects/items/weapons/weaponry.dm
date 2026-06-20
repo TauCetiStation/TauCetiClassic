@@ -95,7 +95,8 @@
 	attack_verb = list("stubbed", "poked")
 	var/extended = FALSE
 	qualities = list(
-		QUALITY_CUTTING = 1
+		QUALITY_CUTTING = 1,
+		QUALITY_SURG_CUTTING = 1.7
 	)
 
 /obj/item/weapon/switchblade/attack_self(mob/user)

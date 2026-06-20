@@ -14,7 +14,8 @@
 	sweep_step = 5
 	qualities = list(
 		QUALITY_PRYING = 1,
-		QUALITY_CUTTING = 1
+		QUALITY_CUTTING = 1,
+		QUALITY_SURG_CUTTING = 1.6
 	)
 
 /obj/item/weapon/fireaxe/atom_init()

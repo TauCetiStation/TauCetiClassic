@@ -1,5 +1,8 @@
 /datum/surgery_step/cut
-	allowed_qualities = list(QUALITY_CUTTING)
+	allowed_qualities = list(
+		QUALITY_CUTTING,
+		QUALITY_SURG_CUTTING
+		)
 
 	can_infect = TRUE
 
@@ -39,7 +42,8 @@
 				if(eyes.surgery_stage & (IO_NORMAL_STATE | IO_ORGAN_CUTTED))
 					return TRUE
 			if(O_MOUTH)
-				if(BP.ps_status < PREPARED)
+				var/obj/item/organ/external/head/head = BP
+				if(head.ps_status < PREPARED)
 					return TRUE
 			if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
 				switch(BP.open)
@@ -66,6 +70,7 @@
 			return TRUE
 	else				// Dionea, Podkid
 		if(target_zone == BP_CHEST && BP.open == BP_SAW_INTERNALS_OPEN_STATE)
+			return TRUE
 
 	return FALSE
 
@@ -76,16 +81,17 @@
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
 
+	var/mob/living/carbon/human/H = target
 
 	switch(target_zone)
 		if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
-			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-			user.visible_message("[user] starts the incision on [target]'s [BP.name] with \the [tool].", \
-			"You start the incision on [target]'s [BP.name] with \the [tool].")
-			target.custom_pain("You feel a horrible pain as if from a sharp knife in your [BP.name]!",1)
+			var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
+			user.visible_message("[user] starts the incision on [H]'s [BP.name] with \the [tool].", \
+			"You start the incision on [H]'s [BP.name] with \the [tool].")
+			H.custom_pain("You feel a horrible pain as if from a sharp knife in your [BP.name]!",1)
 		if(O_EYES)
-			user.visible_message("[user] starts to separate the corneas on [target]'s eyes with \the [tool].", \
-								"You start to separate the corneas on [target]'s eyes with \the [tool].")
+			user.visible_message("[user] starts to separate the corneas on [H]'s eyes with \the [tool].", \
+								"You start to separate the corneas on [H]'s eyes with \the [tool].")
 	..()
 
 /datum/surgery_step/cut/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

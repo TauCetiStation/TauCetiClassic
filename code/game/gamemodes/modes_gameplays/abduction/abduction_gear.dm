@@ -451,7 +451,8 @@
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
 	qualities = list(
-		QUALITY_CUTTING = 0.3
+		QUALITY_CUTTING = 1,
+		QUALITY_SURG_CUTTING = 0.3
 	)
 
 /obj/item/weapon/hemostat/alien
