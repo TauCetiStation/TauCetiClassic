@@ -675,7 +675,17 @@
 		return
 	if(!can_remember())
 		return
-	if(!prob(.))
+	if(reagents.has_reagent("endorphin"))
+		return
+
+	var/probability = .
+	if(HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD))
+		probability += 25
+	if(HAS_TRAIT(src, TRAIT_HIGH_PAIN_THRESHOLD))
+		probability -= 25
+	probability = clamp(probability, 0, 100)
+
+	if(!prob(probability))
 		return
 
 	var/memory_key = pick(mind.key_memories)
