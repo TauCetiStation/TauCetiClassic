@@ -38,6 +38,7 @@ Notes:
 	var/showing = 0
 	var/queueHide = 0
 	var/init = 0
+	var/atom/last_target
 
 /datum/tooltip/New(client/C)
 	if (C)
@@ -50,6 +51,13 @@ Notes:
 /datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
 	if (!thing || !params || (!title && !content) || !owner || !isnum(world.icon_size))
 		return 0
+
+	// BYOND drops MouseExited when the hovered object is deleted (radial slices, action buttons),
+	// leaving the tooltip stuck. Hide it ourselves when its source goes away.
+	if (last_target)
+		UnregisterSignal(last_target, COMSIG_PARENT_QDELETING)
+	RegisterSignal(thing, COMSIG_PARENT_QDELETING, PROC_REF(on_target_qdel))
+	last_target = thing
 
 	if (!init)
 		//Initialize some vars
@@ -89,6 +97,15 @@ Notes:
 	queueHide = showing ? 1 : 0
 
 	return 1
+
+/datum/tooltip/proc/on_target_qdel()
+	SIGNAL_HANDLER
+	last_target = null
+	hide()
+
+/datum/tooltip/Destroy(force)
+	last_target = null
+	return ..()
 
 
 /* TG SPECIFIC CODE */
