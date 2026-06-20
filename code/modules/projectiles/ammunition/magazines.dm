@@ -696,6 +696,7 @@
 /obj/item/ammo_box/magazine/em22/ap
 	name = "EM22 magazine (3.30 AP)"
 	cases = list("магазин EM22 (3.30 AP)", "магазина EM22 (3.30 AP)", "магазину EM22 (3.30 AP)", "магазин EM22 (3.30 AP)", "магазином EM22 (3.30 AP)", "магазине EM22 (3.30 AP)")
+	desc = "Магазин, полный бронебойных патронов для автомата ЕМ22."
 	icon_state = "em22_mag_ap"
 	item_state_inventory = "em22_mag_ap"
 	item_state_world = "em22_mag_ap_w"
@@ -705,6 +706,7 @@
 /obj/item/ammo_box/magazine/em22/nonlethal
 	name = "EM22 magazine (3.30 NL)"
 	cases = list("магазин EM22 (3.30 NL)", "магазина EM22 (3.30 NL)", "магазину EM22 (3.30 NL)", "магазин EM22 (3.30 NL)", "магазином EM22 (3.30 NL)", "магазине EM22 (3.30 NL)")
+	desc = "Магазин, полный резиновых патронов для автомата ЕМ22."
 	icon_state = "em22_mag_nl"
 	item_state_inventory = "em22_mag_nl"
 	item_state_world = "em22_mag_nl_w"
