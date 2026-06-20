@@ -9,9 +9,23 @@
 
 	resistance_flags = CAN_BE_HIT
 
-/obj/structure/curtain/open
+	var/can_be_painted = FALSE
+
+/obj/structure/curtain/transparent
+	name = "transparent curtain"
 	icon_state = "open"
 	opacity = FALSE
+	alpha = 150
+	can_be_painted = TRUE
+
+/obj/structure/curtain/transparent/toggle()
+	icon_state = (icon_state == "open") ? "closed" : "open"
+
+/obj/structure/curtain/opaque
+	name = "opaque curtain"
+	icon_state = "open"
+	opacity = FALSE
+	can_be_painted = TRUE
 
 /obj/structure/curtain/attack_hand(mob/user)
 	playsound(src, 'sound/effects/curtain.ogg', VOL_EFFECTS_MASTER, 15, null, FALSE, -5)
@@ -37,14 +51,12 @@
 		if(anchored)
 			return
 		if(I.use_tool(src, user, 10, volume = 100))
-
 			deconstruct(TRUE)
 			return
 
 	if(iswrenching(I))
 		if(user.is_busy())
 			return
-
 		if(anchored)
 			if(I.use_tool(src, user, 10, volume = 100, quality = QUALITY_WRENCHING))
 				anchored = FALSE
@@ -56,6 +68,15 @@
 				to_chat(user, "<span class='notice'>You fasten \the [src] to the floor with \the [I].</span>")
 				return
 
+	if(istype(I, /obj/item/toy/crayon/spraycan) && can_be_painted)
+		var/obj/item/toy/crayon/spraycan/S = I
+		var/col = S.colour
+		if(!col)
+			return
+
+		change_color(col)
+		S.afterattack(src, user, TRUE, null)
+		return
 
 /obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -67,13 +88,46 @@
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', VOL_EFFECTS_MASTER, 80, TRUE)
 
-
 /obj/structure/curtain/proc/toggle()
 	set_opacity(!opacity)
 	if(opacity)
 		icon_state = "closed"
 	else
 		icon_state = "open"
+
+/obj/structure/curtain/proc/change_color(color)
+
+	if(!istext(color))
+		return
+
+	color = lowertext(color)
+
+	if(length(color) == 7 && copytext(color, 1, 2) == "#")
+		var/hex = copytext(color, 2, 8)
+		if(hex2num("0x[hex]"))
+			src.color = color
+			return
+
+	var/hex_out
+	switch(color)
+		if("black")
+			hex_out = "#222222"
+		if("blue")
+			hex_out = "#3b7bd6"
+		if("yellow")
+			hex_out = "#f1d54a"
+		if("red")
+			hex_out = "#d74b4b"
+		if("purple")
+			hex_out = "#7a4bd6"
+		if("green")
+			hex_out = "#4caf50"
+		if("beige")
+			hex_out = "#d8c6a5"
+		else
+			return
+
+	src.color = hex_out
 
 /obj/structure/curtain/black
 	name = "black curtain"
