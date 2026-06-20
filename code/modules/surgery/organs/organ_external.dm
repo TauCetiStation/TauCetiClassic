@@ -1,17 +1,5 @@
 #define PICK_DAMAGE_STATE "[pick(0, 0, 1, 1, 1, 2, 2, 2, 3, 3)][pick(0, 0, 1, 1, 1, 2, 2, 2, 3, 3)]"
 
-#define BP_NORMAL_STATE 	  		0
-#define BP_SCALPEL_OPEN_STATE 		1
-#define BP_RETRACTOR_OPEN_STATE 	2
-#define BP_SAW_INTERNALS_OPEN_STATE 3
-
-#define BP_GEL 	    (0 << 2)
-#define BP_SET 	    (1 << 2)
-#define BP_VEIN     (2 << 2)
-#define BP_BLEED    (3 << 2)
-#define BP_KIT 	    (4 << 2)
-
-
 /****************************************************
 				BODYPARTS
 ****************************************************/

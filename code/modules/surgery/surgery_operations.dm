@@ -2581,17 +2581,26 @@
 	max_duration = 11 SECONDS
 
 /datum/surgery_step/cut/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		switch(target_zone)
-			if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
-				var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-				if(BP.open == BP_SAW_INTERNALS_OPEN_STATE)
+	if(!..())
+		return FALSE
+
+	switch(target_zone)
+		if(O_EYES)
+			if(target.op_stage.eyes == 0)
+				return TRUE
+		if(O_MOUTH)
+			return TRUE
+		if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
+			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+			switch(BP.open)
+				if(BP_NORMAL_STATE)						// open part
 					return TRUE
-				return BP.open == BP_NORMAL_STATE
-			if(O_EYES)
-				return target.op_stage.eyes == 0
-			if(O_MOUTH)
-				return target_zone == O_MOUTH
+				if(BP_SCALPEL_OPEN_STATE)				// Fat surgery
+					if(target.op_stage.lipoplasty == 0)
+						return TRUE
+				if(BP_SAW_INTERNALS_OPEN_STATE)			// detach internal organ
+					return TRUE
+
 
 
 /datum/surgery_step/cut/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
