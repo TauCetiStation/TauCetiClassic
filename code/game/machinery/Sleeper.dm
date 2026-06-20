@@ -591,6 +591,9 @@
 	freezing_start_time = 0
 
 	var/mob/living/carbon/human/H = occupant
+	if(!H)
+		return
+
 	if(H.has_status_effect(STATUS_EFFECT_STASIS_BAG))
 		H.remove_status_effect(STATUS_EFFECT_STASIS_BAG)
 
