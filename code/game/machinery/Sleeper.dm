@@ -534,9 +534,13 @@
 
 /obj/machinery/sleeper/process()
 	if(!occupant)
+		stop_freezing()
+		stop_dialyzing()
 		return
 
 	if(!ishuman(occupant))
+		stop_freezing()
+		stop_dialyzing()
 		return
 
 	if(freezing)
@@ -611,14 +615,15 @@
 		stop_dialyzing()
 		return
 
-	var/datum/reagent/R = H.blood_get()
-	world.log << R.data["trace_chem"]
-	dialysis_report = params2list(R.data["trace_chem"])
+	H.blood_trans_to(dialysis, 1)
+	for(var/datum/reagent/R in dialysis)
+		if(R.id != "blood")
+			continue
+		dialysis_report = params2list(R.data["trace_chem"])
+
 	if(!dialysis_report.len)
 		stop_dialyzing()
 		return
-
-	H.blood_trans_to(dialysis, 1)
 	playsound(src, 'sound/machines/dialysis.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 	for(var/datum/reagent/x in H.reagents.reagent_list)
 		H.reagents.trans_to(dialysis, 3)
