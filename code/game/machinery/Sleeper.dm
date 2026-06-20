@@ -35,6 +35,7 @@
 	var/freezing = FALSE
 	COOLDOWN_DECLARE(clonexadon_consumption)
 	var/freeze_cost = 15
+	var/freezing_start_time = 0
 
 
 	var/list/regular_beakers = list()
@@ -253,14 +254,13 @@
 /obj/machinery/sleeper/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Sleeper", C_CASE(src, NOMINATIVE_CASE), 690, 600)
+		ui = new(user, src, "Sleeper", C_CASE(src, NOMINATIVE_CASE), 900, 600)
 		ui.open()
 
 /obj/machinery/sleeper/tgui_data(mob/user)
 	var/list/data = list()
 
-	data["valid_occupant"] = ishuman(occupant)
-	data["occupied"] = occupant
+	data["occupied"] = occupant && ishuman(occupant)
 
 	if(!occupant)
 		return data
@@ -278,6 +278,9 @@
 		data["dialysis_report"] = dialysis_report
 
 	data["freezing"] = freezing
+
+	if(freezing)
+		data["freezing_time"] = time2text(world.time - freezing_start_time, "mm:ss")
 
 	data["dialysis_beaker"] = dialysis
 	if(dialysis)
@@ -311,10 +314,6 @@
 	switch(action)
 		if("open")
 			open_machine()
-			return TRUE
-
-		if("close")
-			close_machine()
 			return TRUE
 
 		if("dialyze")
@@ -553,6 +552,8 @@
 		return
 
 	COOLDOWN_START(src, clonexadon_consumption, 5 SECONDS)
+	if(!freezing_start_time)
+		freezing_start_time = world.time
 
 	if(!cryo.reagents.remove_reagent("cryoxadone", 1))
 		stop_freezing()
@@ -564,6 +565,8 @@
 /obj/machinery/sleeper/proc/stop_freezing()
 	freezing = FALSE
 	COOLDOWN_RESET(src, clonexadon_consumption)
+
+	freezing_start_time = 0
 
 	var/mob/living/carbon/human/H = occupant
 	if(H.has_status_effect(STATUS_EFFECT_STASIS_BAG))
