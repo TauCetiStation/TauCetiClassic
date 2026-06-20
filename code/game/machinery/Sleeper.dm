@@ -272,17 +272,6 @@
 /obj/machinery/sleeper/tgui_data(mob/user)
 	var/list/data = list()
 
-	data["occupied"] = occupant && ishuman(occupant)
-
-	if(!occupant)
-		return data
-
-	if(!ishuman(occupant))
-		return data
-
-	var/mob/living/carbon/human/H = occupant
-	data["insurance_type"] = get_insurance_type(H)
-
 	data["medical_access"] = medical_access
 
 	data["dialyzing"] = dialyzing
