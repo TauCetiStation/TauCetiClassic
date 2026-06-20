@@ -675,7 +675,7 @@
 		return
 	if(!can_remember())
 		return
-	if(reagents.has_reagent("endorphin"))
+	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_MEDIUM)
 		return
 
 	var/probability = .
