@@ -464,7 +464,7 @@
 	item_state = "em22_masterkey"
 	initial_mag = /obj/item/ammo_box/magazine/em22
 	suitable_mags = list(/obj/item/ammo_box/magazine/em22, /obj/item/ammo_box/magazine/em22/nonlethal, /obj/item/ammo_box/magazine/em22/ap)
-	fire_sound = /obj/item/weapon/gun/projectile/automatic/borg
+	fire_sound = 'sound/weapons/guns/gunshot_medium.ogg'
 	w_class = SIZE_NORMAL
 	two_hand_weapon = DESIRABLE_TWOHAND
 	recoil = LOW_RECOIL
