@@ -203,21 +203,33 @@
 
 	stop_injections()
 
-	for(var/atom/movable/O in src)
-		if(O in regular_beakers)
-			continue
-		if(O in premium_beakers)
-			continue
-		if(O == cryo)
-			continue
-		if(O == dialysis)
-			continue
-		O.loc = loc
-	if(occupant.client)
-		occupant.client.eye = occupant.client.mob
-		occupant.client.perspective = MOB_PERSPECTIVE
-	occupant = null
+
 	icon_state = "sleeper-open"
+
+/obj/machinery/sleeper/dropContents()
+	var/turf/T = get_turf(src)
+	for(var/atom/movable/AM in contents)
+		if(AM in regular_beakers)
+			continue
+		if(AM in premium_beakers)
+			continue
+		if(AM == cryo)
+			continue
+		if(AM == dialysis)
+			continue
+
+		AM.forceMove(T)
+		if(!isliving(AM))
+			continue
+
+		var/mob/living/L = AM
+		if(!L.client)
+			continue
+
+		L.client.eye = L
+		L.client.perspective = MOB_PERSPECTIVE
+
+	occupant = null
 
 /obj/machinery/sleeper/container_resist()
 	open_machine()
@@ -282,25 +294,29 @@
 	if(freezing)
 		data["freezing_time"] = time2text(world.time - freezing_start_time, "mm:ss")
 
-	data["dialysis_beaker"] = dialysis
-	if(dialysis)
-		data["dialysis_fill"] = round(dialysis.reagents.total_volume / dialysis.volume * 100)
+	data["dialysis_beaker"] = dialysis ? list("name" = dialysis.reagents.get_master_reagent_name(), "amount" = round(dialysis.reagents.total_volume / dialysis.volume * 100)) : null
 
-	data["cryo_beaker"] = cryo
-	if(cryo)
-		data["cryo_fill"] = round(cryo.reagents.total_volume / cryo.volume * 100)
+	data["cryo_beaker"] = cryo ? list("name" = cryo.reagents.get_master_reagent_name(), "amount" = round(cryo.reagents.total_volume / cryo.volume * 100)) : null
 
 	var/list/regular = list()
-	for(var/i in 1 to regular_beakers.len)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B = regular_beakers[i]
-		regular += list("id" = i, "name" = B.reagents.get_master_reagent_name(), "amount" = round(B.reagents.total_volume / B.volume * 100), "injecting_amount" = regular_beakers[B])
+	for(var/i in 1 to 5)
+		if(i <= regular_beakers.len)
+			var/obj/item/weapon/reagent_containers/glass/beaker/B = regular_beakers[i]
+			regular += list(list("id" = i, "name" = B.reagents.get_master_reagent_name(), "amount" = round(B.reagents.total_volume / B.volume * 100), "injecting_amount" = regular_beakers[B]))
+			continue
+
+		regular += null
 
 	data["regular_beakers"] = regular
 
 	var/list/premium = list()
-	for(var/i in 1 to premium_beakers.len)
-		var/obj/item/weapon/reagent_containers/glass/beaker/B = premium_beakers[i]
-		regular += list("id" = i, "name" = B.reagents.get_master_reagent_name(), "amount" = round(B.reagents.total_volume / B.volume * 100), "injecting_amount" = premium_beakers[B])
+	for(var/i in 1 to 5)
+		if(i <= premium_beakers.len)
+			var/obj/item/weapon/reagent_containers/glass/beaker/B = premium_beakers[i]
+			premium += list(list("id" = i, "name" = B.reagents.get_master_reagent_name(), "amount" = round(B.reagents.total_volume / B.volume * 100), "injecting_amount" = premium_beakers[B]))
+			continue
+
+		premium += null
 
 	data["premium_beakers"] = premium
 
@@ -317,11 +333,11 @@
 			return TRUE
 
 		if("dialyze")
-			dialysis = TRUE
+			dialyzing = !dialyzing
 			return TRUE
 
 		if("freeze")
-			freezing = TRUE
+			freezing = !freezing
 			return TRUE
 
 		if("access")
@@ -333,7 +349,7 @@
 			return TRUE
 
 		if("eject_dialyzing_beaker")
-			if(!access_medical)
+			if(!medical_access)
 				return
 
 			if(!dialysis)
@@ -345,7 +361,7 @@
 			return TRUE
 
 		if("put_dialyzing_beaker")
-			if(!access_medical)
+			if(!medical_access)
 				return
 
 			if(dialysis)
@@ -355,7 +371,7 @@
 			return TRUE
 
 		if("eject_cryo_beaker")
-			if(!access_medical)
+			if(!medical_access)
 				return
 
 			if(!cryo)
@@ -367,7 +383,7 @@
 			return TRUE
 
 		if("put_cryo_beaker")
-			if(!access_medical)
+			if(!medical_access)
 				return
 
 			if(cryo)
@@ -377,7 +393,7 @@
 			return TRUE
 
 		if("eject_beaker")
-			if(!access_medical)
+			if(!medical_access)
 				return
 
 			var/beaker_type = params["beaker_type"]
@@ -408,7 +424,7 @@
 					return TRUE
 
 		if("put_beaker")
-			if(!access_medical)
+			if(!medical_access)
 				return
 
 			var/beaker_type = params["beaker_type"]
@@ -448,8 +464,6 @@
 				return
 
 			var/injection_amount = text2num(params["new_injection_amount"])
-			if(!injection_amount)
-				return
 
 			injection_amount = clamp(injection_amount, 0, 5)
 
@@ -467,7 +481,7 @@
 					if(!beaker)
 						return
 
-					regular_beakers[beaker] = injection_amount
+					premium_beakers[beaker] = injection_amount
 					return TRUE
 
 	return TRUE
@@ -512,7 +526,10 @@
 	if(!istype(I, /obj/item/weapon/reagent_containers/glass/beaker))
 		return null
 
-	return H.drop_from_inventory(I, src)
+	if(!H.drop_from_inventory(I, src))
+		return null
+
+	return I
 
 
 /obj/machinery/sleeper/process()
@@ -624,7 +641,10 @@
 			stop_injections()
 			return
 
-		B.reagents.trans_to(H, inject_amount)
+		if(!B.reagents.trans_to(H, inject_amount))
+			regular_beakers[B] = 0
+			continue
+
 		playsound(src, 'sound/machines/sleeper_inject.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 	if(get_insurance_type(H) != INSURANCE_PREMIUM)
@@ -640,7 +660,10 @@
 			stop_injections()
 			return
 
-		B.reagents.trans_to(H, inject_amount)
+		if(!B.reagents.trans_to(H, inject_amount))
+			premium_beakers[B] = 0
+			continue
+
 		playsound(src, 'sound/machines/sleeper_inject.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
 /obj/machinery/sleeper/proc/stop_injections()
