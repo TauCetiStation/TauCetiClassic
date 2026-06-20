@@ -496,7 +496,7 @@
 	if(using_mk)
 		user.visible_message("<span class='warning'>[user] нажимает на кнопку, активируя [CASE(mk, NOMINATIVE_CASE)]!</span>",\
 		"<span class='warning'>Вы активируете [CASE(mk, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
-		"You hear an ominous click.")
+		"Вы слышите зловещий щелчок.")
 	else
 		user.visible_message("<span class='notice'>[user] нажимает на кнопку, принимая решение прекратить во всех палить.</span>",\
 		"<span class='notice'>Вы деактивируете [CASE(mk, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
