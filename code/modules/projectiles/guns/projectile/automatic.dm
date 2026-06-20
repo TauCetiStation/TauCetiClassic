@@ -500,7 +500,7 @@
 	else
 		user.visible_message("<span class='notice'>[user] нажимает на кнопку, принимая решение прекратить во всех палить.</span>",\
 		"<span class='notice'>Вы деактивируете [CASE(mk, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>",\
-		"You hear a click.")
+		"Вы слышите щелчок.")
 	playsound(src, 'sound/weapons/guns/empty.ogg', VOL_EFFECTS_MASTER)
 
 /obj/item/weapon/gun/projectile/automatic/em22/atom_init()
