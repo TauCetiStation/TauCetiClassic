@@ -612,9 +612,9 @@
 		stop_dialyzing()
 		return
 
-	dialysis.reagents.del_reagent("blood")
 	H.take_blood(dialysis, 1)
 	dialysis_report = params2list(dialysis.reagents.get_data("blood")["trace_chem"])
+	dialysis.reagents.del_reagent("blood")
 
 	if(!dialysis_report || !dialysis_report.len)
 		stop_dialyzing()
