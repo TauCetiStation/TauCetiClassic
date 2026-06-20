@@ -73,7 +73,7 @@
 	if(damage_threshold > brute + burn)
 		return 0
 
-	if(BP.is_stump)
+	if(BP.is_stump())
 		return 0
 
 	BP.owner.next_autoheal_allowed = world.time + 5 SECONDS
@@ -202,7 +202,7 @@
 				BP.owner.emote("grunt")
 
 	//If limb took enough damage, try to cut or tear it off
-	if(BP.owner && !(BP.is_stump))
+	if(BP.owner && (!BP.is_stump()))
 		if(!BP.cannot_amputate && (BP.brute_dam + BP.burn_dam + brute + burn + spillover) >= (BP.max_damage * config.organ_health_multiplier))
 			//organs can come off in three cases
 			//1. If the damage source is edge_eligible and the brute damage dealt exceeds the edge threshold, then the organ is cut off.
@@ -391,7 +391,7 @@ This function completely restores a damaged organ to perfect condition.
 				BP.trace_chemicals.Remove(chemID)
 
 	/*if(BP.parent)
-		if(BP.parent.is_stump)
+		if(BP.parent.is_stump())
 			BP.status |= ORGAN_DESTROYED
 			BP.owner.update_body()
 			return*/

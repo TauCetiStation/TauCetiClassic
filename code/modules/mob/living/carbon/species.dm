@@ -1906,7 +1906,7 @@
 	var/mob/living/carbon/human/H = G.affecting
 	var/hit_zone = assailant.get_targetzone()
 	var/obj/item/organ/external/L = H.get_bodypart(hit_zone)
-	if(!L || (L.is_stump) || istype(L, /obj/item/organ/external/chest) || istype(L, /obj/item/organ/external/groin))
+	if(!L || (L.is_stump()) || istype(L, /obj/item/organ/external/chest) || istype(L, /obj/item/organ/external/groin))
 		return FALSE
 	var/limb_time = rand(40,60)
 	if(istype(L, /obj/item/organ/external/head))
@@ -1919,7 +1919,7 @@
 		to_chat(assailant, "<span class='notice'>You stop ripping off the limb.</span>")
 		return FALSE
 
-	if(!L || (L.is_stump))
+	if(!L || (L.is_stump()))
 		return FALSE
 
 	if(L.is_robotic_part())
@@ -1940,7 +1940,7 @@
 		to_chat(assailant, "<span class='notice'>You stop ripping off the limb.</span>")
 		return FALSE
 
-	if(!L || (L.is_stump))
+	if(!L || (L.is_stump()))
 		return FALSE
 
 	assailant.visible_message("<span class='shadowling'>[assailant] rips [H]'s [L.name] away from \his body!</span>", \

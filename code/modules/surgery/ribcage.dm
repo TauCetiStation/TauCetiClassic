@@ -368,9 +368,6 @@
 	min_duration = 80
 	max_duration = 100
 
-/datum/surgery_step/ribcage/cut_diona_brain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.ribcage == 2
-
 /datum/surgery_step/ribcage/cut_diona_brain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts separating connections to [target]'s brain with \the [tool].",
 	"You start separating connections to [target]'s brain with \the [tool].")

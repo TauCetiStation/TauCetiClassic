@@ -245,10 +245,6 @@
 	min_duration = 80
 	max_duration = 100
 
-/datum/surgery_step/ipc/limb/cut_wires/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		return !target.op_stage.bodyparts[target_zone]
-
 /datum/surgery_step/ipc/limb/cut_wires/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to reposition wires where [target]'s [parse_zone(target_zone)] used to be with \the [tool].",
 	"You begin to reposition wires where [target]'s [parse_zone(target_zone)] used to be with \the [tool].")

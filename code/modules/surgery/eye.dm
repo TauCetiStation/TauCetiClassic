@@ -14,7 +14,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (!BP)
 		return 0
-	if (BP.is_stump)
+	if (BP.stump_status)
 		return FALSE
 	return target_zone == O_EYES
 
@@ -27,9 +27,6 @@
 
 	min_duration = 90
 	max_duration = 110
-
-/datum/surgery_step/eye/cut_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.eyes == 0
 
 /datum/surgery_step/eye/cut_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts to separate the corneas on [target]'s eyes with \the [tool].", \

@@ -57,9 +57,6 @@
 	min_duration = 80
 	max_duration = 100
 
-/datum/surgery_step/brain/cut_brain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.skull == 1 && target.has_brain() && target.op_stage.brain_cut == 0
-
 /datum/surgery_step/brain/cut_brain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts separating connections to [target]'s brain with \the [tool].",
 	"You start separating connections to [target]'s brain with \the [tool].")
@@ -298,9 +295,6 @@
 	min_duration = 30
 	max_duration = 50
 
-/datum/surgery_step/slime/cut_flesh/can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.brain_cut == 0
-
 /datum/surgery_step/slime/cut_flesh/begin_step(mob/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts cutting through [target]'s flesh with \the [tool].",
 	"You start cutting through [target]'s flesh with \the [tool].")
@@ -323,9 +317,6 @@
 
 	min_duration = 30
 	max_duration = 50
-
-/datum/surgery_step/slime/cut_innards/can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.brain_cut == 1
 
 /datum/surgery_step/slime/cut_innards/begin_step(mob/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts cutting [target]'s silky innards apart with \the [tool].",

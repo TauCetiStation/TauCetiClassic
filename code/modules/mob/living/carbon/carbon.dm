@@ -589,7 +589,7 @@
 				else if(burndamage > 0)
 					status += "numb"
 
-				if(BP.is_stump)
+				if(BP.is_stump())
 					status = "MISSING!"
 					BPname = parse_zone(BP.body_zone)
 				if(BP.status & ORGAN_MUTATED)

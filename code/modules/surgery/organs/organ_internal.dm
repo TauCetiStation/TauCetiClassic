@@ -1,8 +1,3 @@
-#define IO_SEPARATED (0 << 2)
-#define IO_ (1<<2)
-#define IO_ (2<<2)
-
-
 /****************************************************
 				INTERNAL ORGANS
 ****************************************************/
@@ -16,6 +11,7 @@
 	var/min_bruised_damage = 10 // Damage before considered bruised
 	var/damage = 0              // Amount of damage to the organ
 
+	var/surgery_stage = IO_NORMAL_STATE
 
 	var/process_accuracy = 0
 

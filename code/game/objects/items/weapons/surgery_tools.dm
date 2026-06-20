@@ -172,6 +172,7 @@
 	icon_state = "scalpel_manager_on"
 	item_state_world = "scalpel_manager_on_w"
 	force = 7.5
+	damtype = BURN
 	qualities = list(
 		QUALITY_CUTTING = 0.6,
 		QUALITY_CLAMP   = 0.6,

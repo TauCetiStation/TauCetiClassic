@@ -14,7 +14,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (!BP)
 		return 0
-	if (BP.is_stump)
+	if (BP.stump_status)
 		return FALSE
 	return target_zone == O_MOUTH
 
@@ -27,9 +27,6 @@
 
 	min_duration = 90
 	max_duration = 110
-
-/datum/surgery_step/face/cut_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.face == 0
 
 /datum/surgery_step/face/cut_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts to cut open [target]'s face and neck with \the [tool].", \
@@ -60,9 +57,6 @@
 	min_duration = 70
 	max_duration = 90
 
-/datum/surgery_step/face/mend_vocal/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.face == 1
-
 /datum/surgery_step/face/mend_vocal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts mending [target]'s vocal cords with \the [tool].", \
 	"You start mending [target]'s vocal cords with \the [tool].")
@@ -87,9 +81,6 @@
 
 	min_duration = 80
 	max_duration = 100
-
-/datum/surgery_step/face/fix_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.face == 2
 
 /datum/surgery_step/face/fix_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts pulling the skin on [target]'s face back in place with \the [tool].", \

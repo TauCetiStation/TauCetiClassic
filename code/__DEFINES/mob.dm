@@ -22,16 +22,39 @@
 #define BODYPART_ROBOTIC   2
 #define BODYPART_SKELETON  3
 
-#define BP_NORMAL_STATE 	  		0
-#define BP_SCALPEL_OPEN_STATE 		1
-#define BP_RETRACTOR_OPEN_STATE 	2
+#define BP_DEFAULT_STATE            0
+
+// External organic organs
+#define BP_SCALPEL_OPEN_STATE       1
+#define BP_RETRACTOR_OPEN_STATE     2
 #define BP_SAW_INTERNALS_OPEN_STATE 3
 
+// External synthetic organs
+#define BP_PANEL_UNLOCKED           1
+#define BP_MAINTANCE_PANEL_OPEN     2
+#define BP_SECURITY_PANEL_OPEN      3
+
+// Internal organs
+#define IO_NORMAL_STATE (0<<2)
+#define IO_ORGAN_CUTTED (1<<2)
+
+// Stump status
+#define NO_STUMP       (0<<2)
+#define IS_STUMP       (1<<2)
+#define STUMP_OPERATED (2<<2)
+#define STUMP_PREPARED (3<<2)
+
+// Operation stages
 #define BP_GEL 	    (0<<2)
 #define BP_SET 	    (1<<2)
 #define BP_VEIN     (2<<2)
 #define BP_BLEED    (3<<2)
 #define BP_KIT 	    (4<<2)
+
+// Slime and plastick surgery
+#define DEFAULT     0
+#define CUTTED      1
+#define PREPARED    2
 
 // Bodypart defines
 #define BP_CHEST  "chest"

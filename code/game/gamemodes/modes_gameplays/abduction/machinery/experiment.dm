@@ -57,7 +57,7 @@
 	preview_icon.Blend(temp, ICON_OVERLAY)
 
 	for(var/obj/item/organ/external/BP in H.bodyparts)
-		if((BP.status & ORGAN_CUT_AWAY) || (BP.is_stump))
+		if((BP.status & ORGAN_CUT_AWAY) || (BP.is_stump()))
 			continue
 		temp = new /icon(icobase, "[BP.body_zone]")
 		if(BP.is_robotic_part())

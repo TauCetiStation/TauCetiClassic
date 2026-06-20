@@ -868,7 +868,7 @@ var/global/list/tourette_bad_words= list(
 			if(SEND_SIGNAL(BP, COMSIG_BODYPART_UPDATING_HEALTH_HUD, src) & COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD)
 				continue
 
-			if(!BP || BP.is_stump)
+			if(!BP || BP.is_stump())
 				continue
 
 			var/damage = BP.burn_dam + BP.brute_dam
