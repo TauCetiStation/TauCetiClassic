@@ -88,6 +88,8 @@ Notes:
 	return 1
 
 /datum/tooltip/proc/hide()
+	if (owner)
+		owner << output(null, "[control]:tooltip.hide") //cancels a pending async show that would otherwise re-show us
 	if (queueHide)
 		spawn(1)
 			winshow(owner, control, 0)
