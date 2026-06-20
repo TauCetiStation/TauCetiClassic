@@ -157,7 +157,7 @@
 /obj/mecha/proc/get_log_html(client/user)
 	var/output = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'><title>[src.name] Log</title>[get_browse_zoom_style(user)]</head><body style='font: 13px 'Courier', monospace;'>"
 	for(var/list/entry in log)
-		output += {"<div style='font-weight: bold;'>[time2text(entry["time"],"DDD MMM DD hh:mm:ss")] [game_year]</div>
+		output += {"<div style='font-weight: bold;'>[time2text(entry["time"] + 3 HOURS,"DDD MMM DD hh:mm:ss")] [game_year]</div>
 						<div style='margin-left:15px; margin-bottom:10px;'>[entry["message"]]</div>
 						"}
 	output += "</body></html>"
