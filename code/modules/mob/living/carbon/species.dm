@@ -628,7 +628,6 @@
 
 	primitive = /mob/living/carbon/monkey/tajara
 
-	brute_mod = 1.20
 	burn_mod = 1.20
 	speed_mod = -0.7
 
