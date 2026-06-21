@@ -430,7 +430,7 @@
 	seed_type = /obj/item/seeds/laughweedseed
 	name = "laughweed"
 	cases = list("смехтрава", "смехтравы", "смехтраве", "смехтраву", "смехтравой", "смехтраве")
-	desc = "У нас было 2 пакетика травы..."ъ
+	desc = "У нас было 2 пакетика травы..."
 	laugh_desc = "Ни смеха, ни травы..."
 	smokable = TRUE
 	icon_state = "laughweed"

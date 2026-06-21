@@ -582,9 +582,9 @@
 		if(user.mood_prob(50))
 			delay = 2 SECONDS
 
-		src.visible_message("<span class='notice'>[user] starts rolling a joint.</span>")
+		user.visible_message("<span class='notice'>[user] starts rolling a joint.</span>")
 		if(!do_after(user, delay, needhand = TRUE, target = src))
-			src.visible_message("<span class='notice'>[user] stops rolling.</span>")
+			user.visible_message("<span class='notice'>[user] stops rolling.</span>")
 			return
 
 		var/obj/item/clothing/mask/cigarette/Cig = new(get_turf(src))
@@ -593,7 +593,7 @@
 		Cig.desc = "Homemade eighth wonder of the world."
 		Cig.laugh_desc = "Don't ever buy no weed from the gas station."
 
-		src.visible_message("<span class='notice'>[user] rolls up a joint.</span>")
+		user.visible_message("<span class='notice'>[user] rolls up a joint.</span>")
 		if(!user.put_in_hands(Cig))
 			Cig.forceMove(get_turf(src))
 
