@@ -25,6 +25,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 	allowed_checks = ALLOWED_CHECK_TOPIC
 	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
+	COOLDOWN_DECLARE(next_print)
 
 	var/obj/item/weapon/reagent_containers/glass/beaker/dialysis = null
 	var/dialyzing = FALSE
@@ -334,9 +335,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 	data["dialyzing"] = dialyzing
 
 	var/list/report = list()
-	if(dialyzing)
-		for(var/R in dialysis_report)
-			report += "[R] ([round(text2num(dialysis_report[R]))] ю.)"
+
+	for(var/R in dialysis_report)
+		report += list(list(R, max(round(text2num(dialysis_report[R])), 1)))
 
 	data["dialysis_report"] = report.len ? report : null
 
@@ -541,6 +542,14 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 					premium_beakers[beaker] = injection_amount
 					return TRUE
 
+		if("take_blood_sample")
+			if(try_take_dialysis_sample())
+				return TRUE
+
+		if("print_blood_sample")
+			print_dialysis_report()
+			return TRUE
+
 	return TRUE
 
 /obj/machinery/sleeper/proc/try_access_beakers(mob/user)
@@ -690,28 +699,75 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 
 
 
-/obj/machinery/sleeper/proc/filter_blood()
+/obj/machinery/sleeper/proc/try_take_dialysis_sample()
 	if(!dialysis)
-		stop_dialyzing()
-		return
+		return FALSE
 
 	var/mob/living/carbon/human/H = occupant
 	if(!check_insurance(get_insurance_type(H), INSURANCE_STANDARD))
-		stop_dialyzing()
-		return
+		return FALSE
 
 	if(!try_take_money(dialysis_cost))
-		playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER)
-		stop_dialyzing()
-		return
+		return FALSE
 
 	if(!dialysis.reagents.get_free_space())
-		stop_dialyzing()
-		return
+		return FALSE
 
 	H.take_blood(dialysis, 1)
 	dialysis_report = params2list(dialysis.reagents.get_data("blood")["trace_chem"])
 	dialysis.reagents.del_reagent("blood")
+
+	return TRUE
+
+/obj/machinery/sleeper/proc/print_dialysis_report()
+	if(!dialysis_report || !dialysis_report.len)
+		playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER)
+		return
+
+	if(!COOLDOWN_FINISHED(src, next_print)) //10 sec cooldown
+		to_chat(usr, "<span class='notice'>[CASE(src, NOMINATIVE_CASE)] не может печатать так быстро!</span>")
+		return
+
+	COOLDOWN_START(src, next_print, 10 SECONDS)
+	playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER, 20, FALSE)
+
+	var/obj/item/weapon/paper/P = new(loc)
+	P.info = get_scan_info()
+	P.name = "Результаты лабораторного анализа крови"
+	var/obj/item/weapon/pen/Pen = new
+	P.parsepencode(P.info, Pen)
+	P.updateinfolinks()
+	qdel(Pen)
+	P.update_icon()
+
+/obj/machinery/sleeper/proc/get_scan_info()
+	var/dat
+
+	dat += "<H1>ФОРМА 3I-B: Приложение к результатам лабораторного анализа крови</H1>"
+	dat += "<b>Станция:</b> [station_name_ru()]<br>"
+	dat += "<b>Дата выдачи результатов:</b> [current_date_string]<br>"
+	dat += "<b>Время выдачи:</b> [worldtime2text()]<br>"
+	dat += "<hr>"
+
+	dat += "<table>"
+	dat += "<tr><th>Показатель</th><th>Значение</th><th>Комментарий</th></tr>"
+	for(var/reagent in dialysis_report)
+		dat += "<tr><td>[reagent]</td><td>[max(round(text2num(dialysis_report[reagent])), 1)]</td><td><span class=\"paper_field\"></span></td></tr>"
+	dat += "</table><br>"
+
+	dat += "<hr>"
+	dat += "<center><b>ПОДПИСЬ ОТВЕТСТВЕННОГО ВРАЧА</b></center><br>"
+	dat += "<span class=\"sign_field\"></span><br>"
+
+	return dat
+
+/obj/machinery/sleeper/proc/filter_blood()
+	if(!try_take_dialysis_sample())
+		playsound(src, 'sound/machines/buzz-two.ogg', VOL_EFFECTS_MASTER)
+		stop_dialyzing()
+		return
+
+	var/mob/living/carbon/human/H = occupant
 
 	if(!dialysis_report || !dialysis_report.len)
 		stop_dialyzing()

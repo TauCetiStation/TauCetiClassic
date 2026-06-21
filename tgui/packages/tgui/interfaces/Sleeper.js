@@ -9,6 +9,8 @@ import {
   AnimatedNumber,
   Slider,
 } from '../components';
+
+import { Diagram } from '../components/Diagram';
 import { Window } from '../layouts';
 
 export const Sleeper = (props, context) => {
@@ -99,9 +101,17 @@ export const Sleeper = (props, context) => {
                 )}
                 <Box className="ConfigBox">
                   <span className="ConfigText">
-                    {dialysis_report
-                      ? 'Обнаружены следы: ' + dialysis_report.join(', ')
-                      : 'Следы не обнаружены'}
+                    <Diagram display_array={dialysis_report ? dialysis_report : []} format={(val) => val + ' ю.'}/>
+                    <Button
+                      className="SmallConfigButton"
+                      content="анализ"
+                      onClick={() => act('take_blood_sample')}
+                    />
+                    <Button
+                      className="SmallConfigButton"
+                      content="печать"
+                      onClick={() => act('print_blood_sample')}
+                    />
                   </span>
                 </Box>
               </Box>
@@ -150,12 +160,7 @@ export const Sleeper = (props, context) => {
                   </Box>
                 )}
                 <Box className="ConfigBox">
-                  <span className="ConfigText">
-                    Статус: {freezing ? 'Заморожен' : 'Разморожен'}
-                  </span>
-                  <span className="ConfigText">
                     Длительность: {freezing_time}
-                  </span>
                 </Box>
               </Box>
             </Box>
