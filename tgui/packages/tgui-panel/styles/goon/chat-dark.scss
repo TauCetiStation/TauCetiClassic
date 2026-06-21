@@ -213,17 +213,39 @@ h2.alert {
 }
 
 @keyframes rainbow_cycle {
-  0%   {color: #e46767;}
-  10%  {color: #e49b67;}
-  20%  {color: #dfdf49;}
-  30%  {color: #9be467;}
-  40%  {color: #67e467;}
-  50%  {color: #67e4b5;}
-  60%  {color: #67e4e4;}
-  70%  {color: #6767e4;}
-  80%  {color: #a867e4;}
-  90%  {color: #e467e4;}
-  100% {color: #e46767;}
+  0% {
+    color: #e46767;
+  }
+  10% {
+    color: #e49b67;
+  }
+  20% {
+    color: #dfdf49;
+  }
+  30% {
+    color: #9be467;
+  }
+  40% {
+    color: #67e467;
+  }
+  50% {
+    color: #67e4b5;
+  }
+  60% {
+    color: #67e4e4;
+  }
+  70% {
+    color: #6767e4;
+  }
+  80% {
+    color: #a867e4;
+  }
+  90% {
+    color: #e467e4;
+  }
+  100% {
+    color: #e46767;
+  }
 }
 
 .wet {
