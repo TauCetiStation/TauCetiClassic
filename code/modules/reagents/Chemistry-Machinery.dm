@@ -10,13 +10,10 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 40
 	var/ui_title = "Chem Dispenser 5000"
-	var/energy = 100
-	var/max_energy = 100
 	var/amount = 30
 	var/accept_glass = 0
 	var/obj/item/weapon/reagent_containers/beaker = null
-	var/recharged = 0
-	var/recharge_delay = 15
+	var/obj/item/weapon/reagent_containers/bio_supplements_cartridge/cartridge = null
 	var/hackedcheck = FALSE
 	var/hackable = FALSE
 	var/msg_hack_enable = ""
@@ -32,21 +29,13 @@
 
 /obj/machinery/chem_dispenser/atom_init()
 	. = ..()
-	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
+	cartridge = new /obj/item/weapon/reagent_containers/bio_supplements_cartridge(src)
 
 /obj/machinery/chem_dispenser/Destroy()
 	QDEL_NULL(beaker)
+	QDEL_NULL(cartridge)
 	return ..()
-
-/obj/machinery/chem_dispenser/proc/recharge()
-	if(stat & (BROKEN|NOPOWER)) return
-	var/addenergy = 1
-	var/oldenergy = energy
-	energy = min(energy + addenergy, max_energy)
-	if(energy != oldenergy)
-		use_power(2500) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
-		nanomanager.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/power_change()
 	if(anchored && powered())
@@ -56,13 +45,6 @@
 			stat |= NOPOWER
 			update_power_use()
 	update_power_use()
-
-/obj/machinery/chem_dispenser/process()
-	if(recharged <= 0)
-		recharge()
-		recharged = recharge_delay
-	else
-		recharged -= 1
 
 /obj/machinery/chem_dispenser/ex_act(severity)
 	switch(severity)
@@ -85,10 +67,14 @@
 /obj/machinery/chem_dispenser/tgui_data(mob/user)
 	var/list/data = list()
 	data["amount"] = amount
-	data["energy"] = energy
-	data["maxEnergy"] = max_energy
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 	data["glass"] = accept_glass
+	data["cartridgeLoaded"] = cartridge ? 1 : 0
+	data["cartridgeOk"] = cartridge && cartridge.reagents && cartridge.reagents.has_reagent("bio_supplements")
+	if(cartridge)
+		data["cartridgeName"] = cartridge.name
+		data["cartridgeVolume"] = cartridge.reagents.total_volume
+		data["cartridgeMaxVolume"] = cartridge.volume
 	var/list/beakerContents = list()
 	var/beakerCurrentVolume = 0
 	if(beaker?.reagents?.reagent_list.len)
@@ -131,18 +117,23 @@
 			. = TRUE
 			if (!beaker || !dispensable_reagents.Find(params["chemical"]))
 				return
+			if(!cartridge || !cartridge.reagents.has_reagent("bio_supplements"))
+				return
 
 			var/datum/reagents/R = beaker.reagents
 			var/space = R.maximum_volume - R.total_volume
+			var/bio_available = cartridge.reagents.get_reagent_amount("bio_supplements")
 
 			if(iscarbon(usr))
 				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
 
-			if ((space > 0) && (energy * 10 >= min(amount, space)))
-				playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 40) // 15 isn't enough
+			var/dispense_amount = min(amount, bio_available * 10, space)
+			if(dispense_amount > 0)
+				playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 40)
 
-			R.add_reagent(params["chemical"], min(amount, energy * 10, space))
-			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
+			R.add_reagent(params["chemical"], dispense_amount)
+			cartridge.reagents.remove_reagent("bio_supplements", dispense_amount / 10)
+			SStgui.update_uis(src)
 
 		if("eject_beaker")
 			. = TRUE
@@ -151,6 +142,21 @@
 
 			beaker.forceMove(loc)
 			beaker = null
+			SStgui.update_uis(src)
+
+			if(iscarbon(usr))
+				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+
+		if("eject_cartridge")
+			. = TRUE
+			if(!cartridge)
+				return
+
+			cartridge.forceMove(loc)
+			cartridge = null
+			SStgui.update_uis(src)
 
 			if(iscarbon(usr))
 				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
@@ -173,6 +179,17 @@
 		power_change()
 		return
 
+	if(istype(B, /obj/item/weapon/reagent_containers/bio_supplements_cartridge))
+		if(cartridge)
+			to_chat(user, "\The [src] already has a cartridge loaded.")
+			return
+		cartridge = B
+		user.drop_from_inventory(B, src)
+		to_chat(user, "You insert [B] into \the [src].")
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+		SStgui.update_uis(src)
+		return
+
 	if(src.beaker)
 		to_chat(user, "Something is already loaded into the machine.")
 		return
@@ -191,7 +208,9 @@
 		user.drop_from_inventory(B, src)
 		to_chat(user, "You set [B] on the machine.")
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+		SStgui.update_uis(src)
 		return
+	return ..()
 
 /obj/machinery/chem_dispenser/old/atom_init()
 	. = ..()
@@ -203,10 +222,7 @@
 	name = "portable chem dispenser"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "minidispenser"
-	energy = 10
-	max_energy = 10
 	amount = 5
-	recharge_delay = 30
 	dispensable_reagents = list()
 	var/list/dispensable_reagent_tiers = list(
 		list(
@@ -260,18 +276,7 @@
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
 	..()
 
-	var/time = 0
-	var/temp_energy = 0
 	var/i
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
-		temp_energy += M.rating
-	temp_energy--
-	max_energy = temp_energy * 5  //max energy = (bin1.rating + bin2.rating - 1) * 5, 5 on lowest 25 on highest
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
-		time += C.rating
-	for(var/obj/item/weapon/stock_parts/cell/P in component_parts)
-		time += round(P.maxcharge, 10000) / 10000
-	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		for(i=1, i<=M.rating, i++)
 			dispensable_reagents |= dispensable_reagent_tiers[i]
@@ -301,9 +306,7 @@
 	name = "soda fountain"
 	desc = "A drink fabricating machine, capable of producing many sugary drinks with just one touch."
 	ui_title = "Soda Dispens-o-matic"
-	energy = 100
 	accept_glass = 1
-	max_energy = 100
 	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice")
 	premium_reagents = list("thirteenloko","grapesoda")
 	hackable = TRUE
@@ -316,9 +319,7 @@
 	icon_state = "booze_dispenser"
 	name = "booze dispenser"
 	ui_title = "Booze Portal 9001"
-	energy = 100
 	accept_glass = 1
-	max_energy = 100
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead")
 	premium_reagents = list("goldschlager","patron","watermelonjuice","berryjuice")
@@ -1229,3 +1230,321 @@
 		O.reagents.trans_to(beaker, amount)
 		if(!O.reagents.total_volume)
 			remove_object(O)
+
+// Bio-Supplements Mixer
+#define BIO_PRODUCE_RATE 0.5
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer
+	name = "Bio-BADs Mixer"
+	desc = "This product has a serial number and the corporate logo of Zeng-Hu Pharmaceutical."
+	density = TRUE
+	anchored = FALSE
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "med_mixer0_nopower"
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 40
+	active_power_usage = 200
+	allowed_checks = ALLOWED_CHECK_TOPIC
+	volume = 200
+	start_pressure = ONE_ATMOSPHERE
+	var/obj/item/weapon/reagent_containers/fuel_beaker = null
+	var/obj/item/weapon/reagent_containers/nutriment_beaker = null
+	var/obj/item/weapon/reagent_containers/radium_beaker = null
+	var/obj/item/weapon/reagent_containers/bio_supplements_cartridge/cartridge = null
+
+	var/working = FALSE
+	var/list/beaker_original_flags = list()
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/atom_init()
+	. = ..()
+	var/datum/reagents/R = new/datum/reagents(300)
+	reagents = R
+	R.my_atom = src
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/Destroy()
+	disconnect()
+	for(var/obj/item/weapon/reagent_containers/G in beaker_original_flags)
+		G.flags = beaker_original_flags[G]
+	beaker_original_flags.Cut()
+	QDEL_NULL(fuel_beaker)
+	QDEL_NULL(nutriment_beaker)
+	QDEL_NULL(radium_beaker)
+	QDEL_NULL(cartridge)
+	return ..()
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/attackby(obj/O, mob/user)
+	if(istype(O, /obj/item/weapon/wrench))
+		if(connected_port)
+			disconnect()
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+			user.visible_message("[user] disconnects [src] from the port.", "<span class='notice'>You disconnect [src] from the port.</span>")
+			anchored = FALSE
+			update_icon()
+		else
+			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
+			if(!possible_port)
+				to_chat(user, "<span class='notice'>No connector port here.</span>")
+				return
+			if(possible_port.connected_device)
+				to_chat(user, "<span class='notice'>The port is already in use.</span>")
+				return
+			if(connect(possible_port))
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+				user.visible_message("[user] connects [src] to the port.", "<span class='notice'>You connect [src] to the port.</span>")
+				anchored = TRUE
+				update_icon()
+			else
+				to_chat(user, "<span class='notice'>[src] failed to connect to the port.</span>")
+		SStgui.update_uis(src)
+		return
+
+	if(istype(O, /obj/item/weapon/reagent_containers/bio_supplements_cartridge))
+		if(cartridge)
+			to_chat(user, "\The [src] already has a cartridge loaded.")
+			return
+		cartridge = O
+		user.drop_from_inventory(O, src)
+		to_chat(user, "You insert [O] into \the [src].")
+		SStgui.update_uis(src)
+		return
+
+	if(istype(O, /obj/item/weapon/reagent_containers/blood))
+		if(radium_beaker)
+			to_chat(user, "\The [src] already has a blood container loaded.")
+			return
+		radium_beaker = O
+		user.drop_from_inventory(O, src)
+		to_chat(user, "You load [O] into \the [src].")
+		SStgui.update_uis(src)
+		return
+
+	if(istype(O, /obj/item/weapon/reagent_containers/glass))
+		if(!do_skill_checks(user))
+			return
+		var/obj/item/weapon/reagent_containers/glass/G = O
+		if(G.reagents.has_reagent("fuel"))
+			if(fuel_beaker)
+				to_chat(user, "\The [src] already has a fuel beaker loaded.")
+				return
+			fuel_beaker = G
+		else if(G.reagents.has_reagent("nutriment"))
+			if(nutriment_beaker)
+				to_chat(user, "\The [src] already has a nutriment beaker loaded.")
+				return
+			nutriment_beaker = G
+		else if(G.reagents.has_reagent("blood") || G.reagents.has_reagent("enzyme"))
+			if(radium_beaker)
+				to_chat(user, "\The [src] already has a radium beaker loaded.")
+				return
+			radium_beaker = G
+		else
+			to_chat(user, "\The [src] requires fuel, nutriment, blood or universal enzyme in the beaker.")
+			return
+		user.drop_from_inventory(G, src)
+		beaker_original_flags[G] = G.flags
+		G.flags &= ~OPENCONTAINER
+		to_chat(user, "You load [G] into \the [src].")
+		SStgui.update_uis(src)
+		return
+	return ..()
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/proc/has_ingredients()
+	if(!fuel_beaker || !fuel_beaker.reagents || !fuel_beaker.reagents.has_reagent("fuel"))
+		return FALSE
+	if(!nutriment_beaker || !nutriment_beaker.reagents || !nutriment_beaker.reagents.has_reagent("nutriment"))
+		return FALSE
+	if(!radium_beaker || !radium_beaker.reagents || !(radium_beaker.reagents.has_reagent("blood") || radium_beaker.reagents.has_reagent("enzyme")))
+		return FALSE
+	if(!has_phoron_connection())
+		return FALSE
+	return TRUE
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/proc/has_phoron_connection()
+	return get_available_phoron() >= BIO_PRODUCE_RATE * 5
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/proc/get_available_phoron()
+	if(!connected_port)
+		return 0
+	if(air_contents.gas["phoron"] >= BIO_PRODUCE_RATE * 5)
+		return air_contents.gas["phoron"]
+	var/datum/pipeline/P = connected_port.PARENT1
+	if(!P || !P.air)
+		return 0
+	return P.air.gas["phoron"]
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/process()
+	if(working)
+		if(!powered(power_channel))
+			working = FALSE
+			playsound(src, null, channel = 502)
+			update_icon()
+			SStgui.update_uis(src)
+			return
+
+		if(!has_ingredients())
+			working = FALSE
+			playsound(src, null, channel = 502)
+			update_icon()
+			visible_message("<span class='notice'>[src] stops - missing ingredients.</span>")
+			SStgui.update_uis(src)
+		else
+			playsound(src, 'sound/machines/stove.ogg', VOL_EFFECTS_MASTER, 20, channel = 502)
+			fuel_beaker.reagents.remove_reagent("fuel", BIO_PRODUCE_RATE)
+			nutriment_beaker.reagents.remove_reagent("nutriment", BIO_PRODUCE_RATE)
+			if(radium_beaker.reagents.has_reagent("blood"))
+				radium_beaker.reagents.remove_reagent("blood", BIO_PRODUCE_RATE)
+			else
+				radium_beaker.reagents.remove_reagent("enzyme", BIO_PRODUCE_RATE)
+			if(air_contents.gas["phoron"] >= BIO_PRODUCE_RATE * 5)
+				air_contents.gas["phoron"] = max(0, air_contents.gas["phoron"] - BIO_PRODUCE_RATE * 5)
+			else if(connected_port)
+				var/datum/pipeline/P = connected_port.PARENT1
+				if(P && P.air)
+					P.air.gas["phoron"] = max(0, P.air.gas["phoron"] - BIO_PRODUCE_RATE * 5)
+			update_connected_network()
+			reagents.add_reagent("bio_supplements", BIO_PRODUCE_RATE)
+			var/turf/simulated/T = get_turf(src)
+			if(istype(T))
+				T.return_air().adjust_gas("carbon_dioxide", 2)
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/power_change()
+	if(anchored && powered())
+		stat &= ~NOPOWER
+	else
+		spawn(rand(0, 15))
+			stat |= NOPOWER
+			update_power_use()
+	update_power_use()
+	update_icon()
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/Move(NewLoc, Dir, step_x, step_y)
+	. = ..()
+	if(. && !moving_diagonally)
+		disconnect()
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/update_icon()
+	if(working)
+		icon_state = "med_mixer1"
+	else if(!connected_port || (stat & NOPOWER))
+		icon_state = "med_mixer0_nopower"
+	else
+		icon_state = "med_mixer0"
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BioSupplementsMixer", name)
+		ui.open()
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/tgui_data(mob/user)
+	var/list/data = list()
+	data["fuel_loaded"] = !!fuel_beaker
+	data["fuel_amount"] = fuel_beaker && fuel_beaker.reagents ? fuel_beaker.reagents.total_volume : 0
+	data["fuel_max"] = fuel_beaker ? fuel_beaker.volume : 1
+
+	data["nutriment_loaded"] = !!nutriment_beaker
+	data["nutriment_amount"] = nutriment_beaker && nutriment_beaker.reagents ? nutriment_beaker.reagents.total_volume : 0
+	data["nutriment_max"] = nutriment_beaker ? nutriment_beaker.volume : 1
+
+	data["radium_loaded"] = !!radium_beaker
+	data["radium_amount"] = radium_beaker && radium_beaker.reagents ? radium_beaker.reagents.total_volume : 0
+	data["radium_max"] = radium_beaker ? radium_beaker.volume : 1
+
+	data["phoron_ok"] = has_phoron_connection()
+
+	data["bio_amount"] = reagents.get_reagent_amount("bio_supplements")
+	data["bio_max"] = reagents.maximum_volume
+	data["working"] = working
+
+	data["cartridge_loaded"] = !!cartridge
+	if(cartridge)
+		data["cartridge_name"] = cartridge.name
+		data["cartridge_volume"] = cartridge.reagents.total_volume
+		data["cartridge_max_volume"] = cartridge.volume
+	return data
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	var/mob/user = usr
+	if(isnull(user))
+		return
+
+	switch(action)
+		if("eject_fuel")
+			if(fuel_beaker)
+				if(beaker_original_flags[fuel_beaker])
+					fuel_beaker.flags = beaker_original_flags[fuel_beaker]
+					beaker_original_flags -= fuel_beaker
+				fuel_beaker.forceMove(loc)
+				fuel_beaker = null
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("eject_nutriment")
+			if(nutriment_beaker)
+				if(beaker_original_flags[nutriment_beaker])
+					nutriment_beaker.flags = beaker_original_flags[nutriment_beaker]
+					beaker_original_flags -= nutriment_beaker
+				nutriment_beaker.forceMove(loc)
+				nutriment_beaker = null
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("eject_radium")
+			if(radium_beaker)
+				if(beaker_original_flags[radium_beaker])
+					radium_beaker.flags = beaker_original_flags[radium_beaker]
+					beaker_original_flags -= radium_beaker
+				radium_beaker.forceMove(loc)
+				radium_beaker = null
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("eject_cartridge")
+			if(cartridge)
+				cartridge.forceMove(loc)
+				cartridge = null
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("produce")
+			if(!has_ingredients())
+				to_chat(user, "<span class='warning'>Not enough ingredients! Need: Welding fuel, Nutriment, Blood/Enzyme beaker, and Phoron gas connection.</span>")
+				return TRUE
+			working = TRUE
+			update_icon()
+			playsound(src, 'sound/machines/pacman_on.ogg', VOL_EFFECTS_MASTER, 30, channel = 501)
+			visible_message("<span class='notice'>[src] begins synthesizing Bio-supplements.</span>")
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("stop")
+			working = FALSE
+			playsound(src, null, channel = 502)
+			update_icon()
+			playsound(src, 'sound/machines/pacman_off.ogg', VOL_EFFECTS_MASTER, 30, channel = 501)
+			visible_message("<span class='notice'>[src] stops synthesizing.</span>")
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("dispense")
+			if(!cartridge)
+				to_chat(user, "<span class='warning'>No cartridge loaded!</span>")
+				return TRUE
+			var/space = cartridge.reagents.maximum_volume - cartridge.reagents.total_volume
+			var/amount = min(reagents.get_reagent_amount("bio_supplements"), space)
+			if(amount > 0)
+				reagents.trans_id_to(cartridge, "bio_supplements", amount)
+			SStgui.update_uis(src)
+			return TRUE
+
+	return FALSE
+
+#undef BIO_PRODUCE_RATE

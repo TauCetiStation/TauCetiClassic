@@ -1,4 +1,3 @@
-import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
 import {
   Box,
@@ -15,14 +14,17 @@ export const ChemDispenser = (_, context) => {
   const { act, data } = useBackend(context);
   const {
     amount,
-    energy,
-    maxEnergy,
     isBeakerLoaded,
     glass,
     beakerContents,
     beakerCurrentVolume,
     beakerMaxVolume,
     chemicals,
+    cartridgeLoaded,
+    cartridgeOk,
+    cartridgeName,
+    cartridgeVolume,
+    cartridgeMaxVolume,
   } = data;
 
   const DISPENSE_AMOUNTS = [5, 10, 20, 30, 40];
@@ -32,12 +34,24 @@ export const ChemDispenser = (_, context) => {
       <Window.Content>
         <Section title={'Status'}>
           <LabeledList>
-            <LabeledList.Item label="Energy">
-              <ProgressBar value={energy / maxEnergy}>
-                {toFixed(energy) + ' units'}
-              </ProgressBar>
+            <LabeledList.Item label="Bio-Supplements">
+              {cartridgeLoaded ? (
+                <ProgressBar
+                  maxValue={cartridgeMaxVolume}
+                  value={cartridgeVolume}
+                />
+              ) : (
+                <Box color="average">No cartridge loaded.</Box>
+              )}
             </LabeledList.Item>
           </LabeledList>
+          <Button
+            content="Eject cartridge"
+            icon="eject"
+            disabled={!cartridgeLoaded}
+            mt={1}
+            onClick={() => act('eject_cartridge')}
+          />
         </Section>
         <Section
           title={'Dispense'}
@@ -75,7 +89,7 @@ export const ChemDispenser = (_, context) => {
           }>
           {chemicals.map((chemical) => (
             <Button
-              disabled={!isBeakerLoaded}
+              disabled={!isBeakerLoaded || !cartridgeOk}
               key={chemical.id}
               icon={'tint'}
               width={'130px'}
