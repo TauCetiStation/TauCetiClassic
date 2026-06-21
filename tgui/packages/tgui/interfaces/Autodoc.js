@@ -25,10 +25,10 @@ export const Autodoc = (props, context) => {
   } = data;
 
   const chosen_operations = chosen_surgeries.filter(
-    (surgery) => surgery.target_zone == chosen_zone
+    (surgery) => surgery.target_zone === chosen_zone
   );
   const available_operations = operations.reduce((ops, operation) => {
-    if (operation.target_zone != chosen_zone) return ops;
+    if (operation.target_zone !== chosen_zone) return ops;
     ops.push({
       target_zone: operation.target_zone,
       name: operation.name,
@@ -75,7 +75,7 @@ export const Autodoc = (props, context) => {
                   <Button
                     className="EmptyBeaker"
                     disabled={!medical_access}
-                    content="пусто"
+                    content="свободный слот"
                     onClick={() => act('put_blood_beaker')}
                   />
                 ) : (
@@ -106,7 +106,7 @@ export const Autodoc = (props, context) => {
                   <Button
                     className="EmptyBeaker"
                     disabled={!medical_access}
-                    content="пусто"
+                    content="свободный слот"
                     onClick={() => act('put_antibiotic_beaker')}
                   />
                 ) : (
@@ -141,7 +141,7 @@ export const Autodoc = (props, context) => {
                   <Button
                     className="EmptyBeaker"
                     disabled={!medical_access}
-                    content="пусто"
+                    content="свободный слот"
                     onClick={() => act('put_tank')}
                   />
                 ) : (
@@ -276,7 +276,7 @@ const ButtonSurgeryPart = (props, context) => {
   const { this_zone, width, height, left, top } = props;
 
   let amount = chosen_surgeries.filter(
-    (surgery) => surgery.target_zone == this_zone
+    (surgery) => surgery.target_zone === this_zone
   ).length;
 
   return (
@@ -287,7 +287,7 @@ const ButtonSurgeryPart = (props, context) => {
       position="absolute"
       left={left}
       top={top}
-      selected={chosen_zone == this_zone ? 1 : 0}
+      selected={chosen_zone === this_zone ? 1 : 0}
       onClick={() => act('choose_zone', { zone: this_zone })}
       content={amount ? amount : ''}
     />

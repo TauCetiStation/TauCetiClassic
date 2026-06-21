@@ -578,6 +578,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/autodoc, autodoc_machines)
 			if(!anesthetic)
 				return
 
+			disconnect_anesthetic()
 			eject_thing(anesthetic, usr)
 			anesthetic = null
 			return TRUE
@@ -589,7 +590,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/autodoc, autodoc_machines)
 			if(anesthetic)
 				return
 
-			disconnect_anesthetic()
 			anesthetic = try_put_thing(usr, /obj/item/weapon/tank)
 			return TRUE
 

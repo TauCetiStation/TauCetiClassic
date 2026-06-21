@@ -54,7 +54,7 @@
 	available_target_zones = list(BP_GROIN, BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)
 
 /datum/auto_surgery/arthery
-	name = "Ангиорафия"
+	name = "Сосудистый шов"
 
 	insurance_needed = INSURANCE_STANDARD
 	step_cost = 5
