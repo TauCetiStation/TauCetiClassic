@@ -566,13 +566,29 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 	if(!I)
 		return FALSE
 
-	if(!istype(I, /obj/item/weapon/reagent_containers))
+	if(!istype(I, /obj/item/weapon/reagent_containers/glass))
 		return FALSE
 
 	if(!I.is_open_container())
 		return FALSE
 
-	return beaker.attackby(I, H)
+	if(!I.reagents || !beaker.reagents)
+		return FALSE
+
+	var/obj/item/weapon/reagent_containers/glass/G = I
+	if(!G.reagents.total_volume)
+		to_chat(user, "<span class = 'rose'>В [CASE(G, PREPOSITIONAL_CASE)] ничего нет.</span>")
+		return FALSE
+
+	if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
+		to_chat(user, "<span class = 'rose'>[capitalize(CASE(beaker, NOMINATIVE_CASE))] [(ANYMORPH(beaker, "полон", "полна", "полно", "полны"))].</span>")
+		return FALSE
+
+	var/trans = G.reagents.trans_to(beaker, G.amount_per_transfer_from_this)
+	to_chat(user, "<span class = 'notice'>Вы переливаете [trans] юнитов вещества в [CASE(beaker, ACCUSATIVE_CASE)].</span>")
+	playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER) // Sound taken from "Eris" build
+
+	return TRUE
 
 /obj/machinery/sleeper/proc/eject_beaker(obj/item/weapon/beaker, mob/user)
 	if(!ishuman(user))
@@ -760,7 +776,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 	if(seller_account_number != global.department_accounts["Medical"].account_number) //We are not connected to medbay, no need for insurance check!
 		return TRUE
 
-	return insurance_to_check >= minimal_insurance
+	return is_insurance_sufficient(insurance_to_check, minimal_insurance)
 
 
 /obj/machinery/sleeper/proc/try_take_money(amount_needed = 0)

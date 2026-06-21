@@ -28,7 +28,7 @@ var/global/const/SLEEPER_WIRE_ACCESS     = 2
 		if(SLEEPER_WIRE_ACCESS)
 			S.medical_access = mended
 
-/datum/wires/vending/update_pulsed(index)
+/datum/wires/sleeper/update_pulsed(index)
 	var/obj/machinery/sleeper/S = holder
 
 	switch(index)
