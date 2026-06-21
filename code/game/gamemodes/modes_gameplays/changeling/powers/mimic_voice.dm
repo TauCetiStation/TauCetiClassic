@@ -9,18 +9,11 @@
 	var/slowdown_applied = FALSE
 
 /obj/effect/proc_holder/changeling/mimicvoice/on_purchase(mob/user)
-	SHOULD_CALL_PARENT(FALSE)
-	role = user.mind.GetRoleByType(/datum/role/changeling)
-	action = new /datum/action/innate/changeling/mimicvoice(user)
-	action.name = name
-	action.target = src
-	action.Grant(user)
-
-/datum/action/innate/changeling/mimicvoice
-	name = "Mimic Voice"
-	button_icon = 'icons/hud/actions.dmi'
-	background_icon_state = "bg_default"
-	button_icon_state = "shapeshift"
+	..()
+	action.button_icon = 'icons/hud/actions.dmi'
+	action.background_icon_state = "bg_default"
+	action.button_icon_state = "shapeshift"
+	action.UpdateButtonIcon()
 
 // Fake Voice
 /obj/effect/proc_holder/changeling/mimicvoice/sting_action(mob/user)
