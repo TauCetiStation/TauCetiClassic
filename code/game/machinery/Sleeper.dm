@@ -50,7 +50,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 	var/upgraded = FALSE
 	var/datum/wires/sleeper/wires = null
 
-	var/seller_account_number = null
+	var/seller_account_number = MAP_VENDOR_ACCOUNT_NUMBER_PLACEHOLDER
 
 /obj/machinery/sleeper/upgraded
 	upgraded = TRUE

@@ -5669,7 +5669,7 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "anU" = (
-/obj/machinery/sleeper/upgraded{
+/obj/machinery/sleeper/free_and_full{
 	dir = 4
 	},
 /turf/simulated/shuttle/floor/vox,
@@ -15567,7 +15567,7 @@
 /turf/unsimulated/floor,
 /area/centcom/control)
 "aKq" = (
-/obj/machinery/sleeper/upgraded{
+/obj/machinery/sleeper/free_and_full{
 	dir = 1
 	},
 /turf/unsimulated/floor{
@@ -16569,12 +16569,12 @@
 /turf/unsimulated/floor,
 /area/centcom/living)
 "aMA" = (
-/obj/machinery/sleeper/upgraded{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal/alpha/green{
 	dir = 8;
 	icon_state = "siding_wideplating_line"
+	},
+/obj/machinery/sleeper/free_and_full{
+	dir = 4
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor3"
