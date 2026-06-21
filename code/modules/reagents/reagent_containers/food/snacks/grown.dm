@@ -18,6 +18,7 @@
 	var/yield = 0
 	var/potency = -1
 	var/plant_type = 0
+	var/smokable = FALSE
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/atom_init(mapload, newpotency)
@@ -429,7 +430,9 @@
 	seed_type = /obj/item/seeds/laughweedseed
 	name = "laughweed"
 	cases = list("смехтрава", "смехтравы", "смехтраве", "смехтраву", "смехтравой", "смехтраве")
-	desc = "У нас было 2 пакетика травы..."
+	desc = "У нас было 2 пакетика травы..."ъ
+	laugh_desc = "Ни смеха, ни травы..."
+	smokable = TRUE
 	icon_state = "laughweed"
 	item_state_world = "laughweed_world"
 	potency = 10
@@ -447,6 +450,8 @@
 	name = "megaweed"
 	cases = list("мегатравка", "мегатравки", "мегатравке", "мегатравку", "мегатравкой", "мегатравке")
 	desc = "У нас было 2 пакетика мегатравы..."
+	laugh_desc = "Почему у меня кружится голова, смотря на мегатраву?"
+	smokable = TRUE
 	icon_state = "megaweed"
 	item_state_world = "megaweed_world"
 	potency = 10
@@ -460,17 +465,19 @@
 	reagents.add_reagent("laughbidiol", 3 + round(potency / 5, 1))
 	bitesize = 1 + round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/blackweed
-	seed_type = /obj/item/seeds/blackweedseed
+/obj/item/weapon/reagent_containers/food/snacks/grown/deathweed
+	seed_type = /obj/item/seeds/deathweedseed
 	name = "deathweed"
 	cases = list("смертьтрава", "смертьтравы", "смертьтраве", "смертьтраву", "смертьтравой", "смертьтраве")
 	desc = "Смешит до болезненных колик в животике."
-	icon_state = "blackweed"
-	item_state_world = "blackweed_world"
+	laugh_desc = "Оказывается, отдел СБ правы.. чёрный - плохо."
+	smokable = TRUE
+	icon_state = "deathweed"
+	item_state_world = "deathweed_world"
 	potency = 10
 	filling_color = "#39962d"
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/blackweed/atom_init()
+/obj/item/weapon/reagent_containers/food/snacks/grown/deathweed/atom_init()
 	. = ..()
 	reagents.add_reagent("nutriment", 1 + round(potency / 10, 1))
 	reagents.add_reagent("cyanide", 1 + round((potency / 5), 1))
@@ -555,6 +562,7 @@
 	name = "watermelon"
 	cases = list("арбуз", "арбуза", "арбузу", "арбуз", "арбузом", "арбузе")
 	desc = "И поел, и попил."
+	laugh_desc = "Шутку вспомнил.. рантайм на арбузе!"
 	icon_state = "watermelon"
 	potency = 10
 	filling_color = "#fa2863"
@@ -1299,7 +1307,8 @@
 	seed_type = /obj/item/seeds/tobacco
 	name = "tobacco leaves"
 	cases = list("листья космического табака", "листьев космического табака", "листьям космического табака", "листья космического табака", "листьями космического табака", "листьях космического табака")
-	desc = "Высушите их, чтобы скрутить немного сигарет."
+	desc = "Генетически адаптированные к космосу листья табака, насыщающие кровь кислородом."
+	smokable = TRUE
 	icon_state = "stobacco_leaves"
 	potency = 10
 
@@ -1315,7 +1324,8 @@
 	seed_type = /obj/item/seeds/tobacco
 	name = "tobacco leaves"
 	cases = list("листья табака", "листьев табака", "листьям табака", "листья табака", "листьями табака", "листьях табака")
-	desc = "Высушите их, чтобы скрутить немного сигарет."
+	desc = "Листья традиционного табака. Хорошо подходят для самокруток."
+	smokable = TRUE
 	icon_state = "tobacco_leaves"
 	potency = 10
 
