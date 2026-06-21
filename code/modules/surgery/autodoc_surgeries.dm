@@ -7,7 +7,7 @@
 	var/list/available_target_zones = list()
 
 /datum/auto_surgery/bone/skull
-	name = "исправить кости черепа"
+	name = "Остеосинтез"
 
 	insurance_needed = INSURANCE_STANDARD
 	step_cost = 3
@@ -22,7 +22,7 @@
 	available_target_zones = list(BP_HEAD)
 
 /datum/auto_surgery/bone/ribs
-	name = "исправить рёбра"
+	name = "Остеосинтез"
 
 	insurance_needed = INSURANCE_STANDARD
 	step_cost = 2
@@ -38,7 +38,7 @@
 	available_target_zones = list(BP_CHEST)
 
 /datum/auto_surgery/bone
-	name = "исправить кости"
+	name = "Остеосинтез"
 
 	insurance_needed = INSURANCE_STANDARD
 	step_cost = 1
@@ -54,7 +54,7 @@
 	available_target_zones = list(BP_GROIN, BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)
 
 /datum/auto_surgery/arthery
-	name = "зашить артерии"
+	name = "Ангиорафия"
 
 	insurance_needed = INSURANCE_STANDARD
 	step_cost = 5
@@ -68,7 +68,7 @@
 	available_target_zones = list(BP_GROIN, BP_CHEST, BP_HEAD, BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)
 
 /datum/auto_surgery/organ
-	name = "исправить внутренние органы"
+	name = "Торакальная хирургия"
 
 	insurance_needed = INSURANCE_PREMIUM
 	step_cost = 10
@@ -86,7 +86,7 @@
 	available_target_zones = list(BP_CHEST)
 
 /datum/auto_surgery/organ/groin
-	name = "исправить внутренние органы"
+	name = "Абдоминальная хирургия"
 
 	insurance_needed = INSURANCE_PREMIUM
 	step_cost = 10

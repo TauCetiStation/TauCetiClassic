@@ -193,6 +193,15 @@ SUBSYSTEM_DEF(economy)
 		if(MA.money >= insprice && MA.owner_max_insurance_payment >= insprice)
 			return insurance_type
 
+/proc/is_insurance_sufficient(insurance_to_check, minimal_insurance)
+	var/id_1 = SSeconomy.insurance_quality_decreasing.Find(insurance_to_check)
+	var/id_2 = SSeconomy.insurance_quality_decreasing.Find(minimal_insurance)
+
+	if(!id_1 || !id_2)
+		return FALSE
+
+	return id_1 <= id_2
+
 /proc/is_ensurance_enough(insurance_type, insurance_reference)
 	var/first_num = SSeconomy.insurance_quality_decreasing.Find(insurance_type)
 	var/second_num = SSeconomy.insurance_quality_decreasing.Find(insurance_reference)

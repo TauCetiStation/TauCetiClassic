@@ -10,3 +10,4 @@
 
 #define MAP_CARGO_ACCOUNT_NUMBER_PLACEHOLDER "%cargo_account%"
 #define MAP_VENDOR_ACCOUNT_NUMBER_PLACEHOLDER "%vendor_account%"
+#define MAP_MEDBAY_ACCOUNT_NUMBER_PLACEHOLDER "%medbay_account%"

@@ -131,7 +131,7 @@ var/global/initial_station_money = 7500
 	current_date_string = "[DD].[MM].[game_year]"
 
 	setup_shop()
-	setup_vending()
+	setup_machines()
 
 	economy_init = TRUE
 	return 1
@@ -216,11 +216,22 @@ var/global/initial_station_money = 7500
 	for(var/obj/random_shop_item/Item in global.random_onlineshop_items)
 		Item.generate_shop_item()
 
-/proc/setup_vending()
+/proc/setup_machines()
 	for(var/obj/machinery/vending/Vend in global.vending_machines)
-		switch(Vend.seller_account_number)
-			if(MAP_VENDOR_ACCOUNT_NUMBER_PLACEHOLDER)
-				Vend.seller_account_number = global.vendor_account.account_number
+		Vend.seller_account_number = get_account_number_from_placeholder_or_null(Vend.seller_account_number)
 
-			if(MAP_CARGO_ACCOUNT_NUMBER_PLACEHOLDER)
-				Vend.seller_account_number = global.cargo_account.account_number
+	for(var/obj/machinery/autodoc/Doc in global.autodoc_machines)
+		Doc.seller_account_number = get_account_number_from_placeholder_or_null(Doc.seller_account_number)
+
+/proc/get_account_number_from_placeholder_or_null(placeholder)
+	switch(placeholder)
+		if(MAP_VENDOR_ACCOUNT_NUMBER_PLACEHOLDER)
+			return global.vendor_account.account_number
+
+		if(MAP_CARGO_ACCOUNT_NUMBER_PLACEHOLDER)
+			return global.cargo_account.account_number
+
+		if(MAP_MEDBAY_ACCOUNT_NUMBER_PLACEHOLDER)
+			return global.department_accounts["Medical"].account_number
+
+	return null

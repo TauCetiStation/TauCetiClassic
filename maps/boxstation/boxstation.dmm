@@ -4989,10 +4989,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/warden)
 "aip" = (
-/obj/machinery/body_scanconsole{
-	dir = 1
-	},
-/obj/machinery/autodoc_console,
+/obj/machinery/bodyscanner,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -42770,8 +42767,8 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "bxw" = (
-/obj/machinery/computer/med_data{
-	dir = 4
+/obj/machinery/autodoc{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 10;
@@ -50203,7 +50200,8 @@
 /area/station/medical/cryo)
 "bKP" = (
 /obj/machinery/light/smart,
-/obj/machinery/autodoc,
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/medical,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},
@@ -50308,9 +50306,7 @@
 /turf/simulated/floor,
 /area/station/civilian/dormitories)
 "bKZ" = (
-/obj/machinery/bodyscanner{
-	dir = 1
-	},
+/obj/machinery/body_scanconsole,
 /turf/simulated/floor{
 	icon_state = "whiteblue"
 	},

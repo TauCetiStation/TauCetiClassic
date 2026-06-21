@@ -112,7 +112,7 @@
 		add_overlay(holding.icon_state)
 		visible_message("<span class='notice'>[holding] is attached to \the [src]</span>")
 		if(attached)
-			update_internal(attached, TRUE)
+			update_internal(TRUE)
 
 /obj/machinery/life_assist/artificial_ventilation/attack_hand(mob/user)
 	. = ..()
@@ -127,7 +127,7 @@
 		cut_overlay(holding.icon_state)
 		holding = null
 		if(attached)
-			update_internal(attached, FALSE)
+			update_internal(FALSE)
 
 /obj/machinery/life_assist/artificial_ventilation/attach(mob/living/carbon/human/H)
 	..()
