@@ -2200,5 +2200,3 @@ TODO: Convert everything to custom hair dye,
 	result = "metatrombine"
 	required_reagents = list("bicaridine" = 1, "nitrogen" = 1, "potassium" = 1)
 	result_amount = 3
-
-
