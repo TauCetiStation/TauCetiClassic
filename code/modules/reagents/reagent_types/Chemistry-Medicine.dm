@@ -1076,7 +1076,8 @@
 			H.visible_message("<span class='warning'>[H] expels a sticky, slowing slime!</span>", "<span class='warning'>You expel a sticky, slowing slime - it slows you down!</span>")
 	if(istype(T, /turf/simulated))
 		var/turf/simulated/ST = T
-		ST.return_air().adjust_gas("carbon_dioxide", 5)
+		var/datum/gas_mixture/GM = ST.return_air()
+		GM.adjust_gas("carbon_dioxide", 5)
 	holder.remove_reagent(id, 5)
 
 // Bio-slime decal - releases nitrogen over time
@@ -1116,7 +1117,8 @@
 /obj/effect/decal/cleanable/bio_slime/process()
 	var/turf/simulated/T = get_turf(src)
 	if(istype(T))
-		T.return_air().adjust_gas("carbon_dioxide", 0.5)
+		var/datum/gas_mixture/GM = T.return_air()
+		GM.adjust_gas("carbon_dioxide", 0.5)
 		co2_left -= 0.5
 	if(co2_left <= 0)
 		STOP_PROCESSING(SSobj, src)

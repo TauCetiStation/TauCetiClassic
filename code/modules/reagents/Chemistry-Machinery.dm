@@ -1406,7 +1406,8 @@
 			reagents.add_reagent("bio_supplements", BIO_PRODUCE_RATE)
 			var/turf/simulated/T = get_turf(src)
 			if(istype(T))
-				T.return_air().adjust_gas("carbon_dioxide", 2)
+				var/datum/gas_mixture/GM = T.return_air()
+				GM.adjust_gas("carbon_dioxide", 2)
 
 /obj/machinery/portable_atmospherics/bio_supplements_mixer/power_change()
 	if(anchored && powered())
