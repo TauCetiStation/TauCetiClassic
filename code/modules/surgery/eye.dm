@@ -3,50 +3,6 @@
 //						EYE SURGERY							//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/eye
-	clothless = 0
-	priority = 2
-	can_infect = 1
-
-/datum/surgery_step/eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if (!ishuman(target))
-		return 0
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
-		return 0
-	if (BP.stump_status)
-		return FALSE
-	return target_zone == O_EYES
-
-/datum/surgery_step/eye/cut_open
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,		\
-	/obj/item/weapon/kitchenknife = 75,	\
-	/obj/item/weapon/shard = 50, 		\
-	)
-
-	min_duration = 90
-	max_duration = 110
-
-/datum/surgery_step/eye/cut_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts to separate the corneas on [target]'s eyes with \the [tool].", \
-	"You start to separate the corneas on [target]'s eyes with \the [tool].")
-	..()
-
-/datum/surgery_step/eye/cut_open/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] has separated the corneas on [target]'s eyes with \the [tool].</span>" , \
-	"<span class='notice'>You have separated the corneas on [target]'s eyes with \the [tool].</span>",)
-	target.op_stage.eyes = 1
-	target.blinded += 1.5
-
-/datum/surgery_step/eye/cut_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, slicing [target]'s eyes wth \the [tool]!</span>" , \
-	"<span class='warning'>Your hand slips, slicing [target]'s eyes wth \the [tool]!</span>" )
-	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-	IO.take_damage(5, 0)
-
 /datum/surgery_step/eye/lift_eyes
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,	        \
@@ -204,108 +160,9 @@
 	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
-/datum/surgery_step/eye/manipulation/remove
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,		\
-	/obj/item/weapon/kitchenknife = 75,	\
-	/obj/item/weapon/shard = 50, 		\
-	)
-
-	allowed_species = list("exclude", IPC, DIONA)
-
-	min_duration = 110
-	max_duration = 150
-
-/datum/surgery_step/eye/manipulation/remove/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.eyes == 2
-
-/datum/surgery_step/eye/manipulation/remove/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] starts disconnect eyes inside the incision on [target]'s [BP.name] with \the [tool].", \
-	"You start disconnect eyes inside the incision on [target]'s [BP.name] with \the [tool]" )
-	target.custom_pain("The pain in your chest is living hell!",1)
-	..()
-
-/datum/surgery_step/eye/manipulation/remove/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP.bodypart_organs.len)
-		var/obj/item/organ/internal/eyes/eyes = target.organs_by_name[O_EYES]
-		if(eyes)
-			eyes.status |= ORGAN_CUT_AWAY
-			eyes.remove(target)
-			eyes.loc = get_turf(target)
-			BP.bodypart_organs  -= eyes
-			playsound(target, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
-		if(!eyes)
-			user.visible_message("<span class='notice'>[user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.</span>", \
-		"<span class='notice'>You could not find anything inside [target]'s [BP.name].</span>")
-			return
-
-
-/datum/surgery_step/eye/manipulation/remove/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, stabbing \the [tool] into [target]'s eye!</span>", \
-	"<span class='warning'>Your hand slips, stabbing \the [tool] into [target]'s eye!</span>")
-	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-	if(IO)
-		IO.take_damage(5, 0)
-
-
 //////////////////////////////////////////////////////////////////
 //						ROBO EYE SURGERY						//
 //////////////////////////////////////////////////////////////////
-
-/datum/surgery_step/ipc/eye
-	clothless = FALSE
-	priority = 2
-	can_infect = FALSE
-
-	allowed_species = list(IPC)
-
-/datum/surgery_step/ipc/eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))
-		return FALSE
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if(!BP)
-		return FALSE
-	return target_zone == O_EYES
-
-/datum/surgery_step/ipc/eye/screw_open
-	allowed_tools = list(
-	/obj/item/weapon/screwdriver = 100,
-	/obj/item/weapon/scalpel = 75,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50
-	)
-
-	min_duration = 90
-	max_duration = 110
-
-/datum/surgery_step/ipc/eye/screw_open/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.eyes == 0
-
-/datum/surgery_step/ipc/eye/screw_open/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] begins to unscrew [target]'s camera panels with \the [tool].",
-	"You unscrew [target]'s camera panels with \the [tool].")
-	..()
-
-/datum/surgery_step/ipc/eye/screw_open/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] unscrewed [target]'s camera panels with \the [tool].</span>" ,
-	"<span class='notice'>You unscrewed [target]'s camera panels with \the [tool].</span>")
-	target.op_stage.eyes = 1
-	if(!target.is_bruised_organ(O_KIDNEYS))
-		to_chat(target, "<span class='warning italics'>%VISUALS DENIED%. REQUESTING ADDITIONAL PERSPECTION REACTIONS.</span>")
-	target.blinded += 1.5
-
-/datum/surgery_step/ipc/eye/screw_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s cameras wth \the [tool]!</span>" ,
-	"<span class='warning'>Your hand slips, scratching [target]'s cameras wth \the [tool]!</span>")
-	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-	IO.take_damage(5, 0)
 
 /datum/surgery_step/ipc/eye/mend_cameras
 	allowed_tools = list(
@@ -348,38 +205,3 @@
 		to_chat(target, "<span class='warning italics'>SEVERE VISUAL SENSOR DAMAGE DETECTED. %REACTION_OVERLOAD%.</span>")
 	target.blinded += 3.0
 
-/datum/surgery_step/ipc/eye/close_shut
-	allowed_tools = list(
-	/obj/item/weapon/screwdriver = 100,
-	/obj/item/weapon/scalpel = 75,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50,
-	)
-
-	min_duration = 70
-	max_duration = 100
-
-/datum/surgery_step/ipc/eye/close_shut/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.eyes != 0
-
-/datum/surgery_step/ipc/eye/close_shut/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] is beginning to lock [target]'s camera panels with \the [tool]." ,
-	"You are beginning to lock [target]'s camera panels with \the [tool].")
-
-/datum/surgery_step/ipc/eye/close_shut/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/internal/eyes/eyes = target.organs_by_name[O_EYES]
-	user.visible_message("<span class='notice'>[user] locks [target]'s camera panels with \the [tool].</span>",
-	"<span class='notice'>You lock [target]'s camera panels with \the [tool].</span>")
-	if (target.op_stage.eyes == 2)
-		target.cure_nearsighted(EYE_DAMAGE_TRAIT)
-		target.sdisabilities &= ~BLIND
-		eyes.damage = 0
-	target.op_stage.eyes = 0
-
-/datum/surgery_step/ipc/eye/close_shut/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips,  denting [target]'s cameras with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, denting [target]'s cameras with \the [tool]!</span>")
-	BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
-	IO.take_damage(5, 0)

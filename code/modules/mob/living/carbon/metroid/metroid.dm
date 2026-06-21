@@ -33,7 +33,7 @@
 	var/amount_grown = 0 // controls how long the slime has been overfed, if 10, grows into an adult
 	var/max_grown = 10		// if adult: if 10: reproduces
 
-	var/surgery_status = DEFAULT
+	var/surgery_status = NORMAL
 
 	var/mob/living/Victim = null // the person the slime is currently feeding on
 	var/mob/living/Target = null // AI variable - tells the slime to hunt this down

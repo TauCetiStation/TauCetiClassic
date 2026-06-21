@@ -282,55 +282,6 @@
 //				SLIME CORE EXTRACTION							//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/slime/can_use(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	return isslime(target) && target.stat == DEAD
-
-/datum/surgery_step/slime/cut_flesh
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50,
-	)
-
-	min_duration = 30
-	max_duration = 50
-
-/datum/surgery_step/slime/cut_flesh/begin_step(mob/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts cutting through [target]'s flesh with \the [tool].",
-	"You start cutting through [target]'s flesh with \the [tool].")
-
-/datum/surgery_step/slime/cut_flesh/end_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] cuts through [target]'s flesh with \the [tool].</span>",
-	"<span class='notice'>You cut through [target]'s flesh with \the [tool], exposing the cores.</span>")
-	target.op_stage.brain_cut = 1
-
-/datum/surgery_step/slime/cut_flesh/fail_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='warning'>[user]'s hand slips, tearing [target]'s flesh with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, tearing [target]'s flesh with \the [tool]!</span>")
-
-/datum/surgery_step/slime/cut_innards
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50,
-	)
-
-	min_duration = 30
-	max_duration = 50
-
-/datum/surgery_step/slime/cut_innards/begin_step(mob/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts cutting [target]'s silky innards apart with \the [tool].",
-	"You start cutting [target]'s silky innards apart with \the [tool].")
-
-/datum/surgery_step/slime/cut_innards/end_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] cuts [target]'s innards apart with \the [tool], exposing the cores.</span>",
-	"<span class='notice'>You cut [target]'s innards apart with \the [tool], exposing the cores.</span>")
-	target.op_stage.brain_cut = 2
-
-/datum/surgery_step/slime/cut_innards/fail_step(mob/living/user, mob/living/carbon/slime/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='warning'>[user]'s hand slips, tearing [target]'s innards with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, tearing [target]'s innards with \the [tool]!</span>")
-
 /datum/surgery_step/slime/saw_core
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100,

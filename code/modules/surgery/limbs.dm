@@ -245,11 +245,6 @@
 	min_duration = 80
 	max_duration = 100
 
-/datum/surgery_step/ipc/limb/cut_wires/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] begins to reposition wires where [target]'s [parse_zone(target_zone)] used to be with \the [tool].",
-	"You begin to reposition wires where [target]'s [parse_zone(target_zone)] used to be with \the [tool].")
-	..()
-
 /datum/surgery_step/ipc/limb/cut_wires/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] finished repositioning wires where [target]'s [parse_zone(target_zone)] used to be with \the [tool].</span>",
 	"<span class='notice'>You finished repositioning wires where [target]'s [parse_zone(target_zone)] used to be with \the [tool].</span>")

@@ -68,7 +68,7 @@
 	usesound = 'sound/items/Screwdriver.ogg'
 	qualities = list(
 		QUALITY_SCREWING = 1,
-		QAULITY_RETRACT = 1.7
+		QUALITY_RETRACT = 1.7
 	)
 	stab_eyes = TRUE
 

@@ -23,11 +23,11 @@
 	var/skills_speed_bonus = -0.30 // -30% for each surplus level
 
 // returns how well tool is suited for this step
-/datum/surgery_step/proc/tool_quality(obj/item/tool, mob/M)
+/datum/surgery_step/proc/tool_quality(obj/item/tool, mob/living/carbon/C)
 	for(var/quality in allowed_qualities)
-
-		if(get_suiteble_quality(quality, allowed_qualities, M))
-
+		if(get_suiteble_quality(quality, allowed_qualities, C))
+			if(!tool.get_quality(quality)) //prevert takeing null
+				return
 			if(tool.get_quality(quality) > 1)
 				return (tool.get_quality(quality) - 1) * 100 // like (1.7 - 1)*100 = 70% to lose
 			else if(tool.get_quality(quality) <= 1)
@@ -55,7 +55,12 @@
 
 // checks whether this step can be applied with the given user and target
 /datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return FALSE
+	if(!ishuman(target))
+		return FALSE
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	if(!BP)
+		return FALSE
+	return TRUE
 
 /datum/surgery_step/proc/prepare_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return TRUE
@@ -216,7 +221,7 @@
 				if(prob(H.traumatic_shock) && !H.incapacitated(NONE))
 					to_chat(user, "<span class='warning'>The patient is writhing in pain, this interferes with the operation!</span>")
 					S.fail_step(user, H, target_zone, tool) //patient movements due to pain interfere with surgery
-			if(user.mood_prob(S.tool_quality(tool)) && tool.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus, particle_type = /particles/tool/surgery) && user.get_targetzone() && target_zone == user.get_targetzone())
+			if(user.mood_prob(S.tool_quality(tool, M)) && tool.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus, particle_type = /particles/tool/surgery) && user.get_targetzone() && target_zone == user.get_targetzone())
 				S.end_step(user, M, target_zone, tool)		//finish successfully
 			else if(tool.loc == user && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
 				S.fail_step(user, M, target_zone, tool)		//malpractice~
