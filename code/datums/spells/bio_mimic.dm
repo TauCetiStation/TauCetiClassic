@@ -9,9 +9,9 @@
 /datum/action/innate/bio_mimic/Activate()
 	if(!owner)
 		return
-	var/mob/living/carbon/human/caster = owner
-	if(!ishuman(caster))
+	if(!ishuman(owner))
 		return
+	var/mob/living/carbon/human/caster = owner
 	var/list/targets = list()
 	for(var/mob/living/carbon/human/M in oview(range, caster))
 		targets += M
@@ -28,7 +28,6 @@
 		return
 
 	caster.bio_mimic_uses++
-	caster.bio_mimic_last_target = target
 
 	if(caster.bio_mimic_uses >= 4)
 		caster.special_voice = ""
@@ -43,7 +42,6 @@
 		domutcheck(caster, null)
 		caster.adjustCloneLoss(5 * caster.bodyparts.len)
 		caster.bio_mimic_uses = 0
-		caster.bio_mimic_last_target = null
 		Remove(caster)
 		return
 

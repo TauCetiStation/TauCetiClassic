@@ -1013,7 +1013,7 @@
 	id = "bio_supplements"
 	description = "A complex biochemical compound and sometimes causes specific slime expulsion."
 	reagent_state = LIQUID
-	color = "#4B8B3E"
+	color = "#4b8b3e"
 	taste_message = "synthetic chlorophyll and electricity"
 	custom_metabolism = 0.4
 	overdose = 30

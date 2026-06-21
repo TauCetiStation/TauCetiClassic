@@ -9,6 +9,7 @@
 	var/slowdown_applied = FALSE
 
 /obj/effect/proc_holder/changeling/mimicvoice/on_purchase(mob/user)
+	SHOULD_CALL_PARENT(FALSE)
 	role = user.mind.GetRoleByType(/datum/role/changeling)
 	action = new /datum/action/innate/changeling/mimicvoice(user)
 	action.name = name
@@ -47,6 +48,7 @@
 	return FALSE
 
 /obj/effect/proc_holder/changeling/mimicvoice/Destroy()
+	SHOULD_CALL_PARENT(TRUE)
 	if(role && slowdown_applied)
 		role.chem_recharge_slowdown -= 0.25
 		slowdown_applied = FALSE

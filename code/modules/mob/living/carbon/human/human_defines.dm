@@ -84,7 +84,6 @@
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
 	var/bio_mimic_uses = 0
-	var/mob/living/carbon/human/bio_mimic_last_target = null
 	var/bio_mimic_spell_given = FALSE
 	var/bio_mimic_voice_timer
 
