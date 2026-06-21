@@ -10,6 +10,7 @@
 	density = FALSE
 	light_color = "#7bf9ff"
 
+ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 /obj/machinery/sleeper
 	name = "Sleeper"
 	cases = list("медкапсула", "медкапсулы", "медкапсуле", "медкапсулу", "медкапсулой", "медкапсуле")
@@ -47,12 +48,35 @@
 	var/medical_access = FALSE
 
 	var/upgraded = FALSE
+	var/datum/wires/sleeper/wires = null
+
+	var/seller_account_number = null
 
 /obj/machinery/sleeper/upgraded
 	upgraded = TRUE
 
+/obj/machinery/sleeper/free_and_full/populate_beakers()
+	dialysis = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+
+	cryo = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	cryo.reagents.add_reagent("cryoxadone", 150)
+	cryo.update_icon()
+
+	add_roundstart_chemical("tricordrazine", 150, regular_beakers)
+	add_roundstart_chemical("dexalinp", 150, regular_beakers)
+	add_roundstart_chemical("dermaline", 150, regular_beakers)
+	add_roundstart_chemical("hyronalin", 150, regular_beakers)
+	add_roundstart_chemical("tramadol", 150, regular_beakers)
+
+	add_roundstart_chemical("synaptizine", 150, premium_beakers)
+	add_roundstart_chemical("peridaxon", 150, premium_beakers)
+	add_roundstart_chemical("spaceacillin", 150, premium_beakers)
+	add_roundstart_chemical("metatrombine", 150, premium_beakers)
+	add_roundstart_chemical("rezadone", 150, premium_beakers)
+
 /obj/machinery/sleeper/atom_init(mapload)
 	. = ..()
+	wires = new(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/sleeper(null)
 	if(upgraded)
@@ -67,6 +91,9 @@
 	RefreshParts()
 
 	if(mapload)
+		if(is_station_level(z))
+			seller_account_number = MAP_MEDBAY_ACCOUNT_NUMBER_PLACEHOLDER
+
 		populate_beakers()
 
 /obj/machinery/sleeper/proc/populate_beakers()
@@ -96,7 +123,7 @@
 	add_roundstart_chemical("dexalinp", 150, premium_beakers)
 	add_roundstart_chemical("dextromethorphan", 100, premium_beakers)
 	add_roundstart_chemical("hyronalin", 150, premium_beakers)
-	add_roundstart_chemical("specialwhiskey", 100, premium_beakers)
+	add_roundstart_chemical("doctorsdelight", 100, premium_beakers)
 
 /obj/machinery/sleeper/proc/add_roundstart_chemical(chemical_id, amount, beaker_list)
 	var/obj/item/weapon/reagent_containers/glass/beaker/large/Beaker = new(src)
@@ -163,6 +190,27 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
+
+	if(isscrewing(I) && anchored)
+		src.panel_open = !src.panel_open
+		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
+		updateUsrDialog()
+		return
+	if(is_wire_tool(I) && panel_open && wires.interact(user))
+		return
+
+	if(panel_open)
+		if(!seller_account_number && (istype(I, /obj/item/device/pda) && I.GetID()))
+			var/obj/item/weapon/card/Card = I.GetID()
+			seller_account_number = Card.associated_account_number
+			to_chat(user, "<span class='notice'>You connect your account to the [src]</span>")
+			return
+
+		if(!seller_account_number && istype(I, /obj/item/weapon/card))
+			var/obj/item/weapon/card/Card = I
+			seller_account_number = Card.associated_account_number
+			to_chat(user, "<span class='notice'>You connect your account to the [src]</span>")
+			return
 
 /obj/machinery/sleeper/ex_act(severity)
 	switch(severity)
@@ -243,6 +291,7 @@
 	open_machine()
 
 /obj/machinery/sleeper/Destroy()
+	QDEL_NULL(wires)
 	for(var/atom/movable/A as anything in contents)
 		A.forceMove(get_turf(src))
 	return ..()
@@ -408,6 +457,9 @@
 					if(!beaker)
 						return
 
+					if(try_fill_beaker(beaker, usr))
+						return TRUE
+
 					eject_beaker(beaker, usr)
 					regular_beakers -= beaker
 					return TRUE
@@ -416,6 +468,9 @@
 					var/beaker = premium_beakers[beaker_id]
 					if(!beaker)
 						return
+
+					if(try_fill_beaker(beaker, usr))
+						return TRUE
 
 					eject_beaker(beaker, usr)
 					premium_beakers -= beaker
@@ -501,6 +556,24 @@
 	if(access_medical in card.access)
 		medical_access = TRUE
 
+/obj/machinery/sleeper/proc/try_fill_beaker(obj/item/weapon/beaker, mob/user)
+	if(!beaker.is_open_container())
+		return FALSE
+
+	var/mob/living/carbon/human/H = user
+
+	var/obj/item/I = H.get_active_hand()
+	if(!I)
+		return FALSE
+
+	if(!istype(I, /obj/item/weapon/reagent_containers))
+		return FALSE
+
+	if(!I.is_open_container())
+		return FALSE
+
+	return beaker.attackby(I, H)
+
 /obj/machinery/sleeper/proc/eject_beaker(obj/item/weapon/beaker, mob/user)
 	if(!ishuman(user))
 		beaker.forceMove(get_turf(src))
@@ -562,7 +635,7 @@
 		return
 
 	var/mob/living/carbon/human/H = occupant
-	if(get_insurance_type(H) != INSURANCE_PREMIUM)
+	if(!check_insurance(get_insurance_type(H), INSURANCE_PREMIUM))
 		stop_freezing()
 		return
 
@@ -603,7 +676,7 @@
 		return
 
 	var/mob/living/carbon/human/H = occupant
-	if(get_insurance_type(H) == INSURANCE_NONE)
+	if(!check_insurance(get_insurance_type(H), INSURANCE_STANDARD))
 		stop_dialyzing()
 		return
 
@@ -635,7 +708,7 @@
 
 /obj/machinery/sleeper/proc/inject_from_beakers()
 	var/mob/living/carbon/human/H = occupant
-	if(get_insurance_type(H) == INSURANCE_NONE)
+	if(!check_insurance(get_insurance_type(H), INSURANCE_STANDARD))
 		return
 
 	for(var/obj/item/weapon/reagent_containers/glass/beaker/B in regular_beakers)
@@ -654,7 +727,7 @@
 
 		playsound(src, 'sound/machines/sleeper_inject.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 
-	if(get_insurance_type(H) != INSURANCE_PREMIUM)
+	if(!check_insurance(get_insurance_type(H), INSURANCE_PREMIUM))
 		return
 
 	for(var/obj/item/weapon/reagent_containers/glass/beaker/B in premium_beakers)
@@ -680,8 +753,20 @@
 	for(var/obj/item/weapon/reagent_containers/glass/beaker/B in premium_beakers)
 		premium_beakers[B] = 0
 
+/obj/machinery/sleeper/proc/check_insurance(insurance_to_check, minimal_insurance)
+	if(!seller_account_number) //No account connection, everything is free!
+		return TRUE
+
+	if(seller_account_number != global.department_accounts["Medical"].account_number) //We are not connected to medbay, no need for insurance check!
+		return TRUE
+
+	return insurance_to_check >= minimal_insurance
+
 
 /obj/machinery/sleeper/proc/try_take_money(amount_needed = 0)
+	if(!seller_account_number) //No account connection, everything is free!
+		return TRUE
+
 	if(!occupant || !ishuman(occupant))
 		return FALSE
 
@@ -691,14 +776,15 @@
 		return FALSE
 
 	var/datum/money_account/MA = get_account(R.fields["acc_number"])
-	if(!MA)
+	var/datum/money_account/S = get_account(seller_account_number)
+	if(!MA || !S)
 		return FALSE
 
 	if(MA.money < amount_needed)
 		return FALSE
 
 	if(amount_needed > 0)
-		charge_to_account(MA.account_number, global.department_accounts["Medical"].account_number, "Оплата за операцию в [CASE(src, PREPOSITIONAL_CASE)]", name, -amount_needed)
-		charge_to_account(global.department_accounts["Medical"].account_number, MA.account_number, "Оплата за операцию в [CASE(src, PREPOSITIONAL_CASE)]", name, amount_needed)
+		charge_to_account(MA.account_number, S.account_number, "Оплата за операцию в [CASE(src, PREPOSITIONAL_CASE)]", name, -amount_needed)
+		charge_to_account(S.account_number, MA.account_number, "Оплата за операцию в [CASE(src, PREPOSITIONAL_CASE)]", name, amount_needed)
 
 	return TRUE
