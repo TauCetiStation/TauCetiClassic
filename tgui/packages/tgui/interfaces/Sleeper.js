@@ -101,7 +101,10 @@ export const Sleeper = (props, context) => {
                 )}
                 <Box className="ConfigBox">
                   <span className="ConfigText">
-                    <Diagram display_array={dialysis_report ? dialysis_report : []} format={(val) => val + ' ю.'}/>
+                    <Diagram
+                      display_array={dialysis_report ? dialysis_report : []}
+                      format={(val) => val + ' ю.'}
+                    />
                     <Button
                       className="SmallConfigButton"
                       content="анализ"
@@ -159,9 +162,7 @@ export const Sleeper = (props, context) => {
                     />
                   </Box>
                 )}
-                <Box className="ConfigBox">
-                    Длительность: {freezing_time}
-                </Box>
+                <Box className="ConfigBox">Длительность: {freezing_time}</Box>
               </Box>
             </Box>
           </Box>
