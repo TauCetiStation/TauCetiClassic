@@ -389,6 +389,11 @@
 
 	handle_footsteps(oldLoc, NewLoc, Dir)
 
+/mob/living/carbon/SetCrawling(value)
+	. = ..()
+	if(!value && layer <= CONTAINER_STRUCTURE_LAYER)
+		layer = MOB_LAYER
+
 /mob/living/carbon/proc/handle_footsteps(turf/oldLoc, turf/newLoc, Dir)
 	if(lying && !crawling)
 		return
