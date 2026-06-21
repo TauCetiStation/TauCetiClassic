@@ -1,11 +1,5 @@
 import { useBackend } from '../backend';
-import {
-  Box,
-  Button,
-  LabeledList,
-  ProgressBar,
-  Section,
-} from '../components';
+import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
 export const BioSupplementsMixer = (_, context) => {
@@ -43,10 +37,7 @@ export const BioSupplementsMixer = (_, context) => {
             <LabeledList.Item label="Welding fuel">
               {fuel_loaded ? (
                 <Box>
-                  <ProgressBar
-                    maxValue={fuel_max}
-                    value={fuel_amount}
-                  />
+                  <ProgressBar maxValue={fuel_max} value={fuel_amount} />
                   <Button
                     icon="eject"
                     content="Eject"
@@ -77,10 +68,7 @@ export const BioSupplementsMixer = (_, context) => {
             <LabeledList.Item label="Blood">
               {radium_loaded ? (
                 <Box>
-                  <ProgressBar
-                    maxValue={radium_max}
-                    value={radium_amount}
-                  />
+                  <ProgressBar maxValue={radium_max} value={radium_amount} />
                   <Button
                     icon="eject"
                     content="Eject"
