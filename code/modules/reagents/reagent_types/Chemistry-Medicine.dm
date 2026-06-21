@@ -1051,9 +1051,6 @@
 			H.bio_mimic_spell_given = FALSE
 	..()
 
-/datum/reagent/bio_supplements/on_unathi_digest(mob/living/M)
-	return TRUE
-
 /datum/reagent/bio_supplements/Destroy()
 	if(holder && holder.my_atom && isliving(holder.my_atom))
 		var/mob/living/M = holder.my_atom
