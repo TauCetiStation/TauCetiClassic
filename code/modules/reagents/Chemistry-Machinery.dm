@@ -1249,7 +1249,7 @@
 	start_pressure = ONE_ATMOSPHERE
 	var/obj/item/weapon/reagent_containers/fuel_beaker = null
 	var/obj/item/weapon/reagent_containers/nutriment_beaker = null
-	var/obj/item/weapon/reagent_containers/radium_beaker = null
+	var/obj/item/weapon/reagent_containers/blood_beaker = null
 	var/obj/item/weapon/reagent_containers/bio_supplements_cartridge/cartridge = null
 
 	var/working = FALSE
@@ -1269,7 +1269,7 @@
 	beaker_original_flags.Cut()
 	QDEL_NULL(fuel_beaker)
 	QDEL_NULL(nutriment_beaker)
-	QDEL_NULL(radium_beaker)
+	QDEL_NULL(blood_beaker)
 	QDEL_NULL(cartridge)
 	return ..()
 
@@ -1310,11 +1310,10 @@
 		return
 
 	if(istype(O, /obj/item/weapon/reagent_containers/blood))
-		if(radium_beaker)
+		if(blood_beaker)
 			to_chat(user, "\The [src] already has a blood container loaded.")
 			return
-		radium_beaker = O
-		user.drop_from_inventory(O, src)
+		blood_beaker = O
 		to_chat(user, "You load [O] into \the [src].")
 		SStgui.update_uis(src)
 		return
@@ -1334,10 +1333,10 @@
 				return
 			nutriment_beaker = G
 		else if(G.reagents.has_reagent("blood") || G.reagents.has_reagent("enzyme"))
-			if(radium_beaker)
-				to_chat(user, "\The [src] already has a radium beaker loaded.")
+			if(blood_beaker)
+				to_chat(user, "\The [src] already has a blood container loaded.")
 				return
-			radium_beaker = G
+			blood_beaker = G
 		else
 			to_chat(user, "\The [src] requires fuel, nutriment, blood or universal enzyme in the beaker.")
 			return
@@ -1354,7 +1353,7 @@
 		return FALSE
 	if(!nutriment_beaker || !nutriment_beaker.reagents || !nutriment_beaker.reagents.has_reagent("nutriment"))
 		return FALSE
-	if(!radium_beaker || !radium_beaker.reagents || !(radium_beaker.reagents.has_reagent("blood") || radium_beaker.reagents.has_reagent("enzyme")))
+	if(!blood_beaker || !blood_beaker.reagents || !(blood_beaker.reagents.has_reagent("blood") || blood_beaker.reagents.has_reagent("enzyme")))
 		return FALSE
 	if(!has_phoron_connection())
 		return FALSE
@@ -1392,10 +1391,10 @@
 			playsound(src, 'sound/machines/stove.ogg', VOL_EFFECTS_MASTER, 20, channel = 502)
 			fuel_beaker.reagents.remove_reagent("fuel", BIO_PRODUCE_RATE)
 			nutriment_beaker.reagents.remove_reagent("nutriment", BIO_PRODUCE_RATE)
-			if(radium_beaker.reagents.has_reagent("blood"))
-				radium_beaker.reagents.remove_reagent("blood", BIO_PRODUCE_RATE)
+			if(blood_beaker.reagents.has_reagent("blood"))
+				blood_beaker.reagents.remove_reagent("blood", BIO_PRODUCE_RATE)
 			else
-				radium_beaker.reagents.remove_reagent("enzyme", BIO_PRODUCE_RATE)
+				blood_beaker.reagents.remove_reagent("enzyme", BIO_PRODUCE_RATE)
 			if(air_contents.gas["phoron"] >= BIO_PRODUCE_RATE * 5)
 				air_contents.gas["phoron"] = max(0, air_contents.gas["phoron"] - BIO_PRODUCE_RATE * 5)
 			else if(connected_port)
@@ -1451,9 +1450,9 @@
 	data["nutriment_amount"] = nutriment_beaker && nutriment_beaker.reagents ? nutriment_beaker.reagents.total_volume : 0
 	data["nutriment_max"] = nutriment_beaker ? nutriment_beaker.volume : 1
 
-	data["radium_loaded"] = !!radium_beaker
-	data["radium_amount"] = radium_beaker && radium_beaker.reagents ? radium_beaker.reagents.total_volume : 0
-	data["radium_max"] = radium_beaker ? radium_beaker.volume : 1
+	data["blood_loaded"] = !!blood_beaker
+	data["blood_amount"] = blood_beaker && blood_beaker.reagents ? blood_beaker.reagents.total_volume : 0
+	data["blood_max"] = blood_beaker ? blood_beaker.volume : 1
 
 	data["phoron_ok"] = has_phoron_connection()
 
@@ -1498,13 +1497,13 @@
 			SStgui.update_uis(src)
 			return TRUE
 
-		if("eject_radium")
-			if(radium_beaker)
-				if(beaker_original_flags[radium_beaker])
-					radium_beaker.flags = beaker_original_flags[radium_beaker]
-					beaker_original_flags -= radium_beaker
-				radium_beaker.forceMove(loc)
-				radium_beaker = null
+		if("eject_blood")
+			if(blood_beaker)
+				if(beaker_original_flags[blood_beaker])
+					blood_beaker.flags = beaker_original_flags[blood_beaker]
+					beaker_original_flags -= blood_beaker
+				blood_beaker.forceMove(loc)
+				blood_beaker = null
 			SStgui.update_uis(src)
 			return TRUE
 

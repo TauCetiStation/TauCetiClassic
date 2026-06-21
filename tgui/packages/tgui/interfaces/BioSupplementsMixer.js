@@ -11,9 +11,9 @@ export const BioSupplementsMixer = (_, context) => {
     nutriment_loaded,
     nutriment_amount,
     nutriment_max,
-    radium_loaded,
-    radium_amount,
-    radium_max,
+    blood_loaded,
+    blood_amount,
+    blood_max,
     phoron_ok,
     bio_amount,
     bio_max,
@@ -24,7 +24,7 @@ export const BioSupplementsMixer = (_, context) => {
     cartridge_max_volume,
   } = data;
 
-  const beakers_ok = fuel_loaded && nutriment_loaded && radium_loaded;
+  const beakers_ok = fuel_loaded && nutriment_loaded && blood_loaded;
 
   return (
     <Window width={380} height={420}>
@@ -66,13 +66,13 @@ export const BioSupplementsMixer = (_, context) => {
               )}
             </LabeledList.Item>
             <LabeledList.Item label="Blood">
-              {radium_loaded ? (
+              {blood_loaded ? (
                 <Box>
-                  <ProgressBar maxValue={radium_max} value={radium_amount} />
+                  <ProgressBar maxValue={blood_max} value={blood_amount} />
                   <Button
                     icon="eject"
                     content="Eject"
-                    onClick={() => act('eject_radium')}
+                    onClick={() => act('eject_blood')}
                   />
                 </Box>
               ) : (
