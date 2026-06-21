@@ -55,6 +55,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 /obj/machinery/sleeper/upgraded
 	upgraded = TRUE
 
+/obj/machinery/sleeper/free_and_full
+	seller_account_number = null
+	upgraded = TRUE
+
 /obj/machinery/sleeper/free_and_full/populate_beakers()
 	dialysis = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 
@@ -578,11 +582,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 	var/obj/item/weapon/reagent_containers/glass/G = I
 	if(!G.reagents.total_volume)
 		to_chat(user, "<span class = 'rose'>В [CASE(G, PREPOSITIONAL_CASE)] ничего нет.</span>")
-		return FALSE
+		return TRUE
 
 	if(beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 		to_chat(user, "<span class = 'rose'>[capitalize(CASE(beaker, NOMINATIVE_CASE))] [(ANYMORPH(beaker, "полон", "полна", "полно", "полны"))].</span>")
-		return FALSE
+		return TRUE
 
 	var/trans = G.reagents.trans_to(beaker, G.amount_per_transfer_from_this)
 	to_chat(user, "<span class = 'notice'>Вы переливаете [trans] юнитов вещества в [CASE(beaker, ACCUSATIVE_CASE)].</span>")
