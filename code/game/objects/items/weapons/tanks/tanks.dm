@@ -45,8 +45,14 @@
 	name = "Toggle internals"
 
 /datum/action/item_action/hands_free/toggle_internals/Activate()
-	var/obj/item/weapon/tank/T = target
-	T.toggle_internals()
+	var/obj/item/weapon/tank/tank = target
+	tank.toggle_internals()
+
+/datum/action/item_action/hands_free/toggle_internals/Remove(mob/T)
+	var/obj/item/weapon/tank/tank = target
+	owner.internal = null
+	tank.update_actions_icons(owner)
+	..()
 
 /obj/item/weapon/tank/examine(mob/user)
 	..()
@@ -202,12 +208,16 @@
 	internal_switch = world.time + 16
 	update_actions_icons(C)
 
-/obj/item/weapon/tank/proc/update_actions_icons(mob/living/carbon/T)
-	for(var/datum/action/item_action/hands_free/toggle_internals/TI in T.actions)
-		if(T.internal == src)
-			TI.background_icon_state = "bg_active"
+
+/obj/item/weapon/tank/proc/update_actions_icons(mob/living/carbon/C, turn_off = FALSE)
+	for(var/datum/action/item_action/hands_free/toggle_internals/TI in C.actions)
+		if((TI.target == src) && (C.internal == src) && !turn_off)
+			TI.active = TRUE
+			TI.UpdateButtonIcon()
 		else
-			TI.background_icon_state = "bg_default"
+			TI.active = FALSE
+			TI.UpdateButtonIcon()
+	C.update_action_buttons()
 
 /obj/item/weapon/tank/remove_air(amount)
 	return air_contents.remove(amount)
