@@ -53,6 +53,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 
 	var/seller_account_number = MAP_VENDOR_ACCOUNT_NUMBER_PLACEHOLDER
 
+	var/obj/effect/abstract/particle_holder/freezing_particle
+
 /obj/machinery/sleeper/upgraded
 	upgraded = TRUE
 
@@ -286,6 +288,12 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 		L.client.eye = L
 		L.client.perspective = MOB_PERSPECTIVE
 
+	if(freezing)
+		stop_freezing()
+
+	if(dialyzing)
+		stop_dialyzing()
+
 	occupant = null
 
 /obj/machinery/sleeper/container_resist()
@@ -297,11 +305,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 
 /obj/machinery/sleeper/Destroy()
 	QDEL_NULL(wires)
+	QDEL_NULL(freezing_particle)
 	for(var/atom/movable/A as anything in contents)
 		A.forceMove(get_turf(src))
 	return ..()
 
 /obj/machinery/sleeper/open_machine()
+	if(freezing)
+		new /obj/effect/abstract/particle_holder(src, /particles/sleeper_mist/opendoor, PARTICLE_FADEOUT|PARTICLE_FLICK)
+
 	if(!state_open && !panel_open)
 		..()
 		playsound(src, 'sound/machines/sleeper_open.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
@@ -390,6 +402,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 
 		if("freeze")
 			freezing = !freezing
+			if(!freezing)
+				stop_freezing()
 			return TRUE
 
 		if("access")
@@ -684,11 +698,16 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 	if(!H.has_status_effect(STATUS_EFFECT_STASIS_BAG))
 		H.apply_status_effect(STATUS_EFFECT_STASIS_BAG, null, TRUE)
 
+	if(!freezing_particle)
+		freezing_particle = new /obj/effect/abstract/particle_holder(src, /particles/sleeper_mist, PARTICLE_FADEOUT)
+
 /obj/machinery/sleeper/proc/stop_freezing()
 	freezing = FALSE
 	COOLDOWN_RESET(src, clonexadon_consumption)
 
 	freezing_start_time = 0
+
+	QDEL_NULL(freezing_particle)
 
 	var/mob/living/carbon/human/H = occupant
 	if(!H)
@@ -743,7 +762,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/sleeper, sleeper_machines)
 /obj/machinery/sleeper/proc/get_scan_info()
 	var/dat
 
-	dat += "<H1>ФОРМА 3I-B: Приложение к результатам лабораторного анализа крови</H1>"
+	dat += "<h1>ФОРМА 3I-B: Приложение к результатам лабораторного анализа крови</h1><br>"
 	dat += "<b>Станция:</b> [station_name_ru()]<br>"
 	dat += "<b>Дата выдачи результатов:</b> [current_date_string]<br>"
 	dat += "<b>Время выдачи:</b> [worldtime2text()]<br>"

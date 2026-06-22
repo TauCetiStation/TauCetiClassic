@@ -23,8 +23,9 @@ export const Diagram = (props) => {
     <Box className="Diagram_Body" {...rest}>
       {processed_array.map((item, index) => (
         <Box
+          className="Diagram_Part"
           key={index}
-          width={`${item.percent}%`}
+          width={`${amount === index ? 100 : item.percent}%`}
           height="100%"
           backgroundColor={`hsl(${Math.round((360 / (amount ? amount : 1)) * index)}, 70%, 50%)`}>
           <Tooltip position="top" content={`${item.name}: ${item.value}`}>

@@ -11,6 +11,7 @@ import {
 } from '../components';
 
 import { Diagram } from '../components/Diagram';
+import { SegmentDisplay } from '../components/SegmentDisplay';
 import { Window } from '../layouts';
 
 export const Sleeper = (props, context) => {
@@ -108,11 +109,13 @@ export const Sleeper = (props, context) => {
                     <Button
                       className="SmallConfigButton"
                       content="анализ"
+                      icon="droplet"
                       onClick={() => act('take_blood_sample')}
                     />
                     <Button
                       className="SmallConfigButton"
                       content="печать"
+                      icon="print"
                       onClick={() => act('print_blood_sample')}
                     />
                   </span>

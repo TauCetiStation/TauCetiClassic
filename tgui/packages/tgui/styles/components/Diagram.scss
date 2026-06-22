@@ -8,4 +8,10 @@
 
   padding: 0px;
   margin: 0px;
+
+  .Diagram_Part {
+    &:hover {
+      border: solid 2px #ffffff !important;
+    }
+  }
 }
