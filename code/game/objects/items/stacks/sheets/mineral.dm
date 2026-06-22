@@ -47,8 +47,8 @@ var/global/list/datum/stack_recipe/plastic_recipes = list ( \
 	new/datum/stack_recipe("sign backing", /obj/item/sign_backing, 4, build_outline = TRUE), \
 	null, \
 		new/datum/stack_recipe_list("curtains", list(
+			new/datum/stack_recipe("curtain", /obj/structure/curtain, 5, max_per_place = 1, build_outline = TRUE),
 			new/datum/stack_recipe("transparent curtain", /obj/structure/curtain/transparent, 5, max_per_place = 1, build_outline = TRUE),
-			new/datum/stack_recipe("opaque curtain", /obj/structure/curtain/opaque, 5, max_per_place = 1, build_outline = TRUE),
 		), 5)
 	)
 var/global/list/datum/stack_recipe/gold_recipes = list ( \
