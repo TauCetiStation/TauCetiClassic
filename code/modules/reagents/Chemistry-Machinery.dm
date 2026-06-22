@@ -1425,8 +1425,9 @@
 			produced_since_spawn += BIO_PRODUCE_RATE
 			if(produced_since_spawn >= SPAWN_THRESHOLD)
 				produced_since_spawn -= SPAWN_THRESHOLD
-				new /mob/living/simple_animal/bio_slime(loc)
-				visible_message("<span class='warning'>A bio-slime creature bursts out of [src]!</span>")
+				if(prob(20))
+					new /mob/living/simple_animal/bio_slime(loc)
+					visible_message("<span class='warning'>A bio-slime creature bursts out of [src]!</span>")
 			var/turf/simulated/T = get_turf(src)
 			if(istype(T))
 				var/datum/gas_mixture/GM = T.return_air()
