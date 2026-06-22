@@ -1029,7 +1029,14 @@
 /obj/proc/get_quality(quality)
 	if(!qualities)
 		return 0
+	if(!(check_quality(quality)))
+		return 0
 	return qualities[quality]
+
+/obj/proc/check_quality(needed_quality)
+	if(needed_quality in qualities)
+		return TRUE
+	return FALSE
 
 /proc/get_technic_quality(quality)
 	var/technic_quality = list(

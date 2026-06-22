@@ -95,51 +95,6 @@
 //				ROBOTIC FACE SURGERY							//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/ipc/face
-	clothless = FALSE
-	priority = 2
-	can_infect = FALSE
-	allowed_species = list(IPC)
-
-/datum/surgery_step/ipc/face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))
-		return FALSE
-
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (!BP)
-		return FALSE
-	return target_zone == O_MOUTH
-
-/datum/surgery_step/ipc/face/screw_face
-	allowed_tools = list(
-	/obj/item/weapon/screwdriver = 100,
-	/obj/item/weapon/scalpel = 75,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50
-	)
-
-	min_duration = 90
-	max_duration = 110
-
-/datum/surgery_step/ipc/face/screw_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.face == 0
-
-/datum/surgery_step/ipc/face/screw_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts to unscrew [target]'s screen with \the [tool].",
-	"You start to unscrew [target]'s screen with \the [tool].")
-	..()
-
-/datum/surgery_step/ipc/face/screw_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] has loosen bolts on [target]'s screen with \the [tool].</span>",
-	"<span class='notice'>You have unscrewed [target]'s screen with \the [tool].</span>")
-	target.op_stage.face = 1
-	// target.update_body(BP_HEAD) // commenting this out as at this moment head appearance does not changes based on op stage
-
-/datum/surgery_step/ipc/face/screw_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s screen with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, scratching [target]'s screen with \the [tool]!</span>")
-	BP.take_damage(6, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/face/pry_screen
 	allowed_tools = list(
@@ -191,6 +146,8 @@
 /datum/surgery_step/ipc/face/fix_screen/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] repairs [target]'s screen with \the [tool].</span>",
 	"<span class='notice'>You repair [target]'s screen with \the [tool].</span>" )
+	//var/obj/item/organ/external/head/H = BP
+	//H.disfigured = FALSE
 	target.op_stage.face = 3
 
 /datum/surgery_step/ipc/face/fix_screen/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -203,38 +160,3 @@
 	else if(iswrenching(tool))
 		BP.take_damage(12, 0, used_weapon = tool)
 		BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
-
-/datum/surgery_step/ipc/face/close_shut
-	allowed_tools = list(
-	/obj/item/weapon/screwdriver = 100,
-	/obj/item/weapon/scalpel = 75,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50,
-	)
-
-	min_duration = 70
-	max_duration = 100
-
-/datum/surgery_step/ipc/face/close_shut/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.face > 0
-
-/datum/surgery_step/ipc/face/close_shut/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] is beginning to lock in place [target]'s screen with \the [tool].",
-	"You are beginning to lock in place [target]'s screen with \the [tool].")
-	..()
-
-/datum/surgery_step/ipc/face/close_shut/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='notice'>[user] locks in place [target]'s screen with \the [tool].</span>",
-	"<span class='notice'>You lock in place [target]'s screen \the [tool].</span>")
-	BP.open = 0
-	if (target.op_stage.face == 3)
-		var/obj/item/organ/external/head/H = BP
-		H.disfigured = FALSE
-	target.op_stage.face = 0
-
-/datum/surgery_step/ipc/face/close_shut/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, leaving a small dent on [target]'s screen with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, leaving a small dent on [target]'s screen with \the [tool]!</span>")
-	BP.take_damage(6, 0, used_weapon = tool)

@@ -26,19 +26,16 @@
 /datum/surgery_step/proc/tool_quality(obj/item/tool, mob/living/carbon/C)
 	for(var/quality in allowed_qualities)
 		if(get_suiteble_quality(quality, allowed_qualities, C))
-			if(!tool.get_quality(quality)) //prevert takeing null
-				return
 			if(tool.get_quality(quality) > 1)
 				return (tool.get_quality(quality) - 1) * 100 // like (1.7 - 1)*100 = 70% to lose
-			else if(tool.get_quality(quality) <= 1)
+			else if(tool.get_quality(quality) <= 1 && tool.get_quality(quality) != 0)
 				return (tool.get_quality(quality) + 1) * 100 // like (0.3 + 1)*100 = 130% to win
 
-	return FALSE
+	return 0
 
 /datum/surgery_step/proc/get_suiteble_quality(quality, list/allowed_qualities, mob/living/carbon/C)
 	if(isslime(C))
 		return get_surg_quality(quality)
-
 
 	var/mob/living/carbon/human/H = C
 	if(H.species.flags[IS_SYNTHETIC] || H.species.flags[TRAIT_NO_BLOOD])

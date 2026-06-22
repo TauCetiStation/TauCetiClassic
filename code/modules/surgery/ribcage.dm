@@ -357,32 +357,6 @@
 //////////////////////////////////////////////////////////////////
 //				EXTRACTING DIONA'S BRAIN						//
 //////////////////////////////////////////////////////////////////
-/datum/surgery_step/ribcage/cut_diona_brain
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50
-	)
-	allowed_species = list(DIONA)
-
-	min_duration = 80
-	max_duration = 100
-
-/datum/surgery_step/ribcage/cut_diona_brain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts separating connections to [target]'s brain with \the [tool].",
-	"You start separating connections to [target]'s brain with \the [tool].")
-	..()
-
-/datum/surgery_step/ribcage/cut_diona_brain/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] separates connections to [target]'s brain with \the [tool].</span>",
-	"<span class='notice'>You separate connections to [target]'s brain with \the [tool].</span>")
-	target.chest_brain_op_stage = 1
-
-/datum/surgery_step/ribcage/cut_diona_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
-	BP.take_damage(50, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ribcage/cut_diona_spine
 	allowed_tools = list(

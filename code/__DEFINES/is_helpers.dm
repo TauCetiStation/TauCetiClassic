@@ -27,6 +27,8 @@
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
+#define ismachine(A) (istype(A, /mob/living/carbon/human/machine))
+
 #define ispluvian(A) (A.get_species() == PLUVIAN)
 
 #define isskeleton(A) HAS_TRAIT(A, ELEMENT_TRAIT_SKELETON) // replace with trait checks, zombie too
