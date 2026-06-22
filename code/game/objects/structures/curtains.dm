@@ -21,12 +21,6 @@
 /obj/structure/curtain/transparent/toggle()
 	icon_state = (icon_state == "open") ? "closed" : "open"
 
-/obj/structure/curtain/opaque
-	name = "opaque curtain"
-	icon_state = "open"
-	opacity = FALSE
-	can_be_painted = TRUE
-
 /obj/structure/curtain/attack_hand(mob/user)
 	playsound(src, 'sound/effects/curtain.ogg', VOL_EFFECTS_MASTER, 15, null, FALSE, -5)
 	toggle()
