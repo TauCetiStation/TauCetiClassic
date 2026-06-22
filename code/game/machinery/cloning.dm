@@ -311,7 +311,7 @@
 
 	for(var/obj/machinery/bads_tank/tank in machines)
 		if(tank.z == src.z && tank.consume(CLONE_BADS_COST))
-			connected_message("Bio-BADs consumed from tank.")
+			connected_message("Био-БАДы израсходованы из бака.")
 			return
 
 	return
