@@ -27,28 +27,9 @@
 		to_chat(caster, "<span class='notice'>They are too far away!</span>")
 		return
 
-	caster.bio_mimic_uses++
-
-	if(caster.bio_mimic_uses >= 4)
-		caster.special_voice = ""
-		caster.visible_message("<span class='warning'>[caster]'s appearance shimmers and shifts!</span>",
-			"<span class='warning'>Your appearance shifts to permanently match [target.real_name]!</span>")
-		caster.real_name = target.real_name
-		caster.name = target.real_name
-		caster.dna.real_name = target.real_name
-		caster.dna.uni_identity = target.dna.uni_identity
-		caster.dna.struc_enzymes = target.dna.struc_enzymes
-		caster.UpdateAppearance(target.dna.uni_identity)
-		domutcheck(caster, null)
-		caster.adjustCloneLoss(5 * caster.bodyparts.len)
-		caster.bio_mimic_uses = 0
-		Remove(caster)
-		return
-
 	caster.special_voice = target.real_name
 	caster.visible_message("<span class='notice'>[caster]'s voice shifts subtly.</span>",
 		"<span class='notice'>You mimic [target.real_name]'s voice!</span>")
-	to_chat(caster, "<span class='notice'>Use [4 - caster.bio_mimic_uses] more times to permanently mimic appearance.</span>")
 
 	Remove(caster)
 
@@ -63,3 +44,27 @@
 	caster.special_voice = ""
 	caster.bio_mimic_voice_timer = null
 	to_chat(caster, "<span class='notice'>Your voice returns to normal.</span>")
+
+/proc/try_bio_mimic_transform(mob/living/carbon/human/H)
+	var/list/targets = list()
+	for(var/mob/living/carbon/human/M in oview(7, H))
+		if(M != H)
+			targets += M
+	if(!targets.len)
+		return
+	var/mob/living/carbon/human/target = pick(targets)
+	H.special_voice = ""
+	H.visible_message("<span class='warning'>[H]'s appearance shimmers and shifts!</span>",
+		"<span class='warning'>Your appearance shifts to permanently match [target.real_name]!</span>")
+	H.real_name = target.real_name
+	H.name = target.real_name
+	H.dna.real_name = target.real_name
+	H.dna.uni_identity = target.dna.uni_identity
+	H.dna.struc_enzymes = target.dna.struc_enzymes
+	H.UpdateAppearance(target.dna.uni_identity)
+	domutcheck(H, null)
+	H.adjustCloneLoss(5 * H.bodyparts.len)
+	H.bio_transform_doses = 0
+	H.bio_mimic_spell_given = FALSE
+	for(var/datum/action/innate/bio_mimic/A in H.actions)
+		A.Remove(H)

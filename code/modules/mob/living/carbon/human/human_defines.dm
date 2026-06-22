@@ -83,9 +83,9 @@
 
 	var/special_voice = "" // For changing our voice. Used by a symptom.
 
-	var/bio_mimic_uses = 0
 	var/bio_mimic_spell_given = FALSE
 	var/bio_mimic_voice_timer
+	var/bio_transform_doses = 0
 
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
 

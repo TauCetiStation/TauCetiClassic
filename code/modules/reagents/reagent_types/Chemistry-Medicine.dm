@@ -1046,7 +1046,10 @@
 			var/datum/action/innate/bio_mimic/BM = new(H)
 			BM.Grant(H)
 			H.bio_mimic_spell_given = TRUE
+			H.bio_transform_doses++
 			to_chat(H, "<span class='notice'>You feel your vocal cords tingling... You can now mimic someone's voice once!</span>")
+			if(H.bio_transform_doses >= 4)
+				try_bio_mimic_transform(H)
 	if(volume < 5 && H.bio_mimic_spell_given)
 		for(var/datum/action/innate/bio_mimic/A in H.actions)
 			A.Remove(H)
