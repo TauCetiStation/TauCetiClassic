@@ -11,12 +11,18 @@
 
 	var/can_be_painted = FALSE
 
+/obj/structure/curtain/open
+	icon_state = "open"
+	opacity = FALSE
+
 /obj/structure/curtain/transparent
 	name = "transparent curtain"
-	icon_state = "open"
 	opacity = FALSE
 	alpha = 150
 	can_be_painted = TRUE
+
+/obj/structure/curtain/transparent/open
+	icon_state = "open"
 
 /obj/structure/curtain/transparent/toggle()
 	icon_state = (icon_state == "open") ? "closed" : "open"
