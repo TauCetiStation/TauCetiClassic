@@ -37279,6 +37279,7 @@
 /obj/machinery/light/small/emergency{
 	dir = 1
 	},
+/obj/machinery/bads_tank,
 /turf/simulated/floor{
 	icon_state = "vault"
 	},
@@ -78295,6 +78296,12 @@
 	icon_state = "whitebluecorner"
 	},
 /area/station/medical/genetics)
+"kTg" = (
+/obj/machinery/atmospherics/components/unary/tank/phoron{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/engineering/engine)
 "kTw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -115455,7 +115462,7 @@ cyg
 cAC
 cCm
 cGW
-cuf
+kTg
 ead
 bVt
 bdH

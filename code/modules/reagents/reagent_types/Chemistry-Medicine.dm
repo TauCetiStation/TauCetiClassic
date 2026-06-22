@@ -1019,37 +1019,38 @@
 	overdose = 30
 	overdose_dam = 0
 
-/datum/reagent/bio_supplements/on_mob_life(mob/living/M, remove_amount)
-	if(!M || !holder)
+/datum/reagent/bio_supplements/on_general_digest(mob/living/M)
+	. = ..()
+	if(!.)
 		return
 	M.mob_metabolism_mod.ModAdditive(0.1, src)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(volume >= overdose)
-			H.adjustCloneLoss(1)
-			if(prob(15))
-				switch(H.get_species())
-					if(TAJARAN)
-						expel_slime(H, "tajaran")
-					if(UNATHI)
-						expel_slime(H, "unathi")
-					if(HUMAN, VOX)
-						expel_slime(H, "human")
-		if(volume >= 5 && H.mind && !H.bio_mimic_spell_given)
-			var/has_action = FALSE
-			for(var/datum/action/innate/bio_mimic/A in H.actions)
-				has_action = TRUE
-				break
-			if(!has_action)
-				var/datum/action/innate/bio_mimic/BM = new(H)
-				BM.Grant(H)
-				H.bio_mimic_spell_given = TRUE
-				to_chat(H, "<span class='notice'>You feel your vocal cords tingling... You can now mimic someone's voice once!</span>")
-		if(volume < 5 && H.bio_mimic_spell_given)
-			for(var/datum/action/innate/bio_mimic/A in H.actions)
-				A.Remove(H)
-			H.bio_mimic_spell_given = FALSE
-	..()
+	if(!ishuman(M))
+		return
+	var/mob/living/carbon/human/H = M
+	if(volume >= overdose)
+		H.adjustCloneLoss(1)
+		if(prob(15))
+			switch(H.get_species())
+				if(TAJARAN)
+					expel_slime(H, "tajaran")
+				if(UNATHI)
+					expel_slime(H, "unathi")
+				if(HUMAN, VOX)
+					expel_slime(H, "human")
+	if(volume >= 5 && H.mind && !H.bio_mimic_spell_given)
+		var/has_action = FALSE
+		for(var/datum/action/innate/bio_mimic/A in H.actions)
+			has_action = TRUE
+			break
+		if(!has_action)
+			var/datum/action/innate/bio_mimic/BM = new(H)
+			BM.Grant(H)
+			H.bio_mimic_spell_given = TRUE
+			to_chat(H, "<span class='notice'>You feel your vocal cords tingling... You can now mimic someone's voice once!</span>")
+	if(volume < 5 && H.bio_mimic_spell_given)
+		for(var/datum/action/innate/bio_mimic/A in H.actions)
+			A.Remove(H)
+		H.bio_mimic_spell_given = FALSE
 
 /datum/reagent/bio_supplements/Destroy()
 	if(holder && holder.my_atom && isliving(holder.my_atom))
@@ -1065,7 +1066,6 @@
 	S.slime_type = species_type
 	switch(species_type)
 		if("tajaran")
-			S.AddComponent(/datum/component/slippery, 4, NO_SLIP_WHEN_WALKING)
 			H.visible_message("<span class='warning'>[H] expels a slick, slippery slime!</span>", "<span class='warning'>You expel a slick, slippery slime!</span>")
 		if("unathi")
 			H.visible_message("<span class='warning'>[H] expels a crackling, electrified slime!</span>", "<span class='warning'>You expel a crackling, electrified slime!</span>")
@@ -1086,30 +1086,56 @@
 	anchored = TRUE
 	var/slime_type = "tajaran"
 	var/co2_left = 10
-	var/last_shock_time = 0
 
 /obj/effect/decal/cleanable/bio_slime/atom_init()
 	. = ..()
+	switch(slime_type)
+		if("tajaran")
+			AddComponent(/datum/component/slippery, 4, NO_SLIP_WHEN_WALKING)
+		if("unathi")
+			AddComponent(/datum/component/bio_slime_shock, 30, 2 SECONDS)
+		if("human")
+			AddComponent(/datum/component/bio_slime_slow, 10)
 	START_PROCESSING(SSobj, src)
 	QDEL_IN(src, 60 SECONDS)
 
-/obj/effect/decal/cleanable/bio_slime/Crossed(atom/movable/AM)
-	. = ..()
+/datum/component/bio_slime_shock
+	var/last_shock_time = 0
+	var/shock_cooldown
+	var/shock_damage
+
+/datum/component/bio_slime_shock/Initialize(_shock_damage = 30, _shock_cooldown = 2 SECONDS)
+	shock_damage = _shock_damage
+	shock_cooldown = _shock_cooldown
+	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED), PROC_REF(Shock))
+
+/datum/component/bio_slime_shock/proc/Shock(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+	if(!isliving(AM))
+		return
+	if(world.time - last_shock_time < shock_cooldown)
+		return
+	last_shock_time = world.time
+	var/mob/living/M = AM
+	M.electrocute_act(shock_damage, parent, siemens_coeff = 1.0)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
+	s.set_up(3, 1, parent)
+	s.start()
+	QDEL_IN(s, 1 SECONDS)
+
+/datum/component/bio_slime_slow
+	var/slow_amount
+
+/datum/component/bio_slime_slow/Initialize(_slow_amount = 10)
+	slow_amount = _slow_amount
+	RegisterSignal(parent, list(COMSIG_MOVABLE_CROSSED), PROC_REF(Slow))
+
+/datum/component/bio_slime_slow/proc/Slow(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
 	if(!isliving(AM))
 		return
 	var/mob/living/M = AM
-	switch(slime_type)
-		if("unathi")
-			if(world.time - last_shock_time < 2 SECONDS)
-				return
-			last_shock_time = world.time
-			M.electrocute_act(30, src, siemens_coeff = 1.0)
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
-			s.set_up(3, 1, src)
-			s.start()
-			QDEL_IN(s, 1 SECONDS)
-		if("human")
-			M.setMoveCooldown(10)
+	M.setMoveCooldown(slow_amount)
 
 /obj/effect/decal/cleanable/bio_slime/process()
 	var/turf/simulated/T = get_turf(src)

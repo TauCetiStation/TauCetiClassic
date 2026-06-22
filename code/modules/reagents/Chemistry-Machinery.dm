@@ -7,8 +7,9 @@
 	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
-	use_power = NO_POWER_USE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
+	active_power_usage = 600
 	var/ui_title = "Chem Dispenser 5000"
 	var/amount = 30
 	var/accept_glass = 0
@@ -26,6 +27,9 @@
 	var/list/premium_reagents = list()
 	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
 	fumbling_time = 2 SECONDS
+
+	var/list/bio_cost_low = list("aluminum", "copper", "hydrogen", "mercury", "phosphorus", "sacid", "sugar", "water")
+	var/list/bio_cost_high = list("chlorine", "fluorine", "lithium", "oxygen", "radium", "sodium", "tungsten")
 
 /obj/machinery/chem_dispenser/atom_init()
 	. = ..()
@@ -123,16 +127,29 @@
 			var/datum/reagents/R = beaker.reagents
 			var/space = R.maximum_volume - R.total_volume
 			var/bio_available = cartridge.reagents.get_reagent_amount("bio_supplements")
+			var/bio_cost = 0.1
+			var/power_cost = 0
+			var/chem = params["chemical"]
+			if(chem in bio_cost_low)
+				bio_cost = 0.05
+				power_cost = 25
+			else if(chem in bio_cost_high)
+				bio_cost = 0.2
+			else
+				power_cost = 5
 
 			if(iscarbon(usr))
 				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
 
-			var/dispense_amount = min(amount, bio_available * 10, space)
+			var/dispense_amount = min(amount, round(bio_available / bio_cost), space)
 			if(dispense_amount > 0)
 				playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 40)
 
-			R.add_reagent(params["chemical"], dispense_amount)
-			cartridge.reagents.remove_reagent("bio_supplements", dispense_amount / 10)
+			R.add_reagent(chem, dispense_amount)
+			cartridge.reagents.remove_reagent("bio_supplements", round(dispense_amount * bio_cost))
+
+			if(power_cost > 0)
+				use_power(dispense_amount * power_cost)
 			SStgui.update_uis(src)
 
 		if("eject_beaker")
@@ -1253,6 +1270,8 @@
 	var/obj/item/weapon/reagent_containers/bio_supplements_cartridge/cartridge = null
 
 	var/working = FALSE
+	var/produced_since_spawn = 0
+	var/SPAWN_THRESHOLD = 20
 	var/list/beaker_original_flags = list()
 	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
 
@@ -1403,6 +1422,11 @@
 					P.air.gas["phoron"] = max(0, P.air.gas["phoron"] - BIO_PRODUCE_RATE * 5)
 			update_connected_network()
 			reagents.add_reagent("bio_supplements", BIO_PRODUCE_RATE)
+			produced_since_spawn += BIO_PRODUCE_RATE
+			if(produced_since_spawn >= SPAWN_THRESHOLD)
+				produced_since_spawn -= SPAWN_THRESHOLD
+				new /mob/living/simple_animal/bio_slime(loc)
+				visible_message("<span class='warning'>A bio-slime creature bursts out of [src]!</span>")
 			var/turf/simulated/T = get_turf(src)
 			if(istype(T))
 				var/datum/gas_mixture/GM = T.return_air()
@@ -1548,3 +1572,56 @@
 	return FALSE
 
 #undef BIO_PRODUCE_RATE
+
+/obj/machinery/bads_tank
+	name = "Bio-BADs tank"
+	desc = "A sealed tank of Bio-BADs concentrate. It cannot be moved or opened."
+	icon = 'icons/atmos/tank.dmi'
+	icon_state = "generic_map"
+	density = TRUE
+	anchored = TRUE
+	use_power = NO_POWER_USE
+	allowed_checks = ALLOWED_CHECK_TOPIC
+	var/bads_amount = 0
+	var/max_bads = 300
+
+/obj/machinery/bads_tank/atom_init()
+	. = ..()
+	var/datum/reagents/R = new/datum/reagents(max_bads)
+	reagents = R
+	R.my_atom = src
+	reagents.add_reagent("bio_supplements", max_bads)
+
+/obj/machinery/bads_tank/on_reagent_change()
+	bads_amount = reagents.get_reagent_amount("bio_supplements")
+	SStgui.update_uis(src)
+
+/obj/machinery/bads_tank/attackby(obj/item/weapon/W, mob/user)
+	to_chat(user, "<span class='warning'>[src] is sealed and cannot be refilled.</span>")
+
+/obj/machinery/bads_tank/proc/consume(amount)
+	if(reagents.get_reagent_amount("bio_supplements") >= amount)
+		reagents.remove_reagent("bio_supplements", amount)
+		bads_amount = reagents.get_reagent_amount("bio_supplements")
+		return TRUE
+	return FALSE
+
+/obj/machinery/bads_tank/examine(mob/user)
+	. = ..()
+	to_chat(user, "<span class='notice'>It contains [bads_amount]/[max_bads] units of Bio-BADs. Enough for [round(bads_amount / 50)] clone(s).</span>")
+
+/obj/machinery/bads_tank/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/bads_tank/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BadsTank", name)
+		ui.open()
+
+/obj/machinery/bads_tank/tgui_data(mob/user)
+	var/list/data = list()
+	data["bads_amount"] = bads_amount
+	data["max_bads"] = max_bads
+	data["clones_possible"] = round(bads_amount / 50)
+	return data
