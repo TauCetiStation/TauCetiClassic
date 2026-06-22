@@ -126,7 +126,7 @@
 				for(var/obj/machinery/bads_tank/tank in machines)
 					if(tank.z == src.z)
 						bads_total += tank.bads_amount
-				dat += "Био-БАДов-Ви+: <i>хватает на [round(bads_total / CLONE_BADS_COST)] клона(ов).</i><br>"
+				dat += "Био-БАДов-Ви+: <i>хватает на [round(bads_total / CLONE_BADS_COST)]  [pluralize_russian(round(bads_total / CLONE_BADS_COST), "клона", "клонов", "клонов")].</i><br>"
 
 			// Database
 			dat += "<h4>Функции для управления базой данных</h4>"
