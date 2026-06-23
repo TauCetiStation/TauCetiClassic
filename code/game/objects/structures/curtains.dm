@@ -9,7 +9,7 @@
 
 	resistance_flags = CAN_BE_HIT
 
-	var/can_be_painted = FALSE
+	var/can_be_painted = TRUE
 
 /obj/structure/curtain/open
 	icon_state = "open"
