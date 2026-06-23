@@ -562,7 +562,7 @@
 	name = "watermelon"
 	cases = list("арбуз", "арбуза", "арбузу", "арбуз", "арбузом", "арбузе")
 	desc = "И поел, и попил."
-	laugh_desc = "Шутку вспомнил.. рантайм на арбузе!"
+	laugh_desc = "Шутку вспомнил.. Дасти на арбузе!"
 	icon_state = "watermelon"
 	potency = 10
 	filling_color = "#fa2863"
