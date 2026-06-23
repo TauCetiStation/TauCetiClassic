@@ -769,7 +769,13 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/cargo/storage
 	name = "Cargo Bay"
-	cases = list("склад ОС", "склада ОС", "складу ОС", "склад ОС", "складом ОС", "складе ОС")
+	cases = list("погрузочный док", "погрузочного дока", "погрузочному доку", "погрузочный док", "погрузочным доком", "погрузочном доке")
+	icon_state = "quartstorage"
+	sound_environment = SOUND_AREA_LARGE_METALLIC
+
+/area/station/cargo/warehouse
+	name = "Warehouse"
+	cases = list("склад снабжения", "склада снабжения", "складу снабжения", "склад снабжения", "складом снабжения", "складе снабжения")
 	icon_state = "quartstorage"
 	sound_environment = SOUND_AREA_LARGE_METALLIC
 

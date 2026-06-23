@@ -82,6 +82,10 @@ SUBSYSTEM_DEF(economy)
 	if(!global.economy_init)
 		return
 
+	//Pay for electricity used
+	for(var/obj/machinery/power/meter/Meter in global.power_meters)
+		Meter.try_retrieve_funds()
+
 	for(var/datum/money_account/D in all_money_accounts)
 		if(D.owner_salary && !D.suspended)
 			charge_to_account(D.account_number, D.account_number, "Salary payment", "CentComm", D.owner_salary)
