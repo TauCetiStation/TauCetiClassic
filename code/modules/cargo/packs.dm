@@ -5,11 +5,11 @@
 //BIG NOTE: Don't add living things to crates, that's bad, it will break the shuttle.
 //NEW NOTE: Do NOT set the price of any crates below 7 points. Doing so allows infinite points.
 
-var/global/list/all_supply_groups = list("Operations","Security","Hospitality","Engineering","Medical / Science","Hydroponics","Mining","Supply","Miscellaneous")
+var/global/list/all_supply_groups = list("Bureaucracy / Arts", "Security", "Humanitarian kits", "Engineering", "Medical / Science", "Hydroponics / Kitchen", "Mining", "Fun  / Business")
 
 /datum/supply_pack
 	var/name = "Crate"
-	var/group = "Operations"
+	var/group = "Bureaucracy / Arts"
 	var/true_manifest = ""
 	var/hidden = FALSE
 	var/contraband = FALSE
@@ -84,7 +84,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 			n_sheet.set_amount(sheet_amount)
 
 //----------------------------------------------
-//-----------------OPERATIONS-------------------
+//-----------------BUREAUCRACY / ARTS-------------------
 //----------------------------------------------
 
 /datum/supply_pack/mule
@@ -93,7 +93,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 500
 	crate_type = /obj/structure/largecrate/mule
 	crate_name = "MULEbot Crate"
-	group = "Operations"
+	group = "Bureaucracy / Arts"
 
 /datum/supply_pack/artscrafts
 	name = "Arts and Crafts supplies"
@@ -120,14 +120,14 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/packageWrap/present,
 					/obj/item/weapon/paper_refill)
 	crate_name = "Arts and Crafts crate"
-	group = "Operations"
+	group = "Bureaucracy / Arts"
 
 /datum/supply_pack/price_scanner
 	name = "Export scanners"
 	contains = list(/obj/item/device/export_scanner,
 					/obj/item/device/export_scanner)
 	crate_name = "Export scanners crate"
-	group = "Operations"
+	group = "Bureaucracy / Arts"
 
 /datum/supply_pack/bureaucracy
 	name = "Bureaucracy Crate"
@@ -144,7 +144,31 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/folder,
 					/obj/item/weapon/folder/blue,
 					/obj/item/weapon/folder/red)
-	group = "Operations"
+	group = "Bureaucracy / Arts"
+
+/datum/supply_pack/toner
+
+	name = "Toner cartridges"
+	contains = list(/obj/item/device/toner,
+					/obj/item/device/toner,
+					/obj/item/device/toner,
+					/obj/item/device/toner,
+					/obj/item/device/toner,
+					/obj/item/device/toner)
+	crate_name = "Toner cartridges"
+	group = "Bureaucracy / Arts"
+
+/datum/supply_pack/papers
+	name = "Paper packs"
+	contains = list(/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill,
+					/obj/item/weapon/paper_refill)
+	crate_name = "Paper packs"
+	group = "Bureaucracy / Arts"
+
 //----------------------------------------------
 //-----------------SECURITY---------------------
 //----------------------------------------------
@@ -519,7 +543,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	group = "Security"
 
 //----------------------------------------------
-//-----------------HOSPITALITY------------------
+//-----------------HUMANITARIAN KITS------------------
 //----------------------------------------------
 
 /datum/supply_pack/vending_bar
@@ -530,7 +554,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 5800
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "bartending supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_coffee
 	name = "Hotdrinks supply crate"
@@ -540,7 +564,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 1630
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "hotdrinks supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_snack
 	name = "Snack supply crate"
@@ -550,7 +574,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 1690
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "snack supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_cola
 	name = "Softdrinks supply crate"
@@ -560,7 +584,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 730
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "softdrinks supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_cigarette
 	name = "Cigarette supply crate"
@@ -570,7 +594,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 1170
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "cigarette supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_barber
 	name = "Barbershop supply crate"
@@ -580,7 +604,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 4500
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "barbershop supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_clothing
 	name = "ClothesMate supply crate"
@@ -590,7 +614,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 8900
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "ClothesMate supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_hydroseeds
 	name = "MegaSeed supply crate"
@@ -600,7 +624,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 4200
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "MegaSeed supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_hydronutrients
 	name = "NutriMax supply crate"
@@ -610,7 +634,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 5700
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "NutriMax supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_medical
 	name = "NanoMed Plus supply crate"
@@ -620,7 +644,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 3100
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "NanoMed Plus supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_chinese
 	name = "Mr. Chang supply crate"
@@ -630,7 +654,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 1270
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Mr. Chang supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_tool
 	name = "YouTool supply crate"
@@ -640,7 +664,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 2100
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "YouTool supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_engivend
 	name = "Engi-Vend supply crate"
@@ -650,7 +674,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 2500
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Engi-Vend supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_blood
 	name = "Blood'O'Matic supply crate"
@@ -660,7 +684,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 6900
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Blood'O'Matic supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_junkfood
 	name = "Fast Food supply crate"
@@ -670,7 +694,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 780
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Fast Food supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_donut
 	name = "Monkin' Donuts supply crate"
@@ -680,7 +704,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 590
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Monkin' Donuts supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_assist
 	name = "Vendomat supply crate"
@@ -690,14 +714,14 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 700
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Vendomat supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/kvasstank
 	name = "Kvass tank crate"
 	contains = list(/obj/structure/reagent_dispensers/kvasstank)
 	crate_type = /obj/structure/largecrate
 	crate_name = "Kvass tank crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/vending_dinnerware
 	name = "Dinnerware supply crate"
@@ -707,7 +731,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 3800
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Dinnerware supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/party
 	name = "Party equipment"
@@ -727,7 +751,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 500
 	crate_type = /obj/structure/closet/crate
 	crate_name = "Party equipment"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/shashlik
 	name = "BBQ equipment"
@@ -758,7 +782,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 100
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Ramens supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/drinks
 	name = "Drinks supply crate"
@@ -774,7 +798,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/random/foods/drink_can)
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Drinks supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
 
 /datum/supply_pack/cigarettes
 	name = "Cigarettes supply crate"
@@ -791,7 +815,108 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 250
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Cigarettes supply crate"
-	group = "Hospitality"
+	group = "Humanitarian kits"
+
+/datum/supply_pack/randomised/pizza
+	num_contained = 5
+	contains = list(/obj/item/pizzabox/margherita,
+					/obj/item/pizzabox/mushroom,
+					/obj/item/pizzabox/meat,
+					/obj/item/pizzabox/vegetable)
+	additional_costs = 250
+	name = "Surprise pack of five pizzas"
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Pizza crate"
+	group = "Humanitarian kits"
+
+/datum/supply_pack/evacuation
+	name = "Emergency equipment"
+	contains = list(/obj/item/weapon/storage/toolbox/emergency,
+					/obj/item/weapon/storage/toolbox/emergency,
+					/obj/item/clothing/suit/storage/hazardvest,
+					/obj/item/clothing/suit/storage/hazardvest,
+					/obj/item/weapon/tank/emergency_oxygen,
+					/obj/item/weapon/tank/emergency_oxygen,
+					/obj/item/weapon/tank/emergency_oxygen,
+					/obj/item/weapon/tank/emergency_oxygen,
+					/obj/item/weapon/tank/emergency_oxygen,
+					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/clothing/mask/gas/coloured)
+	crate_type = /obj/structure/closet/crate/internals
+	crate_name = "Emergency crate"
+	group = "Humanitarian kits"
+
+/datum/supply_pack/misc/posters
+	name = "Corporate Posters Crate"
+	contains = list(/obj/item/weapon/poster/legit,
+					/obj/item/weapon/poster/legit,
+					/obj/item/weapon/poster/legit,
+					/obj/item/weapon/poster/legit,
+					/obj/item/weapon/poster/legit)
+	crate_name = "Corporate Posters Crate"
+	group = "Humanitarian kits"
+
+/datum/supply_pack/janitor
+	name = "Janitorial supplies"
+	contains = list(/obj/item/weapon/reagent_containers/glass/bucket,
+					/obj/item/weapon/reagent_containers/glass/bucket,
+					/obj/item/weapon/reagent_containers/glass/bucket,
+					/obj/item/weapon/mop/advanced,
+					/obj/item/weapon/holosign_creator,
+					/obj/item/weapon/caution,
+					/obj/item/weapon/caution,
+					/obj/item/weapon/caution,
+					/obj/item/weapon/reagent_containers/watertank_backpack/janitor,
+					/obj/item/weapon/storage/bag/trash,
+					/obj/item/weapon/reagent_containers/spray/cleaner,
+					/obj/item/weapon/reagent_containers/glass/rag,
+					/obj/item/weapon/grenade/chem_grenade/cleaner,
+					/obj/item/weapon/grenade/chem_grenade/cleaner,
+					/obj/item/weapon/grenade/chem_grenade/cleaner,
+					/obj/structure/mopbucket)
+	additional_costs = 100
+	crate_name = "Janitorial supplies"
+	group = "Humanitarian kits"
+
+/datum/supply_pack/boxes
+	name = "Empty boxes"
+	contains = list(/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box,
+	/obj/item/weapon/storage/box)
+	crate_name = "Empty box crate"
+	group = "Humanitarian kits"
+
+/datum/supply_pack/barber
+	name = "Barber supplies"
+	contains = list(/obj/item/weapon/storage/box/hairdyes,
+	/obj/item/weapon/reagent_containers/spray/hair_color_spray,
+	/obj/item/weapon/reagent_containers/glass/bottle/hair_growth_accelerator,
+	/obj/item/weapon/scissors,
+	/obj/item/weapon/razor)
+	crate_name = "Barber supplies"
+	group = "Humanitarian kits"
+
+/datum/supply_pack/clown
+	name = "Clown supply crate"
+	contains = list(/obj/item/weapon/bikehorn,
+					/obj/item/weapon/bikehorn,
+					/obj/item/weapon/bikehorn,
+					/obj/item/weapon/bikehorn,
+					/obj/item/weapon/reagent_containers/food/snacks/pie,
+					/obj/item/weapon/reagent_containers/food/snacks/pie,
+					/obj/item/toy/crayon/rainbow)
+	crate_name = "HONK supplies"
+	group = "Humanitarian kits"
 
 //----------------------------------------------
 //-----------------ENGINEERING------------------
@@ -839,26 +964,6 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	additional_costs = 200
 	crate_type = /obj/structure/largecrate
 	crate_name = "Air crate"
-	group = "Engineering"
-
-/datum/supply_pack/evacuation
-	name = "Emergency equipment"
-	contains = list(/obj/item/weapon/storage/toolbox/emergency,
-					/obj/item/weapon/storage/toolbox/emergency,
-					/obj/item/clothing/suit/storage/hazardvest,
-					/obj/item/clothing/suit/storage/hazardvest,
-					/obj/item/weapon/tank/emergency_oxygen,
-					/obj/item/weapon/tank/emergency_oxygen,
-					/obj/item/weapon/tank/emergency_oxygen,
-					/obj/item/weapon/tank/emergency_oxygen,
-					/obj/item/weapon/tank/emergency_oxygen,
-					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured)
-	crate_type = /obj/structure/closet/crate/internals
-	crate_name = "Emergency crate"
 	group = "Engineering"
 
 /datum/supply_pack/inflatable
@@ -971,6 +1076,15 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_type = /obj/structure/largecrate
 	crate_name = "fuel tank crate"
 	group = "Engineering"
+
+/datum/supply_pack/vest
+	name = "Vest Crate"
+	contains = list(/obj/item/clothing/accessory/storage/brown_vest,
+					/obj/item/clothing/accessory/storage/brown_vest,
+					/obj/item/clothing/accessory/storage/black_vest)
+	crate_name = "Vest Crate"
+	group = "Engineering"
+
 
 /datum/supply_pack/aqueous_foam_tank
 	name = "AFFF crate"
@@ -1085,16 +1199,6 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/circuitboard/mecha/ripley/peripherals) //TEMPORARY due to lack of circuitboard printer
 	crate_type = /obj/structure/closet/crate/secure/scisecurecrate
 	crate_name = "APLU \"Ripley\" Circuit Crate"
-	additional_costs = 500
-	access = access_robotics
-	group = "Engineering"
-
-/datum/supply_pack/mecha_odysseus
-	name = "Circuit Crate (\"Odysseus\")"
-	contains = list(/obj/item/weapon/circuitboard/mecha/odysseus/peripherals, //TEMPORARY due to lack of circuitboard printer,
-					/obj/item/weapon/circuitboard/mecha/odysseus/main) //TEMPORARY due to lack of circuitboard printer
-	crate_type = /obj/structure/closet/crate/secure/scisecurecrate
-	crate_name = "\"Odysseus\" Circuit Crate"
 	additional_costs = 500
 	access = access_robotics
 	group = "Engineering"
@@ -1402,37 +1506,55 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "CBM crate"
 	group = "Medical / Science"
 
-//----------------------------------------------
-//-----------------HYDROPONICS------------------
-//----------------------------------------------
+/datum/supply_pack/mecha_odysseus
+	name = "Circuit Crate (\"Odysseus\")"
+	contains = list(/obj/item/weapon/circuitboard/mecha/odysseus/peripherals, //TEMPORARY due to lack of circuitboard printer,
+					/obj/item/weapon/circuitboard/mecha/odysseus/main) //TEMPORARY due to lack of circuitboard printer
+	crate_type = /obj/structure/closet/crate/secure/scisecurecrate
+	crate_name = "\"Odysseus\" Circuit Crate"
+	additional_costs = 500
+	access = access_robotics
+	group = "Medical / Science"
 
 /datum/supply_pack/monkey
 	name = "Monkey crate"
 	contains = list (/obj/item/weapon/storage/box/monkeycubes)
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Monkey crate"
-	group = "Hydroponics"
+	group = "Medical / Science"
 
 /datum/supply_pack/farwa
 	name = "Farwa crate"
 	contains = list (/obj/item/weapon/storage/box/monkeycubes/farwacubes)
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Farwa crate"
-	group = "Hydroponics"
+	group = "Medical / Science"
 
 /datum/supply_pack/skrell
 	name = "Neaera crate"
 	contains = list (/obj/item/weapon/storage/box/monkeycubes/neaeracubes)
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Neaera crate"
-	group = "Hydroponics"
+	group = "Medical / Science"
 
 /datum/supply_pack/stok
 	name = "Stok crate"
 	contains = list (/obj/item/weapon/storage/box/monkeycubes/stokcubes)
 	crate_type = /obj/structure/closet/crate/freezer
 	crate_name = "Stok crate"
-	group = "Hydroponics"
+	group = "Medical / Science"
+
+/datum/supply_pack/willpower
+	name = "Volitional Neuroinhibitor Implanter"
+	contains = list(/obj/item/weapon/implanter/willpower)
+	additional_costs = 10000
+	group = "Medical / Science"
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Volitional Neuroinhibitor Implanter"
+
+//----------------------------------------------
+//-----------------HYDROPONICS / KITCHEN------------------
+//----------------------------------------------
 
 /datum/supply_pack/hydroponics // -- Skie
 	name = "Hydroponics Supply Crate"
@@ -1449,7 +1571,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_type = /obj/structure/closet/crate/hydroponics
 	crate_name = "Hydroponics crate"
 	access = access_hydroponics
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 //farm animals - useless and annoying, but potentially a good source of food
 /datum/supply_pack/cow
@@ -1457,81 +1579,81 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_type = /obj/structure/closet/critter/cow
 	crate_name = "Cow crate"
 	access = access_hydroponics
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/goat
 	name = "Goat crate"
 	crate_type = /obj/structure/closet/critter/goat
 	crate_name = "Goat crate"
 	access = access_hydroponics
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/chicken
 	name = "Chicken crate"
 	crate_type = /obj/structure/closet/critter/chick
 	crate_name = "Chicken crate"
 	access = access_hydroponics
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/corgi
 	name = "Corgi crate"
 	crate_type = /obj/structure/closet/critter/corgi
 	crate_name = "Corgi crate"
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/shiba
 	name = "Shiba crate"
 	crate_type = /obj/structure/closet/critter/shiba
 	crate_name = "Shiba crate"
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/cat
 	name = "Cat crate"
 	crate_type = /obj/structure/closet/critter/cat
 	crate_name = "Cat crate"
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/pug
 	name = "Pug crate"
 	crate_type = /obj/structure/closet/critter/pug
 	crate_name = "Pug crate"
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/pig
 	name = "Pig crate"
 	crate_type = /obj/structure/closet/critter/pig
 	crate_name = "Pig crate"
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/turkey
 	name = "Turkey crate"
 	crate_type = /obj/structure/closet/critter/turkey
 	crate_name = "Turkey crate"
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/goose
 	name = "Goose crate"
 	crate_type = /obj/structure/closet/critter/goose
 	crate_name = "Goose crate"
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/seal
 	name = "Seal crate"
 	crate_type = /obj/structure/closet/critter/seal
 	crate_name = "Seal crate"
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/walrus
 	name = "Walrus crate"
 	crate_type = /obj/structure/closet/critter/walrus
 	crate_name = "Walrus crate"
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/larva
 	name = "Sugar larva crate"
 	crate_type = /obj/structure/closet/critter/larva
 	crate_name = "Sugar larva crate"
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/seeds
 	name = "Seeds crate"
@@ -1555,7 +1677,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_type = /obj/structure/closet/crate/hydroponics
 	crate_name = "Seeds crate"
 	access = access_hydroponics
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/weedcontrol
 	name = "Weed control crate"
@@ -1566,7 +1688,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_type = /obj/structure/closet/crate/secure/hydrosec
 	crate_name = "Weed control crate"
 	access = access_hydroponics
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/exoticseeds
 	name = "Exotic seeds crate"
@@ -1587,14 +1709,14 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_type = /obj/structure/closet/crate/hydroponics
 	crate_name = "Exotic Seeds crate"
 	access = access_hydroponics
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/watertank
 	name = "Water tank crate"
 	contains = list(/obj/structure/reagent_dispensers/watertank)
 	crate_type = /obj/structure/largecrate
 	crate_name = "Water tank crate"
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
 
 /datum/supply_pack/bee_keeper
 	name = "Beekeeping crate"
@@ -1606,7 +1728,42 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_type = /obj/structure/closet/crate/hydroponics
 	crate_name = "Beekeeping crate"
 	access = access_hydroponics
-	group = "Hydroponics"
+	group = "Hydroponics / Kitchen"
+
+/datum/supply_pack/food
+	name = "Kitchen supply crate"
+	contains = list(/obj/item/weapon/reagent_containers/food/condiment/flour,
+					/obj/item/weapon/reagent_containers/food/condiment/flour,
+					/obj/item/weapon/reagent_containers/food/condiment/flour,
+					/obj/item/weapon/reagent_containers/food/condiment/flour,
+					/obj/item/weapon/reagent_containers/food/drinks/milk,
+					/obj/item/weapon/reagent_containers/food/drinks/milk,
+					/obj/item/weapon/storage/fancy/egg_box,
+					/obj/item/weapon/reagent_containers/food/snacks/tofu,
+					/obj/item/weapon/reagent_containers/food/snacks/tofu,
+					/obj/item/weapon/reagent_containers/food/snacks/meat,
+					/obj/item/weapon/reagent_containers/food/snacks/meat,
+					/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
+					/obj/item/weapon/reagent_containers/food/snacks/grown/banana)
+	additional_costs = 150
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "Food crate"
+	group = "Hydroponics / Kitchen"
+
+/datum/supply_pack/condiments
+	name = "Condiment supply crate"
+	contains = list(/obj/item/weapon/reagent_containers/food/condiment/sugar,
+					/obj/item/weapon/reagent_containers/food/condiment/rice,
+					/obj/item/weapon/reagent_containers/food/condiment/soysauce,
+					/obj/item/weapon/reagent_containers/food/condiment/hotsauce,
+					/obj/item/weapon/reagent_containers/food/condiment/ketchup,
+					/obj/item/weapon/reagent_containers/food/condiment/coldsauce,
+					/obj/item/weapon/reagent_containers/food/condiment/cornoil,
+					/obj/item/weapon/reagent_containers/food/condiment/enzyme,
+					/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
+					/obj/item/weapon/reagent_containers/food/condiment/peppermill)
+	crate_name = "Condiments crate"
+	group = "Hydroponics / Kitchen"
 
 //----------------------------------------------
 //--------------------MINING--------------------
@@ -1676,144 +1833,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	group = "Mining"
 
 //----------------------------------------------
-//--------------------SUPPLY--------------------
-//----------------------------------------------
-
-/datum/supply_pack/food
-	name = "Kitchen supply crate"
-	contains = list(/obj/item/weapon/reagent_containers/food/condiment/flour,
-					/obj/item/weapon/reagent_containers/food/condiment/flour,
-					/obj/item/weapon/reagent_containers/food/condiment/flour,
-					/obj/item/weapon/reagent_containers/food/condiment/flour,
-					/obj/item/weapon/reagent_containers/food/drinks/milk,
-					/obj/item/weapon/reagent_containers/food/drinks/milk,
-					/obj/item/weapon/storage/fancy/egg_box,
-					/obj/item/weapon/reagent_containers/food/snacks/tofu,
-					/obj/item/weapon/reagent_containers/food/snacks/tofu,
-					/obj/item/weapon/reagent_containers/food/snacks/meat,
-					/obj/item/weapon/reagent_containers/food/snacks/meat,
-					/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
-					/obj/item/weapon/reagent_containers/food/snacks/grown/banana)
-	additional_costs = 150
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "Food crate"
-	group = "Supply"
-
-/datum/supply_pack/condiments
-	name = "Condiment supply crate"
-	contains = list(/obj/item/weapon/reagent_containers/food/condiment/sugar,
-					/obj/item/weapon/reagent_containers/food/condiment/rice,
-					/obj/item/weapon/reagent_containers/food/condiment/soysauce,
-					/obj/item/weapon/reagent_containers/food/condiment/hotsauce,
-					/obj/item/weapon/reagent_containers/food/condiment/ketchup,
-					/obj/item/weapon/reagent_containers/food/condiment/coldsauce,
-					/obj/item/weapon/reagent_containers/food/condiment/cornoil,
-					/obj/item/weapon/reagent_containers/food/condiment/enzyme,
-					/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
-					/obj/item/weapon/reagent_containers/food/condiment/peppermill)
-	crate_name = "Condiments crate"
-	group = "Supply"
-
-/datum/supply_pack/toner
-	name = "Toner cartridges"
-	contains = list(/obj/item/device/toner,
-					/obj/item/device/toner,
-					/obj/item/device/toner,
-					/obj/item/device/toner,
-					/obj/item/device/toner,
-					/obj/item/device/toner)
-	crate_name = "Toner cartridges"
-	group = "Supply"
-
-/datum/supply_pack/papers
-	name = "Paper packs"
-	contains = list(/obj/item/weapon/paper_refill,
-					/obj/item/weapon/paper_refill,
-					/obj/item/weapon/paper_refill,
-					/obj/item/weapon/paper_refill,
-					/obj/item/weapon/paper_refill,
-					/obj/item/weapon/paper_refill)
-	crate_name = "Paper packs"
-	group = "Supply"
-
-/datum/supply_pack/vest
-	name = "Vest Crate"
-	contains = list(/obj/item/clothing/accessory/storage/brown_vest,
-					/obj/item/clothing/accessory/storage/brown_vest,
-					/obj/item/clothing/accessory/storage/black_vest)
-	crate_name = "Vest Crate"
-	group = "Supply"
-
-/datum/supply_pack/misc/posters
-	name = "Corporate Posters Crate"
-	contains = list(/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit,
-					/obj/item/weapon/poster/legit)
-	crate_name = "Corporate Posters Crate"
-	group = "Supply"
-
-/datum/supply_pack/janitor
-	name = "Janitorial supplies"
-	contains = list(/obj/item/weapon/reagent_containers/glass/bucket,
-					/obj/item/weapon/reagent_containers/glass/bucket,
-					/obj/item/weapon/reagent_containers/glass/bucket,
-					/obj/item/weapon/mop/advanced,
-					/obj/item/weapon/holosign_creator,
-					/obj/item/weapon/caution,
-					/obj/item/weapon/caution,
-					/obj/item/weapon/caution,
-					/obj/item/weapon/reagent_containers/watertank_backpack/janitor,
-					/obj/item/weapon/storage/bag/trash,
-					/obj/item/weapon/reagent_containers/spray/cleaner,
-					/obj/item/weapon/reagent_containers/glass/rag,
-					/obj/item/weapon/grenade/chem_grenade/cleaner,
-					/obj/item/weapon/grenade/chem_grenade/cleaner,
-					/obj/item/weapon/grenade/chem_grenade/cleaner,
-					/obj/structure/mopbucket)
-	additional_costs = 100
-	crate_name = "Janitorial supplies"
-	group = "Supply"
-
-/datum/supply_pack/boxes
-	name = "Empty boxes"
-	contains = list(/obj/item/weapon/storage/box,
-	/obj/item/weapon/storage/box,
-	/obj/item/weapon/storage/box,
-	/obj/item/weapon/storage/box,
-	/obj/item/weapon/storage/box,
-	/obj/item/weapon/storage/box,
-	/obj/item/weapon/storage/box,
-	/obj/item/weapon/storage/box,
-	/obj/item/weapon/storage/box,
-	/obj/item/weapon/storage/box)
-	crate_name = "Empty box crate"
-	group = "Supply"
-
-/datum/supply_pack/barber
-	name = "Barber supplies"
-	contains = list(/obj/item/weapon/storage/box/hairdyes,
-	/obj/item/weapon/reagent_containers/spray/hair_color_spray,
-	/obj/item/weapon/reagent_containers/glass/bottle/hair_growth_accelerator,
-	/obj/item/weapon/scissors,
-	/obj/item/weapon/razor)
-	crate_name = "Barber supplies"
-	group = "Supply"
-
-/datum/supply_pack/clown
-	name = "Clown supply crate"
-	contains = list(/obj/item/weapon/bikehorn,
-					/obj/item/weapon/bikehorn,
-					/obj/item/weapon/bikehorn,
-					/obj/item/weapon/bikehorn,
-					/obj/item/weapon/reagent_containers/food/snacks/pie,
-					/obj/item/weapon/reagent_containers/food/snacks/pie,
-					/obj/item/toy/crayon/rainbow)
-	crate_name = "HONK supplies"
-	group = "Supply"
-//----------------------------------------------
-//--------------MISCELLANEOUS-------------------
+//--------------FUN / BUSINESS-------------------
 //----------------------------------------------
 
 /datum/supply_pack/wizard
@@ -1823,7 +1843,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/shoes/sandal,
 					/obj/item/clothing/head/wizard/fake)
 	crate_name = "Wizard costume crate"
-	group = "Miscellaneous"
+	group = "Fun  / Business"
 
 /datum/supply_pack/conveyor
 	name = "Conveyor Assembly Crate"
@@ -1836,7 +1856,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/conveyor_switch_construct,
 					/obj/item/weapon/paper/conveyor)
 	crate_name = "conveyor assembly crate"
-	group = "Miscellaneous"
+	group = "Fun  / Business"
 
 /datum/supply_pack/formal_wear
 	contains = list(/obj/item/clothing/head/bowler,
@@ -1861,7 +1881,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "Formalwear closet"
 	crate_type = /obj/structure/closet
 	crate_name = "Formalwear for the best occasions."
-	group = "Miscellaneous"
+	group = "Fun  / Business"
 
 /datum/supply_pack/laser_tag
 	name = "Laser Tag Crate"
@@ -1877,7 +1897,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/suit/lasertag/bluetag,
 					/obj/item/clothing/suit/lasertag/bluetag,
 					/obj/item/clothing/suit/lasertag/bluetag)
-	group = "Miscellaneous"
+	group = "Fun  / Business"
 
 /datum/supply_pack/casino
 	name = "Casino Starter Pack"
@@ -1887,7 +1907,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/storage/pill_bottle/dice,
 					/obj/item/weapon/storage/pill_bottle/dice,
 					/obj/item/weapon/cane)
-	group = "Miscellaneous"
+	group = "Fun  / Business"
 
 //----------------------------------------------
 //-----------------RANDOMISED-------------------
@@ -1918,7 +1938,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/clothing/head/collectable/petehat)
 	additional_costs = 500
 	crate_name = "Collectable hats crate! Brought to you by Bass.inc!"
-	group = "Miscellaneous"
+	group = "Fun  / Business"
 
 /datum/supply_pack/randomised/fill(obj/structure/closet/crate/C)
 	var/list/L = contains.Copy()
@@ -1946,7 +1966,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_type = /obj/structure/closet/crate
 	crate_name = "Unlabeled crate"
 	contraband = TRUE
-	group = "Operations"
+	group = "Bureaucracy / Arts"
 
 /datum/supply_pack/randomised/toys
 	num_contained = 5
@@ -1963,19 +1983,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "Toy Crate"
 	additional_costs = 200
 	crate_name ="Toy crate"
-	group = "Miscellaneous"
-
-/datum/supply_pack/randomised/pizza
-	num_contained = 5
-	contains = list(/obj/item/pizzabox/margherita,
-					/obj/item/pizzabox/mushroom,
-					/obj/item/pizzabox/meat,
-					/obj/item/pizzabox/vegetable)
-	additional_costs = 250
-	name = "Surprise pack of five pizzas"
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "Pizza crate"
-	group = "Hospitality"
+	group = "Fun  / Business"
 
 /datum/supply_pack/randomised/costume
 	num_contained = 2
@@ -2011,16 +2019,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Actor Costumes"
 	access = access_theatre
-	group = "Miscellaneous"
-
-
-/datum/supply_pack/willpower
-	name = "Volitional Neuroinhibitor Implanter"
-	contains = list(/obj/item/weapon/implanter/willpower)
-	additional_costs = 10000
-	group = "Miscellaneous"
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "Volitional Neuroinhibitor Implanter"
+	group = "Fun  / Business"
 
 //----------------------------------------------
 //-----------------XENO THREAT-------------------
@@ -2120,7 +2119,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/weapon/disk/smartlight_programm/k5500,
 	)
 	additional_costs = 1000
-	group = "Operations"
+	group = "Bureaucracy / Arts"
 
 /datum/supply_pack/smartlight_neon
 	name = "Smartlight programms set: Neon"
@@ -2129,7 +2128,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/weapon/disk/smartlight_programm/neon_dark,
 	)
 	additional_costs = 2000
-	group = "Operations"
+	group = "Bureaucracy / Arts"
 
 /datum/supply_pack/smartlight_blue
 	name = "Smartlight programms set: Blue"
@@ -2138,7 +2137,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/weapon/disk/smartlight_programm/soft_blue,
 	)
 	additional_costs = 2000
-	group = "Operations"
+	group = "Bureaucracy / Arts"
 
 /datum/supply_pack/smartlight_shadows
 	name = "Smartlight programms set: Shadows"
@@ -2147,4 +2146,5 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 		/obj/item/weapon/disk/smartlight_programm/shadows_hard,
 	)
 	additional_costs = 2000
-	group = "Operations"
+	group = "Bureaucracy / Arts"
+
