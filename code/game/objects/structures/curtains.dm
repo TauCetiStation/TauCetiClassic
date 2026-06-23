@@ -48,11 +48,7 @@
 	if(istype(I, /obj/item/toy/crayon/spraycan) && can_be_painted)
 		var/obj/item/toy/crayon/spraycan/S = I
 		var/col = null
-		if(!isnull(S.vars["colour"]))
-			col = S.vars["colour"]
-		else if(!isnull(S.vars["color"]))
-			col = S.vars["color"]
-
+		col = S.vars["colour"]
 		if(!col)
 			return
 
@@ -99,32 +95,18 @@
 	else
 		icon_state = "open"
 
-/obj/structure/curtain/proc/change_color(new_color_name)
-	var/list/color_name_to_hex = list(
-		"black" = "#222222",
-		"blue" = "#3b7bd6",
-		"yellow" = "#f1d54a",
-		"red" = "#d74b4b",
-		"purple" = "#7a4bd6",
-		"green" = "#4caf50",
-		"beige" = "#d8c6a5",
-	)
-
-	if(istext(new_color_name) && length(new_color_name) == 7 && copytext(new_color_name, 1, 2) == "#")
-		var/hex = copytext(new_color_name, 2, 8)
-		if(hex2num("0x[hex]"))
-			src.color = lowertext(new_color_name)
-			return
-
-	if(!istext(new_color_name))
+/obj/structure/curtain/proc/change_color(new_color)
+	if(!istext(new_color))
 		return
 
-	new_color_name = lowertext(new_color_name)
-	var/hex_out = color_name_to_hex[new_color_name]
-	if(!hex_out)
+	if(length(new_color) != 7 || copytext(new_color, 1, 2) != "#")
 		return
 
-	src.color = hex_out
+	var/hex = copytext(new_color, 2, 8)
+	if(!hex2num("0x[hex]"))
+		return
+
+	src.color = lowertext(new_color)
 
 /obj/structure/curtain/black
 	name = "black curtain"
