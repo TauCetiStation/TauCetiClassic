@@ -45,6 +45,20 @@
 	if(.)
 		return
 
+	if(istype(I, /obj/item/toy/crayon/spraycan) && can_be_painted)
+		var/obj/item/toy/crayon/spraycan/S = I
+		var/col = null
+		if(!isnull(S.vars["colour"]))
+			col = S.vars["colour"]
+		else if(!isnull(S.vars["color"]))
+			col = S.vars["color"]
+
+		if(!col)
+			return
+
+		change_color(col)
+		return
+
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(user.is_busy())
 			return
@@ -68,16 +82,6 @@
 				to_chat(user, "<span class='notice'>You fasten \the [src] to the floor with \the [I].</span>")
 				return
 
-	if(istype(I, /obj/item/toy/crayon/spraycan) && can_be_painted)
-		var/obj/item/toy/crayon/spraycan/S = I
-		var/col = S.colour
-		if(!col)
-			return
-
-		change_color(col)
-		S.afterattack(src, user, TRUE, null)
-		return
-
 /obj/structure/curtain/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
@@ -95,37 +99,30 @@
 	else
 		icon_state = "open"
 
-/obj/structure/curtain/proc/change_color(color)
+/obj/structure/curtain/proc/change_color(new_color_name)
+	var/list/color_name_to_hex = list(
+		"black" = "#222222",
+		"blue" = "#3b7bd6",
+		"yellow" = "#f1d54a",
+		"red" = "#d74b4b",
+		"purple" = "#7a4bd6",
+		"green" = "#4caf50",
+		"beige" = "#d8c6a5",
+	)
 
-	if(!istext(color))
+	if(istext(new_color_name) && length(new_color_name) == 7 && copytext(new_color_name, 1, 2) == "#")
+		var/hex = copytext(new_color_name, 2, 8)
+		if(hex2num("0x[hex]"))
+			src.color = lowertext(new_color_name)
+			return
+
+	if(!istext(new_color_name))
 		return
 
-	color = lowertext(color)
-
-	if(length(color) == 7 && copytext(color, 1, 2) == "#")
-		var/hex = copytext(color, 2, 8)
-		if(hex2num("0x[hex]"))
-			src.color = color
-			return
-
-	var/hex_out
-	switch(color)
-		if("black")
-			hex_out = "#222222"
-		if("blue")
-			hex_out = "#3b7bd6"
-		if("yellow")
-			hex_out = "#f1d54a"
-		if("red")
-			hex_out = "#d74b4b"
-		if("purple")
-			hex_out = "#7a4bd6"
-		if("green")
-			hex_out = "#4caf50"
-		if("beige")
-			hex_out = "#d8c6a5"
-		else
-			return
+	new_color_name = lowertext(new_color_name)
+	var/hex_out = color_name_to_hex[new_color_name]
+	if(!hex_out)
+		return
 
 	src.color = hex_out
 
