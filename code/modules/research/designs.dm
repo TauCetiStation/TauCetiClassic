@@ -188,7 +188,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/robocontrol
 	name = "Circuit Design (Robotics Control Console)"
-	desc = "Allows for the construction of circuit boards used to build a Robotics Control console."
+	desc = "Плата, используемая для создания консоли управления боргами."
 	id = "robocontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -197,7 +197,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/dronecontrol
 	name = "Circuit Design (Drone Control Console)"
-	desc = "Allows for the construction of circuit boards used to build a Drone Control console."
+	desc = "Плата, используемая для создания консоли управления ремонтными дронами."
 	id = "dronecontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -206,7 +206,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/clonecontrol
 	name = "Circuit Design (Cloning Machine Console)"
-	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
+	desc = "Плата, используемая для создания консоли клонирующей капсулы."
 	id = "clonecontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -215,7 +215,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/clonepod
 	name = "Circuit Design (Clone Pod)"
-	desc = "Allows for the construction of circuit boards used to build a Cloning Pod."
+	desc = "Плата, используемая для сборки клонирующей капсулы."
 	id = "clonepod"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -224,7 +224,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/clonescanner
 	name = "Circuit Design (Cloning Scanner)"
-	desc = "Allows for the construction of circuit boards used to build a Cloning Scanner."
+	desc = "Плата, используемая для создания сканера для клонирования."
 	id = "clonescanner"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -233,7 +233,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/arcademachine
 	name = "Circuit Design (Arcade Machine)"
-	desc = "Allows for the construction of circuit boards used to build a new arcade machine."
+	desc = "Плата, используемая для создания новых игровых автоматов."
 	id = "arcademachine"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -242,7 +242,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/powermonitor
 	name = "Circuit Design (Power Monitor)"
-	desc = "Allows for the construction of circuit boards used to build a new power monitor."
+	desc = "Плата, используемая для создания консоли измерения энергопотребления."
 	id = "powermonitor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -251,7 +251,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/solarcontrol
 	name = "Circuit Design (Solar Control)"
-	desc = "Allows for the construction of circuit boards used to build a solar control console."
+	desc = "Плата, используемая для создания консоли управления солнечной батареей."
 	id = "solarcontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -260,7 +260,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/prisonmanage
 	name = "Circuit Design (Prisoner Management Console)"
-	desc = "Allows for the construction of circuit boards used to build a prisoner management console."
+	desc = "Плата, используемая для создания консоли управления имплантами заключенных."
 	id = "prisonmanage"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -269,7 +269,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mechacontrol
 	name = "Circuit Design (Exosuit Control Console)"
-	desc = "Allows for the construction of circuit boards used to build an exosuit control console."
+	desc = "Плата, используемая для сборки консоли мониторинга экзоскелетов."
 	id = "mechacontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -278,7 +278,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mechrecharger
 	name = "circuit board (Mechbay Recharger)"
-	desc = "Allows for the construction of circuit boards used to build a mechbay recharger."
+	desc = "Плата, используемая для создания зарядного устройства для экзоскелетов."
 	id = "mechrecharger"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -287,7 +287,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mechapower
 	name = "Circuit Design (Mech Bay Power Control Console)"
-	desc = "Allows for the construction of circuit boards used to build a mech bay power control console."
+	desc = "Плата, используемая для создания консоли зарядного устройства для экзоскелетов."
 	id = "mechapower"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -296,7 +296,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rdconsole
 	name = "Circuit Design (R&D Console)"
-	desc = "Allows for the construction of circuit boards used to build a new R&D console."
+	desc = "Платп, используемая для создания новой научно-исследовательской консоли."//
 	id = "rdconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -305,7 +305,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ordercomp
 	name = "Circuit Design (Supply ordering console)"
-	desc = "Allows for the construction of circuit boards used to build a Supply ordering console."
+	desc = "Плата, используемая для создания консоли заказа товаров."
 	id = "ordercomp"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -314,7 +314,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/supplycomp
 	name = "Circuit Design (Supply shuttle console)"
-	desc = "Allows for the construction of circuit boards used to build a Supply shuttle console."
+	desc = "Плата, используемая для создания консоли управления грузовым челноком."
 	id = "supplycomp"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -323,7 +323,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/comm_monitor
 	name = "Circuit Design (Telecommunications Monitoring Console)"
-	desc = "Allows for the construction of circuit boards used to build a telecommunications monitor."
+	desc = "Плата, используемая для создания телекоммуникационного монитора."
 	id = "comm_monitor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -332,7 +332,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/comm_server
 	name = "Circuit Design (Telecommunications Server Monitoring Console)"
-	desc = "Allows for the construction of circuit boards used to build a telecommunication server browser and monitor."
+	desc = "Allows for the construction of circuit boards used to build a telecommunication server browser and monitor."//
 	id = "comm_server"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -341,7 +341,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/message_monitor
 	name = "Circuit Design (Messaging Monitor Console)"
-	desc = "Allows for the construction of circuit boards used to build a messaging monitor console."
+	desc = "Плата, используемая для создания консоли мониторинга сообщений."
 	id = "message_monitor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -359,7 +359,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/libraryconsole
 	name = "Computer Design (Library Console)"
-	desc = "Allows for the construction of circuit boards used to build a new library console."
+	desc = "Плата, используемая для создания новой библиотечной консоли."
 	id = "libraryconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -368,7 +368,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cmf_console
 	name = "Circuit Design (CMF Console)"
-	desc = "Allows for the construction of circuit boards used to build a CMF modifier console."
+	desc = "Плата, используемая для создания консоли модификаторов CMF."
 	id = "cmf_console"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -377,7 +377,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cmf_scanner
 	name = "Circuit Design (CMF table)"
-	desc = "Allows for the construction of circuit boards used to build a CMF manipulation table."
+	desc = "Плата, используемая для создания стола манипулирования CMF."
 	id = "cmf_scanner"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -389,7 +389,7 @@ other types of metals and chemistry for reagents).
 ///////////////////////////////////
 /datum/design/safeguard_module
 	name = "AI Module(Safeguard)"
-	desc = "Allows for the construction of a Safeguard AI Module."
+	desc = "Allows for the construction of a Safeguard AI Module."//
 	id = "safeguard_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -398,7 +398,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/onentemploye_module
 	name = "AI Module (One NT Employe)"
-	desc = "Allows for the construction of a 'One NT Employe' AI Module."
+	desc = "Allows for the construction of a 'One NT Employe' AI Module."//
 	id = "onentemploye_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -407,7 +407,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/protectstation_module
 	name = "AI Module (ProtectStation)"
-	desc = "Allows for the construction of a ProtectStation AI Module."
+	desc = "Allows for the construction of a ProtectStation AI Module."//
 	id = "protectstation_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -416,7 +416,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/notele_module
 	name = "AI Module (TeleporterOffline Module)"
-	desc = "Allows for the construction of a TeleporterOffline AI Module."
+	desc = "Allows for the construction of a TeleporterOffline AI Module."//
 	id = "notele_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -425,7 +425,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/quarantine_module
 	name = "AI Module (Quarantine)"
-	desc = "Allows for the construction of a Quarantine AI Module."
+	desc = "Allows for the construction of a Quarantine AI Module."//
 	id = "quarantine_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -434,7 +434,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/oxygen_module
 	name = "AI Module (OxygenIsToxicToHumans)"
-	desc = "Allows for the construction of a Safeguard AI Module."
+	desc = "Allows for the construction of a Safeguard AI Module."//
 	id = "oxygen_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -443,7 +443,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/freeform_module
 	name = "AI Module (Freeform)"
-	desc = "Allows for the construction of a Freeform AI Module."
+	desc = "Allows for the construction of a Freeform AI Module."//
 	id = "freeform_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -452,7 +452,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/reset_module
 	name = "AI Module (Reset)"
-	desc = "Allows for the construction of a Reset AI Module."
+	desc = "Allows for the construction of a Reset AI Module."//
 	id = "reset_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -461,7 +461,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/purge_module
 	name = "AI Module (Purge)"
-	desc = "Allows for the construction of a Purge AI Module."
+	desc = "Allows for the construction of a Purge AI Module."//
 	id = "purge_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -470,7 +470,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/freeform/core_module
 	name = "AI Core Module (Freeform)"
-	desc = "Allows for the construction of a Freeform AI Core Module."
+	desc = "Allows for the construction of a Freeform AI Core Module."//
 	id = "freeformcore_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -479,7 +479,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/asimov
 	name = "AI Core Module (Asimov)"
-	desc = "Allows for the construction of a Asimov AI Core Module."
+	desc = "Allows for the construction of a Asimov AI Core Module."//
 	id = "asimov_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -488,7 +488,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/paladin_module
 	name = "AI Core Module (P.A.L.A.D.I.N.)"
-	desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."
+	desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."//
 	id = "paladin_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -497,7 +497,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tyrant_module
 	name = "AI Core Module (T.Y.R.A.N.T.)"
-	desc = "Allows for the construction of a T.Y.R.A.N.T. AI Module."
+	desc = "Allows for the construction of a T.Y.R.A.N.T. AI Module."//
 	id = "tyrant_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -511,7 +511,7 @@ other types of metals and chemistry for reagents).
 ///////////////////////////////////
 /datum/design/subspace_receiver
 	name = "Circuit Design (Subspace Receiver)"
-	desc = "Allows for the construction of Subspace Receiver equipment."
+	desc = "Allows for the construction of Subspace Receiver equipment."//
 	id = "s-receiver"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -520,7 +520,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telecomms_bus
 	name = "Circuit Design (Bus Mainframe)"
-	desc = "Allows for the construction of Telecommunications Bus Mainframes."
+	desc = "Allows for the construction of Telecommunications Bus Mainframes."//
 	id = "s-bus"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -529,7 +529,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telecomms_hub
 	name = "Circuit Design (Hub Mainframe)"
-	desc = "Allows for the construction of Telecommunications Hub Mainframes."
+	desc = "Allows for the construction of Telecommunications Hub Mainframes."//
 	id = "s-hub"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -538,7 +538,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telecomms_relay
 	name = "Circuit Design (Relay Mainframe)"
-	desc = "Allows for the construction of Telecommunications Relay Mainframes."
+	desc = "Allows for the construction of Telecommunications Relay Mainframes."//
 	id = "s-relay"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -547,7 +547,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telecomms_processor
 	name = "Circuit Design (Processor Unit)"
-	desc = "Allows for the construction of Telecommunications Processor equipment."
+	desc = "Allows for the construction of Telecommunications Processor equipment."//
 	id = "s-processor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -556,7 +556,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telecomms_server
 	name = "Circuit Design (Server Mainframe)"
-	desc = "Allows for the construction of Telecommunications Servers."
+	desc = "Allows for the construction of Telecommunications Servers."//
 	id = "s-server"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -565,7 +565,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_broadcaster
 	name = "Circuit Design (Subspace Broadcaster)"
-	desc = "Allows for the construction of Subspace Broadcasting equipment."
+	desc = "Allows for the construction of Subspace Broadcasting equipment."//
 	id = "s-broadcaster"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -579,7 +579,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/intellicard
 	name = "Intellicard AI Transportation System"
-	desc = "Allows for the construction of an intellicard."
+	desc = "Allows for the construction of an intellicard."//
 	id = "intellicard"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 1000, MAT_GOLD = 200)
@@ -588,7 +588,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/paicard
 	name = "Personal Artificial Intelligence Card"
-	desc = "Allows for the construction of a pAI Card."
+	desc = "Allows for the construction of a pAI Card."//
 	id = "paicard"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
@@ -597,7 +597,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/posibrain
 	name = "Positronic Brain"
-	desc = "Allows for the construction of a positronic brain."
+	desc = "Allows for the construction of a positronic brain."//
 	id = "posibrain"
 
 	build_type = PROTOLATHE
@@ -611,7 +611,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ripley_main
 	name = "Circuit Design (APLU \"Ripley\" Central Control module)"
-	desc = "Allows for the construction of a \"Ripley\" Central Control module."
+	desc = "Плата центрального модуля управления \"Ripley\"."
 	id = "ripley_main"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -620,7 +620,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ripley_peri
 	name = "Circuit Design (APLU \"Ripley\" Peripherals Control module)"
-	desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
+	desc = "Плата переферийного модуля управления \"Ripley\"."
 	id = "ripley_peri"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -629,7 +629,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/odysseus_main
 	name = "Circuit Design (\"Odysseus\" Central Control module)"
-	desc = "Allows for the construction of a \"Odysseus\" Central Control module."
+	desc = "Плата центрального модуля управления \"Odysseus\"."
 	id = "odysseus_main"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -638,7 +638,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/odysseus_peri
 	name = "Circuit Design (\"Odysseus\" Peripherals Control module)"
-	desc = "Allows for the construction of a \"Odysseus\" Peripheral Control module."
+	desc = "Плата переферийного модуля управления \"Odysseus\"."
 	id = "odysseus_peri"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -647,7 +647,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/gygax_main
 	name = "Circuit Design (\"Gygax\" Central Control module)"
-	desc = "Allows for the construction of a \"Gygax\" Central Control module."
+	desc = "Плата центрального модуля управления \"Gygax\"."
 	id = "gygax_main"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -656,7 +656,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/gygax_peri
 	name = "Circuit Design (\"Gygax\" Peripherals Control module)"
-	desc = "Allows for the construction of a \"Gygax\" Peripheral Control module."
+	desc = "Плата переферийного модуля управления \"Gygax\"."
 	id = "gygax_peri"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -665,7 +665,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/gygax_targ
 	name = "Circuit Design (\"Gygax\" Weapons & Targeting Control module)"
-	desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
+	desc = "Плата управления модулем вооружения и наведения \"Gygax\"."
 	id = "gygax_targ"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -674,7 +674,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/durand_main
 	name = "Circuit Design (\"Durand\" Central Control module)"
-	desc = "Allows for the construction of a \"Durand\" Central Control module."
+	desc = "Плата центрального модуля управления \"Durand\"."
 	id = "durand_main"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -683,7 +683,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/durand_peri
 	name = "Circuit Design (\"Durand\" Peripherals Control module)"
-	desc = "Allows for the construction of a \"Durand\" Peripheral Control module."
+	desc = "Плата переферийного модуля управления \"Durand\"."
 	id = "durand_peri"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -692,7 +692,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/durand_targ
 	name = "Circuit Design (\"Durand\" Weapons & Targeting Control module)"
-	desc = "Allows for the construction of a \"Durand\" Weapons & Targeting Control module."
+	desc = "Плата управления модулем вооружения и наведения \"Durand\"."
 	id = "durand_targ"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -701,7 +701,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/vindicator_main
 	name = "Circuit Design (\"Vindicator\" Central Control module)"
-	desc = "Allows for the construction of a \"Vindicator\" Central Control module."
+	desc = "Плата центрального модуля управления \"Vindicator\"."
 	id = "vindicator_main"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -710,7 +710,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/vindicator_peri
 	name = "Circuit Design (\"Vindicator\" Peripherals Control module)"
-	desc = "Allows for the construction of a \"Vindicator\" Peripheral Control module."
+	desc = "Плата переферийного модуля управления \"Vindicator\"."
 	id = "vindicator_peri"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -719,7 +719,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/vindicator_targ
 	name = "Circuit Design (\"Vindicator\" Weapons & Targeting Control module)"
-	desc = "Allows for the construction of a \"Vindicator\" Weapons & Targeting Control module."
+	desc = "Плата управления модулем вооружения и наведения \"Vindicator\"."
 	id = "vindicator_targ"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -728,7 +728,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ultra_main
 	name = "Circuit Design (\"Gygax Ultra\" Central Control module)"
-	desc = "Allows for the construction of a \"Gygax Ultra\" Central Control module."
+	desc = "Плата центрального модуля управления \"Gygax Ultra\"."
 	id = "ultra_main"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -737,7 +737,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ultra_peri
 	name = "Circuit Design (\"Gygax Ultra\" Peripherals Control module)"
-	desc = "Allows for the construction of a \"Gygax Ultra\" Peripheral Control module."
+	desc = "Плата переферийного модуля управления \"Gygax Ultra\"."
 	id = "ultra_peri"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -746,7 +746,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ultra_targ
 	name = "Circuit Design (\"Gygax Ultra\" Weapons & Targeting Control module)"
-	desc = "Allows for the construction of a \"Gygax Ultra\" Weapons & Targeting Control module."
+	desc = "Плата управления модулем вооружения и наведения \"Gygax Ultra\"."
 	id = "ultra_targ"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -758,7 +758,7 @@ other types of metals and chemistry for reagents).
 ////////////////////////////////////////
 /datum/design/design_disk
 	name = "Design Storage Disk"
-	desc = "Produce additional disks for storing device designs."
+	desc = "Дополнительные диски для хранения данных прототипа устройств."
 	id = "design_disk"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 10)
@@ -767,7 +767,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tech_disk
 	name = "Technology Data Storage Disk"
-	desc = "Produce additional disks for storing technology data."
+	desc = "Дополнительные диски для хранения технологических данных."
 	id = "tech_disk"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 10)
@@ -776,7 +776,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/science_tool
 	name = "Science Tool"
-	desc = "Портативное устройство, способное извлекать полезные данные из различных источников, таких как бумажные отчеты и образцы слизистых оболочек."
+	desc = "Портативное устройство, способное оценивать полезные данные из различных источников, таких как бумажные отчеты, образцы слизистых оболочек и др."
 	id = "science_tool"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000)
@@ -785,7 +785,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/portalgun
 	name = "Portal Gun"
-	desc = "Experimental bluespace projector able to create interconnected wormholes at user's will."
+	desc = "Экспериментальный bluespace проектор, способный создавать взаимосвязанные червоточины по желанию пользователя."// bluespace как норм перевести?
 	id = "portalgun"
 	build_type = PROTOLATHE
 	materials = list(MAT_DIAMOND = 5000, MAT_SILVER = 5000, MAT_PHORON = 10000, MAT_URANIUM = 5000)
