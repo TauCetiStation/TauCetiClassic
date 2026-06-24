@@ -47,9 +47,8 @@
 
 	if(istype(I, /obj/item/toy/crayon/spraycan) && can_be_painted)
 		var/obj/item/toy/crayon/spraycan/S = I
-		var/col = S.colour
+		change_color(S.colour)
 		S.uses = max(S.uses - 2, 0)
-		change_color(col)
 		return
 
 	if(istype(I, /obj/item/weapon/screwdriver))
