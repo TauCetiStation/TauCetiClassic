@@ -22,8 +22,7 @@
 	var/obj/item/clothing/shoes/S = target
 	if(!can_attach_to(S, user))
 		return
-	forceMove(S)
-	S.AddElement(/datum/element/noslip_sole)
+	S.AddElement(/datum/element/noslip_sole, src)
 	to_chat(user, "<span class='notice'>You fit \the [src] onto \the [S].</span>")
 	playsound(S, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 
@@ -32,11 +31,12 @@
 /datum/element/noslip_sole
 	element_flags = ELEMENT_DETACH
 
-/datum/element/noslip_sole/Attach(datum/target)
-	. = ..()
-	if(!istype(target, /obj/item/clothing/shoes))
+/datum/element/noslip_sole/Attach(datum/target, obj/item/noslip_sole/sole)
+	if(!istype(target, /obj/item/clothing/shoes) || !istype(sole))
 		return ELEMENT_INCOMPATIBLE
+	. = ..()
 	var/obj/item/clothing/shoes/S = target
+	sole.forceMove(S)
 	S.flags |= NOSLIP
 	RegisterSignal(S, COMSIG_ATOM_ALTCLICK, PROC_REF(on_altclick))
 
