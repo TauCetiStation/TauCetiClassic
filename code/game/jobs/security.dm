@@ -112,6 +112,7 @@
 	order = CREW_INTEND_EMPLOYEE(4)
 	total_positions = 2
 	spawn_positions = 5
+	dynamic_positions = 1
 	supervisors = "the head of security and warden"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
@@ -134,16 +135,13 @@
 		to_chat(H, "<span class='notice'>Вместо обычной охраны на эту станцию решили прислать профессиональных оперативников. Вы являетесь одним из них. В отличии от стандартного офицера охраны, вы обладаете продвинутым снаряжением, отличной подготовкой, имплантом лояльности и встроенным устройством для уничтожения тела после смерти.</span>")
 		LAZYADD(skillsets, /datum/skillset/warden)
 
-/datum/job/officer/round_total_positions()
-	return ..(length(global.clients))
-
-
 /datum/job/cadet
 	title = JOB_CADET
 	departments = list(DEP_SECURITY)
 	order = CREW_INTEND_ASSIST(1)
 	total_positions = 2
 	spawn_positions = 3
+	dynamic_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
@@ -160,6 +158,3 @@
 		~Luduk
 	*/
 	restricted_species = list(DIONA, TAJARAN, VOX, IPC, PLUVIAN)
-
-/datum/job/cadet/round_total_positions()
-	return ..(length(global.clients))
