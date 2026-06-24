@@ -21,7 +21,7 @@
 	// Scale dynamic positions for this job
 	var/players_scale
 
-	// Max number of dynamic slots
+	// Max number of dynamic slots for this job
 	var/max_dynamic_slots
 
 	// total_positions override by map
