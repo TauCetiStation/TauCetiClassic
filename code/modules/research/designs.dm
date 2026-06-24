@@ -44,7 +44,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/seccamera
 	name = "Circuit Design (Security)"
-	desc = "Allows for the construction of circuit boards used to build security camera computers."
+	desc = "Позволяет изготавливать печатные платы, используемые для создания компьютеров для систем видеонаблюдения."
 	id = "seccamera"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
