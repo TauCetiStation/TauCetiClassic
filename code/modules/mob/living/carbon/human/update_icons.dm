@@ -188,8 +188,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		update_body(BP_WINGS)
 	if(render_flags & (HIDE_TOP_HAIR | HIDE_FACIAL_HAIR))
 		update_body(BP_HEAD)
-	if(render_flags & HIDE_EARS)
-		update_body(BP_EARS)
 	//if(render_flags & HIDE_UNIFORM) // update_inv_w_uniform should be called by equip anyway
 	//	update_inv_w_uniform()
 
@@ -614,6 +612,9 @@ Please contact me on #coderbus IRC. ~Carn x
 				var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
 				bloodsies.color = K.dirt_overlay.color
 				standing.overlays += bloodsies
+		else if(head.icon != 'icons/obj/clothing/hats.dmi')
+			var/obj/item/clothing/C = head
+			standing = C.get_standing_overlay(src, C.icon , SPRITE_SHEET_HEAD, -HEAD_LAYER, "helmetblood")
 		else
 			standing = head.get_standing_overlay(src, 'icons/mob/head.dmi', SPRITE_SHEET_HEAD, -HEAD_LAYER, "helmetblood")
 
@@ -644,6 +645,9 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/update_inv_wear_suit()
 	remove_standing_overlay(SUIT_LAYER)
 	var/default_path = 'icons/mob/suit.dmi'
+
+	if(wear_suit?.icon_custom)
+		default_path = wear_suit.icon_custom
 
 	if(istype(wear_suit, /obj/item/clothing/suit))
 		if(client && hud_used && hud_used.hud_shown)

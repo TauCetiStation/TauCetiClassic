@@ -29,11 +29,11 @@
 		else
 			icon_state = initial(icon_state)
 		to_chat(usr, "You button up your labcoat.")
-		src.is_button_up = 1
+		is_button_up = 1
 	else
-		src.icon_state += "_open"
+		icon_state = "[base_icon_state]_open"
 		to_chat(usr, "You unbutton your labcoat.")
-		src.is_button_up = 0
+		is_button_up = 0
 	update_inv_mob() //so our overlays update
 
 /obj/item/clothing/suit/storage/labcoat/red

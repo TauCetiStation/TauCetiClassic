@@ -640,6 +640,11 @@ BLIND     // can't see anything
 	if(icon_exists('icons/mob/uniform.dmi', "[basecolor]_d"))
 		item_state = item_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
 		update_inv_mob()
+	else if(icon_custom)
+		var/obj/item/clothing/under/custom/CM = src
+		if(icon_exists(CM.icon, "[basecolor]_d"))
+			item_state = item_state == "[basecolor]" ? "[basecolor]_d" : "[basecolor]"
+			update_inv_mob()
 	else
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 

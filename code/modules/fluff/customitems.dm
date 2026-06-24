@@ -14,6 +14,7 @@
 #define FLUFF_TYPE_HAT "hat"
 #define FLUFF_TYPE_UNIFORM "uniform"
 #define FLUFF_TYPE_SUIT "suit"
+#define FLUFF_TYPE_HOODED "hooded"
 #define FLUFF_TYPE_MASK "mask"
 #define FLUFF_TYPE_GLASSES "glasses"
 #define FLUFF_TYPE_GLOVES "gloves"
@@ -23,12 +24,11 @@
 #define FLUFF_TYPE_BACKPACK "backpack"
 #define FLUFF_TYPE_TIE  "tie"
 #define FLUFF_TYPE_BEDSHEET "bedsheet"
-#define FLUFF_TYPE_HOODED "hooded"
 // other
 //#define FLUFF_TYPE_ROBOT "robot"
 #define FLUFF_TYPE_GHOST "ghost"
 
-#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_BACKPACK, FLUFF_TYPE_GHOST, FLUFF_TYPE_TIE, FLUFF_TYPE_BEDSHEET, FLUFF_TYPE_HOODED)
+#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_HOODED, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_BACKPACK, FLUFF_TYPE_GHOST, FLUFF_TYPE_TIE, FLUFF_TYPE_BEDSHEET)
 
 
 /obj/item/customitem
@@ -48,6 +48,18 @@
 /obj/item/clothing/suit/custom
 	name = "Custom suit"
 	body_parts_covered = 0
+
+/obj/item/clothing/suit/storage/hooded/custom
+	name = "Custom hooded"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	hoodtype = /obj/item/clothing/head/hood/custom
+
+/obj/item/clothing/head/hood/custom
+	cold_protection = HEAD
+	render_flags = parent_type::render_flags | HIDE_TOP_HAIR
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/mask/custom
 	name = "Custom mask"
@@ -80,10 +92,6 @@
 
 /obj/item/weapon/bedsheet/custom
 	name = "Custom bedsheet"
-
-/obj/item/clothing/suit/storage/hooded/custom
-	name = "Custom hooded"
-
 
 /datum/custom_item
 	var/item_type // FLUFF_TYPES_LIST
@@ -290,6 +298,20 @@
 				if("[custom_item_info.icon_state]_mob_fat" in icon_states(custom_item_info.icon))
 					S.flags |= ONESIZEFITSALL
 				item = S
+			if(FLUFF_TYPE_HOODED)
+				var/obj/item/clothing/suit/storage/hooded/hooded = new /obj/item/clothing/suit/storage/hooded/custom()
+				if("[custom_item_info.icon_state]_mob_fat" in icon_states(custom_item_info.icon))
+					hooded.flags |= ONESIZEFITSALL
+
+				hooded.icon_suit_up = "[custom_item_info.icon_state]_t"
+				hooded.icon_suit_down = custom_item_info.icon_state
+
+				hooded.hood.icon = custom_item_info.icon
+				hooded.hood.icon_custom = custom_item_info.icon
+				hooded.hood.icon_state = "[custom_item_info.icon_state]_hood"
+				hooded.hood.item_state = "[custom_item_info.icon_state]_hood_mob"
+				item = hooded
+
 			if(FLUFF_TYPE_MASK)
 				item = new /obj/item/clothing/mask/custom()
 			if(FLUFF_TYPE_GLASSES)
@@ -314,18 +336,6 @@
 				item = labcoat
 			if(FLUFF_TYPE_BEDSHEET)
 				item = new /obj/item/weapon/bedsheet/custom()
-			if(FLUFF_TYPE_HOODED)
-				var/obj/item/clothing/suit/storage/hooded/custom/hooded = new /obj/item/clothing/suit/storage/hooded/custom()
-				if(hooded.hood)
-					hooded.hood.icon_custom = custom_item_info.icon
-					hooded.hood.icon = custom_item_info.icon
-					hooded.hood.icon_state = "[custom_item_info.icon_state]_hood"
-					hooded.hood.item_state = "[custom_item_info.icon_state]_hood_mob"
-				hooded.base_icon_state = custom_item_info.icon_state
-				hooded.icon_suit_up = "[custom_item_info.icon_state]_t"
-				if("[custom_item_info.icon_state]_mob_fat" in icon_states(custom_item_info.icon))
-					hooded.flags |= ONESIZEFITSALL
-				item = hooded
 
 		if(!item)
 			continue
