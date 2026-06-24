@@ -160,38 +160,6 @@
 	BP.open = 2
 
 //////////////////////////////////////////////////////////////////
-//					ALIEN EMBRYO SURGERY						//
-//////////////////////////////////////////////////////////////////
-/datum/surgery_step/ribcage/remove_embryo
-	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,
-	/obj/item/weapon/wirecutters = 75,
-	/obj/item/weapon/kitchen/utensil/fork = 50
-	)
-	blood_level = 2
-
-	min_duration = 80
-	max_duration = 100
-
-/datum/surgery_step/ribcage/remove_embryo/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return (locate(/obj/item/alien_embryo) in target) && ..() && target.op_stage.ribcage == 2
-
-/datum/surgery_step/ribcage/remove_embryo/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/msg = "[user] starts to pull something out from [target]'s ribcage with \the [tool]."
-	var/self_msg = "You start to pull something out from [target]'s ribcage with \the [tool]."
-	user.visible_message(msg, self_msg)
-	target.custom_pain("Something hurts horribly in your chest!",1)
-	..()
-
-/datum/surgery_step/ribcage/remove_embryo/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='warning'>[user] rips the larva out of [target]'s ribcage!</span>",
-						 "You rip the larva out of [target]'s ribcage!")
-
-	for(var/obj/item/alien_embryo/A in target)
-		A.loc = A.loc.loc
-
-
-//////////////////////////////////////////////////////////////////
 //				CHEST INTERNAL ORGAN SURGERY					//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ribcage/fix_chest_internal

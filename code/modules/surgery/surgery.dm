@@ -21,7 +21,9 @@
 	var/clothless = 1
 	var/required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	var/skills_speed_bonus = -0.30 // -30% for each surplus level
-
+	var/msg = null
+	var/self_msg = null
+	var/cp_msg = null
 // returns how well tool is suited for this step
 /datum/surgery_step/proc/tool_quality(obj/item/tool, mob/living/carbon/C)
 	for(var/quality in allowed_qualities)

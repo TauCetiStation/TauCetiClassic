@@ -34,46 +34,6 @@
 	BP.take_damage(10, 0, used_weapon = tool)
 	IO.take_damage(5, 0)
 
-/datum/surgery_step/eye/mend_eyes
-	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,             \
-	/obj/item/stack/cable_coil = 75,            \
-	/obj/item/weapon/wirecutters = 75,           \
-	/obj/item/weapon/kitchen/utensil/fork = 50,  \
-	/obj/item/device/assembly/mousetrap = 10	//I don't know. Don't ask me. But I'm leaving it because hilarity.
-	)
-
-	min_duration = 80
-	max_duration = 100
-
-/datum/surgery_step/eye/mend_eyes/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
-	if(!IO)
-		return
-	return ..() && target.op_stage.eyes == 2
-
-/datum/surgery_step/eye/mend_eyes/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts mending the nerves and lenses in [target]'s eyes with \the [tool].", \
-	"You start mending the nerves and lenses in [target]'s eyes with the [tool].")
-	..()
-
-/datum/surgery_step/eye/mend_eyes/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/internal/eyes/eyes = target.organs_by_name[O_EYES]
-	user.visible_message("<span class='notice'>[user] mends the nerves and lenses in [target]'s with \the [tool].</span>" ,	\
-	"<span class='notice'>You mend the nerves and lenses in [target]'s with \the [tool].</span>")
-
-	target.cure_nearsighted(list(EYE_DAMAGE_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))
-	target.sdisabilities &= ~BLIND
-	eyes.damage = 0
-
-/datum/surgery_step/eye/mend_eyes/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, stabbing \the [tool] into [target]'s eye!</span>", \
-	"<span class='warning'>Your hand slips, stabbing \the [tool] into [target]'s eye!</span>")
-	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-	IO.take_damage(5, 0)
-
 /datum/surgery_step/eye/cauterize
 	allowed_tools = list(
 	/obj/item/weapon/cautery = 100,			\

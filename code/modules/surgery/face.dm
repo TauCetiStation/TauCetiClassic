@@ -3,33 +3,6 @@
 //						FACE SURGERY							//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/face/mend_vocal
-	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,             \
-	/obj/item/stack/cable_coil = 75,            \
-	/obj/item/weapon/wirecutters = 75,           \
-	/obj/item/weapon/kitchen/utensil/fork = 50,  \
-	/obj/item/device/assembly/mousetrap = 10	//I don't know. Don't ask me. But I'm leaving it because hilarity.
-	)
-
-	min_duration = 70
-	max_duration = 90
-
-/datum/surgery_step/face/mend_vocal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts mending [target]'s vocal cords with \the [tool].", \
-	"You start mending [target]'s vocal cords with \the [tool].")
-	..()
-
-/datum/surgery_step/face/mend_vocal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] mends [target]'s vocal cords with \the [tool].</span>", \
-	"<span class='notice'>You mend [target]'s vocal cords with \the [tool].</span>")
-	target.op_stage.face = 2
-
-/datum/surgery_step/face/mend_vocal/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='warning'>[user]'s hand slips, clamping [target]'s trachea shut for a moment with \the [tool]!</span>", \
-	"<span class='warning'>Your hand slips, clamping [user]'s trachea shut for a moment with \the [tool]!</span>")
-	target.losebreath += 10
-
 /datum/surgery_step/face/fix_face
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100, 	\

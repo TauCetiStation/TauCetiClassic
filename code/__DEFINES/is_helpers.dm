@@ -216,6 +216,9 @@
 							 || ispulsing(I)\
 							 || iscoil(I))
 
+#define isalienembryo(A)    istype(A, /obj/item/alien_embryo)
+#define isborer(A)          istype(A, /mob/living/simple_animal/borer)
+
 // OBJECTS
 
 #define isitem(A)		(istype(A, /obj/item))

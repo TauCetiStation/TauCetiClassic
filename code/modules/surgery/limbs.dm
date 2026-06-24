@@ -16,39 +16,6 @@
 		return 0
 	return target_zone != BP_CHEST
 
-
-/datum/surgery_step/limb/cut
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,		\
-	/obj/item/weapon/kitchenknife = 75,	\
-	/obj/item/weapon/shard = 50, 		\
-	)
-
-	min_duration = 80
-	max_duration = 100
-
-/datum/surgery_step/limb/cut/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		return !target.op_stage.bodyparts[target_zone]
-
-/datum/surgery_step/limb/cut/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts cutting away flesh where [target]'s [parse_zone(target_zone)] used to be with \the [tool].", \
-	"You start cutting away flesh where [target]'s [parse_zone(target_zone)] used to be with \the [tool].")
-	..()
-
-/datum/surgery_step/limb/cut/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] cuts away flesh where [target]'s [parse_zone(target_zone)] used to be with \the [tool].</span>",	\
-	"<span class='notice'>You cut away flesh where [target]'s [parse_zone(target_zone)] used to be with \the [tool].</span>")
-	target.op_stage.bodyparts[target_zone] = ORGAN_CUT_AWAY
-
-/datum/surgery_step/limb/cut/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(BP_CHEST)
-	if (BP)
-		user.visible_message("<span class='warning'>[user]'s hand slips, cutting [target]'s [BP.name] open!</span>", \
-		"<span class='warning'>Your hand slips, cutting [target]'s [BP.name] open!</span>")
-		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
-
-
 /datum/surgery_step/limb/mend
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,           \

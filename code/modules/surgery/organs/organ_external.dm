@@ -60,7 +60,7 @@
 	// Surgery vars.
 	var/open = BP_DEFAULT_STATE
 	var/max_open_state = BP_RETRACTOR_OPEN_STATE
-	var/stage = 0  // use binary flags
+	var/stage = null                  // uses binary flags, allow in mob
 	var/cavity = 0
 	var/trauma_kit = FALSE
 	var/burn_kit = FALSE

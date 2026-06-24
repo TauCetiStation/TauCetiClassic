@@ -43,49 +43,6 @@
 	"<span class='warning'>Your hand slips, tearing skin on [target]'s face with \the [tool]!</span>")
 	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 
-/datum/surgery_step/plastic_surgery/adjust_vocal
-	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100, 	\
-	/obj/item/stack/cable_coil = 75, 	\
-	/obj/item/weapon/wirecutters = 75,           \
-	/obj/item/weapon/kitchen/utensil/fork = 50,  \
-	/obj/item/device/assembly/mousetrap = 10
-	)
-
-	min_duration = 70
-	max_duration = 90
-
-/datum/surgery_step/plastic_surgery/adjust_vocal/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.plasticsur == 1 && target.op_stage.face == 1
-
-/datum/surgery_step/plastic_surgery/adjust_vocal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	var/obj/item/organ/external/head/H = BP
-	if (H.disfigured == 1)
-		user.visible_message("[user] starts mending [target]'s vocal cords with \the [tool].", \
-		"You start mending [target]'s vocal cords with \the [tool].")
-	else
-		user.visible_message("[user] starts adjusting [target]'s vocal cords with \the [tool].", \
-		"You start adjusting [target]'s vocal cords with \the [tool].")
-	..()
-
-/datum/surgery_step/plastic_surgery/adjust_vocal/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	var/obj/item/organ/external/head/H = BP
-	if (H.disfigured == 1)
-		user.visible_message("<span class='notice'>[user] mends [target]'s vocal cords with \the [tool].</span>", \
-		"<span class='notice'>You mend [target]'s vocal cords with \the [tool].</span>")
-		H.disfigured = 0
-	else
-		user.visible_message("<span class='notice'>[user] adjusts [target]'s vocal cords with \the [tool].</span>", \
-		"<span class='notice'>You adjust [target]'s vocal cords with \the [tool].</span>")
-	target.op_stage.plasticsur = 2
-
-/datum/surgery_step/plastic_surgery/adjust_vocal/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='warning'>[user]'s hand slips, clamping [target]'s trachea shut for a moment with \the [tool]!</span>", \
-	"<span class='warning'>Your hand slips, clamping [user]'s trachea shut for a moment with \the [tool]!</span>")
-	target.losebreath += 10
-
 //reshape_face
 
 /datum/surgery_step/plastic_surgery/cauterize

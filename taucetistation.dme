@@ -2532,7 +2532,6 @@
 #include "code\modules\surgery\braincore.dm"
 #include "code\modules\surgery\eye.dm"
 #include "code\modules\surgery\face.dm"
-#include "code\modules\surgery\gender_reassignment.dm"
 #include "code\modules\surgery\generic.dm"
 #include "code\modules\surgery\implant.dm"
 #include "code\modules\surgery\limbs.dm"

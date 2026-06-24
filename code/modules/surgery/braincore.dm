@@ -46,33 +46,6 @@
 	BP.fracture()
 	BP.take_damage(max(10, tool.force), 0, DAM_SHARP|DAM_EDGE, tool)
 
-/datum/surgery_step/brain/cut_brain
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50,
-	)
-	allowed_species = list("exclude", IPC, DIONA)
-
-	min_duration = 80
-	max_duration = 100
-
-/datum/surgery_step/brain/cut_brain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts separating connections to [target]'s brain with \the [tool].",
-	"You start separating connections to [target]'s brain with \the [tool].")
-	..()
-
-/datum/surgery_step/brain/cut_brain/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] separates connections to [target]'s brain with \the [tool].</span>",
-	"<span class='notice'>You separate connections to [target]'s brain with \the [tool].</span>")
-	target.op_stage.brain_cut = 1
-
-/datum/surgery_step/brain/cut_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
-	BP.take_damage(50, 0, DAM_SHARP|DAM_EDGE,  tool)
-
 /datum/surgery_step/brain/saw_spine
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100,
@@ -183,36 +156,6 @@
 //////////////////////////////////////////////////////////////////
 //				BRAIN DAMAGE FIXING								//
 //////////////////////////////////////////////////////////////////
-
-/datum/surgery_step/brain/bone_chips
-	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,
-	/obj/item/weapon/wirecutters = 75,
-	/obj/item/weapon/kitchen/utensil/fork = 50
-	)
-
-	min_duration = 80
-	max_duration = 100
-
-/datum/surgery_step/brain/bone_chips/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.skull ==  1 && target.has_brain() && target.op_stage.brain_fix == 0
-
-/datum/surgery_step/brain/bone_chips/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts taking bone chips out of [target]'s brain with \the [tool].",
-	"You start taking bone chips out of [target]'s brain with \the [tool].")
-	..()
-
-/datum/surgery_step/brain/bone_chips/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] takes out all the bone chips in [target]'s brain with \the [tool].</span>",
-	"<span class='notice'>You take out all the bone chips in [target]'s brain with \the [tool].</span>")
-	target.op_stage.brain_fix = 1
-
-
-/datum/surgery_step/brain/bone_chips/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, jabbing \the [tool] in [target]'s brain!</span>",
-	"<span class='warning'>Your hand slips, jabbing \the [tool] in [target]'s brain!</span>")
-	BP.take_damage(30, 0, DAM_SHARP, tool)
 
 /datum/surgery_step/brain/hematoma
 	allowed_tools = list(

@@ -62,6 +62,8 @@
 			return TRUE
 	else if(!surgery_victim.species.flags[TRAIT_NO_BLOOD]) // human, unathi, tajaran, skrell and etc
 		if(!BP.is_robotic_part())
+			if(target_zone == BP_GROIN && BP.open >= BP_SCALPEL_OPEN_STATE && surgery_victim.get_species() != VOX) // in this stage we need check only VOX
+				return TRUE
 			switch(target_zone)
 				if(O_EYES)
 					var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
@@ -100,8 +102,8 @@
 /datum/surgery_step/cut/begin_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
-		user.visible_message("[user] starts cutting through [slime]'s [slime.surgery_status == 1 ? "innards" : "flesh"] with \the [tool].",
-		"You start cutting through [slime]'s [slime.surgery_status == 1 ? "innards" : "flesh"] with \the [tool].")
+		user.visible_message("[user] starts cutting through [slime]'s [slime.surgery_status == CUTTED ? "innards" : "flesh"] with \the [tool].",
+		"You start cutting through [slime]'s [slime.surgery_status == CUTTED ? "innards" : "flesh"] with \the [tool].")
 
 	var/mob/living/carbon/human/surgery_victim = target
 	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
@@ -134,6 +136,11 @@
 						"You start separating connections to [surgery_victim]'s brain with \the [tool].")
 	else if(!surgery_victim.species.flags[TRAIT_NO_BLOOD])
 		surgery_victim.custom_pain("You feel a horrible pain as if from a sharp knife in your [BP.name]!",1)
+		if(target_zone == BP_GROIN && BP.open >= BP_SCALPEL_OPEN_STATE && surgery_victim.get_species() != VOX) // in this stage we need check only VOX
+			user.visible_message("[user] begins to reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [tool].", \
+			"You start to reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [tool]." )
+			surgery_victim.custom_pain("The pain in your groin is living hell!",1)
+
 		switch(target_zone)
 			if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
 				user.visible_message("[user] starts the incision on [surgery_victim]'s [BP.name] with \the [tool].", \
@@ -164,8 +171,8 @@
 /////////////////////////////////////
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
-		user.visible_message("<span class='notice'>[user] cuts through [target]'s [slime.surgery_status == 1 ? "silky innards" : "flesh"] with \the [tool].</span>",
-		"<span class='notice'>You cut through [target]'s [slime.surgery_status == 1 ? "silky innards" : "flesh"] with \the [tool], exposing the cores.</span>")
+		user.visible_message("<span class='notice'>[user] cuts through [target]'s [slime.surgery_status == CUTTED ? "silky innards" : "flesh"] with \the [tool].</span>",
+		"<span class='notice'>You cut through [target]'s [slime.surgery_status == CUTTED ? "silky innards" : "flesh"] with \the [tool], exposing the cores.</span>")
 		switch(slime.surgery_status)
 			if(NORMAL) // cut_flesh
 				slime.surgery_status = CUTTED
@@ -298,8 +305,14 @@
 						"<span class='notice'>You alter [surgery_victim]'s appearance with \the [tool].</span>")
 						surgery_victim.real_name = plastic_new_name
 						plastic_new_name = null
+						HP.ps_status = NORMAL
 						return TRUE
 			if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
+				if(target_zone == BP_GROIN && BP.open >= BP_SCALPEL_OPEN_STATE && surgery_victim.get_species() != VOX) // in this stage we need check only VOX
+					user.visible_message("<span class='notice'>[user] has made a [surgery_victim.gender == FEMALE ? "man" : "woman"] of [surgery_victim] with \the [tool].</span>" , \
+					"<span class='notice'>You have made a man of [target].</span>")
+					target.gender = target.gender == MALE ? FEMALE : MALE
+					surgery_victim.regenerate_icons()
 				switch(BP.open)
 					if(BP_DEFAULT_STATE)
 						var/datum/reagents/R = surgery_victim.reagents
@@ -346,8 +359,8 @@
 /datum/surgery_step/cut/fail_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
-		user.visible_message("<span class='warning'>[user]'s hand slips, tearing [slime]'s [slime.surgery_status == 1 ? "innards" : "flesh"] with \the [tool]!</span>",
-								 "<span class='warning'>Your hand slips, tearing [slime]'s [slime.surgery_status == 1 ? "innards" : "flesh"] with \the [tool]!</span>")
+		user.visible_message("<span class='warning'>[user]'s hand slips, tearing [slime]'s [slime.surgery_status == CUTTED ? "innards" : "flesh"] with \the [tool]!</span>",
+								 "<span class='warning'>Your hand slips, tearing [slime]'s [slime.surgery_status == CUTTED ? "innards" : "flesh"] with \the [tool]!</span>")
 		return TRUE
 
 	var/mob/living/carbon/human/surgery_victim = target
@@ -375,6 +388,13 @@
 
 	switch(target_zone)
 		if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
+			if(target_zone == BP_GROIN && BP.open >= BP_SCALPEL_OPEN_STATE && surgery_victim.get_species() != VOX) // in this stage we need check only VOX
+				user.visible_message("<span class='warning'>[user]'s hand slips, slicing [surgery_victim]'s genitals with \the [tool]!</span>", \
+				"<span class='warning'>Your hand slips, slicing [surgery_victim]'s genitals with \the [tool]!</span>")
+				if(tool.damtype != BURN)
+					BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
+				else
+					BP.take_damage(5, 15, DAM_SHARP|DAM_EDGE, tool)
 			if(BP.open == BP_SAW_INTERNALS_OPEN_STATE)
 				user.visible_message("<span class='warning'>[user]'s hand slips, cutting a [surgery_victim]'s vein on organ with \the [tool]!</span>",
 				"<span class='warning'>Your hand slips, cutting a [surgery_victim]'s vein on organ with \the [tool]!</span>")
@@ -410,8 +430,8 @@
 		borer.detatch() //Should remove borer if the brain is removed - RR
 	surgery_victim.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
 	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, surgery_victim)
-	var/obj/item/organ/internal/brain/IO = surgery_victim.organs_by_name[O_BRAIN]
-	IO.status |= ORGAN_CUT_AWAY
-	IO.remove(surgery_victim)
-	IO.loc = get_turf(surgery_victim)
+	var/obj/item/organ/internal/brain/brain = surgery_victim.organs_by_name[O_BRAIN]
+	brain.status |= ORGAN_CUT_AWAY
+	brain.remove(surgery_victim)
+	brain.loc = get_turf(surgery_victim)
 	surgery_victim.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.

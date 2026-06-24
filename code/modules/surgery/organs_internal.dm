@@ -81,64 +81,6 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 
-/datum/surgery_step/organ_manipulation/remove
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,		\
-	/obj/item/weapon/kitchenknife = 75,	\
-	/obj/item/weapon/shard = 50, 		\
-	)
-
-	min_duration = 110
-	max_duration = 150
-
-/datum/surgery_step/organ_manipulation/remove/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-		if(BP.stage == 3)
-			return FALSE
-
-		return BP && ((BP.open == 3 && BP.body_zone == BP_CHEST) || (BP.open == 2))
-
-/datum/surgery_step/organ_manipulation/remove/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] starts poking around inside the incision on [target]'s [BP.name] with \the [tool].", \
-	"You start poking around inside the incision on [target]'s [BP.name] with \the [tool]" )
-	target.custom_pain("The pain in your chest is living hell!",1)
-	..()
-
-/datum/surgery_step/organ_manipulation/remove/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if (BP.bodypart_organs.len)
-		var/list/embed_organs = list()
-		for(var/embed_organ in BP.bodypart_organs)
-			embed_organs += embed_organ
-		for(var/atom/embed_organ as anything in embed_organs)
-			embed_organs[embed_organ] = image(icon = embed_organ.icon, icon_state = initial(embed_organ.icon_state))
-		var/choosen_organ = show_radial_menu(user, target, embed_organs, radius = 50, require_near = TRUE, tooltips = TRUE)
-		if(!choosen_organ)
-			user.visible_message("<span class='notice'>[user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.</span>", \
-		"<span class='notice'>You could not find anything inside [target]'s [BP.name].</span>")
-			return
-		if(!(BP.open >= 2  && (target_zone != BP_CHEST || target.op_stage.ribcage == 2)))
-			return
-		var/obj/item/organ/internal/I = choosen_organ
-		I.status |= ORGAN_CUT_AWAY
-		I.remove(target)
-		I.loc = get_turf(target)
-		BP.bodypart_organs  -= I
-		playsound(target, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
-
-	else
-		user.visible_message("<span class='notice'>[user] could not find anything inside [target]'s [BP.name], and pulls \the [tool] out.</span>", \
-		"<span class='notice'>You could not find anything inside [target]'s [BP.name].</span>" )
-
-/datum/surgery_step/organ_manipulation/remove/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
-	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
-	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
-
-
 /datum/surgery_step/organ_manipulation/treat_necrosis
 	priority = 0
 
