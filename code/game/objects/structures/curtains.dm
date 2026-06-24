@@ -12,11 +12,13 @@
 	var/can_be_painted = TRUE
 
 /obj/structure/curtain/open
+	desc = "За этой шторой определённо нет человека с монтировкой."
 	icon_state = "open"
 	opacity = FALSE
 
 /obj/structure/curtain/transparent
 	name = "transparent curtain"
+	desc = "Обеспечивает приватность примерно на том же уровне, что и стеклянная дверь."
 	opacity = FALSE
 	alpha = 150
 	can_be_painted = TRUE
