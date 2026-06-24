@@ -19,7 +19,7 @@
 	var/dynamic_positions = 0
 
 	// Scale dynamic positions for this job
-	var/dynamic_scale
+	var/players_scale
 
 	// total_positions override by map
 	var/map_total_positions
@@ -210,5 +210,5 @@
 	if(map_total_positions == 0)
 		return 0
 	if(dynamic_positions == 1)
-		return (map_total_positions || total_positions) + round(length(global.clients) / dynamic_scale)
+		return (map_total_positions || total_positions) + round(length(global.clients) / players_scale)
 	return map_total_positions || total_positions

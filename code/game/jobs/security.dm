@@ -113,7 +113,7 @@
 	total_positions = 2
 	spawn_positions = 5
 	dynamic_positions = 1
-	dynamic_scale = 10
+	players_scale = 10
 	supervisors = "the head of security and warden"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
@@ -143,7 +143,7 @@
 	total_positions = 2
 	spawn_positions = 3
 	dynamic_positions = 1
-	dynamic_scale = 10
+	players_scale = 10
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
