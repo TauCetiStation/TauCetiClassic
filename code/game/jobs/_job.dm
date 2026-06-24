@@ -15,11 +15,14 @@
 	//How many players can spawn in as this job
 	var/spawn_positions = 0
 
-	// Adds dynamic positions for this job (0 - disable, 1 - active)
-	var/dynamic_positions = 0
+	// Adds dynamic positions for this job
+	var/dynamic_positions = FALSE
 
 	// Scale dynamic positions for this job
 	var/players_scale
+
+	// Max number of dynamic slots
+	var/max_dynamic_slots
 
 	// total_positions override by map
 	var/map_total_positions
@@ -209,6 +212,13 @@
 /datum/job/proc/round_dynamic_positions()
 	if(map_total_positions == 0)
 		return 0
-	if(dynamic_positions == 1)
-		return (map_total_positions || total_positions) + round(length(global.clients) / players_scale)
+	if(dynamic_positions == TRUE)
+		var/positions = (map_total_positions || total_positions)
+		var/rounded_slots = positions + round(length(global.clients) / players_scale)
+
+		if(max_dynamic_slots > 0 && rounded_slots > max_dynamic_slots)
+			return max_dynamic_slots
+
+		return rounded_slots
+
 	return map_total_positions || total_positions
