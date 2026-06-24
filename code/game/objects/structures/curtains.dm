@@ -47,11 +47,8 @@
 
 	if(istype(I, /obj/item/toy/crayon/spraycan) && can_be_painted)
 		var/obj/item/toy/crayon/spraycan/S = I
-		var/col = null
-		col = S.vars["colour"]
-		if(!col)
-			return
-
+		var/col = S.colour
+		S.uses = max(S.uses - 2, 0)
 		change_color(col)
 		return
 
