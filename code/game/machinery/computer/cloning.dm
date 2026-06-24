@@ -122,7 +122,11 @@
 				dat += "Статус блокировки: <a href='byond://?src=\ref[src];lock=1'>[src.scanner.locked ? "Заблокирован" : "Разблокирован"]</a><br>"
 
 			if (!isnull(src.pod1))
-				dat += "Биомасса: <i>[src.pod1.biomass].</i><br>"
+				var/bads_total = 0
+				for(var/obj/machinery/bads_tank/tank in machines)
+					if(tank.z == src.z)
+						bads_total += tank.bads_amount
+				dat += "Био-БАДов-Ви+: <i>хватает на [round(bads_total / CLONE_BADS_COST)]  [pluralize_russian(round(bads_total / CLONE_BADS_COST), "клона", "клонов", "клонов")].</i><br>"
 
 			// Database
 			dat += "<h4>Функции для управления базой данных</h4>"
@@ -161,10 +165,15 @@
 				dat += {"<b>UI:</b> [src.active_record.dna.uni_identity]<br>
 				<b>SE:</b> [src.active_record.dna.struc_enzymes]<br><br>"}
 
-				if(pod1 && pod1.biomass >= CLONE_BIOMASS)
+				var/has_bads = FALSE
+				for(var/obj/machinery/bads_tank/tank in machines)
+					if(tank.z == pod1.z && tank.bads_amount >= CLONE_BADS_COST)
+						has_bads = TRUE
+						break
+				if(has_bads)
 					dat += {"<a href='byond://?src=\ref[src];clone=\ref[src.active_record]'>Клонировать</a><br>"}
 				else
-					dat += {"<b>Недостаточно биомассы</b><br>"}
+					dat += {"<b>Недостаточно Био-БАДов-Ви+</b><br>"}
 
 		if(4)
 			if (!src.active_record)
@@ -322,8 +331,6 @@
 				temp = "Ошибка: не обнаружено капсулы клонирования."
 			else if(pod1.occupant)
 				temp = "Ошибка: капсула клонирования уже занята."
-			else if(pod1.biomass < CLONE_BIOMASS)
-				temp = "Ошибка: недостаточно биомассы."
 			else if(pod1.mess)
 				temp = "Ошибка: повреждение капсулы клонирования."
 			else if(!config.revival_cloning)

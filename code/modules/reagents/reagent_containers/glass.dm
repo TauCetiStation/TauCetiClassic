@@ -527,3 +527,24 @@
 	. = ..()
 	reagents.add_reagent("water", volume)
 	update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/nutriment
+	name = "beaker (nutriment)"
+
+/obj/item/weapon/reagent_containers/glass/beaker/nutriment/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", volume)
+
+/obj/item/weapon/reagent_containers/glass/beaker/fuel
+	name = "beaker (welding fuel)"
+
+/obj/item/weapon/reagent_containers/glass/beaker/fuel/atom_init()
+	. = ..()
+	reagents.add_reagent("fuel", volume)
+
+/obj/item/weapon/reagent_containers/glass/beaker/blood
+	name = "beaker (blood)"
+
+/obj/item/weapon/reagent_containers/glass/beaker/blood/atom_init()
+	. = ..()
+	reagents.add_reagent("blood", volume)

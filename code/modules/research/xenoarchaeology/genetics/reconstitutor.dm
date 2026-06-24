@@ -224,18 +224,19 @@
 	if(pod1)
 		if(pod1.occupant)
 			visible_message("<span class='red'>[bicon(src)] The cloning pod is currently occupied.</span>")
-		else if(pod1.biomass < CLONE_BIOMASS)
-			visible_message("<span class='red'>[bicon(src)] Not enough biomass in the cloning pod.</span>")
 		else if(pod1.mess)
 			visible_message("<span class='red'>[bicon(src)] Error: clonepod malfunction.</span>")
 		else
+			var/obj/machinery/bads_tank/tank = locate() in machines
+			if(!tank || tank.z != pod1.z || !tank.consume(CLONE_BADS_COST))
+				visible_message("<span class='red'>[bicon(src)] Not enough Bio-BADs-Vi+ on Z-level.</span>")
+				return
 			visible_message("<span class='notice'>[bicon(src)] [src] clones something from a reconstituted gene sequence!</span>")
 			playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 			pod1.occupant = new cloned_genesequence.spawned_type(pod1)
 			pod1.locked = 1
 			pod1.icon_state = "pod_1"
 			//pod1.occupant.name = "[pod1.occupant.name] ([rand(0,999)])"
-			pod1.biomass -= CLONE_BIOMASS
 	else
 		to_chat(usr, "<span class='red'>[bicon(src)] Unable to locate cloning pod!</span>")
 
