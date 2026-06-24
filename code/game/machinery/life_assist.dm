@@ -28,15 +28,15 @@
 /obj/machinery/life_assist/proc/attach(mob/living/carbon/human/H)
 	attached = H
 	AddComponent(/datum/component/bounded, H, 0, 1, CALLBACK(src, PROC_REF(resolve_stranded)))
-	visible_message("<span class='notice'>[usr] attaches \the [src] to \the [H].</span>")
+	visible_message("<span class='notice'>[usr] подключает трубки [CASE(src, GENITIVE_CASE)] к [H].</span>")
 	assist(H)
 	update_icon()
 
 /obj/machinery/life_assist/proc/detach(rip = FALSE)
 	if(!rip)
-		visible_message("<span class='notice'>[attached] is detached from \the [src]</span>")
+		visible_message("<span class='notice'>[attached] отключен от [CASE(src, GENITIVE_CASE)]</span>")
 	else
-		visible_message("<span class='warning'>The tubes are ripped out of [attached], doesn't that hurt?</span>")
+		visible_message("<span class='warning'>Трубки [CASE(src, GENITIVE_CASE)] с силой вырываются из тела [attached], оставляя за собой раны.</span>")
 		attached.apply_damage(15, BRUTE, BP_CHEST)
 
 	qdel(GetComponent(/datum/component/bounded))
@@ -72,8 +72,8 @@
 			detach()
 		else if(ishuman(over_object))
 			var/mob/living/carbon/human/H = over_object
-			if(HAS_TRAIT(H, TRAIT_EXTERNAL_VENTILATION))
-				visible_message("<span class='notice'>\the [H] is already attached to Artificial Ventillation</span>")
+			if(HAS_TRAIT(H, assist_trait))
+				visible_message("<span class='notice'>[H] уже подключен к [CASE(src, DATIVE_CASE)]</span>")
 				return
 			attach(H)
 
@@ -87,13 +87,23 @@
 	detach(rip = TRUE)
 	return TRUE
 
+/obj/machinery/life_assist/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
+	. = ..()
+
+	if(moving_diagonally)
+		return .
+
+	if(has_gravity(src))
+		playsound(src, 'sound/effects/roll.ogg', VOL_EFFECTS_MASTER)
+
 
 
 /obj/machinery/life_assist/artificial_ventilation
 	name = "artificial ventilation machine"
+	cases = list("аппарат ИВЛ", "аппарата ИВЛ", "аппарату ИВЛ", "аппарат ИВЛ", "аппаратом ИВЛ", "аппарате ИВЛ")
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "av_idle"
-	desc = "This is an Artificial Ventillation machine that supports breathing while lungs is broken."
+	desc = "Аппарат искусственной вентиляции лёгких. Заменяет функции лёгких."
 
 	icon_state_attached = "av_ventilating"
 	icon_state_detached = "av_idle"
@@ -104,13 +114,13 @@
 
 /obj/machinery/life_assist/artificial_ventilation/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/tank) || istype(W, /obj/item/weapon/tank/jetpack) || (stat & BROKEN) || holding)
-		return
+		return ..()
 	if(do_after(user, 10, target = src))
 		if(!user.drop_from_inventory(W, src))
 			return
 		holding = W
 		add_overlay(holding.icon_state)
-		visible_message("<span class='notice'>[holding] is attached to \the [src]</span>")
+		visible_message("<span class='notice'>[CASE(holding, NOMINATIVE_CASE)] вставлен в [CASE(src, ACCUSATIVE_CASE)]</span>")
 		if(attached)
 			update_internal(attached, TRUE)
 
@@ -123,7 +133,7 @@
 		return
 	if(holding && do_after(user, 20, target = src))
 		user.put_in_hands(holding)
-		visible_message("<span class='notice'>[holding] is detached from \the [src]</span>")
+		visible_message("<span class='notice'>[CASE(holding, NOMINATIVE_CASE)] извлечён из [CASE(src, GENITIVE_CASE)]</span>")
 		cut_overlay(holding.icon_state)
 		holding = null
 		if(attached)
@@ -142,7 +152,7 @@
 		return
 	if(connect && holding)
 		if(attached.internal)
-			visible_message("<span class='notice'>\the [attached] is already attached to tank</span>")
+			visible_message("<span class='notice'>[attached] уже подключен к другому баллону</span>")
 			return
 		attached.internal = holding
 	else if(attached.internal == holding)
@@ -150,9 +160,10 @@
 
 /obj/machinery/life_assist/cardiopulmonary_bypass
 	name = "cardiopulmonary bypass machine"
+	cases = list("аппарат ИК", "аппарата ИК", "аппарату ИК", "аппарат ИК", "аппаратом ИК", "аппарате ИК")
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "cpb_idle"
-	desc = "This is an Cardiopulmonary Bypass machine that temporarily takes over the function of the heart"
+	desc = "Аппарат искусственного кровообращения. Заменяет функции сердца."
 
 	density = TRUE
 
@@ -176,9 +187,10 @@
 
 /obj/machinery/life_assist/external_cooling_device
 	name = "External Cooling Device"
+	cases = list("аппарат вспомогательного охлаждения", "аппарата вспомогательного охлаждения", "аппарату вспомогательного охлаждения", "аппарат вспомогательного охлаждения", "аппаратом вспомогательного охлаждения", "аппарате вспомогательного охлаждения")
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "cooler_idle"
-	desc = "External Cooling Device rapidly cools down any connected machine. There are IPC-compatible jacks."
+	desc = "Аппарат для вспомогательного охлаждения подключённой машинерии. Имеет разъёмы для подключения к СПУ."
 
 	density = TRUE
 
@@ -186,3 +198,88 @@
 	icon_state_detached = "cooler_idle"
 
 	assist_trait = TRAIT_EXTERNAL_COOLING
+
+/obj/machinery/life_assist/hemodialysis
+	name = "Hemodialysis Machine"
+	cases = list("аппарат для гемодиализа", "аппарата для гемодиализа", "аппарату для гемодиализа", "аппарат для гемодализа", "аппаратом для гемодиализа", "аппарате для гемодиализа")
+	icon = 'icons/obj/iv_drip.dmi'
+	icon_state = "hemo_idle"
+	desc = "Аппарат для гемодиализа. Заменяет функции почек."
+
+	density = TRUE
+
+	icon_state_attached = "hemo_pumping"
+	icon_state_detached = "hemo_idle"
+
+	assist_trait = TRAIT_EXTERNAL_KIDNEY
+	var/filtertick = TRUE
+	var/remove_blood_amount = 10
+	var/blood_return_effectiveness = 0.9
+	var/filtering_amount = 3
+
+	var/obj/item/weapon/reagent_containers/glass/beaker/beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large
+
+/obj/machinery/life_assist/hemodialysis/attackby(obj/item/weapon/W, mob/user)
+	if (!istype(W, /obj/item/weapon/reagent_containers/glass/beaker) || (stat & BROKEN) || beaker)
+		return ..()
+
+	if(do_after(user, 1 SECOND, target = src))
+		if(!user.drop_from_inventory(W, src))
+			return
+		beaker = W
+		visible_message("<span class='notice'>[CASE(beaker, NOMINATIVE_CASE)] вставлен в [CASE(src, ACCUSATIVE_CASE)]</span>")
+		update_icon()
+
+/obj/machinery/life_assist/hemodialysis/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	if(user.is_busy() || issilicon(user))
+		return
+	if(beaker && do_after(user, 2 SECONDS, target = src))
+		user.put_in_hands(beaker)
+		visible_message("<span class='notice'>[CASE(beaker, NOMINATIVE_CASE)] извлечён из [CASE(src, GENITIVE_CASE)]</span>")
+		beaker = null
+		update_icon()
+
+/obj/machinery/life_assist/hemodialysis/process()
+	if(!attached || !beaker || (beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
+		return
+
+	filtertick = !filtertick
+
+	if(filtertick)
+		attached.inject_blood(beaker, min(round(remove_blood_amount * blood_return_effectiveness), beaker.reagents.get_reagent_amount("blood")))
+		update_icon()
+		return
+
+	attached.blood_trans_to(beaker, remove_blood_amount)
+	playsound(src, 'sound/machines/dialysis.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+	for(var/datum/reagent/x in attached.reagents.reagent_list)
+		attached.reagents.trans_to(beaker, filtering_amount)
+
+	update_icon()
+
+/obj/machinery/life_assist/hemodialysis/update_icon()
+	..()
+	cut_overlays()
+	if(!beaker)
+		return
+
+	add_overlay("di_beaker")
+	if(beaker && beaker.reagents && beaker.reagents.total_volume)
+		var/image/filling = image('icons/obj/iv_drip.dmi', src, "reagent")
+
+		var/percent = round((beaker.reagents.total_volume / beaker.volume) * 100)
+		switch(percent)
+			if(0 to 9)		filling.icon_state = "reagent0"
+			if(10 to 24) 	filling.icon_state = "reagent10"
+			if(25 to 49)	filling.icon_state = "reagent25"
+			if(50 to 74)	filling.icon_state = "reagent50"
+			if(75 to 79)	filling.icon_state = "reagent75"
+			if(80 to 90)	filling.icon_state = "reagent80"
+			if(91 to INFINITY)	filling.icon_state = "reagent100"
+
+		filling.icon += mix_color_from_reagents(beaker.reagents.reagent_list)
+		add_overlay(filling)

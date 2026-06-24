@@ -146,6 +146,16 @@
 	unit_name = "artifical ventilation machine"
 	export_types = list(/obj/machinery/life_assist/artificial_ventilation)
 
+/datum/export/large/external_cooling_device
+	cost = 300
+	unit_name = "external cooling device"
+	export_types = list(/obj/machinery/life_assist/external_cooling_device)
+
+/datum/export/large/hemodialysis
+	cost = 300
+	unit_name = "hemodialysis machine"
+	export_types = list(/obj/machinery/life_assist/hemodialysis)
+
 /datum/export/large/barrier
 	cost = 65
 	unit_name = "security barrier"

@@ -306,6 +306,10 @@
 /obj/machinery/giga_drill/price = 40000
 /obj/machinery/gravity_generator/price = 7500
 /obj/machinery/iv_drip/price = 250
+/obj/machinery/life_assist/cardiopulmonary_bypass/price = 250
+/obj/machinery/life_assist/artificial_ventilation/price = 250
+/obj/machinery/life_assist/external_cooling_device/price = 250
+/obj/machinery/life_assist/hemodialysis/price = 250
 /obj/machinery/nuclearbomb/price = 35333
 /obj/machinery/pipedispenser/price = 850
 /obj/machinery/recharger/price = 350

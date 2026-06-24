@@ -41,7 +41,9 @@ var/global/list/predefined_forms_list = list(
 				/datum/form/med/work_incapacity,
 				/datum/form/med/chem_request,
 				/datum/form/med/psych_exam,
-				/datum/form/med/medical_services
+				/datum/form/med/medical_services,
+				/datum/form/med/blood_analysis,
+				/datum/form/med/blood_analysis_table
 				)
 		),
 		"RnD" = list(
@@ -589,6 +591,54 @@ var/global/list/predefined_forms_list = list(
 		[hr][small]*Приложить результаты сканирования пациента.[/small]
 		[small]**Приложить форму 3B при наличии.[/small]
 		[hr]Место для штампов.
+	"}
+
+/datum/form/med/blood_analysis
+	index = "3I-A"
+	name = "Результаты лабораторного анализа крови"
+	content = @{"
+		[h]ФОРМА 3I-A: Результаты лабораторного анализа крови[/h]
+		[b]Станция:[/b] [sname][br]
+		[b]Дата выдачи результатов:[/b] [date][br]
+		[b]Время выдачи:[/b] [time][br]
+		[hr]
+		[b]Пациент[/b][br]
+		[b]ФИО:[/b] [field][br]
+		[b]Отдел/должность:[/b] [field][br]
+		[b]Группа крови:[/b] [field] [b]Резус-фактор:[/b] [field][br]
+		[hr]
+		[b]Выполненный тип анализа:[/b][br]
+		[field][br]
+		[b]Результаты исследования[/b][br]
+		[hr]
+		[center][b]ПОДПИСЬ ОТВЕТСТВЕННОГО ВРАЧА[/b][/center][br]
+		[sfield][br]
+	"}
+
+/datum/form/med/blood_analysis_table
+	index = "3I-B"
+	name = "Приложение к результатам лабораторного анализа крови"
+	content = @{"
+		[h]ФОРМА 3I-B: Результаты лабораторного анализа крови[/h]
+		[b]Станция:[/b] [sname][br]
+		[b]Дата выдачи результатов:[/b] [date][br]
+		[b]Время выдачи:[/b] [time][br]
+		[hr]
+		[table]
+		[tr][th]Показатель[/th][th]Значение[/th][th]Комментарий[/th][/tr]
+		[tr][td][field][/td][td][field][/td][td][field][/td][/tr]
+		[tr][td][field][/td][td][field][/td][td][field][/td][/tr]
+		[tr][td][field][/td][td][field][/td][td][field][/td][/tr]
+		[tr][td][field][/td][td][field][/td][td][field][/td][/tr]
+		[tr][td][field][/td][td][field][/td][td][field][/td][/tr]
+		[tr][td][field][/td][td][field][/td][td][field][/td][/tr]
+		[tr][td][field][/td][td][field][/td][td][field][/td][/tr]
+		[tr][td][field][/td][td][field][/td][td][field][/td][/tr]
+		[tr][td][field][/td][td][field][/td][td][field][/td][/tr]
+		[/table][br]
+		[hr]
+		[center][b]ПОДПИСЬ ОТВЕТСТВЕННОГО ВРАЧА[/b][/center][br]
+		[sfield][br]
 	"}
 
 /datum/form/rnd/experiment

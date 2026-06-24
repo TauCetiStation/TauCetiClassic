@@ -21,6 +21,7 @@
 @include meta.load-css('./components/BlockQuote.scss');
 @include meta.load-css('./components/Button.scss');
 @include meta.load-css('./components/ColorBox.scss');
+@include meta.load-css('./components/Diagram.scss');
 @include meta.load-css('./components/Dimmer.scss');
 @include meta.load-css('./components/Divider.scss');
 @include meta.load-css('./components/Dropdown.scss');
@@ -57,6 +58,7 @@
 @include meta.load-css('./interfaces/TachyonArray.scss');
 @include meta.load-css('./interfaces/Techweb.scss');
 @include meta.load-css('./interfaces/Minesweeper.scss');
+@include meta.load-css('./interfaces/Sleeper.scss');
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');

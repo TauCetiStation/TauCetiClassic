@@ -167,6 +167,7 @@
 #define TRAIT_EXTERNAL_VENTILATION "external_ventilation"
 #define TRAIT_EXTERNAL_COOLING    "external_cooling"
 #define TRAIT_EXTERNAL_HEART      "external_heart"
+#define TRAIT_EXTERNAL_KIDNEY     "external_kidney"
 #define TRAIT_LIGHT_STEP          "light_step"
 #define TRAIT_FREERUNNING         "freerunning"
 #define TRAIT_AGEUSIA             "ageusia"

@@ -1072,6 +1072,10 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/machinery/sleeper/survival_pod
 	icon = 'icons/obj/survival_pod.dmi'
 
+/obj/machinery/sleeper/survival_pod/atom_init()
+	. = ..()
+	populate_beakers()
+
 //Computer
 /obj/item/device/gps/computer
 	name = "pod computer"

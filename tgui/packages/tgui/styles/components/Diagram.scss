@@ -1,0 +1,17 @@
+.Diagram_Body {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+  column-gap: 0px;
+
+  padding: 0px;
+  margin: 0px;
+
+  .Diagram_Part {
+    &:hover {
+      border: solid 2px #ffffff !important;
+    }
+  }
+}
