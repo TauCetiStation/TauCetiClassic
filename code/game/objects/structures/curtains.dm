@@ -92,12 +92,6 @@
 		icon_state = "open"
 
 /obj/structure/curtain/proc/change_color(new_color)
-	if(!istext(new_color))
-		return
-
-	if(length(new_color) != 7 || copytext(new_color, 1, 2) != "#")
-		return
-
 	color = new_color
 
 /obj/structure/curtain/black
