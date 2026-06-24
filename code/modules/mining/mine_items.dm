@@ -394,7 +394,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		else
 			power_supply.loc = get_turf(src.loc)
 			user.put_in_hands(power_supply)
-			power_supply.updateicon()
+			power_supply.update_icon()
 			power_supply = null
 			to_chat(user, "<span class='notice'>You pull the powercell out of \the [src].</span>")
 		return
