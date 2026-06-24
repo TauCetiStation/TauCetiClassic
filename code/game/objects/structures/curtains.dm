@@ -102,7 +102,7 @@
 	if(!hex2num("0x[hex]"))
 		return
 
-	src.color = lowertext(new_color)
+	color = new_color
 
 /obj/structure/curtain/black
 	name = "black curtain"
