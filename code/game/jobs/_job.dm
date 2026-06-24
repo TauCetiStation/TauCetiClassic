@@ -18,6 +18,9 @@
 	// Adds dynamic positions for this job (0 - disable, 1 - active)
 	var/dynamic_positions = 0
 
+	// Scale dynamic positions for this job
+	var/dynamic_scale
+
 	// total_positions override by map
 	var/map_total_positions
 	// spawn_positions override by map
@@ -192,7 +195,7 @@
 	return max(0, roles_ingame_minute_unlock[role] - C.player_ingame_age)
 
 /datum/job/proc/is_position_available()
-	var/dyn_pos_count = round_total_positions()
+	var/dyn_pos_count = round_dynamic_positions()
 	return (current_positions < dyn_pos_count) || (dyn_pos_count == -1)
 
 /datum/job/proc/map_check()
@@ -203,9 +206,9 @@
 		return skillsets[H.mind.role_alt_title] || skillsets[title]
 	return skillsets[title]
 
-/datum/job/proc/round_total_positions()
+/datum/job/proc/round_dynamic_positions()
 	if(map_total_positions == 0)
 		return 0
 	if(dynamic_positions == 1)
-		return (map_total_positions || total_positions) + round(length(global.clients) / 10)
+		return (map_total_positions || total_positions) + round(length(global.clients) / dynamic_scale)
 	return map_total_positions || total_positions
