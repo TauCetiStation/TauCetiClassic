@@ -98,10 +98,6 @@
 	if(length(new_color) != 7 || copytext(new_color, 1, 2) != "#")
 		return
 
-	var/hex = copytext(new_color, 2, 8)
-	if(!hex2num("0x[hex]"))
-		return
-
 	color = new_color
 
 /obj/structure/curtain/black
