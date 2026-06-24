@@ -360,6 +360,7 @@
 #include "code\datums\components\mechanic_description.dm"
 #include "code\datums\components\mood.dm"
 #include "code\datums\components\multi_carry.dm"
+#include "code\datums\components\mutant_hands.dm"
 #include "code\datums\components\seethrough.dm"
 #include "code\datums\components\serial_number.dm"
 #include "code\datums\components\silence.dm"

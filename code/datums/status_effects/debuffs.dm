@@ -70,8 +70,8 @@
 		return
 	owner.weakened = TRUE
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
-	owner.drop_from_inventory(owner.l_hand)
-	owner.drop_from_inventory(owner.r_hand)
+	owner.drop_l_hand()
+	owner.drop_r_hand()
 
 /datum/status_effect/incapacitating/weakened/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
@@ -122,8 +122,8 @@
 		if(prob(10) && owner.health)
 			if(!carbon_owner || !carbon_owner.hal_crit)
 				owner.emote("snore")
-	owner.drop_from_inventory(owner.l_hand)
-	owner.drop_from_inventory(owner.r_hand)
+	owner.drop_l_hand()
+	owner.drop_r_hand()
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Сон"
