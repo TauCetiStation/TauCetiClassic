@@ -1,5 +1,6 @@
 /obj/structure/curtain
 	name = "curtain"
+	desc = "За этой шторой определённо нет человека с монтировкой."
 	icon = 'icons/obj/curtain.dmi'
 	icon_state = "closed"
 	layer = INFRONT_MOB_LAYER
@@ -12,7 +13,6 @@
 	var/can_be_painted = TRUE
 
 /obj/structure/curtain/open
-	desc = "За этой шторой определённо нет человека с монтировкой."
 	icon_state = "open"
 	opacity = FALSE
 
