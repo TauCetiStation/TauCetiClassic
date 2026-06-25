@@ -436,7 +436,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	merge_type = /obj/item/stack/cable_coil
 
 	qualities = list(
-		QUALITY_FIX_VEIN = 1.25
+		QUALITY_FIX_VEIN = 75,
+		QUALITY_CLAMP = 75
 	)
 
 /obj/item/stack/cable_coil/cyborg

@@ -758,7 +758,7 @@
 		if(qual_mod <= 0)
 			return
 
-		delay *= qual_mod
+		delay /= qual_mod/100
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)

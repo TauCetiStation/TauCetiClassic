@@ -181,7 +181,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/excavation_amount = 100
 
 	qualities = list(
-		QUALITY_ROCK_DRILL = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
+		QUALITY_ROCK_DRILL = 100 //moving the delay to an item var so R&D can make improved picks. --NEO
 	)
 
 /obj/item/weapon/pickaxe/silver
@@ -191,7 +191,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	origin_tech = "materials=3"
 	desc = "This makes no metallurgic sense."
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.7
+		QUALITY_ROCK_DRILL = 125
 	)
 
 /obj/item/weapon/pickaxe/gold
@@ -202,7 +202,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.2 // hi MiNeCrAfT golden pickaxe
+		QUALITY_ROCK_DRILL = 400 // hi MiNeCrAfT golden pickaxe
 	)
 
 /obj/item/weapon/pickaxe/diamond
@@ -213,7 +213,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.25
+		QUALITY_ROCK_DRILL = 350
 	)
 
 /*****************************Sledgehammer********************************/
@@ -278,7 +278,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	usesound = 'sound/effects/shovel_digging.ogg'
 	// Better than a rod, worse than a crowbar.
 	qualities = list(
-		QUALITY_PRYING = 0.75
+		QUALITY_PRYING = 75
 	)
 
 /obj/item/weapon/shovel/experimental
@@ -290,7 +290,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	force = 10.0
 	origin_tech = "materials=2;engineering=3"
 	qualities = list(
-		QUALITY_PRYING = 0.1
+		QUALITY_PRYING = 200
 	)
 
 /obj/item/weapon/shovel/spade
@@ -347,7 +347,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	var/cell_type = /obj/item/weapon/stock_parts/cell/high
 	var/effectively_mode = FALSE
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.5
+		QUALITY_ROCK_DRILL = 200
 	)
 
 /obj/item/weapon/pickaxe/drill/atom_init()
@@ -420,7 +420,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/pickaxe/drill/proc/update_mode_stats()
 	if(effectively_mode)
-		qualities[QUALITY_ROCK_DRILL] *= 1.25 // slow down drilling speed
+		qualities[QUALITY_ROCK_DRILL] /= 1.25 // slow down drilling speed
 		drill_cost *= 2
 		mineral_multiply_coefficient += 0.25
 	else
@@ -437,7 +437,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.8 // Drills 3 tiles in front of user
+		QUALITY_ROCK_DRILL = 150 // Drills 3 tiles in front of user
 	)
 
 /obj/item/weapon/pickaxe/drill/jackhammer/attackby(obj/item/I, mob/user, params)
@@ -452,7 +452,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	desc = "Yours is the drill that will pierce the heavens!"
 	drill_verb = "drilling"
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.3 // Digs through walls, girders, and can dig up sand
+		QUALITY_ROCK_DRILL = 300 // Digs through walls, girders, and can dig up sand
 	)
 
 /obj/item/weapon/pickaxe/drill/borgdrill
@@ -462,7 +462,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	mineral_multiply_coefficient = 1.2
 	drill_verb = "drilling"
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.4
+		QUALITY_ROCK_DRILL = 200
 	)
 
 /obj/item/weapon/pickaxe/drill/borgdrill/attackby(obj/item/I, mob/user, params)

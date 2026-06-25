@@ -28,10 +28,7 @@
 /datum/surgery_step/proc/tool_quality(obj/item/tool, mob/living/carbon/C)
 	for(var/quality in allowed_qualities)
 		if(get_suiteble_quality(quality, allowed_qualities, C))
-			if(tool.get_quality(quality) > 1)
-				return (tool.get_quality(quality) - 1) * 100 // like (1.7 - 1)*100 = 70% to lose
-			else if(tool.get_quality(quality) <= 1 && tool.get_quality(quality) != 0)
-				return (tool.get_quality(quality) + 1) * 100 // like (0.3 + 1)*100 = 130% to win
+			return tool.get_quality(quality)
 
 	return 0
 

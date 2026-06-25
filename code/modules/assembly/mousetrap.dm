@@ -51,6 +51,9 @@
 /obj/item/device/assembly/mousetrap/attack_self(mob/living/user)
 	if(!armed)
 		to_chat(user, "<span class='notice'>You arm [src].</span>")
+		qualities = list(
+			QUALITY_CLAMP = 25
+		)
 	else
 		if((user.getBrainLoss() >= 60 && prob(50)) || user.ClumsyProbabilityCheck(50))
 			triggered(user, user.hand ? BP_L_ARM : BP_R_ARM)

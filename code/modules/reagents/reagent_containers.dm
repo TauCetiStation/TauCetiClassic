@@ -11,7 +11,7 @@
 	var/list/list_reagents = null
 	var/volume = 30
 	qualities = list(
-		QUALITY_DROP_LIQUID = 1
+		QUALITY_DROP_LIQUID = 100
 	)
 
 /obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this

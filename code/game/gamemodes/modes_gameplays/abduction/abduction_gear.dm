@@ -451,8 +451,8 @@
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
 	qualities = list(
-		QUALITY_CUTTING = 1,
-		QUALITY_SURG_CUTTING = 0.3
+		QUALITY_CUTTING = 100,
+		QUALITY_SURG_CUTTING = 300
 	)
 
 /obj/item/weapon/hemostat/alien
@@ -460,7 +460,8 @@
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
 	qualities = list(
-		QUALITY_CLAMP = 0.3
+		QUALITY_CLAMP = 300,
+		QUALITY_SCREWING = 100
 	)
 
 /obj/item/weapon/retractor/alien
@@ -468,7 +469,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
 	qualities = list(
-		QUALITY_RETRACT = 0.3
+		QUALITY_RETRACT = 300
 	)
 
 /obj/item/weapon/circular_saw/alien
@@ -477,14 +478,15 @@
 	item_state_world = null
 	icon_state = "saw"
 	qualities = list(
-		QUALITY_SAW_OPEN = 0.3
+		QUALITY_SAW_OPEN = 300,
+		QUALITY_CUTTING = 25
 	)
 /obj/item/weapon/surgicaldrill/alien
 	name = "alien drill"
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
 	qualities = list(
-		QUALITY_DRILL_OPEN = 0.3
+		QUALITY_DRILL_OPEN = 300
 	)
 
 /obj/item/weapon/cautery/alien
@@ -492,7 +494,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
 	qualities = list(
-		QUALITY_CAUTER = 0.3
+		QUALITY_CAUTER = 300
 	)
 
 /obj/item/weapon/bonegel/alien
@@ -502,7 +504,8 @@
 	icon_state = "ectoplasm"
 	item_state_world = null
 	qualities = list(
-		QUALITY_MENDING_BONE = 0.3
+		QUALITY_MENDING_BONE = 300,
+		QUALITY_FIX_VEIN = 300
 	)
 
 // OPERATING TABLE / BEDS / LOCKERS	/ OTHER
@@ -513,6 +516,9 @@
 	var/holding = FALSE
 	var/belt = null
 	var/mob/living/carbon/fastened = null
+	qualities = (
+		QUALITY_OPERATE_TABLE = 300
+	)
 
 /obj/machinery/optable/abductor/atom_init()
 	belt = image("icons/obj/abductor.dmi", "belt", layer = FLY_LAYER)

@@ -94,10 +94,6 @@
 	hitsound = list('sound/weapons/Genhit.ogg')
 	attack_verb = list("stubbed", "poked")
 	var/extended = FALSE
-	qualities = list(
-		QUALITY_CUTTING = 1,
-		QUALITY_SURG_CUTTING = 1.7
-	)
 
 /obj/item/weapon/switchblade/attack_self(mob/user)
 	extended = !extended
@@ -110,6 +106,10 @@
 		icon_state = "switchblade_ext"
 		attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 		hitsound = list('sound/weapons/bladeslice.ogg')
+		qualities = list(
+		QUALITY_CUTTING = 100,
+		QUALITY_SURG_CUTTING = 75
+		)
 	else
 		force = 1
 		w_class = SIZE_TINY
@@ -118,6 +118,7 @@
 		icon_state = "switchblade"
 		attack_verb = list("stubbed", "poked")
 		hitsound = list('sound/weapons/Genhit.ogg')
+		qualities = null
 
 /obj/item/weapon/switchblade/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting \his own throat with the [src.name]! It looks like \he's trying to commit suicide.</span>")

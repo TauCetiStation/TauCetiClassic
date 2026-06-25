@@ -13,7 +13,7 @@
 	attack_verb = list("drills")
 	hitsound = list('sound/weapons/circsawhit.ogg')
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.6
+		QUALITY_ROCK_DRILL = 175
 	)
 
 /obj/item/weapon/pickaxe/excavationdrill/attack_self(mob/user)
@@ -51,7 +51,7 @@
 	item_state = "Dexcavationdrill"
 	desc = "Advanced archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The diamond tip is adjustable from 1 to 100 cms."
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.3
+		QUALITY_ROCK_DRILL = 300
 	)
 
 /obj/item/weapon/pickaxe/excavationdrill/adv/attack_self(mob/user)

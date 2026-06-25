@@ -139,8 +139,8 @@
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	var/on_step_sound = 'sound/effects/glass_step.ogg'
 	qualities = list(
-		QUALITY_CUTTING = 1.5,
-		QUALITY_SURG_CUTTING = 1.2
+		QUALITY_CUTTING = 50,
+		QUALITY_SURG_CUTTING = 25
 	)
 
 /obj/item/weapon/shard/atom_init()
@@ -514,8 +514,8 @@
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
 	qualities = list(
-		QUALITY_PRYING = 1.2,
-		QUALITY_SAW_OPEN = 1.2
+		QUALITY_PRYING = 50,
+		QUALITY_SAW_OPEN = 25
 	)
 
 /obj/item/weapon/hatchet/atom_init()

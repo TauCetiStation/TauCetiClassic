@@ -9,7 +9,7 @@
 	var/delay = 1 SECOND
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 	qualities = list(
-		QUALITY_MENDING_IPC = 0.9
+		QUALITY_MENDING_IPC = 100
 	)
 
 /obj/item/stack/nanopaste/attack(mob/living/M, mob/user, def_zone)

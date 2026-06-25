@@ -124,7 +124,7 @@
 	drill_verb = "clearing"
 	w_class = SIZE_SMALL
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.6
+		QUALITY_ROCK_DRILL = 150
 	)
 
 /obj/item/weapon/pickaxe/cyb/attack_self(mob/user)

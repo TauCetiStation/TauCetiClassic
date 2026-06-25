@@ -48,8 +48,6 @@
 #define BP_GEL 	    (0<<2)
 #define BP_SET 	    (1<<2)
 #define BP_VEIN     (2<<2)
-#define BP_BLEED    (3<<2)
-#define BP_KIT 	    (4<<2)
 
 // Slime and plastick surgery
 #define NORMAL      0

@@ -323,7 +323,6 @@
 
 						BP.open = BP_SCALPEL_OPEN_STATE
 						BP.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
-						BP.strap() // we dont apply ORGAN_BLEEDING early, and idn, need we this or not on case
 						return TRUE
 					if(BP_SAW_INTERNALS_OPEN_STATE)
 						if(!length(BP.bodypart_organs))

@@ -13,7 +13,7 @@
 	drill_verb = "brushing"
 	w_class = SIZE_TINY
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.4
+		QUALITY_ROCK_DRILL = 225
 	)
 
 /obj/item/weapon/pickaxe/one_pick
@@ -27,7 +27,7 @@
 	drill_verb = "delicately picking"
 	w_class = SIZE_TINY
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.4
+		QUALITY_ROCK_DRILL = 225
 	)
 
 /obj/item/weapon/pickaxe/two_pick
@@ -41,7 +41,7 @@
 	drill_verb = "delicately picking"
 	w_class = SIZE_TINY
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.4
+		QUALITY_ROCK_DRILL = 225
 	)
 
 /obj/item/weapon/pickaxe/three_pick
@@ -55,7 +55,7 @@
 	drill_verb = "delicately picking"
 	w_class = SIZE_TINY
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.4
+		QUALITY_ROCK_DRILL = 225
 	)
 
 /obj/item/weapon/pickaxe/four_pick
@@ -69,7 +69,7 @@
 	drill_verb = "delicately picking"
 	w_class = SIZE_TINY
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.4
+		QUALITY_ROCK_DRILL = 225
 	)
 
 /obj/item/weapon/pickaxe/five_pick
@@ -83,7 +83,7 @@
 	drill_verb = "delicately picking"
 	w_class = SIZE_TINY
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.4
+		QUALITY_ROCK_DRILL = 225
 	)
 
 /obj/item/weapon/pickaxe/six_pick
@@ -97,7 +97,7 @@
 	drill_verb = "delicately picking"
 	w_class = SIZE_TINY
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.4
+		QUALITY_ROCK_DRILL = 225
 	)
 
 /obj/item/weapon/pickaxe/hand
@@ -111,7 +111,7 @@
 	drill_verb = "clearing"
 	w_class = SIZE_SMALL
 	qualities = list(
-		QUALITY_ROCK_DRILL = 0.6
+		QUALITY_ROCK_DRILL = 175
 	)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

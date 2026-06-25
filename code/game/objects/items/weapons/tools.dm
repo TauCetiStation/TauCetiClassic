@@ -33,9 +33,9 @@
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 	qualities = list(
-		QUALITY_WRENCHING = 1,
-		QUALITY_BONE_SET = 1.7,
-		QUALITY_MENDING_IPC = 1.7
+		QUALITY_WRENCHING = 100,
+		QUALITY_BONE_SET = 75,
+		QUALITY_MENDING_IPC = 75
 	)
 
 /obj/item/weapon/wrench/atom_init(mapload, param_color)
@@ -67,8 +67,8 @@
 	attack_verb = list("stabbed")
 	usesound = 'sound/items/Screwdriver.ogg'
 	qualities = list(
-		QUALITY_SCREWING = 1,
-		QUALITY_RETRACT = 1.7
+		QUALITY_SCREWING = 100,
+		QUALITY_RETRACT = 75
 	)
 	stab_eyes = TRUE
 
@@ -116,9 +116,9 @@
 	var/random_color = TRUE
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 	qualities = list(
-		QUALITY_CUTTING = 1,
-		QUALITY_SURG_CUTTING = 1.7,
-		QUALITY_CLAMP = 1.7
+		QUALITY_CUTTING = 100,
+		QUALITY_SURG_CUTTING = 75,
+		QUALITY_CLAMP = 75
 	)
 
 /obj/item/weapon/wirecutters/atom_init(mapload, param_color)
@@ -160,10 +160,9 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = SIZE_TINY
-	qualities = list(
-		QUALITY_WELDING = 1,
-		QUALITY_CAUTER = 1.7
-	)
+	qualities = null
+	var/cautarize_quiality = 75
+	var/weld_quality = 100
 
 	m_amt = 70 // Cost to make in the autolathe
 	g_amt = 30
@@ -416,6 +415,10 @@
 			src.force = 15
 			src.damtype = BURN
 			src.icon_state = initial(src.icon_state) + "1"
+			qualities = list(
+				QUALITY_CAUTER = cautarize_quiality,
+				QUALITY_WELDING = weld_quality
+				)
 			START_PROCESSING(SSobj, src)
 		else
 			to_chat(usr, "<span class='info'>Need more fuel!</span>")
@@ -509,10 +512,7 @@
 	g_amt = 120
 	origin_tech = "materials=4;engineering=4;bluespace=2;phorontech=3"
 	var/next_refuel_tick = 0
-	qualities = list(
-		QUALITY_WELDING = 0.5,
-		QUALITY_CAUTER = 1.9
-	)
+	weld_quality = 150
 
 /obj/item/weapon/weldingtool/experimental/atom_init()
 	.=..()
@@ -551,8 +551,8 @@
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 	qualities = list(
-		QUALITY_PRYING = 1,
-		QUALITY_SAW_OPEN = 1.7
+		QUALITY_PRYING = 100,
+		QUALITY_SAW_OPEN = 50
 	)
 
 /obj/item/weapon/crowbar/red
@@ -567,8 +567,8 @@
 	m_amt = 15
 
 	qualities = list(
-		QUALITY_PRYING = 1.3,
-		QUALITY_SAW_OPEN = 1.8 //easier to perform small operations with a small crowbar
+		QUALITY_PRYING = 75,
+		QUALITY_SAW_OPEN = 75 //easier to perform small operations with a small crowbar
 	)
 
 /obj/item/weapon/weldingtool/attack(mob/M, mob/user, def_zone)
@@ -619,8 +619,8 @@
 	throwforce = 8
 	attack_verb = list("drilled", "screwed", "jabbed")
 	qualities = list(
-		QUALITY_WRENCHING = 0.3,
-		QUALITY_BONE_SET = 1.8
+		QUALITY_WRENCHING = 300,
+		QUALITY_BONE_SET = 75
 	)
 	item_action_types = list(/datum/action/item_action/hands_free/change_mode)
 
@@ -632,15 +632,15 @@
 	playsound(user, 'sound/items/change_drill.ogg', VOL_EFFECTS_MASTER)
 	if(mode)
 		qualities = list(
-			QUALITY_SCREWING = 0.3,
-			QUALITY_RETRACT = 1.8
+			QUALITY_SCREWING = 300,
+			QUALITY_RETRACT = 75
 		)
 		icon_state = "drill_screw"
 		to_chat(user, "<span class='notice'>You attach the screw driver bit to [src].</span>")
 	else
 		qualities = list(
-			QUALITY_WRENCHING = 0.3,
-			QUALITY_BONE_SET = 1.8
+			QUALITY_WRENCHING = 300,
+			QUALITY_BONE_SET = 75
 		)
 		icon_state = "drill_bolt"
 		to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
@@ -656,8 +656,8 @@
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
 	sharp = 1
 	qualities = list(
-		QUALITY_CUTTING = 0.3,
-		QUALITY_SURG_CUTTING = 1.7
+		QUALITY_CUTTING = 300,
+		QUALITY_SURG_CUTTING = 75
 	)
 	item_action_types = list(/datum/action/item_action/hands_free/change_mode)
 
@@ -669,16 +669,16 @@
 	playsound(user, 'sound/items/change_jaws.ogg', VOL_EFFECTS_MASTER)
 	if(mode)
 		qualities = list(
-			QUALITY_PRYING = 0.3,
-			QUALITY_SAW_OPEN = 1.8
+			QUALITY_PRYING = 300,
+			QUALITY_SAW_OPEN = 75
 		)
 		sharp = 0
 		icon_state = "jaws_pry"
 		to_chat(user, "<span class='notice'>You attach the pry jaws to [src].</span>")
 	else
 		qualities = list(
-			QUALITY_CUTTING = 0.3,
-			QUALITY_SURG_CUTTING = 1.7
+			QUALITY_CUTTING = 300,
+			QUALITY_SURG_CUTTING = 75
 		)
 		sharp = 1
 		icon_state = "jaws_cutter"
