@@ -209,13 +209,7 @@
 /datum/job/proc/round_summary_positions()
 	if(map_total_positions == 0)
 		return 0
+
+	. = map_total_positions || total_positions
 	if(summary_slots > 0)
-		var/positions = (map_total_positions || total_positions)
-		var/rounded_slots = positions + floor(length(global.clients) / players_scale)
-
-		if(rounded_slots > summary_slots)
-			return summary_slots
-
-		return rounded_slots
-
-	return map_total_positions || total_positions
+		. = min(summary_slots, . + floor(length(global.clients) / players_scale))
