@@ -106,6 +106,10 @@
 // /atom signals
 ///from base of atom/Click(): (location, control, params, mob/user)
 #define COMSIG_CLICK "atom_click"
+/// from base of atom/AltClick(): (mob/user)
+#define COMSIG_ATOM_ALTCLICK "atom_altclick"
+	// Return this to suppress the default AltClick behaviour
+	#define COMPONENT_CANCEL_ALTCLICK 1
 /// emp_act() : severity
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 	#define COMPONENT_PREVENT_EMP 1
