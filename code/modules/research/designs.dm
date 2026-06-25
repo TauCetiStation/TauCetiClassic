@@ -1077,7 +1077,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/basic_cell
 	name = "Basic Power Cell"
-	desc = "A basic power cell that holds 1000 units of energy"
+	desc = "Элемент питания, вмещающий 1000 условных единиц энергии."
 	id = "basic_cell"
 	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 50)
@@ -1087,7 +1087,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/high_cell
 	name = "High-Capacity Power Cell"
-	desc = "A power cell that holds 10000 units of energy"
+	desc = "Элемент питания, вмещающий 10000 условных единиц энергии."
 	id = "high_cell"
 	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 60)
@@ -1097,7 +1097,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/super_cell
 	name = "Super-Capacity Power Cell"
-	desc = "A power cell that holds 20000 units of energy"
+	desc = "Элемент питания, вмещающий 20000 условных единиц энергии."
 	id = "super_cell"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 70)
@@ -1107,7 +1107,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/hyper_cell
 	name = "Hyper-Capacity Power Cell"
-	desc = "A power cell that holds 30000 units of energy"
+	desc = "Элемент питания, вмещающий 30000 условных единиц энергии."
 	id = "hyper_cell"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 400, MAT_GLASS = 70, MAT_SILVER = 150, MAT_GOLD = 150)
@@ -1117,7 +1117,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/bluespace_cell
 	name = "Bluespace Power Cell"
-	desc = "A power cell that holds 40000 units of energy."
+	desc = "Элемент питания, вмещающий 40000 условных единиц энергии."
 	id = "bluespace_cell"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 800, MAT_GLASS = 160, MAT_SILVER = 300, MAT_GOLD = 300, MAT_DIAMOND = 160)
