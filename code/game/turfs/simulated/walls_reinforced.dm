@@ -380,8 +380,8 @@
 		var/obj/item/noticeboard_frame/NF = W
 		NF.try_build(user, src)
 
-	else if(istype(W,/obj/item/painting_frame))
-		var/obj/item/painting_frame/AH = W
+	else if(istype(W,/obj/item/weapon/picture_frame))
+		var/obj/item/weapon/picture_frame/AH = W
 		AH.try_build(src)
 		return
 
