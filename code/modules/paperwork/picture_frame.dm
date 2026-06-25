@@ -184,7 +184,7 @@
 		else
 			user.visible_message("<span class='notice'>[user] starts screwing \the [src] to the wall.</span>",
 								 "<span class='notice'>You start screwing \the [src] to the wall.</span>")
-		if(do_after(user, 20 * O.toolspeed, target = src))
+		if(O.use_tool(src, user, SKILL_TASK_EASY, quality = QUALITY_SCREWING))
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			screwed = !screwed
 			if(!screwed)

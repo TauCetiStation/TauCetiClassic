@@ -1,13 +1,13 @@
 ///////////////////ORGAN STATUS DEFINES///////////////////
-#define ORGAN_CUT_AWAY   1
-#define ORGAN_ATTACHABLE 2
-#define ORGAN_BLEEDING   4
-#define ORGAN_BROKEN     8
-#define ORGAN_SPLINTED   16
-#define ORGAN_ROBOT      32
-#define ORGAN_DEAD       64
-#define ORGAN_MUTATED    128
-#define ORGAN_ARTERY_CUT 256
+#define ORGAN_CUT_AWAY   (0<<2)
+#define ORGAN_ATTACHABLE (1<<2)
+#define ORGAN_BLEEDING   (2<<2)
+#define ORGAN_BROKEN     (3<<2)
+#define ORGAN_SPLINTED   (4<<2)
+#define ORGAN_ROBOT      (5<<2)
+#define ORGAN_DEAD       (6<<2)
+#define ORGAN_MUTATED    (7<<2)
+#define ORGAN_ARTERY_CUT (8<<2)
 
 #define DROPLIMB_EDGE  0
 #define DROPLIMB_BLUNT 1
@@ -21,6 +21,38 @@
 #define BODYPART_ORGANIC   1
 #define BODYPART_ROBOTIC   2
 #define BODYPART_SKELETON  3
+
+#define BP_DEFAULT_STATE            0
+
+// External organic organs
+#define BP_SCALPEL_OPEN_STATE       1
+#define BP_RETRACTOR_OPEN_STATE     2
+#define BP_SAW_INTERNALS_OPEN_STATE 3
+
+// External synthetic organs
+#define BP_PANEL_UNLOCKED           1
+#define BP_MAINTANCE_PANEL_OPEN     2
+#define BP_SECURITY_PANEL_OPEN      3
+
+// Internal organs
+#define IO_NORMAL_STATE (0<<2)
+#define IO_ORGAN_CUTTED (1<<2)
+
+// Stump status
+#define NO_STUMP       (0<<2)
+#define IS_STUMP       (1<<2)
+#define STUMP_OPERATED (2<<2)
+#define STUMP_PREPARED (3<<2)
+
+// Operation stages
+#define BP_GEL 	    (0<<2)
+#define BP_SET 	    (1<<2)
+#define BP_VEIN     (2<<2)
+
+// Slime and plastick surgery
+#define NORMAL      0
+#define CUTTED      1
+#define PREPARED    2
 
 // Bodypart defines
 #define BP_CHEST  "chest"

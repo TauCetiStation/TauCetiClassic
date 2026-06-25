@@ -10,6 +10,9 @@
 	var/possible_transfer_amounts = list(5,10,15,25,30)
 	var/list/list_reagents = null
 	var/volume = 30
+	qualities = list(
+		QUALITY_DROP_LIQUID = 100
+	)
 
 /obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
@@ -39,8 +42,11 @@
 	if(user.a_intent == INTENT_HARM) // Since we usually splash mobs or whatever, now we will also hit them.
 		..()
 
-/obj/item/weapon/reagent_containers/afterattack(atom/target, mob/user, proximity, params)
-	return
+/obj/item/weapon/reagent_containers/proc/treat_organ(mob/living/carbon/human/target)
+	var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
+	reagents.reaction(target)
+	update_icon()
+	return trans
 
 /obj/item/weapon/reagent_containers/proc/reagentlist(obj/item/weapon/reagent_containers/snack) //Attack logs for regents in pills
 	var/data

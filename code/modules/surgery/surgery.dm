@@ -4,6 +4,7 @@
 
 	//type path referencing tools that can be used for this step, and how well are they suited for it
 	var/list/allowed_tools = null
+	var/list/allowed_qualities = null
 	// type paths referencing mutantraces that this step applies to.
 	var/list/allowed_species = list("exclude", IPC)
 
@@ -20,13 +21,26 @@
 	var/clothless = 1
 	var/required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	var/skills_speed_bonus = -0.30 // -30% for each surplus level
-
+	var/msg = null
+	var/self_msg = null
+	var/cp_msg = null
 // returns how well tool is suited for this step
-/datum/surgery_step/proc/tool_quality(obj/item/tool)
-	for(var/T in allowed_tools)
-		if(istype(tool, T))
-			return allowed_tools[T]
-	return FALSE
+/datum/surgery_step/proc/tool_quality(obj/item/tool, mob/living/carbon/C)
+	for(var/quality in allowed_qualities)
+		if(get_suiteble_quality(quality, allowed_qualities, C))
+			return tool.get_quality(quality)
+
+	return 0
+
+/datum/surgery_step/proc/get_suiteble_quality(quality, list/allowed_qualities, mob/living/carbon/C)
+	if(isslime(C))
+		return get_surg_quality(quality)
+
+	var/mob/living/carbon/human/H = C
+	if(H.species.flags[IS_SYNTHETIC] || H.species.flags[TRAIT_NO_BLOOD])
+		return get_technic_quality(quality)
+	else
+		return get_surg_quality(quality)
 
 // Checks if this step applies to the mutantrace of the user.
 /datum/surgery_step/proc/is_valid_mutantrace(mob/living/carbon/human/target)
@@ -37,7 +51,12 @@
 
 // checks whether this step can be applied with the given user and target
 /datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return FALSE
+	if(!ishuman(target))
+		return FALSE
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	if(!BP)
+		return FALSE
+	return TRUE
 
 /datum/surgery_step/proc/prepare_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	return TRUE
@@ -183,7 +202,7 @@
 			return FALSE
 
 		//check if tool is right or close enough and if this step is possible
-		if(S.tool_quality(tool) && S.can_use(user, M, target_zone, tool) && S.is_valid_mutantrace(M))
+		if(S.tool_quality(tool, M) && S.can_use(user, M, target_zone, tool) && S.is_valid_mutantrace(M))
 			if(!S.prepare_step(user, M, target_zone, tool))	//for some kind of checks
 				return TRUE
 
@@ -198,7 +217,7 @@
 				if(prob(H.traumatic_shock) && !H.incapacitated(NONE))
 					to_chat(user, "<span class='warning'>The patient is writhing in pain, this interferes with the operation!</span>")
 					S.fail_step(user, H, target_zone, tool) //patient movements due to pain interfere with surgery
-			if(user.mood_prob(S.tool_quality(tool)) && tool.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus, particle_type = /particles/tool/surgery) && user.get_targetzone() && target_zone == user.get_targetzone())
+			if(user.mood_prob(S.tool_quality(tool, M)) && tool.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus, particle_type = /particles/tool/surgery) && user.get_targetzone() && target_zone == user.get_targetzone())
 				S.end_step(user, M, target_zone, tool)		//finish successfully
 			else if(tool.loc == user && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
 				S.fail_step(user, M, target_zone, tool)		//malpractice~

@@ -43,69 +43,74 @@
 	if(istype(target, /obj/effect/proc_holder/spell))
 		return FALSE
 
-	if(istype(target, /obj/structure/reagent_dispensers) && proximity) //this block copypasted from reagent_containers/glass, for lack of a better solution
-		var/obj/structure/reagent_dispensers/RD = target
-		if(!is_open_container())
-			to_chat(user, "<span class='notice'>[src] can't be filled right now.</span>")
-			return FALSE
+	if(!..())
 
-		if(!RD.reagents.total_volume && RD.reagents)
-			to_chat(user, "<span class='notice'>[RD] does not have enough liquids.</span>")
-			return FALSE
+		if(istype(target, /obj/structure/reagent_dispensers) && proximity) //this block copypasted from reagent_containers/glass, for lack of a better solution
+			var/obj/structure/reagent_dispensers/RD = target
+			if(!is_open_container())
+				to_chat(user, "<span class='notice'>[src] can't be filled right now.</span>")
+				return FALSE
 
-		if(reagents.total_volume >= reagents.maximum_volume)
-			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
+			if(!RD.reagents.total_volume && RD.reagents)
+				to_chat(user, "<span class='notice'>[RD] does not have enough liquids.</span>")
+				return FALSE
+
+			if(reagents.total_volume >= reagents.maximum_volume)
+				to_chat(user, "<span class='notice'>\The [src] is full.</span>")
+				update_icon()
+				return FALSE
+
+			var/trans = RD.reagents.trans_to(src, RD.amount_per_transfer_from_this)
+			to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [RD].</span>")
 			update_icon()
 			return FALSE
 
-		var/trans = RD.reagents.trans_to(src, RD.amount_per_transfer_from_this)
-		to_chat(user, "<span class='notice'>You fill \the [src] with [trans] units of the contents of \the [RD].</span>")
+		if(reagents.total_volume < amount_per_transfer_from_this)
+			to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
+			return FALSE
+
+		if(safety)
+			to_chat(usr, "<span class = 'warning'>The safety is on!</span>")
+			return FALSE
+
+		playsound(src, spray_sound, VOL_EFFECTS_MASTER, null, FALSE, null, volume_modifier)
+
+		if(reagents.has_reagent("sacid"))
+			message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src]. [ADMIN_JMP(user)]")
+			log_game("[key_name(user)] fired sulphuric acid from \a [src].")
+		if(reagents.has_reagent("pacid"))
+			message_admins("[key_name_admin(user)] fired Polyacid from \a [src]. [ADMIN_JMP(user)]")
+			log_game("[key_name(user)] fired Polyacid from \a [src].")
+		if(reagents.has_reagent("lube"))
+			message_admins("[key_name_admin(user)] fired Space lube from \a [src]. [ADMIN_JMP(user)]")
+			log_game("[key_name(user)] fired Space lube from \a [src].")
+
+		user.SetNextMove(CLICK_CD_INTERACT * 2)
+
+		var/turf/T = get_turf(target) // BS12 edit, with the wall spraying.
+		var/turf/T_start = get_turf(src)
+
+		if(triple_shot && reagents.total_volume >= amount_per_transfer_from_this * 3) // If it doesn't have triple the amount of reagents, but it passed the previous check, make it shoot just one tiny spray.
+			var/direction = get_dir(T_start, T)
+
+			var/turf/T1_start = get_step(T_start, turn(direction, 90))
+			var/turf/T2_start = get_step(T_start, turn(direction, -90))
+
+			var/turf/T1 = get_step(T, turn(direction, 90))
+			var/turf/T2 = get_step(T, turn(direction, -90))
+
+			INVOKE_ASYNC(src, PROC_REF(Spray_at), T_start, T)
+			INVOKE_ASYNC(src, PROC_REF(Spray_at), T1_start, T1)
+			INVOKE_ASYNC(src, PROC_REF(Spray_at), T2_start, T2)
+		else
+			INVOKE_ASYNC(src, PROC_REF(Spray_at), T_start, T)
+
+		INVOKE_ASYNC(src, PROC_REF(on_spray), T, user) // A proc where we do all the dirty chair riding stuff.
 		update_icon()
-		return FALSE
-
-	if(reagents.total_volume < amount_per_transfer_from_this)
-		to_chat(user, "<span class='notice'>\The [src] is empty!</span>")
-		return FALSE
-
-	if(safety)
-		to_chat(usr, "<span class = 'warning'>The safety is on!</span>")
-		return FALSE
-
-	playsound(src, spray_sound, VOL_EFFECTS_MASTER, null, FALSE, null, volume_modifier)
-
-	if(reagents.has_reagent("sacid"))
-		message_admins("[key_name_admin(user)] fired sulphuric acid from \a [src]. [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] fired sulphuric acid from \a [src].")
-	if(reagents.has_reagent("pacid"))
-		message_admins("[key_name_admin(user)] fired Polyacid from \a [src]. [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] fired Polyacid from \a [src].")
-	if(reagents.has_reagent("lube"))
-		message_admins("[key_name_admin(user)] fired Space lube from \a [src]. [ADMIN_JMP(user)]")
-		log_game("[key_name(user)] fired Space lube from \a [src].")
-
-	user.SetNextMove(CLICK_CD_INTERACT * 2)
-
-	var/turf/T = get_turf(target) // BS12 edit, with the wall spraying.
-	var/turf/T_start = get_turf(src)
-
-	if(triple_shot && reagents.total_volume >= amount_per_transfer_from_this * 3) // If it doesn't have triple the amount of reagents, but it passed the previous check, make it shoot just one tiny spray.
-		var/direction = get_dir(T_start, T)
-
-		var/turf/T1_start = get_step(T_start, turn(direction, 90))
-		var/turf/T2_start = get_step(T_start, turn(direction, -90))
-
-		var/turf/T1 = get_step(T, turn(direction, 90))
-		var/turf/T2 = get_step(T, turn(direction, -90))
-
-		INVOKE_ASYNC(src, PROC_REF(Spray_at), T_start, T)
-		INVOKE_ASYNC(src, PROC_REF(Spray_at), T1_start, T1)
-		INVOKE_ASYNC(src, PROC_REF(Spray_at), T2_start, T2)
+		return TRUE
 	else
-		INVOKE_ASYNC(src, PROC_REF(Spray_at), T_start, T)
-
-	INVOKE_ASYNC(src, PROC_REF(on_spray), T, user) // A proc where we do all the dirty chair riding stuff.
-	update_icon()
-	return TRUE
+		playsound(src, spray_sound, VOL_EFFECTS_MASTER, null, FALSE, null, volume_modifier)
+		return FALSE
 
 /obj/item/weapon/reagent_containers/spray/proc/on_spray(turf/T, mob/user)
 	if(!triple_shot) // Currently only the big baddies have this mechanic.

@@ -103,96 +103,98 @@
 	if (!is_open_container() || !proximity)
 		return
 
-	for(var/type in src.can_be_placed_into)
-		if(istype(target, type))
+	if(!..())
+
+		for(var/type in src.can_be_placed_into)
+			if(istype(target, type))
+				return
+
+		if(ismob(target))
+			if(!reagents.total_volume)
+				to_chat(user, "<span class = 'rose'>В [CASE(src, PREPOSITIONAL_CASE)] ничего нет.</span>")
+				return
+			var/mob/living/M = target
+
+			if(M == user)
+				if(user.a_intent == INTENT_HARM)
+					reagents.standard_splash(target, user=user)
+					M.visible_message("<span class='warning'>[usr] splashed the [src] all over!</span>", "<span class='warning'>You splashed the [src] all over!</span>")
+					return
+				if(!CanEat(user, M, src, "drink"))
+					return
+				else if(user.a_intent != INTENT_HELP)
+					gulp_whole()
+					return
+				if(isliving(M))
+					var/mob/living/L = M
+					L.taste_reagents(reagents)
+				to_chat(M, "<span class='notice'>You swallow a gulp of [src].</span>")
+				if(reagents.total_volume)
+					reagents.trans_to_ingest(M, gulp_size)
+				playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
+				update_icon()
+				return TRUE
+			else if(user.a_intent != INTENT_HARM)
+				if(!CanEat(user, M, src, "drink"))
+					return
+				M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
+								"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
+				if(!do_mob(user, M))
+					return
+				M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
+								"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
+
+				M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
+
+				if(reagents.total_volume)
+					reagents.trans_to_ingest(M, gulp_size)
+
+				playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
+				update_icon()
+				return TRUE
+
+			var/list/injected = list()
+			for(var/datum/reagent/R in src.reagents.reagent_list)
+				injected += R.name
+			var/contained = get_english_list(injected)
+
+			M.log_combat(user, "splashed with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
+
+			user.visible_message("<span class='rose'>[target] has been splashed with something by [user]!</span>")
+			reagents.standard_splash(target, user=user)
 			return
 
-	if(ismob(target))
-		if(!reagents.total_volume)
-			to_chat(user, "<span class = 'rose'>В [CASE(src, PREPOSITIONAL_CASE)] ничего нет.</span>")
-			return
-		var/mob/living/M = target
-
-		if(M == user)
-			if(user.a_intent == INTENT_HARM)
-				reagents.standard_splash(target, user=user)
-				M.visible_message("<span class='warning'>[usr] splashed the [src] all over!</span>", "<span class='warning'>You splashed the [src] all over!</span>")
+		else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us. Or FROM us TO it.
+			var/obj/structure/reagent_dispensers/T = target
+			if(T.transfer_from)
+				T.try_transfer(T, src, user)
+			else
+				T.try_transfer(src, T, user)
+		else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
+			if(!reagents.total_volume)
+				to_chat(user, "<span class = 'rose'>В [CASE(src, PREPOSITIONAL_CASE)] ничего нет.</span>")
 				return
-			if(!CanEat(user, M, src, "drink"))
+
+			if(target.reagents.total_volume >= target.reagents.maximum_volume)
+				to_chat(user, "<span class = 'rose'>[capitalize(CASE(target, NOMINATIVE_CASE))] [(ANYMORPH(target, "полон", "полна", "полно", "полны"))].</span>")
 				return
-			else if(user.a_intent != INTENT_HELP)
-				gulp_whole()
-				return
-			if(isliving(M))
-				var/mob/living/L = M
-				L.taste_reagents(reagents)
-			to_chat(M, "<span class='notice'>You swallow a gulp of [src].</span>")
-			if(reagents.total_volume)
-				reagents.trans_to_ingest(M, gulp_size)
-			playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
-			update_icon()
-			return TRUE
-		else if(user.a_intent != INTENT_HARM)
-			if(!CanEat(user, M, src, "drink"))
-				return
-			M.visible_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", \
-							"<span class='warning'><B>[user]</B> attempts to feed you <B>[src]</B>.</span>")
-			if(!do_mob(user, M))
-				return
-			M.visible_message("<span class='rose'>[user] feeds [M] [src].</span>", \
-							"<span class='warning'><B>[user]</B> feeds you <B>[src]</B>.</span>")
 
-			M.log_combat(user, "fed [name], reagents: [reagentlist(src)] (INTENT: [uppertext(user.a_intent)])")
+			var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
+			to_chat(user, "<span class = 'notice'>Вы переливаете [trans] юнитов вещества в [CASE(target, ACCUSATIVE_CASE)].</span>")
+			playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER) // Sound taken from "Eris" build
 
-			if(reagents.total_volume)
-				reagents.trans_to_ingest(M, gulp_size)
-
-			playsound(M, 'sound/items/drink.ogg', VOL_EFFECTS_MASTER, rand(10, 50))
-			update_icon()
-			return TRUE
-
-		var/list/injected = list()
-		for(var/datum/reagent/R in src.reagents.reagent_list)
-			injected += R.name
-		var/contained = get_english_list(injected)
-
-		M.log_combat(user, "splashed with [name], reagents: [contained] (INTENT: [uppertext(user.a_intent)])")
-
-		user.visible_message("<span class='rose'>[target] has been splashed with something by [user]!</span>")
-		reagents.standard_splash(target, user=user)
-		return
-
-	else if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us. Or FROM us TO it.
-		var/obj/structure/reagent_dispensers/T = target
-		if(T.transfer_from)
-			T.try_transfer(T, src, user)
-		else
-			T.try_transfer(src, T, user)
-	else if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
-		if(!reagents.total_volume)
-			to_chat(user, "<span class = 'rose'>В [CASE(src, PREPOSITIONAL_CASE)] ничего нет.</span>")
+		//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
+		else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
 			return
 
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			to_chat(user, "<span class = 'rose'>[capitalize(CASE(target, NOMINATIVE_CASE))] [(ANYMORPH(target, "полон", "полна", "полно", "полны"))].</span>")
+		else if(istype(target, /obj/machinery/bunsen_burner))
 			return
 
-		var/trans = reagents.trans_to(target, amount_per_transfer_from_this)
-		to_chat(user, "<span class = 'notice'>Вы переливаете [trans] юнитов вещества в [CASE(target, ACCUSATIVE_CASE)].</span>")
-		playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER) // Sound taken from "Eris" build
+		else if(istype(target, /obj/machinery/smartfridge))
+			return
 
-	//Safety for dumping stuff into a ninja suit. It handles everything through attackby() and this is unnecessary.
-	else if(istype(target, /obj/item/clothing/suit/space/space_ninja))
-		return
-
-	else if(istype(target, /obj/machinery/bunsen_burner))
-		return
-
-	else if(istype(target, /obj/machinery/smartfridge))
-		return
-
-	else if(istype(target, /obj/machinery/radiocarbon_spectrometer))
-		return
+		else if(istype(target, /obj/machinery/radiocarbon_spectrometer))
+			return
 
 	else if(istype(target, /obj/machinery/kitchen_machine))
 		return
@@ -205,19 +207,14 @@
 					var/obj/item/weapon/reagent_containers/glass/GB = CM.beakers[CM.filling_tank_id]
 					GB.afterattack(src, user, proximity)
 				else
-					afterattack(CM.beakers[CM.filling_tank_id], user, proximity)
-				CM.updateUsrDialog()
-				CM.update_icon()
-				return
-			else
-				to_chat(user, "<span class='warning'>You try to fill [user.a_intent == INTENT_GRAB ? "[src] up from a tank" : "a tank up"], but find it is absent.</span>")
-				return
+					to_chat(user, "<span class='warning'>You try to fill [user.a_intent == INTENT_GRAB ? "[src] up from a tank" : "a tank up"], but find it is absent.</span>")
+					return
 
 
-	else if(reagents && reagents.total_volume)
-		to_chat(user, "<span class = 'notice'>Вы разлили содержимое на [CASE(target, ACCUSATIVE_CASE)].</span>")
-		reagents.standard_splash(target, user=user)
-		return
+		else if(reagents && reagents.total_volume)
+			to_chat(user, "<span class = 'notice'>Вы разлили содержимое на [CASE(target, ACCUSATIVE_CASE)].</span>")
+			reagents.standard_splash(target, user=user)
+			return
 
 /obj/item/weapon/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/pen) || istype(I, /obj/item/device/flashlight/pen))

@@ -51,6 +51,17 @@
 /obj/item/proc/afterattack(atom/target, mob/user, proximity, params)
 	return
 
+/obj/item/proc/try_operate(atom/target, mob/user)
+	if(ishuman(target) && (isorganicsurgery(src) || issynteticsurgery(src)))
+		var/mob/living/carbon/human/H = target
+		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+		if(BP.open && can_operate(H, user)) // Checks if mob is lying down on table for surgery
+			do_surgery(H, user, src)
+			return TRUE
+		else
+			to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than \a [src]!</span>")
+		return FALSE
+
 
 /obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user, def_zone) & COMPONENT_ITEM_NO_ATTACK)

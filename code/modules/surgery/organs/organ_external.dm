@@ -42,9 +42,9 @@
 	var/list/children = list()        // Sub-limbs.
 	var/list/bodypart_organs = list() // Internal organs of this body part
 	var/sabotaged = 0                 // If a prosthetic limb is emagged, it will detonate when it fails.
-	var/list/embedded_objects = list() // Currently implanted objects. Includes embed objects, implants like mindshield, borers...
+	var/list/embedded_objects = list()// Currently implanted objects. Includes embed objects, implants like mindshield, borers...
 	var/bandaged = FALSE              // Are there any visual bandages on this bodypart
-	var/is_stump = FALSE              // Is it just a leftover of a destroyed bodypart
+	var/stump_status = NO_STUMP       // Is it just a leftover of a destroyed bodypart
 	var/leaves_stump = TRUE           // Does this bodypart leaves a stump when destroyed
 	// PUMPED, yo
 	var/pumped = 0
@@ -53,13 +53,14 @@
 	var/max_pumped = 60
 
 	// Joint/state stuff.
-	var/cannot_amputate               // Impossible to amputate.
+	var/cannot_amputate = FALSE       // Impossible to amputate.
 	var/artery_name = "artery"        // Flavour text for cartoid artery, aorta, etc.
 	var/arterial_bleed_severity = 1   // Multiplier for bleeding in a limb.
 
 	// Surgery vars.
-	var/open = 0
-	var/stage = 0
+	var/open = BP_DEFAULT_STATE
+	var/max_open_state = BP_RETRACTOR_OPEN_STATE
+	var/stage = null                  // uses binary flags, allow in mob
 	var/cavity = 0
 	var/trauma_kit = FALSE
 	var/burn_kit = FALSE
@@ -300,7 +301,7 @@
 	RETURN_TYPE(/list)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(is_stump)
+	if(is_stump())
 		return
 
 	// todo: it can rewrite things we don't want to rewrite
@@ -485,7 +486,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 // new damage icon system
 // returns just the brute/burn damage code
 /obj/item/organ/external/proc/damage_state_text()
-	if(is_stump)
+	if(is_stump())
 		return "--"
 
 	var/tburn = 0
@@ -516,6 +517,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 /****************************************************
 			   DISMEMBERMENT
 ****************************************************/
+/obj/item/organ/external/proc/is_stump()
+	if(stump_status & IS_STUMP)
+		return TRUE
+	return FALSE
 
 //Handles dismemberment
 /obj/item/organ/external/proc/droplimb(no_explode = FALSE, clean = FALSE, disintegrate = DROPLIMB_EDGE)
@@ -562,7 +567,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(BP.parent == src)
 			BP.droplimb(null, clean, disintegrate)
 
-	if(parent && !(parent.is_stump) && disintegrate != DROPLIMB_BURN)
+	if(parent && !parent.is_stump() && disintegrate != DROPLIMB_BURN)
 		if(clean)
 			if(prob(10))
 				parent.sever_artery()
@@ -880,14 +885,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_TORSO_LAYER
 	regen_bodypart_penalty = 150
 
+	max_open_state = BP_SAW_INTERNALS_OPEN_STATE
 	cannot_amputate = TRUE
 
 	max_damage = 75
 	min_broken_damage = 35
 	vital = TRUE
 	w_class = SIZE_BIG // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
-
-/obj/item/organ/external/chest
 
 /obj/item/organ/external/groin
 	name = "groin"
@@ -1035,6 +1039,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_HEAD_LAYER
 	regen_bodypart_penalty = 100
 
+	max_open_state = BP_SAW_INTERNALS_OPEN_STATE
+	var/ps_status = NORMAL
 	max_damage = 75
 	min_broken_damage = 35
 	vital = TRUE
@@ -1512,7 +1518,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return get_english_list(descriptors)
 
 	var/list/flavor_text = list()
-	if(is_stump)
+	if(is_stump())
 		flavor_text += "a tear and hangs by a scrap of flesh" // TODO ZAKONCHIT'
 
 	var/list/wound_descriptors = list()

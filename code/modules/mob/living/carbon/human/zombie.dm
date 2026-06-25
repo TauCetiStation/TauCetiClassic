@@ -132,7 +132,7 @@
 
 /mob/living/carbon/human/proc/prerevive_zombie()
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
-	if(organs_by_name[O_BRAIN] && BP && !(BP.is_stump))
+	if(organs_by_name[O_BRAIN] && BP && !BP.is_stump())
 		var/free_body = TRUE
 		if(!key && mind)
 			for(var/mob/dead/observer/ghost in player_list)
@@ -151,7 +151,7 @@
 
 /mob/living/carbon/human/proc/revive_zombie()
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
-	if(!organs_by_name[O_BRAIN] || !BP || BP.is_stump)
+	if(!organs_by_name[O_BRAIN] || !BP || BP.is_stump())
 		return
 	//remove all blind-blur effects
 	cure_nearsighted(list(EYE_DAMAGE_TRAIT, GENETIC_MUTATION_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))

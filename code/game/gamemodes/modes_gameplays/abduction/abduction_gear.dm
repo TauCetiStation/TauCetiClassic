@@ -450,38 +450,52 @@
 	name = "alien scalpel"
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
-	toolspeed = 0.3
+	qualities = list(
+		QUALITY_CUTTING = 100,
+		QUALITY_SURG_CUTTING = 300
+	)
 
 /obj/item/weapon/hemostat/alien
 	name = "alien hemostat"
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
-	toolspeed = 0.3
+	qualities = list(
+		QUALITY_CLAMP = 300,
+		QUALITY_SCREWING = 100
+	)
 
 /obj/item/weapon/retractor/alien
 	name = "alien retractor"
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
-	toolspeed = 0.3
+	qualities = list(
+		QUALITY_RETRACT = 300
+	)
 
 /obj/item/weapon/circular_saw/alien
 	name = "alien saw"
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
 	icon_state = "saw"
-	toolspeed = 0.3
-
+	qualities = list(
+		QUALITY_SAW_OPEN = 300,
+		QUALITY_CUTTING = 25
+	)
 /obj/item/weapon/surgicaldrill/alien
 	name = "alien drill"
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
-	toolspeed = 0.3
+	qualities = list(
+		QUALITY_DRILL_OPEN = 300
+	)
 
 /obj/item/weapon/cautery/alien
 	name = "alien cautery"
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
-	toolspeed = 0.3
+	qualities = list(
+		QUALITY_CAUTER = 300
+	)
 
 /obj/item/weapon/bonegel/alien
 	name = "alien ectoplasm"
@@ -489,6 +503,10 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "ectoplasm"
 	item_state_world = null
+	qualities = list(
+		QUALITY_MENDING_BONE = 300,
+		QUALITY_FIX_VEIN = 300
+	)
 
 // OPERATING TABLE / BEDS / LOCKERS	/ OTHER
 /obj/machinery/optable/abductor
@@ -498,6 +516,9 @@
 	var/holding = FALSE
 	var/belt = null
 	var/mob/living/carbon/fastened = null
+	qualities = (
+		QUALITY_OPERATE_TABLE = 300
+	)
 
 /obj/machinery/optable/abductor/atom_init()
 	belt = image("icons/obj/abductor.dmi", "belt", layer = FLY_LAYER)
@@ -509,6 +530,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor/adv/super/quadratic(null)
 	component_parts += new /obj/item/stack/cable_coil/red(null, 2)
 	RefreshParts()
+
 /obj/machinery/optable/abductor/attack_hand(mob/living/carbon/C)
 	if(!victim && !fastened)
 		return

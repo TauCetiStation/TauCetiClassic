@@ -11,6 +11,7 @@
 	var/min_bruised_damage = 10 // Damage before considered bruised
 	var/damage = 0              // Amount of damage to the organ
 
+	var/surgery_stage = NORMAL
 
 	var/process_accuracy = 0
 

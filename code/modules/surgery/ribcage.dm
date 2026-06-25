@@ -160,38 +160,6 @@
 	BP.open = 2
 
 //////////////////////////////////////////////////////////////////
-//					ALIEN EMBRYO SURGERY						//
-//////////////////////////////////////////////////////////////////
-/datum/surgery_step/ribcage/remove_embryo
-	allowed_tools = list(
-	/obj/item/weapon/hemostat = 100,
-	/obj/item/weapon/wirecutters = 75,
-	/obj/item/weapon/kitchen/utensil/fork = 50
-	)
-	blood_level = 2
-
-	min_duration = 80
-	max_duration = 100
-
-/datum/surgery_step/ribcage/remove_embryo/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return (locate(/obj/item/alien_embryo) in target) && ..() && target.op_stage.ribcage == 2
-
-/datum/surgery_step/ribcage/remove_embryo/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/msg = "[user] starts to pull something out from [target]'s ribcage with \the [tool]."
-	var/self_msg = "You start to pull something out from [target]'s ribcage with \the [tool]."
-	user.visible_message(msg, self_msg)
-	target.custom_pain("Something hurts horribly in your chest!",1)
-	..()
-
-/datum/surgery_step/ribcage/remove_embryo/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='warning'>[user] rips the larva out of [target]'s ribcage!</span>",
-						 "You rip the larva out of [target]'s ribcage!")
-
-	for(var/obj/item/alien_embryo/A in target)
-		A.loc = A.loc.loc
-
-
-//////////////////////////////////////////////////////////////////
 //				CHEST INTERNAL ORGAN SURGERY					//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ribcage/fix_chest_internal
@@ -357,35 +325,6 @@
 //////////////////////////////////////////////////////////////////
 //				EXTRACTING DIONA'S BRAIN						//
 //////////////////////////////////////////////////////////////////
-/datum/surgery_step/ribcage/cut_diona_brain
-	allowed_tools = list(
-	/obj/item/weapon/scalpel = 100,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50
-	)
-	allowed_species = list(DIONA)
-
-	min_duration = 80
-	max_duration = 100
-
-/datum/surgery_step/ribcage/cut_diona_brain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.ribcage == 2
-
-/datum/surgery_step/ribcage/cut_diona_brain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts separating connections to [target]'s brain with \the [tool].",
-	"You start separating connections to [target]'s brain with \the [tool].")
-	..()
-
-/datum/surgery_step/ribcage/cut_diona_brain/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] separates connections to [target]'s brain with \the [tool].</span>",
-	"<span class='notice'>You separate connections to [target]'s brain with \the [tool].</span>")
-	target.chest_brain_op_stage = 1
-
-/datum/surgery_step/ribcage/cut_diona_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
-	BP.take_damage(50, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ribcage/cut_diona_spine
 	allowed_tools = list(
@@ -431,101 +370,6 @@
 //////////////////////////////////////////////////////////////////
 //				EXTRACTING IPC'S BRAIN							//
 //////////////////////////////////////////////////////////////////
-/datum/surgery_step/ipc/ribcage/cut_posibrain
-	allowed_tools = list(
-	/obj/item/weapon/wirecutters = 100,
-	/obj/item/weapon/kitchenknife = 75,
-	/obj/item/weapon/shard = 50
-	)
-
-	min_duration = 80
-	max_duration = 100
-
-/datum/surgery_step/ipc/ribcage/cut_posibrain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.ribcage == 2 && target.has_brain()
-
-/datum/surgery_step/ipc/ribcage/cut_posibrain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts cutting wires connecting [target]'s posi-brain with \the [tool].",
-	"You start cutting wires connecting [target]'s posi-brain with \the [tool].")
-	..()
-
-/datum/surgery_step/ipc/ribcage/cut_posibrain/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] cuts wires connecting [target]'s posi-brain with \the [tool].</span>",
-	"<span class='notice'>You cut wires connecting [target]'s posi-brain with \the [tool].</span>")
-	target.chest_brain_op_stage = 1
-
-/datum/surgery_step/ipc/ribcage/cut_posibrain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>")
-	BP.take_damage(50, 0, DAM_SHARP, tool)
-
-/datum/surgery_step/ipc/ribcage/extract_posibrain
-	allowed_tools = list(
-	/obj/item/weapon/crowbar = 100,
-	/obj/item/weapon/hatchet = 75,
-	/obj/item/weapon/circular_saw = 50
-	)
-	priority = 4
-
-	min_duration = 50
-	max_duration = 70
-
-/datum/surgery_step/ipc/ribcage/extract_posibrain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.chest_brain_op_stage == 1 && target.has_brain() && target.op_stage.ribcage == 2
-
-/datum/surgery_step/ipc/ribcage/extract_posibrain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts prying out [target]'s posi-brain from \his hatch with \the [tool].",
-	"You start prying out [target]'s posi-brain from hatch with \the [tool].")
-	..()
-
-/datum/surgery_step/ipc/ribcage/extract_posibrain/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] pries out [target]'s posi-brain from \his hatch with \the [tool].</span>",
-	"<span class='notice'>You pry out [target]'s posi-brain from hatch with \the [tool].</span>")
-
-	target.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
-
-	var/brain_type = /obj/item/device/mmi/posibrain
-	var/brain_species = target.get_species()
-
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if(istype(BP, /obj/item/organ/external/chest/robot/ipc))
-		var/obj/item/organ/external/chest/robot/ipc/I = BP
-		brain_type = I.posibrain_type
-		brain_species = I.posibrain_species
-
-	var/obj/item/device/mmi/P = new brain_type(target.loc)
-	if(brain_species == DIONA)
-		var/mob/living/carbon/monkey/diona/D = new(target)
-
-		D.real_name = target.real_name
-		D.name = target.real_name
-
-		D.dna = target.dna.Clone()
-		D.dna.SetSEState(MONKEYBLOCK, 1)
-		D.dna.SetSEValueRange(MONKEYBLOCK, 0xDAC, 0xFFF)
-
-		if(target.mind)
-			target.mind.transfer_to(D)
-
-		for(var/datum/language/L as anything in target.languages)
-			D.add_language(L.name, target.languages[L])
-
-		for(var/datum/quirk/Q in target.roundstart_quirks)
-			D.saved_quirks += Q.type
-
-		P.transfer_nymph(D)
-	else
-		P.transfer_identity(target)
-
-	target.chest_brain_op_stage = 2
-	target.death()
-
-/datum/surgery_step/ipc/ribcage/extract_posibrain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>")
-	BP.take_damage(30, 0, DAM_SHARP, tool)
 
 /datum/surgery_step/ipc/ribcage/import_posibrain
 	allowed_tools = list(

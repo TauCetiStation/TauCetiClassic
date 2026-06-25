@@ -23,12 +23,6 @@
 	min_duration = 110
 	max_duration = 150
 
-/datum/surgery_step/lipoplasty/cut_fat/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!..())
-		return FALSE
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	return BP && BP.open == 1 && target.op_stage.lipoplasty == 0
-
 /datum/surgery_step/lipoplasty/cut_fat/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!target.has_quirk(/datum/quirk/fatness))
 		user.visible_message("[user] begins to cut away [target]'s excess fat with \the [tool].",

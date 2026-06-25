@@ -90,6 +90,11 @@
 	icon_state = "fork"
 	overlay_food_string = "food_fork"
 	m_amt = 300
+	qualities = list(
+		QUALITY_SCREWING = 50,
+		QUALITY_RETRACT = 50,
+		QUALITY_CLAMP = 50
+	)
 
 /obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity, params)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
@@ -108,6 +113,10 @@
 	force = 2
 	icon_state = "sticks"
 	overlay_food_string = "food_sticks"
+	qualities = list(
+		QUALITY_CLAMP = 75,
+		QUALITY_RETRACT = 75
+	)
 
 /obj/item/weapon/kitchen/utensil/pfork
 	name = "plastic fork"
@@ -148,7 +157,9 @@
 	origin_tech = "materials=1"
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	qualities = list(
-		QUALITY_CUTTING = 1
+		QUALITY_CUTTING = 100,
+		QUALITY_SURG_CUTTING = 50
+		QUALITY_SCREWING = 75
 		)
 	sweep_step = 2
 
@@ -177,12 +188,22 @@
 	icon_state = "pknife"
 	force = 0
 	throwforce = 0
+		qualities = list(
+		QUALITY_CUTTING = 5,
+		QUALITY_SURG_CUTTING = 5
+		QUALITY_SCREWING = 5
+	)
 
 /obj/item/weapon/kitchenknife/ritual
 	name = "ritual knife"
 	desc = "The unearthly energies that once powered this blade are now dormant."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
+	qualities = list(
+		QUALITY_CUTTING = 75,
+		QUALITY_SURG_CUTTING = 100,
+		QUALITY_SCREWING = 75
+	)
 
 /obj/item/weapon/kitchenknife/combat
 	name = "combat knife"
@@ -192,7 +213,11 @@
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "combat_knife"
 	origin_tech = "materials=1;combat=1"
-
+	qualities = list(
+		QUALITY_CUTTING = 100,
+		QUALITY_SURG_CUTTING = 75
+		QUALITY_SCREWING = 75
+		)
 /obj/item/weapon/kitchenknife/combat/atom_init()
 	. = ..()
 	AddComponent(/datum/component/serial_number)
@@ -237,7 +262,11 @@
 	throw_range = 6
 	m_amt = 12000
 	sweep_step = 2
-
+	qualities = list(
+		QUALITY_CUTTING = 100,
+		QUALITY_SAW_OPEN = 75,
+		QUALITY_SCREWING = 50
+		)
 /*
  * Rolling Pins
  */
