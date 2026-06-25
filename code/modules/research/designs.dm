@@ -1633,7 +1633,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mass_spectrometer
 	name = "Mass-Spectrometer"
-	desc = "A device for analyzing chemicals in the blood."
+	desc = "Устройство для анализа химических веществ в крови."
 	id = "mass_spectrometer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
@@ -1642,7 +1642,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/adv_mass_spectrometer
 	name = "Advanced Mass-Spectrometer"
-	desc = "A device for analyzing chemicals in the blood and their quantities."
+	desc = "Устройство для анализа химических веществ в крови и определения их количества."
 	id = "adv_mass_spectrometer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
@@ -1651,7 +1651,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/reagent_scanner
 	name = "Reagent Scanner"
-	desc = "A device for identifying chemicals."
+	desc = "Устройство для определения химических веществ."
 	id = "reagent_scanner"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
@@ -1660,7 +1660,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/adv_reagent_scanner
 	name = "Advanced Reagent Scanner"
-	desc = "A device for identifying chemicals and their proportions."
+	desc = "Устройство для определения химических веществ и их соотношения."
 	id = "adv_reagent_scanner"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
@@ -1669,7 +1669,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mmi
 	name = "Man-Machine Interface"
-	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
+	desc = "Невзрачная аббревиатура MMI скрывает подлинный ужас этого устройства."//ЧМИ
 	id = "mmi"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
@@ -1678,7 +1678,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mmi_radio
 	name = "Radio-enabled Man-Machine Interface"
-	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity. This one comes with a built-in radio."
+	desc = "Невзрачная аббревиатура MMI скрывает подлинный ужас этого устройства. Эта версия оснащена встроенным радиоприемником."//ЧМИ
 	id = "mmi_radio"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 1200, MAT_GLASS = 500)
@@ -1687,7 +1687,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/synthetic_flash
 	name = "Synthetic Flash"
-	desc = "When a problem arises, SCIENCE is the solution."
+	desc = "Когда возникает проблема, решение — это наука."
 	id = "sflash"
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 750, MAT_GLASS = 750)
@@ -1696,7 +1696,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cyborg_analyzer
 	name = "Cyborg Analyzer"
-	desc = "A hand-held scanner able to diagnose robotic injuries."
+	desc = "Ручной сканер, способный диагностировать повреждения у боргов."
 	id = "cyborg_analyzer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000, MAT_SILVER = 1500, MAT_DIAMOND = 1000)
@@ -1705,7 +1705,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/nanopaste
 	name = "nanopaste"
-	desc = "A tube of paste containing swarms of repair nanites. Very effective in repairing robotic machinery."
+	desc = "Тюбик с пастой, содержащей рои ремонтных нанитов. Очень эффективен при ремонте роботизированной техники."
 	id = "nanopaste"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000)
@@ -1714,7 +1714,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implanter
 	name = "implanter"
-	desc = "Implanter, used to inject implants."
+	desc = "Имплантер, используемый для введения имплантатов."
 	id = "implanter"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
@@ -1723,7 +1723,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implant_loyal
 	name = "Glass Case- 'Loyalty'"
-	desc = "A case containing a loyalty implant."
+	desc = "Футляр с имплантатом лояльности."
 	id = "implant_loyal"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000)
@@ -1732,7 +1732,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implant_mindshield
 	name = "Glass Case- 'MindShield'"
-	desc = "A case containing a mindshield implant."
+	desc = "Футляр с имплантатом защиты разума."
 	id = "implant_mindshield"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000)
@@ -1741,7 +1741,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implant_chem
 	name = "Glass Case- 'Chem'"
-	desc = "A case containing a chemical implant."
+	desc = "Футляр с химическим имплантатом."
 	id = "implant_chem"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000,)
@@ -1750,7 +1750,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implant_death
 	name = "Glass Case- 'Death Alarm'"
-	desc = "A case containing a death alarm implant."
+	desc = "Футляр с имплантатом 'сигнализатор о смерти'."//
 	id = "implant_death"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
@@ -1759,7 +1759,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implant_tracking
 	name = "Glass Case- 'Tracking'"
-	desc = "A case containing a tracking implant."
+	desc = "Футляр с имплантатом отслеживания."
 	id = "implant_tracking"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
@@ -1768,7 +1768,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implant_free
 	name = "Glass Case- 'Freedom'"
-	desc = "A case containing a freedom implant."
+	desc = "Футляр с имплантатом освобождения."
 	id = "implant_free"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000, MAT_DIAMOND = 1000)
@@ -1777,7 +1777,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/chameleon
 	name = "Chameleon Kit"
-	desc = "A set of clothes with dials on them."
+	desc = "Комплект одежды хамелеон."
 	id = "chameleon"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000)
