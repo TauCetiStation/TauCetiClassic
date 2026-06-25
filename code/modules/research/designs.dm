@@ -1001,7 +1001,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telesci_gps
 	name = "GPS Device"
-	desc = "Little thingie that can track its position at all times."
+	desc = "Устройство, способное в любой момент отслеживать свое местоположение."
 	id = "telesci_gps"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
@@ -1010,7 +1010,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_ansible
 	name = "Subspace Ansible"
-	desc = "A compact module capable of sensing extradimensional activity."
+	desc = "A compact module capable of sensing extradimensional activity."//
 	id = "s-ansible"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 80, MAT_SILVER = 20)
@@ -1019,7 +1019,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/hyperwave_filter
 	name = "Hyperwave Filter"
-	desc = "A tiny device capable of filtering and converting super-intense radiowaves."
+	desc = "A tiny device capable of filtering and converting super-intense radiowaves."//
 	id = "s-filter"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 40, MAT_SILVER = 10)
@@ -1028,7 +1028,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_amplifier
 	name = "Subspace Amplifier"
-	desc = "A compact micro-machine capable of amplifying weak subspace transmissions."
+	desc = "A compact micro-machine capable of amplifying weak subspace transmissions."//
 	id = "s-amplifier"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10, MAT_GOLD = 30, MAT_URANIUM = 15)
@@ -1037,7 +1037,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_treatment
 	name = "Subspace Treatment Disk"
-	desc = "A compact micro-machine capable of stretching out hyper-compressed radio waves."
+	desc = "A compact micro-machine capable of stretching out hyper-compressed radio waves."//
 	id = "s-treatment"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10, MAT_SILVER = 20)
@@ -1046,7 +1046,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_analyzer
 	name = "Subspace Analyzer"
-	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
+	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."//
 	id = "s-analyzer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10, MAT_GOLD = 15)
@@ -1055,7 +1055,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_crystal
 	name = "Ansible Crystal"
-	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
+	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."//
 	id = "s-crystal"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 1000, MAT_SILVER = 20, MAT_GOLD = 20)
@@ -1064,7 +1064,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_transmitter
 	name = "Subspace Transmitter"
-	desc = "A large piece of equipment used to open a window into the subspace dimension."
+	desc = "A large piece of equipment used to open a window into the subspace dimension."//
 	id = "s-transmitter"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 100, MAT_SILVER = 10, MAT_URANIUM = 15)
