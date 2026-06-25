@@ -2957,7 +2957,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tier1_hud_upgrade
 	name = "Damage Scan Upgrade"
-	desc = "Allows HUD to show damage on person."
+	desc = "Модификация, позволяющая HUD отображать повреждения, наносимые кому-либо."
 	id = "tier1_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
@@ -2966,7 +2966,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tier2_hud_upgrade
 	name = "Basic Nightvision HUD upgrade"
-	desc = "Allows HUD to turn a basic nightvision mode. Can be installed only after damage scan upgrade"
+	desc = "Модификация, позволяющая HUD активировать базовый режим ночного видения. Установка возможна только после установки улучшения для сканирования повреждений."
 	id = "tier2_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_URANIUM = 2000)
@@ -2975,7 +2975,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tier3_hud_upgrade
 	name = "Thermal HUD upgrade"
-	desc = "Allows HUD to turn a basic thermal mode, makes nightvision mode more comfortable for use. Can be installed only after basic nightvision upgrade"
+	desc = "Модификация, позволяющая HUD активировать базовый тепловизионного режим и делает использование режима ночного видения более комфортным. Установка возможна только после установки системы ночного видения."
 	id = "tier3_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_PHORON = 2500)
@@ -2984,7 +2984,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tier4_hud_upgrade
 	name = "Advanced Thermal HUD upgrade"
-	desc = "Makes thermal mode comfortable and combines it with nightvision mode. Can be installed only after thermal upgrade"
+	desc = "Модификация, делающая использование тепловизионного режима более комфортным и совмещающая его с режимом ночного видения. Установка возможна только после установки тепловизора."
 	id = "tier4_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_GOLD = 1500, MAT_URANIUM = 3000, MAT_PHORON = 3500)
@@ -2997,7 +2997,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ds_helmet
 	name = "Deathsquad helmet"
-	desc = "That's not red paint. That's real blood."
+	desc = "Это не красная краска. Это кровь."
 	id = "ds_helmet"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 15000, MAT_GLASS = 8000, MAT_GOLD = 2500, MAT_URANIUM = 4500, MAT_PHORON = 5000)
@@ -3015,7 +3015,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ds_boots
 	name = "SWAT shoes"
-	desc = "When you want to turn up the heat."
+	desc = "Когда нужно поддать жару."
 	id = "ds_boots"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GOLD = 2000, MAT_PHORON = 4000)
