@@ -1998,7 +1998,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/decloner
 	name = "Decloner"
-	desc = "Your opponent will bubble into a messy pile of goop."
+	desc = "Оружие, которое за счет большого количества контролируемого излучения постепенно разрушает цель на составные элементы."
 	id = "decloner"
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 5000,MAT_URANIUM = 10000)
@@ -2007,7 +2007,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/chemsprayer
 	name = "Chem Sprayer"
-	desc = "An advanced chem spraying device."
+	desc = "Усовершенствованное устройство для распыления химикатов на большую площадь."
 	id = "chemsprayer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
@@ -2016,7 +2016,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rapidsyringe
 	name = "Rapid Syringe Gun"
-	desc = "A gun that fires many syringes."
+	desc = "Оружие, стреляющее множеством шприцев."
 	id = "rapidsyringe"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
@@ -2034,7 +2034,7 @@ other types of metals and chemistry for reagents).
 */
 /datum/design/temp_gun
 	name = "Temperature Gun"
-	desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want
+	desc = "Оружие, стреляющее снарядами, которые меняют температуру."//Change it if you want
 	id = "temp_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 500, MAT_SILVER = 3000)
@@ -2043,7 +2043,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/emp_mine
 	name = "EMP Mine"
-	desc = "A mine which will generate ion impulse upon activation."
+	desc = "Мина, которая при активации генерирует ионный импульс."
 	id = "emp_mine"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 100, MAT_URANIUM = 150)
@@ -2052,7 +2052,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tesla_gun
 	name = "Tesla Cannon"
-	desc = "A gun which uses electrical discharges to hit multiple targets"
+	desc = "Оружие, использующие электрический заряд для поражения нескольких целей. Вращайте рукоятку генератора, чтобы зарядить её."
 	id = "tesla_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GOLD = 1000, MAT_SILVER = 4000)
@@ -2061,7 +2061,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/flora_gun
 	name = "Floral Somatoray"
-	desc = "A tool that discharges controlled radiation which induces mutation in plant cells. Harmless to other organic life."
+	desc = "Инструмент, чей принцип работы основывается на управляемом излучениее, вызывающий мутации в клетках растений."
 	id = "flora_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 500, MAT_URANIUM = 500)
@@ -2070,7 +2070,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/large_grenade
 	name = "Large Grenade"
-	desc = "A grenade that affects a larger area and use larger containers."
+	desc = "Крупная граната, поражающая большую область."
 	id = "large_Grenade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000)
@@ -2079,7 +2079,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/plasma_10_gun
 	name = "plasma 10-bc"
-	desc = "A basic plasma-based bullpup carbine with fast rate of fire."
+	desc = "Стандартный плазменный карабин типа булл-пап обладающий высокой скорострельностью."
 	id = "plasma_10_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 4500, MAT_DIAMOND = 500, MAT_URANIUM = 1000)
@@ -2088,7 +2088,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/plasma_104_gun
 	name = "plasma 104-sass"
-	desc = "A plasma-based semi-automatic short shotgun."
+	desc = "Полуавтоматический короткоствольный дробовик на основе плазмы."
 	id = "plasma_104_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 8000, MAT_DIAMOND = 750, MAT_URANIUM = 5000)
@@ -2097,7 +2097,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/plasma_mag
 	name = "plasma weapon battery pack"
-	desc = "A special battery case with protection against EM pulse. Has standardized dimensions and can be used with any plasma type gun of this series."
+	desc = "Специальный корпус аккумулятора с защитой от ЭМИ. Используется метод быстрой зарядки. Имеет стандартизированные размеры и может использоваться с любым плазмотроном данной серии. Возможна замена элемента питания."
 	id = "plasma_mag"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_GOLD = 2000, MAT_SILVER = 1500)
@@ -2106,7 +2106,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/smg
 	name = "Submachine Gun"
-	desc = "A lightweight, fast firing gun."
+	desc = "Легкий, скорострельный пистолет-пулемёт. Использует патроны калибра 9мм."
 	id = "smg"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_SILVER = 2000, MAT_DIAMOND = 1000)
@@ -2115,7 +2115,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/msmg9mm
 	name = "SMG magazine (9mm)"
-	desc = "Magazine, full of 9mm submachine gun ammo."
+	desc = "Коробка с патронами, полный боеприпасов 9-мм для пистолета-пулемета."
 	id = "smg_ammo_9mm"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3750, MAT_SILVER = 100)
@@ -2124,7 +2124,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/stunshot
 	name = "Stun Shot"
-	desc = "Box of eight stunning, electrified shells for a shotgun."
+	desc = "Коробка для ружейных патронов 'Электрошок'."
 	id = "stunshell"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 20000)
@@ -2133,7 +2133,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/phoronpistol
 	name = "phoron pistol"
-	desc = "A specialized firearm designed to fire lethal bolts of phoron."
+	desc = "Специализированное огнестрельное оружие, предназначенное для стрельбы смертоносными зарядами форона."
 	id = "ppistol"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_PHORON = 3000)
@@ -2173,7 +2173,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/jackhammer
 	name = "Sonic Jackhammer"
-	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
+	desc = "Раскалывает камни звуковыми импульсами — идеально подходит для уничтожения пещерных ящериц."
 	id = "jackhammer"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 500, MAT_SILVER = 500)
@@ -2184,7 +2184,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/drill
 	name = "Mining Drill"
-	desc = "Yours is the drill that will pierce through the rock walls."
+	desc = "Твой бур пронзит эти скалы."
 	id = "drill"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000) //expensive, but no need for miners.
@@ -2194,7 +2194,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/excavation_drill
 	name = "Excavation Drill"
-	desc = "Basic archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision."
+	desc = "Базовый археологический бур, сочетающий ультразвуковое воздействие и манипуляцию с блюспейсом для обеспечения высочайшей точности."
 	id = "excavation_drill"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
