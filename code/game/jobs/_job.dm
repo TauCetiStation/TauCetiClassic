@@ -15,14 +15,11 @@
 	//How many players can spawn in as this job
 	var/spawn_positions = 0
 
-	// Adds dynamic positions for this job
-	var/dynamic_positions = FALSE
-
 	// Scale dynamic positions for this job
 	var/players_scale
 
-	// Max number of dynamic slots for this job
-	var/max_dynamic_slots
+	// Max number of slots (total + dynamic) for this job
+	var/summary_slots
 
 	// total_positions override by map
 	var/map_total_positions
@@ -198,7 +195,7 @@
 	return max(0, roles_ingame_minute_unlock[role] - C.player_ingame_age)
 
 /datum/job/proc/is_position_available()
-	var/dyn_pos_count = round_dynamic_positions()
+	var/dyn_pos_count = round_summary_positions()
 	return (current_positions < dyn_pos_count) || (dyn_pos_count == -1)
 
 /datum/job/proc/map_check()
@@ -209,15 +206,15 @@
 		return skillsets[H.mind.role_alt_title] || skillsets[title]
 	return skillsets[title]
 
-/datum/job/proc/round_dynamic_positions()
+/datum/job/proc/round_summary_positions()
 	if(map_total_positions == 0)
 		return 0
-	if(dynamic_positions == TRUE)
+	if(summary_slots > 0)
 		var/positions = (map_total_positions || total_positions)
 		var/rounded_slots = positions + round(length(global.clients) / players_scale)
 
-		if(max_dynamic_slots > 0 && rounded_slots > max_dynamic_slots)
-			return max_dynamic_slots
+		if(rounded_slots > summary_slots)
+			return summary_slots
 
 		return rounded_slots
 

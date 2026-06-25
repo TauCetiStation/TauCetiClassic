@@ -112,8 +112,7 @@
 	order = CREW_INTEND_EMPLOYEE(4)
 	total_positions = 2
 	spawn_positions = 5
-	dynamic_positions = TRUE
-	max_dynamic_slots = 5
+	summary_slots = 5
 	players_scale = 10
 	supervisors = "the head of security and warden"
 	selection_color = "#ffeeee"
@@ -143,8 +142,7 @@
 	order = CREW_INTEND_ASSIST(1)
 	total_positions = 2
 	spawn_positions = 3
-	dynamic_positions = TRUE
-	max_dynamic_slots = 5
+	summary_slots = 5
 	players_scale = 10
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
