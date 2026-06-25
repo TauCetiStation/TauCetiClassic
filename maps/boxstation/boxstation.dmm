@@ -42771,8 +42771,8 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "bxw" = (
-/obj/machinery/computer/med_data{
-	dir = 4
+/obj/machinery/autodoc{
+	dir = 1
 	},
 /turf/simulated/floor{
 	dir = 10;

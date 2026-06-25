@@ -52,6 +52,12 @@
 		surgery_steps += S
 	sort_surgeries()
 
+	//Auto Surgeries - Initialize all /datum/auto_surgery into an associated list
+	for(var/T in subtypesof(/datum/auto_surgery))
+		var/datum/auto_surgery/surgery = new T
+		for(var/target_zone in surgery.available_target_zones)
+			LAZYADDASSOCLIST(global.auto_surgeries, target_zone, surgery)
+
 	// Keybindings
 	for(var/KB in subtypesof(/datum/keybinding))
 		var/datum/keybinding/keybinding = KB

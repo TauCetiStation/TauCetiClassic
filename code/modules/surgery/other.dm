@@ -35,10 +35,14 @@
 	user.visible_message("<span class='notice'>[user] has patched the damaged vein in [target]'s [BP.name] with \the [tool].</span>", \
 		"<span class='notice'>You have patched the damaged vein in [target]'s [BP.name] with \the [tool].</span>")
 
-	BP.status &= ~ORGAN_ARTERY_CUT
-	if (ishuman(user) && prob(40))
+	end_step_action(target, target_zone)
+	if(ishuman(user) && prob(40))
 		var/mob/living/carbon/human/H = user
 		H.bloody_hands(target, 0)
+
+/datum/surgery_step/fix_vein/end_step_action(mob/living/carbon/human/target, target_zone)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	BP.status &= ~ORGAN_ARTERY_CUT
 
 /datum/surgery_step/fix_vein/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)

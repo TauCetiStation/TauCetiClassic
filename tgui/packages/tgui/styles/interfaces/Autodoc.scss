@@ -1,0 +1,397 @@
+.Background {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: #ecebe7;
+  display: flex;
+  flex-direction: column;
+  row-gap: 3vw;
+
+  align-items: center;
+}
+
+.Header {
+  margin: 0px;
+  padding: 1vw 4vw;
+  height: 6vw;
+  width: 100%;
+  background-color: #2788ce;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Title {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1vw;
+  vertical-align: middle;
+  align-items: center;
+}
+
+.TitleText {
+  height: 4vw;
+  font-size: 2.5vw;
+  font-weight: bold;
+  text-align: left;
+  align-content: center;
+}
+
+.HeaderLogo {
+  width: 4vw;
+  height: 4vw;
+  background-color: #ecebe7;
+  color: #2788ce;
+
+  font-size: 4vw;
+}
+
+.HeaderIcon {
+  width: 100%;
+  height: 100%;
+
+  text-align: center;
+  align-content: center;
+}
+
+.Menu {
+  display: flex;
+  flex-direction: row;
+  column-gap: 4vw;
+}
+
+.Header_Button {
+  width: 15vw;
+  height: 4vw;
+
+  background-color: #ecebe7;
+  border: none;
+  border-radius: 0px;
+
+  font-size: 2vw;
+  color: #272727;
+  font-weight: bold;
+
+  padding: 0.5vw 1vw;
+
+  .Icon {
+    font-size: 3vw;
+  }
+
+  text-align: left;
+  align-items: center;
+
+  box-shadow: 0px 2px 2px 1px #00000050;
+}
+
+.Contents {
+  width: 91vw;
+  height: fit-content;
+
+  padding: 3vw 2vw 2vw 2vw;
+
+  display: flex;
+  flex-direction: row;
+
+  justify-content: center;
+
+  background-color: #34476c;
+  box-shadow: 0px 4px 4px 2px #00000050;
+}
+
+.Contents_Part {
+  width: 100%;
+  height: fit-content;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  row-gap: 1vw;
+}
+
+.Contents_Title {
+  width: 100%;
+  height: 100%;
+  font-size: 1.5vw;
+  font-weight: bold;
+
+  text-align: center;
+}
+
+.ContentsItem {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5vw;
+
+  margin-top: 1vw;
+}
+
+.Beaker_Title {
+  width: 100%;
+  height: 100%;
+  font-size: 1.25vw;
+  font-weight: bold;
+
+  text-align: start;
+}
+
+.Beaker {
+  width: 100%;
+  height: 4vw;
+
+  display: flex;
+  flex-direction: row;
+  column-gap: 1vw;
+
+  font-size: 1.5vw;
+  font-weight: bold;
+
+  border: 0.5vw solid #2788ce;
+
+  align-items: center;
+
+  padding-right: 1vw;
+
+  &:hover {
+    border-color: #ecebe7;
+  }
+
+  .SubButton {
+    min-width: 20vw;
+    height: 3.1vw;
+    position: relative;
+    top: 0.125vw;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background-color: #2788ce;
+    border-radius: 0px;
+
+    text-align: center;
+    padding: 1vw;
+
+    &:hover {
+      background-color: #ecebe7;
+      color: #202020;
+    }
+  }
+
+  .SubButton.Button--disabled {
+    background-color: #34476c !important;
+    color: #ecebe7 !important;
+  }
+
+  .ProgressBar {
+    height: 2vw;
+    border-radius: 0px;
+    background-color: #272727;
+  }
+}
+
+.EmptyBeaker {
+  width: 100%;
+  height: 4vw;
+
+  display: block;
+
+  font-size: 1.5vw;
+  font-weight: bold;
+
+  border: 0.5vw solid #202020;
+  background-color: #202020;
+  border-radius: 0px;
+  margin: 0px;
+
+  align-items: center;
+  text-align: center;
+
+  padding-right: 1vw;
+
+  color: #8d8d8d;
+
+  &:hover {
+    border-color: #ecebe7;
+    background-color: #202020 !important;
+    color: #8d8d8d;
+  }
+
+  &:focus {
+    background-color: #202020 !important;
+    color: #8d8d8d;
+  }
+}
+
+.EmptyBeaker.Button--disabled {
+  border: 0.5vw solid #202020 !important;
+  background-color: #202020 !important;
+  border-radius: 0px !important;
+}
+
+.TankButton {
+  height: 4vw;
+
+  font-size: 1.5vw;
+  font-weight: bold;
+
+  border: 0.5vw solid #2788ce;
+  background-color: #2788ce;
+
+  text-align: center;
+  align-content: center;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  border-radius: 0px;
+
+  &:hover {
+    border-color: #ecebe7;
+    background-color: #ecebe7 !important;
+    color: #202020;
+  }
+}
+
+.TankButton.Button--disabled {
+  background-color: #34476c !important;
+  color: #ecebe7 !important;
+}
+
+.FinishButton {
+  width: 100%;
+  height: 7vw;
+
+  margin-top: 6vw;
+
+  font-size: 1.5vw;
+  font-weight: bold;
+
+  border: 0.5vw solid #2788ce;
+  background-color: #2788ce;
+
+  text-align: center;
+  align-content: center;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  border-radius: 0px;
+
+  &:hover {
+    border-color: #ecebe7;
+    background-color: #ecebe7;
+    color: #202020;
+  }
+}
+
+.FinishButton.Button--disabled {
+  background-color: #34476c !important;
+  color: #ecebe7 !important;
+}
+
+.Operations {
+  width: 100%;
+  height: 37vw;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 2vw;
+  justify-content: start;
+
+  padding: 1vw;
+  margin: 0px;
+
+  border: 0.5vw solid #2788ce;
+}
+
+.OperationButton {
+  width: 26vw;
+  height: 4vw;
+
+  font-size: 1.5vw;
+  font-weight: bold;
+
+  background-color: #2788ce;
+
+  text-align: center;
+  align-content: center;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  border-radius: 0px;
+
+  &:hover {
+    background-color: #ecebe7;
+    color: #202020;
+  }
+
+  &:focus {
+    background-color: #2788ce;
+  }
+}
+
+.OperationButton.Button--selected {
+  background-color: green;
+  &:hover {
+    background-color: #ecebe7;
+    color: #202020;
+  }
+}
+
+.SurgeryDoll {
+  width: 23vw;
+  height: 37vw;
+  background-color: #202020;
+
+  padding: 1.5vw;
+
+  position: relative;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.SurgeryPart {
+  border-width: 0.5vw;
+  border-style: none;
+  border-radius: 0px;
+
+  background: none;
+
+  align-content: center;
+  text-align: center;
+
+  font-size: 2.5vw;
+  font-weight: bold;
+  color: red;
+
+  &:hover {
+    border-style: dashed;
+    border-color: #2788ce;
+    background: none;
+  }
+  &:focus {
+    background: none;
+  }
+}
+
+.SurgeryPart.Button--selected {
+  border: 0.5vw dashed #ecebe7 !important;
+}
+
+.DollLetter {
+  font-size: 2vw;
+  font-weight: bold;
+  color: #5ca928;
+}

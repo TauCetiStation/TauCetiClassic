@@ -31,6 +31,10 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='notice'>[user] applies some [tool] to [target]'s bone in [BP.name]</span>", \
 		"<span class='notice'>You apply some [tool] to [target]'s bone in [BP.name] with \the [tool].</span>")
+	end_step_action(target, target_zone)
+
+/datum/surgery_step/glue_bone/end_step_action(mob/living/carbon/human/target, target_zone)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.stage = 1
 
 /datum/surgery_step/glue_bone/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -64,10 +68,17 @@
 	if (BP.status & ORGAN_BROKEN)
 		user.visible_message("<span class='notice'>[user] sets the bone in [target]'s [BP.name] in place with \the [tool].</span>", \
 			"<span class='notice'>You set the bone in [target]'s [BP.name] in place with \the [tool].</span>")
-		BP.stage = 2
 	else
 		user.visible_message("<span class='notice'>[user] sets the bone in [target]'s [BP.name]<span class='warning'> in the WRONG place with \the [tool].</span></span>", \
 			"<span class='notice'>You set the bone in [target]'s [BP.name]<span class='warning'> in the WRONG place with \the [tool].</span></span>")
+
+	end_step_action(target, target_zone)
+
+/datum/surgery_step/set_bone/end_step_action(mob/living/carbon/human/target, target_zone)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	if (BP.status & ORGAN_BROKEN)
+		BP.stage = 2
+	else
 		BP.fracture()
 
 /datum/surgery_step/set_bone/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -96,9 +107,12 @@
 	..()
 
 /datum/surgery_step/mend_skull/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='notice'>[user] sets [target]'s skull with \the [tool].</span>" , \
 		"<span class='notice'>You set [target]'s skull with \the [tool].</span>")
+	end_step_action(target, target_zone)
+
+/datum/surgery_step/mend_skull/end_step_action(mob/living/carbon/human/target, target_zone)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.stage = 2
 
 /datum/surgery_step/mend_skull/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -135,6 +149,10 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("<span class='notice'>[user] has mended the damaged bones in [target]'s [BP.name] with \the [tool].</span>"  , \
 		"<span class='notice'>You have mended the damaged bones in [target]'s [BP.name] with \the [tool].</span>" )
+	end_step_action(target, target_zone)
+
+/datum/surgery_step/finish_bone/end_step_action(mob/living/carbon/human/target, target_zone)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.status &= ~(ORGAN_BROKEN | ORGAN_SPLINTED)
 	BP.stage = 0
 	BP.perma_injury = 0

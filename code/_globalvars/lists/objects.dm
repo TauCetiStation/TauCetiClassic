@@ -8,6 +8,7 @@ var/global/list/implant_list = list()       //list of all /obj/item/weapon/impla
 var/global/list/ladder_list = list()        //|====| <- /obj/structure/ladder
 var/global/list/mecha_tracking_list = list()//list of all /obj/item/mecha_parts/mecha_tracking
 var/global/list/surgery_steps = list()      //list of all surgery steps  |BS12
+var/global/list/auto_surgeries = list()      //list of all auto surgeries
 var/global/list/crafting_recipes = list()   //list of all personal craft recipes
 var/global/list/side_effects = list()       //list of all medical sideeffects types by thier names |BS12
 var/global/list/mechas_list = list()        //list of all mechs. Used by hostile mobs target tracking.
@@ -81,3 +82,4 @@ var/global/list/faith_reactions = list()
 var/global/list/faith_reactions_by_aspects = list()
 var/global/list/bells = list()
 var/global/list/washing_items_list = list()
+var/global/list/autodoc_machines = list()
