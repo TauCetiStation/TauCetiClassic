@@ -1463,7 +1463,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ore_redemption
 	name = "Machine Design (Ore Redemption Board)"
-	desc = "Плата, используемая для сборки The circuit board for an Ore Redemption machine."
+	desc = "Плата, используемая для сборки устройства выкупа руды."// что это?
 	id = "ore_redemption"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1472,7 +1472,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mining_equipment_vendor
 	name = "Machine Design (Mining Rewards Vender Board)"
-	desc = "Плата, используемая для сборки The circuit board for a Mining Rewards Vender."
+	desc = "Плата, используемая для сборки шахтёрского торгового автомата."
 	id = "mining_equipment_vendor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1481,7 +1481,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rdservercontrol
 	name = "R&D Server Control Console Board"
-	desc = "Плата, используемая для сборки The circuit board for an R&D Server Control Console"
+	desc = "Плата, используемая для сборки The circuit board for an R&D Server Control Console"//
 	id = "rdservercontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1490,7 +1490,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rdserver
 	name = "R&D Server Board"
-	desc = "Плата, используемая для сборки The circuit board for an R&D Server"
+	desc = "Плата, используемая для сборки The circuit board for an R&D Server"//
 	id = "rdserver"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1499,7 +1499,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mechfab
 	name = "Exosuit Fabricator Board"
-	desc = "Плата, используемая для сборки The circuit board for an Exosuit Fabricator"
+	desc = "Плата, используемая для сборки The circuit board for an Exosuit Fabricator"//
 	id = "mechfab"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1508,7 +1508,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cyborgrecharger
 	name = "Cyborg Recharger Board"
-	desc = "Плата, используемая для сборки The circuit board for a Cyborg Recharger"
+	desc = "Плата, используемая для сборки The circuit board for a Cyborg Recharger"//
 	id = "cyborgrecharger"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1517,7 +1517,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tesla_coil
 	name = "Machine Design (Tesla Coil Board)"
-	desc = "Плата, используемая для сборки The circuit board for a tesla coil."
+	desc = "Плата, используемая для сборки катушки Теслы."
 	id = "tesla_coil"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1526,7 +1526,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/grounding_rod
 	name = "Machine Design (Grounding Rod Board)"
-	desc = "Плата, используемая для сборки The circuit board for a grounding rod."
+	desc = "Плата, используемая для сборки заземляющего стержня."
 	id = "grounding_rod"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1535,7 +1535,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mining_drill
 	name = "Machine Design (Mining Drill Head)"
-	desc = "Large drill for mining."
+	desc = "Крупная дрель для горных работ."
 	id = "mining_drill"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1544,7 +1544,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/expshovel
 	name = "Experimental shovel"
-	desc = "This is an experimental shovel that digs damn fast!"
+	desc = "Экспериментальная лопата, которая копает чертовски быстро!"
 	id = "expshovel"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 200)
@@ -1553,7 +1553,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mining_drill_brace
 	name = "Machine Design (Mining Drill Brace)"
-	desc = "Brace for mining drill."
+	desc = "Упор для буровой коронки."
 	id = "mining_drill_brace"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1562,7 +1562,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mining_fabricator
 	name = "Machine Design (Mining fabricator)"
-	desc = "For mining staff"
+	desc = "Плата, используемая для сборки шахтёрского фабрикатора."
 	id = "mining_fabricator"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1571,7 +1571,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/microscope
 	name = "Microscope Board"
-	desc = "The circuit board for a forensics microscope."
+	desc = "Плата, используемая для сборки криминалистического микроскопа."
 	id = "microscope"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1584,7 +1584,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/pacman
 	name = "PACMAN-type Generator Board"
-	desc = "The circuit board that for a PACMAN-type portable generator."
+	desc = "Плата, используемая для сборки The circuit board that for a PACMAN-type portable generator."//
 	id = "pacman"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1593,7 +1593,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/superpacman
 	name = "SUPERPACMAN-type Generator Board"
-	desc = "The circuit board that for a SUPERPACMAN-type portable generator."
+	desc = "Плата, используемая для сборки The circuit board that for a SUPERPACMAN-type portable generator."//
 	id = "superpacman"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1602,7 +1602,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mrspacman
 	name = "MRSPACMAN-type Generator Board"
-	desc = "The circuit board that for a MRSPACMAN-type portable generator."
+	desc = "Плата, используемая для сборки The circuit board that for a MRSPACMAN-type portable generator."//
 	id = "mrspacman"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1611,7 +1611,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/circulator
 	name = "Circulator Board"
-	desc = "The circuit board for a TEG circulator."
+	desc = "The circuit board for a TEG circulator."//
 	id = "circ"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1620,7 +1620,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/teg
 	name = "TEG Board"
-	desc = "The circuit board for a TEG generator."
+	desc = "The circuit board for a TEG generator."//
 	id = "teg"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
