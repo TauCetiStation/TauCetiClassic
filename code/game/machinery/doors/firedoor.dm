@@ -159,7 +159,7 @@
 	if(density)
 		INVOKE_ASYNC(src, PROC_REF(open))
 		if(alarmed)
-			addtimer(CALLBACK(src, PROC_REF(check_late_close)), 10 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(check_late_close)), 5 SECONDS)
 	else
 		INVOKE_ASYNC(src, PROC_REF(close))
 
