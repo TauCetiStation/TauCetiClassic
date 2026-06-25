@@ -1128,7 +1128,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/light_replacer
 	name = "Light Replacer"
-	desc = "A device to automatically replace lights. Refill with reinforced glass."
+	desc = "Устройство для автоматической замены ламп. Чтобы восполнить лампы используйте укрепленное стекло."
 	id = "light_replacer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 3000, MAT_SILVER = 150)
@@ -1141,7 +1141,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/smes
 	name = "SMES Board"
-	desc = "The circuit board for a SMES."
+	desc = "Плата, используемая для сборки СПИНа."//
 	id = "smes"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1150,7 +1150,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/space_heater
 	name = "Machine Design (Space Heater Board)"
-	desc = "The circuit board for a space heater."
+	desc = "Плата, используемая для сборки обогревателя."//
 	id = "space_heater"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1159,7 +1159,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/teleport_station
 	name = "Teleportation Station Board"
-	desc = "The circuit board for a teleportation station."
+	desc = "Плата, используемая для сборки станции телепортации."
 	id = "tele_station"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1168,7 +1168,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/teleport_hub
 	name = "Teleportation Hub Board"
-	desc = "The circuit board for a teleportation hub."
+	desc = "Плата, используемая для создания телепортационного узла."
 	id = "tele_hub"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1177,7 +1177,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telepad
 	name = "Telepad Board"
-	desc = "The circuit board for a telescience telepad."
+	desc = "The circuit board for a telescience telepad."//
 	id = "telepad"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1186,7 +1186,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/sleeper
 	name = "Sleeper Board"
-	desc = "The circuit board for a sleeper."
+	desc = "The circuit board for a sleeper."//
 	id = "sleeper"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1195,7 +1195,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cryotube
 	name = "Cryotube Board"
-	desc = "The circuit board for a cryotube."
+	desc = "The circuit board for a cryotube."//
 	id = "cryotube"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1204,7 +1204,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/board/reagentgrinder
 	name = "All-In-One Grinder Board"
-	desc = "The circuit board for an All-In-One Grinder."
+	desc = "The circuit board for an All-In-One Grinder."//
 	id = "reagentgrinder"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1213,7 +1213,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/gas_heater
 	name = "gas heating system"
-	desc = "The circuit board for a heater."
+	desc = "Плата, используемая для сборки обогревателя. The circuit board for a heater."//
 	id = "gasheater"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1222,7 +1222,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/gas_cooler
 	name = "gas cooling system"
-	desc = "The circuit board for a freezer."
+	desc = "Плата, используемая для сборки обогревателя.The circuit board for a freezer."//
 	id = "gascooler"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1231,7 +1231,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/biogenerator
 	name = "Biogenerator Board"
-	desc = "The circuit board for a biogenerator."
+	desc = "Плата, используемая для сборки биогенератора."
 	id = "biogenerator"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1240,7 +1240,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/hydroponics
 	name = "Hydroponics Tray Board"
-	desc = "The circuit board for a hydroponics tray."
+	desc = "Плата, используемая для сборки гидропонного лотка."
 	id = "hydro_tray"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1249,7 +1249,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/gibber
 	name = "Machine Design (Gibber Board)"
-	desc = "The circuit board for a gibber."
+	desc = "The circuit board for a gibber."//
 	id = "gibber"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1258,7 +1258,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/smartfridge
 	name = "Machine Design (Smartfridge Board)"
-	desc = "The circuit board for a smartfridge."
+	desc = "Плата, используемая для сборки умного холодильника."
 	id = "smartfridge"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1267,7 +1267,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/bluespace_storage
 	name = "Machine Design (Bluespace Storage)"
-	desc = "The circuit board for a Bluespace Storage."
+	desc = "Плата, используемая для сборки Блюспейс хранилища."
 	id = "bluespace_storage"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1500, MAT_DIAMOND = 1000, "sacid" = 20)
@@ -1276,7 +1276,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/monkey_recycler
 	name = "Machine Design (Monkey Recycler Board)"
-	desc = "The circuit board for a monkey recycler."
+	desc = "Плата, используемая для сборки устройства по переработке обезьян."
 	id = "monkey_recycler"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1285,7 +1285,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/seed_extractor
 	name = "Machine Design (Seed Extractor Board)"
-	desc = "The circuit board for a seed extractor."
+	desc = "Плата, используемая для сборки устройства извлечения семян различных культур."
 	id = "seed_extractor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1294,7 +1294,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/processor
 	name = "Machine Design (Processor Board)"
-	desc = "The circuit board for a processor."
+	desc = "Плата, используемая для сборки кухонного комбайна"
 	id = "processor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1312,7 +1312,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/holopad
 	name = "Machine Design (AI Holopad Board)"
-	desc = "The circuit board for a holopad."
+	desc = "The circuit board for a holopad."//
 	id = "holopad"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1321,7 +1321,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/deepfryer
 	name = "Deep Fryer Board"
-	desc = "The circuit board for a deep fryer."
+	desc = "Плата, используемая для сборки фритюрницы."
 	id = "deepfryer"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1330,7 +1330,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/microwave
 	name = "Microwave Board"
-	desc = "The circuit board for a microwave."
+	desc = "Плата, используемая для сборки микроволновки."
 	id = "microwave"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1339,7 +1339,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/oven
 	name = "Oven Board"
-	desc = "The circuit board for a oven."
+	desc = "Плата, используемая для сборки духовки."
 	id = "oven"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1348,7 +1348,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/grill
 	name = "Grill Board"
-	desc = "The circuit board for a grill."
+	desc = "Плата, используемая для сборки гриля."
 	id = "grill"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1357,7 +1357,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/candymaker
 	name = "Candy Machine Board"
-	desc = "The circuit board for a candy machine."
+	desc = "Плата, используемая для сборки кондитерской машины."
 	id = "candymaker"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1366,7 +1366,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/chem_dispenser
 	name = "Portable Chem Dispenser Board"
-	desc = "The circuit board for a portable chem dispenser."
+	desc = "Плата, используемая для сборки портативного дозатора химических веществ."
 	id = "chem_dispenser"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1375,7 +1375,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/chem_master
 	name = "Machine Design (Chem Master Board)"
-	desc = "The circuit board for a Chem Master 2999."
+	desc = "Плата, используемая для сборки Chem Master 2999."
 	id = "chem_master"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1384,7 +1384,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/operating_table
 	name = "Machine Design (Operating Table)"
-	desc = "The circuit board for a Operating Table."
+	desc = "Плата, используемая для сборки операционного стола."
 	id = "operating_table"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 3000, "sacid" = 20)
@@ -1393,7 +1393,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/destructive_analyzer
 	name = "Destructive Analyzer Board"
-	desc = "The circuit board for a destructive analyzer."
+	desc = "Плата, используемая для сборки destructive analyzer."//
 	id = "destructive_analyzer"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1402,7 +1402,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/protolathe
 	name = "Protolathe Board"
-	desc = "The circuit board for a protolathe."
+	desc = "Плата, используемая для сборки protolathe."//
 	id = "protolathe"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1411,7 +1411,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/circuit_imprinter
 	name = "Circuit Imprinter Board"
-	desc = "The circuit board for a circuit imprinter."
+	desc = "Плата, используемая для сборки устройства оттиска печатных дорожек."
 	id = "circuit_imprinter"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1420,7 +1420,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/emitter
 	name = "Circuit Board Emitter"
-	desc = "The circuit board for a emitter."
+	desc = "Плата, используемая для сборки излучателя."
 	id = "emitter"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1429,7 +1429,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/autolathe
 	name = "Autolathe Board"
-	desc = "The circuit board for an autolathe."
+	desc = "Плата, используемая для сборки autolathe."//
 	id = "autolathe"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1438,7 +1438,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/recharger
 	name = "Machine Design (Weapon Recharger Board)"
-	desc = "The circuit board for a Weapon Recharger."
+	desc = "Плата, используемая для сборки Weapon Recharger."//
 	id = "recharger"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20, MAT_GOLD = 100)
@@ -1446,7 +1446,7 @@ other types of metals and chemistry for reagents).
 	category = list("Machine")
 /datum/design/cell_recharger
 	name = "Cell Recharger Board"
-	desc = "The circuit board for a Cell Recharger."
+	desc = "Плата, используемая для сборки  Cell Recharger."//
 	id = "cellcharger"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 500, "sacid" = 20)
@@ -1454,7 +1454,7 @@ other types of metals and chemistry for reagents).
 	category = list("Machine")
 /datum/design/vendor
 	name = "Machine Design (Vendor Board)"
-	desc = "The circuit board for a Vendor."
+	desc = "Плата, используемая для сборки торгового автомата."
 	id = "vendor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1463,7 +1463,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ore_redemption
 	name = "Machine Design (Ore Redemption Board)"
-	desc = "The circuit board for an Ore Redemption machine."
+	desc = "Плата, используемая для сборки The circuit board for an Ore Redemption machine."
 	id = "ore_redemption"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1472,7 +1472,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mining_equipment_vendor
 	name = "Machine Design (Mining Rewards Vender Board)"
-	desc = "The circuit board for a Mining Rewards Vender."
+	desc = "Плата, используемая для сборки The circuit board for a Mining Rewards Vender."
 	id = "mining_equipment_vendor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1481,7 +1481,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rdservercontrol
 	name = "R&D Server Control Console Board"
-	desc = "The circuit board for an R&D Server Control Console"
+	desc = "Плата, используемая для сборки The circuit board for an R&D Server Control Console"
 	id = "rdservercontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1490,7 +1490,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rdserver
 	name = "R&D Server Board"
-	desc = "The circuit board for an R&D Server"
+	desc = "Плата, используемая для сборки The circuit board for an R&D Server"
 	id = "rdserver"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1499,7 +1499,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mechfab
 	name = "Exosuit Fabricator Board"
-	desc = "The circuit board for an Exosuit Fabricator"
+	desc = "Плата, используемая для сборки The circuit board for an Exosuit Fabricator"
 	id = "mechfab"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1508,7 +1508,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cyborgrecharger
 	name = "Cyborg Recharger Board"
-	desc = "The circuit board for a Cyborg Recharger"
+	desc = "Плата, используемая для сборки The circuit board for a Cyborg Recharger"
 	id = "cyborgrecharger"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1517,7 +1517,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tesla_coil
 	name = "Machine Design (Tesla Coil Board)"
-	desc = "The circuit board for a tesla coil."
+	desc = "Плата, используемая для сборки The circuit board for a tesla coil."
 	id = "tesla_coil"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1526,7 +1526,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/grounding_rod
 	name = "Machine Design (Grounding Rod Board)"
-	desc = "The circuit board for a grounding rod."
+	desc = "Плата, используемая для сборки The circuit board for a grounding rod."
 	id = "grounding_rod"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
