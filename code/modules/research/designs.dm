@@ -44,7 +44,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/seccamera
 	name = "Circuit Design (Security)"
-	desc = "Плата, используемая для создания компьютера системы видеонаблюдения."
+	desc = "Плата, используемая для сборки компьютера системы видеонаблюдения."
 	id = "seccamera"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -53,7 +53,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telepad_concole
 	name = " Circuit Design (Telescience Console) "
-	desc = "Плата, используемая для создания компьютера телепортации."//
+	desc = "Плата, используемая для сборки компьютера телепортации."
 	id = "telepad_concole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -62,7 +62,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/aicore
 	name = "Circuit Design (AI Core)"
-	desc = "Плата, изпользуемая для создания новых ядер ИИ."
+	desc = "Плата, изпользуемая для сборки новых ядер ИИ."
 	id = "aicore"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -89,7 +89,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/med_data
 	name = "Circuit Design (Medical Records)"
-	desc = "Плата, используемая для создания консоли с медицинскими записями."
+	desc = "Плата, используемая для сборки консоли с медицинскими записями."
 	id = "med_data"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -98,7 +98,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/operating
 	name = "Circuit Design (Operating Computer)"
-	desc = "Плата, используемая для создания компьютера хирургического стола."//
+	desc = "Плата, используемая для сборки компьютера хирургического стола."
 	id = "operating"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -107,7 +107,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/slime_management
 	name = "Circuit Design (Slime management console)"
-	desc = "Плата, используемая для создания консоли управления слизью."//
+	desc = "Плата, используемая для сборки консоли управления слизью."
 	id = "slime_management"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -116,7 +116,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/scan_console
 	name = "Circuit Design (DNA Machine)"
-	desc = "Плата, используемая для сборки новой консоли для сканирования ДНК."//
+	desc = "Плата, используемая для сборки новой консоли для сканирования ДНК."
 	id = "scan_console"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -125,7 +125,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/comconsole
 	name = "Circuit Design (Communications)"
-	desc = "Плата, используемая для создания коммуникационной консоли."//
+	desc = "Плата, используемая для сборки коммуникационной консоли."
 	id = "comconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -134,7 +134,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/idcardconsole
 	name = "Circuit Design (ID Computer)"
-	desc = "Плата, используемая для создания компьютера идентификации."//
+	desc = "Плата, используемая для сборки компьютера идентификации."
 	id = "idcardconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -143,7 +143,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/crewconsole
 	name = "Circuit Design (Crew monitoring computer)"
-	desc = "Плата, используемая для создания компьютера мониторинга состояния экипажа."
+	desc = "Плата, используемая для сборки компьютера мониторинга состояния экипажа."
 	id = "crewconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -152,7 +152,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/teleconsole
 	name = "Circuit Design (Teleporter Console)"
-	desc = "Плата, используемая для создания консоли управления телепортатором."//
+	desc = "Плата, используемая для сборки консоли управления телепортатором."
 	id = "teleconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -161,7 +161,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/secdata
 	name = "Circuit Design (Security Records Console)"
-	desc = "Плата, используемая для создания консоли управления записями в системе безопасности."//
+	desc = "Плата, используемая для сборки консоли управления записями в системе безопасности."
 	id = "secdata"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -170,7 +170,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/atmosalerts
 	name = "Circuit Design (Atmosphere Alert)"
-	desc = "Плата, используемая для создания консоли оповещения об атмосферных тревогах."
+	desc = "Плата, используемая для сборки консоли оповещения об атмосферных тревогах."
 	id = "atmosalerts"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -179,7 +179,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/air_management
 	name = "Circuit Design (Atmospheric Monitor)"
-	desc = "Плата, используемая для создания атмосферного монитора."
+	desc = "Плата, используемая для сборки атмосферного монитора."
 	id = "air_management"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -188,7 +188,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/robocontrol
 	name = "Circuit Design (Robotics Control Console)"
-	desc = "Плата, используемая для создания консоли управления боргами."
+	desc = "Плата, используемая для сборки консоли управления боргами."
 	id = "robocontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -197,7 +197,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/dronecontrol
 	name = "Circuit Design (Drone Control Console)"
-	desc = "Плата, используемая для создания консоли управления ремонтными дронами."
+	desc = "Плата, используемая для сборки консоли управления ремонтными дронами."
 	id = "dronecontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -206,7 +206,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/clonecontrol
 	name = "Circuit Design (Cloning Machine Console)"
-	desc = "Плата, используемая для создания консоли клонирующей капсулы."
+	desc = "Плата, используемая для сборки консоли клонирующей капсулы."
 	id = "clonecontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -224,7 +224,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/clonescanner
 	name = "Circuit Design (Cloning Scanner)"
-	desc = "Плата, используемая для создания сканера для клонирования."
+	desc = "Плата, используемая для сборки сканера для клонирования."
 	id = "clonescanner"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -233,7 +233,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/arcademachine
 	name = "Circuit Design (Arcade Machine)"
-	desc = "Плата, используемая для создания новых игровых автоматов."
+	desc = "Плата, используемая для сборки новых игровых автоматов."
 	id = "arcademachine"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -242,7 +242,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/powermonitor
 	name = "Circuit Design (Power Monitor)"
-	desc = "Плата, используемая для создания консоли измерения энергопотребления."
+	desc = "Плата, используемая для сборки консоли измерения энергопотребления."
 	id = "powermonitor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -251,7 +251,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/solarcontrol
 	name = "Circuit Design (Solar Control)"
-	desc = "Плата, используемая для создания консоли управления солнечной батареей."
+	desc = "Плата, используемая для сборки консоли управления солнечной батареей."
 	id = "solarcontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -260,7 +260,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/prisonmanage
 	name = "Circuit Design (Prisoner Management Console)"
-	desc = "Плата, используемая для создания консоли управления имплантами заключенных."
+	desc = "Плата, используемая для сборки консоли управления имплантами заключенных."
 	id = "prisonmanage"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -278,7 +278,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mechrecharger
 	name = "circuit board (Mechbay Recharger)"
-	desc = "Плата, используемая для создания зарядного устройства для экзоскелетов."
+	desc = "Плата, используемая для сборки зарядного устройства для экзоскелетов."
 	id = "mechrecharger"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -287,7 +287,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mechapower
 	name = "Circuit Design (Mech Bay Power Control Console)"
-	desc = "Плата, используемая для создания консоли зарядного устройства для экзоскелетов."
+	desc = "Плата, используемая для сборки консоли зарядного устройства для экзоскелетов."
 	id = "mechapower"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -296,7 +296,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rdconsole
 	name = "Circuit Design (R&D Console)"
-	desc = "Платп, используемая для создания новой научно-исследовательской консоли."//
+	desc = "Платп, используемая для сборки новой научно-исследовательской консоли."
 	id = "rdconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -305,7 +305,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ordercomp
 	name = "Circuit Design (Supply ordering console)"
-	desc = "Плата, используемая для создания консоли заказа товаров."
+	desc = "Плата, используемая для сборки консоли заказа товаров."
 	id = "ordercomp"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -314,7 +314,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/supplycomp
 	name = "Circuit Design (Supply shuttle console)"
-	desc = "Плата, используемая для создания консоли управления грузовым челноком."
+	desc = "Плата, используемая для сборки консоли управления грузовым челноком."
 	id = "supplycomp"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -323,7 +323,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/comm_monitor
 	name = "Circuit Design (Telecommunications Monitoring Console)"
-	desc = "Плата, используемая для создания телекоммуникационного монитора."
+	desc = "Плата, используемая для сборки телекоммуникационного монитора."
 	id = "comm_monitor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -341,7 +341,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/message_monitor
 	name = "Circuit Design (Messaging Monitor Console)"
-	desc = "Плата, используемая для создания консоли мониторинга сообщений."
+	desc = "Плата, используемая для сборки консоли мониторинга сообщений."
 	id = "message_monitor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -359,7 +359,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/libraryconsole
 	name = "Computer Design (Library Console)"
-	desc = "Плата, используемая для создания новой библиотечной консоли."
+	desc = "Плата, используемая для сборки новой библиотечной консоли."
 	id = "libraryconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -368,7 +368,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cmf_console
 	name = "Circuit Design (CMF Console)"
-	desc = "Плата, используемая для создания консоли модификаторов CMF."
+	desc = "Плата, используемая для сборки консоли модификаторов CMF."
 	id = "cmf_console"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -377,7 +377,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cmf_scanner
 	name = "Circuit Design (CMF table)"
-	desc = "Плата, используемая для создания стола манипулирования CMF."
+	desc = "Плата, используемая для сборки стола манипулирования CMF."
 	id = "cmf_scanner"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1168,7 +1168,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/teleport_hub
 	name = "Teleportation Hub Board"
-	desc = "Плата, используемая для создания телепортационного узла."
+	desc = "Плата, используемая для сборки телепортационного узла."
 	id = "tele_hub"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
