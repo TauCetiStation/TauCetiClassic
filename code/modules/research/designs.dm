@@ -350,7 +350,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/aifixer
 	name = "Circuit Design (AI Integrity Restorer)"
-	desc = "Allows for the construction of circuit boards used to build an AI Integrity Restorer."
+	desc = "Плата, используемая для восстановления целостности ИИ."
 	id = "aifixer"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -368,7 +368,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cmf_console
 	name = "Circuit Design (CMF Console)"
-	desc = "Плата, используемая для сборки консоли модификаторов CMF."
+	desc = "Плата, используемая для сборки консоли модификатора CMF."
 	id = "cmf_console"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -377,7 +377,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cmf_scanner
 	name = "Circuit Design (CMF table)"
-	desc = "Плата, используемая для сборки стола манипулирования CMF."
+	desc = "Плата, используемая для сборки стола манипулирования над CMF."
 	id = "cmf_scanner"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -389,7 +389,7 @@ other types of metals and chemistry for reagents).
 ///////////////////////////////////
 /datum/design/safeguard_module
 	name = "AI Module(Safeguard)"
-	desc = "Allows for the construction of a Safeguard AI Module."//
+	desc = "Плата, с модулем законов для ИИ - эта с 'Safeguard'."
 	id = "safeguard_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -398,7 +398,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/onentemploye_module
 	name = "AI Module (One NT Employe)"
-	desc = "Allows for the construction of a 'One NT Employe' AI Module."//
+	desc = "Плата, с модулем законов для ИИ - эта с 'One NT Employe'."
 	id = "onentemploye_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -407,7 +407,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/protectstation_module
 	name = "AI Module (ProtectStation)"
-	desc = "Allows for the construction of a ProtectStation AI Module."//
+	desc = "Плата, с модулем законов для ИИ - эта с 'ProtectStation'."
 	id = "protectstation_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -416,7 +416,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/notele_module
 	name = "AI Module (TeleporterOffline Module)"
-	desc = "Allows for the construction of a TeleporterOffline AI Module."//
+	desc = "Плата, с модулем законов для ИИ - эта с 'TeleporterOffline'."
 	id = "notele_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -425,7 +425,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/quarantine_module
 	name = "AI Module (Quarantine)"
-	desc = "Allows for the construction of a Quarantine AI Module."//
+	desc = "Плата, с модулем законов для ИИ - эта с 'Quarantine'."
 	id = "quarantine_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -434,7 +434,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/oxygen_module
 	name = "AI Module (OxygenIsToxicToHumans)"
-	desc = "Allows for the construction of a Safeguard AI Module."//
+	desc = "Плата, с модулем законов для ИИ - эта с 'Safeguard'."
 	id = "oxygen_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -443,7 +443,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/freeform_module
 	name = "AI Module (Freeform)"
-	desc = "Allows for the construction of a Freeform AI Module."//
+	desc = "Плата, с модулем законов для ИИ - эта с 'Freeform'."
 	id = "freeform_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -452,7 +452,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/reset_module
 	name = "AI Module (Reset)"
-	desc = "Allows for the construction of a Reset AI Module."//
+	desc = "Плата, с модулем законов для ИИ - эта с 'Reset'."
 	id = "reset_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -461,7 +461,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/purge_module
 	name = "AI Module (Purge)"
-	desc = "Allows for the construction of a Purge AI Module."//
+	desc = "Плата, с модулем законов для ИИ - эта с 'Purge'."
 	id = "purge_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -470,7 +470,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/freeform/core_module
 	name = "AI Core Module (Freeform)"
-	desc = "Allows for the construction of a Freeform AI Core Module."//
+	desc = "Плата, с модулем законов для ИИ - эта с 'Freeform'."
 	id = "freeformcore_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -479,7 +479,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/asimov
 	name = "AI Core Module (Asimov)"
-	desc = "Allows for the construction of a Asimov AI Core Module."//
+	desc = "Плата, с модулем законов для ИИ - эта с 'Asimov'."
 	id = "asimov_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -488,7 +488,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/paladin_module
 	name = "AI Core Module (P.A.L.A.D.I.N.)"
-	desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."//
+	desc = "Плата, с модулем законов для ИИ - эта с 'P.A.L.A.D.I.N.'."
 	id = "paladin_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -497,7 +497,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tyrant_module
 	name = "AI Core Module (T.Y.R.A.N.T.)"
-	desc = "Allows for the construction of a T.Y.R.A.N.T. AI Module."//
+	desc = "Плата, с модулем законов для ИИ - эта с 'T.Y.R.A.N.T.'."
 	id = "tyrant_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -511,7 +511,7 @@ other types of metals and chemistry for reagents).
 ///////////////////////////////////
 /datum/design/subspace_receiver
 	name = "Circuit Design (Subspace Receiver)"
-	desc = "Плата, используемая для сборки Allows for the construction of Subspace Receiver equipment."//
+	desc = "Плата, используемая для сборки оборудования для подпространственного приема радиосигнала."
 	id = "s-receiver"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -520,7 +520,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telecomms_bus
 	name = "Circuit Design (Bus Mainframe)"
-	desc = "Плата, используемая для сборки Allows for the construction of Telecommunications Bus Mainframes."//
+	desc = "Плата, используемая для сборки базовых блоков телекоммуникационных шин."
 	id = "s-bus"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -529,7 +529,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telecomms_hub
 	name = "Circuit Design (Hub Mainframe)"
-	desc = "Плата, используемая для сборки Allows for the construction of Telecommunications Hub Mainframes."//
+	desc = "Плата, используемая для сборки центральных узлов телекоммуникационной сети."
 	id = "s-hub"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1046,7 +1046,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_analyzer
 	name = "Subspace Analyzer"
-	desc = "Сложный анализатор, способный анализировать скрытые длины волн подпространства."//
+	desc = "Сложный анализатор, способный анализировать скрытые длины волн подпространства."
 	id = "s-analyzer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10, MAT_GOLD = 15)
@@ -1055,7 +1055,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_crystal
 	name = "Ansible Crystal"
-	desc = "Сложный анализатор, способный анализировать скрытые длины волн подпространства."//
+	desc = "Сложный анализатор, способный анализировать скрытые длины волн подпространства."
 	id = "s-crystal"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 1000, MAT_SILVER = 20, MAT_GOLD = 20)
@@ -1186,7 +1186,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/sleeper
 	name = "Sleeper Board"
-	desc = "Плата, используемая для сборки слипера."//sleeper
+	desc = "Плата, используемая для сборки слипера."
 	id = "sleeper"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1611,7 +1611,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/circulator
 	name = "Circulator Board"
-	desc = "The circuit board for a TEG circulator."//
+	desc = "Плата, используемая для сборки турбины циркулятора на основе термоэлектрического генератора."
 	id = "circ"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1620,7 +1620,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/teg
 	name = "TEG Board"
-	desc = "The circuit board for a TEG generator."//
+	desc = "Плата, используемая для сборки термоэлектрического генератора."
 	id = "teg"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1669,7 +1669,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mmi
 	name = "Man-Machine Interface"
-	desc = "Невзрачная аббревиатура MMI скрывает подлинный ужас этого устройства."//ЧМИ
+	desc = "Невзрачная аббревиатура MMI скрывает подлинный ужас этого устройства."
 	id = "mmi"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
@@ -1678,7 +1678,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mmi_radio
 	name = "Radio-enabled Man-Machine Interface"
-	desc = "Невзрачная аббревиатура MMI скрывает подлинный ужас этого устройства. Эта версия оснащена встроенным радиоприемником."//ЧМИ
+	desc = "Невзрачная аббревиатура MMI скрывает подлинный ужас этого устройства. Эта версия оснащена встроенным радиоприемником."
 	id = "mmi_radio"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 1200, MAT_GLASS = 500)
@@ -1750,7 +1750,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implant_death
 	name = "Glass Case- 'Death Alarm'"
-	desc = "Футляр с имплантатом 'сигнализатор о смерти'."//
+	desc = "Футляр с имплантатом 'оповещение о смерти'."
 	id = "implant_death"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
@@ -2372,7 +2372,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/hud_advanced
 	name = "Advanced HUD"
-	desc = "Продвинутый HUD с возможностью гибкой настройки."//что это?
+	desc = "Продвинутый HUD с возможностью гибкой настройки."
 	id = "advanced_hud"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
