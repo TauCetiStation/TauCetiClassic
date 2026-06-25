@@ -798,7 +798,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/RPED
 	name = "Rapid Part Exchange Device"
-	desc = "Special mechanical module made to store, sort, and apply standart machine parts."
+	desc = "Механическое устройство, предназначенное для хранения, сортировки и подачи стандартных машиностроительных деталей."
 	id = "rped"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000) //hardcore
@@ -807,7 +807,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/BS_RPED
 	name = "Bluespace RPED"
-	desc = "Powered by bluespace technology, this RPED variant can upgrade buildings from a distance, without needing to remove the panel first."
+	desc = "Используя технологию «блюспейс» эта модификация RPED позволяет модернизировать устройства дистанционно, не снимая предварительно панель."// bluespace
 	id = "bs_rped"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 15000, MAT_GLASS = 5000, MAT_SILVER = 2500) //hardcore
@@ -817,7 +817,7 @@ other types of metals and chemistry for reagents).
 //Tier1
 /datum/design/basic_capacitor
 	name = "Basic Capacitor"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "basic_capacitor"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 400, MAT_GLASS = 400) //2000 material per sheet.
@@ -826,7 +826,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/basic_sensor
 	name = "Basic Sensor Module"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "basic_sensor"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 400, MAT_GLASS = 160)
@@ -835,7 +835,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/micro_mani
 	name = "Micro Manipulator"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "micro_mani"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 240)
@@ -844,7 +844,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/basic_micro_laser
 	name = "Basic Micro-Laser"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "basic_micro_laser"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 80, MAT_GLASS = 160)
@@ -853,7 +853,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/basic_matter_bin
 	name = "Basic Matter Bin"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "basic_matter_bin"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 640)
@@ -863,7 +863,7 @@ other types of metals and chemistry for reagents).
 //Tier 2
 /datum/design/adv_capacitor
 	name = "Advanced Capacitor"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "adv_capacitor"
 	build_type = PROTOLATHE | MECHFAB | AUTOLATHE
 	materials = list(MAT_METAL = 650, MAT_GLASS = 400)
@@ -872,7 +872,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/adv_sensor
 	name = "Advanced Sensor Module"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "adv_sensor"
 	build_type = PROTOLATHE | MECHFAB | AUTOLATHE
 	materials = list(MAT_METAL = 400, MAT_GLASS = 310)
@@ -881,7 +881,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/nano_mani
 	name = "Nano Manipulator"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "nano_mani"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 240, MAT_GLASS = 250)
@@ -890,7 +890,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/high_micro_laser
 	name = "High-Power Micro-Laser"
-	desc = "A stock part used in the construction of various devices."
+	desc = "AСтандартная деталь, используемая при создании различных устройств."
 	id = "high_micro_laser"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 330, MAT_GLASS = 160)
@@ -899,7 +899,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/adv_matter_bin
 	name = "Advanced Matter Bin"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "adv_matter_bin"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 640, MAT_GLASS = 300)
@@ -909,7 +909,7 @@ other types of metals and chemistry for reagents).
 //Tier 3
 /datum/design/super_capacitor
 	name = "Super Capacitor"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "super_capacitor"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 450)
@@ -918,7 +918,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/phasic_sensor
 	name = "Phasic Sensor Module"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "phasic_sensor"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 600, MAT_GLASS = 390)
@@ -927,7 +927,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/pico_mani
 	name = "Pico Manipulator"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "pico_mani"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 340, MAT_GLASS = 250)
@@ -936,7 +936,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ultra_micro_laser
 	name = "Ultra-High-Power Micro-Laser"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "ultra_micro_laser"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 380, MAT_GLASS = 310)
@@ -945,7 +945,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/super_matter_bin
 	name = "Super Matter Bin"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "super_matter_bin"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 840, MAT_GLASS = 300)
@@ -955,7 +955,7 @@ other types of metals and chemistry for reagents).
 //Tier 4
 /datum/design/quadratic_capacitor
 	name = "Quadratic Capacitor"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "quadratic_capacitor"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 800, MAT_GLASS = 800, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250)
@@ -964,7 +964,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/triphasic_scanning
 	name = "Triphasic Scanning Module"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "triphasic_scanning"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 800, MAT_GLASS = 320, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250)
@@ -973,7 +973,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/femto_mani
 	name = "Femto Manipulator"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "femto_mani"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 480, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250)
@@ -982,7 +982,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/quadultra_micro_laser
 	name = "Quad-Ultra Micro-Laser"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "quadultra_micro_laser"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 160, MAT_GLASS = 320, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250, MAT_URANIUM = 160)
@@ -991,7 +991,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/bluespace_matter_bin
 	name = "Bluespace Matter Bin"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "bluespace_matter_bin"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1280, MAT_SILVER = 300, MAT_GOLD = 300, MAT_DIAMOND = 400)
