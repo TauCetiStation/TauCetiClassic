@@ -159,11 +159,16 @@
 	if(density)
 		INVOKE_ASYNC(src, PROC_REF(open))
 		if(alarmed)
-			addtimer(CALLBACK(src, PROC_REF(close)), 10 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(check_late_close)), 10 SECONDS)
 	else
 		INVOKE_ASYNC(src, PROC_REF(close))
 
-
+/obj/machinery/door/firedoor/proc/check_late_close()
+	check_alarms()
+	if(alarmed)
+		INVOKE_ASYNC(src, PROC_REF(close))
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/firedoor/proc/check_alarms()
 	alarmed = initial(alarmed)			//dump alarms to check area`s
