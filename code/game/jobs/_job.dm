@@ -206,10 +206,14 @@
 		return skillsets[H.mind.role_alt_title] || skillsets[title]
 	return skillsets[title]
 
+```suggestion
 /datum/job/proc/round_summary_positions()
 	if(map_total_positions == 0)
 		return 0
 
 	. = map_total_positions || total_positions
+	if(. == -1)
+		return
+
 	if(summary_slots > 0)
 		. = min(summary_slots, . + floor(length(global.clients) / players_scale))
