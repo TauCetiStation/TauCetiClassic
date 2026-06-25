@@ -211,7 +211,7 @@
 		return 0
 	if(summary_slots > 0)
 		var/positions = (map_total_positions || total_positions)
-		var/rounded_slots = positions + round(length(global.clients) / players_scale)
+		var/rounded_slots = positions + floor(length(global.clients) / players_scale)
 
 		if(rounded_slots > summary_slots)
 			return summary_slots
