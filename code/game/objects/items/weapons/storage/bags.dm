@@ -153,7 +153,7 @@
 
 /obj/item/weapon/storage/bag/ore/atom_init()
 	. = ..()
-	AddComponent(/datum/component/autopickup_ore)
+	AddComponent(/datum/component/autopickup_bag)
 
 // -----------------------------
 //          Plant bag
@@ -213,7 +213,7 @@
 
 /obj/item/weapon/storage/bag/holding/atom_init()
 	. = ..()
-	AddComponent(/datum/component/autopickup_ore)
+	AddComponent(/datum/component/autopickup_bag)
 
 // -----------------------------
 //        Sheet Snatcher
