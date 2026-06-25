@@ -171,7 +171,7 @@
 	return FALSE
 
 /obj/machinery/door/firedoor/proc/check_alarms()
-	alarmed = initial(alarmed)			//dump alarms to check area`s
+	alarmed = FALSE
 	for(var/area/A in areas_added)		//Just in case a fire alarm is turned off while the firedoor is going through an autoclose cycle
 		if(A.fire || A.air_doors_activated)
 			alarmed = TRUE
