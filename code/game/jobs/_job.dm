@@ -206,7 +206,6 @@
 		return skillsets[H.mind.role_alt_title] || skillsets[title]
 	return skillsets[title]
 
-```suggestion
 /datum/job/proc/round_summary_positions()
 	if(map_total_positions == 0)
 		return 0
