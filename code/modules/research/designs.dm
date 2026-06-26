@@ -1832,7 +1832,7 @@ other types of metals and chemistry for reagents).
 /datum/design/bluespacebeaker/New()
 	..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B = build_path
-	desc += "Can hold up to [initial(B.volume)] units."
+	desc += "Вмещает до [initial(B.volume)] единиц жидкости."
 
 /datum/design/noreactbeaker
 	name = "cryostasis beaker"
@@ -1846,7 +1846,7 @@ other types of metals and chemistry for reagents).
 /datum/design/noreactbeaker/New()
 	..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B = build_path
-	desc += "Can hold up to [initial(B.volume)] units."
+	desc += "Вмещает до [initial(B.volume)] единиц жидкости."
 
 /datum/design/defibrillators_back
 	name = "Defibrillators"
