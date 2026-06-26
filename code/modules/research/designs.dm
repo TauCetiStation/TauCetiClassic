@@ -2142,7 +2142,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/medigun
 	name = "Medigun"
-	desc = "Прототип лечебной пушки, которая медленно возвращает органику в прежнее состояние, исцеляя их."
+	desc = "Прототип лечебной пушки, которая медленно возвращает органику в прежнее состояние, исцеляя её."
 	id = "medigun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000, MAT_PHORON = 5000, MAT_GOLD = 1500, MAT_SILVER = 1500, MAT_DIAMOND = 2000)
