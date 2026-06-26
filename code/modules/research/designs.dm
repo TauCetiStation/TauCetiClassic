@@ -2043,7 +2043,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/emp_mine
 	name = "EMP Mine"
-	desc = "Мина, которая при активации генерирует ионный импульс."
+	desc = "Мина, которая при активации генерирует электромагнитный импульс."
 	id = "emp_mine"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 100, MAT_URANIUM = 150)
