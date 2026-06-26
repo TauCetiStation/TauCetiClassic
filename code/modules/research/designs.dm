@@ -269,7 +269,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mechacontrol
 	name = "Circuit Design (Exosuit Control Console)"
-	desc = "Плата, используемая для сборки консоли мониторинга экзоскелетов."
+	desc = "Плата, используемая для сборки консоли мониторинга мехов."
 	id = "mechacontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -278,7 +278,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mechrecharger
 	name = "circuit board (Mechbay Recharger)"
-	desc = "Плата, используемая для сборки зарядного устройства для экзоскелетов."
+	desc = "Плата, используемая для сборки зарядного устройства для мехов."
 	id = "mechrecharger"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -287,7 +287,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mechapower
 	name = "Circuit Design (Mech Bay Power Control Console)"
-	desc = "Плата, используемая для сборки консоли зарядного устройства для экзоскелетов."
+	desc = "Плата, используемая для сборки консоли зарядного устройства для мехов."
 	id = "mechapower"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -597,7 +597,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/posibrain
 	name = "Positronic Brain"
-	desc = "Позитронный мозг - это сложный компьютерный процессор служащий искусственным разумом для роботов и наделяющий их зачатками сознания, логики и эмоций. Авторские права защищены Айзеком Азимовым."
+	desc = "Позитронный мозг - это сложный компьютерный процессор служащий искусственным разумом для роботов и наделяющий их зачатками сознания, логики и эмоций. Авторские права принадлежат Айзеку Азимову."
 	id = "posibrain"
 
 	build_type = PROTOLATHE
@@ -1962,7 +1962,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/stunrevolver
 	name = "Stun Revolver"
-	desc = "Награда начальника службы безопасности."
+	desc = "Награда главы службы безопасности."
 	id = "stunrevolver"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000)
