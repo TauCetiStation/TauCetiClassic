@@ -48,12 +48,11 @@
 	var/obj/item/weapon/tank/tank = target
 	tank.toggle_internals()
 
-/datum/action/item_action/hands_free/toggle_internals/Remove(mob/T)
-	var/obj/item/weapon/tank/tank = target
-
-	if(T.internal == tank)
-		tank.close_internals(T)
-		tank.update_actions_icons(T)
+/obj/item/weapon/tank/dropped()
+	var/mob/living/carbon/C = carryer_weakref?.resolve()
+	if(C.internal == src && src.loc != C)
+		close_internals(C)
+		update_actions_icons(C)
 	..()
 
 /obj/item/weapon/tank/examine(mob/user)
