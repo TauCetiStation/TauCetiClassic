@@ -45,6 +45,7 @@ SUBSYSTEM_DEF(shuttle)
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
 	var/list/mail_orders = list() //list("sender", "type", "receiver")
+	var/list/cargoshop_orders = list() //list(obj/item/order)
 		//shuttle movement
 	var/at_station = TRUE
 	var/movetime = 1200
@@ -457,7 +458,7 @@ SUBSYSTEM_DEF(shuttle)
 
 //Buyin
 /datum/controller/subsystem/shuttle/proc/buy()
-	if(!shoppinglist.len && !mail_orders.len)
+	if(!shoppinglist.len && !mail_orders.len && !cargoshop_orders.len)
 		return
 
 	var/shuttle_at
@@ -507,6 +508,14 @@ SUBSYSTEM_DEF(shuttle)
 				Item.forceMove(Crate)
 
 			mail_orders -= Order
+
+	if(cargoshop_orders.len && clear_turfs.len)
+		var/turf/picked_loc = pick_n_take(clear_turfs)
+
+		var/obj/structure/closet/crate/mailcrate/Crate = new(picked_loc)
+		for(var/atom/movable/A in cargoshop_orders)
+			A.forceMove(Crate)
+			cargoshop_orders -= A
 
 	SSshuttle.shoppinglist.Cut()
 	return

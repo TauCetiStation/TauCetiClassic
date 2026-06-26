@@ -233,3 +233,19 @@
 	unit_name = "loyalty implant"
 	include_subtypes = FALSE
 	export_types = list(/obj/item/weapon/implantcase/loyalty)
+
+
+/datum/export/gear/sukeban_pants
+	cost = 160
+	unit_name = "sukeban pants"
+	export_types = list(/obj/item/clothing/under/sukeban_pants)
+
+/datum/export/gear/sukeban_dress
+	cost = 140
+	unit_name = "sukeban dress"
+	export_types = list(/obj/item/clothing/under/sukeban_dress)
+
+/datum/export/gear/sukeban_coat
+	cost = 135
+	unit_name = "sukeban coat"
+	export_types = list(/obj/item/clothing/suit/sukeban_coat)
