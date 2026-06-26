@@ -707,9 +707,9 @@
 	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/stealthy_tools/syndigolashes
-	name = "No-Slip Brown Shoes"
-	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces."
-	item = /obj/item/clothing/shoes/syndigaloshes
+	name = "Anti-Slip Soles"
+	desc = "A pair of rubberized soles that attach to any footwear and let you run on wet floors. Click them on your shoes to install, alt-click the shoes to pry them off. They do not work on lubricated surfaces."
+	item = /obj/item/noslip_sole
 	cost = 1
 	uplink_types = list(UPLINK_TYPE_TRAITOR)
 

@@ -748,7 +748,7 @@
 		if(cell)
 			user.put_in_hands(cell)
 			cell.add_fingerprint(user)
-			cell.updateicon()
+			cell.update_icon()
 
 			src.cell = null
 			user.visible_message("<span class='warning'>[user.name] извлекает аккумулятор из [CASE(src, GENITIVE_CASE)]!</span>", "Вы извлекаете аккумулятор из [CASE(src, GENITIVE_CASE)].")

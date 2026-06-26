@@ -723,7 +723,6 @@
 /turf/simulated/floor/plating,
 /area/space_structures/carp_space)
 "en" = (
-/obj/structure/rack,
 /obj/structure/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -733,17 +732,12 @@
 	name = "Warehouse APC";
 	pixel_y = 28
 	},
-/obj/item/clothing/suit/space/syndicate/elite/commander{
-	armor = list("melee"=60,"bullet"=45,"laser"=40,"energy"=35,"bomb"=70,"bio"=100,"rad"=20);
-	name = "old striker commander space suit"
-	},
-/obj/item/clothing/head/helmet/space/syndicate/elite/commander{
-	armor = list("melee"=60,"bullet"=45,"laser"=40,"energy"=35,"bomb"=70,"bio"=100,"rad"=20);
-	name = "old striker commander space helmet"
-	},
 /obj/effect/decal/turf_decal{
 	dir = 9;
 	icon_state = "warn"
+	},
+/obj/machinery/suit_storage_unit/syndicate_unit/elite/comander{
+	filled = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -5515,12 +5509,6 @@
 	icon_state = "darkblue"
 	},
 /area/space_structures/old_station/central/bridge)
-"Gw" = (
-/obj/item/clothing/head/helmet/space/rig/security,
-/turf/simulated/floor/airless{
-	icon_state = "yellow"
-	},
-/area/space_structures/carp_space)
 "Gy" = (
 /turf/simulated/floor/airless{
 	icon_state = "yellow"
@@ -7674,10 +7662,9 @@
 	},
 /area/space_structures/carp_space)
 "Tt" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/rig/engineering,
-/obj/item/clothing/shoes/magboots,
-/obj/item/clothing/head/helmet/space/rig/engineering,
+/obj/machinery/suit_storage_unit/engine{
+	filled = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellow"
@@ -9692,7 +9679,7 @@ we
 Xa
 hW
 iq
-Gw
+Gy
 Us
 we
 Zd
