@@ -2,61 +2,6 @@
 //////////////////////////////////////////////////////////////////
 //						COMMON STEPS							//
 //////////////////////////////////////////////////////////////////
-/datum/surgery_step/generic/retract_skin
-	allowed_tools = list(
-	/obj/item/weapon/retractor = 100,           \
-	/obj/item/weapon/kitchen/utensil/fork = 75,	\
-	/obj/item/weapon/screwdriver = 50
-	)
-
-	min_duration = 30
-	max_duration = 40
-
-/datum/surgery_step/generic/retract_skin/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-		return BP.open == 1 && !(BP.status & ORGAN_BLEEDING)
-
-/datum/surgery_step/generic/retract_skin/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	var/msg = "[user] starts to pry open the incision on [target]'s [BP.name] with \the [tool]."
-	var/self_msg = "You start to pry open the incision on [target]'s [BP.name] with \the [tool]."
-	if (target_zone == BP_CHEST)
-		msg = "[user] starts to separate the ribcage and rearrange the organs in [target]'s torso with \the [tool]."
-		self_msg = "You start to separate the ribcage and rearrange the organs in [target]'s torso with \the [tool]."
-	if (target_zone == BP_GROIN)
-		msg = "[user] starts to pry open the incision and rearrange the organs in [target]'s lower abdomen with \the [tool]."
-		self_msg = "You start to pry open the incision and rearrange the organs in [target]'s lower abdomen with \the [tool]."
-	user.visible_message(msg, self_msg)
-	target.custom_pain("It feels like the skin on your [BP.name] is on fire!",1)
-	..()
-
-/datum/surgery_step/generic/retract_skin/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	var/msg = "<span class='notice'>[user] keeps the incision open on [target]'s [BP.name] with \the [tool].</span>"
-	var/self_msg = "<span class='notice'>You keep the incision open on [target]'s [BP.name] with \the [tool].</span>"
-	if (target_zone == BP_CHEST)
-		msg = "<span class='notice'>[user] keeps the ribcage open on [target]'s torso with \the [tool].</span>"
-		self_msg = "<span class='notice'>You keep the ribcage open on [target]'s torso with \the [tool].</span>"
-	if (target_zone == BP_GROIN)
-		msg = "<span class='notice'>[user] keeps the incision open on [target]'s lower abdomen with \the [tool].</span>"
-		self_msg = "<span class='notice'>You keep the incision open on [target]'s lower abdomen with \the [tool].</span>"
-	user.visible_message(msg, self_msg)
-	BP.open = 2
-
-/datum/surgery_step/generic/retract_skin/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	var/msg = "<span class='warning'>[user]'s hand slips, tearing the edges of the incision on [target]'s [BP.name] with \the [tool]!</span>"
-	var/self_msg = "<span class='warning'>Your hand slips, tearing the edges of the incision on [target]'s [BP.name] with \the [tool]!</span>"
-	if (target_zone == BP_CHEST)
-		msg = "<span class='warning'>[user]'s hand slips, damaging several organs in [target]'s torso with \the [tool]!</span>"
-		self_msg = "<span class='warning'>Your hand slips, damaging several organs in [target]'s torso with \the [tool]!</span>"
-	if (target_zone == BP_GROIN)
-		msg = "<span class='warning'>[user]'s hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]</span>"
-		self_msg = "<span class='warning'>Your hand slips, damaging several organs in [target]'s lower abdomen with \the [tool]!</span>"
-	user.visible_message(msg, self_msg)
-	BP.take_damage(12, 0, DAM_SHARP|DAM_EDGE, tool)
-
 /datum/surgery_step/generic/cauterize
 	allowed_tools = list(
 	/obj/item/stack/medical/suture = 100,

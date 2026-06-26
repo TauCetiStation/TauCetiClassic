@@ -3,32 +3,6 @@
 //						FACE SURGERY							//
 //////////////////////////////////////////////////////////////////
 
-/datum/surgery_step/face/fix_face
-	allowed_tools = list(
-	/obj/item/weapon/retractor = 100, 	\
-	/obj/item/weapon/kitchen/utensil/fork = 75,	\
-	/obj/item/weapon/screwdriver = 50
-	)
-
-	min_duration = 80
-	max_duration = 100
-
-/datum/surgery_step/face/fix_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts pulling the skin on [target]'s face back in place with \the [tool].", \
-	"You start pulling the skin on [target]'s face back in place with \the [tool].")
-	..()
-
-/datum/surgery_step/face/fix_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] pulls the skin on [target]'s face back in place with \the [tool].</span>",	\
-	"<span class='notice'>You pull the skin on [target]'s face back in place with \the [tool].</span>")
-	target.op_stage.face = 3
-
-/datum/surgery_step/face/fix_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, tearing skin on [target]'s face with \the [tool]!</span>", \
-	"<span class='warning'>Your hand slips, tearing skin on [target]'s face with \the [tool]!</span>")
-	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-
 /datum/surgery_step/face/cauterize
 	allowed_tools = list(
 	/obj/item/weapon/cautery = 100,			\

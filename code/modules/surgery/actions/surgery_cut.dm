@@ -22,79 +22,80 @@
 		if(slime.stat == DEAD && slime.surgery_status != PREPARED)
 			return TRUE
 
-	var/mob/living/carbon/human/surgery_victim = target
-	if(!..())
-		return FALSE
+	if(ishuman(target))
+		var/mob/living/carbon/human/surgery_victim = target
+		if(!..())
+			return FALSE
 
-	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
+		var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
 
-	if(BP.is_stump()) 				// stump preparing
-		return TRUE					// prevert etc checks, is target bodypart is stump
+		if(BP.is_stump()) 				// stump preparing
+			return TRUE					// prevert etc checks, is target bodypart is stump
 
 /////////////////////////////////////
 ///       IPC SURGERY CUT         ///
 /////////////////////////////////////
-	if(surgery_victim.species.flags[IS_SYNTHETIC]) // IPC only
-		can_infect = FALSE
-		switch(target_zone)
-			if(O_EYES)
-				var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-				if(eyes.surgery_stage < PREPARED)
+		if(surgery_victim.species.flags[IS_SYNTHETIC]) // IPC only
+			can_infect = FALSE
+			switch(target_zone)
+				if(O_EYES)
+					var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
+					if(eyes.surgery_stage < BP_SAW_INTERNALS_OPEN_STATE)
+						return TRUE
+				if(O_MOUTH)
 					return TRUE
-			if(O_MOUTH)
-				return TRUE
-			if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
-				switch(BP.open)
-					if(BP_DEFAULT_STATE)
-						return TRUE
-					if(BP_PANEL_UNLOCKED)
-						return TRUE
-					if(BP_SECURITY_PANEL_OPEN)
-						if(surgery_victim.has_brain()) // only chest may be open on this stage
+				if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
+					switch(BP.open)
+						if(BP_DEFAULT_STATE)
 							return TRUE
-						return TRUE
+						if(BP_PANEL_UNLOCKED)
+							return TRUE
+						if(BP_MAINTANCE_PANEL_OPEN)
+							if(surgery_victim.has_brain()) // only chest may be open on this stage
+								return TRUE
+							return TRUE
 
 /////////////////////////////////////
 ///     ORGANIC SURGERY CUT       ///
 /////////////////////////////////////
-	else if(surgery_victim.species.flags[IS_PLANT])	// Dionea, Podkid
-		if(target_zone == BP_CHEST && BP.open == BP_SAW_INTERNALS_OPEN_STATE)
-			return TRUE
-	else if(!surgery_victim.species.flags[TRAIT_NO_BLOOD]) // human, unathi, tajaran, skrell and etc
-		if(!BP.is_robotic_part())
-			if(target_zone == BP_GROIN && BP.open >= BP_SCALPEL_OPEN_STATE && surgery_victim.get_species() != VOX) // in this stage we need check only VOX
+		else if(surgery_victim.species.flags[IS_PLANT])	// Dionea, Podkid
+			if(target_zone == BP_CHEST && BP.open == BP_SAW_INTERNALS_OPEN_STATE)
 				return TRUE
-			switch(target_zone)
-				if(O_EYES)
-					var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-					if(eyes.surgery_stage < PREPARED)
-						return TRUE
-				if(O_MOUTH)
-					var/obj/item/organ/external/head/head = BP
-					if(head.ps_status < PREPARED)
-						return TRUE
-				if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
-					switch(BP.open)
-						if(BP_DEFAULT_STATE)						// open part
+		else if(!surgery_victim.species.flags[TRAIT_NO_BLOOD]) // human, unathi, tajaran, skrell and etc
+			if(!BP.is_robotic_part())
+				if(target_zone == BP_GROIN && BP.open >= BP_SCALPEL_OPEN_STATE && surgery_victim.get_species() != VOX) // in this stage we need check only VOX
+					return TRUE
+				switch(target_zone)
+					if(O_EYES)
+						var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
+						if(eyes.surgery_stage < BP_SAW_INTERNALS_OPEN_STATE)
 							return TRUE
-						if(BP_SCALPEL_OPEN_STATE)
-							if(BP.body_zone == BP_CHEST\
-							&& surgery_victim.overeatduration > 0) // Fat surgery
+					if(O_MOUTH)
+						var/obj/item/organ/external/head/head = BP
+						if(head.ps_status < BP_SAW_INTERNALS_OPEN_STATE)
+							return TRUE
+					if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
+						switch(BP.open)
+							if(BP_DEFAULT_STATE)						// open part
 								return TRUE
-						if(BP_RETRACTOR_OPEN_STATE)
-							if(BP.body_zone == BP_GROIN)		// detach internal organs from groin
-								return TRUE
-						if(BP_SAW_INTERNALS_OPEN_STATE)			// detach internal organs from head or chest
-							if(BP.body_zone == BP_HEAD\
-							|| BP.body_zone == BP_CHEST)
-								return TRUE
+							if(BP_SCALPEL_OPEN_STATE)
+								if(BP.body_zone == BP_CHEST\
+								&& surgery_victim.overeatduration > 0) // Fat surgery
+									return TRUE
+							if(BP_RETRACTOR_OPEN_STATE)
+								if(BP.body_zone == BP_GROIN)		// detach internal organs from groin
+									return TRUE
+							if(BP_SAW_INTERNALS_OPEN_STATE)			// detach internal organs from head or chest
+								if(BP.body_zone == BP_HEAD\
+								|| BP.body_zone == BP_CHEST)
+									return TRUE
 	return FALSE
 
 /datum/surgery_step/cut/prepare_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
 	if(target_zone == O_MOUTH && ishuman(target) && !ismachine(target))
 		var/mob/living/carbon/human/surgery_victim = target
-		var/obj/item/organ/external/head/HP = surgery_victim.get_bodypart(target_zone)
-		if(HP.ps_status == PREPARED)
+		var/obj/item/organ/external/head/head = surgery_victim.get_bodypart(target_zone)
+		if(head.ps_status == BP_SAW_INTERNALS_OPEN_STATE)
 			plastic_new_name = sanitize_name(input(user, "Choose new character's name:", "Changing") as text|null)
 			return plastic_new_name && checks_for_surgery(target, user, clothless)
 	return TRUE
@@ -102,29 +103,29 @@
 /datum/surgery_step/cut/begin_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
-		user.visible_message("[user] starts cutting through [slime]'s [slime.surgery_status == CUTTED ? "innards" : "flesh"] with \the [tool].",
-		"You start cutting through [slime]'s [slime.surgery_status == CUTTED ? "innards" : "flesh"] with \the [tool].")
+		msg = "[user] starts cutting through [slime]'s [slime.surgery_status == CUTTED ? "innards" : "flesh"] with \the [tool]."
+		self_msg = "You start cutting through [slime]'s [slime.surgery_status == CUTTED ? "innards" : "flesh"] with \the [tool]."
 
 	var/mob/living/carbon/human/surgery_victim = target
 	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
 	if(surgery_victim.species.flags[IS_SYNTHETIC]) // IPC only
 		if(BP.is_stump())
-			user.visible_message("[user] begins to reposition wires where [surgery_victim]'s [BP] used to be with \the [tool].",
-			"You begin to reposition wires where [surgery_victim]'s [BP] used to be with \the [tool].")
+			msg = "[user] begins to reposition wires where [surgery_victim]'s [BP] used to be with \the [tool]."
+			self_msg = "You begin to reposition wires where [surgery_victim]'s [BP] used to be with \the [tool]."
 		switch(target_zone)
 			if(O_EYES)
 				var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
 				if(eyes)
-					user.visible_message("[user] [eyes.surgery_stage == NORMAL ? "begins to unscrew" : "is beginning to lock"] [surgery_victim]'s camera panels with \the [tool]." ,
-					"You [eyes.surgery_stage == NORMAL ? "unscrew" : "are beginning to lock"] [surgery_victim]'s camera panels with \the [tool].")
+					msg = "[user] [eyes.surgery_stage == BP_DEFAULT_STATE ? "begins to unscrew" : "is beginning to lock"] [surgery_victim]'s camera panels with \the [tool]."
+					self_msg = "You [eyes.surgery_stage == BP_DEFAULT_STATE ? "unscrew" : "are beginning to lock"] [surgery_victim]'s camera panels with \the [tool]."
 			if(O_MOUTH, BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
 				switch(BP.open)
-					if(BP_SECURITY_PANEL_OPEN)
-						user.visible_message("[user] starts cutting wires connecting [surgery_victim]'s posi-brain with \the [tool].",
-						"You start cutting wires connecting [surgery_victim]'s posi-brain with \the [tool].")
+					if(BP_MAINTANCE_PANEL_OPEN)
+						msg = "[user] starts cutting wires connecting [surgery_victim]'s posi-brain with \the [tool]."
+						self_msg = "You start cutting wires connecting [surgery_victim]'s posi-brain with \the [tool]."
 					if(BP_DEFAULT_STATE, BP_PANEL_UNLOCKED)
-						user.visible_message("[user] starts to [BP.open == BP_DEFAULT_STATE ? "un" : null]screw [surgery_victim]'s [BP.name]'s [target_zone != O_MOUTH ? "maintenance hatch" : "screen"] with \the [tool].",
-						"You start to [BP.open == BP_DEFAULT_STATE ? "un" : null]screw [surgery_victim]'s [BP.name]'s [target_zone != O_MOUTH ? "maintenance hatch" : "screen"] with \the [tool].")
+						msg = "[user] starts to [BP.open == BP_DEFAULT_STATE ? "un" : null]screw [surgery_victim]'s [BP.name]'s [target_zone != O_MOUTH ? "maintenance hatch" : "screen"] with \the [tool]."
+						self_msg = "You start to [BP.open == BP_DEFAULT_STATE ? "un" : null]screw [surgery_victim]'s [BP.name]'s [target_zone != O_MOUTH ? "maintenance hatch" : "screen"] with \the [tool]."
 						if(!surgery_victim.is_bruised_organ(O_KIDNEYS))
 							to_chat(surgery_victim, "%[BP.name]'S MAINTENANCE HATCH% UNATHORISED ACCESS ATTEMPT DETECTED!")
 	else if(surgery_victim.species.flags[IS_PLANT])
@@ -132,37 +133,39 @@
 			if(BP_CHEST)
 				switch(BP.open)
 					if(BP_SAW_INTERNALS_OPEN_STATE)
-						user.visible_message("[user] starts separating connections to [surgery_victim]'s brain with \the [tool].",
-						"You start separating connections to [surgery_victim]'s brain with \the [tool].")
+						msg = "[user] starts separating connections to [surgery_victim]'s brain with \the [tool]."
+						"You start separating connections to [surgery_victim]'s brain with \the [tool]."
 	else if(!surgery_victim.species.flags[TRAIT_NO_BLOOD])
-		surgery_victim.custom_pain("You feel a horrible pain as if from a sharp knife in your [BP.name]!",1)
+		cp_msg = "You feel a horrible pain as if from a sharp knife in your [BP.name]!"
 		if(target_zone == BP_GROIN && BP.open >= BP_SCALPEL_OPEN_STATE && surgery_victim.get_species() != VOX) // in this stage we need check only VOX
-			user.visible_message("[user] begins to reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [tool].", \
-			"You start to reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [tool]." )
-			surgery_victim.custom_pain("The pain in your groin is living hell!",1)
+			msg = "[user] begins to reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [tool]."
+			self_msg = "You start to reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [tool]."
+			cp_msg = "The pain in your groin is living hell!"
 
 		switch(target_zone)
 			if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
-				user.visible_message("[user] starts the incision on [surgery_victim]'s [BP.name] with \the [tool].", \
-				"You start the incision on [surgery_victim]'s [BP.name] with \the [tool].")
+				msg = "[user] starts the incision on [surgery_victim]'s [BP.name] with \the [tool]."
+				self_msg = "You start the incision on [surgery_victim]'s [BP.name] with \the [tool]."
 			if(O_EYES)
 				var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
 				if(eyes)
-					if(eyes.surgery_stage == NORMAL)
-						user.visible_message("[user] starts to separate the corneas on [surgery_victim]'s eyes with \the [tool].", \
-						"You start to separate the corneas on [surgery_victim]'s eyes with \the [tool].")
-					else if(eyes.surgery_stage == PREPARED)
-						user.visible_message("[user] starts disconnect eyes inside the incision on [surgery_victim]'s [BP.name] with \the [tool].", \
-						"You start disconnect eyes inside the incision on [surgery_victim]'s [BP.name] with \the [tool]" )
+					if(eyes.surgery_stage == BP_DEFAULT_STATE)
+						msg = "[user] starts to separate the corneas on [surgery_victim]'s eyes with \the [tool]."
+						self_msg = "You start to separate the corneas on [surgery_victim]'s eyes with \the [tool]."
+					else if(eyes.surgery_stage == BP_SAW_INTERNALS_OPEN_STATE)
+						msg = "[user] starts disconnect eyes inside the incision on [surgery_victim]'s [BP.name] with \the [tool]."
+						self_msg = "You start disconnect eyes inside the incision on [surgery_victim]'s [BP.name] with \the [tool]"
 			if(O_MOUTH)
-				var/obj/item/organ/external/head/HP = BP
-				if(HP.ps_status == NORMAL)
-					user.visible_message("[user] starts to cut open [surgery_victim]'s face and neck with \the [tool].", \
-					"You start to cut open [surgery_victim]'s face and neck with \the [tool].")
-				else if(HP.ps_status == PREPARED)
-					user.visible_message("[user] begins to alter [surgery_victim]'s appearance with \the [tool].", \
-					"You begin to alter [surgery_victim]'s appearance with \the [tool].")
+				var/obj/item/organ/external/head/head = BP
+				if(head.ps_status == BP_DEFAULT_STATE)
+					msg = "[user] starts to cut open [surgery_victim]'s face and neck with \the [tool]."
+					self_msg = "You start to cut open [surgery_victim]'s face and neck with \the [tool]."
+				else if(head.ps_status == BP_SAW_INTERNALS_OPEN_STATE)
+					msg = "[user] begins to alter [surgery_victim]'s appearance with \the [tool]."
+					self_msg = "You begin to alter [surgery_victim]'s appearance with \the [tool]."
 
+	user.visible_message(msg, self_msg)
+	surgery_victim.custom_pain(cp_msg, 1)
 	..()
 
 /datum/surgery_step/cut/end_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
@@ -191,15 +194,15 @@
 			if(O_EYES)
 				var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
 				switch(eyes.surgery_stage)
-					if(NORMAL)
+					if(BP_DEFAULT_STATE)
 						user.visible_message("<span class='notice'>[user] unscrewed [surgery_victim]'s camera panels with \the [tool].</span>",
 						"<span class='notice'>You unscrewed [surgery_victim]'s camera panels with \the [tool].</span>")
-						eyes.surgery_stage = CUTTED
-					if(PREPARED)
+						eyes.surgery_stage = BP_SCALPEL_OPEN_STATE
+					if(BP_MAINTANCE_PANEL_OPEN)
 						surgery_victim.cure_nearsighted(EYE_DAMAGE_TRAIT)
 						surgery_victim.sdisabilities &= ~BLIND
 						eyes.damage = 0
-						eyes.surgery_stage = NORMAL
+						eyes.surgery_stage = BP_DEFAULT_STATE
 					else
 						user.visible_message("<span class='notice'>[user] locks [surgery_victim]'s camera panels with \the [tool].</span>",
 						"<span class='notice'>You lock [surgery_victim]'s camera panels with \the [tool].</span>")
@@ -208,7 +211,7 @@
 				surgery_victim.blinded += 1.5
 			if(O_MOUTH, BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
 				switch(BP.open)
-					if(BP_SECURITY_PANEL_OPEN)
+					if(BP_MAINTANCE_PANEL_OPEN)
 						user.visible_message("<span class='notice'>[user] pries out [surgery_victim]'s posi-brain from \his hatch with \the [tool].</span>",
 							"<span class='notice'>You pry out [surgery_victim]'s posi-brain from hatch with \the [tool].</span>")
 
@@ -275,11 +278,11 @@
 				var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
 				if(eyes)
 					switch(eyes.surgery_stage)
-						if(NORMAL)
+						if(BP_DEFAULT_STATE)
 							user.visible_message("<span class='notice'>[user] has separated the corneas on [surgery_victim]'s eyes with \the [tool].</span>" , \
 							"<span class='notice'>You have separated the corneas on [surgery_victim]'s eyes with \the [tool].</span>",)
-							eyes.surgery_stage = CUTTED
-						if(PREPARED)
+							eyes.surgery_stage = BP_SCALPEL_OPEN_STATE
+						if(BP_SAW_INTERNALS_OPEN_STATE)
 							eyes.status |= ORGAN_CUT_AWAY
 							eyes.remove(surgery_victim)
 							eyes.loc = get_turf(surgery_victim)
@@ -293,19 +296,19 @@
 						"<span class='notice'>You could not find anything inside [surgery_victim]'s [BP.name].</span>")
 					return FALSE
 			if(O_MOUTH)
-				var/obj/item/organ/external/head/HP = BP
-				switch(HP.ps_status)
-					if(NORMAL)
+				var/obj/item/organ/external/head/head = BP
+				switch(head.ps_status)
+					if(BP_DEFAULT_STATE)
 						user.visible_message("<span class='notice'>[user] has cut open [surgery_victim]'s face and neck with \the [tool].</span>" , \
 						"<span class='notice'>You have cut open [surgery_victim]'s face and neck with \the [tool].</span>",)
-						HP.ps_status = CUTTED
+						head.ps_status = BP_SCALPEL_OPEN_STATE
 						return TRUE
-					if(PREPARED)
+					if(BP_SAW_INTERNALS_OPEN_STATE)
 						user.visible_message("<span class='notice'>[user] alters [surgery_victim]'s appearance with \the [tool].</span>",		\
 						"<span class='notice'>You alter [surgery_victim]'s appearance with \the [tool].</span>")
 						surgery_victim.real_name = plastic_new_name
 						plastic_new_name = null
-						HP.ps_status = NORMAL
+						head.ps_status = BP_DEFAULT_STATE
 						return TRUE
 			if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
 				if(target_zone == BP_GROIN && BP.open >= BP_SCALPEL_OPEN_STATE && surgery_victim.get_species() != VOX) // in this stage we need check only VOX
@@ -368,8 +371,8 @@
 	if(surgery_victim.species.flags[IS_SYNTHETIC])
 		if(target_zone == O_EYES)
 			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-			user.visible_message("<span class='warning'>[user]'s hand slips, [eyes.surgery_stage != NORMAL ? "denting": "scratching"] [surgery_victim]'s cameras with \the [tool]!</span>",
-			"<span class='warning'>Your hand slips, [eyes.surgery_stage != NORMAL ? "denting": "scratching"] [surgery_victim]'s cameras with \the [tool]!</span>")
+			user.visible_message("<span class='warning'>[user]'s hand slips, [eyes.surgery_stage != BP_SCALPEL_OPEN_STATE ? "denting": "scratching"] [surgery_victim]'s cameras with \the [tool]!</span>",
+			"<span class='warning'>Your hand slips, [eyes.surgery_stage != BP_SCALPEL_OPEN_STATE ? "denting": "scratching"] [surgery_victim]'s cameras with \the [tool]!</span>")
 			BP.take_damage(5, 0, DAM_SHARP|DAM_EDGE, tool)
 			eyes.take_damage(5, 0)
 			return TRUE

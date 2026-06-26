@@ -16,38 +16,6 @@
 		return 0
 	return target_zone != BP_CHEST
 
-/datum/surgery_step/limb/mend
-	allowed_tools = list(
-	/obj/item/weapon/retractor = 100,           \
-	/obj/item/weapon/kitchen/utensil/fork = 75,	\
-	/obj/item/weapon/screwdriver = 50
-	)
-
-	min_duration = 80
-	max_duration = 100
-
-/datum/surgery_step/limb/mend/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		return target.op_stage.bodyparts[target_zone] && target.op_stage.bodyparts[target_zone] == ORGAN_CUT_AWAY
-
-/datum/surgery_step/limb/mend/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] is beginning to reposition flesh and nerve endings where where [target]'s [parse_zone(target_zone)] used to be with [tool].", \
-	"You start repositioning flesh and nerve endings where [target]'s [parse_zone(target_zone)] used to be with [tool].")
-	..()
-
-/datum/surgery_step/limb/mend/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] has finished repositioning flesh and nerve endings where [target]'s [parse_zone(target_zone)] used to be with [tool].</span>",	\
-	"<span class='notice'>You have finished repositioning flesh and nerve endings where [target]'s [parse_zone(target_zone)] used to be with [tool].</span>")
-	target.op_stage.bodyparts[target_zone] = 3
-
-/datum/surgery_step/limb/mend/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(BP_CHEST)
-	if (BP)
-		user.visible_message("<span class='warning'>[user]'s hand slips, tearing flesh on [target]'s [BP.name]!</span>", \
-		"<span class='warning'>Your hand slips, tearing flesh on [target]'s [BP.name]!</span>")
-		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
-
-
 /datum/surgery_step/limb/prepare
 	allowed_tools = list(
 	/obj/item/weapon/cautery = 100,			\
@@ -223,34 +191,3 @@
 		user.visible_message("<span class='warning'>[user]'s hand slips, cutting [target]'s [BP.name] open!</span>",
 		"<span class='warning'>Your hand slips, cutting [target]'s [BP.name] open!</span>")
 		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
-
-/datum/surgery_step/ipc/limb/ipc_prepare
-	allowed_tools = list(
-	/obj/item/weapon/wrench = 100,
-	/obj/item/weapon/bonesetter = 75
-	)
-
-	min_duration = 60
-	max_duration = 70
-	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED, /datum/skill/engineering = SKILL_LEVEL_NOVICE)
-
-/datum/surgery_step/ipc/limb/ipc_prepare/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(..())
-		return target.op_stage.bodyparts[target_zone] && target.op_stage.bodyparts[target_zone] == ORGAN_CUT_AWAY
-
-/datum/surgery_step/ipc/limb/ipc_prepare/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts adjusting the area around [target]'s [parse_zone(target_zone)] with \the [tool].",
-	"You start adjusting the area around [target]'s [parse_zone(target_zone)] with \the [tool].")
-	..()
-
-/datum/surgery_step/ipc/limb/ipc_prepare/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] has finished adjusting the area around [target]'s [parse_zone(target_zone)] with \the [tool].</span>",
-	"<span class='notice'>You have finished adjusting the area around [target]'s [parse_zone(target_zone)] with \the [tool].</span>")
-	target.op_stage.bodyparts[target_zone] = ORGAN_ATTACHABLE
-
-/datum/surgery_step/ipc/limb/ipc_prepare/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(BP_CHEST)
-	if (BP)
-		user.visible_message("<span class='warning'>[user]'s hand slips, denting [target]'s [BP.name]!</span>",
-		"<span class='warning'>Your hand slips, searing [target]'s [BP.name]!</span>")
-		target.apply_damage(10, BRUTE, BP)

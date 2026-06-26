@@ -516,7 +516,7 @@
 	var/holding = FALSE
 	var/belt = null
 	var/mob/living/carbon/fastened = null
-	qualities = (
+	qualities = list(
 		QUALITY_OPERATE_TABLE = 300
 	)
 

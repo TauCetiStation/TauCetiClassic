@@ -2,38 +2,6 @@
 //////////////////////////////////////////////////////////////////
 //						EYE SURGERY							//
 //////////////////////////////////////////////////////////////////
-
-/datum/surgery_step/eye/lift_eyes
-	allowed_tools = list(
-	/obj/item/weapon/retractor = 100,	        \
-	/obj/item/weapon/kitchen/utensil/fork = 75,	\
-	/obj/item/weapon/screwdriver = 50
-	)
-
-	min_duration = 30
-	max_duration = 40
-
-/datum/surgery_step/eye/lift_eyes/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.eyes == 1
-
-/datum/surgery_step/eye/lift_eyes/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts lifting corneas from [target]'s eyes with \the [tool].", \
-	"You start lifting corneas from [target]'s eyes with \the [tool].")
-	..()
-
-/datum/surgery_step/eye/lift_eyes/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] has lifted the corneas from [target]'s eyes from with \the [tool].</span>" , \
-	"<span class='notice'>You has lifted the corneas from [target]'s eyes from with \the [tool].</span>" )
-	target.op_stage.eyes = 2
-
-/datum/surgery_step/eye/lift_eyes/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, damaging [target]'s eyes with \the [tool]!</span>", \
-	"<span class='warning'>Your hand slips, damaging [target]'s eyes with \the [tool]!</span>")
-	BP.take_damage(10, 0, used_weapon = tool)
-	IO.take_damage(5, 0)
-
 /datum/surgery_step/eye/cauterize
 	allowed_tools = list(
 	/obj/item/weapon/cautery = 100,			\

@@ -158,7 +158,7 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	qualities = list(
 		QUALITY_CUTTING = 100,
-		QUALITY_SURG_CUTTING = 50
+		QUALITY_SURG_CUTTING = 50,
 		QUALITY_SCREWING = 75
 		)
 	sweep_step = 2
@@ -188,9 +188,9 @@
 	icon_state = "pknife"
 	force = 0
 	throwforce = 0
-		qualities = list(
+	qualities = list(
 		QUALITY_CUTTING = 5,
-		QUALITY_SURG_CUTTING = 5
+		QUALITY_SURG_CUTTING = 5,
 		QUALITY_SCREWING = 5
 	)
 
@@ -215,9 +215,10 @@
 	origin_tech = "materials=1;combat=1"
 	qualities = list(
 		QUALITY_CUTTING = 100,
-		QUALITY_SURG_CUTTING = 75
+		QUALITY_SURG_CUTTING = 75,
 		QUALITY_SCREWING = 75
-		)
+	)
+
 /obj/item/weapon/kitchenknife/combat/atom_init()
 	. = ..()
 	AddComponent(/datum/component/serial_number)

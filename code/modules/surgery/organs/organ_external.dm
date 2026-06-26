@@ -1040,7 +1040,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	regen_bodypart_penalty = 100
 
 	max_open_state = BP_SAW_INTERNALS_OPEN_STATE
-	var/ps_status = NORMAL
+	var/ps_status = BP_SCALPEL_OPEN_STATE
 	max_damage = 75
 	min_broken_damage = 35
 	vital = TRUE

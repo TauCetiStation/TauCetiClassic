@@ -24,15 +24,15 @@
 
 #define BP_DEFAULT_STATE            0
 
-// External organic organs
+// External organic organs and plastick surgery
 #define BP_SCALPEL_OPEN_STATE       1
 #define BP_RETRACTOR_OPEN_STATE     2
 #define BP_SAW_INTERNALS_OPEN_STATE 3
 
 // External synthetic organs
 #define BP_PANEL_UNLOCKED           1
-#define BP_MAINTANCE_PANEL_OPEN     2
-#define BP_SECURITY_PANEL_OPEN      3
+#define BP_SECURITY_PANEL_OPEN      2
+#define BP_MAINTANCE_PANEL_OPEN     3
 
 // Internal organs
 #define IO_NORMAL_STATE (0<<2)
@@ -49,7 +49,7 @@
 #define BP_SET 	    (1<<2)
 #define BP_VEIN     (2<<2)
 
-// Slime and plastick surgery
+// Slime
 #define NORMAL      0
 #define CUTTED      1
 #define PREPARED    2

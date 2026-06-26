@@ -1,12 +1,11 @@
 /datum/surgery_step/clamp
 	allowed_qualities = list(
-		QUALITY_CLAMP,
-		QUALITY_WRENCHING
+		QUALITY_CLAMP
 		)
 
 	allowed_species = list("exclude", IPC, DIONA)
-	min_duration = 60
-	max_duration = 80
+	min_duration = 6 SECONDS
+	max_duration = 8 SECONDS
 
 /datum/surgery_step/clamp/can_use(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
 	if(!ishuman(surgery_victim))
@@ -16,9 +15,6 @@
 		return FALSE
 	if(BP.open == BP_DEFAULT_STATE)
 		return FALSE
-
-	if(BP.open == BP_PANEL_UNLOCKED && surgery_victim.species.flags[IS_SYNTHETIC])
-		return TRUE
 
 	if(BP.status & ORGAN_BLEEDING)
 	//clamp bleedin if exist
@@ -45,12 +41,12 @@
 				var/obj/item/organ/internal/eyes/eyes = surgery_victim.organs_by_name[O_EYES]
 				if(!eyes)
 					return FALSE
-				if(eyes.surgery_stage == PREPARED)
+				if(eyes.surgery_stage == BP_RETRACTOR_OPEN_STATE)
 					return TRUE
 			if(O_MOUTH)
 			//face reconstruction & plastic surgery
 				var/obj/item/organ/external/head/head = BP
-				if(head.ps_status <= PREPARED)
+				if(head.ps_status <= BP_SAW_INTERNALS_OPEN_STATE)
 					return TRUE
 			if(BP_HEAD)
 			//brain chips
@@ -101,7 +97,7 @@
 				self_msg = "You start mending the nerves and lenses in [surgery_victim]'s eyes with the [tool]."
 			if(O_MOUTH)
 				//face reconstruction && plastic surg
-				if(head.ps_status > NORMAL)
+				if(head.ps_status > BP_DEFAULT_STATE)
 					msg = "[user] starts [head.disfigured ? "mending" : "adjusting"] [surgery_victim]'s vocal cords with \the [tool]."
 					self_msg = "You start [head.disfigured ? "mending" : "adjusting"] [surgery_victim]'s vocal cords with \the [tool]."
 			if(BP_HEAD)
@@ -199,11 +195,11 @@
 				eyes.damage = 0
 			if(O_MOUTH)
 			//face && plastic surgery
-				if(head.ps_status > NORMAL)
+				if(head.ps_status > BP_DEFAULT_STATE)
 					msg = "<span class='notice'>[user] [head.disfigured ? "mending" : "adjusting"] [surgery_victim]'s vocal cords with \the [tool].</span>"
 					self_msg = "<span class='notice'>You [head.disfigured ? "mending" : "adjusting"][surgery_victim]'s vocal cords with \the [tool].</span>"
 					head.disfigured = FALSE
-				head.ps_status = head.ps_status == CUTTED ? PREPARED : head.ps_status
+				head.ps_status = head.ps_status == BP_SCALPEL_OPEN_STATE ? BP_RETRACTOR_OPEN_STATE : BP_SAW_INTERNALS_OPEN_STATE
 			if(BP_HEAD)
 				if(BP.open == BP_SAW_INTERNALS_OPEN_STATE)
 				//brain chips

@@ -14,35 +14,6 @@
 		return 0
 	return target_zone == O_MOUTH
 
-/datum/surgery_step/plastic_surgery/retract_face
-	allowed_tools = list(
-	/obj/item/weapon/retractor = 100,           \
-	/obj/item/weapon/kitchen/utensil/fork = 75, \
-	/obj/item/weapon/screwdriver = 50
-	)
-
-	min_duration = 80
-	max_duration = 100
-
-/datum/surgery_step/plastic_surgery/retract_face/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.plasticsur == 0 && target.op_stage.face == 1
-
-/datum/surgery_step/plastic_surgery/retract_face/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts adjusting the skin on [target]'s face with \the [tool].", \
-	"You start adjusting the skin on [target]'s face with \the [tool].")
-	..()
-
-/datum/surgery_step/plastic_surgery/retract_face/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] pulls the skin on [target]'s face with \the [tool].</span>",	\
-	"<span class='notice'>You pull the skin on [target]'s face with \the [tool].</span>")
-	target.op_stage.plasticsur = 1
-
-/datum/surgery_step/plastic_surgery/retract_face/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, tearing skin on [target]'s face with \the [tool]!</span>", \
-	"<span class='warning'>Your hand slips, tearing skin on [target]'s face with \the [tool]!</span>")
-	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-
 //reshape_face
 
 /datum/surgery_step/plastic_surgery/cauterize
