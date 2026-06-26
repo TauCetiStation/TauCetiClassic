@@ -1249,7 +1249,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/gibber
 	name = "Machine Design (Gibber Board)"
-	desc = "Плата, используемая для сборки мясорубки."//gibber
+	desc = "Плата, используемая для сборки мясорубки. Она запросто перемалывает грызунов."//gibber
 	id = "gibber"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
