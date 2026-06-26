@@ -1940,7 +1940,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/changeling_test
 	name = "Changeling test"
-	desc = "Позволяет выявлять скрытых подменышей."//
+	desc = "Позволяет выявлять скрытых генокрад."
 	id = "changtest"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GOLD = 2000, MAT_DIAMOND = 3750, MAT_URANIUM = 4000)
