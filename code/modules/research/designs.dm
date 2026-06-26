@@ -1249,7 +1249,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/gibber
 	name = "Machine Design (Gibber Board)"
-	desc = "Плата, используемая для сборки мясорубки. Она запросто перемалывает грызунов."//gibber
+	desc = "Плата, используемая для сборки мясорубки. Она запросто перемалывает грызунов."
 	id = "gibber"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1393,7 +1393,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/destructive_analyzer
 	name = "Destructive Analyzer Board"
-	desc = "Плата, используемая для сборки destructive analyzer."//Обратный инжиниринг?
+	desc = "Плата, используемая для сборки разрушительного анализатора."
 	id = "destructive_analyzer"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1402,7 +1402,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/protolathe
 	name = "Protolathe Board"
-	desc = "Плата, используемая для сборки protolathe."//ЧПУ станок для прототипов?
+	desc = "Плата, используемая для сборки протолата."
 	id = "protolathe"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1429,7 +1429,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/autolathe
 	name = "Autolathe Board"
-	desc = "Плата, используемая для сборки autolathe."//ЧПУ станок?
+	desc = "Плата, используемая для сборки автолата."
 	id = "autolathe"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
