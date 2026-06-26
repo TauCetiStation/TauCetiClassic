@@ -10,7 +10,7 @@
 	var/list/access = list()
 
 	//How many players can be this job
-	var/total_positions = 0
+	var/baseline_slots = 0
 
 	//How many players can spawn in as this job
 	var/spawn_positions = 0
@@ -18,10 +18,10 @@
 	// Scale dynamic positions for this job
 	var/players_scale
 
-	// Max number of slots (total + dynamic) for this job
-	var/summary_slots
+	// Max number of slots (baseline + dynamic) for this job
+	var/total_positions
 
-	// total_positions override by map
+	// baseline_slots override by map
 	var/map_total_positions
 	// spawn_positions override by map
 	var/map_spawn_positions
@@ -210,9 +210,9 @@
 	if(map_total_positions == 0)
 		return 0
 
-	. = map_total_positions || total_positions
+	. = map_total_positions || baseline_slots
 	if(. == -1)
 		return
 
-	if(summary_slots > 0)
-		. = min(summary_slots, . + floor(length(global.clients) / players_scale))
+	if(total_positions > 0)
+		. = min(total_positions, . + floor(length(global.clients) / players_scale))

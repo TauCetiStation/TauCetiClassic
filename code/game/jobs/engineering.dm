@@ -8,7 +8,7 @@
 	title = JOB_CHIEF_ENGINEER
 	departments = list(DEP_ENGINEERING, DEP_COMMAND)
 	order = CREW_INTEND_HEADS(4)
-	total_positions = 1
+	baseline_slots = 1
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ffeeaa"
@@ -37,7 +37,7 @@
 	title = JOB_ENGINEER
 	departments = list(DEP_ENGINEERING)
 	order = CREW_INTEND_EMPLOYEE(1)
-	total_positions = 5
+	baseline_slots = 5
 	spawn_positions = 5
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
@@ -54,7 +54,7 @@
 	title = JOB_ATMOS
 	departments = list(DEP_ENGINEERING)
 	order = CREW_INTEND_EMPLOYEE(2)
-	total_positions = 3
+	baseline_slots = 3
 	spawn_positions = 2
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"
@@ -70,7 +70,7 @@
 	title = JOB_TECHNICAL_ASSISTANT
 	departments = list(DEP_ENGINEERING)
 	order = CREW_INTEND_ASSIST(1)
-	total_positions = 3
+	baseline_slots = 3
 	spawn_positions = 3
 	supervisors = "the chief engineer"
 	selection_color = "#fff5cc"

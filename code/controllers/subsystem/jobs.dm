@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(job)
 			return FALSE
 		if(!job.map_check())
 			return FALSE
-		var/position_limit = job.total_positions
+		var/position_limit = job.baseline_slots
 		if(!latejoin)
 			position_limit = job.spawn_positions
 		Debug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
@@ -110,8 +110,8 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/FreeRole(rank)	//making additional slot on the fly
 	var/datum/job/job = GetJob(rank)
-	if(job && job.current_positions >= job.total_positions && job.total_positions != -1)
-		job.total_positions++
+	if(job && job.current_positions >= job.baseline_slots && job.baseline_slots != -1)
+		job.baseline_slots++
 		return TRUE
 	return FALSE
 
@@ -187,9 +187,9 @@ SUBSYSTEM_DEF(job)
 			J.spawn_positions = initial(J.spawn_positions)
 
 		if(!isnull(J.map_total_positions))
-			J.total_positions = J.map_total_positions
+			J.baseline_slots = J.map_total_positions
 		else
-			J.total_positions = initial(J.total_positions)
+			J.baseline_slots = initial(J.baseline_slots)
 
 		J.quota = initial(J.quota)
 
@@ -204,7 +204,7 @@ SUBSYSTEM_DEF(job)
 			var/datum/job/job = GetJob(command_position)
 			if(!job)
 				continue
-			if((job.current_positions >= job.total_positions) && job.total_positions != -1)
+			if((job.current_positions >= job.baseline_slots) && job.baseline_slots != -1)
 				continue
 			var/list/candidates = FindOccupationCandidates(job, level)
 			if(!candidates.len)
@@ -222,7 +222,7 @@ SUBSYSTEM_DEF(job)
 		var/datum/job/job = GetJob(command_position)
 		if(!job)
 			continue
-		if((job.current_positions >= job.total_positions) && job.total_positions != -1)
+		if((job.current_positions >= job.baseline_slots) && job.baseline_slots != -1)
 			continue
 		var/list/candidates = FindOccupationCandidates(job, level)
 		if(!candidates.len)
@@ -241,9 +241,9 @@ SUBSYSTEM_DEF(job)
 		return FALSE
 
 	if(istype(SSticker.mode, /datum/game_mode/malfunction) && job.spawn_positions)//no additional AIs with malf
-		job.total_positions = job.spawn_positions
+		job.baseline_slots = job.spawn_positions
 		job.spawn_positions = 0
-	for(var/i = job.total_positions, i > 0, i--)
+	for(var/i = job.baseline_slots, i > 0, i--)
 		for(var/level in JP_LEVELS)
 			var/list/candidates = list()
 			if(istype(SSticker.mode, /datum/game_mode/malfunction))//Make sure they want to malf if its malf

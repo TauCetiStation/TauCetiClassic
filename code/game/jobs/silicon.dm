@@ -9,7 +9,7 @@
 	title = JOB_AI
 	departments = list(DEP_SILICON)
 	order = CREW_INTEND_EMPLOYEE(1)
-	total_positions = 0
+	baseline_slots = 0
 	spawn_positions = 1
 	selection_color = "#ccffcc"
 	supervisors = "your laws"
@@ -33,7 +33,7 @@
 	title = JOB_CYBORG
 	departments = list(DEP_SILICON)
 	order = CREW_INTEND_EMPLOYEE(2)
-	total_positions = 0 // Not used for AI, see is_position_available below and modules/mob/living/silicon/ai/latejoin.dm
+	baseline_slots = 0 // Not used for AI, see is_position_available below and modules/mob/living/silicon/ai/latejoin.dm
 	spawn_positions = 2
 	supervisors = "your laws and the AI"	//Nodrak
 	selection_color = "#ddffdd"
