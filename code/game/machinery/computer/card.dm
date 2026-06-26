@@ -266,6 +266,7 @@
 						modify.assignment = temp_t
 						var/list/dep_choices = list(
 							DEP_COMMAND,
+							DEP_SPECIAL,
 							DEP_SECURITY,
 							DEP_ENGINEERING,
 							DEP_MEDICAL,
