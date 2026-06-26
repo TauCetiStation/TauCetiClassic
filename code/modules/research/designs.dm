@@ -107,7 +107,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/slime_management
 	name = "Circuit Design (Slime management console)"
-	desc = "Плата, используемая для сборки консоли управления слизью."
+	desc = "Плата, используемая для сборки консоли управления слаймами."
 	id = "slime_management"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
