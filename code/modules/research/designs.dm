@@ -1971,7 +1971,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/laserrifle
 	name = "Extended-Capacity Laser Rifle"
-	desc = "Стандартное оружие, предназначенное для убийства с помощью концентрированных энергетических зарядов. Эта модель имеет батарейку повышенной емкости и обладает большим размером."
+	desc = "Стандартное оружие, предназначенное для убийства с помощью концентрированных энергетических зарядов. Эта модель имеет батарейку повышенной емкости и обладает большими габаритами."
 	id = "laserrifle"
 	build_type = PROTOLATHE
 	materials = list (MAT_METAL = 8000, MAT_GLASS = 1000, MAT_URANIUM = 200)
