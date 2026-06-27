@@ -4,22 +4,22 @@
 @use 'sass:color';
 
 //Boxed message colors
-$box-default-bg:     hsl(220, 10%, 10%);
+$box-default-bg: hsl(220, 10%, 10%);
 $box-default-border: hsla(220, 40%, 75%, 0.25);
-$box-red-bg:         hsl(0, 20%, 10%);
-$box-red-border:     hsla(0, 100%, 50%, 0.5);
-$box-green-bg:       hsl(140, 20%, 10%);
-$box-green-border:   hsla(120, 100%, 50%, 0.5);
-$box-blue-bg:        hsl(220, 20%, 10%);
-$box-blue-border:    hsla(225, 90%, 65%, 0.5);
-$box-purple-bg:      hsl(260, 25%, 12.5%);
-$box-purple-border:  hsla(260, 100%, 75%, 0.5);
-$box-orange-bg:      hsl(35, 25%, 10%);
-$box-orange-border:  hsla(37, 100%, 50%, 0.5);
+$box-red-bg: hsl(0, 20%, 10%);
+$box-red-border: hsla(0, 100%, 50%, 0.5);
+$box-green-bg: hsl(140, 20%, 10%);
+$box-green-border: hsla(120, 100%, 50%, 0.5);
+$box-blue-bg: hsl(220, 20%, 10%);
+$box-blue-border: hsla(225, 90%, 65%, 0.5);
+$box-purple-bg: hsl(260, 25%, 12.5%);
+$box-purple-border: hsla(260, 100%, 75%, 0.5);
+$box-orange-bg: hsl(35, 25%, 10%);
+$box-orange-border: hsla(37, 100%, 50%, 0.5);
 
 // Examine box colors
 $examine-border: hsla(220, 50%, 60%, 0.5);
-$examine-bg:     hsl(222, 18%, 8%);
+$examine-bg: hsl(222, 18%, 8%);
 
 // Fieldset border
 $fieldset-border: hsla(220, 40%, 75%, 0.4);
@@ -133,50 +133,50 @@ $fieldset-border: hsla(220, 40%, 75%, 0.4);
 
 $alert-stripe-colors: (
   'default': hsl(198.6, 100%, 11.4%),
-  'green':   hsl(120, 100%, 12%),
-  'blue':    hsl(198.6, 100%, 11.4%),
-  'pink':    hsl(326.2, 100%, 9.4%),
-  'yellow':  hsl(51, 100%, 17.1%),
-  'orange':  hsl(35.1, 100%, 17.5%),
-  'red':     hsl(0, 100%, 12.9%),
-  'purple':  hsl(295, 100%, 9.4%),
-  'grey':    hsl(0, 0%, 14.5%),
+  'green': hsl(120, 100%, 12%),
+  'blue': hsl(198.6, 100%, 11.4%),
+  'pink': hsl(326.2, 100%, 9.4%),
+  'yellow': hsl(51, 100%, 17.1%),
+  'orange': hsl(35.1, 100%, 17.5%),
+  'red': hsl(0, 100%, 12.9%),
+  'purple': hsl(295, 100%, 9.4%),
+  'grey': hsl(0, 0%, 14.5%),
 );
 
 $alert-stripe-alternate-colors: (
   'default': hsl(198.3, 100%, 13.5%),
-  'green':   hsl(120, 100%, 13.9%),
-  'blue':    hsl(198.3, 100%, 13.5%),
-  'pink':    hsl(325.3, 100%, 12.5%),
-  'yellow':  hsl(50.6, 100%, 15.1%),
-  'orange':  hsl(37, 100%, 21%),
-  'red':     hsl(0, 100%, 16.1%),
-  'purple':  hsl(295.1, 100%, 12%),
-  'grey':    hsl(0, 0%, 16.1%),
+  'green': hsl(120, 100%, 13.9%),
+  'blue': hsl(198.3, 100%, 13.5%),
+  'pink': hsl(325.3, 100%, 12.5%),
+  'yellow': hsl(50.6, 100%, 15.1%),
+  'orange': hsl(37, 100%, 21%),
+  'red': hsl(0, 100%, 16.1%),
+  'purple': hsl(295.1, 100%, 12%),
+  'grey': hsl(0, 0%, 16.1%),
 );
 
 $alert-major-header-colors: (
   'default': hsl(192.4, 100%, 60%),
-  'green':   hsl(150.1, 100%, 50%),
-  'blue':    hsl(192.4, 100%, 60%),
-  'pink':    hsl(336.1, 100%, 66.1%),
-  'yellow':  hsl(38.7, 100%, 93.9%),
-  'orange':  hsl(20.9, 92%, 95.1%),
-  'red':     hsl(336.1, 100%, 66.1%),
-  'purple':  hsl(266.5, 84.3%, 80%),
-  'grey':    hsl(336.1, 100%, 66.1%),
+  'green': hsl(150.1, 100%, 50%),
+  'blue': hsl(192.4, 100%, 60%),
+  'pink': hsl(336.1, 100%, 66.1%),
+  'yellow': hsl(38.7, 100%, 93.9%),
+  'orange': hsl(20.9, 92%, 95.1%),
+  'red': hsl(336.1, 100%, 66.1%),
+  'purple': hsl(266.5, 84.3%, 80%),
+  'grey': hsl(336.1, 100%, 66.1%),
 );
 
 $alert-subheader-header-colors: (
   'default': hsl(336.1, 100%, 66.1%),
-  'green':   hsl(336.4, 100%, 76.1%),
-  'blue':    hsl(336.1, 100%, 66.1%),
-  'pink':    hsl(192.4, 100%, 60%),
-  'yellow':  hsl(192.4, 100%, 60%),
-  'orange':  hsl(192.4, 100%, 60%),
-  'red':     hsl(192.4, 100%, 60%),
-  'purple':  hsl(192.4, 100%, 60%),
-  'grey':    hsl(192.4, 100%, 60%),
+  'green': hsl(336.4, 100%, 76.1%),
+  'blue': hsl(336.1, 100%, 66.1%),
+  'pink': hsl(192.4, 100%, 60%),
+  'yellow': hsl(192.4, 100%, 60%),
+  'orange': hsl(192.4, 100%, 60%),
+  'red': hsl(192.4, 100%, 60%),
+  'purple': hsl(192.4, 100%, 60%),
+  'grey': hsl(192.4, 100%, 60%),
 );
 
 $border-width: 4;
