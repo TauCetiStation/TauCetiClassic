@@ -436,3 +436,13 @@
 
 	to_chat(H, "<span class='notice'>В твоей сумке лежат особые перчатки, они позволят тебе незаметно красть вещи у людей.</span>")
 	H.equip_or_collect(new /obj/item/clothing/gloves/black/strip(H), SLOT_IN_BACKPACK)
+
+/datum/quality/quirkieish/cult_eyes
+	name = "Cult Eyes"
+	desc = "Ты провёл всю ночь за изучением оккультных файлов в архивах станции, и теперь твои глаза налились кровью. Поговаривают, так выглядят истинные адепты культа."
+	requirement = "Нет."
+
+/datum/quality/quirkieish/cult_eyes/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_CULT_EYES, QUALITY_TRAIT)
+	H.regenerate_icons()
+	to_chat(H, "<span class='notice'>Ваши глаза наливаются кровью, напоминая о бессонной ночи, проведённой за оккультными файлами.</span>")
