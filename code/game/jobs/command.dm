@@ -8,7 +8,7 @@
 	title = JOB_CAPTAIN
 	departments = list(DEP_COMMAND)
 	order = CREW_INTEND_HEADS(1)
-	baseline_slots = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "Nanotrasen officials and Space law"
 	selection_color = "#ccccff"

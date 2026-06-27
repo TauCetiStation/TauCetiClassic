@@ -8,7 +8,7 @@
 	title = JOB_HOP
 	departments = list(DEP_CIVILIAN, DEP_COMMAND)
 	order = CREW_INTEND_HEADS(2)
-	baseline_slots = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ddddff"
@@ -40,7 +40,7 @@
 	title = JOB_QM
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(1)
-	baseline_slots = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
@@ -69,7 +69,7 @@
 	title = JOB_CARGO_TECH
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(2)
-	baseline_slots = 2
+	baseline_positions = 2
 	spawn_positions = 2
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
@@ -87,7 +87,7 @@
 	title = JOB_MINER
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(3)
-	baseline_slots = 3
+	baseline_positions = 3
 	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
@@ -105,7 +105,7 @@
 	title = JOB_RECYCLER
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(4)
-	baseline_slots = 2
+	baseline_positions = 2
 	spawn_positions = 2
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
@@ -130,7 +130,7 @@
 	title = JOB_BARTENDER
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(5)
-	baseline_slots = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
@@ -151,7 +151,7 @@
 	title = JOB_CHEF
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(6)
-	baseline_slots = 2
+	baseline_positions = 2
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
@@ -178,7 +178,7 @@
 	title = JOB_HYDRO
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(7)
-	baseline_slots = 3
+	baseline_positions = 3
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
@@ -194,7 +194,7 @@
 	title = JOB_JANITOR
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(8)
-	baseline_slots = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
@@ -210,7 +210,7 @@
 	title = JOB_BARBER
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(9)
-	baseline_slots = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
@@ -226,7 +226,7 @@
 	title = JOB_LIBRARIAN
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(10)
-	baseline_slots = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
@@ -242,7 +242,7 @@
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(11)
 	title = "Clown"
-	baseline_slots = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
@@ -264,7 +264,7 @@
 	title = JOB_MIME
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(12)
-	baseline_slots = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
@@ -287,7 +287,7 @@
 	title = JOB_CHAPLAIN
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_EMPLOYEE(13)
-	baseline_slots = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
@@ -308,7 +308,7 @@
 	title = JOB_ASSISTANT
 	departments = list(DEP_CIVILIAN)
 	order = CREW_INTEND_ASSIST(1)
-	baseline_slots = -1
+	baseline_positions = -1
 	spawn_positions = -1
 	supervisors = "absolutely everyone"
 	selection_color = "#dddddd"

@@ -621,7 +621,7 @@
 					dat += "[line]<BR>"
 				dat+= "*******<BR><BR>"
 				for(var/datum/job/job as anything in SSjob.all_occupations)
-					dat += "job ([(job in SSjob.active_occupations) ? "active" : "inactive"]): [job.title], current_positions: [job.current_positions], baseline_slots: [job.baseline_slots] <BR>"
+					dat += "job ([(job in SSjob.active_occupations) ? "active" : "inactive"]): [job.title], current_positions: [job.current_positions], baseline_positions: [job.baseline_positions] <BR>"
 
 				var/datum/browser/popup = new(usr, "jobdebug", "Job Debug info", 600, 500)
 				popup.set_content(dat)
@@ -765,7 +765,7 @@
 		if("infinite_sec")
 			var/datum/job/J = SSjob.GetJob("Security Officer")
 			if(!J) return
-			J.baseline_slots = -1
+			J.baseline_positions = -1
 			J.spawn_positions = -1
 			message_admins("[key_name_admin(usr)] has removed the cap on security officers.")
 		if("topicspam")
