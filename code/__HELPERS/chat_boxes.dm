@@ -42,10 +42,8 @@
 // Admin PM received by a player — red boxed fieldset (tg receive_ahelp)
 /client/proc/receive_ahelp(reply_to, message, span_class = "adminsay")
 	to_chat_admin_pm(src, fieldset_block(
-		"<span class='adminhelp'>Administrator private message</span>",
-		"<span class='[span_class]'>Admin PM from-<b>[reply_to]</b></span><br><br>\
-		<span class='[span_class]'>[message]</span><br><br>\
-		<i class='adminsay'>Нажмите на имя администратора для ответа.</i>",
+		"Administrator private message",
+		"Admin PM from <b>[reply_to]</b><br><br>[message]<br><br>Нажмите на имя администратора для ответа.",
 		"red_box"))
 
 // Colored boxed message shortcuts
