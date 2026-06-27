@@ -1,0 +1,316 @@
+// chat boxes and announcements dark
+
+@use 'sass:map';
+@use 'sass:color';
+
+//Boxed message colors
+$box-default-bg:     hsl(220, 10%, 10%);
+$box-default-border: hsla(220, 40%, 75%, 0.25);
+$box-red-bg:         hsl(0, 20%, 10%);
+$box-red-border:     hsla(0, 100%, 50%, 0.5);
+$box-green-bg:       hsl(140, 20%, 10%);
+$box-green-border:   hsla(120, 100%, 50%, 0.5);
+$box-blue-bg:        hsl(220, 20%, 10%);
+$box-blue-border:    hsla(225, 90%, 65%, 0.5);
+$box-purple-bg:      hsl(260, 25%, 12.5%);
+$box-purple-border:  hsla(260, 100%, 75%, 0.5);
+$box-orange-bg:      hsl(35, 25%, 10%);
+$box-orange-border:  hsla(37, 100%, 50%, 0.5);
+
+// Examine box colors
+$examine-border: hsla(220, 50%, 60%, 0.5);
+$examine-bg:     hsl(222, 18%, 8%);
+
+// Fieldset border
+$fieldset-border: hsla(220, 40%, 75%, 0.4);
+
+.adminhelp {
+  color: hsl(0, 100%, 50%);
+  font-weight: bold;
+}
+
+.fieldset {
+  border: 1px solid $fieldset-border;
+  border-radius: 6px;
+  margin: 0.5em 0;
+  padding: 0 0.75em 0.75em;
+  min-width: 0;
+}
+
+.fieldset_body {
+  padding: 0.25em 0;
+  line-height: 1.5;
+}
+
+.fieldset_legend {
+  font-size: 100%;
+  font-weight: normal;
+  padding: 0 0.4em;
+  color: inherit;
+}
+
+.fieldset.examine_box {
+  border-color: $examine-border;
+  background: $examine-bg;
+}
+
+.boxed_message {
+  background: $box-default-bg;
+  border: 1px solid $box-default-border;
+  border-left: 4px solid $box-default-border;
+  margin: 0.7em 0;
+  padding: 0.75em 1em;
+  border-radius: 10px;
+
+  &.red_box {
+    background: $box-red-bg;
+    border-color: $box-red-border;
+  }
+
+  &.green_box {
+    background: $box-green-bg;
+    border-color: $box-green-border;
+  }
+
+  &.blue_box {
+    background: $box-blue-bg;
+    border-color: $box-blue-border;
+  }
+
+  &.purple_box {
+    background: $box-purple-bg;
+    border-color: $box-purple-border;
+  }
+
+  &.orange_box {
+    background: $box-orange-bg;
+    border-color: $box-orange-border;
+  }
+
+  hr {
+    margin: 0.75em -0.75em;
+    border-color: inherit;
+  }
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid hsl(213.6, 37.9%, 74.1%);
+}
+
+.separator:not(:empty)::before {
+  margin-right: 0.25em;
+}
+
+.separator:not(:empty)::after {
+  margin-left: 0.25em;
+}
+
+.img_by_text_container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.img_by_text_container img {
+  width: 3em;
+  height: auto;
+  margin-right: 12px;
+  margin-top: 6px;
+}
+
+.img_by_text_container .img_text {
+  flex-grow: 1;
+}
+
+$alert-stripe-colors: (
+  'default': hsl(198.6, 100%, 11.4%),
+  'green':   hsl(120, 100%, 12%),
+  'blue':    hsl(198.6, 100%, 11.4%),
+  'pink':    hsl(326.2, 100%, 9.4%),
+  'yellow':  hsl(51, 100%, 17.1%),
+  'orange':  hsl(35.1, 100%, 17.5%),
+  'red':     hsl(0, 100%, 12.9%),
+  'purple':  hsl(295, 100%, 9.4%),
+  'grey':    hsl(0, 0%, 14.5%),
+);
+
+$alert-stripe-alternate-colors: (
+  'default': hsl(198.3, 100%, 13.5%),
+  'green':   hsl(120, 100%, 13.9%),
+  'blue':    hsl(198.3, 100%, 13.5%),
+  'pink':    hsl(325.3, 100%, 12.5%),
+  'yellow':  hsl(50.6, 100%, 15.1%),
+  'orange':  hsl(37, 100%, 21%),
+  'red':     hsl(0, 100%, 16.1%),
+  'purple':  hsl(295.1, 100%, 12%),
+  'grey':    hsl(0, 0%, 16.1%),
+);
+
+$alert-major-header-colors: (
+  'default': hsl(192.4, 100%, 60%),
+  'green':   hsl(150.1, 100%, 50%),
+  'blue':    hsl(192.4, 100%, 60%),
+  'pink':    hsl(336.1, 100%, 66.1%),
+  'yellow':  hsl(38.7, 100%, 93.9%),
+  'orange':  hsl(20.9, 92%, 95.1%),
+  'red':     hsl(336.1, 100%, 66.1%),
+  'purple':  hsl(266.5, 84.3%, 80%),
+  'grey':    hsl(336.1, 100%, 66.1%),
+);
+
+$alert-subheader-header-colors: (
+  'default': hsl(336.1, 100%, 66.1%),
+  'green':   hsl(336.4, 100%, 76.1%),
+  'blue':    hsl(336.1, 100%, 66.1%),
+  'pink':    hsl(192.4, 100%, 60%),
+  'yellow':  hsl(192.4, 100%, 60%),
+  'orange':  hsl(192.4, 100%, 60%),
+  'red':     hsl(192.4, 100%, 60%),
+  'purple':  hsl(192.4, 100%, 60%),
+  'grey':    hsl(192.4, 100%, 60%),
+);
+
+$border-width: 4;
+$border-width-px: $border-width * 1px;
+
+.major_announcement_title {
+  font-size: 175%;
+  padding: 0 0.5rem;
+  line-height: 120%;
+  text-align: left;
+  text-decoration: none;
+  width: 100%;
+  margin-bottom: 0.4rem;
+}
+
+.subheader_announcement_text {
+  font-weight: bold;
+  padding: 0 0.5rem;
+  padding-top: 0.25rem;
+  line-height: 130%;
+  width: 100%;
+  text-align: left;
+  font-size: 125%;
+  margin-top: 0.2rem;
+  margin-bottom: 0.6rem;
+}
+
+.major_announcement_text {
+  color: hsl(0, 0%, 91.8%);
+  background-color: hsl(0, 0%, 10%);
+  font-weight: bold;
+  font-size: 100%;
+  text-align: left;
+  padding: 0.8rem 1rem;
+  margin-top: 0.4rem;
+  line-height: 1.5;
+  width: 100%;
+  height: 100%;
+}
+
+.minor_announcement_title {
+  font-weight: bold;
+  padding: 0 0.5rem;
+  padding-top: 0;
+  line-height: 120%;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  font-size: 150%;
+  margin-bottom: 0.4rem;
+}
+
+.minor_announcement_text {
+  background-color: hsl(0, 0%, 12.5%);
+  color: hsl(0, 0%, 91.8%);
+  padding: 0.8rem 1rem;
+  text-align: left;
+  font-size: 100%;
+  line-height: 1.5;
+}
+
+.announcement_header {
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ooc_alert {
+  background: hsl(50.6, 100%, 15.1%);
+  border: 1px solid hsl(47.9, 100%, 40%);
+  margin: 0.5em;
+  padding: 0.5em 0.5em 0.5em 0.2em;
+  color: hsl(0, 0%, 100%);
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+}
+
+.ooc_announcement_text {
+  color: hsl(47.9, 100%, 40%);
+  padding: 0.5em 0 0 0.35em;
+  display: flex;
+  flex-direction: column;
+}
+
+@each $color-name, $color-value in $alert-stripe-colors {
+  .chat_alert_#{$color-name} {
+    color: hsl(0, 0%, 100%);
+    padding: 0.5rem;
+    box-shadow: none;
+    font-weight: bold;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    border-image: repeating-linear-gradient(
+      -45deg,
+      map.get($alert-stripe-alternate-colors, $color-name),
+      map.get($alert-stripe-alternate-colors, $color-name) 10px,
+      $color-value 10px,
+      $color-value 20px
+    );
+    border-image-slice: $border-width fill;
+    border-width: $border-width-px;
+    border-image-width: $border-width-px;
+    border-image-outset: 0 0 0 0;
+    border-image-repeat: repeat repeat;
+    border-style: solid;
+  }
+
+  .chat_alert_#{$color-name} .major_announcement_title {
+    color: map.get($alert-major-header-colors, $color-name);
+  }
+
+  .chat_alert_#{$color-name} .minor_announcement_title {
+    color: map.get($alert-major-header-colors, $color-name);
+  }
+
+  .chat_alert_#{$color-name} .subheader_announcement_text {
+    color: map.get($alert-subheader-header-colors, $color-name);
+  }
+
+  .chat_alert_#{$color-name} .minor_announcement_text {
+    background-color: color.adjust(
+      map.get($alert-stripe-colors, $color-name),
+      $lightness: -5%,
+      $space: hsl
+    );
+  }
+
+  .chat_alert_#{$color-name} .major_announcement_text {
+    background-color: color.adjust(
+      map.get($alert-stripe-colors, $color-name),
+      $lightness: -5%,
+      $space: hsl
+    );
+  }
+}
