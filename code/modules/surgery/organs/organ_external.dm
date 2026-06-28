@@ -59,7 +59,7 @@
 
 	// Surgery vars.
 	var/open = BP_DEFAULT_STATE
-	var/max_open_state = BP_RETRACTOR_OPEN_STATE
+	var/max_open_state = BP_RETRACT_OS
 	var/stage = null                  // uses binary flags, allow in mob
 	var/cavity = 0
 	var/trauma_kit = FALSE
@@ -885,7 +885,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_TORSO_LAYER
 	regen_bodypart_penalty = 150
 
-	max_open_state = BP_SAW_INTERNALS_OPEN_STATE
+	max_open_state = BP_INTERNALS_OS
 	cannot_amputate = TRUE
 
 	max_damage = 75
@@ -1039,8 +1039,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_HEAD_LAYER
 	regen_bodypart_penalty = 100
 
-	max_open_state = BP_SAW_INTERNALS_OPEN_STATE
-	var/ps_status = BP_SCALPEL_OPEN_STATE
+	max_open_state = BP_INTERNALS_OS
+	var/ps_status = BP_SCALPEL_OS
 	max_damage = 75
 	min_broken_damage = 35
 	vital = TRUE

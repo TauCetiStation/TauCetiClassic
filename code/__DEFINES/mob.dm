@@ -25,14 +25,18 @@
 #define BP_DEFAULT_STATE            0
 
 // External organic organs and plastick surgery
-#define BP_SCALPEL_OPEN_STATE       1
-#define BP_RETRACTOR_OPEN_STATE     2
-#define BP_SAW_INTERNALS_OPEN_STATE 3
+#define BP_SCALPEL_OS               1
+#define BP_RETRACT_OS               2
+#define BP_INTERNALS_OS             3
 
 // External synthetic organs
-#define BP_PANEL_UNLOCKED           1
-#define BP_SECURITY_PANEL_OPEN      2
-#define BP_MAINTANCE_PANEL_OPEN     3
+#define BP_UNLOCK_P                1
+#define BP_SEC_PO                  2
+#define BP_MAINTANCE_PO            3
+
+// United final stage
+#define BP_RIBCAGE_OS              4
+
 
 // Internal organs
 #define IO_NORMAL_STATE (0<<2)

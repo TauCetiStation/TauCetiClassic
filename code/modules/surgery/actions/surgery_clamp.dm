@@ -27,11 +27,11 @@
 	//implant remove
 		switch(target_zone)
 			if(BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
-				if(BP.open >= BP_RETRACTOR_OPEN_STATE)
+				if(BP.open >= BP_RETRACT_OS)
 					return TRUE
 			if(BP_HEAD, BP_CHEST)
 			// implant or embreo remove
-				if(BP.open >= BP_SAW_INTERNALS_OPEN_STATE)
+				if(BP.open >= BP_INTERNALS_OS)
 					return TRUE
 	else      // operate organs
 		switch(target_zone)
@@ -41,17 +41,17 @@
 				var/obj/item/organ/internal/eyes/eyes = surgery_victim.organs_by_name[O_EYES]
 				if(!eyes)
 					return FALSE
-				if(eyes.surgery_stage == BP_RETRACTOR_OPEN_STATE)
+				if(eyes.surgery_stage == BP_RETRACT_OS)
 					return TRUE
 			if(O_MOUTH)
 			//face reconstruction & plastic surgery
 				var/obj/item/organ/external/head/head = BP
-				if(head.ps_status <= BP_SAW_INTERNALS_OPEN_STATE)
+				if(head.ps_status <= BP_INTERNALS_OS)
 					return TRUE
 			if(BP_HEAD)
 			//brain chips
 				var/obj/item/organ/internal/brain/brain = surgery_victim:organs_by_name[O_BRAIN]
-				if(BP.open == BP_SAW_INTERNALS_OPEN_STATE)
+				if(BP.open == BP_INTERNALS_OS)
 					if(brain?.status & ORGAN_BLEEDING)
 						return TRUE
 	return FALSE
@@ -63,7 +63,7 @@
 /datum/surgery_step/clamp/begin_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
 
-	if(BP.open == BP_PANEL_UNLOCKED && surgery_victim.species.flags[IS_SYNTHETIC])
+	if(BP.open == BP_UNLOCK_P && surgery_victim.species.flags[IS_SYNTHETIC])
 
 		return
 
@@ -103,7 +103,7 @@
 			if(BP_HEAD)
 			//brain chips
 				var/obj/item/organ/internal/brain/brain = surgery_victim:organs_by_name[O_BRAIN]
-				if(BP.open == BP_SAW_INTERNALS_OPEN_STATE && brain?.status & ORGAN_BLEEDING)
+				if(BP.open == BP_INTERNALS_OS && brain?.status & ORGAN_BLEEDING)
 					msg = "[user] starts taking bone chips out of [surgery_victim]'s brain with \the [tool]."
 					self_msg = "You start taking bone chips out of [surgery_victim]'s brain with \the [tool]."
 
@@ -199,9 +199,9 @@
 					msg = "<span class='notice'>[user] [head.disfigured ? "mending" : "adjusting"] [surgery_victim]'s vocal cords with \the [tool].</span>"
 					self_msg = "<span class='notice'>You [head.disfigured ? "mending" : "adjusting"][surgery_victim]'s vocal cords with \the [tool].</span>"
 					head.disfigured = FALSE
-				head.ps_status = head.ps_status == BP_SCALPEL_OPEN_STATE ? BP_RETRACTOR_OPEN_STATE : BP_SAW_INTERNALS_OPEN_STATE
+				head.ps_status = head.ps_status == BP_SCALPEL_OS ? BP_RETRACT_OS : BP_INTERNALS_OS
 			if(BP_HEAD)
-				if(BP.open == BP_SAW_INTERNALS_OPEN_STATE)
+				if(BP.open == BP_INTERNALS_OS)
 				//brain chips
 					msg = "<span class='notice'>[user] takes out all the bone chips in [surgery_victim]'s brain with \the [tool].</span>"
 					self_msg = "<span class='notice'>You take out all the bone chips in [surgery_victim]'s brain with \the [tool].</span>"
@@ -260,7 +260,7 @@
 				surgery_victim.losebreath += 10
 				return TRUE
 			if(BP_HEAD)
-				if(BP.open == BP_SAW_INTERNALS_OPEN_STATE)
+				if(BP.open == BP_INTERNALS_OS)
 				//brain chips
 					user.visible_message("<span class='warning'>[user]'s hand slips, jabbing \the [tool] in [surgery_victim]'s brain!</span>",
 					"<span class='warning'>Your hand slips, jabbing \the [tool] in [surgery_victim]'s brain!</span>")
