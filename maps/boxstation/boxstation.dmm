@@ -12507,10 +12507,10 @@
 	pixel_x = -28
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/painting_frame{
+/obj/item/weapon/picture_frame/wooden{
 	pixel_y = -10
 	},
-/obj/item/painting_frame{
+/obj/item/weapon/picture_frame/wooden{
 	pixel_y = -10
 	},
 /obj/item/stack/sheet/cloth{
@@ -51916,8 +51916,8 @@
 "bNL" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/painting{
-	pixel_x = 30
+/obj/structure/picture_frame{
+	pixel_x = 28
 	},
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
@@ -53563,7 +53563,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/aft)
 "bQH" = (
-/obj/structure/sign/painting{
+/obj/structure/picture_frame{
 	pixel_y = -30
 	},
 /obj/effect/decal/turf_decal/set_damaged,
@@ -69326,8 +69326,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/easel,
 /obj/effect/decal/cleanable/cobweb2,
-/obj/structure/sign/painting{
-	pixel_y = 30
+/obj/structure/picture_frame{
+	pixel_y = 28
 	},
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
