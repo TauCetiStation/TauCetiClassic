@@ -11,20 +11,16 @@
 /datum/component/autopickup_bag/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
-	if (isrobot(usr))
-		wearer = WEAKREF(usr)
-		var/mob/W = wearer?.resolve()
-		if(W)
-			RegisterSignal(W, COMSIG_MOVABLE_MOVED, PROC_REF(on_equipper_moved))
+	RegisterSignal(parent, COMSIG_HAND_ACTIVATE_MODULE, PROC_REF(on_equipped))
+	RegisterSignal(parent, COMSIG_HAND_UNEQUIP_MODULE, PROC_REF(on_dropped))
 
 /datum/component/autopickup_bag/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ITEM_EQUIPPED,
-		COMSIG_ITEM_DROPPED
+		COMSIG_ITEM_DROPPED,
+		COMSIG_HAND_ACTIVATE_MODULE,
+		COMSIG_HAND_UNEQUIP_MODULE
 	))
-	var/mob/W = wearer?.resolve()
-	if (isrobot(W))
-		UnregisterSignal(W, COMSIG_MOVABLE_MOVED)
 
 /datum/component/autopickup_bag/proc/on_equipped(obj/item/weapon/storage/bag/B, mob/equipper, slot)
 	SIGNAL_HANDLER
