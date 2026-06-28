@@ -15,6 +15,8 @@
 	var/obj/item/clothing/suit/space/rig/rig_connect
 	can_be_modded = TRUE
 
+	unacidable = TRUE //all helmets on rigs can be acidable
+
 	//Species-specific stuff.
 	species_restricted = list("exclude", UNATHI, TAJARAN, SKRELL, DIONA, VOX)
 	species_restricted_locked = TRUE
@@ -49,13 +51,6 @@
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
 
-/obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
-	if(rig_connect)
-		rig_connect.helmet = null
-		rig_connect = null
-		canremove = 1
-	return ..()
-
 /obj/item/clothing/suit/space/rig
 	name = "hardsuit"
 	desc = "A special space suit for environments that might pose hazards beyond just the vacuum of space. Provides more protection than a standard space suit."
@@ -65,8 +60,23 @@
 	var/magpulse = FALSE
 	var/offline_slowdown = 2
 	can_be_modded = TRUE
-	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 20)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
+	armor = list(
+		melee = 40,
+		bullet = 5,
+		laser = 10,
+		energy = 5,
+		bomb = 35,
+		bio = 100,
+		rad = 20
+	)
+	allowed = list(
+		/obj/item/device/flashlight,
+		/obj/item/weapon/tank,
+		/obj/item/device/suit_cooling_unit,
+		/obj/item/weapon/storage/bag/ore,
+		/obj/item/device/t_scanner,
+		/obj/item/weapon/rcd
+	)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted_locked = TRUE
@@ -92,8 +102,10 @@
 
 	var/attached_boots = 1                                      // Can't wear boots if some are attached
 	var/obj/item/clothing/shoes/magboots/boots = null           // Deployable boots, if any.
+	var/boots_type = /obj/item/clothing/shoes/magboots
 	var/attached_helmet = 1                                     // Can't wear a helmet if one is deployable.
 	var/obj/item/clothing/head/helmet/space/rig/helmet = null   // Deployable helmet, if any.
+	var/helmet_type = null
 
 	var/max_mounted_devices = 4                                 // Maximum devices. Easy.
 	var/list/can_mount = null                                   // Types of device that can be hardpoint mounted.
@@ -112,12 +124,20 @@
 	var/list/installed_modules = list() // Power consumption/use bookkeeping.
 	var/cell_type = /obj/item/weapon/stock_parts/cell/high
 	var/obj/item/weapon/stock_parts/cell/cell // Power supply, if any.
-	item_action_types = list(/datum/action/item_action/hands_free/toggle_hardsuit_magboots, /datum/action/item_action/hands_free/toggle_hardsuit_helm)
+	item_action_types = list(
+		/datum/action/item_action/hands_free/toggle_hardsuit_magboots,
+		/datum/action/item_action/hands_free/toggle_hardsuit_helm
+	)
 
 	var/rig_variant = "engineering"
 
 /obj/item/clothing/suit/space/rig/atom_init()
 	. = ..()
+	if(helmet_type)
+		helmet = new helmet_type(src)
+		helmet.rig_connect = src
+	if(boots_type)
+		boots  = new boots_type(src)
 	if(initial_modules && initial_modules.len)
 		for(var/path in initial_modules)
 			var/obj/item/rig_module/module = new path(src)
@@ -125,6 +145,7 @@
 
 	if(cell_type)
 		cell = new cell_type(src)
+		cell.update_icon()
 
 /obj/item/clothing/suit/space/rig/Destroy()
 	if(wearer) // remove overlays if rig gets deleted while wearing
@@ -375,6 +396,8 @@
 		wearer = H
 		update_overlays(wearer)
 		give_actions(wearer)
+		if(helmet)
+			toggle_helmet()
 
 		if(!offline) // so rigs without cell are slow
 			slowdown = initial(slowdown)
@@ -388,27 +411,14 @@
 
 /obj/item/clothing/suit/space/rig/dropped(mob/user)
 	..()
-	var/old_wearer = wearer
+	var/mob/living/carbon/human/old_wearer = wearer
 	wearer = null
-	var/mob/living/carbon/human/H
 
-	if(helmet)
-		H = helmet.loc
-		if(istype(H))
-			if(helmet && H.head == helmet)
-				helmet.canremove = 1
-				var/dropped_helmet = helmet
-				H.drop_from_inventory(helmet)
-				helmet = dropped_helmet		//attach the helmet back to the suit
-				helmet.loc = src
+	if(helmet && old_wearer?.head == helmet)
+		move_helmet(old_wearer)
 
 	if(boots)
-		H = boots.loc
-		if(istype(H))
-			if(boots && H.shoes == boots)
-				boots.canremove = 1
-				H.drop_from_inventory(boots)
-				boots.loc = src
+		toggle_magboots()
 
 	if(old_wearer)
 		update_overlays(old_wearer)
@@ -419,42 +429,38 @@
 		STOP_PROCESSING(SSobj, src)
 		process() // process one last time so we can disable all modules and other stuff
 
-/obj/item/clothing/suit/space/rig/verb/toggle_helmet()
 
-	set name = "Toggle Helmet"
-	set category = "Object"
-	set src in usr
-
-	if(!isliving(src.loc)) return
-
-	if(!helmet)
-		to_chat(usr, "There is no helmet installed.")
-		return
-
-	var/mob/living/carbon/human/H = usr
-
-	if(!istype(H)) return
-	if(H.incapacitated())
-		return
-	if(H.wear_suit != src) return
-
+/obj/item/clothing/suit/space/rig/proc/move_helmet(mob/living/carbon/human/H)
 	if(H.head == helmet)
 		helmet.canremove = 1
-		var/dropped_helmet = helmet
-		H.drop_from_inventory(helmet)
-		helmet = dropped_helmet		//attach the helmet back to the suit
-		helmet.loc = src
-		to_chat(H, "<span class='notice'>You retract your hardsuit helmet.</span>")
+		H.drop_from_inventory(helmet, src)
+		helmet.forceMove(src)
+		to_chat(H, "<span class='notice'>[name] retract helmet.</span>")
 
 	else if(H.equip_to_slot_if_possible(helmet, SLOT_HEAD))
-		helmet.canremove = 0
 		if(helmet.on)
 			helmet.set_light(helmet.brightness_on)
 		else
 			helmet.set_light(0)
-
-		to_chat(H, "<span class='notice'>You deploy your hardsuit helmet, sealing you off from the world.</span>")
+		helmet.canremove = 0
+		to_chat(wearer, "<span class='notice'>[name] deploy helmet, sealing you off from the world.</span>")
 		return
+
+/obj/item/clothing/suit/space/rig/verb/toggle_helmet()
+	set name = "Toggle Helmet"
+	set category = "Object"
+	set src in usr.loc
+
+	if(!helmet)
+		to_chat(usr, "There is no helmet installed.")
+		return
+	var/mob/living/carbon/human/H = usr
+	if(!ishuman(H)) return
+	if(H.incapacitated()) return
+	if(H.wear_suit != src) return
+
+	move_helmet(H)
+
 
 /obj/item/clothing/suit/space/rig/verb/toggle_magboots()
 
@@ -470,7 +476,7 @@
 
 	var/mob/living/carbon/human/H = usr
 
-	if(!istype(H)) return
+	if(!ishuman(H)) return
 	if(H.incapacitated())
 		return
 	if(H.wear_suit != src) return
@@ -594,17 +600,46 @@
 			if(equipped)
 				user.add_overlay(module.suit_overlay_image)
 
+/obj/item/clothing/suit/space/rig/proc/detach_cell(mob/user)
+	to_chat(user, "You detach \the [cell] from \the [src]'s battery mount.")
+	for(var/obj/item/rig_module/module in installed_modules)
+		module.deactivate()
+	cell.update_icon()
+	user.put_in_hands(cell)
+	cell = null
+
+/obj/item/clothing/suit/space/rig/proc/detach_boots(mob/user)
+	to_chat(user, "You detatch \the [boots] from \the [src]'s boot mounts.")
+	user.put_in_hands(boots)
+	boots = null
+
+/obj/item/clothing/suit/space/rig/proc/detach_module(mob/user, list/current_mounts_modules, atom/anchor)
+	var/list/modules = list()
+	for(var/atom/module as anything in current_mounts_modules)
+		modules[module] += image(icon = module.icon, icon_state = module.icon_state)
+
+	var/removal_choice = show_radial_menu(user, anchor ? anchor : src, modules, require_near = TRUE, tooltips = TRUE)
+
+	if(!removal_choice || wearer)
+		return FALSE
+
+	var/obj/item/rig_module/removed = removal_choice
+	to_chat(user, "You detach \the [removed] from \the [src].")
+	user.put_in_hands(removed)
+	removed.removed()
+	installed_modules -= removed
+
+	return TRUE
+
 // action buttons
 /datum/action/item_action/hands_free/toggle_hardsuit_magboots
 	name = "Toggle hardsuit magboots"
 	button_icon_state = "toggle_rig_magboots"
 	action_type = AB_INNATE
 
-
 /datum/action/item_action/hands_free/toggle_hardsuit_magboots/Activate()
 	var/obj/item/clothing/suit/space/rig/S = target
 	S.toggle_magboots()
-
 
 /datum/action/item_action/hands_free/toggle_hardsuit_helm
 	name = "Toggle helmet"
@@ -614,8 +649,6 @@
 /datum/action/item_action/hands_free/toggle_hardsuit_helm/Activate()
 	var/obj/item/clothing/suit/space/rig/S = target
 	S.toggle_helmet()
-
-
 
 //Engineering rig
 /obj/item/clothing/head/helmet/space/rig/engineering
@@ -637,6 +670,7 @@
 	siemens_coefficient = 0
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/engineering
 
 //Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/engineering/chief
@@ -658,6 +692,7 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 7
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/rcd, /obj/item/rig_module/nuclear_generator, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/emp_shield)
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/engineering/chief
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -678,6 +713,7 @@
 	breach_threshold = 26
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/orescanner, /obj/item/rig_module/device/drill)
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/mining
 
 //Red Faction mining rig
 /obj/item/clothing/head/helmet/space/rig/RF_mining
@@ -696,6 +732,7 @@
 	rig_variant = "RedMiner"
 	armor = list(melee = 40, bullet = 11, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/RF_mining
 
 //Syndicate rig
 /obj/item/clothing/head/helmet/space/rig/syndi
@@ -842,6 +879,8 @@
 	var/combat_slowdown = 0
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_hardsuit_magboots, /datum/action/item_action/hands_free/toggle_hardsuit_helm,
 	/datum/action/item_action/hands_free/toggle_space_suit_mode)
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi
+	boots_type = /obj/item/clothing/shoes/magboots/syndie
 
 /datum/action/item_action/hands_free/toggle_space_suit_mode
 	name = "Toggle space suit mode"
@@ -928,6 +967,7 @@
 	combat_armor = list(melee = 75, bullet = 80, laser = 70,energy = 55, bomb = 50, bio = 100, rad = 30)
 	space_armor = list(melee = 45, bullet = 30, laser = 30, energy = 45, bomb = 50, bio = 100, rad = 60)
 	combat_slowdown = 0.5
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/heavy
 
 /obj/item/clothing/head/helmet/space/rig/syndi/elite
 	name = "Syndicate elite hybrid helmet"
@@ -960,6 +1000,7 @@
 	combat_slowdown = 0.2
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair/adv, /obj/item/rig_module/syndiemmessage, /obj/item/rig_module/emp_shield)
 	can_be_modded = FALSE
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/elite
 
 /obj/item/clothing/suit/space/rig/syndi/elite/comander
 	name = "Syndicate elite hybrid suit"
@@ -967,13 +1008,13 @@
 	icon_state = "rig-syndie_elitcom-space"
 	item_state = "syndicate-commander"
 	rig_variant = "rig-syndie_elitcom"
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander
 
 /obj/item/clothing/head/helmet/space/rig/syndi/hazmat
 	name = "hazmat hybrid helmet"
 	desc = "Anyone wearing this should not be considered human."
 	icon_state = "rig0-hazmat"
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
-	unacidable = TRUE
 	combat_armor = list(melee = 55, bullet = 60, laser = 50, energy = 55, bomb = 100, bio = 100, rad = 100)
 	space_armor = list(melee = 55, bullet = 50, laser = 40, energy = 45, bomb = 80, bio = 100, rad = 80)
 	glowtype = "terrohazmat"
@@ -1000,6 +1041,7 @@
 	               /obj/item/weapon/handcuffs)
 	combat_armor = list(melee = 55, bullet = 60, laser = 50, energy = 55, bomb = 100, bio = 100, rad = 100)
 	space_armor = list(melee = 30, bullet = 20, laser = 20, energy = 45, bomb = 80, bio = 100, rad = 80)
+	helmet_type = /obj/item/clothing/suit/space/rig/syndi/hazmat
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
@@ -1025,6 +1067,7 @@
 	armor = list(melee = 60, bullet = 50, laser = 30,energy = 25, bomb = 33, bio = 100, rad = 66)
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/emp_shield/adv)
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/wizard
 
 /obj/item/clothing/suit/space/rig/wizard/atom_init(mapload, ...)
 	. = ..()
@@ -1048,6 +1091,7 @@
 	armor = list(melee = 30, bullet = 5, laser = 10,energy = 5, bomb = 25, bio = 100, rad = 50)
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/healthscanner)
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/medical
 
 //CMO Rig
 /obj/item/clothing/head/helmet/space/rig/medical/cmo
@@ -1065,6 +1109,7 @@
 	slowdown = 0.2
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/medical, /obj/item/rig_module/device/healthscanner)
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/medical/cmo
 
 //Security
 /obj/item/clothing/head/helmet/space/rig/security
@@ -1086,6 +1131,7 @@
 	slowdown = 0.7
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/selfrepair, /obj/item/rig_module/device/flash)
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/security
 
 	var/brightness_on = 2 //luminosity when on
 	var/on = 0
@@ -1125,7 +1171,7 @@
 	slowdown = 0.3
 	max_mounted_devices = 6
 	initial_modules = list(/obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/mounted/taser, /obj/item/rig_module/med_teleport, /obj/item/rig_module/chem_dispenser/combat, /obj/item/rig_module/grenade_launcher/flashbang)
-
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/security/hos
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_hardsuit_magboots, /datum/action/item_action/hands_free/toggle_hardsuit_helm)
 
 //Atmospherics Rig (BS12)
@@ -1147,6 +1193,7 @@
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/atmos
 
 //Science rig
 /obj/item/clothing/head/helmet/space/rig/science
@@ -1169,6 +1216,7 @@
 	slowdown = 0.2
 	offline_slowdown = 3.5
 	initial_modules = list( /obj/item/rig_module/teleporter_stabilizer , /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer , /obj/item/rig_module/simple_ai, /obj/item/rig_module/device/anomaly_scanner)
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/science
 
 /obj/item/clothing/head/helmet/space/rig/science/rd
 	desc = "A special helmet designed for work in a hazardous, low pressure environments. Has low weight and integrated HUD."
@@ -1202,3 +1250,4 @@
 	slowdown = 0.2
 	offline_slowdown = 4
 	initial_modules = list(/obj/item/rig_module/mounted_relay, /obj/item/rig_module/teleporter_stabilizer, /obj/item/rig_module/simple_ai/advanced, /obj/item/rig_module/selfrepair, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/device/science_tool, /obj/item/rig_module/device/analyzer, /obj/item/rig_module/device/anomaly_scanner)
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/science/rd
