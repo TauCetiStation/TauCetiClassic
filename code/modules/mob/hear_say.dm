@@ -70,13 +70,13 @@
 
 // At minimum every mob has a hear_say proc.
 /mob/proc/hear_say(message, verb = "says", datum/language/language = null, alt_name = "",italics = 0, mob/speaker = null, used_radio, sound/speech_sound, sound_vol)
+	var/not_processed_message = message
 	if(!client)
 		if(!remote_hearers)
 			return FALSE
-		var/runechat_message = message
 		message = process_speech(message, verb, language, alt_name, italics, speaker, used_radio, speech_sound, sound_vol)
 		if(message)
-			telepathy_eavesdrop(speaker, message, "has heard", language, runechat_message)
+			telepathy_eavesdrop(speaker, message, "has heard", language, not_processed_message)
 
 		return FALSE
 
@@ -109,9 +109,15 @@
 				H.remove_language(L.name)
 
 	if(!(sdisabilities & DEAF) && !ear_deaf)
-		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
-			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
-			playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
+		var/turf/source = speaker? get_turf(speaker) : get_turf(src)
+		if((HAS_TRAIT(speaker, TRAIT_MELODIUS_VOICE) || speech_sound) && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
+			if(HAS_TRAIT(speaker, TRAIT_MELODIUS_VOICE) && ishuman(speaker))
+				var/mob/living/carbon/human/H = speaker
+				var/sounds = clamp(round(length_char(not_processed_message)/3), 1, 5)
+				play_instrumental_voice(H, sounds, source)
+
+			else
+				playsound_local(source, speech_sound, VOL_EFFECTS_MASTER, sound_vol)
 
 	. = TRUE
 
@@ -129,6 +135,32 @@
 
 	var/mob/living/carbon/human/H = speaker
 	H.handle_socialization(src)
+
+/mob/proc/play_instrumental_voice(mob/living/carbon/human/H, repeats = 1, turf/source)
+	if(!repeats)
+		return
+	var/instrumental_sound = H.get_instrumental_voice()
+	playsound_local(source, instrumental_sound, VOL_EFFECTS_MASTER, 80)
+	addtimer(CALLBACK(src, PROC_REF(play_instrumental_voice), H, repeats - 1), 0.3 SECONDS)
+
+/mob/living/carbon/human/proc/get_instrumental_voice()
+	var/static/list/sound_by_gender_species = list(
+		"[TAJARAN][FEMALE]" = global.SOUNDIN_TAJARAN_FEMALE_VOICES,
+		"[TAJARAN][MALE]" = global.SOUNDIN_TAJARAN_MALE_VOICES,
+		"[SKRELL][FEMALE]" = global.SOUNDIN_SKRELL_FEMALE_VOICES,
+		"[SKRELL][MALE]" = global.SOUNDIN_SKRELL_MALE_VOICES,
+		"[UNATHI][FEMALE]" = global.SOUNDIN_UNATHI_FEMALE_VOICES,
+		"[UNATHI][MALE]" = global.SOUNDIN_UNATHI_MALE_VOICES,
+		"[DIONA][NEUTER]" = global.SOUNDIN_DIONA_VOICES,
+	)
+
+	var/hash = "[get_species()][gender]"
+
+	if(sound_by_gender_species[hash])
+		return pick(sound_by_gender_species[hash])
+	if(istype(species, /datum/species/machine))
+		return get_sound_by_voice(src, global.SOUNDIN_IPC_MALE_VOICES, global.SOUNDIN_IPC_FEMALE_VOICES)
+	return get_sound_by_voice(src, global.SOUNDIN_HUMAN_MALE_VOICES, global.SOUNDIN_HUMAN_FEMALE_VOICES)
 
 /mob/proc/hear_radio(message, verb="says", datum/language/language=null, part_a, part_b, part_c, mob/speaker = null, hard_to_hear = 0, vname ="")
 
