@@ -101,17 +101,19 @@
 				self_msg = "You start adjusting the skin on [surgery_victim]'s face with \the [tool]."
 
 			else
-				//open ribcage
-				msg = "[user] starts to force open the ribcage in [surgery_victim]'s torso with \the [tool]."
-				self_msg = "You start to force open the ribcage in [surgery_victim]'s torso with \the [tool]."
+				switch(BP.open)
+					if(BP_SAW_INTERNALS_OPEN_STATE)
+						//open ribcage
+						msg = "[user] starts to force open the ribcage in [surgery_victim]'s torso with \the [tool]."
+						self_msg = "You start to force open the ribcage in [surgery_victim]'s torso with \the [tool]."
 
-				cp_msg = "[HAS_TRAIT(surgery_victim, TRAIT_NO_PAIN) ? "You notice movement inside your chest!" : "Something hurts horribly in your chest!"]"
+						cp_msg = "[HAS_TRAIT(surgery_victim, TRAIT_NO_PAIN) ? "You notice movement inside your chest!" : "Something hurts horribly in your chest!"]"
+					else
+						//close ribcage
+						msg = "[user] starts bending [surgery_victim]'s ribcage back into place with \the [tool]."
+						self_msg = "You start bending [surgery_victim]'s ribcage back into place with \the [tool]."
 
-				//close ribcage
-				msg = "[user] starts bending [surgery_victim]'s ribcage back into place with \the [tool]."
-				self_msg = "You start bending [surgery_victim]'s ribcage back into place with \the [tool]."
-
-				cp_msg = "Something hurts horribly in your chest!"
+						cp_msg = "Something hurts horribly in your chest!"
 
 
 
