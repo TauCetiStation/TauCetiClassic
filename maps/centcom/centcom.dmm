@@ -5331,12 +5331,9 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "ang" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/vox/stealth,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/mask/gas/vox,
-/obj/item/clothing/head/helmet/space/vox/stealth,
+/obj/machinery/suit_storage_unit/vox/stealth{
+	filled = 1
+	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -5539,12 +5536,9 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "anB" = (
-/obj/item/clothing/suit/space/vox/pressure,
-/obj/structure/rack,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/mask/gas/vox,
-/obj/item/clothing/head/helmet/space/vox/pressure,
+/obj/machinery/suit_storage_unit/vox/engine{
+	filled = 1
+	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -6226,14 +6220,11 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "apf" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/vox/carapace,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/mask/gas/vox,
-/obj/item/clothing/head/helmet/space/vox/carapace,
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/suit_storage_unit/vox/carapace{
+	filled = 1
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
@@ -7591,12 +7582,9 @@
 	},
 /area/shuttle/vox/arkship)
 "arW" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/vox/medic,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/mask/gas/vox,
-/obj/item/clothing/head/helmet/space/vox/medic,
+/obj/machinery/suit_storage_unit/vox/medic{
+	filled = 1
+	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -8437,6 +8425,16 @@
 /obj/structure/rack,
 /obj/item/device/debugger,
 /obj/item/device/debugger,
+/obj/item/clothing/accessory/storage/black_vest{
+	pixel_x = -4
+	},
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/clothing/accessory/storage/black_vest{
+	pixel_x = 6
+	},
+/obj/item/clothing/accessory/storage/black_vest{
+	pixel_x = 10
+	},
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "atR" = (
