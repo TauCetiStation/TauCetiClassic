@@ -400,6 +400,28 @@
 /mob/proc/update_gravity()
 	return
 
+/proc/drag_pull_chain(atom/movable/target, turf/destination)
+	if(!target || !isturf(target.loc) || !isturf(destination) || target.anchored)
+		return
+
+	var/turf/old_target_loc = get_turf(target)
+	var/atom/movable/chain_next = null
+
+	if(isliving(target))
+		var/mob/living/L = target
+		chain_next = L.pulling
+		if(chain_next)
+			L.stop_pulling()
+
+	target.Move(destination, get_dir(target.loc, destination))
+
+	if(isliving(target) && chain_next)
+		var/mob/living/L = target
+		L.start_pulling(chain_next)
+		var/turf/new_target_loc = get_turf(target)
+		if(new_target_loc != old_target_loc && !chain_next.anchored && isturf(chain_next.loc) && get_dist(L, chain_next) > 1)
+			drag_pull_chain(chain_next, old_target_loc)
+
 /mob/proc/Move_Pulled(atom/A)
 	if (!canmove || restrained() || !pulling)
 		return
@@ -416,12 +438,7 @@
 	if (!Process_Spacemove(get_dir(pulling.loc, A)))
 		return
 	if (ismob(pulling))
-		var/mob/M = pulling
-		var/atom/movable/t = M.pulling
-		M.stop_pulling()
-		step(pulling, get_dir(pulling.loc, A))
-		if(M && t)
-			M.start_pulling(t)
+		drag_pull_chain(pulling, get_step(pulling, get_dir(pulling.loc, A)))
 	else
 		step(pulling, get_dir(pulling.loc, A))
 	return
