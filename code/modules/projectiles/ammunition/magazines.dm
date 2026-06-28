@@ -33,6 +33,9 @@
 
 /obj/item/ammo_box/magazine/internal/cylinder/rus357/atom_init()
 	. = ..()
+	for(var/obj/item/ammo_casing/AC as anything in stored_ammo)
+		qdel(AC)
+	stored_ammo = list()
 	stored_ammo += new ammo_type(src)
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev38

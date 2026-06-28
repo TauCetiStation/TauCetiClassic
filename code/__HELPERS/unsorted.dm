@@ -1111,6 +1111,19 @@ Turf and target are seperate in case you want to teleport some distance from a t
 			return "правая нога"
 		else
 			return zone
+// Genitive case organs for translation
+/proc/parse_zone_ru_genitive(zone)
+	switch(zone)
+		if(BP_L_ARM)
+			return "левой руки"
+		if(BP_R_ARM)
+			return "правой руки"
+		if(BP_L_LEG)
+			return "левой ноги"
+		if(BP_R_LEG)
+			return "правой ноги"
+		else
+			return zone
 
 /*
  Gets the turf this atom's *ICON* appears to inhabit
@@ -1232,7 +1245,7 @@ var/global/list/WALLITEMS = typecacheof(list(
 	/obj/machinery/computer/security/telescreen,
 	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
 	/obj/structure/mirror, /obj/structure/closet/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment,
-	/obj/structure/sign/painting,
+	/obj/structure/picture_frame,
 ))
 /proc/gotwallitem(loc, dir)
 	for(var/obj/O in loc)
