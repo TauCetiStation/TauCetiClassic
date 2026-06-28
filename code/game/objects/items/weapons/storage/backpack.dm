@@ -28,7 +28,7 @@
 	S.opened = !S.opened
 
 /obj/item/weapon/storage/backpack/attackby(obj/item/I, mob/user, params)
-	if(length(use_sound))
+	if(!silent && length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	return ..()
 
@@ -328,6 +328,8 @@
 	max_storage_space = DEFAULT_BACKPACK_STORAGE - 10
 	cant_hold = list(/obj/item/weapon/storage/backpack/satchel/flat) //muh recursive backpacks
 
+	silent = TRUE
+
 /obj/item/weapon/storage/backpack/satchel/flat/atom_init()
 	. = ..()
 	new /obj/item/stack/tile/plasteel(src)
@@ -343,6 +345,8 @@
 	item_state = "duffle-syndie"
 	origin_tech = "syndicate=1"
 	max_storage_space = DEFAULT_BACKPACK_STORAGE + 10
+
+	silent = TRUE
 
 /obj/item/weapon/storage/backpack/dufflebag/marinad
 	name = "marine dufflebag"

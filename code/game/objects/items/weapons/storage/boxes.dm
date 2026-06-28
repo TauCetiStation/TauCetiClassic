@@ -751,6 +751,7 @@
 	name = "syndie box"
 	desc = "It's a red box with an 'S' on it. Strange."
 	icon_state = "syndie_box"
+	silent = TRUE
 
 /obj/item/weapon/storage/box/nanotrasenlogo_box
 	name = "NT box"
