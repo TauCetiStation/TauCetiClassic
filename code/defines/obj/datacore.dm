@@ -49,7 +49,28 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		var/account_number = t.fields["acc_number"]
 
 		var/datum/job/J = SSjob.GetJob(t.fields["real_rank"])
-		if(J)
+		var/custom_dep = t.fields["custom_department"]
+		// если для кастомного титула игрок выбрал департамент — используем его
+		if(custom_dep)
+			var/list/entry = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = J ? J.order : 99)
+			switch(custom_dep)
+				if(DEP_COMMAND)
+					heads[++heads.len] = entry
+				if(DEP_SPECIAL)
+					centcom[++centcom.len] = entry
+				if(DEP_SECURITY)
+					sec[++sec.len] = entry
+				if(DEP_ENGINEERING)
+					eng[++eng.len] = entry
+				if(DEP_MEDICAL)
+					med[++med.len] = entry
+				if(DEP_SCIENCE)
+					sci[++sci.len] = entry
+				if(DEP_CIVILIAN)
+					civ[++civ.len] = entry
+				else
+					misc[++misc.len] = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number)
+		else if(J)
 			var/list/entry = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = J.order)
 			if (DEP_COMMAND in J.departments)
 				heads[++heads.len] = entry
@@ -230,7 +251,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 
 		CHECK_TICK
 
-/obj/effect/datacore/proc/manifest_modify(name, assignment)
+/obj/effect/datacore/proc/manifest_modify(name, assignment, custom_department = null)
 	PDA_Manifest.Cut()
 	var/datum/data/record/foundrecord
 	var/real_title = assignment
@@ -248,6 +269,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 	if(foundrecord)
 		foundrecord.fields["rank"] = assignment
 		foundrecord.fields["real_rank"] = real_title
+		foundrecord.fields["custom_department"] = custom_department
 
 /obj/effect/datacore/proc/manifest_inject(mob/living/carbon/human/H, client/C)
 	set waitfor = FALSE
