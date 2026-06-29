@@ -1024,8 +1024,6 @@
 			return FALSE
 	return TRUE
 
-/mob/living/var/crawl_getup = FALSE
-
 /mob/living/verb/crawl()
 	set name = "Crawl"
 	set category = "IC"
@@ -1034,7 +1032,7 @@
 		to_chat(src, "<span class='warning'>Нет! ПОЛ ГРЯЗНЫЙ!</span>")
 		return
 
-	if(crawl_getup)
+	if(is_busy())
 		return
 
 
@@ -1049,39 +1047,63 @@
 		return
 
 	if(crawling)
-		if(iscarbon(src))
-			var/mob/living/carbon/C = src
-			if(C.traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
-				to_chat(C, "<span class='danger'>I'm in so much pain! I can not get up!</span>")
-				return
-		if(!has_bodypart(BP_L_LEG) && !has_bodypart(BP_L_LEG))
-			to_chat(src, "<span class='danger'>WAIT, where are the legs?</span>")
-			return
-		crawl_getup = TRUE
-		if(do_after(src, 10, target = src))
-			crawl_getup = FALSE
-			if(!crawl_can_use())
-				playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
-				if(ishuman(src))
-					var/mob/living/carbon/human/H = src
-					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-					BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
-				else
-					take_overall_damage(5, used_weapon = "Table")
-				Stun(1)
-				to_chat(src, "<span class='danger'>Ouch!</span>")
-				return
-			layer = 4.0
-		else
-			crawl_getup = FALSE
-			return
-	else
-		if(!crawl_can_use())
-			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
-			return
-	SetCrawling(!crawling)
+		get_up()
+		return
+	lay_down()
+
+/mob/living/proc/lay_down(change_crawling_intent = TRUE)
+	if(change_crawling_intent && crawl_can_use())
+		crawling_intent = CRAWL_INTENT_CRAWLING
+		if(has_status_effect(/datum/status_effect/force_crawl))
+			to_chat(src, "<span class='notice'>You will try to crawl after the status-effect ends.</span>")
+	if(!crawl_can_use())
+		to_chat(src, "<span class='notice'>You can't crawl here!</span>")
+		return
+	if(crawling)
+		return
+	SetCrawling(TRUE)
 	update_canmove()
-	to_chat(src, "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>")
+	to_chat(src, "<span class='notice'>You are now crawling.</span>")
+	return
+
+/mob/living/proc/get_up(has_do_after_delay = TRUE, do_after_can_move = FALSE, look_at_intent = TRUE, change_crawling_intent = TRUE)
+	if(change_crawling_intent && crawl_can_use())
+		crawling_intent = CRAWL_INTENT_STANDING
+		if(has_status_effect(/datum/status_effect/force_crawl))
+			to_chat(src, "<span class='notice'>You will try to get up after the status-effect ends.</span>")
+	if(!is_can_get_up(has_do_after_delay, do_after_can_move, look_at_intent))
+		return
+	if(!crawl_can_use())
+		playsound(src, 'sound/weapons/tablehit1.ogg', VOL_EFFECTS_MASTER)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
+		else
+			take_overall_damage(5, used_weapon = "Table")
+		Stun(1)
+		to_chat(src, "<span class='danger'>Ouch!</span>")
+		return
+	layer = 4.0
+	SetCrawling(FALSE)
+	update_canmove()
+	to_chat(src, "<span class='notice'>You are now getting up.</span>")
+
+
+/mob/living/proc/is_can_get_up(has_do_after_delay = TRUE, do_after_can_move = FALSE, look_at_intent = TRUE)
+	if(!crawling)
+		return FALSE
+	if(has_status_effect(/datum/status_effect/force_crawl))
+		return FALSE
+	if(look_at_intent && (crawling_intent == CRAWL_INTENT_CRAWLING))
+		return FALSE
+	if(!has_bodypart(BP_L_LEG) && !has_bodypart(BP_L_LEG))
+		to_chat(src, "<span class='danger'>WAIT, where are the legs?</span>")
+		return FALSE
+	if(has_do_after_delay)
+		if(!do_after(src, 1 SECOND, target = src, can_move = do_after_can_move))
+			return FALSE
+	return TRUE
 
 //called when the mob receives a bright flash
 /mob/living/proc/flash_eyes(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /atom/movable/screen/fullscreen/flash)
