@@ -1,6 +1,5 @@
 name: "Оставить предложение"
 description: "Любые идеи."
-labels: ["Proposal"]
 type: Feature
 body:
   - type: textarea

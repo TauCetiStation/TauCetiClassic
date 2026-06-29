@@ -1,6 +1,6 @@
 name: "Сообщить об ошибке в тексте или переводе"
 description: "Некорректный текст или перевод на русский язык."
-labels: ["Bug", "Translation/Localization"]
+labels: ["Translation/Localization"]
 type: Bug
 body:
   - type: markdown
