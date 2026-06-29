@@ -42,10 +42,55 @@
 /particles/tool/cut
 	icon_state = list("cut1", "cut2", "cut3", "cut4", "cut5", "cut6", "cut7", "cut8", "cut9", "cut10", "cut11", "cut12")
 
+/particles/tool/signal
+	icon = 'icons/effects/particles/symbols.dmi'
+	icon_state = list("0", "1")
+
+	count = 10
+	spawning = 0.5
+
+	lifespan = 5
+	fadein = 2
+	fade = 5
+
+	position = generator("box", list(-2, -4, 0), list(2, -0, 0))
+	velocity = null
+
+	gravity = list(0, 1.5, 0)
+	friction = 0.1
+
+	spin = null
+
+	color = "#00ff00"
+
+/particles/tool/signal/emag
+	color = "#ff0000"
+
 /particles/tool/generic
 	icon_state = list("generic1")
 
+/particles/tool/surgery
+	icon = 'icons/effects/particles/clouds.dmi'
+	icon_state = list("cloud1", "cloud2", "cloud3")
 
+	count = 5
+	spawning = 0.3
+
+	lifespan = 15
+	fadein = 2
+	fade = 5
+
+	velocity = null
+
+	gravity = list(0, 0, 0)
+	friction = 0
+
+	rotation = generator("num", -180, 180, "NORMAL_RAND")
+
+	spin = null
+	color = "#dd000099"
+
+	scale = generator("num", 1, 1.5, "UNIFORM_RAND")
 
 /particles/tool/digging
 	count = 5

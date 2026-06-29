@@ -6,9 +6,9 @@
 	if(init_full)
 		charge = maxcharge
 		if(isturf(loc))
-			updateicon()
+			update_icon()
 
-/obj/item/weapon/stock_parts/cell/proc/updateicon()
+/obj/item/weapon/stock_parts/cell/update_icon()
 	cut_overlays()
 
 	if(charge < 0.01)
@@ -94,7 +94,7 @@
 					if(drain > src.charge)
 						drain = src.charge
 					H.nutrition += use(drain)
-					updateicon()
+					update_icon()
 					to_chat(user, "<span class='notice'>[round(100.0*drain/maxcharge, 1)]% of energy gained from the cell.</span>")
 				else
 					to_chat(user, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
@@ -146,7 +146,7 @@
 	charge = 0
 	maxcharge = 1
 	icon_state = "cell_explode"
-	updateicon()
+	update_icon()
 
 
 /obj/item/weapon/stock_parts/cell/proc/corrupt()
