@@ -260,6 +260,9 @@
 	if(target && prob(60))
 		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 
+	else if(prob(round(length(orbiters) * 2.5))) //These ghosts are griefers
+		movement_dir = get_dir(src, get_turf(length(global.living_list) ? pick(global.living_list) : get_turf(src)))
+
 	step(src, movement_dir)
 
 /obj/singularity/proc/check_turfs_in(direction = 0, step = 0)
