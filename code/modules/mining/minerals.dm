@@ -54,7 +54,7 @@ var/global/list/name_to_mineral
 
 /mineral/phoron
 	name = "Phoron"
-	spread_chance = 25
+	spread_chance = 10
 	ore = /obj/item/weapon/ore/phoron
 	ore_type = "crystal"
 

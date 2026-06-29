@@ -33,6 +33,8 @@
 
 	var/ore_amount = 0
 
+	var/crystal_type
+
 	has_resources = TRUE
 
 	var/global/list/rock_side_overlays
@@ -60,6 +62,10 @@
 	..()
 	MineralSpread()
 	update_overlays()
+
+	if(crystal_type)
+		generate_crystals()
+		crystal_type = null
 
 /turf/simulated/mineral/update_overlays()
 	cut_overlays()
@@ -161,6 +167,8 @@
 						ChangeTurf(/turf/simulated/floor/plating/airless/asteroid/cave)
 					else
 						new/turf/simulated/floor/plating/airless/asteroid/cave(src)
+
+					new /obj/structure/fans/tiny/asteroid_lians(src)
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
@@ -321,6 +329,21 @@
 	else
 		return attack_hand(user)
 
+/turf/simulated/mineral/proc/generate_crystals()
+	for(var/crystal_dir in global.cardinal)
+		var/turf/T = get_step(src, crystal_dir)
+		if(!istype(get_area(T), /area/asteroid/geode))
+			continue
+
+		var/obj/structure/crystal/wall/crystal = new crystal_type(T)
+		crystal.dir = crystal_dir
+
+/turf/simulated/mineral/proc/DropCrystals()
+	for(var/crystal_dir in global.cardinal)
+		var/turf/T = get_step(src, crystal_dir)
+		for(var/obj/structure/crystal/wall/crystal in T.contents)
+			if(crystal.dir == crystal_dir)
+				qdel(crystal)
 
 /turf/simulated/mineral/proc/DropMineral()
 	if(!mineral)
@@ -364,6 +387,7 @@
 			var/rads = 25 * sqrt(1 / (distance_rad_signal + 1))
 			counter.recieve_rad_signal(rads, distance_rad_signal)
 
+	DropCrystals()
 
 	var/datum/atom_hud/mine/mine = global.huds[DATA_HUD_MINER]
 	if(src in mine.hudatoms)
@@ -371,6 +395,9 @@
 
 	var/turf/N = ChangeTurf(basetype)
 	N.update_overlays_full()
+
+	if(prob(10))
+		new /obj/structure/fans/tiny/asteroid_lians(src)
 
 	if(prob(CRATE_DROP_CHANCE))
 		visible_message("<span class='notice'>An old dusty crate was buried within!</span>")
@@ -471,7 +498,7 @@
 /turf/simulated/mineral/random/caves/high_chance
 	icon_state = "rock_cave_highchance"
 	mineralChance = 25
-	mineralSpawnChanceList = list("Phoron" = 25, "Silver" = 15, "Gold" = 15, "Uranium" = 10, "Platinum" = 5, "Diamond" = 10)
+	mineralSpawnChanceList = list("Silver" = 15, "Gold" = 15, "Uranium" = 10, "Platinum" = 5, "Diamond" = 10)
 
 /turf/simulated/mineral/random/caves/high_chance/atom_init()
 	icon_state = "rock"
@@ -480,7 +507,7 @@
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 40
-	mineralSpawnChanceList = list("Phoron" = 50, "Silver" = 50, "Gold" = 45, "Uranium" = 35, "Platinum" = 45, "Diamond" = 30)
+	mineralSpawnChanceList = list("Silver" = 50, "Gold" = 45, "Uranium" = 35, "Platinum" = 45, "Diamond" = 30)
 
 /turf/simulated/mineral/random/high_chance/atom_init()
 	icon_state = "rock"
@@ -489,14 +516,14 @@
 /turf/simulated/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 5
-	mineralSpawnChanceList = list("Phoron" = 1, "Iron" = 33, "Coal" = 20, "Silver" = 1, "Gold" = 1, "Uranium" = 1,  "Platinum" = 1, "Diamond" = 1)
+	mineralSpawnChanceList = list("Iron" = 33, "Coal" = 20, "Silver" = 1, "Gold" = 1, "Uranium" = 1,  "Platinum" = 1, "Diamond" = 1)
 
 /turf/simulated/mineral/random/low_chance/atom_init()
 	icon_state = "rock"
 	. = ..()
 
 /turf/simulated/mineral/random/labormineral
-	mineralSpawnChanceList = list("Phoron" = 2, "Iron" = 28, "Coal" = 17, "Silver" = 1, "Gold" = 1, "Uranium" = 1, "Platinum" = 2, "Diamond" = 1)
+	mineralSpawnChanceList = list("Iron" = 28, "Coal" = 17, "Silver" = 1, "Gold" = 1, "Uranium" = 1, "Platinum" = 2, "Diamond" = 1)
 	icon_state = "rock_labor"
 
 /turf/simulated/mineral/random/labormineral/atom_init()

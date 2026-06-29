@@ -12,6 +12,12 @@
 	requires_power = 0
 	dynamic_lighting = TRUE
 
+/area/asteroid/geode
+	name = "Asteroid - Geode"
+	icon_state = "cave"
+	requires_power = 0
+	dynamic_lighting = TRUE
+
 /area/asteroid/mine/explored
 	name = "Mine"
 	icon_state = "explored"
