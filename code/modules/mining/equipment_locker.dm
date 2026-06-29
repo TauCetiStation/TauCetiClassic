@@ -890,7 +890,7 @@
 	var/loaded = 1
 
 /obj/item/weapon/lazarus_injector/proc/revive(mob/living/target, mob/living/user)
-	if(istype(target, /mob/living/simple_animal))
+	if(istype(target, /mob/living/simple_animal) || istype(target, /mob/living/carbon/ian))
 		var/mob/living/simple_animal/M = target
 		if(M.stat == DEAD)
 			M.faction = "lazarus"
