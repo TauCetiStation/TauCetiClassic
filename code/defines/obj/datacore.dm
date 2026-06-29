@@ -50,7 +50,6 @@ using /obj/effect/datacore/proc/manifest_inject( )
 
 		var/datum/job/J = SSjob.GetJob(t.fields["real_rank"])
 		var/custom_dep = t.fields["custom_department"]
-		// если для кастомного титула игрок выбрал департамент — используем его
 		if(custom_dep)
 			var/list/entry = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = J ? J.order : 99)
 			switch(custom_dep)
