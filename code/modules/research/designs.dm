@@ -1452,14 +1452,6 @@ other types of metals and chemistry for reagents).
 	materials = list(MAT_GLASS = 500, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/cell_recharger
 	category = list("Machine")
-/datum/design/vendor
-	name = "Machine Design (Vendor Board)"
-	desc = "The circuit board for a Vendor."
-	id = "vendor"
-	build_type = IMPRINTER
-	materials = list(MAT_GLASS = 1000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/vendor
-	category = list("Machine")
 
 /datum/design/ore_redemption
 	name = "Machine Design (Ore Redemption Board)"
