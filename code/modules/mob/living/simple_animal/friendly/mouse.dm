@@ -36,6 +36,8 @@
 	faction = "untouchable"
 	var/changes_color = TRUE
 	var/can_emote_snuffles = TRUE
+	edible_nutriment = 3
+	edible_protein = 3
 
 	has_head = TRUE
 	has_arm = TRUE
@@ -106,8 +108,6 @@
 		return ..()
 
 /mob/living/simple_animal/mouse/get_scooped(mob/living/carbon/grabber)
-	if (stat >= DEAD)
-		return
 	..()
 
 //copy paste from alien/larva, if that func is updated please update this one alsoghost
