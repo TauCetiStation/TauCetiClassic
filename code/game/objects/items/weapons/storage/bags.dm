@@ -114,7 +114,7 @@
 	icon_state = "bluetrashbag"
 	item_state_world = "bluetrashbag_world"
 	max_storage_space = 56
-	var/allow_gathering_scrap = 0
+	var/allow_gathering_scrap = FALSE
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_gathering_scrap)
 
 /obj/item/weapon/storage/bag/trash/bluespace/atom_init()
@@ -127,17 +127,16 @@
 
 	allow_gathering_scrap = !allow_gathering_scrap
 	quick_empty()
-	switch (allow_gathering_scrap)
-		if(1)
-			max_w_class = SIZE_NORMAL
-			can_hold = list(/obj/item/weapon/scrap_lump)
-			max_storage_space = 240
-			to_chat(usr, "[src] now picks up only scrap lumps.")
-		if(0)
-			max_w_class = initial(max_w_class)
-			can_hold = list()
-			max_storage_space = initial(max_storage_space)
-			to_chat(usr, "[src] now picks up all items, except scrap lumps.")
+	if (allow_gathering_scrap)
+		max_w_class = SIZE_NORMAL
+		can_hold = list(/obj/item/weapon/scrap_lump)
+		max_storage_space = 240
+		to_chat(usr, "[src] now picks up only scrap lumps.")
+	else
+		max_w_class = initial(max_w_class)
+		can_hold = list()
+		max_storage_space = initial(max_storage_space)
+		to_chat(usr, "[src] now picks up all items, except scrap lumps.")
 
 /datum/action/item_action/hands_free/toggle_gathering_scrap
 	name = "Switch Gathering to Scrap Only"
