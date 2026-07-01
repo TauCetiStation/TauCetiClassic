@@ -159,6 +159,7 @@ var/global/list/severity_to_string = list("RoundStart", "Mundane", "Moderate", "
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Anti meat",               /datum/event/feature/area/replace/mice_attack,                 10),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Invasion In Mainteance",  /datum/event/feature/area/maintenance_spawn/invasion,         10, list(ASSIGNMENT_SECURITY = 50)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Sign of Antagonists",     /datum/event/feature/area/maintenance_spawn/antag_meta,       10, list(ASSIGNMENT_SECURITY = 50)),
+		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Maintenance Corpses",    /datum/event/feature/area/maintenance_spawn/corpse,       		15, list(ASSIGNMENT_DETECTIVE = 30, ASSIGNMENT_FORENSICS = 15, ASSIGNMENT_SECURITY = 5)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Headset",       /datum/event/feature/headset,                                 10, list(ASSIGNMENT_ANY = 5)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Survival Box",  /datum/event/feature/survbox,                                 10, list(ASSIGNMENT_ANY = 5)),
 		new /datum/event_meta(EVENT_LEVEL_FEATURE, "Forgotten Fueltanks",     /datum/event/feature/fueltank,                                10, list(ASSIGNMENT_ENGINEER = 20)),
