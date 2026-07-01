@@ -1302,6 +1302,20 @@
 	boozepwr = 3
 	taste_message = "tomatoes with booze"
 
+/datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/M)
+	var/mob/living/carbon/human/H = M
+	if(!istype(H))
+		return ..()
+	if(volume > 30)
+		if(!HAS_TRAIT(H, TRAIT_CULT_EYES))
+			ADD_TRAIT(H, TRAIT_CULT_EYES, "reagent")
+			H.update_body()
+	else
+		if(HAS_TRAIT_FROM(H, TRAIT_CULT_EYES, "reagent"))
+			REMOVE_TRAIT(H, TRAIT_CULT_EYES, "reagent")
+			H.update_body()
+	return ..()
+
 /datum/reagent/consumable/ethanol/brave_bull
 	name = "Brave Bull"
 	id = "bravebull"
