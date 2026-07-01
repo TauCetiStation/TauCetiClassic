@@ -62,6 +62,7 @@ export const Autolathe = (props, context) => {
           <Input
             autoFocus
             fluid
+            value={searchText}
             placeholder="Search for..."
             onInput={(e, v) => setSearchText(v)}
             mb={1}
