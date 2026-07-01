@@ -1,6 +1,5 @@
 name: "Pull Request Labeler"
 
-
 on:
   push:
     branches:
@@ -15,6 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Apply labels based on changed files
-        uses: actions/labeler@v6
+        uses: actions/labeler@v6.1.0
         with:
           configuration-path: .github/LABELER.yml
+      - name: Check for conflicting PRs
+        uses: eps1lon/actions-label-merge-conflict@v3.0.2
+        with:
+          dirtyLabel: "Merge Conflict"
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          commentOnDirty: "Pull Request содержит конфликты. Устраните их, чтобы мы смогли оценить и принять запрос."
