@@ -333,13 +333,23 @@
 /obj/machinery/door_control/attack_hand(mob/user)
 	if(buildstage != DOOR_CONTROL_COMPLETE || wiresexposed || !connected_doors.len)
 		return
-	. = ..()
-	if(.)
+	if(!..())
 		return
+	add_fingerprint(user)
+	activate(user)
+
+/obj/machinery/door_control/attack_ghost(mob/user)
+	if(user.client && user.client.AI_Interact)
+		activate(user)
+		return
+	return ..()
+
+/obj/machinery/door_control/proc/activate(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 20)
 	use_power(5)
 	icon_state = "doorctrl1"
+
 	for(var/door in connected_doors)
 		INVOKE_ASYNC(src, PROC_REF(toggle_door), door)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 15)
