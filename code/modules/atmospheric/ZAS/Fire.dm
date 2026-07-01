@@ -206,7 +206,9 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	for(var/mob/living/L in loc)
 		L.FireBurn(firelevel, air_contents.temperature, air_contents.return_relative_density())  //Burn the mobs!
 
-	loc.fire_act(air_contents, air_contents.temperature, air_contents.volume)
+	var/obj/machinery/portable_atmospherics/tile_atmos/tileatmos_machine = locate(/obj/machinery/portable_atmospherics/tile_atmos) in loc
+	if(!tileatmos_machine)
+		loc.fire_act(air_contents, air_contents.temperature, air_contents.volume)
 	for(var/atom/A in loc)
 		A.fire_act(air_contents, air_contents.temperature, air_contents.volume)
 
@@ -235,7 +237,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 				if(prob( 50 + 50 * (firelevel/vsc.fire_firelevel_multiplier) ) && my_tile.CanPass(null, enemy_tile, 0))
 					enemy_tile.create_fire(firelevel)
 
-			else
+			else if(!tileatmos_machine || (tileatmos_machine.state_open && (tileatmos_machine.dir == direction)))
 				enemy_tile.adjacent_fire_act(loc, air_contents, air_contents.temperature, air_contents.volume)
 
 	animate(src, color = fire_color(air_contents.temperature), 5)
