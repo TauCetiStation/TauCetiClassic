@@ -797,6 +797,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]             >> socks
 	S["backbag"]           >> backbag
 	S["use_skirt"]         >> use_skirt
+	S["jumpsuit_style"]    >> jumpsuit_style
+	S["jumpsuit_pattern"]  >> jumpsuit_pattern
+	S["jumpsuit_color"]    >> jumpsuit_color
+	S["jumpsuit_base_color"] >> jumpsuit_base_color
 	S["pda_ringtone"]      >> chosen_ringtone
 	S["pda_custom_melody"] >> custom_melody
 
@@ -882,6 +886,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	undershirt_print = sanitize_inlist(undershirt_print, undershirt_prints_t + null, null)
 	socks			= sanitize_integer(socks, 0, socks_t.len, initial(socks))
 	backbag			= sanitize_integer(backbag, 1, backbaglist.len, initial(backbag))
+	jumpsuit_style	= sanitize_inlist(jumpsuit_style, poly_valid_styles, POLY_STYLE_JOB)
+	if(jumpsuit_pattern && !(jumpsuit_pattern in poly_pattern_display))
+		jumpsuit_pattern = null
+	jumpsuit_color		= sanitize_poly_color(jumpsuit_color, initial(jumpsuit_color))
+	jumpsuit_base_color	= sanitize_poly_color(jumpsuit_base_color, initial(jumpsuit_base_color))
 	var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
 	chosen_ringtone  = sanitize_inlist(chosen_ringtone, pref_ringtones, initial(chosen_ringtone))
 	custom_melody = sanitize(custom_melody, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
@@ -998,6 +1007,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["socks"]                 << socks
 	S["backbag"]               << backbag
 	S["use_skirt"]             << use_skirt
+	S["jumpsuit_style"]        << jumpsuit_style
+	S["jumpsuit_pattern"]      << jumpsuit_pattern
+	S["jumpsuit_color"]        << jumpsuit_color
+	S["jumpsuit_base_color"]   << jumpsuit_base_color
 	S["pda_ringtone"]          << chosen_ringtone
 	S["pda_custom_melody"]     << custom_melody
 	//Write prefs
