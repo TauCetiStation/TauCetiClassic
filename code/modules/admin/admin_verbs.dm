@@ -884,7 +884,7 @@ var/global/list/admin_verbs_hideable = list(
 	if(holder)
 		var/list/jobs = list()
 		for (var/datum/job/J as anything in SSjob.active_occupations)
-			if (J.current_positions >= J.total_positions && J.total_positions != -1)
+			if (J.current_positions >= J.baseline_positions && J.baseline_positions != -1)
 				jobs += J.title
 		if (!jobs.len)
 			to_chat(usr, "There are no fully staffed jobs.")
