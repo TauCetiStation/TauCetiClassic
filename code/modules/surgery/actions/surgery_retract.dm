@@ -322,4 +322,4 @@
 	//remove_fat
 	user.visible_message("<span class='warning'>[user]'s hand slips, cutting [surgery_victim]'s belly with \the [tool]!</span>" , \
 	"<span class='warning'>Your hand slips, cutting [surgery_victim]'s belly with \the [tool]!</span>" )
-BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)
+	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)

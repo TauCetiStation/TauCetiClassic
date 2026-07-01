@@ -1,6 +1,5 @@
 /datum/surgery_step/cut
 	allowed_qualities = list(
-		QUALITY_CUTTING,
 		QUALITY_SURG_CUTTING,
 		QUALITY_SCREWING // for ipc, burn it
 		)
@@ -13,9 +12,6 @@
 
 /datum/surgery_step/cut/can_use(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
 
-/////////////////////////////////////
-///       SLIME SURGERY CUT       ///
-/////////////////////////////////////
 //Must be first, to invoke ..() and check bodyparts
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
@@ -205,9 +201,7 @@
 
 	var/mob/living/carbon/human/surgery_victim = target
 	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
-/////////////////////////////////////
-///       IPC SURGERY CUT         ///
-/////////////////////////////////////
+
 	if(surgery_victim.species.flags[IS_SYNTHETIC]) // IPC only
 		switch(target_zone)
 			if(O_EYES)
@@ -280,9 +274,6 @@
 						BP.open = BP_DEFAULT_STATE
 						return TRUE
 
-/////////////////////////////////////
-///     ORGANIC SURGERY CUT       ///
-/////////////////////////////////////
 	if(surgery_victim.species.flags[IS_PLANT])
 		switch(target_zone)
 			if(BP_CHEST)
@@ -332,7 +323,7 @@
 			if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
 				if(target_zone == BP_GROIN && BP.open >= BP_SCALPEL_OS && surgery_victim.get_species() != VOX) // in this stage we need check only VOX
 					user.visible_message("<span class='notice'>[user] has made a [surgery_victim.gender == FEMALE ? "man" : "woman"] of [surgery_victim] with \the [tool].</span>" , \
-					"<span class='notice'>You have made a man of [target].</span>")
+					"<span class='notice'>You have made a [surgery_victim.gender == FEMALE ? "man" : "woman"] of [target].</span>")
 					target.gender = target.gender == MALE ? FEMALE : MALE
 					surgery_victim.regenerate_icons()
 				switch(BP.open)
