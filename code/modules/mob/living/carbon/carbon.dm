@@ -360,8 +360,18 @@
 
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	var/turf/oldLoc = loc
+	var/was_under_container_layer = layer <= CONTAINER_STRUCTURE_LAYER
 
 	. = ..()
+
+	if(. && crawling && isturf(oldLoc) && isturf(loc))
+		var/turf/currentLoc = loc
+		var/old_loc_has_container_layer = oldLoc.has_container_layer_movable()
+		var/current_loc_has_container_layer = currentLoc.has_container_layer_movable()
+		if(current_loc_has_container_layer)
+			layer = (!old_loc_has_container_layer || was_under_container_layer) ? BELOW_CONTAINERS_LAYER : MOB_LAYER
+		else if(old_loc_has_container_layer && was_under_container_layer)
+			layer = MOB_LAYER
 
 	if(!. || ISDIAGONALDIR(Dir))
 		return .
@@ -378,6 +388,11 @@
 	handle_rig_move(NewLoc, Dir)
 
 	handle_footsteps(oldLoc, NewLoc, Dir)
+
+/mob/living/carbon/SetCrawling(value)
+	. = ..()
+	if(!value && layer <= CONTAINER_STRUCTURE_LAYER)
+		layer = MOB_LAYER
 
 /mob/living/carbon/proc/handle_footsteps(turf/oldLoc, turf/newLoc, Dir)
 	if(lying && !crawling)
