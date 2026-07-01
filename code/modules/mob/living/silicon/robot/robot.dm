@@ -11,6 +11,7 @@
 
 	typing_indicator_type = "robot"
 
+	var/evil = 0
 	var/lights_on = 0 // Is our integrated light on?
 	var/used_power_this_tick = 0
 	var/sight_mode = 0
@@ -1213,4 +1214,4 @@
 				break
 
 /mob/living/silicon/robot/is_antag()
-	return emagged || laws?.zeroth
+	return emagged || laws?.zeroth || evil
