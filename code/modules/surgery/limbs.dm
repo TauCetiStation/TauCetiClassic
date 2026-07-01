@@ -18,6 +18,7 @@
 
 
 /datum/surgery_step/limb/cut
+	name = "Cut limb stump"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
 	/obj/item/weapon/kitchenknife = 75,	\
@@ -50,6 +51,7 @@
 
 
 /datum/surgery_step/limb/mend
+	name = "Reposition tissue"
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,           \
 	/obj/item/weapon/kitchen/utensil/fork = 75,	\
@@ -82,6 +84,7 @@
 
 
 /datum/surgery_step/limb/prepare
+	name = "Cauterize stump"
 	allowed_tools = list(
 	/obj/item/weapon/cautery = 100,			\
 	/obj/item/clothing/mask/cigarette = 75,	\
@@ -115,6 +118,7 @@
 
 
 /datum/surgery_step/limb/attach
+	name = "Attach limb"
 	allowed_tools = list(
 	/obj/item/organ/external = 100,
 	/obj/item/robot_parts = 100,
@@ -236,6 +240,7 @@
 
 
 /datum/surgery_step/ipc/limb/cut_wires
+	name = "Cut wires"
 	allowed_tools = list(
 	/obj/item/weapon/wirecutters = 100,
 	/obj/item/weapon/kitchenknife = 75,
@@ -267,6 +272,7 @@
 		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
 
 /datum/surgery_step/ipc/limb/ipc_prepare
+	name = "Prepare robotic limb"
 	allowed_tools = list(
 	/obj/item/weapon/wrench = 100,
 	/obj/item/weapon/bonesetter = 75

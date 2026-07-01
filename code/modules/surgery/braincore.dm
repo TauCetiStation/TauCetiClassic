@@ -17,6 +17,7 @@
 	return target_zone == BP_HEAD && BP.open
 
 /datum/surgery_step/brain/saw_skull
+	name = "Saw skull"
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100,
 	/obj/item/weapon/hatchet = 75,
@@ -47,6 +48,7 @@
 	BP.take_damage(max(10, tool.force), 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/brain/cut_brain
+	name = "Remove brain"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,
 	/obj/item/weapon/kitchenknife = 75,
@@ -77,6 +79,7 @@
 	BP.take_damage(50, 0, DAM_SHARP|DAM_EDGE,  tool)
 
 /datum/surgery_step/brain/saw_spine
+	name = "Saw spine"
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100,
 	/obj/item/weapon/hatchet = 75,
@@ -122,6 +125,7 @@
 		user:bloody_hands(target, 0)
 
 /datum/surgery_step/brain/insert_brain
+	name = "Insert brain"
 	allowed_tools = list(
 	/obj/item/organ/internal/brain = 100
 	)
@@ -188,6 +192,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/brain/bone_chips
+	name = "Remove bone chips"
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,
 	/obj/item/weapon/wirecutters = 75,
@@ -218,6 +223,7 @@
 	BP.take_damage(30, 0, DAM_SHARP, tool)
 
 /datum/surgery_step/brain/hematoma
+	name = "Drain hematoma"
 	allowed_tools = list(
 	/obj/item/weapon/FixOVein = 100,
 	/obj/item/stack/cable_coil = 75
@@ -253,6 +259,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/brain/mend_skull
+	name = "Mend skull"
 	allowed_tools = list(
 	/obj/item/weapon/bonegel = 100,
 	/obj/item/stack/rods = 50
@@ -289,6 +296,7 @@
 	return isslime(target) && target.stat == DEAD
 
 /datum/surgery_step/slime/cut_flesh
+	name = "Cut slime flesh"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,
 	/obj/item/weapon/kitchenknife = 75,
@@ -315,6 +323,7 @@
 	"<span class='warning'>Your hand slips, tearing [target]'s flesh with \the [tool]!</span>")
 
 /datum/surgery_step/slime/cut_innards
+	name = "Cut slime innards"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,
 	/obj/item/weapon/kitchenknife = 75,
@@ -341,6 +350,7 @@
 	"<span class='warning'>Your hand slips, tearing [target]'s innards with \the [tool]!</span>")
 
 /datum/surgery_step/slime/saw_core
+	name = "Extract slime core"
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100,
 	/obj/item/weapon/hatchet = 75,

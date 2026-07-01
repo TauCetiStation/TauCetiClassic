@@ -5,6 +5,7 @@
 
 
 /datum/surgery_step/fix_vein
+	name = "Repair veins"
 	priority = 2
 	allowed_tools = list(
 	/obj/item/weapon/FixOVein = 100, \
@@ -50,6 +51,7 @@
 //					GROIN ORGAN PATCHING						//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/groin_organs
+	name = "Repair groin organs"
 	priority = 3
 	can_infect = 0
 	blood_level = 1
@@ -70,6 +72,7 @@
 	return FALSE
 
 /datum/surgery_step/groin_organs/fixing
+	name = "Apply bandage to groin"
 	allowed_tools = list(
 	/obj/item/stack/medical/advanced/bruise_pack= 100,
 	/obj/item/stack/medical/bruise_pack = 20,

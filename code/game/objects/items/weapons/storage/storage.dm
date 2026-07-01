@@ -132,13 +132,14 @@
 	show_to(user)
 
 // Returns TRUE if user can open the storage and opens it. Returns FALSE otherwise.
-/obj/item/weapon/storage/proc/try_open(mob/user)
+/obj/item/weapon/storage/proc/try_open(mob/user, check_only = FALSE)
 	if(!user)
 		return FALSE
 	if(!user.in_interaction_vicinity(src))
 		return FALSE
 
-	open(user)
+	if(!check_only)
+		open(user)
 	return TRUE
 
 /obj/item/weapon/storage/proc/prepare_ui()

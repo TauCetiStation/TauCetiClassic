@@ -1,5 +1,6 @@
 /* SURGERY STEPS */
 /datum/surgery_step
+	var/name = "surgery step"
 	var/priority = 0	//steps with higher priority would be attempted first
 
 	//type path referencing tools that can be used for this step, and how well are they suited for it
@@ -161,9 +162,141 @@
 
 	return !check_covered_bodypart(T, zone)
 
-/proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool)
+/proc/has_medical_hud(mob/living/user)
+	var/datum/atom_hud/med = global.huds[DATA_HUD_MEDICAL]
+	var/datum/atom_hud/med_adv = global.huds[DATA_HUD_MEDICAL_ADV]
+	if((med && (med.hudusers[user])) || (med_adv && (med_adv.hudusers[user])))
+		return TRUE
+	return FALSE
+
+// Only trained surgeons get the assist menu. Borgs are always allowed.
+/proc/can_use_surgery_radial(mob/living/user)
+	if(isrobot(user))
+		return TRUE
+	if(!ishuman(user))
+		return FALSE
+	return is_skill_competent(user, list(/datum/skill/surgery = SKILL_LEVEL_PRO))
+
+// Checks one item against the surgery steps and records it as the best tool for the highest-priority step it fits.
+/proc/match_surgery_tool(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I, list/best_for_step, list/best_quality)
+	for(var/datum/surgery_step/S in surgery_steps)
+		if(!S.is_valid_mutantrace(target))
+			continue
+		var/quality = S.tool_quality(I)
+		if(!quality)
+			continue
+		if(!S.can_use(user, target, target_zone, I))
+			continue
+		if(!best_for_step[S] || quality > best_quality[S])
+			best_for_step[S] = I
+			best_quality[S] = quality
+		return
+
+/proc/get_available_surgery_tools(mob/living/user, mob/living/carbon/human/target, target_zone)
+	var/list/best_for_step = list()
+	var/list/best_quality = list()
+
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		if(R.module)
+			for(var/obj/item/I in R.module.modules)
+				if(I.required_skills && I.required_skills.len)
+					match_surgery_tool(user, target, target_zone, I, best_for_step, best_quality)
+		return best_for_step
+
+	var/datum/personal_crafting/C = new
+	for(var/obj/item/I in C.get_environment(user))
+		match_surgery_tool(user, target, target_zone, I, best_for_step, best_quality)
+		if(istype(I, /obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = I
+			if(S.try_open(user, check_only = TRUE))
+				for(var/obj/item/SI in S.contents)
+					match_surgery_tool(user, target, target_zone, SI, best_for_step, best_quality)
+	qdel(C)
+	return best_for_step
+
+/proc/try_show_surgery_radial_menu(mob/living/user, mob/living/carbon/human/target, target_zone)
+	set waitfor = FALSE
+
+	if(!ishuman(user) && !isrobot(user))
+		return
+	if(!has_medical_hud(user))
+		return
+	if(!can_use_surgery_radial(user))
+		return
+	if(!ishuman(target))
+		return
+	if(!user.client)
+		return
+	if(!user.Adjacent(target) || user.incapacitated())
+		return
+
+	var/list/best_for_step = get_available_surgery_tools(user, target, target_zone)
+	if(!best_for_step.len)
+		return
+
+	var/list/step_choices = list()
+	var/list/name_to_tool = list()
+
+	for(var/datum/surgery_step/S in best_for_step)
+		var/obj/item/tool = best_for_step[S]
+		step_choices[S.name] = image(icon = tool.icon, icon_state = tool.icon_state)
+		name_to_tool[S.name] = tool
+
+	var/chosen_name = show_radial_menu(user, target, step_choices, radius = 36, require_near = TRUE, tooltips = TRUE)
+
+	if(!chosen_name || !user.Adjacent(target) || user.incapacitated())
+		return
+
+	var/obj/item/chosen = name_to_tool[chosen_name]
+	if(QDELETED(chosen))
+		return
+
+	// borg path: tools stay in module, no pickup/return needed
+	if(isrobot(user))
+		do_surgery(target, user, chosen, from_radial = TRUE, forced_zone = target_zone)
+		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(try_show_surgery_radial_menu), user, target, target_zone)
+		return
+
+	var/atom/tool_original_loc = chosen.loc
+	var/obj/item/dropped_item = null
+
+	if(chosen.loc != user)
+		if(!user.Adjacent(chosen))
+			to_chat(user, "<span class='warning'>[chosen] is no longer within reach!</span>")
+			return
+		if(!user.put_in_hands(chosen))
+			// both hands full, drop active hand first
+			dropped_item = user.get_active_hand()
+			if(dropped_item)
+				user.drop_from_inventory(dropped_item, get_turf(target))
+			if(!user.put_in_hands(chosen))
+				to_chat(user, "<span class='warning'>You can't pick up [chosen]!</span>")
+				if(dropped_item)
+					user.put_in_hands(dropped_item)
+				return
+
+	do_surgery(target, user, chosen, from_radial = TRUE, forced_zone = target_zone)
+
+	// put the tool back where we found it
+	if(tool_original_loc && tool_original_loc != user && chosen.loc == user)
+		user.drop_from_inventory(chosen, get_turf(target))
+		if(!QDELETED(tool_original_loc))
+			if(istype(tool_original_loc, /obj/item/weapon/storage))
+				var/obj/item/weapon/storage/S = tool_original_loc
+				if(!S.handle_item_insertion(chosen, prevent_warning = TRUE))
+					to_chat(user, "<span class='warning'>[chosen] no longer fits in [S], leaving it on the floor.</span>")
+			else
+				chosen.forceMove(tool_original_loc)
+	if(dropped_item && !QDELETED(dropped_item) && dropped_item.loc != user)
+		user.put_in_hands(dropped_item)
+
+	// re-open for the next step instead of looping: a fresh async stack, so an error can't spin the server
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(try_show_surgery_radial_menu), user, target, target_zone)
+
+/proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool, from_radial = FALSE, forced_zone = null)
 	checks_for_surgery(M, user, FALSE)
-	var/target_zone = user.get_targetzone()
+	var/target_zone = forced_zone || user.get_targetzone()
 	var/covered
 	if(ishuman(M))
 		covered = get_human_covering(M)
@@ -207,7 +340,11 @@
 
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				H.update_surgery()										//shows surgery results
+				H.update_surgery()
+				// When called from manual tool use, kick off the radial chain for the next step.
+				// When called from radial, it re-opens itself after the step (via INVOKE_ASYNC).
+				if(!from_radial)
+					try_show_surgery_radial_menu(user, H, target_zone)
 			return	TRUE	  												//don't want to do weapony things after surgery
 	return FALSE
 

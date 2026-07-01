@@ -13,6 +13,7 @@
 	return target_zone == BP_CHEST
 
 /datum/surgery_step/ribcage/saw_ribcage
+	name = "Saw ribcage"
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
 	/obj/item/weapon/hatchet = 75,       \
@@ -48,6 +49,7 @@
 
 
 /datum/surgery_step/ribcage/retract_ribcage
+	name = "Retract ribcage"
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,           \
 	/obj/item/weapon/kitchen/utensil/fork = 75,	\
@@ -91,6 +93,7 @@
 	BP.take_damage(20, 0, used_weapon = tool)
 
 /datum/surgery_step/ribcage/close_ribcage
+	name = "Close ribcage"
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,           \
 	/obj/item/weapon/kitchen/utensil/fork = 75,	\
@@ -132,6 +135,7 @@
 		target.rupture_lung()
 
 /datum/surgery_step/ribcage/mend_ribcage
+	name = "Mend ribcage"
 	allowed_tools = list(
 	/obj/item/weapon/bonegel = 100,	\
 	/obj/item/stack/rods = 50
@@ -163,6 +167,7 @@
 //					ALIEN EMBRYO SURGERY						//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ribcage/remove_embryo
+	name = "Remove embryo"
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,
 	/obj/item/weapon/wirecutters = 75,
@@ -195,6 +200,7 @@
 //				CHEST INTERNAL ORGAN SURGERY					//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ribcage/fix_chest_internal
+	name = "Fix internal organ"
 	allowed_tools = list(
 	/obj/item/stack/medical/advanced/bruise_pack= 100,
 	/obj/item/stack/medical/bruise_pack = 20,
@@ -358,6 +364,7 @@
 //				EXTRACTING DIONA'S BRAIN						//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ribcage/cut_diona_brain
+	name = "Cut diona brain"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,
 	/obj/item/weapon/kitchenknife = 75,
@@ -388,6 +395,7 @@
 	BP.take_damage(50, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ribcage/cut_diona_spine
+	name = "Cut diona spine"
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100,
 	/obj/item/weapon/hatchet = 75,
@@ -432,6 +440,7 @@
 //				EXTRACTING IPC'S BRAIN							//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ipc/ribcage/cut_posibrain
+	name = "Cut posibrain"
 	allowed_tools = list(
 	/obj/item/weapon/wirecutters = 100,
 	/obj/item/weapon/kitchenknife = 75,
@@ -461,6 +470,7 @@
 	BP.take_damage(50, 0, DAM_SHARP, tool)
 
 /datum/surgery_step/ipc/ribcage/extract_posibrain
+	name = "Extract posibrain"
 	allowed_tools = list(
 	/obj/item/weapon/crowbar = 100,
 	/obj/item/weapon/hatchet = 75,
@@ -528,6 +538,7 @@
 	BP.take_damage(30, 0, DAM_SHARP, tool)
 
 /datum/surgery_step/ipc/ribcage/import_posibrain
+	name = "Import posibrain"
 	allowed_tools = list(
 	/obj/item/device/mmi/posibrain = 100
 	)
@@ -566,6 +577,7 @@
 //				RIBCAGE	ROBOTIC SURGERY							//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ipc/ribcage
+	name = "IPC ribcage surgery"
 	can_infect = FALSE
 	priority = 2
 	allowed_species = list(IPC)
@@ -577,6 +589,7 @@
 	return target_zone == BP_CHEST
 
 /datum/surgery_step/ipc/ribcage/wrench_sec
+	name = "Unbolt IPC ribcage"
 	allowed_tools = list(
 	/obj/item/weapon/wrench = 100,
 	/obj/item/weapon/bonesetter = 75
@@ -611,6 +624,7 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/ribcage/pry_sec
+	name = "Pry open IPC ribcage"
 	allowed_tools = list(
 	/obj/item/weapon/crowbar = 100,
 	/obj/item/weapon/hatchet = 75,
@@ -647,6 +661,7 @@
 	BP.take_damage(20, 0, used_weapon = tool)
 
 /datum/surgery_step/ipc/ribcage/shut_sec
+	name = "Close IPC ribcage"
 	allowed_tools = list(
 	/obj/item/weapon/crowbar = 100,
 	/obj/item/weapon/hatchet = 75,
@@ -684,6 +699,7 @@
 		target.rupture_lung()
 
 /datum/surgery_step/ipc/ribcage/wrenchshut_sec
+	name = "Bolt IPC ribcage shut"
 	allowed_tools = list(
 	/obj/item/weapon/wrench = 100,
 	/obj/item/weapon/bonesetter = 75
@@ -715,6 +731,7 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/ribcage/take_accumulator
+	name = "Take accumulator"
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,
@@ -757,6 +774,7 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/ribcage/put_accumulator
+	name = "Put accumulator"
 	allowed_tools = list(
 	/obj/item/weapon/stock_parts/cell = 100
 	)
@@ -790,6 +808,7 @@
 
 
 /datum/surgery_step/ipc/ribcage/hearing_restoration
+	name = "Hearing restoration"
 	allowed_tools = list(
 		/obj/item/robot_parts/robot_component/radio = 100,
 	)
