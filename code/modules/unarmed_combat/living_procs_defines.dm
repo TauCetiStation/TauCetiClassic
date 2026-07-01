@@ -140,6 +140,9 @@
 
 /// This proc checks whether src can be attacked by attacker at all.
 /mob/living/proc/can_be_attacked(mob/living/attacker)
+	if(is_under_table_surface_interaction(attacker, src))
+		return FALSE
+
 	// Why does this exist? ~Luduk
 	if(isturf(loc) && istype(loc.loc, /area/start))
 		to_chat(attacker, "<span class='warning'>No attacking people at spawn!</span>")

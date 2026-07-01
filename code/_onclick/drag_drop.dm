@@ -12,7 +12,9 @@
 
 /mob/proc/CanUseMouseDrop(atom/over, atom/with)
 	if(istype(over, /atom/movable/screen)) // let hud check everything
-		return TRUE
+		return !is_under_table_surface_interaction(src, with)
+	if(is_under_table_surface_interaction(src, over, TRUE) || is_under_table_surface_interaction(src, with))
+		return FALSE
 	return !incapacitated() && in_interaction_vicinity(over) && in_interaction_vicinity(with) && over.Adjacent(with)
 
 /atom/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)

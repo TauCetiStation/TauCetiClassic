@@ -525,6 +525,9 @@ var/global/list/slot_equipment_priority = list(
 	if(is_busy() || isdrone(src) || incapacitated() || !isturf(target.loc) || !in_interaction_vicinity(target))
 		return FALSE
 
+	if(is_under_table_surface_interaction(src, target))
+		return FALSE
+
 	if(ishuman(src) || isrobot(src) || ismonkey(src) || isIAN(src) || isxenoadult(src))
 		return TRUE
 
