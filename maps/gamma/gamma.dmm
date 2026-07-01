@@ -34232,6 +34232,7 @@
 /area/station/maintenance/medbay)
 "fXG" = (
 /obj/structure/flora/ausbushes/grassybush,
+/obj/structure/composter/botany,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "fXR" = (

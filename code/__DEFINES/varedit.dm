@@ -28,6 +28,7 @@
 		/datum/tgui_list_input,\
 		/datum/tgui_modal,\
 		/datum/map_module,\
+		/datum/component/continuity_object,\
 	)
 
 /* protected variables */

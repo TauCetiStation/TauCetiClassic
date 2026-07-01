@@ -5,15 +5,38 @@
 	var/ancestor_chain = 1
 	var/relic_hat	//Note: these two are paths
 	var/relic_mask
-	var/memory_saved = 0
 	var/list/pet_monkey_names = list("Pun Pun", "Bubbles", "Mojo", "George", "Darwin", "Aldo", "Caeser", "Kanzi", "Kong", "Terk", "Grodd", "Mala", "Bojangles", "Coco", "Able", "Baker", "Scatter", "Norbit", "Travis")
 	var/list/rare_pet_monkey_names = list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky")
 	holder_type = /obj/item/weapon/holder/monkey/punpun
 
 /mob/living/carbon/monkey/punpun/atom_init()
-	Read_Memory()
-	if(relic_mask)
-		equip_to_slot_or_del(new relic_mask, SLOT_WEAR_MASK)
+	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/punpun", list(
+		"ancestor_name" = new /datum/continuity_field/string(
+			max_length = 150,
+			can_be_null = TRUE
+		),
+		"ancestor_chain" = new /datum/continuity_field/int(
+			min_num = 1
+		),
+		"relic_mask" = new /datum/continuity_field/type(
+			in_list = subtypesof(/obj/item/clothing/mask) + null
+		),
+	))
+
+	name = pick(pet_monkey_names)
+	gender = pick(MALE, FEMALE)
+
+	. = ..()
+
+/mob/living/carbon/monkey/punpun/proc/Read_Memory(save_data)
+	ancestor_name = save_data["ancestor_name"]
+	ancestor_chain = save_data["ancestor_chain"]
+
+	var/mask_type = save_data["relic_mask"]
+	if(mask_type)
+		var/obj/item/mask = new mask_type
+		equip_to_slot_or_del(mask, SLOT_WEAR_MASK)
+
 	if(ancestor_name)
 		name = ancestor_name
 		if(ancestor_chain > 1)
@@ -24,39 +47,22 @@
 		else
 			name = pick(pet_monkey_names)
 		gender = pick(MALE, FEMALE)
-	. = ..()
 
-/mob/living/carbon/monkey/punpun/Life()
-	if(SSticker.current_state == GAME_STATE_FINISHED && !memory_saved)
-		Write_Memory(0)
-	..()
+/mob/living/carbon/monkey/punpun/proc/Write_Memory()
+	var/list/data = list(
+		"ancestor_name" = null,
+		"ancestor_chain" = ancestor_chain,
+		"relic_mask" = null,
+	)
 
-/mob/living/carbon/monkey/punpun/death(gibbed)
-	if(!memory_saved || gibbed)
-		Write_Memory(1,gibbed)
-	..()
-
-/mob/living/carbon/monkey/punpun/proc/Read_Memory()
-	var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
-	S["ancestor_name"] 		>> ancestor_name
-	S["ancestor_chain"]		>> ancestor_chain
-	S["relic_mask"]			>> relic_mask
-
-/mob/living/carbon/monkey/punpun/proc/Write_Memory(dead, gibbed)
-	var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
-	if(gibbed)
-		S["ancestor_name"] 		<< null
-		S["ancestor_chain"]		<< 1
-		S["relic_mask"]			<< null
-		return
-	if(dead && istext(ancestor_name) && isnum(ancestor_chain))
-		S["ancestor_name"] 		<< ancestor_name
-		S["ancestor_chain"]		<< ancestor_chain + 1
+	if(stat == DEAD && istext(ancestor_name) && isnum(ancestor_chain))
+		data["ancestor_name"] = ancestor_name
+		data["ancestor_chain"] = ancestor_chain + 1
 	if(!ancestor_name && istext(name))	//new monkey name this round
-		S["ancestor_name"] 		<< name
-	if(wear_mask && istype(wear_mask, wear_mask.type))
-		S["relic_mask"]			<< wear_mask.type
+		data["ancestor_name"] = name
+	if(wear_mask && isitem(wear_mask))
+		data["relic_mask"] = wear_mask.type
 	else
-		S["relic_mask"]			<< null
-	if(!dead)
-		memory_saved = 1
+		data["relic_mask"] = null
+
+	return data

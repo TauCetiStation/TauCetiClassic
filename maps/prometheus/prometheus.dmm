@@ -56465,7 +56465,7 @@
 /obj/structure/flora/ausbushes/sparsegrass{
 	layer = 2.7
 	},
-/obj/structure/flora/junglebush/large,
+/obj/structure/composter/botany,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "nfy" = (

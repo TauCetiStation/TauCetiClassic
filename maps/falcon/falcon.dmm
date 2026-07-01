@@ -988,6 +988,9 @@
 	dir = 4;
 	pixel_x = 22
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "abL" = (
@@ -10686,13 +10689,11 @@
 	},
 /area/station/hallway/primary/central)
 "biv" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 9
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
 	},
 /obj/structure/flora/ausbushes/fullgrass,
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "biC" = (
@@ -17197,15 +17198,6 @@
 "hqn" = (
 /turf/simulated/wall/r_wall,
 /area/station/bridge/nuke_storage)
-"hrp" = (
-/obj/machinery/door/airlock/external{
-	dock_tag = "supply_dock";
-	name = "Supply Dock Airlock";
-	req_access = list(31)
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/station/cargo/storage)
 "hrw" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper{
@@ -19053,9 +19045,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
+/obj/structure/composter/botany,
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "jju" = (
@@ -21882,12 +21872,10 @@
 /area/station/civilian/kitchen)
 "lHQ" = (
 /obj/structure/flora/ausbushes/fullgrass,
-/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor/grass,
 /area/station/civilian/kitchen)
 "lIp" = (
@@ -64909,7 +64897,7 @@ iiV
 abJ
 hrp
 tMy
-hrp
+xbK
 lVb
 rTU
 kek
@@ -65423,7 +65411,7 @@ akS
 abH
 hrp
 smt
-hrp
+xbK
 qRj
 bkM
 idm
