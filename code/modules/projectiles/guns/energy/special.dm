@@ -566,7 +566,7 @@
 
 /obj/item/weapon/gun/medbeam
 	name = "prototype medical retrosynchronizer"
-	desc = "Прототип лечебной пушки, которая медленно возвращает органику в прежнее состояние, исцеляя их."
+	desc = "Прототип лечебной пушки, которая медленно возвращает органику в прежнее состояние, исцеляя её."
 	icon_state = "medigun"
 	item_state = "medigun"
 	var/mob/living/current_target
