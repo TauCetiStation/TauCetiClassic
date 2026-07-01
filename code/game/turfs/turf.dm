@@ -7,7 +7,8 @@
 	// dynamic lighting subsystem uses lighting_object's for luminosity
 	luminosity = 0
 
-	var/turf/basetype = /turf/environment/space
+	// Either a turf type or a list of turf types, sorted bottom layer to top.
+	var/list/basetype = /turf/environment/space
 	var/can_deconstruct = FALSE
 
 	var/underfloor_accessibility = UNDERFLOOR_HIDDEN
@@ -339,10 +340,60 @@
 	if(turf_type)
 		ChangeTurf(turf_type)
 
+/turf/proc/get_environment_turf_type()
+	if(SSenvironment && SSenvironment.turf_type && z && SSenvironment.turf_type.len >= z && SSenvironment.turf_type[z])
+		return SSenvironment.turf_type[z]
+	return /turf/environment/space
+
+/turf/proc/normalize_base_turf_stack(list/base_turfs)
+	var/list/normalized_turfs = list()
+	for(var/base_turf in base_turfs)
+		if(!base_turf || normalized_turfs.Find(base_turf))
+			continue
+		normalized_turfs += base_turf
+
+	if(!normalized_turfs.len)
+		normalized_turfs += get_environment_turf_type()
+
+	return normalized_turfs
+
+/turf/proc/get_base_turf_type()
+	if(islist(basetype))
+		var/list/base_turfs = normalize_base_turf_stack(basetype)
+		return base_turfs[base_turfs.len]
+	if(basetype)
+		return basetype
+	return get_environment_turf_type()
+
+/turf/proc/get_base_turf_stack(include_self = FALSE)
+	var/list/base_turfs
+	if(islist(basetype))
+		base_turfs = normalize_base_turf_stack(basetype)
+	else if(basetype)
+		base_turfs = list(basetype)
+	else
+		base_turfs = list(get_environment_turf_type())
+
+	if(include_self && !base_turfs.Find(type))
+		base_turfs += type
+
+	if(base_turfs.len == 1)
+		return base_turfs[1]
+	return base_turfs
+
 //Creates a new turf
 /turf/proc/ChangeTurf(path, list/arguments = list())
 	if (!path)
 		return
+
+	var/new_basetype
+	if(islist(path))
+		var/list/base_turfs = normalize_base_turf_stack(path)
+		path = base_turfs[base_turfs.len]
+		if(base_turfs.len > 1)
+			new_basetype = base_turfs.Copy(1, base_turfs.len)
+		else
+			new_basetype = path
 
 	clean_turf_decals()
 
@@ -351,11 +402,13 @@
 		return*/
 
 	if(ispath(path, /turf/environment))
-		var/env_turf_type = SSenvironment.turf_type[z]
+		var/env_turf_type = get_environment_turf_type()
 		if(!ispath(path, env_turf_type))
 			path = env_turf_type
 
 	if (path == type)
+		if(new_basetype)
+			basetype = new_basetype
 		return src
 
 	// Back all this data up, so we can set it after the turf replace.
@@ -440,7 +493,7 @@
 
 	W.levelupdate()
 
-	basetype = old_basetype
+	basetype = new_basetype || old_basetype
 
 	queue_smooth_neighbors(W)
 
@@ -471,8 +524,12 @@
 	return W
 
 /turf/proc/MoveTurf(turf/target, move_unmovable = 0)
-	if(type != basetype || move_unmovable)
+	if(type != get_base_turf_type() || move_unmovable)
+		var/target_basetype = target.get_base_turf_stack(target.type != type)
 		. = target.ChangeTurf(src.type)
+		var/turf/moved_turf = .
+		if(moved_turf)
+			moved_turf.basetype = target_basetype
 		ChangeTurf(basetype)
 	else
 		return target

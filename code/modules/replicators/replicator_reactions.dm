@@ -25,7 +25,7 @@
 
 /* TURFS */
 /turf/simulated/floor/get_replicator_material_amount()
-	if(type == basetype)
+	if(type == get_base_turf_type())
 		return -1
 
 	return 1
