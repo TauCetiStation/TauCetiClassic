@@ -45,7 +45,7 @@
 			equip_to_slot_or_del(new /obj/item/clothing/suit/space/vox/medic, SLOT_WEAR_SUIT)
 			equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/vox/medic, SLOT_HEAD)
 			equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full, SLOT_BELT) // Who needs actual surgical tools?
-			equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health/vox, SLOT_GLASSES) // REPLACE WITH CODED VOX ALTERNATIVE.
+			equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/health/advanced, SLOT_GLASSES) // REPLACE WITH CODED VOX ALTERNATIVE.
 			equip_to_slot_or_del(new /obj/item/weapon/circular_saw, SLOT_L_STORE)
 			equip_to_slot_or_del(new /obj/item/weapon/gun/dartgun/vox/medical, SLOT_IN_BACKPACK)
 

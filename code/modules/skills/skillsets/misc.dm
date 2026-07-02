@@ -40,3 +40,13 @@
 		/datum/skill/medical = SKILL_LEVEL_TRAINED,
 		/datum/skill/command = SKILL_LEVEL_ROBUST,
 	)
+
+/datum/skillset/solgov_operative
+	name = "SolGov Operative"
+	initial_skills = list(
+		/datum/skill/police = SKILL_LEVEL_ROBUST,
+		/datum/skill/firearms = SKILL_LEVEL_MASTER,
+		/datum/skill/melee = SKILL_LEVEL_TRAINED,
+		/datum/skill/medical = SKILL_LEVEL_PRO,
+		/datum/skill/command = SKILL_LEVEL_TRAINED,
+	)

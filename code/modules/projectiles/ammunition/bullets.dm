@@ -263,3 +263,16 @@
 	caliber = "10x24"
 	icon_state = "casing_1024"
 	projectile_type = /obj/item/projectile/bullet/pulserifle
+
+/obj/item/ammo_casing/a330
+	desc = "Патрон от пули калибра 3.30."
+	caliber = "3.30"
+	projectile_type = /obj/item/projectile/bullet/midbullet2
+
+/obj/item/ammo_casing/a330/ap
+	desc = "Патрон от пули калибра 3.30 AP."
+	projectile_type = /obj/item/projectile/bullet/ap
+
+/obj/item/ammo_casing/a330/nl
+	desc = "Патрон от пули калибра 3.30 NL."
+	projectile_type = /obj/item/projectile/bullet/weakbullet/rubber

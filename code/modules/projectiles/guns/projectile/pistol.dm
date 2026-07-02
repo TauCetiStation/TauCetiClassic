@@ -130,7 +130,15 @@
 	suitable_mags = list(/obj/item/ammo_box/magazine/wjpp, /obj/item/ammo_box/magazine/wjpp/rubber)
 	fire_sound = 'sound/weapons/guns/gunshot_light.ogg'
 	can_be_holstered = TRUE
-	recoil = 1.5
+	recoil = LOW_RECOIL
+
+/obj/item/weapon/gun/projectile/automatic/pistol/wjpp/tactical
+	name = "W&J PP XM27"
+	desc = "Модифицированная версия W&P PP для нужд ВС ПСС. Благодаря замене деталей на более качественные вышло достичь большей надёжности и скорострельности."
+	icon_state = "wjpptact"
+	item_state = "wjpptact"
+	origin_tech = "combat=3;materials=2"
+	fire_delay = 2
 
 /obj/item/weapon/gun/projectile/automatic/pistol/peashooter
 	name = "Peashooter"
