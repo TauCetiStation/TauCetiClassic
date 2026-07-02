@@ -1878,6 +1878,7 @@
 	},
 /obj/item/clothing/suit/poncho/green,
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/elevator/cargo,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "adb" = (
@@ -30620,6 +30621,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/structure/elevator/cargo,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "dPZ" = (
@@ -41091,6 +41093,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/structure/elevator/cargo,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "gsq" = (
@@ -55927,6 +55930,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/structure/elevator/cargo,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "jNO" = (
@@ -62810,6 +62814,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/structure/elevator/cargo,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "luF" = (
@@ -63406,6 +63411,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/structure/elevator/cargo,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "lCV" = (
@@ -78360,6 +78366,13 @@
 	icon_state = "blackchoco"
 	},
 /area/station/storage/tech)
+"plI" = (
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot_old"
+	},
+/obj/structure/elevator/cargo,
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "plL" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -86253,6 +86266,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot_old"
 	},
+/obj/structure/elevator/cargo,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "rhh" = (
@@ -157986,7 +158000,7 @@ ojt
 ojt
 lCO
 ojt
-miA
+plI
 ojt
 jNK
 xuQ

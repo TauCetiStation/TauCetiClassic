@@ -6660,9 +6660,6 @@
 /area/station/rnd/chargebay)
 "aZr" = (
 /obj/structure/closet/secure_closet/miner,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = -30
-	},
 /turf/simulated/floor{
 	icon_state = "brown"
 	},
@@ -48275,6 +48272,10 @@
 /obj/item/weapon/minihoe{
 	pixel_x = 3
 	},
+/obj/structure/elevator/cargo,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "brown"
@@ -59196,6 +59197,14 @@
 	icon_state = "whitepurple"
 	},
 /area/station/rnd/scibreak)
+"nQE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 2;
+	icon_state = "loadingarea"
+	},
+/turf/simulated/floor,
+/area/station/cargo/storage)
 "nQI" = (
 /obj/structure/stool/bed/chair/comfy/green{
 	dir = 1
@@ -59872,12 +59881,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "nZu" = (
-/obj/structure/rack,
-/obj/item/stack/rods{
-	amount = 50
+/obj/structure/elevator/cargo,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
-/obj/random_shop_item,
-/obj/random_shop_item,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "brown"
@@ -63058,6 +63065,10 @@
 	},
 /obj/random_shop_item,
 /obj/random_shop_item,
+/obj/random_shop_item,
+/obj/item/stack/rods{
+	amount = 50
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -64507,6 +64518,9 @@
 /area/station/civilian/fitness)
 "phn" = (
 /obj/machinery/vending/assist,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = -30
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "brown"
@@ -67885,6 +67899,10 @@
 /obj/random/science/stock_part,
 /obj/random/science/stock_part,
 /obj/random/science/stock_part,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 2;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "browncorner"
@@ -72250,6 +72268,10 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 2;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -76454,6 +76476,18 @@
 	icon_state = "darkblue"
 	},
 /area/station/ai_monitored/storage_secure)
+"sjM" = (
+/obj/structure/rack,
+/obj/random_shop_item,
+/obj/item/stack/sheet/glass{
+	amount = 27
+	},
+/obj/random_shop_item,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/station/cargo/storage)
 "sjS" = (
 /obj/structure/closet/secure_closet/CMO,
 /obj/item/weapon/defibrillator/compact/loaded,
@@ -85921,14 +85955,13 @@
 	},
 /area/station/rnd/storage)
 "uDl" = (
-/obj/structure/rack,
 /obj/machinery/light/smart{
 	dir = 1
 	},
-/obj/item/stack/sheet/glass{
-	amount = 27
+/obj/structure/elevator/cargo,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
-/obj/random_shop_item,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -131018,7 +131051,7 @@ gVM
 aZr
 lYa
 uDl
-fqe
+nQE
 npX
 poO
 fqe
@@ -131274,7 +131307,7 @@ wBI
 trq
 phn
 lYa
-hxa
+sjM
 imP
 pJO
 uGV
