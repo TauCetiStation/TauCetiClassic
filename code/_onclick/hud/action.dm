@@ -295,6 +295,8 @@
 
 /datum/action/item_action/Activate()
 	var/obj/item/I = target
+	if(SEND_SIGNAL(I, COMSIG_ITEM_ACTION_TRIGGER, usr, src) & COMPONENT_ACTION_HANDLED)
+		return
 	I.attack_self(usr)
 
 /datum/action/item_action/IsAvailable()
