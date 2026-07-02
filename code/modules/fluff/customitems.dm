@@ -14,6 +14,7 @@
 #define FLUFF_TYPE_HAT "hat"
 #define FLUFF_TYPE_UNIFORM "uniform"
 #define FLUFF_TYPE_SUIT "suit"
+#define FLUFF_TYPE_HOODIE "hoodie"
 #define FLUFF_TYPE_MASK "mask"
 #define FLUFF_TYPE_GLASSES "glasses"
 #define FLUFF_TYPE_GLOVES "gloves"
@@ -27,7 +28,7 @@
 //#define FLUFF_TYPE_ROBOT "robot"
 #define FLUFF_TYPE_GHOST "ghost"
 
-#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_BACKPACK, FLUFF_TYPE_GHOST, FLUFF_TYPE_TIE, FLUFF_TYPE_BEDSHEET)
+#define FLUFF_TYPES_LIST list(FLUFF_TYPE_NORMAL, FLUFF_TYPE_SMALL, FLUFF_TYPE_LIGHTER, FLUFF_TYPE_HAT, FLUFF_TYPE_UNIFORM, FLUFF_TYPE_SUIT, FLUFF_TYPE_HOODIE, FLUFF_TYPE_MASK, FLUFF_TYPE_GLASSES, FLUFF_TYPE_GLOVES, FLUFF_TYPE_SHOES, FLUFF_TYPE_ACCESSORY, FLUFF_TYPE_LABCOAT, FLUFF_TYPE_BACKPACK, FLUFF_TYPE_GHOST, FLUFF_TYPE_TIE, FLUFF_TYPE_BEDSHEET)
 
 
 /obj/item/customitem
@@ -47,6 +48,18 @@
 /obj/item/clothing/suit/custom
 	name = "Custom suit"
 	body_parts_covered = 0
+
+/obj/item/clothing/suit/hooded/custom
+	name = "Custom hoodie"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	hoodtype = /obj/item/clothing/head/hood/custom
+
+/obj/item/clothing/head/hood/custom
+	cold_protection = HEAD
+	render_flags = parent_type::render_flags | HIDE_TOP_HAIR
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/mask/custom
 	name = "Custom mask"
@@ -285,6 +298,20 @@
 				if("[custom_item_info.icon_state]_mob_fat" in icon_states(custom_item_info.icon))
 					S.flags |= ONESIZEFITSALL
 				item = S
+			if(FLUFF_TYPE_HOODIE)
+				var/obj/item/clothing/suit/hooded/hoodie = new /obj/item/clothing/suit/hooded/custom()
+				if("[custom_item_info.icon_state]_mob_fat" in icon_states(custom_item_info.icon))
+					hoodie.flags |= ONESIZEFITSALL
+
+				hoodie.icon_suit_up = "[custom_item_info.icon_state]_t"
+				hoodie.icon_suit_down = custom_item_info.icon_state
+
+				hoodie.hood.icon = custom_item_info.icon
+				hoodie.hood.icon_custom = custom_item_info.icon
+				hoodie.hood.icon_state = "[custom_item_info.icon_state]_h"
+				hoodie.hood.item_state = "[custom_item_info.icon_state]_h_mob"
+				item = hoodie
+
 			if(FLUFF_TYPE_MASK)
 				item = new /obj/item/clothing/mask/custom()
 			if(FLUFF_TYPE_GLASSES)
