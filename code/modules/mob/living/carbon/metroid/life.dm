@@ -722,3 +722,8 @@
 /mob/living/carbon/slime/proc/get_starve_nutrition() // Below it we will eat before everything else
 	if(isslimeadult(src)) return 300
 	else return 200
+
+/mob/living/carbon/slime/proc/on_friend_pointed(datum/source, mob/pointer, atom/pointed_atom)
+	SIGNAL_HANDLER
+	if(isliving(pointed_atom) && (pointer in Friends) && (pointer in oview(src)))
+		last_pointed = pointed_atom
