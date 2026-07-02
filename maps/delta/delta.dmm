@@ -4882,6 +4882,7 @@
 	dir = 6;
 	icon_state = "warn"
 	},
+/obj/structure/closet/secure_closet/tactical_armor,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
