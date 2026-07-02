@@ -1,13 +1,31 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Input, LabeledList, NoticeBox, Section } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  Input,
+  LabeledList,
+  NoticeBox,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const PharmacyFridge = (props, context) => {
   const { act, data } = useBackend(context);
   const contents = data.contents || [];
-  const { is_staff, can_set_prices, vend_pending, pending_price, pending_item } = data;
+  const {
+    is_staff,
+    can_set_prices,
+    vend_pending,
+    pending_price,
+    pending_item,
+  } = data;
 
-  const [editingPrice, setEditingPrice] = useLocalState(context, 'editingPrice', null);
+  const [editingPrice, setEditingPrice] = useLocalState(
+    context,
+    'editingPrice',
+    null
+  );
   const [priceInput, setPriceInput] = useLocalState(context, 'priceInput', '');
 
   const submitPrice = (vend) => {
@@ -145,12 +163,8 @@ export const PharmacyFridge = (props, context) => {
                     <Flex.Item>{item.display_name}</Flex.Item>
                     <Flex.Item italic width="25%" textAlign="right">
                       {item.quantity + ' available'}
-                      {item.price > 0 && (
-                        <div>{item.price + ' cr. each'}</div>
-                      )}
-                      {!item.price && (
-                        <div>no price set</div>
-                      )}
+                      {item.price > 0 && <div>{item.price + ' cr. each'}</div>}
+                      {!item.price && <div>no price set</div>}
                     </Flex.Item>
                   </Flex>
                   <LabeledList.Divider />

@@ -49,9 +49,17 @@ export const BioSupplementsMixer = (_, context) => {
 
   const beakers_ok = fuel_loaded && nutriment_loaded && blood_loaded;
   const tempColor =
-    mixer_temperature < 100 ? 'good' : mixer_temperature < 400 ? 'average' : 'bad';
+    mixer_temperature < 100
+      ? 'good'
+      : mixer_temperature < 400
+        ? 'average'
+        : 'bad';
   const sealColor =
-    mixer_seal_integrity > 50 ? 'good' : mixer_seal_integrity > 20 ? 'average' : 'bad';
+    mixer_seal_integrity > 50
+      ? 'good'
+      : mixer_seal_integrity > 20
+        ? 'average'
+        : 'bad';
 
   return (
     <Window width={500} height={640}>
@@ -70,8 +78,7 @@ export const BioSupplementsMixer = (_, context) => {
               <ProgressBar
                 maxValue={100}
                 value={mixer_seal_integrity}
-                color={sealColor}
-              >
+                color={sealColor}>
                 {mixer_seal_integrity}%
               </ProgressBar>
             </LabeledList.Item>
@@ -81,8 +88,7 @@ export const BioSupplementsMixer = (_, context) => {
                   key={lvl.key}
                   icon="cog"
                   selected={mixer_rpm_target === lvl.key}
-                  onClick={() => act('rpm', { target: lvl.key })}
-                >
+                  onClick={() => act('rpm', { target: lvl.key })}>
                   {lvl.label}
                 </Button>
               ))}
@@ -105,8 +111,7 @@ export const BioSupplementsMixer = (_, context) => {
                   key={lvl.key}
                   icon="tint"
                   selected={coolant_usage_rate === lvl.key}
-                  onClick={() => act('coolant_level', { level: lvl.key })}
-                >
+                  onClick={() => act('coolant_level', { level: lvl.key })}>
                   {lvl.label}
                 </Button>
               ))}
@@ -139,7 +144,10 @@ export const BioSupplementsMixer = (_, context) => {
             <LabeledList.Item label="Nutriment">
               {nutriment_loaded ? (
                 <Box>
-                  <ProgressBar maxValue={nutriment_max} value={nutriment_amount} mr={1}>
+                  <ProgressBar
+                    maxValue={nutriment_max}
+                    value={nutriment_amount}
+                    mr={1}>
                     {nutriment_amount}/{nutriment_max} u
                   </ProgressBar>
                   <Button icon="eject" onClick={() => act('eject_nutriment')} />
