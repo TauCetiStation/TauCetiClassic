@@ -123,6 +123,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/species = HUMAN
 	var/language = "None"				//Secondary language
 	var/insurance = INSURANCE_NONE
+	var/bodytype = AVERAGE_BODYTYPE
 
 	//Some faction information.
 	var/home_system = "None"            //System of birth.
@@ -467,6 +468,8 @@ var/global/list/datum/preferences/preferences_datums = list()
 	character.h_style = h_style
 	character.grad_style = grad_style
 	character.f_style = f_style
+	character.bodytype_name = bodytype
+	character.update_bodytype()
 
 	character.home_system = home_system
 	character.citizenship = citizenship

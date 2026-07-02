@@ -50,7 +50,8 @@
 		"<span class='notice'>You have made a woman of [target].</span>")
 		target.gender = FEMALE
 
-	target.regenerate_icons()
+	target.set_bodytype_for_gender()
+	target.regenerate_icons(update_body_preferences = TRUE)
 
 /datum/surgery_step/gender_reassignment/reshape_genitals/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.bodyparts_by_name[BP_GROIN]
