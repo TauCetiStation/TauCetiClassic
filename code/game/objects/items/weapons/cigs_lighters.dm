@@ -146,10 +146,22 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.handle_reactions()
 		icon_state = icon_on
 		item_state = icon_on
+		set_light(1, 0.5, LIGHT_COLOR_FIRE)
 		update_inv_mob()
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		START_PROCESSING(SSobj, src)
+
+// Emissive overlay for the lit ember. Outputs a white silhouette of just the ember pixels
+// (alpha = 4.44*(R - B) - 2.0 keeps the warm red/orange/yellow tip in every facing, drops the
+// white paper / brown filter / grey smoke). Placed on EMISSIVE_PLANE which is added onto the
+// lighting plane, so the ember stays lit through darkness while the real sprite (on the game
+// plane) is still occluded by tables and objects normally.
+/obj/item/clothing/mask/cigarette/proc/build_ember_overlay(_icon, _state)
+	var/image/ember = image(_icon, icon_state = _state)
+	ember.color = list(0,0,0,4.44, 0,0,0,0, 0,0,0,-4.44, 0,0,0,0, 1,1,1,-2.0)
+	ember.plane = EMISSIVE_PLANE
+	return ember
 
 
 /obj/item/clothing/mask/cigarette/process()
@@ -279,6 +291,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		damtype = BURN
 		icon_state = icon_on
 		item_state = icon_on
+		set_light(1, 0.5, LIGHT_COLOR_FIRE)
 		update_inv_mob()
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
@@ -297,6 +310,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			icon_state = icon_off
 			item_state = icon_off
 			update_inv_mob()
+		set_light(0)
+		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(location)
@@ -309,6 +324,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
+		set_light(0)
+		set_light(0)
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(smoketime <= 0)
