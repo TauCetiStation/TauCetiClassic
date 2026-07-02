@@ -125,7 +125,7 @@
 
 /obj/machinery/smartfridge/secure/medbay/pharmacy
 	name = "Pharmacy Refrigerator"
-	desc = "A refrigerated storage unit for medicines. Medical staff can dispense freely. Others must purchase items at prices set by the chemist."
+	desc = "A refrigerated cabinet stocked with medicine. Someone taped a handwritten price list to the door."
 	req_one_access = list(access_medical, access_chemistry)
 
 	var/list/prices = list()

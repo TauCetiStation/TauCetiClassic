@@ -1275,7 +1275,7 @@
 
 /obj/machinery/portable_atmospherics/bio_supplements_mixer
 	name = "Bio-BADs Mixer"
-	desc = "This product has a serial number and the corporate logo of Zeng-Hu Pharmaceutical."
+	desc = "A bulky piece of pharmaceutical hardware covered in Zeng-Hu branding and warning decals. It smells faintly of burnt phoron."
 	density = TRUE
 	anchored = FALSE
 	icon = 'icons/obj/chemical.dmi'
@@ -1765,7 +1765,7 @@
 
 /obj/machinery/bads_tank
 	name = "Bio-BADs tank"
-	desc = "A sealed tank of Bio-BADs concentrate. It cannot be moved or opened."
+	desc = "A heavy-duty containment vessel filled with thick amber liquid. Factory seals and biohazard stickers are plastered across its surface."
 	icon = 'icons/atmos/tank.dmi'
 	icon_state = "generic_map"
 	density = TRUE
