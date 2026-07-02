@@ -17,6 +17,8 @@
 	var/list/records = list()
 	var/datum/dna2/record/active_record = null
 	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
+	var/obj/item/weapon/reagent_containers/bio_supplements_cartridge/cartridge = null
+	var/tank_unlocked = FALSE
 	var/loading = 0 // Nice loading text
 	var/autoprocess = 0
 	required_skills = list(/datum/skill/medical = SKILL_LEVEL_PRO, /datum/skill/research = SKILL_LEVEL_TRAINED)
@@ -24,6 +26,7 @@
 
 /obj/machinery/computer/cloning/atom_init()
 	..()
+	cartridge = new /obj/item/weapon/reagent_containers/bio_supplements_cartridge/empty(src)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/cloning/atom_init_late()
@@ -63,6 +66,18 @@
 		return podf
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
+	if (istype(W, /obj/item/weapon/reagent_containers/bio_supplements_cartridge))
+		if(cartridge)
+			if(cartridge.reagents.total_volume > 0)
+				to_chat(user, "<span class='warning'>[src] already has a cartridge with reagents loaded.</span>")
+				return
+			cartridge.forceMove(loc)
+		user.drop_from_inventory(W, src)
+		cartridge = W
+		to_chat(user, "You insert [W] into [src].")
+		updateUsrDialog()
+		return
+
 	if (istype(W, /obj/item/weapon/disk/data)) //INSERT SOME DISKETTES
 		if (!src.diskette)
 			user.drop_from_inventory(W, src)
@@ -126,7 +141,15 @@
 				for(var/obj/machinery/bads_tank/tank in machines)
 					if(tank.z == src.z)
 						bads_total += tank.bads_amount
-				dat += "Био-БАДов-Ви+: <i>хватает на [round(bads_total / CLONE_BADS_COST)] клона(ов).</i><br>"
+				if(cartridge)
+					var/cart_bads = cartridge.reagents.get_reagent_amount("bio_supplements")
+					dat += "Био-БАДов-Ви+ (картридж): <i>[cart_bads]/[cartridge.volume] ед. ([round(cart_bads / CLONE_BADS_COST)] клонов)</i>"
+					dat += " <a href='byond://?src=\ref[src];eject_cartridge=1'>(Извлечь)</a><br>"
+				if(tank_unlocked)
+					dat += "Био-БАДов-Ви+ (бак): <i>хватает на [round(bads_total / CLONE_BADS_COST)] клона(ов).</i><br>"
+				else
+					dat += "Био-БАДов-Ви+ (бак): <i>хватает на [round(bads_total / CLONE_BADS_COST)] клона(ов). <b>ЗАБЛОКИРОВАН</b></i><br>"
+					dat += "<a href='byond://?src=\ref[src];unlock_tank=1'>Разблокировать бак (требуется ID главы)</a><br>"
 
 			// Database
 			dat += "<h4>Функции для управления базой данных</h4>"
@@ -166,10 +189,13 @@
 				<b>SE:</b> [src.active_record.dna.struc_enzymes]<br><br>"}
 
 				var/has_bads = FALSE
-				for(var/obj/machinery/bads_tank/tank in machines)
-					if(tank.z == pod1.z && tank.bads_amount >= CLONE_BADS_COST)
-						has_bads = TRUE
-						break
+				if(cartridge && cartridge.reagents.get_reagent_amount("bio_supplements") >= CLONE_BADS_COST)
+					has_bads = TRUE
+				else if(tank_unlocked)
+					for(var/obj/machinery/bads_tank/tank in machines)
+						if(tank.z == pod1.z && tank.bads_amount >= CLONE_BADS_COST)
+							has_bads = TRUE
+							break
 				if(has_bads)
 					dat += {"<a href='byond://?src=\ref[src];clone=\ref[src.active_record]'>Клонировать</a><br>"}
 				else
@@ -299,6 +325,26 @@
 				if (!isnull(src.diskette))
 					src.diskette.loc = src.loc
 					src.diskette = null
+
+	else if (href_list["eject_cartridge"])
+		if(cartridge)
+			cartridge.forceMove(loc)
+			cartridge = null
+			to_chat(usr, "You eject the cartridge from [src].")
+
+	else if (href_list["unlock_tank"])
+		if(!ishuman(usr))
+			temp = "Требуется ID-карта главы."
+		else
+			var/mob/living/carbon/human/H = usr
+			var/obj/item/weapon/card/id/C = H.get_idcard()
+			if(!C)
+				temp = "Приложите ID-карту главы."
+			else if(access_heads in C.access)
+				tank_unlocked = TRUE
+				temp = "Бак Био-БАДов-Ви+ разблокирован."
+			else
+				temp = "Отказано в доступе. Требуется ID главы."
 
 	else if (href_list["save_disk"]) //Save to disk!
 		if ((isnull(src.diskette)) || (src.diskette.read_only) || (isnull(src.active_record)))

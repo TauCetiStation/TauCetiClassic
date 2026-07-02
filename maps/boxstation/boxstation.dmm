@@ -18364,10 +18364,7 @@
 	},
 /area/station/medical/hallway)
 "aFZ" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/smartfridge/chemistry,
+/obj/machinery/smartfridge/secure/medbay/pharmacy,
 /obj/machinery/door/window/eastright{
 	dir = 2;
 	layer = 2.9;

@@ -1065,8 +1065,7 @@
 	if(!isturf(H.loc))
 		return
 	var/turf/T = H.loc
-	var/obj/effect/decal/cleanable/bio_slime/S = new(T)
-	S.slime_type = species_type
+	new /obj/effect/decal/cleanable/bio_slime(T, species_type)
 	switch(species_type)
 		if("tajaran")
 			H.visible_message("<span class='warning'>[H] expels a slick, slippery slime!</span>", "<span class='warning'>You expel a slick, slippery slime!</span>")
@@ -1089,6 +1088,11 @@
 	anchored = TRUE
 	var/slime_type = "tajaran"
 	var/co2_left = 10
+
+/obj/effect/decal/cleanable/bio_slime/New(loc, _slime_type)
+	if(_slime_type)
+		slime_type = _slime_type
+	..()
 
 /obj/effect/decal/cleanable/bio_slime/atom_init()
 	. = ..()

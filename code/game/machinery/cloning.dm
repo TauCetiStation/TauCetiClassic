@@ -309,10 +309,20 @@
 //	occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
 	src.occupant = null
 
-	for(var/obj/machinery/bads_tank/tank in machines)
-		if(tank.z == src.z && tank.consume(CLONE_BADS_COST))
-			connected_message("Bio-BADs consumed from tank.")
+	if(connected && connected.cartridge)
+		if(connected.cartridge.reagents.get_reagent_amount("bio_supplements") >= CLONE_BADS_COST)
+			connected.cartridge.reagents.remove_reagent("bio_supplements", CLONE_BADS_COST)
+			connected_message("Bio-BADs consumed from cartridge.")
 			return
+
+	if(connected && connected.tank_unlocked)
+		for(var/obj/machinery/bads_tank/tank in machines)
+			if(tank.z == src.z && tank.consume(CLONE_BADS_COST))
+				connected_message("Bio-BADs consumed from tank.")
+				return
+		connected_message("Bio-BADs tank is empty.")
+	else
+		connected_message("Bio-BADs tank is locked. Unlock at the console with a head ID.")
 
 	return
 
