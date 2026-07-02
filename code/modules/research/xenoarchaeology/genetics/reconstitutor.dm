@@ -229,7 +229,7 @@
 		else
 			var/obj/machinery/bads_tank/tank = locate() in machines
 			if(!tank || tank.z != pod1.z || !tank.consume(CLONE_BADS_COST))
-				visible_message("<span class='red'>[bicon(src)] Not enough Bio-BADs-Vi+ on Z-level.</span>")
+				visible_message("<span class='red'>[bicon(src)] Not enough Bio-BADs-Vi+ on board. Consult your closest secret vault.</span>")
 				return
 			visible_message("<span class='notice'>[bicon(src)] [src] clones something from a reconstituted gene sequence!</span>")
 			playsound(src, 'sound/effects/screech.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
