@@ -69,12 +69,12 @@
 	if (istype(W, /obj/item/weapon/reagent_containers/bio_supplements_cartridge))
 		if(cartridge)
 			if(cartridge.reagents.total_volume > 0)
-				to_chat(user, "<span class='warning'>[src] already has a cartridge with reagents loaded.</span>")
+				to_chat(user, "<span class='warning'>[src] уже имеет картридж с реагентами.</span>")
 				return
 			cartridge.forceMove(loc)
 		user.drop_from_inventory(W, src)
 		cartridge = W
-		to_chat(user, "You insert [W] into [src].")
+		to_chat(user, "Вы вставляете [W] в [src].")
 		updateUsrDialog()
 		return
 
@@ -146,10 +146,10 @@
 					dat += "Био-БАДов-Ви+ (картридж): <i>[cart_bads]/[cartridge.volume] ед. ([round(cart_bads / CLONE_BADS_COST)] клонов)</i>"
 					dat += " <a href='byond://?src=\ref[src];eject_cartridge=1'>(Извлечь)</a><br>"
 				if(tank_unlocked)
-					dat += "Био-БАДов-Ви+ (бак): <i>хватает на [round(bads_total / CLONE_BADS_COST)] клона(ов).</i><br>"
+					dat += "Био-БАДов-Ви+ (резервуар): <i>хватает на [round(bads_total / CLONE_BADS_COST)] клона(ов).</i><br>"
 				else
-					dat += "Био-БАДов-Ви+ (бак): <i>хватает на [round(bads_total / CLONE_BADS_COST)] клона(ов). <b>ЗАБЛОКИРОВАН</b></i><br>"
-					dat += "<a href='byond://?src=\ref[src];unlock_tank=1'>Разблокировать бак (требуется ID главы)</a><br>"
+					dat += "Био-БАДов-Ви+ (резервуар): <i>хватает на [round(bads_total / CLONE_BADS_COST)] клона(ов). <b>ЗАБЛОКИРОВАН</b></i><br>"
+					dat += "<a href='byond://?src=\ref[src];unlock_tank=1'>Разблокировать резервуар (требуется ID главы)</a><br>"
 
 			// Database
 			dat += "<h4>Функции для управления базой данных</h4>"
@@ -330,7 +330,7 @@
 		if(cartridge)
 			cartridge.forceMove(loc)
 			cartridge = null
-			to_chat(usr, "You eject the cartridge from [src].")
+			to_chat(usr, "Вы извлекли картридж из [src].")
 
 	else if (href_list["unlock_tank"])
 		if(!ishuman(usr))
@@ -342,7 +342,7 @@
 				temp = "Приложите ID-карту главы."
 			else if(access_heads in C.access)
 				tank_unlocked = TRUE
-				temp = "Бак Био-БАДов-Ви+ разблокирован."
+				temp = "Резервуар Био-БАДов-Ви+ разблокирован."
 			else
 				temp = "Отказано в доступе. Требуется ID главы."
 

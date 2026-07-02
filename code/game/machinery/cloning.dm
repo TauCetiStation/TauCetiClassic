@@ -312,17 +312,17 @@
 	if(connected && connected.cartridge)
 		if(connected.cartridge.reagents.get_reagent_amount("bio_supplements") >= CLONE_BADS_COST)
 			connected.cartridge.reagents.remove_reagent("bio_supplements", CLONE_BADS_COST)
-			connected_message("Bio-BADs consumed from cartridge.")
+			connected_message("Био-БАДы израсходованы из картриджа.")
 			return
 
 	if(connected && connected.tank_unlocked)
 		for(var/obj/machinery/bads_tank/tank in machines)
 			if(tank.z == src.z && tank.consume(CLONE_BADS_COST))
-				connected_message("Bio-BADs consumed from tank.")
+				connected_message("Био-БАДы израсходованы из резервуара.")
 				return
-		connected_message("Bio-BADs tank is empty.")
+		connected_message("Резервуар Био-БАДов пуст.")
 	else
-		connected_message("Bio-BADs tank is locked. Unlock at the console with a head ID.")
+		connected_message("Резервуар Био-БАДов заблокирован. Разблокируйте в консоли ID-картой главы.")
 
 	return
 
