@@ -24,6 +24,7 @@
 	var/collection_mode = 1  //0 = pick one at a time, 1 = pick all on tile
 	var/foldable = null	// BubbleWrap - if set, can be folded (when empty) into a sheet of cardboard
 	var/list/use_sound // sound played when used. null for no sound.
+	var/animated = TRUE // plays a small squish animation when opened or when contents change
 
 	var/storage_ui_path = /datum/storage_ui/default
 	var/datum/storage_ui/storage_ui = null
@@ -66,6 +67,9 @@
 
 	var/mob/M = usr
 	add_fingerprint(M)
+	if(istype(over_object, /obj/item/weapon/storage) && over_object != src)
+		dump_into(over_object, M)
+		return
 	if(isturf(over_location) && over_object != M)
 		if(M.incapacitated())
 			return
@@ -102,6 +106,60 @@
 
 	return ..()
 
+// Dumps all contents into another storage container via drag and drop.
+/obj/item/weapon/storage/proc/dump_into(obj/item/weapon/storage/target, mob/M)
+	if(target == src || !M.CanUseMouseDrop(target, src))
+		return
+
+	if(istype(src, /obj/item/weapon/storage/lockbox))
+		var/obj/item/weapon/storage/lockbox/L = src
+		if(L.locked)
+			return
+
+	if(!contents.len)
+		to_chat(M, "<span class='notice'>[src] is empty.</span>")
+		return
+
+	// Collect what actually fits before we commit to the transfer.
+	var/list/to_dump = list()
+	for(var/obj/item/I in contents)
+		if(I == target)
+			continue
+		if(target.can_be_inserted(I, stop_messages = TRUE))
+			to_dump += I
+
+	if(!to_dump.len)
+		to_chat(M, "<span class='notice'>You fail to dump anything from [src] into [target].</span>")
+		return
+
+	to_chat(M, "<span class='notice'>You start dumping the contents of [src] into [target]...</span>")
+	if(!do_after(M, 0.5 SECONDS, target = target))
+		return
+
+	var/inserted = 0
+	for(var/obj/item/I in to_dump)
+		if(QDELETED(I) || I.loc != src)
+			continue
+		if(!target.can_be_inserted(I, stop_messages = TRUE))
+			continue
+		remove_from_storage(I, null, NoUpdate = TRUE)
+		target.handle_item_insertion(I, prevent_warning = TRUE, NoUpdate = TRUE)
+		I.add_fingerprint(M)
+		inserted++
+
+	if(!inserted)
+		to_chat(M, "<span class='notice'>You fail to dump anything from [src] into [target].</span>")
+		return
+
+	finish_bulk_removal()
+	target.update_ui_after_item_insertion()
+	target.add_fingerprint(M)
+	if(length(use_sound))
+		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
+	M.visible_message(
+		"<span class='notice'>[M] dumps the contents of [src] into [target].</span>",
+		"<span class='notice'>You dump the contents of [src] into [target].</span>")
+
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list(  )
 	L += contents
@@ -127,6 +185,7 @@
 	if (length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 
+	squish()
 	prepare_ui()
 	storage_ui.on_open(user)
 	show_to(user)
@@ -276,14 +335,21 @@
 	return TRUE
 
 /obj/item/weapon/storage/proc/update_ui_after_item_insertion()
+	squish()
 	prepare_ui()
 	if(storage_ui)
 		storage_ui.on_insertion(usr)
 
 /obj/item/weapon/storage/proc/update_ui_after_item_removal()
+	squish()
 	prepare_ui()
 	if(storage_ui)
 		storage_ui.on_post_remove(usr)
+
+// Spiffy squish animation to represent opening and shuffling contents.
+/obj/item/weapon/storage/proc/squish()
+	if(animated)
+		do_squish_animation()
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
 /obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
