@@ -535,6 +535,7 @@
 	ID.registered_name = H.real_name
 	ID.assignment = assignment
 	ID.rank = assignment
+	ID.sec_hud_icon = assignment
 
 	H.sec_hud_set_ID()
 
@@ -596,6 +597,119 @@
 	ID.rank = ID.assignment
 
 	H.sec_hud_set_ID()
+
+/datum/outfit/responders/solgov
+	name = "Responders: SolGov Outer Systems Guardian"
+	uniform = /obj/item/clothing/under/tactical/solgov
+	suit = /obj/item/clothing/suit/storage/flak/solgov
+	head = /obj/item/clothing/head/helmet/solgov
+	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical
+	mask = /obj/item/clothing/mask/balaclava/tactical
+	gloves = /obj/item/clothing/gloves/security/marinad
+	belt = /obj/item/weapon/storage/belt/security/solgov
+	shoes = /obj/item/clothing/shoes/boots
+	l_ear = /obj/item/device/radio/headset/headset_sec/marinad
+	back = /obj/item/weapon/storage/backpack/security
+
+	id = /obj/item/weapon/card/id/centcom/ert
+
+	l_pocket = /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat
+	r_pocket = /obj/item/weapon/storage/pouch/pistol_holster/solgov
+
+	backpack_contents = list(
+	/obj/item/weapon/storage/box/space_suit/combat,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
+	/obj/item/weapon/handcuffs = 3,
+	)
+
+	var/list/rank = list("Pvt.", "PFC")
+	var/assignment = "Outer Systems Guardian"
+
+/datum/outfit/responders/solgov/post_equip(mob/living/carbon/human/H)
+	H.real_name = "[pick(rank)] [pick(global.last_names)]"
+	H.name = H.real_name
+	var/obj/item/weapon/card/id/ID = H.wear_id
+	ID.registered_name = H.real_name
+	ID.assignment = assignment
+	ID.rank = assignment
+	ID.sec_hud_icon = assignment
+	ID.access = list(access_maint_tunnels, access_external_airlocks)
+
+	H.sec_hud_set_ID()
+
+	if(prob(25))
+		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/bulldog/nonlethal(H), SLOT_S_STORE)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/bulldog/stun(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/bulldog/stun(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/bulldog/stun(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/bulldog/stun(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/bulldog(H), SLOT_IN_BACKPACK)
+
+	else
+		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/l13(H), SLOT_S_STORE)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/l13(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/l13(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/l13(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/l13(H), SLOT_IN_BACKPACK)
+		H.equip_or_collect(new /obj/item/ammo_box/magazine/l13/lethal(H), SLOT_IN_BACKPACK)
+
+
+/datum/outfit/responders/solgov/medic
+	name = "Responders: SolGov Outer Systems Guardian Medic"
+	head = /obj/item/clothing/head/helmet/solgov/medic
+	glasses = /obj/item/clothing/glasses/hud/health/advanced
+
+	l_pocket = /obj/item/weapon/storage/pouch/medical_supply/syndicate
+
+	backpack_contents = list(
+	/obj/item/weapon/storage/box/space_suit/combat,
+	/obj/item/weapon/storage/firstaid/adv,
+	/obj/item/weapon/storage/firstaid/tactical,
+	/obj/item/weapon/reagent_containers/hypospray/autoinjector/bonepen,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
+	)
+
+	rank = list("Cpl.", "LCpl.")
+
+
+/datum/outfit/responders/solgov/leader
+	name = "Responders: SolGov Outer Systems Guardian Leader"
+	head = /obj/item/clothing/head/helmet/solgov/leader
+	rank = list("Sergeant")
+	assignment = "Outer Systems Guardians Squad Leader"
+	suit_store = /obj/item/weapon/gun/projectile/automatic/em22
+
+	backpack_contents = list(
+	/obj/item/weapon/storage/box/space_suit/combat,
+	/obj/item/weapon/storage/firstaid/small_firstaid_kit/nutriment,
+	/obj/item/weapon/handcuffs = 3,
+	/obj/item/ammo_box/magazine/em22 = 1,
+	/obj/item/ammo_box/magazine/em22/nonlethal = 3,
+	/obj/item/ammo_box/magazine/em22/ap = 1,
+	/obj/item/ammo_box/eight_shells/dart
+	)
+
+/datum/outfit/responders/solgov/leader/post_equip(mob/living/carbon/human/H)
+	H.real_name = "[pick(rank)] [pick(global.last_names)]"
+	H.name = H.real_name
+	var/obj/item/weapon/card/id/ID = H.wear_id
+	ID.registered_name = H.real_name
+	ID.assignment = assignment
+	ID.rank = assignment
+	ID.sec_hud_icon = assignment
+	ID.access = list(access_maint_tunnels, access_external_airlocks)
+
+	H.sec_hud_set_ID()
+
+/obj/item/weapon/gun/projectile/automatic/bulldog/nonlethal
+	initial_mag = /obj/item/ammo_box/magazine/bulldog/stun
+
+/obj/item/weapon/storage/pouch/pistol_holster/solgov
+	startswith = list(/obj/item/weapon/gun/projectile/automatic/pistol/wjpp/tactical)
+
+/obj/item/weapon/storage/belt/security/solgov
+	startswith = list(/obj/item/weapon/melee/telebaton, /obj/item/device/flash, /obj/item/weapon/grenade/flashbang = 2,
+	/obj/item/ammo_box/magazine/wjpp/rubber = 3,)
 
 /obj/item/weapon/storage/belt/security/ert
 	startswith = list(/obj/item/weapon/melee/baton, /obj/item/device/flash, /obj/item/weapon/grenade/flashbang = 2, /obj/item/weapon/handcuffs = 3)

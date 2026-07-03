@@ -53,6 +53,14 @@
 	desc = "It's a traditional skrellian warrior-caste blue and black uniform. Skintight, sturdy and slightly wet."
 	icon_state = "raskinta"
 	item_state = "raskinta"
+
+/obj/item/clothing/under/tactical/solgov
+	name = "OSG uniform"
+	desc = "Combat uniform of space border guards."
+	icon_state = "SG_combat"
+	item_state = "SG_combat"
+	item_state_world = "SG_combat_w"
+
 /*
  * Detective
  */

@@ -501,3 +501,13 @@
 	armor = list(melee = 40, bullet = 5, laser = 40, energy = 25, bomb = 0, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.4
+
+/obj/item/clothing/suit/storage/flak/solgov
+	name = "armor"
+	cases = list("бронежилет", "бронежилета", "бронежилету", "бронежилет", "бронежилетом", "бронежилете")
+	desc = "Укреплённый бронежилет, защищающий от значительных повреждений. Используется легкой пехотой вооружённых сил ПСС."
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	pierce_protection = UPPER_TORSO|LOWER_TORSO|ARMS
+	icon_state = "SG_armor"
+	item_state = "SG_armor"
+	armor = list(melee = 60, bullet = 50, laser = 45, energy = 30, bomb = 40, bio = 0, rad = 0)

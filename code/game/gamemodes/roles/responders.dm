@@ -97,3 +97,21 @@
 	disallow_job = TRUE
 
 	skillset_type = /datum/skillset/clown
+
+/datum/role/solgov
+	name = "Outer Systems Guard"
+	id = "Outer Systems Guard"
+	disallow_job = TRUE
+
+	skillset_type = /datum/skillset/solgov_operative
+
+
+/datum/role/solgov/OnPostSetup(laterole)
+	. = ..()
+	antag.current.add_language(LANGUAGE_SOLCOMMON)
+	antag.current.forced_language = LANGUAGE_SOLCOMMON
+
+	for(var/datum/language/language as anything in antag.current.languages)
+		if(language.name == antag.current.forced_language)
+			continue
+		antag.current.remove_language(language.name)
