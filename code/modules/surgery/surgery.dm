@@ -56,6 +56,9 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(!BP)
 		return FALSE
+	if(BP.is_stump())
+	//stump preparing, prevert etc checks, is target bodypart is stump
+		return TRUE
 	return TRUE
 
 /datum/surgery_step/proc/prepare_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -212,15 +215,16 @@
 			//We had proper tools! (or RNG smiled.) and User did not move or change hands.
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if(!HAS_TRAIT(H, TRAIT_NO_PAIN) && !HAS_TRAIT(H, TRAIT_IMMOBILIZED))
-					H.adjustHalLoss(25)
 				if(prob(H.traumatic_shock) && !H.incapacitated(NONE))
 					to_chat(user, "<span class='warning'>The patient is writhing in pain, this interferes with the operation!</span>")
 					S.fail_step(user, H, target_zone, tool) //patient movements due to pain interfere with surgery
-			if(user.mood_prob(S.tool_quality(tool, M)) && tool.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus, particle_type = /particles/tool/surgery) && user.get_targetzone() && target_zone == user.get_targetzone())
-				S.end_step(user, M, target_zone, tool)		//finish successfully
-			else if(tool.loc == user && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
-				S.fail_step(user, M, target_zone, tool)		//malpractice~
+			if(user.mood_prob(S.tool_quality(tool, M))\
+			   && tool.use_tool(M, user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus, particle_type = /particles/tool/surgery)\
+			   && user.get_targetzone()\
+			   && target_zone == user.get_targetzone())
+				S.end_step(user, M, target_zone, tool)          //finish successfully
+			else if(tool.loc == user && user.Adjacent(M))       //or (also check for tool in hands and being near the target)
+				S.fail_step(user, M, target_zone, tool)         //malpractice~
 			else	// this failing silently was a pain.
 				to_chat(user, "<span class='warning'>You must remain close to your patient to conduct surgery.</span>")
 

@@ -58,7 +58,7 @@
 	var/arterial_bleed_severity = 1   // Multiplier for bleeding in a limb.
 
 	// Surgery vars.
-	var/open = BP_DEFAULT_STATE
+	var/open = BP_DEFAULT_OS
 	var/max_open_state = BP_RETRACT_OS
 	var/stage = null                  // uses binary flags, allow in mob
 	var/cavity = 0

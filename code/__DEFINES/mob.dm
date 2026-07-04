@@ -22,7 +22,7 @@
 #define BODYPART_ROBOTIC   2
 #define BODYPART_SKELETON  3
 
-#define BP_DEFAULT_STATE            0
+#define BP_DEFAULT_OS            0
 
 // External organic organs and plastick surgery
 #define BP_SCALPEL_OS               1

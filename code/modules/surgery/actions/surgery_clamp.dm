@@ -13,7 +13,7 @@
 	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
 	if(!BP)
 		return FALSE
-	if(BP.open == BP_DEFAULT_STATE)
+	if(BP.open == BP_DEFAULT_OS)
 		return FALSE
 
 	if(BP.status & ORGAN_BLEEDING)
@@ -97,7 +97,7 @@
 				self_msg = "You start mending the nerves and lenses in [surgery_victim]'s eyes with the [tool]."
 			if(O_MOUTH)
 				//face reconstruction && plastic surg
-				if(head.ps_status > BP_DEFAULT_STATE)
+				if(head.ps_status > BP_DEFAULT_OS)
 					msg = "[user] starts [head.disfigured ? "mending" : "adjusting"] [surgery_victim]'s vocal cords with \the [tool]."
 					self_msg = "You start [head.disfigured ? "mending" : "adjusting"] [surgery_victim]'s vocal cords with \the [tool]."
 			if(BP_HEAD)
@@ -195,7 +195,7 @@
 				eyes.damage = 0
 			if(O_MOUTH)
 			//face && plastic surgery
-				if(head.ps_status > BP_DEFAULT_STATE)
+				if(head.ps_status > BP_DEFAULT_OS)
 					msg = "<span class='notice'>[user] [head.disfigured ? "mending" : "adjusting"] [surgery_victim]'s vocal cords with \the [tool].</span>"
 					self_msg = "<span class='notice'>You [head.disfigured ? "mending" : "adjusting"][surgery_victim]'s vocal cords with \the [tool].</span>"
 					head.disfigured = FALSE
