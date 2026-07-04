@@ -198,7 +198,6 @@
 	new /obj/item/weapon/reagent_containers/glass/beaker/vial/romerol(src)
 	new /obj/item/weapon/reagent_containers/syringe(src)
 	new /obj/item/weapon/reagent_containers/dropper(src)
-	new /obj/item/weapon/reagent_containers/hypospray/combat/zombie(src)
 
 	var/garanted_item = pick(/obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol, /obj/item/weapon/grenade/chem_grenade/romerol, /obj/item/weapon/implanter/zombie)
 	new garanted_item (src)
