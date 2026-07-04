@@ -139,12 +139,10 @@
 			var/free_body = TRUE
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == mind && ghost.can_reenter_corpse)
-					free_body = FALSE
 					var/answer = tgui_alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!", list("Yes","No"), 10 SECONDS)
 					if(answer == "Yes")
 						ghost.reenter_corpse()
-					else if(!client)
-						create_spawner(/datum/spawner/living/zombie, src)
+						free_body = FALSE
 					break
 			if(free_body && !client)
 				create_spawner(/datum/spawner/living/zombie, src)
