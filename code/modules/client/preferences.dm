@@ -566,7 +566,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 		return null
 	var/obj/item/clothing/under/color/polychromic/J = new()
 	J.poly_style = style
-	J.poly_pattern = style.forced_pattern || jumpsuit_pattern
+	J.poly_pattern = style.forced_pattern || (jumpsuit_pattern == POLY_PATTERN_TURT ? null : jumpsuit_pattern)
 	var/base_col = style.white_base ? jumpsuit_base_color : "#ffffff"
 	J.poly_colors = list(base_col, jumpsuit_color)
 	J.update_icon()

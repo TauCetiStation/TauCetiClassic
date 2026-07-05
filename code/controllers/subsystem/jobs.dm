@@ -433,7 +433,7 @@ SUBSYSTEM_DEF(job)
 						// This is a miserable way to fix the loadout overwrite bug, but the alternative requires
 						// adding an arg to a bunch of different procs. Will look into it after this merge. ~ Z
 						metadata = H.client.prefs.gear[G.display_name]
-						if(G.slot == SLOT_WEAR_MASK || G.slot == SLOT_WEAR_SUIT || G.slot == SLOT_HEAD)
+						if(G.slot == SLOT_WEAR_MASK || G.slot == SLOT_WEAR_SUIT || G.slot == SLOT_HEAD || G.slot == SLOT_W_UNIFORM)
 							custom_equip_leftovers += thing
 						else if(H.equip_to_slot_or_del(G.spawn_item(H, metadata), G.slot))
 							to_chat(H, "<span class='notice'>Equipping you with \the [thing]!</span>")
@@ -447,16 +447,15 @@ SUBSYSTEM_DEF(job)
 			H.species.before_job_equip(H, job)
 
 		job.equip(H)
-
-		// Custom jumpsuit from prefs, unless the gear loadout already filled the uniform slot.
-		if(ishuman(H) && H.client?.prefs && job.give_loadout_items && !(SLOT_W_UNIFORM in custom_equip_slots))
-			var/obj/item/clothing/under/color/polychromic/J = H.client.prefs.spawn_custom_jumpsuit()
-			if(J)
-				H.replace_in_slot(SLOT_W_UNIFORM, J)
+		var/obj/item/clothing/under/color/polychromic/custom_jumpsuit
+		if(ishuman(H) && H.client?.prefs && job.give_loadout_items)
+			custom_jumpsuit = H.client.prefs.spawn_custom_jumpsuit()
 
 		for(var/thing in custom_equip_leftovers)
 			var/datum/gear/G = gear_datums[thing]
 			if(G.slot in custom_equip_slots)
+				spawn_in_storage += thing
+			else if(custom_jumpsuit && G.slot == SLOT_W_UNIFORM)
 				spawn_in_storage += thing
 			else
 				metadata = H.client.prefs.gear[G.display_name]
@@ -465,6 +464,9 @@ SUBSYSTEM_DEF(job)
 					custom_equip_slots.Add(G.slot)
 				else
 					spawn_in_storage += thing
+
+		if(custom_jumpsuit)
+			H.replace_in_slot(SLOT_W_UNIFORM, custom_jumpsuit)
 
 	else
 		to_chat(H, "Ваша профессия - [rank], и игра почему-то не может её обработать! Пожалуйста, сообщите об этой ошибке администратору.")

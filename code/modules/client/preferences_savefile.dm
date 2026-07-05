@@ -889,6 +889,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	jumpsuit_style	= sanitize_inlist(jumpsuit_style, poly_valid_styles, POLY_STYLE_JOB)
 	if(jumpsuit_pattern && !(jumpsuit_pattern in poly_pattern_display))
 		jumpsuit_pattern = null
+	if(jumpsuit_pattern == POLY_PATTERN_TURT && jumpsuit_style != POLY_STYLE_TURT)
+		jumpsuit_pattern = null
 	jumpsuit_color		= sanitize_poly_color(jumpsuit_color, initial(jumpsuit_color))
 	jumpsuit_base_color	= sanitize_poly_color(jumpsuit_base_color, initial(jumpsuit_base_color))
 	var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME

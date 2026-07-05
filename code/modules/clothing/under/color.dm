@@ -7,8 +7,7 @@
 	item_state = "white"
 	flags = ONESIZEFITSALL|HEAR_TALK
 	poly_colors = list("#ffffff", "#ffffff")
-	// Worn sprite is handled by the element via COMSIG_ITEM_GET_WORN_OVERLAY.
-	// This cached ref is for the icon/dye paths below, which have no signal.
+	// This cached ref is for the icon/dye/worn render paths below.
 	var/datum/element/polychromic/poly
 
 /obj/item/clothing/under/color/polychromic/atom_init()
@@ -23,6 +22,11 @@
 
 /obj/item/clothing/under/color/polychromic/update_world_icon()
 	update_icon()
+
+/obj/item/clothing/under/color/polychromic/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
+	if(sprite_sheet_slot == SPRITE_SHEET_HELD || !length(poly_colors))
+		return ..()
+	return poly.build_worn(src, H, layer, bloodied_icon_state)
 
 /obj/item/clothing/under/color/polychromic/wash_act(w_color)
 	if(w_color && poly.try_dye(src, w_color))

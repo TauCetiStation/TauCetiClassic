@@ -137,6 +137,9 @@
 					qdel(spawned_item)
 			else
 				var/target_slot = _preview_slot_from_flags(spawned_item.slot_flags)
+				if(polychromic_jumpsuit && target_slot == SLOT_W_UNIFORM)
+					qdel(spawned_item)
+					continue
 				if(target_slot)
 					mannequin.replace_in_slot(target_slot, spawned_item)
 				else if(!mannequin.equip_to_appropriate_slot(spawned_item))

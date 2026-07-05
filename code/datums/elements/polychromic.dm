@@ -49,7 +49,8 @@
 	MA.layer = layer
 	MA.appearance_flags = KEEP_TOGETHER
 	MA.add_overlay(make_overlay(eff.get_mob_base_state(U, H), U.poly_colors[1], U.poly_style.icon))
-	MA.add_overlay(get_mob_overlays(U, eff, H, bloodied_icon_state))
+	for(var/mutable_appearance/overlay as anything in get_mob_overlays(U, eff, H, bloodied_icon_state))
+		MA.add_overlay(overlay)
 	return MA
 
 /datum/element/polychromic/proc/get_mob_overlays(obj/item/clothing/under/U, datum/poly_style/eff, mob/living/carbon/human/H, bloodied_icon_state)
