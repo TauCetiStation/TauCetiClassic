@@ -170,7 +170,7 @@
 				BP.open = BP_MAINTANCE_PO
 	else if(!surgery_victim.species.flags[TRAIT_NO_BLOOD])
 	//human, unathi, tajaran, skrell and etc)
-		if(isfat())
+		if(isfat(surgery_victim))
 		//remove_fat
 			surgery_victim.op_stage.lipoplasty = 0
 			if(surgery_victim.overeatduration > 0)
@@ -199,7 +199,7 @@
 				var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
 				user.visible_message("<span class='notice'>[user] has lifted the corneas from [surgery_victim]'s eyes from with \the [tool].</span>" , \
 				"<span class='notice'>You has lifted the corneas from [surgery_victim]'s eyes from with \the [tool].</span>" )
-				eyes.surgery_stege = BP_RETRACT_OS
+				eyes.surgery_stage = BP_RETRACT_OS
 			if(O_MOUTH)
 			//face & plastic surgery
 				var/obj/item/organ/external/head/head = surgery_victim.get_bodypart(target_zone)
@@ -208,7 +208,7 @@
 						user.visible_message("<span class='notice'>[user] pulls the skin on [surgery_victim]'s face with \the [tool].</span>",	\
 						"<span class='notice'>You pull the skin on [surgery_victim]'s face with \the [tool].</span>")
 						head.ps_status = BP_SCALPEL_OS
-					if(BP_INTERNAL_OS)
+					if(BP_INTERNALS_OS)
 						user.visible_message("<span class='notice'>[user] pulls the skin on [surgery_victim]'s face back in place with \the [tool].</span>",	\
 						"<span class='notice'>You pull the skin on [surgery_victim]'s face back in place with \the [tool].</span>")
 						head.ps_status = BP_RIBCAGE_OS
@@ -221,7 +221,7 @@
 						self_msg = "<span class='notice'>You keep the incision open on [surgery_victim]'s [BP.name] with \the [tool].</span>"
 						user.visible_message(msg, self_msg)
 						BP.open = BP_RETRACT_OS
-					if(BP_INTERNAL_OS)
+					if(BP_INTERNALS_OS)
 					//open ribcage
 						msg = "<span class='notice'>[user] forces open [surgery_victim]'s ribcage with \the [tool].</span>"
 						self_msg = "<span class='notice'>You force open [surgery_victim]'s ribcage with \the [tool].</span>"
@@ -232,7 +232,7 @@
 						msg = "<span class='notice'>[user] bends [surgery_victim]'s ribcage back into place with \the [tool].</span>"
 						self_msg = "<span class='notice'>You bend [surgery_victim]'s ribcage back into place with \the [tool].</span>"
 						user.visible_message(msg, self_msg)
-						BP.open = BP_INTERNAL_OS
+						BP.open = BP_INTERNALS_OS
 
 /datum/surgery_step/retract/fail_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
 	//IPC SURGERY
@@ -248,7 +248,7 @@
 	//wrench_shut
 	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [surgery_victim]'s security panel with \the [tool]!</span>" ,
 	"<span class='warning'>Your hand slips, scratching [surgery_victim]'s security panel with \the [tool]!</span>" )
-		BP.fracture()
+	BP.fracture()
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 	//wrenchshut_sec

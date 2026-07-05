@@ -1,33 +1,46 @@
 // Input Sortcut Defines
 
 // Slime action
-#define SLIME_CUT_ACTION "[slime]'s [slime.surgery_status == CUTTED ? "silky innards" : "flesh"] with \the [tool]"
+#define SLIME_CUT_ACTION          "cut through [slime]'s [slime.surgery_status == CUTTED ? "silky innards" : "flesh"] with \the [tool]"
 
 // Default cut|screw action
 #define CUT_SCREW                 (bodypart.open == BP_DEFAULT_OS || (surgery_victim.species.flags[IS_SYNTHETIC] && bodypart.open == BP_SCALPEL_OS))
-#define SCREWING_ACTION            "[bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s maintenance hatch with \the [tool]"
-#define CUT_ACTION                 "the incision on [surgery_victim]'s [bodypart.name] with \the [tool]"
-#define SIMPLE_CUT_SCREW_ACTION    "[surgery_victim.species.flags[IS_SYNTHETIC] ? SCREWING_ACTION : CUT_ACTION]"
+#define SCREWING_ACTION            "[bodypart.is_stump() ? "reposition wires where [surgery_victim]'s [bodypart] used to be with \the [tool]" : [bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s maintenance hatch with \the [tool]]"
+#define CUT_ACTION                 "[bodypart.is_stump() ? "cut away flesh on [surgery_victim]'s [bodypart.name] used to be with \the [tool]." : "make the incision on [surgery_victim]'s [bodypart.name] with \the [tool]"]"
+#define SIMPLE_CUT_SCREW_ACTION    "[bodypart.controller.bodypart_type == BODYPART_ROBOTIC ? SCREWING_ACTION : CUT_ACTION]"
+
+// Detach internal organ\brain
+#define CUT_ORGAN                 (bodypart.open == BP_RIBCAGE_OS)
+#define CUT_ORGAN_ACTION          "poking around inside the incision on [surgery_victim]'s [BP.name] with \the [tool]"
 
 // Eyes action
 #define EYES_SURGERY              (eyes?.surgery_stage <= BP_SCALPEL_OS)
 #define MACHINE_EYES_SCREW_ACTION "[eyes.surgery_stage == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s camera panels with \the [tool]]"
 #define ORGANIC_EYES_CUT_ACTION   "[eyes.surgery_stage == BP_DEFAULT_OS ? "separate" : "extract"] eyes from [surgery_victim]'s eyelid with \the [tool]"
-#define SIMPLE_EYES_ACTION        "[surgery_victim.species.flags[IS_SYNTHETIC] ? MACHINE_EYES_SCREW_ACTION : ORGANIC_EYES_CUT_ACTION]"
+#define SIMPLE_EYES_ACTION        "[eyes.status == ORGAN_ROBOT ? MACHINE_EYES_SCREW_ACTION : ORGANIC_EYES_CUT_ACTION]"
 
 // Mouth Action
 #define MOUTH_SURGERY            (head.ps_status == BP_DEFAULT_OS || head.ps_status == BP_INTERNALS_OS)
 #define MACHINE_MOUTH_CUT_ACTION "[bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s screen with \the [tool]"
-#define ORGANIC_MOUTH_CUT_ACTION "[head.ps_status == BP_DEFAULT_OS ? "to cut open [surgery_victim]'s face and neck with \the [tool]" : "to alter [surgery_victim]'s appearance with \the [tool]"]"
+#define ORGANIC_MOUTH_CUT_ACTION "[head.ps_status == BP_DEFAULT_OS ? "cut open [surgery_victim]'s face and neck with \the [tool]" : "to alter [surgery_victim]'s appearance with \the [tool]"]"
 #define SIMPLE_MOUTH_ACTION      "[surgery_victim.species.flags[IS_SYNTHETIC] ? MACHINE_MOUTH_CUT_ACTION : ORGANIC_MOUTH_CUT_ACTION]"
 
 // Diona nymph extract action
 #define NYMPH_SURGERY            (surgery_victim.get_species() == DIONA && target_zone == BP_CHEST && bodypart.open == BP_RIBCAGE_OS)
 #define NYMPH_EXTRACT_ACTION     "separating connections roots to [surgery_victim]'s nymph with \the [tool]"
 
+// Fatass remove action
+#define FATASS_SURGERY           (bodypart.body_zone == BP_CHEST && surgery_victim.overeatduration > 0 && bodypart.open == BP_SCALPEL_OS)
+#define FATASS_ACTION            ""
+
 // Organics gender bender
-#define GENDER_SURGERY           (target_zone == BP_GROIN && bodypart.open >= BP_SCALPEL_OS && surgery_victim.get_species() != VOX)
-#define GENDER_BENDER_ACTION     "to reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [tool]"
+#define GENDER_SURGERY           (target_zone == BP_GROIN && bodypart.open >= BP_SCALPEL_OS && !surgery_victim.species.flags[TRAIT_NO_BLOOD] && surgery_victim.get_species() != VOX)
+#define GENDER_BENDER_ACTION     "reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [tool]"
+
+// Machine Detach Positron Unit Action
+#define DETACH_POSITRON          (target_zone == BP_CHEST && bodyprat.open == BP_RIBCAGE_OS && surgery_victim.has_brain() && surgery_victim.get_species() == IPC)
+#define DETACH_POSITRON_ACTION   "detach wires on [surgery_victim]'s [bodypart.name] connected to positron brain unit with \the [tool]."
+
 //Action
 /datum/surgery_step/cut
 	allowed_qualities = list(
@@ -41,13 +54,23 @@
 	min_duration = 9 SECONDS
 	max_duration = 11 SECONDS
 
+/datum/surgery_step/cut/prepare_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
+	if(target_zone == O_MOUTH && ishuman(target) && !ismachine(target))
+	//plastic surgery
+		var/mob/living/carbon/human/surgery_victim = target
+		var/obj/item/organ/external/head/head = surgery_victim.get_bodypart(target_zone)
+		if(head.ps_status == BP_INTERNALS_OS)
+			plastic_new_name = sanitize_name(input(user, "Choose new character's name:", "Changing") as text|null)
+			return plastic_new_name && checks_for_surgery(target, user, clothless)
+	return TRUE
+
 /datum/surgery_step/cut/can_use(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
 //Must be first, to invoke ..() and check bodyparts
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
 		if(slime.stat == DEAD && slime.surgery_status != PREPARED)
-			msg = "[user] starts cutting through [SLIME_CUT_ACTION]."
-			self_msg = "You start cutting through [SLIME_CUT_ACTION]."
+			msg = "[user] being [SLIME_CUT_ACTION]."
+			self_msg = "You start [SLIME_CUT_ACTION]."
 			user.visible_message(msg, self_msg)
 			return TRUE
 
@@ -59,8 +82,14 @@
 
 	if(NYMPH_SURGERY)
 	// Exception for Dionea
-		msg = "[user] starts [NYMPH_EXTRACT_ACTION]."
-		self_msg = "You start [NYMPH_EXTRACT_ACTION]."
+		msg = "[user] being to [NYMPH_EXTRACT_ACTION]."
+		self_msg = "You start to [NYMPH_EXTRACT_ACTION]."
+		user.visible_message(msg, self_msg)
+		return TRUE
+	if(DETACH_POSITRON)
+	// IPC exception for detach brain
+		msg = "[user] being to [DETACH_POSITRON_ACTION]"
+		self_msg = "You start to [DETACH_POSITRON_ACTION]"
 		user.visible_message(msg, self_msg)
 		return TRUE
 
@@ -70,172 +99,62 @@
 			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
 			if(EYES_SURGERY)
 				msg = "[user] are beginning to [SIMPLE_EYES_ACTION]"
-				self_msg = "You are beginning to [SIMPLE_EYES_ACTION]"
+				self_msg = "You are starting to [SIMPLE_EYES_ACTION]"
 				user.visible_message(msg, self_msg)
 				return TRUE
 		if(O_MOUTH)
 		// Cut|Screw Face
-
-		else // Head, Chest, Groin, L|R Arm, L|R Leg
+			var/obj/item/organ/external/head/head = bodypart
+			if(MOUTH_SURGERY)
+			//start operate face|plastic surgery
+				msg = "[user] being to [SIMPLE_MOUTH_ACTION]."
+				self_msg = "You start to [SIMPLE_MOUTH_ACTION]."
+				user.visible_message(msg, self_msg)
+				return TRUE
+		else
+		// Head, Chest, Groin, L|R Arm, L|R Leg
 			if(GENDER_SURGERY)
 			//gender surgery, in this stage we need check only VOX
-				msg = "[user] begins [GENDER_BENDER_ACTION]."
-				self_msg = "You start [GENDER_BENDER_ACTION]."
+				msg = "[user] begins to [GENDER_BENDER_ACTION]."
+				self_msg = "You start to [GENDER_BENDER_ACTION]."
 				cp_msg = "The pain in your groin is living hell!"
-
+				user.visible_message(msg, self_msg)
+				surgery_victim.custom_pain(cp_msg, 1)
+				return TRUE
+			if(CUT_ORGAN)
+				msg = "[user] being [CUT_ORGAN_ACTION]"
+				self_msg = "You start [CUT_ORGAN_ACTION]"
+				cp_msg = "The pain in your chest is living hell!"
+				user.visible_message(msg, self_msg)
+				surgery_victim.custom_pain(cp_msg, 1)
 			if(CUT_SCREW)
-			// Cut|Screw Default
-
+			// Cut|Screw Default|Limb cut replace stump to health part
+				msg = "[user] being to [SIMPLE_CUT_SCREW_ACTION]"
+				self_msg = "You start to [SIMPLE_CUT_SCREW_ACTION]"
+				cp_msg = "You feel a horrible pain as if from a sharp knife in your [bodypart.name]!"
+				user.visible_message(msg, self_msg)
 				return TRUE
 
-	if(surgery_victim.species.flags[IS_SYNTHETIC])
-	// IPC only
-		can_infect = FALSE
-		switch(target_zone)
-			if(O_EYES)
-			//Fix eyes
-				var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-				if(eyes.surgery_stage < BP_INTERNALS_OS)
-					return TRUE
-			if(O_MOUTH)
-			//Fix face
-				return TRUE
-			if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
-				switch(bodypart.open)
-					if(BP_DEFAULT_OS)
-					//Unscrew panel
-						return TRUE
-					if(BP_UNLOCK_P)
-					//Screw panel
-						return TRUE
-					if(BP_RIBCAGE_OS)
-					//Exctract brain
-						if(surgery_victim.has_brain())
-						// only chest may be open on this stage
-							return TRUE
-						return TRUE
-
-	else if(surgery_victim.species.flags[IS_PLANT])
-	//Dionea, Podkid
-		if(target_zone == BP_CHEST && bodypart.open == BP_INTERNALS_OS)
-			return TRUE
-	else if(!surgery_victim.species.flags[TRAIT_NO_BLOOD])
-	//Human, unathi, tajaran, skrell and etc
-		if(!bodypart.is_robotic_part())
-			if(target_zone == BP_GROIN && bodypart.open >= BP_SCALPEL_OS && surgery_victim.get_species() != VOX)
-			//gender surgery, in this stage we need check only VOX
-				return TRUE
-			switch(target_zone)
-				if(O_EYES)
-					var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-					if(eyes.surgery_stage < BP_INTERNALS_OS)
-						return TRUE
-				if(O_MOUTH)
-					var/obj/item/organ/external/head/head = bodypart
-					if(head.ps_status < BP_INTERNALS_OS)
-						return TRUE
-				if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
-					switch(bodypart.open)
-						if(BP_DEFAULT_OS)
-						// open part
-							return TRUE
-						if(BP_SCALPEL_OS)
-							if(bodypart.body_zone == BP_CHEST\
-							&& surgery_victim.overeatduration > 0)
-							// Fat surgery
-								return TRUE
-						if(BP_RETRACT_OS)
-							if(bodypart.body_zone == BP_GROIN)
-							// detach internal organs from groin
-								return TRUE
-						if(BP_INTERNALS_OS)
-						// detach internal organs from head or chest
-							if(bodypart.body_zone == BP_HEAD\
-							|| bodypart.body_zone == BP_CHEST)
-								return TRUE
-	return FALSE
-
-/datum/surgery_step/cut/prepare_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
-	if(target_zone == O_MOUTH && ishuman(target) && !ismachine(target))
-	//plastic surgery
-		var/mob/living/carbon/human/surgery_victim = target
-		var/obj/item/organ/external/head/head = surgery_victim.get_bodypart(target_zone)
-		if(head.ps_status == BP_INTERNALS_OS)
-			plastic_new_name = sanitize_name(input(user, "Choose new character's name:", "Changing") as text|null)
-			return plastic_new_name && checks_for_surgery(target, user, clothless)
-	return TRUE
-
-/datum/surgery_step/cut/begin_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
-	if(isslime(target))
-	//slime surgery
-		var/mob/living/carbon/slime/slime = target
-
-	var/mob/living/carbon/human/surgery_victim = target
-	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
-	if(surgery_victim.species.flags[IS_SYNTHETIC])
-	//IPC only
-		if(bodypart.is_stump())
-			msg = "[user] begins to reposition wires where [surgery_victim]'s [bodypart] used to be with \the [tool]."
-			self_msg = "You begin to reposition wires where [surgery_victim]'s [bodypart] used to be with \the [tool]."
-		switch(target_zone)
-			if(O_MOUTH, BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
-				switch(bodypart.open)
-					if(BP_MAINTANCE_PO)
-						msg = "[user] starts cutting wires connecting [surgery_victim]'s posi-brain with \the [tool]."
-						self_msg = "You start cutting wires connecting [surgery_victim]'s posi-brain with \the [tool]."
-					if(BP_DEFAULT_OS, BP_UNLOCK_P)
-						msg = "[user] starts to [bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s [target_zone != O_MOUTH ? "maintenance hatch" : "screen"] with \the [tool]."
-						self_msg = "You start to [bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s [target_zone != O_MOUTH ? "maintenance hatch" : "screen"] with \the [tool]."
-						if(!surgery_victim.is_bruised_organ(O_KIDNEYS))
-							to_chat(surgery_victim, "%[bodypart.name]'S MAINTENANCE HATCH% UNATHORISED ACCESS ATTEMPT DETECTED!")
-
-	else if(!surgery_victim.species.flags[TRAIT_NO_BLOOD])
-	// human, unathi, tajaran, skrell and etc
-		cp_msg = "You feel a horrible pain as if from a sharp knife in your [bodypart.name]!"
-
-		switch(target_zone)
-			if(BP_HEAD, BP_CHEST, BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
-			//make first cut
-				msg = "[user] starts the incision on [surgery_victim]'s [bodypart.name] with \the [tool]."
-				self_msg = "You start the incision on [surgery_victim]'s [bodypart.name] with \the [tool]."
-			if(O_EYES)
-			//eyes surgery
-				var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-				if(eyes)
-					if(eyes.surgery_stage == BP_DEFAULT_OS)
-					//first cut
-						msg = "[user] starts to separate the corneas on [surgery_victim]'s eyes with \the [tool]."
-						self_msg = "You start to separate the corneas on [surgery_victim]'s eyes with \the [tool]."
-					else if(eyes.surgery_stage == BP_INTERNALS_OS)
-					//remove eyes
-						msg = "[user] starts disconnect eyes inside the incision on [surgery_victim]'s [bodypart.name] with \the [tool]."
-						self_msg = "You start disconnect eyes inside the incision on [surgery_victim]'s [bodypart.name] with \the [tool]"
-			if(O_MOUTH)
-				var/obj/item/organ/external/head/head = bodypart
-				if(MOUTH_SURGERY)
-				//start operate face|plastic surgery
-					msg = "[user] being [SIMPLE_MOUTH_ACTION]."
-					self_msg = "You being [SIMPLE_MOUTH_ACTION]."
-
-	user.visible_message(msg, self_msg)
-	surgery_victim.custom_pain(cp_msg, 1)
-	..()
+	return FALSE // if we can`t do this operation
 
 /datum/surgery_step/cut/end_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
-		msg = "<span class='notice'>[user] cuts through [SLIME_CUT_ACTION].</span>"
-		self_msg = "<span class='notice'>You cut through [SLIME_CUT_ACTION], exposing the cores.</span>"
+		msg = "<span class='notice'>[user] finish [SLIME_CUT_ACTION].</span>"
+		self_msg = "<span class='notice'>You finish [SLIME_CUT_ACTION], exposing the cores.</span>"
 		switch(slime.surgery_status)
-			if(NORMAL) // cut_flesh
+			if(NORMAL)
+			// cut flesh
 				slime.surgery_status = CUTTED
 				return
 			if(CUTTED)
+			// cut internals flesh
 				slime.surgery_status = PREPARED
 				return
 
 	var/mob/living/carbon/human/surgery_victim = target
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
+
 	if(surgery_victim.species.flags[IS_SYNTHETIC]) // IPC only
 		switch(target_zone)
 			if(O_EYES)
@@ -372,7 +291,7 @@
 						bodypart.take_damage(1, 0, DAM_SHARP|DAM_EDGE, tool)
 						return TRUE
 					if(BP_INTERNALS_OS)
-						if(!length(bodypart.BP_organs))
+						if(!length(bodypart.bodypart_organs))
 							user.visible_message("<span class='notice'>[user] could not find anything inside [surgery_victim]'s [bodypart.name], and pulls \the [tool] out.</span>", \
 													"<span class='notice'>You could not find anything inside [surgery_victim]'s [bodypart.name].</span>" )
 							return FALSE
@@ -386,7 +305,7 @@
 
 								if(BP_CHEST, BP_GROIN)
 									var/list/organs_list = list()
-									for(var/atom/embed_organ in bodypart.BP_organs)
+									for(var/atom/embed_organ in bodypart.bodypart_organs)
 										organs_list[embed_organ] = embed_organ.appearance
 									var/choosen_organ = show_radial_menu(user, surgery_victim, organs_list, radius = 50, require_near = TRUE, tooltips = TRUE)
 									if(!choosen_organ)
@@ -397,7 +316,7 @@
 									IO.status |= ORGAN_CUT_AWAY
 									IO.remove(surgery_victim)
 									IO.loc = get_turf(surgery_victim)
-									bodypart.BP_organs  -= IO
+									bodypart.bodypart_organs  -= IO
 									playsound(surgery_victim, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
 									return TRUE
 	return FALSE
