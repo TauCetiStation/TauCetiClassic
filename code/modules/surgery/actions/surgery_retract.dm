@@ -253,8 +253,8 @@
 
 	//wrenchshut_sec
 	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [surgery_victim]'s security panel with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, scratching [surgery_victim]'s security panel with \the [tool]!</span>" )
-		BP.fracture()
+	"<span class='warning'>Your hand slips, scratching [surgery_victim]'s security panel with \the [tool]!</span>")
+	BP.fracture()
 
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
