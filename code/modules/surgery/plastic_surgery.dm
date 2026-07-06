@@ -4,7 +4,7 @@
 /datum/surgery_step/plastic_surgery
 	clothless = 0
 	priority = 3
-	can_infect = 0
+
 
 /datum/surgery_step/plastic_surgery/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))

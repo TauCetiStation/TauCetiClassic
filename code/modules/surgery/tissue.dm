@@ -8,7 +8,7 @@
 	/obj/item/stack/medical/advanced/bruise_pack = 100,
 	/obj/item/stack/medical/advanced/ointment = 100
 	)
-	can_infect = 1
+
 	blood_level = 1
 
 	min_duration = 50

@@ -10,7 +10,7 @@
 	/obj/item/weapon/FixOVein = 100, \
 	/obj/item/stack/cable_coil = 75
 	)
-	can_infect = 1
+
 	blood_level = 1
 
 	min_duration = 70
@@ -51,7 +51,7 @@
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/groin_organs
 	priority = 3
-	can_infect = 0
+
 	blood_level = 1
 	allowed_species = null // Allows surgery for all species, whereas previously it was only allowed for DIONA, IPC, VOX, and PODMAN
 

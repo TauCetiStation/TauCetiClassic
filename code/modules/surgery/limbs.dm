@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/limb
-	can_infect = 0
+
 
 /datum/surgery_step/limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
@@ -156,7 +156,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/ipc/limb
-	can_infect = FALSE
+
 	allowed_species = list(IPC)
 
 /datum/surgery_step/ipc/limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

@@ -91,7 +91,7 @@
 		/obj/item/weapon/reagent_containers/spray = 60,
 	)
 
-	can_infect = FALSE
+
 
 	min_duration = 110
 	max_duration = 150

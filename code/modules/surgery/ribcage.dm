@@ -4,7 +4,7 @@
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ribcage
 	priority = 2
-	can_infect = 1
+
 	blood_level = 1
 
 /datum/surgery_step/ribcage/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -325,7 +325,7 @@
 //				RIBCAGE	ROBOTIC SURGERY							//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ipc/ribcage
-	can_infect = FALSE
+
 	priority = 2
 	allowed_species = list(IPC)
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED, /datum/skill/engineering = SKILL_LEVEL_NOVICE)

@@ -8,7 +8,7 @@
 	/obj/item/weapon/bonegel = 100,	\
 	/obj/item/stack/rods = 50
 	)
-	can_infect = 1
+
 	blood_level = 1
 
 	min_duration = 50
@@ -114,7 +114,7 @@
 	/obj/item/weapon/bonegel = 100,	\
 	/obj/item/stack/rods = 50
 	)
-	can_infect = 1
+
 	blood_level = 1
 
 	min_duration = 50

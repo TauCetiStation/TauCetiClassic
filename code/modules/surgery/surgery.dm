@@ -1,3 +1,6 @@
+// Poking inside something with something
+#define POKING_ACTION             "poking around inside the [surgery_victim]'s [bodypart.name] with \the [tool]"
+#define NO_POKING_MESSAGE         "could not find anything inside [surgery_victim]'s [bodypart.name], and pulls \the [tool] out"
 /* SURGERY STEPS */
 /datum/surgery_step
 	var/priority = 0	//steps with higher priority would be attempted first
@@ -12,8 +15,6 @@
 	var/min_duration = 0
 	var/max_duration = 0
 
-	//evil infection stuff that will make everyone hate me
-	var/can_infect = 0
 	//How much blood this step can get on surgeon. 1 - hands, 2 - full body.
 	var/blood_level = 0
 
@@ -42,6 +43,11 @@
 	else
 		return get_surg_quality(quality)
 
+/datum/surgery_step/proc/can_infect(obj/item/organ/external/bodypart)
+	if(bodypart.status & ORGAN_ROBOT)
+		return FALSE
+	return TRUE
+
 // Checks if this step applies to the mutantrace of the user.
 /datum/surgery_step/proc/is_valid_mutantrace(mob/living/carbon/human/target)
 	if(ishuman(target) && allowed_species)
@@ -53,10 +59,10 @@
 /datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))
 		return FALSE
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if(!BP)
+	var/obj/item/organ/external/bodypart = target.get_bodypart(target_zone)
+	if(!bodypart)
 		return FALSE
-	if(BP.is_stump())
+	if(bodypart.is_stump())
 	//stump preparing, prevert etc checks, is target bodypart is stump
 		return TRUE
 	return TRUE
@@ -66,9 +72,9 @@
 
 // does stuff to begin the step, usually just printing messages. Moved germs transfering and bloodying here too
 /datum/surgery_step/proc/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if(can_infect && BP)
-		spread_germs_to_organ(BP, user, tool)
+	var/obj/item/organ/external/bodypart = target.get_bodypart(target_zone)
+	if(can_infect(bodypart) && bodypart)
+		spread_germs_to_organ(bodypart, user, tool)
 	if(ishuman(user) && prob(60))
 		var/mob/living/carbon/human/H = user
 		if(blood_level)
@@ -97,8 +103,8 @@
 	else
 		to_chat(user, "<span class='warning'>[target]'s [get_english_list(organ_names)] are necrotic and can't be treated this way.</span>")
 
-/proc/spread_germs_to_organ(obj/item/organ/external/BP, mob/living/carbon/human/user, obj/item/tool)
-	if(!istype(user) || !istype(BP))
+/proc/spread_germs_to_organ(obj/item/organ/external/bodypart, mob/living/carbon/human/user, obj/item/tool)
+	if(!istype(user) || !istype(bodypart))
 		return
 
 	var/germ_level = 0
@@ -116,9 +122,9 @@
 	if(ishuman(user) && !user.is_skip_breathe() && !user.wear_mask) //wearing a mask helps preventing people from breathing germs into open incisions
 		germ_level += user.germ_level * 0.25
 
-	BP.germ_level = max(germ_level, BP.germ_level)
-	if(BP.germ_level)
-		BP.owner.bad_bodyparts |= BP
+	bodypart.germ_level = max(germ_level, bodypart.germ_level)
+	if(bodypart.germ_level)
+		bodypart.owner.bad_bodyparts |= bodypart
 
 /proc/checks_for_surgery(mob/living/carbon/M, mob/living/user, check_covering = TRUE)
 	if(!user.Adjacent(M))
@@ -263,7 +269,7 @@
 	var/list/bodyparts = list() // Holds info about removed bodyparts
 
 /datum/surgery_step/ipc
-	can_infect = FALSE
+
 	allowed_species = list(IPC)
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/surgery = SKILL_LEVEL_NOVICE)
 	skills_speed_bonus = -0.2

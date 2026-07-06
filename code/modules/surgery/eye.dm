@@ -113,11 +113,11 @@
 /datum/surgery_step/ipc/eye/mend_cameras/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] mends the lenses and wires in [target]'s cameras with \the [tool].</span>",
 	"<span class='notice'>You mend the lenses abd wires in [target]'s cameras with \the [tool].</span>")
-	surgery_victim.cure_nearsighted(EYE_DAMAGE_TRAIT)
+	/* surgery_victim.cure_nearsighted(EYE_DAMAGE_TRAIT)
 	surgery_victim.sdisabilities &= ~BLIND
 	eyes.damage = 0
 	eyes.surgery_stage = BP_DEFAULT_OS
-
+ */
 /datum/surgery_step/ipc/eye/mend_cameras/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)

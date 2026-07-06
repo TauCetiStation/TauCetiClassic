@@ -1,3 +1,11 @@
+
+#define TISSUE_ACTION       "connecting regenerative membrane with damaged tissue inside of [surgery_victim]'s [bodypart.name]"
+#define CLAMP_ACTION        "clamping bleeders in [surgery_victim]'s [bodypart.name] with \the [tool]"
+#define PULL_FROM_ACTION    "pull something out from [surgery_victim]'s ribcage with \the [tool]"
+#define EYES_MENDING_ACTION "mending the nerves and lenses in [surgery_victim]'s eyes with \the [tool]"
+#define FACE_MENDING_ACTION "[head.disfigured ? "mending" : "adjusting"] [surgery_victim]'s vocal cords with \the [tool]"
+#define BONE_CHIPS_ACTION   "taking bone chips out of [surgery_victim]'s brain with \the [tool]"
+
 /datum/surgery_step/clamp
 	allowed_qualities = list(
 		QUALITY_CLAMP
@@ -10,30 +18,54 @@
 /datum/surgery_step/clamp/can_use(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
 	if(!ishuman(surgery_victim))
 		return FALSE
-	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
-	if(!BP)
+	if(!..())
 		return FALSE
-	if(BP.open == BP_DEFAULT_OS)
+	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
+
+	if(bodypart.open == BP_DEFAULT_OS)
 		return FALSE
 
-	if(BP.status & ORGAN_BLEEDING)
-	//clamp bleedin if exist
+	if(bodypart.status & ORGAN_BLEEDING)
+	// clamp bleedin if exist
+		msg = "[user] starts [CLAMP_ACTION]."
+		self_msg = "You start [CLAMP_ACTION]."
+		cp_msg = "The pain in your [bodypart.name] is maddening!"
+		user.visible_message(msg, self_msg)
+		surgery_victim.custom_pain(cp_msg, 1)
 		return TRUE
-	else if(BP.trauma_kit || BP.burn_kit)
-	 //tissue, if salvaged
+	else if(bodypart.trauma_kit || bodypart.burn_kit)
+	 // tissue, if salvaged
+		msg = "<span class='notice'>[user] starts [TISSUE_ACTION].</span>"
+		self_msg = "<span class='notice'>You start [TISSUE_ACTION].</span>"
+		cp_msg = "The pain in your [bodypart.name] is going to make you pass out!"
+		surgery_victim.custom_pain(cp_msg, 1)
+		user.visible_message(msg, self_msg)
 		return TRUE
-	else if(check_inside(BP))
-	//remove something inside
-	//implant remove
+	else if(check_inside(bodypart))
+	// remove something inside
+		if(!(locate(/obj/item/alien_embryo) in bodypart))
+		// implant remove
+			msg = "[user] starts [POKING_ACTION]."
+			self_msg = "You start [POKING_ACTION]"
+			cp_msg = "The pain in your chest is living hell!"
+		else
+		// alien remove
+			msg = "[user] starts to [PULL_FROM_ACTION]."
+			self_msg = "You start to [PULL_FROM_ACTION]."
+			cp_msg = "Something hurts horribly in your chest!"
+
+		surgery_victim.custom_pain(cp_msg, 1)
+		user.visible_message(msg, self_msg)
 		switch(target_zone)
 			if(BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
-				if(BP.open >= BP_RETRACT_OS)
+				if(bodypart.open >= BP_RETRACT_OS)
 					return TRUE
 			if(BP_HEAD, BP_CHEST)
 			// implant or embreo remove
-				if(BP.open >= BP_INTERNALS_OS)
+				if(bodypart.open >= BP_RIBCAGE_OS)
 					return TRUE
-	else      // operate organs
+	else
+	// operate organs
 		switch(target_zone)
 		//exclude operations
 			if(O_EYES)
@@ -42,119 +74,75 @@
 				if(!eyes)
 					return FALSE
 				if(eyes.surgery_stage == BP_RETRACT_OS)
+					msg = "[user] starts [EYES_MENDING_ACTION]."
+					self_msg = "You start [EYES_MENDING_ACTION]."
+					user.visible_message(msg, self_msg)
 					return TRUE
 			if(O_MOUTH)
 			//face reconstruction & plastic surgery
-				var/obj/item/organ/external/head/head = BP
-				if(head.ps_status <= BP_INTERNALS_OS)
+				var/obj/item/organ/external/head/head = bodypart
+				if(BP_DEFAULT_OS < head.ps_status && head.ps_status <= BP_INTERNALS_OS) // 0 < x <= 3
+					msg = "[user] starts [FACE_MENDING_ACTION]."
+					self_msg = "You start [FACE_MENDING_ACTION]."
+					user.visible_message(msg, self_msg)
 					return TRUE
 			if(BP_HEAD)
 			//brain chips
 				var/obj/item/organ/internal/brain/brain = surgery_victim:organs_by_name[O_BRAIN]
-				if(BP.open == BP_INTERNALS_OS)
-					if(brain?.status & ORGAN_BLEEDING)
-						return TRUE
+				if(bodypart.open == BP_INTERNALS_OS && brain?.status & ORGAN_BLEEDING)
+					//brain chips
+					msg = "[user] starts [BONE_CHIPS_ACTION]."
+					self_msg = "You start [BONE_CHIPS_ACTION]."
+					user.visible_message(msg, self_msg)
+					return TRUE
 	return FALSE
 
-
 /datum/surgery_step/clamp/prepare_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
-	return TRUE //may be next time add somethink
-
-/datum/surgery_step/clamp/begin_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
-
-	if(BP.open == BP_UNLOCK_P && surgery_victim.species.flags[IS_SYNTHETIC])
-
-		return
-
-	if(BP.status & ORGAN_BLEEDING)
-	//clamp bleeding
-		msg = "[user] starts clamping bleeders in [surgery_victim]'s [BP.name] with \the [tool]."
-		self_msg = "You start clamping bleeders in [surgery_victim]'s [BP.name] with \the [tool]."
-		cp_msg = "The pain in your [BP.name] is maddening!"
-	else if(BP.trauma_kit || BP.burn_kit)
-	//tissue
-		msg = "<span class='notice'>[user] starts connecting regenerative membrane with damaged tissue inside of [surgery_victim]'s [BP.name].</span>"
-		self_msg = "<span class='notice'>You start connecting regenerative membrane with damaged tissue inside of [surgery_victim]'s [BP.name].</span>"
-		cp_msg = "The pain in your [BP.name] is going to make you pass out!"
-	else if(check_inside(BP))
-		if(!(locate(/obj/item/alien_embryo) in surgery_victim))
-		//implant remove
-			msg = "[user] starts poking around inside the incision on [surgery_victim]'s [BP.name] with \the [tool]."
-			self_msg = "You start poking around inside the incision on [surgery_victim]'s [BP.name] with \the [tool]"
-			cp_msg = "The pain in your chest is living hell!"
-		else
-		//alien remove
-			msg = "[user] starts to pull something out from [surgery_victim]'s ribcage with \the [tool]."
-			self_msg = "You start to pull something out from [surgery_victim]'s ribcage with \the [tool]."
-			cp_msg = "Something hurts horribly in your chest!"
-	else
-		var/obj/item/organ/external/head/head = BP
-		switch(target_zone)
-			if(O_EYES)
-			//eyes
-				msg = "[user] starts mending the nerves and lenses in [surgery_victim]'s eyes with \the [tool]."
-				self_msg = "You start mending the nerves and lenses in [surgery_victim]'s eyes with the [tool]."
-			if(O_MOUTH)
-				//face reconstruction && plastic surg
-				if(head.ps_status > BP_DEFAULT_OS)
-					msg = "[user] starts [head.disfigured ? "mending" : "adjusting"] [surgery_victim]'s vocal cords with \the [tool]."
-					self_msg = "You start [head.disfigured ? "mending" : "adjusting"] [surgery_victim]'s vocal cords with \the [tool]."
-			if(BP_HEAD)
-			//brain chips
-				var/obj/item/organ/internal/brain/brain = surgery_victim:organs_by_name[O_BRAIN]
-				if(BP.open == BP_INTERNALS_OS && brain?.status & ORGAN_BLEEDING)
-					msg = "[user] starts taking bone chips out of [surgery_victim]'s brain with \the [tool]."
-					self_msg = "You start taking bone chips out of [surgery_victim]'s brain with \the [tool]."
-
-	surgery_victim.custom_pain(cp_msg, 1)
-	user.visible_message(msg, self_msg)
-
-	..()
+	return TRUE //may be next time add something
 
 /datum/surgery_step/clamp/end_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
-	if(BP.status & ORGAN_BLEEDING)
+	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
+	if(bodypart.status & ORGAN_BLEEDING)
 	//clamp bleeding
-		msg = "<span class='notice'>[user] clamps bleeders in [surgery_victim]'s [BP.name] with \the [tool].</span>"
-		self_msg = "<span class='notice'>You clamp bleeders in [surgery_victim]'s [BP.name] with \the [tool].</span>"
-		BP.strap()
-	else if(BP.trauma_kit || BP.burn_kit)
+		msg = "<span class='notice'>[user] clamps bleeders in [surgery_victim]'s [bodypart.name] with \the [tool].</span>"
+		self_msg = "<span class='notice'>You clamp bleeders in [surgery_victim]'s [bodypart.name] with \the [tool].</span>"
+		bodypart.strap()
+	else if(bodypart.trauma_kit || bodypart.burn_kit)
 	//tissue
-		msg = "<span class='notice'>[user] finishes connecting regenerative membrane with damaged tissue inside of [surgery_victim]'s [BP.name].</span>"
-		self_msg = "<span class='notice'>[user] finish connecting regenerative membrane with damaged tissue inside of [surgery_victim]'s [BP.name].</span>"
-		if(BP.trauma_kit)
-			BP.trauma_kit = FALSE
-			BP.heal_damage(20)
-			BP.disinfect()
-			BP.status &= ~ORGAN_BLEEDING
-		if(BP.burn_kit)
-			BP.burn_kit = FALSE
-			BP.heal_damage(0, 20)
-			BP.salve()
-	else if(check_inside(BP))
+		msg = "<span class='notice'>[user] finishes connecting regenerative membrane with damaged tissue inside of [surgery_victim]'s [bodypart.name].</span>"
+		self_msg = "<span class='notice'>[user] finish connecting regenerative membrane with damaged tissue inside of [surgery_victim]'s [bodypart.name].</span>"
+		if(bodypart.trauma_kit)
+			bodypart.trauma_kit = FALSE
+			bodypart.heal_damage(20)
+			bodypart.disinfect()
+			bodypart.status &= ~ORGAN_BLEEDING
+		if(bodypart.burn_kit)
+			bodypart.burn_kit = FALSE
+			bodypart.heal_damage(0, 20)
+			bodypart.salve()
+	else if(check_inside(bodypart))
 	//implant remove
-		if(length(BP.embedded_objects))
+		if(length(bodypart.embedded_objects))
 			var/list/list_of_embed_types = list()
 			var/list/embed_object_shrapnel = list()
 			var/list/embed_object_implants = list()
 			var/list/embed_object_else = list()
-			get_menu_of_embed(BP, embed_object_shrapnel, embed_object_implants, embed_object_else, list_of_embed_types)
+			get_menu_of_embed(bodypart, embed_object_shrapnel, embed_object_implants, embed_object_else, list_of_embed_types)
 			var/list_to_choose = show_radial_menu(user, surgery_victim, list_of_embed_types, radius = 30, require_near = TRUE, tooltips = TRUE)
 			if(!list_to_choose)
-				user.visible_message("<span class='notice'>[user] removes \the [tool] from [surgery_victim]'s [BP.name].</span>", \
-				"<span class='notice'>There's something inside [surgery_victim]'s [BP.name], but you decided not to touch it.</span>" )
+				user.visible_message("<span class='notice'>[user] removes \the [tool] from [surgery_victim]'s [bodypart.name].</span>", \
+				"<span class='notice'>There's something inside [surgery_victim]'s [bodypart.name], but you decided not to touch it.</span>" )
 				return FALSE
 			switch(list_to_choose)
 				if("Shrapnel")
 					var/atom/picked_obj = pick(embed_object_shrapnel)
-					remove_from_cavity(user, surgery_victim, picked_obj, BP, tool)
+					remove_from_cavity(user, surgery_victim, picked_obj, bodypart, tool)
 				if("Implants")
 					var/choosen_object = show_radial_menu(user, surgery_victim, embed_object_implants, radius = 50, require_near = TRUE, tooltips = TRUE)
 					if(choosen_object)
 						var/obj/item/weapon/implant/imp = choosen_object
 						imp.eject()
-						remove_from_cavity(user, surgery_victim, choosen_object, BP, tool)
+						remove_from_cavity(user, surgery_victim, choosen_object, bodypart, tool)
 						surgery_victim.sec_hud_set_implants()
 				if("Else")
 					var/choosen_object = show_radial_menu(user, surgery_victim, embed_object_else, radius = 50, require_near = TRUE, tooltips = TRUE)
@@ -168,21 +156,21 @@
 						//alien reemove
 							var/obj/item/alien_embryo/ae = choosen_object
 							ae.detach()
-						remove_from_cavity(user, surgery_victim, choosen_object, BP, tool)
+						remove_from_cavity(user, surgery_victim, choosen_object, bodypart, tool)
 			playsound(surgery_victim, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
-		else if(BP.hidden)
-			msg = "<span class='notice'>[user] takes something out of incision on [surgery_victim]'s [BP.name] with \the [tool].</span>"
-			self_msg = "<span class='notice'>You take something out of incision on [surgery_victim]'s [BP.name]s with \the [tool].</span>"
-			BP.hidden.forceMove(get_turf(surgery_victim))
-			BP.hidden.item_actions_special = initial(BP.hidden.item_actions_special)
-			BP.hidden.remove_item_actions(surgery_victim)
-			if(!BP.hidden.blood_DNA)
-				BP.hidden.blood_DNA = list()
-			BP.hidden.blood_DNA[surgery_victim.dna.unique_enzymes] = surgery_victim.dna.b_type
-			BP.hidden.update_icon()
-			BP.hidden = null
+		else if(bodypart.hidden)
+			msg = "<span class='notice'>[user] takes something out of incision on [surgery_victim]'s [bodypart.name] with \the [tool].</span>"
+			self_msg = "<span class='notice'>You take something out of incision on [surgery_victim]'s [bodypart.name]s with \the [tool].</span>"
+			bodypart.hidden.forceMove(get_turf(surgery_victim))
+			bodypart.hidden.item_actions_special = initial(bodypart.hidden.item_actions_special)
+			bodypart.hidden.remove_item_actions(surgery_victim)
+			if(!bodypart.hidden.blood_DNA)
+				bodypart.hidden.blood_DNA = list()
+			bodypart.hidden.blood_DNA[surgery_victim.dna.unique_enzymes] = surgery_victim.dna.b_type
+			bodypart.hidden.update_icon()
+			bodypart.hidden = null
 	else
-		var/obj/item/organ/external/head/head = BP
+		var/obj/item/organ/external/head/head = bodypart
 		switch(target_zone)
 			if(O_EYES)
 			//eyes
@@ -201,7 +189,7 @@
 					head.disfigured = FALSE
 				head.ps_status = head.ps_status == BP_SCALPEL_OS ? BP_RETRACT_OS : BP_INTERNALS_OS
 			if(BP_HEAD)
-				if(BP.open == BP_INTERNALS_OS)
+				if(bodypart.open == BP_INTERNALS_OS)
 				//brain chips
 					msg = "<span class='notice'>[user] takes out all the bone chips in [surgery_victim]'s brain with \the [tool].</span>"
 					self_msg = "<span class='notice'>You take out all the bone chips in [surgery_victim]'s brain with \the [tool].</span>"
@@ -214,32 +202,32 @@
 
 
 /datum/surgery_step/clamp/fail_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
-	if(BP.status & ORGAN_BLEEDING)
+	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
+	if(bodypart.status & ORGAN_BLEEDING)
 	//clamp bleeding
-		user.visible_message("<span class='warning'>[user]'s hand slips, tearing blood vessals and causing massive bleeding in [surgery_victim]'s [BP.name] with \the [tool]!</span>",	\
-		"<span class='warning'>Your hand slips, tearing blood vessels and causing massive bleeding in [surgery_victim]'s [BP.name] with \the [tool]!</span>",)
-		BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
+		user.visible_message("<span class='warning'>[user]'s hand slips, tearing blood vessals and causing massive bleeding in [surgery_victim]'s [bodypart.name] with \the [tool]!</span>",	\
+		"<span class='warning'>Your hand slips, tearing blood vessels and causing massive bleeding in [surgery_victim]'s [bodypart.name] with \the [tool]!</span>",)
+		bodypart.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 		return TRUE
-	else if(BP.trauma_kit || BP.burn_kit)
+	else if(bodypart.trauma_kit || bodypart.burn_kit)
 	//tissue
-		user.visible_message("<span class='warning'>[user]'s hand slips, getting mess and wasting regenerative membrane inside of [surgery_victim]'s [BP.name]!</span>", \
-		"<span class='warning'>Your hand slips, getting mess and wasting regenerative membrane inside of [surgery_victim]'s [BP.name]!</span>")
-		BP.trauma_kit = FALSE
-		BP.burn_kit = FALSE
-		BP.take_damage(5, 0, used_weapon = tool)
+		user.visible_message("<span class='warning'>[user]'s hand slips, getting mess and wasting regenerative membrane inside of [surgery_victim]'s [bodypart.name]!</span>", \
+		"<span class='warning'>Your hand slips, getting mess and wasting regenerative membrane inside of [surgery_victim]'s [bodypart.name]!</span>")
+		bodypart.trauma_kit = FALSE
+		bodypart.burn_kit = FALSE
+		bodypart.take_damage(5, 0, used_weapon = tool)
 		return TRUE
-	else if(check_inside(BP))
+	else if(check_inside(bodypart))
 	//implant remove
-		user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [surgery_victim]'s [BP.name] with \the [tool]!</span>", \
-		"<span class='warning'>Your hand slips, scraping tissue inside [surgery_victim]'s [BP.name] with \the [tool]!</span>")
-		BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
-		if(length(BP.embedded_objects))
+		user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [surgery_victim]'s [bodypart.name] with \the [tool]!</span>", \
+		"<span class='warning'>Your hand slips, scraping tissue inside [surgery_victim]'s [bodypart.name] with \the [tool]!</span>")
+		bodypart.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
+		if(length(bodypart.embedded_objects))
 			var/fail_prob = 10
 			fail_prob += 100 - tool_quality(tool)
-			var/obj/item/weapon/implant/imp = locate(/obj/item/weapon/implant) in BP.embedded_objects
+			var/obj/item/weapon/implant/imp = locate(/obj/item/weapon/implant) in bodypart.embedded_objects
 			if(prob(fail_prob))
-				user.visible_message("<span class='warning'>Внутри [CASE(BP, GENITIVE_CASE)] [surgery_victim] что-то пищит!</span>")
+				user.visible_message("<span class='warning'>Внутри [CASE(bodypart, GENITIVE_CASE)] [surgery_victim] что-то пищит!</span>")
 				playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
 				addtimer(CALLBACK(imp, TYPE_PROC_REF(/obj/item/weapon/implant, use_implant)), 3 SECONDS)
 		return TRUE
@@ -250,7 +238,7 @@
 				var/obj/item/organ/internal/eyes/IO = surgery_victim.organs_by_name[O_EYES]
 				user.visible_message("<span class='warning'>[user]'s hand slips, stabbing \the [tool] into [surgery_victim]'s eye!</span>", \
 				"<span class='warning'>Your hand slips, stabbing \the [tool] into [surgery_victim]'s eye!</span>")
-				BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
+				bodypart.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
 				IO.take_damage(5, 0)
 				return TRUE
 			if(O_MOUTH)
@@ -260,18 +248,18 @@
 				surgery_victim.losebreath += 10
 				return TRUE
 			if(BP_HEAD)
-				if(BP.open == BP_INTERNALS_OS)
+				if(bodypart.open == BP_INTERNALS_OS)
 				//brain chips
 					user.visible_message("<span class='warning'>[user]'s hand slips, jabbing \the [tool] in [surgery_victim]'s brain!</span>",
 					"<span class='warning'>Your hand slips, jabbing \the [tool] in [surgery_victim]'s brain!</span>")
-					BP.take_damage(30, 0, DAM_SHARP, tool)
+					bodypart.take_damage(30, 0, DAM_SHARP, tool)
 					return TRUE
 
 	return FALSE
 
-/datum/surgery_step/proc/remove_from_cavity(mob/user, mob/target, obj/obj_to_remove, obj/item/organ/external/BP, obj/tool)
-	BP.embedded_objects -= obj_to_remove
-	for(var/datum/wound/W in BP.wounds)
+/datum/surgery_step/proc/remove_from_cavity(mob/user, mob/target, obj/obj_to_remove, obj/item/organ/external/bodypart, obj/tool)
+	bodypart.embedded_objects -= obj_to_remove
+	for(var/datum/wound/W in bodypart.wounds)
 		if(obj_to_remove in W.embedded_objects)
 			W.embedded_objects -= obj_to_remove
 			break
@@ -280,18 +268,18 @@
 		var/obj/item/I = obj_to_remove
 		I.item_actions_special = initial(I.item_actions_special)
 		I.remove_item_actions(target)
-	user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [BP.name] with \the [tool].</span>", \
-	"<span class='notice'>You take [obj_to_remove] out of incision on [target]'s [BP.name]s with \the [tool].</span>" )
+	user.visible_message("<span class='notice'>[user] takes something out of incision on [target]'s [bodypart.name] with \the [tool].</span>", \
+	"<span class='notice'>You take [obj_to_remove] out of incision on [target]'s [bodypart.name]s with \the [tool].</span>" )
 
-/datum/surgery_step/proc/check_inside(obj/item/organ/external/BP)
-	for(var/something in BP.contents)
+/datum/surgery_step/proc/check_inside(obj/item/organ/external/bodypart)
+	for(var/something in bodypart.contents)
 		if(!isorgan(something))
 			return TRUE
 	return FALSE
 
-/datum/surgery_step/proc/get_menu_of_embed(obj/item/organ/external/BP, list/embed_object_shrapnel, list/embed_object_implants, list/embed_object_else, list/list_of_embed_types)
+/datum/surgery_step/proc/get_menu_of_embed(obj/item/organ/external/bodypart, list/embed_object_shrapnel, list/embed_object_implants, list/embed_object_else, list/list_of_embed_types)
 
-	for(var/embed_object in BP.embedded_objects)
+	for(var/embed_object in bodypart.embedded_objects)
 		if(istype(embed_object, /obj/item/weapon/shard/shrapnel))
 			embed_object_shrapnel += embed_object
 			continue

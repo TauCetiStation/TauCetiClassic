@@ -1,3 +1,11 @@
+// Condition content
+
+// Output Sortcut Defines
+
+
+
+
+
 /datum/surgery_step/retract
 	allowed_qualities = list(
 		QUALITY_RETRACT,
@@ -13,20 +21,15 @@
 
 	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
 
-	//stump preparing, prevert etc checks, is target bodypart is stump
-	if(BP.is_stump())
-		return TRUE
-
 	if(surgery_victim.species.flags[IS_SYNTHETIC])
 	//IPC only
-		can_infect = FALSE
 		switch(target_zone)
 			if(BP_CHEST)
 				switch(BP.open)
-					if(BP_SEC_PO)
+					if(BP_RETRACT_OS)
 					//wrench_sec
 						return TRUE
-					if(BP_MAINTANCE_PO)
+					if(BP_INTERNALS_OS)
 					//wrenchshut_sec
 						return TRUE
 	else if(!surgery_victim.species.flags[TRAIT_NO_BLOOD])
@@ -49,6 +52,20 @@
 				//ribcage & retract skin & remove fat
 					if(BP.open > BP_RETRACT_OS || BP.open == BP_SCALPEL_OS)
 						return TRUE
+	/* 		switch(target_zone)
+				if(O_EYES)
+				// Cut|Screw Eyes
+				if(O_MOUTH)
+				// Cut|Screw Face
+
+				else // Head, Chest, Groin, L|R Arm, L|R Leg
+					if(GENDER_SURGERY)
+					// Gender surgery, in this stage we need check only VOX
+					if(CUT_ORGAN)
+					// Detach organ or brain
+					if(CUT_SCREW)
+					// Cut|Screw Default
+	*/
 
 /datum/surgery_step/retract/prepare_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
 	return TRUE
@@ -71,13 +88,13 @@
 		switch(target_zone)
 			if(BP_CHEST)
 				switch(BP.open)
-					if(BP_SEC_PO)
+					if(BP_SCALPEL_OS)
 					//wrench_sec
 						msg = "[user] begins to loosen bolts on [surgery_victim]'s security panel with \the [tool]."
 						self_msg = "You begin to loosen bolts on [surgery_victim]'s security panel with \the [tool]."
 						if(!surgery_victim.is_bruised_organ(O_KIDNEYS))
 							to_chat(surgery_victim, "%MAIN SECURITY PANEL% UNATHORISED ACCESS ATTEMPT DETECTED!")
-					if(BP_MAINTANCE_PO)
+					if(BP_INTERNALS_OS)
 					//wrenchshut_sec
 						msg = "[user] starts tighetning bolts on [surgery_victim]'s security panel with \the [tool]."
 						self_msg = "You start tighetning bolts on [surgery_victim]'s security panel with \the [tool]."
@@ -153,12 +170,12 @@
 	else if(surgery_victim.species.flags[IS_SYNTHETIC])
 	//IPC only
 		switch(BP.open)
-			if(BP_SEC_PO)
+			if(BP_SCALPEL_OS)
 			//pry close sec
 				user.visible_message("<span class='notice'>[user] has loosen bolts on [surgery_victim]'s security panel with \the [tool].</span>",
 				"<span class='notice'>You have loosen bolts on [surgery_victim]'s security panel with \the [tool].</span>")
-				BP.open = BP_UNLOCK_P
-			if(BP_MAINTANCE_PO)
+				BP.open = BP_SCALPEL_OS
+			if(BP_INTERNALS_OS)
 			//pry open maintance
 				user.visible_message("<span class='notice'>[user] has pry open maintance panel on [surgery_victim]' with \the [tool].</span>",
 				"<span class='notice'>You has pry open maintance panel on [surgery_victim]'s with \the [tool].</span>")
@@ -167,10 +184,10 @@
 			//pry close maintance
 				user.visible_message("<span class='notice'>[user] has pry to close maintance panel on [surgery_victim]'s  with \the [tool].</span>",
 				"<span class='notice'>You has pry to close maintance panel on [surgery_victim]'s with \the [tool].</span>")
-				BP.open = BP_MAINTANCE_PO
+				BP.open = BP_INTERNALS_OS
 	else if(!surgery_victim.species.flags[TRAIT_NO_BLOOD])
 	//human, unathi, tajaran, skrell and etc)
-		if(isfat(surgery_victim))
+		if(HAS_TRAIT(surgery_victim, TRAIT_FAT))
 		//remove_fat
 			surgery_victim.op_stage.lipoplasty = 0
 			if(surgery_victim.overeatduration > 0)
@@ -216,7 +233,6 @@
 				switch(BP.open)
 					if(BP_SCALPEL_OS)
 					//retract skin
-						var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
 						msg = "<span class='notice'>[user] keeps the incision open on [surgery_victim]'s [BP.name] with \the [tool].</span>"
 						self_msg = "<span class='notice'>You keep the incision open on [surgery_victim]'s [BP.name] with \the [tool].</span>"
 						user.visible_message(msg, self_msg)
@@ -236,7 +252,7 @@
 
 /datum/surgery_step/retract/fail_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
 	//IPC SURGERY
-
+/*
 	//limb/ipc_prepare
 	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(BP_CHEST)
 	if(BP)
@@ -261,7 +277,7 @@
 	//wrench_sec
 	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [surgery_victim]'s security panel with \the [tool]!</span>" ,
 	"<span class='warning'>Your hand slips, scratching [surgery_victim]'s security panel with \the [tool]!</span>" )
-		BP.fracture()
+	BP.fracture()
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 	//ribcage
@@ -323,3 +339,4 @@
 	user.visible_message("<span class='warning'>[user]'s hand slips, cutting [surgery_victim]'s belly with \the [tool]!</span>" , \
 	"<span class='warning'>Your hand slips, cutting [surgery_victim]'s belly with \the [tool]!</span>" )
 	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)
+ */
