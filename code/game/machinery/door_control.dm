@@ -337,6 +337,7 @@
 	if(.)
 		return TRUE
 	activate(user)
+	return FALSE
 
 /obj/machinery/door_control/attack_ghost(mob/user)
 	if(user.client && user.client.AI_Interact)
