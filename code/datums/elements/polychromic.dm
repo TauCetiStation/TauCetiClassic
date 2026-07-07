@@ -95,9 +95,12 @@
 	if(U.flags_2 & IN_INVENTORY || U.flags_2 & IN_STORAGE)
 		U.icon_state = U.poly_style.get_inventory_state()
 		U.add_overlay(get_inventory_overlays(U))
-		return
-	U.icon_state = U.poly_style.get_world_state()
-	U.add_overlay(get_world_overlays(U))
+	else
+		U.icon_state = U.poly_style.get_world_state()
+		U.add_overlay(get_world_overlays(U))
+	// cut_overlays() above also wipes attached accessory overlays, restore them
+	for(var/obj/item/clothing/accessory/A in U.accessories)
+		U.add_overlay(A.inv_overlay)
 
 /datum/element/polychromic/proc/try_dye(obj/item/clothing/under/U, w_color)
 	var/static/list/dye_to_hex = list(
