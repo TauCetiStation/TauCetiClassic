@@ -1,0 +1,22 @@
+name: "Merge Conflict Labeler"
+
+on:
+  push:
+  pull_request_target:
+    types: [synchronize]
+
+permissions: {}
+
+jobs:
+  labeler:
+    permissions:
+      contents: read # may be required due to overwrite/add ambiguity
+      pull-requests: write # required to apply labels to PRs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for conflicting PRs
+        uses: eps1lon/actions-label-merge-conflict@v3
+        with:
+          dirtyLabel: "Merge Conflict"
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          commentOnDirty: "Pull Request содержит конфликты."
