@@ -8,6 +8,7 @@
 	flags = ONESIZEFITSALL|HEAR_TALK
 	poly_colors = list("#ffffff", "#ffffff")
 	// This cached ref is for the icon/dye/worn render paths below.
+	// TODO: rework update_icon and add COMSIG_ATOM_UPDATE_ICON
 	var/datum/element/polychromic/poly
 
 /obj/item/clothing/under/color/polychromic/atom_init()
