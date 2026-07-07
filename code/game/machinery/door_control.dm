@@ -336,7 +336,6 @@
 	. = ..()
 	if(.)
 		return TRUE
-	add_fingerprint(user)
 	activate(user)
 
 /obj/machinery/door_control/attack_ghost(mob/user)
