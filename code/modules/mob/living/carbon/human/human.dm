@@ -263,8 +263,8 @@
 
 	for(var/i in 1 to 3)
 		var/obj/item/organ/external/BP = pick(bodyparts)
-		apply_damage(b_loss * rand(0.25, 1), BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
-		apply_damage(f_loss * rand(0.25, 1), BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
+		apply_damage(b_loss * rand(25, 100) * 0.01, BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
+		apply_damage(f_loss * rand(25, 100) * 0.01, BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
 
 	// minor "behind the armor" damage from the blast wave across the entire body
 	b_loss *= 0.25
