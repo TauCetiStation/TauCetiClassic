@@ -33,11 +33,6 @@
 
 // Organics gender bender
 #define GENDER_BENDER_ACTION      "reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [tool]"
-
-// Fail output
-#define F_ACTION_RANDOM           (pick("slips", "dragged", "spasms"))
-#define FAIL_ACTION               "hand [F_ACTION_RANDOM], when you operate [target]!"
-
 //Action
 /datum/surgery_step/cut
 	allowed_qualities = list(
@@ -231,8 +226,8 @@
 	user.visible_message(msg, self_msg)
 
 /datum/surgery_step/cut/fail_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
-	msg = "[user] [FAIL_ACTION]"
-	self_msg = "Yours [FAIL_ACTION]"
+	msg = "<span class='warning'>[user] [FAIL_ACTION] [target]!</span>"
+	self_msg = "<span class='warning'>Yours [FAIL_ACTION] [target]!</span>"
 
 	var/mob/living/carbon/human/surgery_victim = target
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)

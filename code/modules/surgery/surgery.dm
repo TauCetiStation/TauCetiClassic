@@ -1,6 +1,11 @@
 // Poking inside something with something
 #define POKING_ACTION             "poking around inside the [surgery_victim]'s [bodypart.name] with \the [tool]"
 #define NO_POKING_MESSAGE         "could not find anything inside [surgery_victim]'s [bodypart.name], and pulls \the [tool] out"
+#define EYES_MENDING_ACTION "mending the nerves and lenses in [surgery_victim]'s eyes with \the [tool]"
+// Fail output
+#define F_ACTION_RANDOM           (pick("slips", "dragged", "spasms"))
+#define FAIL_ACTION               "hand [F_ACTION_RANDOM], when you operate"
+
 /* SURGERY STEPS */
 /datum/surgery_step
 	var/priority = 0	//steps with higher priority would be attempted first
@@ -273,3 +278,12 @@
 	allowed_species = list(IPC)
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/surgery = SKILL_LEVEL_NOVICE)
 	skills_speed_bonus = -0.2
+
+/datum/surgery_step/proc/fix_eyes(mob/living/user, mob/living/carbon/human/surgery_victim, obj/item/tool)
+	var/obj/item/organ/internal/eyes/eyes = surgery_victim.organs_by_name[O_EYES]
+	msg = "<span class='notice'>[user] finish [EYES_MENDING_ACTION].</span>"
+	self_msg = "<span class='notice'>You finish [EYES_MENDING_ACTION].</span>"
+
+	surgery_victim.cure_nearsighted(list(EYE_DAMAGE_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))
+	surgery_victim.sdisabilities &= ~BLIND
+	eyes.damage = 0
