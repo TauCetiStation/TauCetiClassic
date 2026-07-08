@@ -42,7 +42,6 @@
 	var/b_skin = /datum/preferences::b_skin
 
 	//Bodytype
-	var/bodytype_name = /datum/preferences::bodytype
 	var/datum/bodytype/bodytype
 	var/prefat_bodytype_name // remembers the bodytype before getting fat, to restore on slimming down
 

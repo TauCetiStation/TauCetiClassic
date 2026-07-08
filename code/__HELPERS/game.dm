@@ -731,12 +731,3 @@
 			break
 	return turf_to_check
 
-/proc/get_bodytype_by_name(bodytype_name)
-	switch(bodytype_name)
-		if(SLIM_BODYTYPE)
-			return /datum/bodytype/slim
-		if(FAT_BODYTYPE)
-			return /datum/bodytype/fat
-		else
-			return /datum/bodytype/average
-

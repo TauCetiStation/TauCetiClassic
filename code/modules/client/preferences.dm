@@ -472,8 +472,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	character.h_style = h_style
 	character.grad_style = grad_style
 	character.f_style = f_style
-	character.bodytype_name = bodytype
-	character.update_bodytype()
+	character.bodytype = global.bodytypes_list[bodytype]
 
 	character.home_system = home_system
 	character.citizenship = citizenship
