@@ -22,7 +22,7 @@
 		var/mob/living/carbon/human/M = src
 		for(var/obj/item/organ/external/BP in M.bodyparts)
 			if(BP.is_stump())
-				traumatic_shock += 60
+				traumatic_shock += 10
 			else if((BP.status & ORGAN_BROKEN) || BP.open)
 				traumatic_shock += 30
 				if(BP.status & ORGAN_SPLINTED)

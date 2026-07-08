@@ -37,8 +37,6 @@
 // Stump status
 #define NO_STUMP       (0<<2)
 #define IS_STUMP       (1<<2)
-#define STUMP_OPERATED (2<<2)
-#define STUMP_PREPARED (3<<2)
 
 // Operation stages
 #define BP_GEL 	    (0<<2)
