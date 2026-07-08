@@ -233,3 +233,9 @@
 	unit_name = "loyalty implant"
 	include_subtypes = FALSE
 	export_types = list(/obj/item/weapon/implantcase/loyalty)
+
+/datum/export/gear/bio_cartridge
+	cost = 300
+	unit_name = "Bio-BADs-V cartridge"
+	include_subtypes = FALSE
+	export_types = list(/obj/item/weapon/reagent_containers/bio_supplements_cartridge)

@@ -57,3 +57,25 @@
 	med_hud_set_health()
 	med_hud_set_status()
 	qdel(src)
+
+/mob/living/simple_animal/bio_slime
+	name = "bio-slime creature"
+	desc = "A writhing mass of semi-organic slime. It looks hungry."
+	icon = 'icons/mob/slimes.dmi'
+	icon_state = "badaslime"
+	icon_living = "badaslime"
+	icon_dead = "badaslime_dead"
+	speak_emote = list("chirps")
+	health = 30
+	maxHealth = 30
+	response_help  = "pets"
+	response_disarm = "shoos"
+	response_harm   = "stomps on"
+	emote_see = list("булькает", "качается")
+	var/colour = "grey"
+	ventcrawler = 2
+
+	typing_indicator_type = "slime"
+
+	has_head = TRUE
+	moveset_type = /datum/combat_moveset/slime

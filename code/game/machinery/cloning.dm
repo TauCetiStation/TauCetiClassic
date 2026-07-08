@@ -3,7 +3,7 @@
 
 //Potential replacement for genetics revives or something I dunno (?)
 
-#define CLONE_BIOMASS 150
+#define CLONE_BADS_COST 50
 #define CLONE_INITIAL_DAMAGE     190    //Clones in clonepods start with 190 cloneloss damage and 190 brainloss damage, thats just logical
 
 
@@ -23,7 +23,6 @@
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 //One clone attempt at a time thanks
 	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
-	var/biomass = CLONE_BIOMASS * 3
 	var/speed_coeff
 	var/efficiency
 	light_color = "#00ff00"
@@ -252,11 +251,6 @@
 		else
 			src.locked = 0
 			to_chat(user, "Система разблокирована.")
-	else if (istype(W, /obj/item/weapon/reagent_containers/food/snacks/meat))
-		to_chat(user, "<span class='notice'>[CASE(src, NOMINATIVE_CASE)] обрабатывает [CASE(W, ACCUSATIVE_CASE)].</span>")
-		biomass += 50
-		qdel(W)
-		return
 	else
 		..()
 
@@ -315,7 +309,20 @@
 //	occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
 	src.occupant = null
 
-	src.biomass -= CLONE_BIOMASS
+	if(connected && connected.cartridge)
+		if(connected.cartridge.reagents.get_reagent_amount("bio_supplements") >= CLONE_BADS_COST)
+			connected.cartridge.reagents.remove_reagent("bio_supplements", CLONE_BADS_COST)
+			connected_message("Био-БАДы израсходованы из картриджа.")
+			return
+
+	if(connected && connected.tank_unlocked)
+		for(var/obj/machinery/bads_tank/tank in machines)
+			if(tank.z == src.z && tank.consume(CLONE_BADS_COST))
+				connected_message("Био-БАДы израсходованы из резервуара.")
+				return
+		connected_message("Резервуар Био-БАДов пуст.")
+	else
+		connected_message("Резервуар Био-БАДов заблокирован. Разблокируйте в консоли ID-картой главы.")
 
 	return
 

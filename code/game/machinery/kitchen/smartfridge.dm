@@ -123,6 +123,203 @@
 		return 1
 	return 0
 
+/obj/machinery/smartfridge/secure/medbay/pharmacy
+	name = "Pharmacy Refrigerator"
+	desc = "A refrigerated cabinet stocked with medicine. Someone taped a handwritten price list to the door."
+	req_one_access = list(access_medical, access_chemistry)
+
+	var/list/prices = list()
+	var/vend_pending = FALSE
+	var/pending_item_name = ""
+	var/pending_item_index = 0
+	var/pending_amount = 0
+	var/pending_price = 0
+
+/obj/machinery/smartfridge/secure/medbay/pharmacy/proc/can_change_price(mob/user)
+	if(issilicon(user))
+		return TRUE
+	var/obj/item/weapon/card/id/ID = get_user_card(user)
+	if(!ID)
+		return FALSE
+	for(var/acc in ID.access)
+		if(acc == access_chemistry || acc == access_cmo)
+			return TRUE
+	return FALSE
+
+/obj/machinery/smartfridge/secure/medbay/pharmacy/proc/reset_pending()
+	vend_pending = FALSE
+	pending_item_name = ""
+	pending_item_index = 0
+	pending_amount = 0
+	pending_price = 0
+
+/obj/machinery/smartfridge/secure/medbay/pharmacy/attackby(obj/item/O, mob/user)
+	if(vend_pending)
+		if(istype(O, /obj/item/weapon/card/id))
+			var/obj/item/weapon/card/id/C = O
+			try_payment(user, C)
+			return
+
+		if(istype(O, /obj/item/device/pda))
+			var/obj/item/device/pda/P = O
+			var/obj/item/weapon/card/id/C = P.GetID()
+			if(C)
+				try_payment(user, C)
+			else
+				to_chat(user, "<span class='warning'>No ID card found in the PDA!</span>")
+			return
+
+		to_chat(user, "<span class='warning'>Please swipe your ID card to pay [pending_price] credits.</span>")
+		return
+	return ..()
+
+/obj/machinery/smartfridge/secure/medbay/pharmacy/proc/try_payment(mob/user, obj/item/weapon/card/id/C)
+	if(!vend_pending || !C)
+		return
+	visible_message("<span class='info'>[user] swipes a card through [src].</span>")
+	playsound(src, 'sound/machines/use_card.ogg', VOL_EFFECTS_MASTER)
+	var/datum/money_account/D = get_account(C.associated_account_number)
+	var/datum/money_account/S = global.department_accounts["Medical"]
+	if(!D || !S)
+		to_chat(user, "<span class='warning'>Unable to access your money account!</span>")
+		return
+	D = attempt_account_access_with_user_input(C.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, user)
+	if(user.incapacitated() || !Adjacent(user))
+		return
+	if(!D)
+		to_chat(user, "<span class='warning'>Wrong account PIN!</span>")
+		return
+	if(pending_price > D.money)
+		to_chat(user, "<span class='warning'>You don't have enough money!</span>")
+		return
+	var/tax = 0
+	if(S in global.department_accounts)
+		tax = round(pending_price * SSeconomy.tax_vendomat_sales * 0.01)
+		charge_to_account(global.station_account.account_number, global.station_account.owner_name, "Налог на продажу в вендомате", src.name, tax)
+	charge_to_account(D.account_number, "[S.owner_name] (via [src.name])", "Покупка: [pending_item_name]", src.name, -pending_price)
+	charge_to_account(S.account_number, S.owner_name, "Продажа: [pending_item_name]", src.name, pending_price - tax)
+	do_vend()
+
+/obj/machinery/smartfridge/secure/medbay/pharmacy/proc/get_user_card(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/weapon/card/id/ID = H.get_idcard()
+		if(!ID)
+			for(var/obj/item/I in H.get_hand_slots())
+				if(!I)
+					continue
+				ID = I.GetID()
+				if(ID)
+					break
+		return ID
+	return null
+
+/obj/machinery/smartfridge/secure/medbay/pharmacy/proc/do_vend()
+	var/K = item_quants[pending_item_index]
+	var/count = item_quants[K]
+	if(count > 0)
+		item_quants[K] = max(count - pending_amount, 0)
+		var/i = pending_amount
+		for(var/obj/O in contents)
+			if(O.name == K)
+				O.loc = loc
+				i--
+				if(i <= 0)
+					break
+	reset_pending()
+	SStgui.update_uis(src)
+
+/obj/machinery/smartfridge/secure/medbay/pharmacy/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PharmacyFridge", name)
+		ui.open()
+
+/obj/machinery/smartfridge/secure/medbay/pharmacy/tgui_data(mob/user)
+	var/list/data = list(
+		"contents" = null,
+		"secure" = TRUE,
+		"vend_pending" = vend_pending,
+		"pending_price" = pending_price,
+		"pending_item" = pending_item_name,
+	)
+
+	var/list/items[0]
+	for(var/i = 1 to length(item_quants))
+		var/K = item_quants[i]
+		var/count = item_quants[K]
+		if(count > 0)
+			var/price = prices[K]
+			items.Add(list(list(
+				"display_name" = html_encode(capitalize(K)),
+				"vend" = i,
+				"quantity" = count,
+				"price" = price
+			)))
+
+	if(items.len > 0)
+		data["contents"] = items
+
+	if(allowed(user))
+		data["is_staff"] = TRUE
+	else
+		data["is_staff"] = FALSE
+
+	data["can_set_prices"] = can_change_price(user)
+
+	return data
+
+/obj/machinery/smartfridge/secure/medbay/pharmacy/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	if(action == "set_price")
+		if(!can_change_price(usr))
+			return FALSE
+		var/index = text2num(params["index"])
+		var/price = text2num(params["price"])
+		if(index && index <= length(item_quants))
+			var/K = item_quants[index]
+			if(price >= 0)
+				prices[K] = price
+				SStgui.update_uis(src)
+				return TRUE
+		return FALSE
+
+	if(action == "buy")
+		if(vend_pending)
+			return FALSE
+		var/index = text2num(params["index"])
+		var/amount = text2num(params["amount"])
+		if(index && index <= length(item_quants))
+			var/K = item_quants[index]
+			var/count = item_quants[K]
+			var/price = prices[K]
+			if(isnull(price) || count <= 0)
+				return FALSE
+			if(price <= 0)
+				return FALSE
+			vend_pending = TRUE
+			pending_item_name = K
+			pending_item_index = index
+			pending_amount = min(amount, count)
+			pending_price = price * pending_amount
+			var/obj/item/weapon/card/id/ID = get_user_card(usr)
+			if(ID)
+				try_payment(usr, ID)
+			else
+				SStgui.update_uis(src)
+			return TRUE
+		return FALSE
+
+	if(action == "cancel_buy")
+		reset_pending()
+		SStgui.update_uis(src)
+		return TRUE
+
+	return FALSE
+
 /obj/machinery/smartfridge/secure/virology
 	name = "Refrigerated Virus Storage"
 	desc = "A refrigerated storage unit for storing viral material."

@@ -7,16 +7,14 @@
 	anchored = TRUE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
-	use_power = NO_POWER_USE
+	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
+	active_power_usage = 600
 	var/ui_title = "Chem Dispenser 5000"
-	var/energy = 100
-	var/max_energy = 100
 	var/amount = 30
 	var/accept_glass = 0
 	var/obj/item/weapon/reagent_containers/beaker = null
-	var/recharged = 0
-	var/recharge_delay = 15
+	var/obj/item/weapon/reagent_containers/bio_supplements_cartridge/cartridge = null
 	var/hackedcheck = FALSE
 	var/hackable = FALSE
 	var/msg_hack_enable = ""
@@ -30,23 +28,18 @@
 	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
 	fumbling_time = 2 SECONDS
 
+	var/list/bio_cost_low = list("aluminum", "copper", "hydrogen", "mercury", "phosphorus", "sacid", "sugar", "water")
+	var/list/bio_cost_high = list("chlorine", "fluorine", "lithium", "oxygen", "radium", "sodium", "tungsten")
+
 /obj/machinery/chem_dispenser/atom_init()
 	. = ..()
-	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
+	cartridge = new /obj/item/weapon/reagent_containers/bio_supplements_cartridge(src)
 
 /obj/machinery/chem_dispenser/Destroy()
 	QDEL_NULL(beaker)
+	QDEL_NULL(cartridge)
 	return ..()
-
-/obj/machinery/chem_dispenser/proc/recharge()
-	if(stat & (BROKEN|NOPOWER)) return
-	var/addenergy = 1
-	var/oldenergy = energy
-	energy = min(energy + addenergy, max_energy)
-	if(energy != oldenergy)
-		use_power(2500) // This thing uses up alot of power (this is still low as shit for creating reagents from thin air)
-		nanomanager.update_uis(src) // update all UIs attached to src
 
 /obj/machinery/chem_dispenser/power_change()
 	if(anchored && powered())
@@ -56,13 +49,6 @@
 			stat |= NOPOWER
 			update_power_use()
 	update_power_use()
-
-/obj/machinery/chem_dispenser/process()
-	if(recharged <= 0)
-		recharge()
-		recharged = recharge_delay
-	else
-		recharged -= 1
 
 /obj/machinery/chem_dispenser/ex_act(severity)
 	switch(severity)
@@ -85,10 +71,14 @@
 /obj/machinery/chem_dispenser/tgui_data(mob/user)
 	var/list/data = list()
 	data["amount"] = amount
-	data["energy"] = energy
-	data["maxEnergy"] = max_energy
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 	data["glass"] = accept_glass
+	data["cartridgeLoaded"] = cartridge ? 1 : 0
+	data["cartridgeOk"] = cartridge && cartridge.reagents && cartridge.reagents.has_reagent("bio_supplements")
+	if(cartridge)
+		data["cartridgeName"] = cartridge.name
+		data["cartridgeVolume"] = cartridge.reagents.total_volume
+		data["cartridgeMaxVolume"] = cartridge.volume
 	var/list/beakerContents = list()
 	var/beakerCurrentVolume = 0
 	if(beaker?.reagents?.reagent_list.len)
@@ -131,18 +121,36 @@
 			. = TRUE
 			if (!beaker || !dispensable_reagents.Find(params["chemical"]))
 				return
+			if(!cartridge || !cartridge.reagents.has_reagent("bio_supplements"))
+				return
 
 			var/datum/reagents/R = beaker.reagents
 			var/space = R.maximum_volume - R.total_volume
+			var/bio_available = cartridge.reagents.get_reagent_amount("bio_supplements")
+			var/bio_cost = 0.1
+			var/power_cost = 0
+			var/chem = params["chemical"]
+			if(chem in bio_cost_low)
+				bio_cost = 0.05
+				power_cost = 25
+			else if(chem in bio_cost_high)
+				bio_cost = 0.2
+			else
+				power_cost = 5
 
 			if(iscarbon(usr))
 				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
 
-			if ((space > 0) && (energy * 10 >= min(amount, space)))
-				playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 40) // 15 isn't enough
+			var/dispense_amount = min(amount, round(bio_available / bio_cost), space)
+			if(dispense_amount > 0)
+				playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER, 40)
 
-			R.add_reagent(params["chemical"], min(amount, energy * 10, space))
-			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
+			R.add_reagent(chem, dispense_amount)
+			cartridge.reagents.remove_reagent("bio_supplements", round(dispense_amount * bio_cost))
+
+			if(power_cost > 0)
+				use_power(dispense_amount * power_cost)
+			SStgui.update_uis(src)
 
 		if("eject_beaker")
 			. = TRUE
@@ -151,6 +159,21 @@
 
 			beaker.forceMove(loc)
 			beaker = null
+			SStgui.update_uis(src)
+
+			if(iscarbon(usr))
+				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
+
+			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+
+		if("eject_cartridge")
+			. = TRUE
+			if(!cartridge)
+				return
+
+			cartridge.forceMove(loc)
+			cartridge = null
+			SStgui.update_uis(src)
 
 			if(iscarbon(usr))
 				playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MISC, 20)
@@ -173,6 +196,17 @@
 		power_change()
 		return
 
+	if(istype(B, /obj/item/weapon/reagent_containers/bio_supplements_cartridge))
+		if(cartridge)
+			to_chat(user, "\The [src] already has a cartridge loaded.")
+			return
+		cartridge = B
+		user.drop_from_inventory(B, src)
+		to_chat(user, "You insert [B] into \the [src].")
+		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+		SStgui.update_uis(src)
+		return
+
 	if(src.beaker)
 		to_chat(user, "Something is already loaded into the machine.")
 		return
@@ -191,7 +225,9 @@
 		user.drop_from_inventory(B, src)
 		to_chat(user, "You set [B] on the machine.")
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
+		SStgui.update_uis(src)
 		return
+	return ..()
 
 /obj/machinery/chem_dispenser/old/atom_init()
 	. = ..()
@@ -203,10 +239,7 @@
 	name = "portable chem dispenser"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "minidispenser"
-	energy = 10
-	max_energy = 10
 	amount = 5
-	recharge_delay = 30
 	dispensable_reagents = list()
 	var/list/dispensable_reagent_tiers = list(
 		list(
@@ -260,18 +293,7 @@
 /obj/machinery/chem_dispenser/constructable/RefreshParts()
 	..()
 
-	var/time = 0
-	var/temp_energy = 0
 	var/i
-	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
-		temp_energy += M.rating
-	temp_energy--
-	max_energy = temp_energy * 5  //max energy = (bin1.rating + bin2.rating - 1) * 5, 5 on lowest 25 on highest
-	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
-		time += C.rating
-	for(var/obj/item/weapon/stock_parts/cell/P in component_parts)
-		time += round(P.maxcharge, 10000) / 10000
-	recharge_delay /= time/2         //delay between recharges, double the usual time on lowest 50% less than usual on highest
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		for(i=1, i<=M.rating, i++)
 			dispensable_reagents |= dispensable_reagent_tiers[i]
@@ -301,9 +323,7 @@
 	name = "soda fountain"
 	desc = "A drink fabricating machine, capable of producing many sugary drinks with just one touch."
 	ui_title = "Soda Dispens-o-matic"
-	energy = 100
 	accept_glass = 1
-	max_energy = 100
 	dispensable_reagents = list("water","ice","coffee","cream","tea","icetea","cola","spacemountainwind","dr_gibb","space_up","tonic","sodawater","lemon_lime","sugar","orangejuice","limejuice","watermelonjuice")
 	premium_reagents = list("thirteenloko","grapesoda")
 	hackable = TRUE
@@ -316,9 +336,7 @@
 	icon_state = "booze_dispenser"
 	name = "booze dispenser"
 	ui_title = "Booze Portal 9001"
-	energy = 100
 	accept_glass = 1
-	max_energy = 100
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	dispensable_reagents = list("lemon_lime","sugar","orangejuice","limejuice","sodawater","tonic","beer","kahlua","whiskey","wine","vodka","gin","rum","tequilla","vermouth","cognac","ale","mead")
 	premium_reagents = list("goldschlager","patron","watermelonjuice","berryjuice")
@@ -338,6 +356,7 @@
 	icon_state = "mixer0"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 20
+	active_power_usage = 500
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/obj/item/weapon/storage/pill_bottle/loaded_pill_bottle = null
 	var/mode = 1
@@ -346,9 +365,19 @@
 	var/pillamount = 10
 	var/bottlesprite = 1
 	var/pillsprite = 1
-	var/client/has_sprites = list()
 	var/max_pill_count = 24
 	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
+
+	// Temperature control
+	var/temperature = T20C
+	var/heater_mode = 0  // 0=off, 1=heating, 2=cooling
+	var/const/MAX_HEATING_TEMP = 500
+	var/const/MIN_COOLING_TEMP = 200
+	var/const/TEMP_CHANGE_RATE = 10  // K per process tick
+
+	var/list/pill_icon_cache
+	var/list/bottle_icon_cache
+	var/sprite_icons_loaded = FALSE
 
 
 /obj/machinery/chem_master/atom_init()
@@ -375,6 +404,25 @@
 			update_power_use()
 	update_power_use()
 
+/obj/machinery/chem_master/process()
+	if(heater_mode == 1)
+		if(temperature < MAX_HEATING_TEMP)
+			temperature = min(temperature + TEMP_CHANGE_RATE, MAX_HEATING_TEMP)
+		use_power(active_power_usage)
+	else if(heater_mode == 2)
+		if(temperature > MIN_COOLING_TEMP)
+			temperature = max(temperature - TEMP_CHANGE_RATE, MIN_COOLING_TEMP)
+		use_power(active_power_usage)
+	else
+		if(abs(temperature - T20C) < 1)
+			temperature = T20C
+		else if(temperature > T20C)
+			temperature = max(temperature - TEMP_CHANGE_RATE * 0.5, T20C)
+		else
+			temperature = min(temperature + TEMP_CHANGE_RATE * 0.5, T20C)
+
+	SStgui.update_uis(src)
+
 /obj/machinery/chem_master/attackby(obj/item/B, mob/user)
 
 	if(default_unfasten_wrench(user, B))
@@ -388,7 +436,7 @@
 		src.beaker = B
 		user.drop_from_inventory(B, src)
 		to_chat(user, "You add the beaker to the machine!")
-		updateUsrDialog()
+		SStgui.update_uis(src)
 		icon_state = "mixer1"
 
 	else if(!condi && istype(B, /obj/item/weapon/storage/pill_bottle))
@@ -399,97 +447,255 @@
 		src.loaded_pill_bottle = B
 		user.drop_from_inventory(B, src)
 		to_chat(user, "You add the pill bottle into the dispenser slot!")
-		updateUsrDialog()
+		SStgui.update_uis(src)
 
 	return
 
-/obj/machinery/chem_master/Topic(href, href_list)
-	. = ..()
-	if(!.)
-		return
+/obj/machinery/chem_master/ui_interact(mob/user)
+	tgui_interact(user)
 
-	if(href_list["ejectp"])
-		if(loaded_pill_bottle)
-			loaded_pill_bottle.loc = src.loc
-			loaded_pill_bottle = null
+/obj/machinery/chem_master/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ChemMaster", name)
+		ui.open()
 
-	else if(href_list["toggle"])
-		mode = !mode
+/obj/machinery/chem_master/tgui_data(mob/user)
+	var/list/data = list()
 
-	else if(href_list["createbottle"])
-		if(!condi)
-			var/name = sanitize_safe(input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " ")) as text|null, MAX_NAME_LEN)
-			if(!name)
-				return FALSE
-			var/amount = 1
-			if(text2num(href_list["bulk"]))
-				amount = ceil(reagents.total_volume / 30)
-			for(var/i in 1 to amount)
-				var/obj/item/weapon/reagent_containers/glass/bottle/P = new(loc)
-				P.name = "[name] bottle"
-				P.icon_state = "bottle[bottlesprite]"
-				P.pixel_x = rand(-7, 7) //random position
-				P.pixel_y = rand(-7, 7)
-				reagents.trans_to(P, 30)
-		else
-			if(text2num(href_list["bulk"]))
-				to_chat(usr, "Sorry! \"CondiMaster Neo\" DRM forbids mass production. Please contact our support to upgrade your license.")
-			else
-				var/obj/item/weapon/reagent_containers/food/condiment/P = new(loc)
-				reagents.trans_to(P, 50)
+	data["condi"] = condi
 
-	else if(href_list["changepill"])
-		var/dat = "<B>Choose pill colour</B><BR>"
+	// Temperature
+	data["temperature"] = round(temperature)
+	data["temperature_c"] = round(temperature - T0C)
+	data["heater_mode"] = heater_mode
 
-		dat += "<TABLE><TR>"
-		for(var/i = 1 to MAX_PILL_SPRITE)
-			if(!((i-1)%9)) //New row every 9 icons
-				dat +="</TR><TR>"
-			dat += "<TD><A href='byond://?src=\ref[src];set=1;value=[i] '><IMG src=pill[i].png></A></TD>"
-		dat += "</TR></TABLE>"
-
-		dat += "<BR><A href='byond://?src=\ref[src];main=1'>Back</A>"
-
-		var/datum/browser/popup = new(usr, "chem_master", name)
-		popup.set_content(dat)
-		popup.open()
-		return
-
-	else if(href_list["changebottle"])
-		var/dat = "<B>Choose bottle</B><BR>"
-
-		dat += "<TABLE><TR>"
-		for(var/i = 1 to MAX_BOTTLE_SPRITE)
-			if(!((i-1)%9)) //New row every 9 icons
-				dat += "</TR><TR>"
-			dat += "<TD><A href='byond://?src=\ref[src];set=2;value=[i] '><IMG src=bottle[i].png></A></TD>"
-
-		dat += "</TR></TABLE>"
-
-		dat += "<BR><A href='byond://?src=\ref[src];main=1'>Back</A>"
-
-		var/datum/browser/popup = new(usr, "chem_master", name)
-		popup.set_content(dat)
-		popup.open()
-		return
-
-	else if(href_list["set"])
-		if(href_list["value"])
-			if(href_list["set"] == "1")
-				src.pillsprite = text2num(href_list["value"])
-			else
-				src.bottlesprite = text2num(href_list["value"])
-		attack_hand(usr)
-		return
-
-	else if(href_list["main"]) // Used to exit the analyze screen.
-		attack_hand(usr)
-		return
-
+	// Beaker
+	data["beaker_loaded"] = !!beaker
 	if(beaker)
-		if(href_list["analyze"])
-			if(locate(href_list["reagent"]))
-				var/datum/reagent/R = locate(href_list["reagent"])
+		data["beaker_volume"] = beaker.reagents.total_volume
+		data["beaker_max"] = beaker.volume
+		var/list/beaker_reagents = list()
+		for(var/datum/reagent/G in beaker.reagents.reagent_list)
+			beaker_reagents += list(list(
+				"id" = G.id,
+				"reagent_ref" = "\ref[G]",
+				"name" = G.name,
+				"volume" = G.volume
+			))
+		data["beaker_reagents"] = beaker_reagents
+
+	// Buffer
+	data["buffer_volume"] = reagents.total_volume
+	data["buffer_max"] = reagents.maximum_volume
+	data["mode"] = mode
+	var/list/buffer_reagents = list()
+	for(var/datum/reagent/N in reagents.reagent_list)
+		buffer_reagents += list(list(
+			"id" = N.id,
+			"reagent_ref" = "\ref[N]",
+			"name" = N.name,
+			"volume" = N.volume
+		))
+	data["buffer_reagents"] = buffer_reagents
+
+	// Pill bottle
+	data["pill_bottle_loaded"] = !!loaded_pill_bottle
+	if(loaded_pill_bottle)
+		data["pill_bottle_count"] = loaded_pill_bottle.contents.len
+		data["pill_bottle_max"] = loaded_pill_bottle.storage_slots
+
+	// Sprites
+	data["pillsprite"] = pillsprite
+	data["bottlesprite"] = bottlesprite
+	data["max_pill_sprite"] = MAX_PILL_SPRITE
+	data["max_bottle_sprite"] = MAX_BOTTLE_SPRITE
+
+	// Icon cache (only sent when sprite picker opened)
+	if(sprite_icons_loaded)
+		if(!pill_icon_cache)
+			pill_icon_cache = list()
+			for(var/i = 1 to MAX_PILL_SPRITE)
+				var/icon/pill = icon('icons/obj/chemical.dmi', "pill[i]")
+				pill.Blend("#ffffff", ICON_UNDERLAY)
+				pill_icon_cache["[i]"] = icon2base64(pill)
+		if(!bottle_icon_cache)
+			bottle_icon_cache = list()
+			for(var/i = 1 to MAX_BOTTLE_SPRITE)
+				var/icon/bottle = icon('icons/obj/chemical.dmi', "bottle[i]")
+				bottle.Blend("#ffffff", ICON_UNDERLAY)
+				bottle_icon_cache["[i]"] = icon2base64(bottle)
+		data["pill_icons"] = pill_icon_cache
+		data["bottle_icons"] = bottle_icon_cache
+
+	return data
+
+/obj/machinery/chem_master/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	var/mob/user = usr
+	if(isnull(user))
+		return
+
+	switch(action)
+		if("load_sprite_icons")
+			sprite_icons_loaded = TRUE
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("eject")
+			if(beaker)
+				beaker.forceMove(loc)
+				beaker = null
+				reagents.clear_reagents()
+				icon_state = "mixer0"
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("ejectp")
+			if(loaded_pill_bottle)
+				loaded_pill_bottle.forceMove(loc)
+				loaded_pill_bottle = null
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("heat")
+			heater_mode = 1
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("cool")
+			heater_mode = 2
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("heatoff")
+			heater_mode = 0
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("toggle")
+			mode = !mode
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("add")
+			var/id = params["id"]
+			var/amount = text2num(params["amount"])
+			if(amount > 0 && beaker)
+				beaker.reagents.trans_id_to(src, id, amount)
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("addcustom")
+			var/id = params["id"]
+			var/amt_temp = input(user, "Select the amount to transfer.", "Transfer how much?", useramount) as num|null
+			if(!amt_temp)
+				return FALSE
+			useramount = clamp(round(amt_temp), 0, 300)
+			if(beaker)
+				beaker.reagents.trans_id_to(src, id, useramount)
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("remove")
+			var/id = params["id"]
+			var/amount = text2num(params["amount"])
+			if(amount > 0)
+				if(mode)
+					if(beaker)
+						reagents.trans_id_to(beaker, id, amount)
+				else
+					reagents.remove_reagent(id, amount)
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("removecustom")
+			var/id = params["id"]
+			var/amt_temp = input(user, "Select the amount to transfer.", "Transfer how much?", useramount) as num|null
+			if(!amt_temp)
+				return FALSE
+			useramount = clamp(round(amt_temp), 0, 300)
+			if(mode)
+				if(beaker)
+					reagents.trans_id_to(beaker, id, useramount)
+			else
+				reagents.remove_reagent(id, useramount)
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("createpill")
+			if(reagents.total_volume == 0)
+				return FALSE
+			if(!condi)
+				var/amount = 1
+				var/vol_each = min(reagents.total_volume, 50)
+				if(text2num(params["many"]))
+					amount = min(max(round(input(user, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0), 10)
+					if(!amount)
+						return FALSE
+					vol_each = min(reagents.total_volume / amount, 50)
+				var/name = sanitize_safe(input(user, "Name:", "Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)") as text|null, MAX_NAME_LEN)
+				if(!name || !reagents.total_volume)
+					return FALSE
+				var/obj/item/weapon/reagent_containers/pill/P
+				for(var/i = 0; i < amount; i++)
+					if(loaded_pill_bottle && loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
+						P = new/obj/item/weapon/reagent_containers/pill(loaded_pill_bottle)
+					else
+						P = new/obj/item/weapon/reagent_containers/pill(loc)
+					P.name = "[name] pill"
+					P.icon_state = "pill[pillsprite]"
+					P.pixel_x = rand(-7, 7)
+					P.pixel_y = rand(-7, 7)
+					reagents.trans_to(P, vol_each)
+			else
+				if(beaker && reagents.total_volume)
+					var/obj/item/weapon/reagent_containers/food/condiment/P = new(loc)
+					reagents.trans_to(P, 50)
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("createbottle")
+			if(!condi)
+				var/name = sanitize_safe(input(user, "Name:", "Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " ")) as text|null, MAX_NAME_LEN)
+				if(!name)
+					return FALSE
+				var/amount = 1
+				if(text2num(params["bulk"]))
+					amount = ceil(reagents.total_volume / 30)
+				for(var/i in 1 to amount)
+					var/obj/item/weapon/reagent_containers/glass/bottle/P = new(loc)
+					P.name = "[name] bottle"
+					P.icon_state = "bottle[bottlesprite]"
+					P.pixel_x = rand(-7, 7)
+					P.pixel_y = rand(-7, 7)
+					reagents.trans_to(P, 30)
+			else
+				if(text2num(params["bulk"]))
+					to_chat(user, "Sorry! \"CondiMaster Neo\" DRM forbids mass production. Please contact our support to upgrade your license.")
+				else
+					var/obj/item/weapon/reagent_containers/food/condiment/P = new(loc)
+					reagents.trans_to(P, 50)
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("set_pillsprite")
+			pillsprite = clamp(text2num(params["value"]), 1, MAX_PILL_SPRITE)
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("set_bottlesprite")
+			bottlesprite = clamp(text2num(params["value"]), 1, MAX_BOTTLE_SPRITE)
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("analyze")
+			var/ref = params["reagent_ref"]
+			if(ref)
+				var/datum/reagent/R = locate(ref)
 				if(R)
 					var/dat = ""
 					dat += "<H1>[condi ? "Condiment" : "Chemical"] information:</H1>"
@@ -512,185 +718,16 @@
 						var/B = G.data["blood_DNA"]
 						dat += "<B>Blood Type:</B> [A]<br>"
 						dat += "<B>DNA:</B> [B]<BR><BR><BR>"
-					var/const/P = 3 //The number of seconds between life ticks
+					var/const/P = 3
 					var/T = initial(R.custom_metabolism) * (60 / P)
 					dat += "<B>Metabolization Rate:</B> [T]u/minute<BR>"
 					dat += "<B>Overdose Threshold:</B> [initial(R.overdose) ? "[initial(R.overdose)]u" : "none"]<BR>"
-					//dat += "<B>Addiction Threshold:</B> [initial(R.addiction_threshold) ? "[initial(R.addiction_threshold)]u" : "none"]<BR><BR>"
-					dat += "<BR><A href='byond://?src=\ref[src];main=1'>Back</A>"
-					var/datum/browser/popup = new(usr, "chem_master", name)
+					var/datum/browser/popup = new(user, "chem_master_analyze", name)
 					popup.set_content(dat)
 					popup.open()
-					return
+			return TRUE
 
-
-		else if(href_list["add"])
-			if(href_list["amount"])
-				var/id = href_list["add"]
-				var/amount = text2num(href_list["amount"])
-				if (amount > 0)
-					beaker.reagents.trans_id_to(src, id, amount)
-
-		else if(href_list["addcustom"])
-			var/id = href_list["addcustom"]
-			var/amt_temp = isgoodnumber(input(usr, "Select the amount to transfer.", "Transfer how much?", useramount) as num|null)
-			if(!amt_temp)
-				return FALSE
-			useramount = amt_temp
-			if(useramount < 0)
-				message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [useramount]</a>! [ADMIN_JMP(src)]")
-				log_admin("EXPLOIT : [key_name(usr)] tried to exploit a chemistry by entering a negative value: [useramount] !")
-				return FALSE
-			if(useramount > 300)
-				return FALSE
-			Topic(null, list("amount" = "[useramount]", "add" = "[id]"))
-
-		else if(href_list["remove"])
-			if(href_list["amount"])
-				var/id = href_list["remove"]
-				var/amount = text2num(href_list["amount"])
-				if (amount > 0)
-					if(mode)
-						reagents.trans_id_to(beaker, id, amount)
-					else
-						reagents.remove_reagent(id, amount)
-
-		else if(href_list["removecustom"])
-			var/id = href_list["removecustom"]
-			var/amt_temp = isgoodnumber(input(usr, "Select the amount to transfer.", "Transfer how much?", useramount) as num|null)
-			if(!amt_temp)
-				return FALSE
-			useramount = amt_temp
-			if(useramount < 0)
-				message_admins("[key_name_admin(usr)] tried to exploit a chemistry by entering a negative value: [useramount]</a>! [ADMIN_JMP(src)]")
-				log_admin("EXPLOIT : [key_name(usr)] tried to exploit a chemistry by entering a negative value: [useramount] !")
-				return FALSE
-			if(useramount > 300)
-				return FALSE
-			Topic(null, list("amount" = "[useramount]", "remove" = "[id]"))
-
-		else if(href_list["eject"])
-			if(beaker)
-				beaker.loc = src.loc
-				beaker = null
-				reagents.clear_reagents()
-				icon_state = "mixer0"
-
-		else if(href_list["createpill"]) //Also used for condiment packs.
-			if(reagents.total_volume == 0)
-				return FALSE
-			if(!condi)
-				var/amount = 1
-				var/vol_each = min(reagents.total_volume, 50)
-				if(text2num(href_list["many"]))
-					amount = min(max(round(input(usr, "Max 10. Buffer content will be split evenly.", "How many pills?", amount) as num|null), 0), 10)
-					if(!amount)
-						return FALSE
-					vol_each = min(reagents.total_volume / amount, 50)
-				var/name = sanitize_safe(input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)") as text|null, MAX_NAME_LEN)
-				if(!name || !reagents.total_volume)
-					return FALSE
-				var/obj/item/weapon/reagent_containers/pill/P
-
-				for(var/i = 0; i < amount; i++)
-					if(loaded_pill_bottle && loaded_pill_bottle.contents.len < loaded_pill_bottle.storage_slots)
-						P = new/obj/item/weapon/reagent_containers/pill(loaded_pill_bottle)
-					else
-						P = new/obj/item/weapon/reagent_containers/pill(src.loc)
-					P.name = "[name] pill"
-					P.icon_state = "pill[pillsprite]"
-					P.pixel_x = rand(-7, 7) //random position
-					P.pixel_y = rand(-7, 7)
-					reagents.trans_to(P,vol_each)
-
-	updateUsrDialog()
-
-/obj/machinery/chem_master/ui_interact(mob/user)
-	if(!(user.client in has_sprites))
-		spawn()
-			has_sprites += user.client
-			for(var/i = 1 to MAX_PILL_SPRITE)
-				usr << browse_rsc(icon('icons/obj/chemical.dmi', "pill[i]"), "pill[i].png")
-			for(var/i = 1 to MAX_BOTTLE_SPRITE)
-				usr << browse_rsc(icon('icons/obj/chemical.dmi', "bottle[i]"), "bottle[i].png")
-			updateUsrDialog()
-
-	var/dat = ""
-	if(beaker)
-		dat += "Beaker \[[beaker.reagents.total_volume]/[beaker.volume]\] <A href='byond://?src=\ref[src];eject=1'>Eject and Clear Buffer</A><BR>"
-	else
-		dat = "Please insert beaker.<BR>"
-
-	dat += "<HR><B>Add to buffer:</B><UL>"
-	if(beaker)
-		if(beaker.reagents.total_volume)
-			for(var/datum/reagent/G in beaker.reagents.reagent_list)
-				dat += "<LI>[G.name], [G.volume] Units - "
-				dat += "<A href='byond://?src=\ref[src];analyze=1;reagent=\ref[G]'>Analyze</A> "
-				dat += "<A href='byond://?src=\ref[src];add=[G.id];amount=1'>1</A> "
-				dat += "<A href='byond://?src=\ref[src];add=[G.id];amount=5'>5</A> "
-				dat += "<A href='byond://?src=\ref[src];add=[G.id];amount=10'>10</A> "
-				dat += "<A href='byond://?src=\ref[src];add=[G.id];amount=[G.volume]'>All</A> "
-				dat += "<A href='byond://?src=\ref[src];addcustom=[G.id]'>Custom</A>"
-		else
-			dat += "<LI>Beaker is empty."
-	else
-		dat += "<LI>No beaker."
-
-	dat += "</UL><HR><B>Transfer to <A href='byond://?src=\ref[src];toggle=1'>[(!mode ? "disposal" : "beaker")]</A>:</B><UL>"
-	if(reagents.total_volume)
-		for(var/datum/reagent/N in reagents.reagent_list)
-			dat += "<LI>[N.name], [N.volume] Units - "
-			dat += "<A href='byond://?src=\ref[src];analyze=1;reagent=\ref[N]'>Analyze</A> "
-			dat += "<A href='byond://?src=\ref[src];remove=[N.id];amount=1'>1</A> "
-			dat += "<A href='byond://?src=\ref[src];remove=[N.id];amount=5'>5</A> "
-			dat += "<A href='byond://?src=\ref[src];remove=[N.id];amount=10'>10</A> "
-			dat += "<A href='byond://?src=\ref[src];remove=[N.id];amount=[N.volume]'>All</A> "
-			dat += "<A href='byond://?src=\ref[src];removecustom=[N.id]'>Custom</A>"
-	else
-		dat += "<LI>Buffer is empty."
-	dat += "</UL><HR>"
-
-
-	dat += "<A href='byond://?src=\ref[src];changepill=1'><img src='pill[src.pillsprite].png'></A>"
-	dat += "<A href='byond://?src=\ref[src];changebottle=1'><img src='bottle[src.bottlesprite].png'></A>"
-
-
-	dat += "<HR>"
-	if(!condi)
-		if(src.loaded_pill_bottle)
-			dat += "Pill Bottle \[[loaded_pill_bottle.contents.len]/[loaded_pill_bottle.storage_slots]\] <A href='byond://?src=\ref[src];ejectp=1'>Eject</A>"
-		else
-			dat += "No pill bottle inserted."
-	else
-		dat += "<BR>"
-
-	dat += "<UL>"
-	if(!condi)
-		if(beaker && reagents.total_volume)
-			dat += "<LI><A href='byond://?src=\ref[src];createpill=1;many=0'>Create pill</A> (50 units max)"
-			dat += "<LI><A href='byond://?src=\ref[src];createpill=1;many=1'>Create multiple pills</A><BR>"
-		else
-			dat += "<LI><span class='disabled'>Create pill</span> (50 units max)"
-			dat += "<LI><span class='disabled'>Create multiple pills</span><BR>"
-	else
-		if(beaker && reagents.total_volume)
-			dat += "<LI><A href='byond://?src=\ref[src];createpill=1'>Create pack</A> (10 units max)<BR>"
-		else
-			dat += "<LI><span class='disabled'>Create pack</span> (10 units max)<BR>"
-	dat += "<LI><A href='byond://?src=\ref[src];createbottle=1;bulk=0'>Create bottle</A> ([condi ? "50" : "30"] units max)"
-	dat += "<LI><A href='byond://?src=\ref[src];createbottle=1;bulk=1'>Create multiple bottles</A> (30 units max)"
-	dat += "</UL>"
-
-	var/datum/browser/popup = new(user, "chem_master", name, 470, 500)
-	popup.set_content(dat)
-	popup.open()
-
-/obj/machinery/chem_master/proc/isgoodnumber(num)
-	if(isnum(num))
-		return clamp(round(num), 0, 200)
-	else
-		return FALSE
+	return FALSE
 
 
 /obj/machinery/chem_master/condimaster
@@ -744,7 +781,7 @@
 		src.beaker = B
 		user.drop_from_inventory(B, src)
 		to_chat(user, "You add the beaker to the machine!")
-		updateUsrDialog()
+		SStgui.update_uis(src)
 		icon_state = "mixer1"
 
 	else if(!condi && istype(B, /obj/item/weapon/storage/pill_bottle))
@@ -754,7 +791,7 @@
 		src.loaded_pill_bottle = B
 		user.drop_from_inventory(B, src)
 		to_chat(user, "You add the pill bottle into the dispenser slot!")
-		updateUsrDialog()
+		SStgui.update_uis(src)
 
 	return
 
@@ -1229,3 +1266,564 @@
 		O.reagents.trans_to(beaker, amount)
 		if(!O.reagents.total_volume)
 			remove_object(O)
+
+// Bio-Supplements Mixer
+#define BIO_PRODUCE_RATE 1.0
+#define MAX_PHORON_TEMP 293
+#define MIN_PHORON_TEMP 73
+#define MIN_PHORON_EFFICIENCY 0.1
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer
+	name = "Bio-BADs Mixer"
+	desc = "A bulky piece of pharmaceutical hardware covered in Zeng-Hu branding and warning decals. It smells faintly of burnt phoron."
+	density = TRUE
+	anchored = FALSE
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "med_mixer0_nopower"
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 40
+	active_power_usage = 200
+	allowed_checks = ALLOWED_CHECK_TOPIC
+	volume = 200
+	start_pressure = ONE_ATMOSPHERE
+	var/obj/item/weapon/reagent_containers/fuel_beaker = null
+	var/obj/item/weapon/reagent_containers/nutriment_beaker = null
+	var/obj/item/weapon/reagent_containers/blood_beaker = null
+	var/obj/item/weapon/reagent_containers/bio_supplements_cartridge/cartridge = null
+
+	var/working = FALSE
+	var/list/beaker_original_flags = list()
+
+	// Heating/cooling system (like radiocarbon spectrometer)
+	var/mixer_temperature = 0
+	var/mixer_seal_integrity = 100
+	var/mixer_rpm = 0
+	var/mixer_rpm_target = 500
+	var/coolant_usage_rate = 0
+	var/fresh_coolant = 0
+	var/coolant_purity = 0
+	var/datum/reagents/coolant_reagents
+	var/used_coolant = 0
+	var/list/coolant_reagents_purity = list()
+	var/last_process_worldtime = 0
+
+	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED)
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/atom_init()
+	. = ..()
+	var/datum/reagents/R = new/datum/reagents(300)
+	reagents = R
+	R.my_atom = src
+	coolant_reagents = new/datum/reagents(500)
+	coolant_reagents.my_atom = src
+	coolant_reagents_purity["water"] = 0.5
+	coolant_reagents_purity["icecoffee"] = 0.6
+	coolant_reagents_purity["icetea"] = 0.6
+	coolant_reagents_purity["milkshake"] = 0.6
+	coolant_reagents_purity["leporazine"] = 0.7
+	coolant_reagents_purity["kelotane"] = 0.7
+	coolant_reagents_purity["sterilizine"] = 0.7
+	coolant_reagents_purity["dermaline"] = 0.7
+	coolant_reagents_purity["cryoxadone"] = 0.9
+	coolant_reagents_purity["coolant"] = 1
+	coolant_reagents_purity["adminordrazine"] = 2
+	last_process_worldtime = world.time
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/Destroy()
+	disconnect()
+	for(var/obj/item/weapon/reagent_containers/G in beaker_original_flags)
+		G.flags = beaker_original_flags[G]
+	beaker_original_flags.Cut()
+	QDEL_NULL(fuel_beaker)
+	QDEL_NULL(nutriment_beaker)
+	QDEL_NULL(blood_beaker)
+	QDEL_NULL(cartridge)
+	QDEL_NULL(coolant_reagents)
+	return ..()
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/attackby(obj/O, mob/user)
+	if(istype(O, /obj/item/weapon/wrench))
+		if(connected_port)
+			disconnect()
+			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+			user.visible_message("[user] disconnects [src] from the port.", "<span class='notice'>You disconnect [src] from the port.</span>")
+			anchored = FALSE
+			update_icon()
+		else
+			var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector) in loc
+			if(!possible_port)
+				to_chat(user, "<span class='notice'>No connector port here.</span>")
+				return
+			if(possible_port.connected_device)
+				to_chat(user, "<span class='notice'>The port is already in use.</span>")
+				return
+			if(connect(possible_port))
+				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+				user.visible_message("[user] connects [src] to the port.", "<span class='notice'>You connect [src] to the port.</span>")
+				anchored = TRUE
+				update_icon()
+			else
+				to_chat(user, "<span class='notice'>[src] failed to connect to the port.</span>")
+		SStgui.update_uis(src)
+		return
+
+	if(istype(O, /obj/item/weapon/reagent_containers/bio_supplements_cartridge))
+		if(cartridge)
+			to_chat(user, "\The [src] already has a cartridge loaded.")
+			return
+		cartridge = O
+		user.drop_from_inventory(O, src)
+		to_chat(user, "You insert [O] into \the [src].")
+		SStgui.update_uis(src)
+		return
+
+	if(istype(O, /obj/item/weapon/reagent_containers/blood))
+		if(blood_beaker)
+			to_chat(user, "\The [src] already has an organic liquid container loaded.")
+			return
+		blood_beaker = O
+		to_chat(user, "You load [O] into \the [src].")
+		SStgui.update_uis(src)
+		return
+
+	if(istype(O, /obj/item/weapon/reagent_containers/glass))
+		var/obj/item/weapon/reagent_containers/glass/G = O
+		if(G.reagents.has_reagent("fuel") || G.reagents.has_reagent("nutriment") || is_valid_organic_beaker(G.reagents))
+			if(!do_skill_checks(user))
+				return
+			if(G.reagents.has_reagent("fuel"))
+				if(fuel_beaker)
+					to_chat(user, "\The [src] already has a fuel beaker loaded.")
+					return
+				fuel_beaker = G
+			else if(G.reagents.has_reagent("nutriment"))
+				if(nutriment_beaker)
+					to_chat(user, "\The [src] already has a nutriment beaker loaded.")
+					return
+				nutriment_beaker = G
+			else if(is_valid_organic_beaker(G.reagents))
+				if(blood_beaker)
+					to_chat(user, "\The [src] already has an organic liquid container loaded.")
+					return
+				blood_beaker = G
+			user.drop_from_inventory(G, src)
+			beaker_original_flags[G] = G.flags
+			G.flags &= ~OPENCONTAINER
+			to_chat(user, "You load [G] into \the [src].")
+			SStgui.update_uis(src)
+		else
+			user.SetNextMove(CLICK_CD_INTERACT)
+			if(working)
+				to_chat(user, "<span class='warning'>You can't do that while [src] is mixing!</span>")
+				return
+			var/choice = tgui_alert(user, "What do you want to do with the container?", name, list("Add coolant", "Empty coolant"))
+			if(choice == "Add coolant")
+				var/amount_transferred = min(coolant_reagents.maximum_volume - coolant_reagents.total_volume, G.reagents.total_volume)
+				G.reagents.trans_to(coolant_reagents, amount_transferred)
+				to_chat(user, "<span class='info'>You empty [amount_transferred]u of coolant into [src].</span>")
+				update_coolant()
+			else if(choice == "Empty coolant")
+				var/amount_transferred = min(G.reagents.maximum_volume - G.reagents.total_volume, coolant_reagents.total_volume)
+				coolant_reagents.trans_to(G, amount_transferred)
+				to_chat(user, "<span class='info'>You remove [amount_transferred]u of coolant from [src].</span>")
+				update_coolant()
+		return
+	return ..()
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/proc/update_coolant()
+	var/total_purity = 0
+	fresh_coolant = 0
+	coolant_purity = 0
+	for(var/datum/reagent/current_reagent in coolant_reagents.reagent_list)
+		if(!current_reagent)
+			continue
+		var/cur_purity = coolant_reagents_purity[current_reagent.id]
+		if(!cur_purity)
+			cur_purity = 0.1
+		else if(cur_purity > 1)
+			cur_purity = 1
+		total_purity += cur_purity * current_reagent.volume
+		fresh_coolant += current_reagent.volume
+	if(total_purity && fresh_coolant)
+		coolant_purity = total_purity / fresh_coolant
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/proc/has_ingredients()
+	if(!fuel_beaker || !fuel_beaker.reagents || !fuel_beaker.reagents.has_reagent("fuel"))
+		return FALSE
+	if(!nutriment_beaker || !nutriment_beaker.reagents || !nutriment_beaker.reagents.has_reagent("nutriment"))
+		return FALSE
+	if(!blood_beaker || !blood_beaker.reagents || !is_valid_organic_beaker(blood_beaker.reagents))
+		return FALSE
+	if(!has_phoron_connection())
+		return FALSE
+	return TRUE
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/proc/is_valid_organic_beaker(datum/reagents/R)
+	if(!R)
+		return FALSE
+	if(R.has_reagent("blood") || R.has_reagent("enzyme"))
+		return TRUE
+	if(R.has_reagent("milk") || R.has_reagent("beer") || R.has_reagent("ale"))
+		return TRUE
+	for(var/datum/reagent/reag in R.reagent_list)
+		if(findtext(reag.id, "juice"))
+			return TRUE
+	return FALSE
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/proc/get_organic_reagent_to_consume()
+	if(!blood_beaker || !blood_beaker.reagents)
+		return null
+	var/static/list/organic_reagents = list("blood", "enzyme", "milk", "beer", "ale")
+	for(var/reag_id in organic_reagents)
+		if(blood_beaker.reagents.has_reagent(reag_id))
+			return reag_id
+	for(var/datum/reagent/reag in blood_beaker.reagents.reagent_list)
+		if(findtext(reag.id, "juice"))
+			return reag.id
+	return null
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/proc/has_phoron_connection()
+	return get_available_phoron() >= BIO_PRODUCE_RATE * 5
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/proc/get_available_phoron()
+	if(!connected_port)
+		return 0
+	if(air_contents.gas["phoron"] >= BIO_PRODUCE_RATE * 5)
+		return air_contents.gas["phoron"]
+	var/datum/pipeline/P = connected_port.PARENT1
+	if(!P || !P.air)
+		return 0
+	return P.air.gas["phoron"]
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/proc/get_phoron_temperature()
+	if(!connected_port || get_available_phoron() < BIO_PRODUCE_RATE * 5)
+		return 0
+	if(air_contents.gas["phoron"] >= BIO_PRODUCE_RATE * 5)
+		return air_contents.temperature
+	var/datum/pipeline/P = connected_port.PARENT1
+	if(!P || !P.air)
+		return 0
+	return P.air.temperature
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/proc/get_phoron_efficiency()
+	var/temp = get_phoron_temperature()
+	if(temp <= 0)
+		return 0
+	return clamp(1.0 - (temp - MIN_PHORON_TEMP) / (MAX_PHORON_TEMP - MIN_PHORON_TEMP) * (1.0 - MIN_PHORON_EFFICIENCY), MIN_PHORON_EFFICIENCY, 1.0)
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/process()
+	if(working)
+		if(!powered(power_channel))
+			working = FALSE
+			playsound(src, null, channel = 502)
+			for(var/i in 1 to 3)
+				new /mob/living/simple_animal/bio_slime(loc)
+			visible_message("<span class='warning'>Bio-slime creatures burst out of [src] as the power cuts!</span>")
+			update_icon()
+			SStgui.update_uis(src)
+			return
+
+		if(!has_ingredients())
+			working = FALSE
+			playsound(src, null, channel = 502)
+			update_icon()
+			visible_message("<span class='notice'>[src] stops - missing ingredients.</span>")
+			SStgui.update_uis(src)
+		else
+			// Calculate time difference
+			var/deltaT = min((world.time - last_process_worldtime) * 0.1, 5)
+
+			// Move RPM toward target
+			if(mixer_rpm < mixer_rpm_target)
+				mixer_rpm = min(mixer_rpm + 100 * deltaT, mixer_rpm_target)
+			else if(mixer_rpm > mixer_rpm_target)
+				mixer_rpm = max(mixer_rpm - 100 * deltaT, mixer_rpm_target)
+
+			// Heat up according to RPM
+			mixer_temperature += mixer_rpm * deltaT * 0.05
+
+			// Use coolant to cool down
+			if(coolant_usage_rate > 0)
+				var/coolant_used = min(fresh_coolant, coolant_usage_rate * deltaT)
+				if(coolant_used > 0)
+					fresh_coolant -= coolant_used
+					used_coolant += coolant_used
+					mixer_temperature = max(mixer_temperature - coolant_used * coolant_purity * 20, 0)
+
+			// Degrade seal over time according to temperature
+			mixer_seal_integrity -= (max(mixer_temperature, 1) / 1000) * deltaT
+
+			// Emergency stop
+			if(mixer_seal_integrity <= 0 || mixer_temperature >= 1273)
+				working = FALSE
+				playsound(src, null, channel = 502)
+				update_icon()
+				visible_message("<span class='notice'>[bicon(src)] [src] buzzes unhappily. It has failed mid-mix!</span>", 2)
+				// Release phoron into atmosphere on overheat
+				if(mixer_temperature >= 1273)
+					var/turf/simulated/T = get_turf(src)
+					if(istype(T))
+						var/datum/gas_mixture/GM = T.return_air()
+						GM.adjust_gas("phoron", 10)
+						visible_message("<span class='warning'>[bicon(src)] [src] vents hot phoron gas!</span>", 2)
+				last_process_worldtime = world.time
+				SStgui.update_uis(src)
+				return
+
+			playsound(src, 'sound/machines/stove.ogg', VOL_EFFECTS_MASTER, 20, channel = 502)
+			var/rpm_rate = BIO_PRODUCE_RATE * (mixer_rpm / 500)
+			fuel_beaker.reagents.remove_reagent("fuel", rpm_rate)
+			nutriment_beaker.reagents.remove_reagent("nutriment", rpm_rate)
+			var/organic_reagent = get_organic_reagent_to_consume()
+			if(organic_reagent)
+				blood_beaker.reagents.remove_reagent(organic_reagent, rpm_rate)
+			if(air_contents.gas["phoron"] >= rpm_rate * 5)
+				air_contents.gas["phoron"] = max(0, air_contents.gas["phoron"] - rpm_rate * 5)
+			else if(connected_port)
+				var/datum/pipeline/P = connected_port.PARENT1
+				if(P && P.air)
+					P.air.gas["phoron"] = max(0, P.air.gas["phoron"] - rpm_rate * 5)
+			update_connected_network()
+			reagents.add_reagent("bio_supplements", rpm_rate * get_phoron_efficiency())
+			var/turf/simulated/T = get_turf(src)
+			if(istype(T))
+				var/datum/gas_mixture/GM = T.return_air()
+				GM.adjust_gas("carbon_dioxide", 2)
+
+			if(prob(5))
+				visible_message("<span class='notice'>[bicon(src)] [src] [pick("whirrs", "chuffs", "clicks")][pick(" excitedly", " energetically", " busily")].</span>", 2)
+	else
+		// Gradually cool down over time
+		if(mixer_temperature > 0)
+			mixer_temperature = max(mixer_temperature - 5 - 10 * rand(), 0)
+		if(used_coolant)
+			coolant_reagents.remove_any(used_coolant)
+			used_coolant = 0
+
+	last_process_worldtime = world.time
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/power_change()
+	if(anchored && powered())
+		stat &= ~NOPOWER
+	else
+		spawn(rand(0, 15))
+			stat |= NOPOWER
+			update_power_use()
+	update_power_use()
+	update_icon()
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/Move(NewLoc, Dir, step_x, step_y)
+	. = ..()
+	if(. && !moving_diagonally)
+		disconnect()
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/update_icon()
+	if(working)
+		icon_state = "med_mixer1"
+	else if(!connected_port || (stat & NOPOWER))
+		icon_state = "med_mixer0_nopower"
+	else
+		icon_state = "med_mixer0"
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BioSupplementsMixer", name)
+		ui.open()
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/tgui_data(mob/user)
+	var/list/data = list()
+	data["fuel_loaded"] = !!fuel_beaker
+	data["fuel_amount"] = fuel_beaker && fuel_beaker.reagents ? fuel_beaker.reagents.total_volume : 0
+	data["fuel_max"] = fuel_beaker ? fuel_beaker.volume : 1
+
+	data["nutriment_loaded"] = !!nutriment_beaker
+	data["nutriment_amount"] = nutriment_beaker && nutriment_beaker.reagents ? nutriment_beaker.reagents.total_volume : 0
+	data["nutriment_max"] = nutriment_beaker ? nutriment_beaker.volume : 1
+
+	data["blood_loaded"] = !!blood_beaker
+	data["blood_amount"] = blood_beaker && blood_beaker.reagents ? blood_beaker.reagents.total_volume : 0
+	data["blood_max"] = blood_beaker ? blood_beaker.volume : 1
+
+	data["phoron_ok"] = has_phoron_connection()
+	data["phoron_temp"] = round(get_phoron_temperature())
+	data["phoron_efficiency"] = round(get_phoron_efficiency() * 100)
+
+	data["bio_amount"] = reagents.get_reagent_amount("bio_supplements")
+	data["bio_max"] = reagents.maximum_volume
+	data["working"] = working
+
+	data["cartridge_loaded"] = !!cartridge
+	if(cartridge)
+		data["cartridge_name"] = cartridge.name
+		data["cartridge_volume"] = cartridge.reagents.total_volume
+		data["cartridge_max_volume"] = cartridge.volume
+
+	data["mixer_temperature"] = round(mixer_temperature)
+	data["mixer_seal_integrity"] = round(mixer_seal_integrity)
+	data["mixer_rpm"] = round(mixer_rpm)
+	data["mixer_rpm_target"] = mixer_rpm_target
+	data["coolant_usage_rate"] = coolant_usage_rate
+	data["unused_coolant_abs"] = round(fresh_coolant)
+	data["unused_coolant_per"] = round(fresh_coolant / coolant_reagents.maximum_volume * 100)
+	data["coolant_purity"] = round(coolant_purity * 100)
+
+	return data
+
+/obj/machinery/portable_atmospherics/bio_supplements_mixer/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	var/mob/user = usr
+	if(isnull(user))
+		return
+
+	switch(action)
+		if("eject_fuel")
+			if(fuel_beaker)
+				if(beaker_original_flags[fuel_beaker])
+					fuel_beaker.flags = beaker_original_flags[fuel_beaker]
+					beaker_original_flags -= fuel_beaker
+				fuel_beaker.forceMove(loc)
+				fuel_beaker = null
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("eject_nutriment")
+			if(nutriment_beaker)
+				if(beaker_original_flags[nutriment_beaker])
+					nutriment_beaker.flags = beaker_original_flags[nutriment_beaker]
+					beaker_original_flags -= nutriment_beaker
+				nutriment_beaker.forceMove(loc)
+				nutriment_beaker = null
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("eject_blood")
+			if(blood_beaker)
+				if(beaker_original_flags[blood_beaker])
+					blood_beaker.flags = beaker_original_flags[blood_beaker]
+					beaker_original_flags -= blood_beaker
+				blood_beaker.forceMove(loc)
+				blood_beaker = null
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("eject_cartridge")
+			if(cartridge)
+				cartridge.forceMove(loc)
+				cartridge = null
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("produce")
+			if(!has_ingredients())
+				to_chat(user, "<span class='warning'>Not enough ingredients! Need: Welding fuel, Nutriment, Organic Liquid, and Phoron gas connection.</span>")
+				return TRUE
+			working = TRUE
+			update_icon()
+			playsound(src, 'sound/machines/pacman_on.ogg', VOL_EFFECTS_MASTER, 30, channel = 501)
+			visible_message("<span class='notice'>[src] begins synthesizing Bio-supplements.</span>")
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("stop")
+			working = FALSE
+			playsound(src, null, channel = 502)
+			update_icon()
+			playsound(src, 'sound/machines/pacman_off.ogg', VOL_EFFECTS_MASTER, 30, channel = 501)
+			visible_message("<span class='notice'>[src] stops synthesizing.</span>")
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("dispense")
+			if(!cartridge)
+				to_chat(user, "<span class='warning'>No cartridge loaded!</span>")
+				return TRUE
+			var/space = cartridge.reagents.maximum_volume - cartridge.reagents.total_volume
+			var/amount = min(reagents.get_reagent_amount("bio_supplements"), space)
+			if(amount > 0)
+				reagents.trans_id_to(cartridge, "bio_supplements", amount)
+			SStgui.update_uis(src)
+			return TRUE
+
+		if("rpm")
+			mixer_rpm_target = clamp(text2num(params["target"]), 1, 1000)
+			return TRUE
+
+		if("coolant_level")
+			coolant_usage_rate = text2num(params["level"])
+			return TRUE
+
+	return FALSE
+
+#undef BIO_PRODUCE_RATE
+
+/obj/machinery/bads_tank
+	name = "Bio-BADs tank"
+	desc = "A heavy-duty containment vessel filled with thick amber liquid. Factory seals and biohazard stickers are plastered across its surface."
+	icon = 'icons/atmos/tank.dmi'
+	icon_state = "generic_map"
+	density = TRUE
+	anchored = TRUE
+	use_power = NO_POWER_USE
+	allowed_checks = ALLOWED_CHECK_TOPIC
+	var/bads_amount = 0
+	var/max_bads = 300
+
+/obj/machinery/bads_tank/atom_init()
+	. = ..()
+	var/datum/reagents/R = new/datum/reagents(max_bads)
+	reagents = R
+	R.my_atom = src
+	reagents.add_reagent("bio_supplements", max_bads)
+
+/obj/machinery/bads_tank/on_reagent_change()
+	bads_amount = reagents.get_reagent_amount("bio_supplements")
+	SStgui.update_uis(src)
+
+/obj/machinery/bads_tank/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/reagent_containers/bio_supplements_cartridge))
+		if(reagents.total_volume >= reagents.maximum_volume)
+			to_chat(user, "<span class='warning'>[src] is already full.</span>")
+			return
+		var/available = W.reagents.get_reagent_amount("bio_supplements")
+		if(available <= 0)
+			to_chat(user, "<span class='warning'>The cartridge is empty.</span>")
+			return
+		var/transferred = W.reagents.trans_id_to(src, "bio_supplements", available)
+		to_chat(user, "<span class='notice'>You refill [src] with [transferred] units from the cartridge.</span>")
+		return
+
+	to_chat(user, "<span class='warning'>[src] is sealed and cannot be refilled.</span>")
+
+/obj/machinery/bads_tank/proc/consume(amount)
+	if(reagents.get_reagent_amount("bio_supplements") >= amount)
+		reagents.remove_reagent("bio_supplements", amount)
+		bads_amount = reagents.get_reagent_amount("bio_supplements")
+		return TRUE
+	return FALSE
+
+/obj/machinery/bads_tank/examine(mob/user)
+	. = ..()
+	to_chat(user, "<span class='notice'>It contains [bads_amount]/[max_bads] units of Bio-BADs. Enough for [round(bads_amount / 50)] clone(s).</span>")
+
+/obj/machinery/bads_tank/ui_interact(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/bads_tank/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BadsTank", name)
+		ui.open()
+
+/obj/machinery/bads_tank/tgui_data(mob/user)
+	var/list/data = list()
+	data["bads_amount"] = bads_amount
+	data["max_bads"] = max_bads
+	data["clones_possible"] = round(bads_amount / 50)
+	return data

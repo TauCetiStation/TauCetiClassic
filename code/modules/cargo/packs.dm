@@ -1209,6 +1209,22 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	group = "Medical / Science"
 	hidden = TRUE
 
+/datum/supply_pack/bio_cartridge
+	name = "Bio-BADs-V Cartridges Crate"
+	contains = list(/obj/item/weapon/reagent_containers/bio_supplements_cartridge,
+					/obj/item/weapon/reagent_containers/bio_supplements_cartridge)
+	additional_costs = 500
+	crate_type = /obj/structure/closet/crate/medical
+	crate_name = "Bio-BADs-V cartridge crate"
+	group = "Medical / Science"
+
+/datum/supply_pack/bio_mixer
+	name = "Bio-BADs Mixer Crate"
+	contains = list(/obj/machinery/portable_atmospherics/bio_supplements_mixer)
+	additional_costs = 1380
+	crate_name = "wooden crate"
+	group = "Medical / Science"
+
 /datum/supply_pack/medical
 	name = "Medical crate"
 	contains = list(/obj/item/weapon/storage/firstaid/regular,
