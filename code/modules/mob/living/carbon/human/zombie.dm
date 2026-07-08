@@ -18,8 +18,10 @@
 
 	attack_verb = list("bitten and scratched", "scratched")
 
-/obj/item/weapon/melee/zombie_hand/right
-	icon_state = "bloodhand_right"
+/obj/item/weapon/melee/zombie_hand/equipped(mob/user, slot)
+	. = ..()
+	if(slot == SLOT_R_HAND)
+		icon_state = "bloodhand_right"
 
 /obj/item/weapon/melee/zombie_hand/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
@@ -122,7 +124,7 @@
 /mob/living/carbon/human/proc/handle_infected_death() //Death of human
 	if(!can_zombified())
 		return
-	preprerevive_zombie(300)
+	preprerevive_zombie(600)
 
 /mob/living/carbon/human/proc/preprerevive_zombie(delay)
 	addtimer(CALLBACK(src, PROC_REF(prerevive_zombie)), delay)
@@ -132,19 +134,20 @@
 
 /mob/living/carbon/human/proc/prerevive_zombie()
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
+
 	if(organs_by_name[O_BRAIN] && BP && !BP.is_stump())
 		var/free_body = TRUE
 		if(!key && mind)
+			var/free_body = TRUE
 			for(var/mob/dead/observer/ghost in player_list)
 				if(ghost.mind == mind && ghost.can_reenter_corpse)
-					free_body = FALSE
 					var/answer = tgui_alert(ghost,"You are about to turn into a zombie. Do you want to return to body?","I'm a zombie!", list("Yes","No"), 10 SECONDS)
 					if(answer == "Yes")
 						ghost.reenter_corpse()
-					else
-						create_spawner(/datum/spawner/living/zombie, src)
-		if(free_body)
-			create_spawner(/datum/spawner/living/zombie, src)
+						free_body = FALSE
+					break
+			if(free_body && !client)
+				create_spawner(/datum/spawner/living/zombie, src)
 
 		visible_message("<span class='danger'>[src]'s body starts to move!</span>")
 		addtimer(CALLBACK(src, PROC_REF(revive_zombie)), 40)
@@ -420,13 +423,6 @@ var/global/list/zombie_list = list()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.infect_zombie_virus(null, TRUE, TRUE)
-
-/obj/item/weapon/reagent_containers/hypospray/combat/zombie
-	name = "biowarfare hypospray"
-	desc = "A modified air-needle autoinjector, used by operatives to quickly make warcrimes in the field. This one is left unlabelled."
-	volume = 50
-	list_reagents = list("romerol" = 50)
-	amount_per_transfer_from_this = 5
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/romerol
 	name = "Z-virus"

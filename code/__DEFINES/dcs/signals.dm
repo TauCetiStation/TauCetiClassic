@@ -106,6 +106,10 @@
 // /atom signals
 ///from base of atom/Click(): (location, control, params, mob/user)
 #define COMSIG_CLICK "atom_click"
+/// from base of atom/AltClick(): (mob/user)
+#define COMSIG_ATOM_ALTCLICK "atom_altclick"
+	// Return this to suppress the default AltClick behaviour
+	#define COMPONENT_CANCEL_ALTCLICK 1
 /// emp_act() : severity
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 	#define COMPONENT_PREVENT_EMP 1
@@ -419,7 +423,10 @@
 #define COMSIG_CARBON_BUMPED_AIRLOCK_OPEN "carbon_bumped_airlock_open"
 /// Return to stop the door opening on bump.
 	#define STOP_BUMP (1<<0)
-
+/// Called from carbon losing a limb /obj/item/bodypart/proc/drop_limb(obj/item/bodypart/lost_limb)
+#define COMSIG_CARBON_REMOVE_LIMB "carbon_post_remove_limb"
+///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
+#define COMSIG_CARBON_ATTACH_LIMB "carbon_post_attach_limb"
 /// Called from update_health_hud, whenever a bodypart is being updated on the health doll
 #define COMSIG_BODYPART_UPDATING_HEALTH_HUD "bodypart_updating_health_hud"
 	/// Return to override that bodypart's health hud with your own icon

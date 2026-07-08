@@ -58420,7 +58420,7 @@
 	},
 /area/station/civilian/library)
 "ksc" = (
-/obj/structure/sign/painting{
+/obj/structure/picture_frame{
 	pixel_y = -30
 	},
 /turf/simulated/floor{
@@ -84017,7 +84017,7 @@
 /area/station/civilian/chapel/mass_driver)
 "qDW" = (
 /obj/machinery/light/smart,
-/obj/structure/sign/painting{
+/obj/structure/picture_frame{
 	pixel_y = -30
 	},
 /turf/simulated/floor{
