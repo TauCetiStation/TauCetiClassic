@@ -203,8 +203,8 @@
 					var/obj/item/organ/internal/IO = choosen_organ
 					if(isbrain(IO))
 						prepare_to_detach_brain(user, surgery_victim, bodypart, tool)
-						msg = "You finish to [SIMPLE_DETACH_ACTION].</span>"
-						self_msg = "You finish to [SIMPLE_DETACH_ACTION].</span>"
+						msg = "<span class='notice'>You finish to [SIMPLE_DETACH_ACTION].</span>"
+						self_msg = "<span class='notice'>You finish to [SIMPLE_DETACH_ACTION].</span>"
 					IO.status |= ORGAN_CUT_AWAY
 					IO.remove(surgery_victim)
 					IO.loc = get_turf(surgery_victim)

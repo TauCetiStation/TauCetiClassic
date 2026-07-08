@@ -54,8 +54,8 @@
 		self_msg = "<span class='notice'>You finish to [MEND_IPC_FACE_ACTION].</span>"
 		user.visible_message(msg, self_msg)
 	else
-		msg = "<span class='notice'>[user] finish to [BONE_GEL_ACTION]."
-		self_msg = "<span class='notice'>You finish to [BONE_GEL_ACTION]."
+		msg = "<span class='notice'>[user] finish to [BONE_GEL_ACTION].</span>"
+		self_msg = "<span class='notice'>You finish to [BONE_GEL_ACTION].</span>"
 		user.visible_message(msg, self_msg)
 		if(bodypart.stage & BP_SET)
 			bodypart.status &= ~(ORGAN_BROKEN | ORGAN_SPLINTED)
