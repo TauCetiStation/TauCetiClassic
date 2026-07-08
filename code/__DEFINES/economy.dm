@@ -1,4 +1,5 @@
 #define MAX_INSURANCE_PRICE 5000
+#define MAX_KWH_PRICE 500
 
 #define INSURANCE_NONE "None"
 #define INSURANCE_STANDARD "Standard"

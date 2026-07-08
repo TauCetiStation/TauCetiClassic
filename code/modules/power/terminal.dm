@@ -23,17 +23,19 @@
 	return ..()
 
 /obj/machinery/power/proc/can_terminal_dismantle()
-	. = 0
+	return FALSE
 
 /obj/machinery/power/apc/can_terminal_dismantle()
-	. = 0
 	if(opened && has_electronics != 2)
-		. = 1
+		return TRUE
+
+	return FALSE
 
 /obj/machinery/power/smes/can_terminal_dismantle()
-	. = 0
-	if(panel_open)
-		. = 1
+	return panel_open
+
+/obj/machinery/power/meter/can_terminal_dismantle()
+	return panel_open
 
 
 /obj/machinery/power/terminal/proc/dismantle(mob/living/user)
