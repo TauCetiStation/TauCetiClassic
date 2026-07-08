@@ -1,10 +1,12 @@
 
+// Output Sortcut Defines
 #define TISSUE_ACTION       "connecting regenerative membrane with damaged tissue inside of [surgery_victim]'s [bodypart.name]"
 #define CLAMP_ACTION        "clamping bleeders in [surgery_victim]'s [bodypart.name] with \the [tool]"
 #define PULL_FROM_ACTION    "pull something out from [surgery_victim]'s ribcage with \the [tool]"
 #define FACE_MENDING_ACTION "[head.disfigured ? "mending" : "adjusting"] [surgery_victim]'s vocal cords with \the [tool]"
 #define BONE_CHIPS_ACTION   "taking bone chips out of [surgery_victim]'s brain with \the [tool]"
 
+// Action
 /datum/surgery_step/clamp
 	allowed_qualities = list(
 		QUALITY_CLAMP
@@ -62,7 +64,7 @@
 					return TRUE
 			if(BP_HEAD, BP_CHEST)
 			// implant or embreo remove
-				if(bodypart.open >= BP_RIBCAGE_OS)
+				if(bodypart.open == BP_RIBCAGE_OS)
 					surgery_victim.custom_pain(cp_msg, 1)
 					user.visible_message(msg, self_msg)
 					return TRUE
@@ -162,51 +164,6 @@
 	surgery_victim.custom_pain(cp_msg, 1)
 	user.visible_message(msg, self_msg)
 
-
-/datum/surgery_step/clamp/fail_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
-	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
-	msg = "<span class='warning'>[user]'s [FAIL_ACTION] [surgery_victim]!</span>"
-	self_msg = "<span class='warning'>Your [FAIL_ACTION] [surgery_victim]!</span>"
-
-	if(bodypart.status & ORGAN_BLEEDING)
-	//clamp bleeding
-		bodypart.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-		bodypart.sever_artery()
-	else if(bodypart.trauma_kit || bodypart.burn_kit)
-	//tissue
-		bodypart.trauma_kit = FALSE
-		bodypart.burn_kit = FALSE
-		bodypart.take_damage(5, 0, used_weapon = tool)
-	else if(check_inside(bodypart))
-	//implant remove
-		bodypart.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
-		if(length(bodypart.embedded_objects))
-			var/fail_prob = 10
-			fail_prob += 100 - tool_quality(tool)
-			var/obj/item/weapon/implant/imp = locate(/obj/item/weapon/implant) in bodypart.embedded_objects
-			if(prob(fail_prob))
-				user.visible_message("<span class='warning'>Something cheeps inside [CASE(bodypart, GENITIVE_CASE)] [surgery_victim]!</span>")
-				playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-				addtimer(CALLBACK(imp, TYPE_PROC_REF(/obj/item/weapon/implant, use_implant)), 3 SECONDS)
-	else
-		switch(target_zone)
-			if(O_EYES)
-			//eyes
-				var/obj/item/organ/internal/eyes/eyes = surgery_victim.organs_by_name[O_EYES]
-				bodypart.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-				eyes.take_damage(5, 0)
-			if(O_MOUTH)
-			//face
-				bodypart.take_damage(15, 0, DAM_SHARP|DAM_EDGE, tool)
-				surgery_victim.losebreath += 10
-			if(BP_HEAD)
-				if(bodypart.open == BP_INTERNALS_OS)
-				//brain chips
-					bodypart.take_damage(30, 0, DAM_SHARP, tool)
-
-	user.visible_message(msg, self_msg)
-
-
 /datum/surgery_step/proc/remove_from_cavity(mob/user, mob/target, obj/obj_to_remove, obj/item/organ/external/bodypart, obj/tool)
 	bodypart.embedded_objects -= obj_to_remove
 	for(var/datum/wound/W in bodypart.wounds)
@@ -279,3 +236,9 @@
 					ae.detach()
 				remove_from_cavity(user, surgery_victim, choosen_object, bodypart, tool)
 	playsound(surgery_victim, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
+
+#undef TISSUE_ACTION
+#undef CLAMP_ACTION
+#undef PULL_FROM_ACTION
+#undef FACE_MENDING_ACTION
+#undef BONE_CHIPS_ACTION

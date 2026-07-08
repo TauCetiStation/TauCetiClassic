@@ -67,6 +67,11 @@
 	var/obj/item/organ/external/bodypart = target.get_bodypart(target_zone)
 	if(!bodypart)
 		return FALSE
+	if(bodypart.status & ORGAN_BLEEDING)
+		msg = "<span class='warning'>[target]`s [bodypart.name] bleeding!</span>"
+		self_msg = "<span class='warning'>You try to reach operation zone, but [target]`s [bodypart.name] bleeding!</span>"
+		user.visible_message(msg, self_msg)
+		return FALSE
 	if(bodypart.is_stump())
 	//stump preparing, prevert etc checks, is target bodypart is stump
 		return TRUE
@@ -93,8 +98,34 @@
 	return
 
 // stuff that happens when the step fails
-/datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return null
+/datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
+	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
+	msg = "<span class='warning'>[user]'s [FAIL_ACTION] [surgery_victim]!</span>"
+	self_msg = "<span class='warning'>Your [FAIL_ACTION] [surgery_victim]!</span>"
+
+	bodypart.take_damage(pick(10, 20, 30, 40, 50, 60), 0, DAM_SHARP|DAM_EDGE, tool)
+	bodypart.trauma_kit = FALSE
+	bodypart.burn_kit = FALSE
+	if(!bodypart.is_stump() && pick(0, 1))
+		bodypart.fracture()
+	if(pick(0, 1))
+		for(var/obj/item/organ in bodypart.bodypart_organs)
+			if(isorgan(organ))
+				if(pick(0, 1))
+					organ.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
+	if(check_inside(bodypart))
+	//implant remove
+		bodypart.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
+		if(length(bodypart.embedded_objects))
+			var/fail_prob = 10
+			fail_prob += 100 - tool_quality(tool)
+			var/obj/item/weapon/implant/imp = locate(/obj/item/weapon/implant) in bodypart.embedded_objects
+			if(prob(fail_prob))
+				user.visible_message("<span class='warning'>Something cheeps inside [CASE(bodypart, GENITIVE_CASE)] [surgery_victim]!</span>")
+				playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
+				addtimer(CALLBACK(imp, TYPE_PROC_REF(/obj/item/weapon/implant, use_implant)), 3 SECONDS)
+
+	user.visible_message(msg, self_msg)
 
 /// Outputs a consolidated warning about necrotic organs that can't be treated by "fix" step.
 /datum/surgery_step/proc/necrotic_organs_warning(mob/living/user, mob/living/carbon/human/target, list/dead_organs)

@@ -1,11 +1,21 @@
 // Condition content
+#define EYES_SURGERY                   (!(eyes.status & ORGAN_ROBOT) && eyes.surgery_stage == BP_SCALPEL_OS)
+#define MOUTH_SURGERY                  (!(head.status & ORGAN_ROBOT) && head.ps_status >= BP_SCALPEL_OS)
+#define FATTAS_SURGERY                 (!(bodypart.status & ORGAN_ROBOT) && HAS_TRAIT(surgery_victim, TRAIT_FAT) && bodypart.open == BP_INTERNALS_OS)
+#define RETRACT_PRY                    (bodypart.open > BP_DEFAULT_OS)
+
 
 // Output Sortcut Defines
+#define MOUTH_ACTION                   "[head.ps_status == BP_INTERNALS_OS ? "adjust": "pull"] the skin on [surgery_victim]'s face back in place with \the [tool]"
+#define EYES_ACTION                    "lifting corneas from [surgery_victim]'s eyes with \the [tool]"
+#define FATTAS_ACTION                  "extract [surgery_victim]'s loose fat with \the [tool]"
 
+// Pry or retract
+#define RETREAC_ACTION                 "to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] the [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "incision" : "ribcage"] on [surgery_victim]'s [bodypart.name] with \the [tool]"
+#define PRY_ACTION                     "pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "security" : "maintance"] panel on [surgery_victim]' with \the [tool]"
+#define SIMPLE_PRY_RETRACT_ACTION      bodypart.controller.bodypart_type == BODYPART_ROBOTIC ? PRY_ACTION : RETREAC_ACTION
 
-
-
-
+// Action
 /datum/surgery_step/retract
 	allowed_qualities = list(
 		QUALITY_RETRACT,
@@ -15,328 +25,95 @@
 	min_duration = 6 SECONDS
 	max_duration = 8 SECONDS
 
+/datum/surgery_step/retract/prepare_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
+	return TRUE
+
 /datum/surgery_step/retract/can_use(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
 	if(!..())
 		return FALSE
 
-	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
+	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
 
-	if(surgery_victim.species.flags[IS_SYNTHETIC])
-	//IPC only
-		switch(target_zone)
-			if(BP_CHEST)
-				switch(BP.open)
-					if(BP_RETRACT_OS)
-					//wrench_sec
-						return TRUE
-					if(BP_INTERNALS_OS)
-					//wrenchshut_sec
-						return TRUE
-	else if(!surgery_victim.species.flags[TRAIT_NO_BLOOD])
-	//human, unathi, tajaran, skrell and etc
-		if(!(BP.status & ORGAN_BLEEDING))
-			switch(target_zone)
-				if(O_EYES)
-				//eyes
-					var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-					if(eyes.surgery_stage == BP_SCALPEL_OS)
-						return TRUE
-				if(O_MOUTH)
-				//face & plastic surgery
-					var/obj/item/organ/external/head/head = BP
-					if(head.ps_status >= BP_SCALPEL_OS)
-						user.visible_message("[user] starts pulling the skin on [surgery_victim]'s face back in place with \the [tool].", \
-						"You start pulling the skin on [surgery_victim]'s face back in place with \the [tool].")
-						return TRUE
-				else
-				//ribcage & retract skin & remove fat
-					if(BP.open > BP_RETRACT_OS || BP.open == BP_SCALPEL_OS)
-						return TRUE
-	/* 		switch(target_zone)
-				if(O_EYES)
-				// Cut|Screw Eyes
-				if(O_MOUTH)
-				// Cut|Screw Face
-
-				else // Head, Chest, Groin, L|R Arm, L|R Leg
-					if(GENDER_SURGERY)
-					// Gender surgery, in this stage we need check only VOX
-					if(CUT_ORGAN)
-					// Detach organ or brain
-					if(CUT_SCREW)
-					// Cut|Screw Default
-	*/
-
-/datum/surgery_step/retract/prepare_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
-	return TRUE
-
-/datum/surgery_step/retract/begin_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
-
-
-	//limb/ipc_prepare
-	if(BP.is_stump())
-		if(surgery_victim.species.flags[IS_SYNTHETIC])
-			user.visible_message("[user] starts adjusting the area around [surgery_victim]'s [parse_zone(target_zone)] with \the [tool].",
-			"You start adjusting the area around [surgery_victim]'s [parse_zone(target_zone)] with \the [tool].")
-		else
-			msg = "[user] is beginning to reposition flesh and nerve endings where where [surgery_victim]'s [parse_zone(target_zone)] used to be with [tool]."
-			self_msg = "You start repositioning flesh and nerve endings where [surgery_victim]'s [parse_zone(target_zone)] used to be with [tool]."
-
-	else if(surgery_victim.species.flags[IS_SYNTHETIC])
-	//IPC only
-		switch(target_zone)
-			if(BP_CHEST)
-				switch(BP.open)
-					if(BP_SCALPEL_OS)
-					//wrench_sec
-						msg = "[user] begins to loosen bolts on [surgery_victim]'s security panel with \the [tool]."
-						self_msg = "You begin to loosen bolts on [surgery_victim]'s security panel with \the [tool]."
-						if(!surgery_victim.is_bruised_organ(O_KIDNEYS))
-							to_chat(surgery_victim, "%MAIN SECURITY PANEL% UNATHORISED ACCESS ATTEMPT DETECTED!")
-					if(BP_INTERNALS_OS)
-					//wrenchshut_sec
-						msg = "[user] starts tighetning bolts on [surgery_victim]'s security panel with \the [tool]."
-						self_msg = "You start tighetning bolts on [surgery_victim]'s security panel with \the [tool]."
-
-	else if(!surgery_victim.species.flags[TRAIT_NO_BLOOD])
-	//human, unathi, tajaran, skrell and etc
-		switch(target_zone)
-			if(O_EYES)
-			//eyes
-				msg = "[user] starts lifting corneas from [surgery_victim]'s eyes with \the [tool]."
-				self_msg = "You start lifting corneas from [surgery_victim]'s eyes with \the [tool]."
-			if(O_MOUTH)
-			//face & plastic surgery
-				var/obj/item/organ/external/head/head = BP
-				if(head.ps_status == BP_INTERNALS_OS)
-					msg = "<span class='notice'>[user] pulls the skin on [surgery_victim]'s face back in place with \the [tool].</span>"
-					self_msg = "<span class='notice'>You pull the skin on [surgery_victim]'s face back in place with \the [tool].</span>"
-					head.ps_status = BP_RETRACT_OS
-				else if(head.ps_status == BP_SCALPEL_OS)
-					msg = "[user] starts adjusting the skin on [surgery_victim]'s face with \the [tool]."
-					self_msg = "You start adjusting the skin on [surgery_victim]'s face with \the [tool]."
-			else
-				if(BP.body_zone == BP_CHEST && surgery_victim.overeatduration > 0)
-				//remove_fat
-					msg = "[user] begins to extract [surgery_victim]'s loose fat with \the [tool]."
-					self_msg = "You begin to extract [surgery_victim]'s loose fat with \the [tool]."
-					if(surgery_victim.overeatduration > 0)
-						cp_msg = "Something hurts horribly in your chest!"
-				switch(BP.open)
-					if(BP_SCALPEL_OS)
-					//retract skin
-						msg = "[user] starts to pry open the incision on [surgery_victim]'s [BP.name] with \the [tool]."
-						self_msg = "You start to pry open the incision on [surgery_victim]'s [BP.name] with \the [tool]."
-
-						cp_msg = "Something hurts horribly in your [BP.name]!"
-
-					if(BP_INTERNALS_OS)
-					//open ribcage
-						msg = "[user] starts to force open the ribcage in [surgery_victim]'s torso with \the [tool]."
-						self_msg = "You start to force open the ribcage in [surgery_victim]'s torso with \the [tool]."
-
-						cp_msg = "[HAS_TRAIT(surgery_victim, TRAIT_NO_PAIN) ? "You notice movement inside your [BP.name]!" : "Something hurts horribly in your [BP.name]!"]"
-
-					if(BP_RIBCAGE_OS)
-					//close ribcage
-						msg = "[user] starts bending [surgery_victim]'s ribcage back into place with \the [tool]."
-						self_msg = "You start bending [surgery_victim]'s ribcage back into place with \the [tool]."
-
-						cp_msg = "It feels like the skin on your [BP.name] is on fire!"
-
-
-	user.visible_message(msg, self_msg)
-	surgery_victim.custom_pain(cp_msg, 1)
-	..()
+	//human, unathi, tajaran, skrell, ipc and etc
+	switch(target_zone)
+		if(O_EYES)
+		// Retract Eyes
+			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
+			if(EYES_SURGERY)
+				msg = "[user] being to [EYES_ACTION]"
+				self_msg = "You start to [EYES_ACTION]"
+				user.visible_message(msg, self_msg)
+				return TRUE
+		if(O_MOUTH)
+		// Retract Face
+			var/obj/item/organ/external/head/head = bodypart
+			if(MOUTH_SURGERY)
+				msg = "[user] starts [MOUTH_ACTION]."
+				self_msg = "You start [MOUTH_ACTION]."
+				user.visible_message(msg, self_msg)
+		else // Head, Chest, Groin, L|R Arm, L|R Leg
+			if(FATTAS_SURGERY)
+				msg = "[user] begins to [FATTAS_ACTION]."
+				self_msg = "You begins to [FATTAS_ACTION]."
+				user.visible_message(msg, self_msg)
+				return TRUE
+			//ribcage & retract skin & remove fat
+			if(RETRACT_PRY)
+				msg = "[user] being to [SIMPLE_PRY_RETRACT_ACTION]"
+				self_msg = "You start to [SIMPLE_PRY_RETRACT_ACTION]"
+				cp_msg = "It feels like the skin on your [bodypart.name] is on fire!"
+				surgery_victim.custom_pain(cp_msg, 1)
+				user.visible_message(msg, self_msg)
+				return TRUE
 
 /datum/surgery_step/retract/end_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
+	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
+	//human, unathi, tajaran, skrell, ipc and etc)
 
-	//limb/ipc_prepare
-
-	if(BP.is_stump())
-		if(surgery_victim.species.flags[IS_SYNTHETIC])
-			user.visible_message("<span class='notice'>[user] has finished adjusting the area around [surgery_victim]'s [parse_zone(target_zone)] with \the [tool].</span>",
-			"<span class='notice'>You have finished adjusting the area around [surgery_victim]'s [parse_zone(target_zone)] with \the [tool].</span>")
-			surgery_victim.op_stage.bodyparts[target_zone] = ORGAN_ATTACHABLE
+	switch(target_zone)
+		if(O_EYES)
+		//eyes
+			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
+			msg = "[user] finish to [EYES_ACTION]"
+			self_msg = "You finish to [EYES_ACTION]"
+			eyes.surgery_stage = BP_RETRACT_OS
+		if(O_MOUTH)
+		//face & plastic surgery
+			var/obj/item/organ/external/head/head = surgery_victim.get_bodypart(target_zone)
+			msg = "[user] starts [MOUTH_ACTION]."
+			self_msg = "You start [MOUTH_ACTION]."
+			user.visible_message(msg, self_msg)
+			head.ps_status = bodypart.open == BP_SCALPEL_OS ? BP_RETRACT_OS : BP_SCALPEL_OS
 		else
-			//limb
-			user.visible_message("<span class='notice'>[user] has finished repositioning flesh and nerve endings where [surgery_victim]'s [parse_zone(target_zone)] used to be with [tool].</span>",	\
-			"<span class='notice'>You have finished repositioning flesh and nerve endings where [surgery_victim]'s [parse_zone(target_zone)] used to be with [tool].</span>")
-			surgery_victim.op_stage.bodyparts[target_zone] = 3
-
-
-	else if(surgery_victim.species.flags[IS_SYNTHETIC])
-	//IPC only
-		switch(BP.open)
-			if(BP_SCALPEL_OS)
-			//pry close sec
-				user.visible_message("<span class='notice'>[user] has loosen bolts on [surgery_victim]'s security panel with \the [tool].</span>",
-				"<span class='notice'>You have loosen bolts on [surgery_victim]'s security panel with \the [tool].</span>")
-				BP.open = BP_SCALPEL_OS
-			if(BP_INTERNALS_OS)
-			//pry open maintance
-				user.visible_message("<span class='notice'>[user] has pry open maintance panel on [surgery_victim]' with \the [tool].</span>",
-				"<span class='notice'>You has pry open maintance panel on [surgery_victim]'s with \the [tool].</span>")
-				BP.open = BP_RIBCAGE_OS
-			if(BP_RIBCAGE_OS)
-			//pry close maintance
-				user.visible_message("<span class='notice'>[user] has pry to close maintance panel on [surgery_victim]'s  with \the [tool].</span>",
-				"<span class='notice'>You has pry to close maintance panel on [surgery_victim]'s with \the [tool].</span>")
-				BP.open = BP_INTERNALS_OS
-	else if(!surgery_victim.species.flags[TRAIT_NO_BLOOD])
-	//human, unathi, tajaran, skrell and etc)
-		if(HAS_TRAIT(surgery_victim, TRAIT_FAT))
-		//remove_fat
-			surgery_victim.op_stage.lipoplasty = 0
-			if(surgery_victim.overeatduration > 0)
-				user.visible_message("<span class='notice'>[user] extracts [surgery_victim]'s fat with \the [tool].</span>",		\
-				"<span class='notice'>You have removed [surgery_victim]'s fat loose with \the [tool].</span>")
-				var/removednutriment = max(75, (surgery_victim.nutrition + surgery_victim.overeatduration) - 450)
-				surgery_victim.nutrition = 450
-				surgery_victim.overeatduration = 0
-				var/obj/item/weapon/reagent_containers/food/snacks/meat/P = new
-				P.name = "fatty meat"
-				P.desc = "Extremely fatty tissue taken from a patient."
-				P.reagents.add_reagent ("nutriment", (removednutriment / 15))
-				var/amount = 0
-				if (surgery_victim.reagents.total_volume > 0)
-					amount = surgery_victim.reagents.total_volume
-					surgery_victim.reagents.remove_reagent("nutriment",amount)
-				var/obj/item/meatslab = P
-				meatslab.loc = get_turf(surgery_victim)
-				playsound(surgery_victim, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
+			if(HAS_TRAIT(surgery_victim, TRAIT_FAT))
+			//remove_fat
+				msg = "[user] finish [FATTAS_ACTION]."
+				self_msg = "You finish [FATTAS_ACTION]."
+				user.visible_message(msg, self_msg)
+				liposacsy(user, surgery_victim, tool)
 			else
-				user.visible_message("<span class='notice'>Unfortunately, there is nothing to extract of [surgery_victim]'s with \the [tool].</span>",		\
-				"<span class='notice'>Unfortunately, there is nothing to extract of [surgery_victim] with \the [tool].</span>")
-		switch(target_zone)
-			if(O_EYES)
-			//eyes
-				var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-				user.visible_message("<span class='notice'>[user] has lifted the corneas from [surgery_victim]'s eyes from with \the [tool].</span>" , \
-				"<span class='notice'>You has lifted the corneas from [surgery_victim]'s eyes from with \the [tool].</span>" )
-				eyes.surgery_stage = BP_RETRACT_OS
-			if(O_MOUTH)
-			//face & plastic surgery
-				var/obj/item/organ/external/head/head = surgery_victim.get_bodypart(target_zone)
-				switch(head.ps_status)
-					if(BP_RETRACT_OS)
-						user.visible_message("<span class='notice'>[user] pulls the skin on [surgery_victim]'s face with \the [tool].</span>",	\
-						"<span class='notice'>You pull the skin on [surgery_victim]'s face with \the [tool].</span>")
-						head.ps_status = BP_SCALPEL_OS
-					if(BP_INTERNALS_OS)
-						user.visible_message("<span class='notice'>[user] pulls the skin on [surgery_victim]'s face back in place with \the [tool].</span>",	\
-						"<span class='notice'>You pull the skin on [surgery_victim]'s face back in place with \the [tool].</span>")
-						head.ps_status = BP_RIBCAGE_OS
-			else
-				switch(BP.open)
-					if(BP_SCALPEL_OS)
+				msg = "[user] finish to [SIMPLE_PRY_RETRACT_ACTION]"
+				self_msg = "You finish to [SIMPLE_PRY_RETRACT_ACTION]"
+				switch(bodypart.open)
+					if(BP_SCALPEL_OS, BP_RETRACT_OS)
 					//retract skin
-						msg = "<span class='notice'>[user] keeps the incision open on [surgery_victim]'s [BP.name] with \the [tool].</span>"
-						self_msg = "<span class='notice'>You keep the incision open on [surgery_victim]'s [BP.name] with \the [tool].</span>"
 						user.visible_message(msg, self_msg)
-						BP.open = BP_RETRACT_OS
-					if(BP_INTERNALS_OS)
-					//open ribcage
-						msg = "<span class='notice'>[user] forces open [surgery_victim]'s ribcage with \the [tool].</span>"
-						self_msg = "<span class='notice'>You force open [surgery_victim]'s ribcage with \the [tool].</span>"
+						bodypart.open = bodypart.open == BP_RETRACT_OS ? BP_SCALPEL_OS : BP_RETRACT_OS
+					if(BP_INTERNALS_OS, BP_RIBCAGE_OS)
+					//open|close ribcage
 						user.visible_message(msg, self_msg)
-						BP.open = BP_RIBCAGE_OS
-					if(BP_RIBCAGE_OS)
-					//close ribcage
-						msg = "<span class='notice'>[user] bends [surgery_victim]'s ribcage back into place with \the [tool].</span>"
-						self_msg = "<span class='notice'>You bend [surgery_victim]'s ribcage back into place with \the [tool].</span>"
-						user.visible_message(msg, self_msg)
-						BP.open = BP_INTERNALS_OS
-
-/datum/surgery_step/retract/fail_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
-	//IPC SURGERY
-/*
-	//limb/ipc_prepare
-	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(BP_CHEST)
-	if(BP)
-		user.visible_message("<span class='warning'>[user]'s hand slips, denting [surgery_victim]'s [BP.name]!</span>",
-		"<span class='warning'>Your hand slips, searing [surgery_victim]'s [BP.name]!</span>")
-		surgery_victim.apply_damage(10, BRUTE, BP)
+						bodypart.open = bodypart.open == BP_RIBCAGE_OS ? BP_INTERNALS_OS : BP_RIBCAGE_OS
 
 
-	//wrench_shut
-	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [surgery_victim]'s security panel with \the [tool]!</span>" ,
-	"<span class='warning'>Your hand slips, scratching [surgery_victim]'s security panel with \the [tool]!</span>" )
-	BP.fracture()
-	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
-
-	//wrenchshut_sec
-	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [surgery_victim]'s security panel with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, scratching [surgery_victim]'s security panel with \the [tool]!</span>")
-	BP.fracture()
-
-	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
-
-	//wrench_sec
-	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [surgery_victim]'s security panel with \the [tool]!</span>" ,
-	"<span class='warning'>Your hand slips, scratching [surgery_victim]'s security panel with \the [tool]!</span>" )
-	BP.fracture()
-	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
-
-	//ribcage
-	msg = "<span class='warning'>[user]'s hand slips, breaking [surgery_victim]'s ribcage!</span>"
-	self_msg = "<span class='warning'>Your hand slips, breaking [surgery_victim]'s ribcage!</span>"
-	user.visible_message(msg, self_msg)
-	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(target_zone)
-	BP.fracture()
-	BP.take_damage(20, 0, used_weapon = tool)
-
-	msg = "<span class='warning'>[user]'s hand slips, bending [surgery_victim]'s ribs the wrong way!</span>"
-	self_msg = "<span class='warning'>Your hand slips, bending [surgery_victim]'s ribs the wrong way!</span>"
-	user.visible_message(msg, self_msg)
-	var/obj/item/organ/external/chest/BP = surgery_victim.get_bodypart(BP_CHEST)
-	BP.fracture()
-	BP.take_damage(20, 0, used_weapon = tool)
-	if (prob(40))
-		user.visible_message("<span class='warning'>A rib pierces the lung!</span>")
-		surgery_victim.rupture_lung()
-
-	//eyes
-	var/obj/item/organ/internal/eyes/IO = surgery_victim.organs_by_name[O_EYES]
-	user.visible_message("<span class='warning'>[user]'s hand slips, damaging [surgery_victim]'s eyes with \the [tool]!</span>", \
-	"<span class='warning'>Your hand slips, damaging [surgery_victim]'s eyes with \the [tool]!</span>")
-	BP.take_damage(10, 0, used_weapon = tool)
-	IO.take_damage(5, 0)
-
-	//face && plastic surgery
-	user.visible_message("<span class='warning'>[user]'s hand slips, tearing skin on [surgery_victim]'s face with \the [tool]!</span>", \
-	"<span class='warning'>Your hand slips, tearing skin on [surgery_victim]'s face with \the [tool]!</span>")
-	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-
-	user.visible_message("<span class='warning'>[user]'s hand slips, tearing skin on [surgery_victim]'s face with \the [tool]!</span>", \
-	"<span class='warning'>Your hand slips, tearing skin on [surgery_victim]'s face with \the [tool]!</span>")
-	BP.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-
-
-	//retract skin
-	msg = "<span class='warning'>[user]'s hand slips, tearing the edges of the incision on [surgery_victim]'s [BP.name] with \the [tool]!</span>"
-	self_msg = "<span class='warning'>Your hand slips, tearing the edges of the incision on [surgery_victim]'s [BP.name] with \the [tool]!</span>"
-	if (target_zone == BP_CHEST)
-		msg = "<span class='warning'>[user]'s hand slips, damaging several organs in [surgery_victim]'s torso with \the [tool]!</span>"
-		self_msg = "<span class='warning'>Your hand slips, damaging several organs in [surgery_victim]'s torso with \the [tool]!</span>"
-	if (target_zone == BP_GROIN)
-		msg = "<span class='warning'>[user]'s hand slips, damaging several organs in [surgery_victim]'s lower abdomen with \the [tool]</span>"
-		self_msg = "<span class='warning'>Your hand slips, damaging several organs in [surgery_victim]'s lower abdomen with \the [tool]!</span>"
-	user.visible_message(msg, self_msg)
-	BP.take_damage(12, 0, DAM_SHARP|DAM_EDGE, tool)
-
-	//limb
-	var/obj/item/organ/external/BP = surgery_victim.get_bodypart(BP_CHEST)
-	if(BP)
-		user.visible_message("<span class='warning'>[user]'s hand slips, tearing flesh on [surgery_victim]'s [BP.name]!</span>", \
-		"<span class='warning'>Your hand slips, tearing flesh on [surgery_victim]'s [BP.name]!</span>")
-		surgery_victim.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
-
-
-	//remove_fat
-	user.visible_message("<span class='warning'>[user]'s hand slips, cutting [surgery_victim]'s belly with \the [tool]!</span>" , \
-	"<span class='warning'>Your hand slips, cutting [surgery_victim]'s belly with \the [tool]!</span>" )
-	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)
- */
+/datum/surgery_step/retract/proc/liposacsy(mob/living/user, mob/living/carbon/human/surgery_victim, obj/item/tool)
+	surgery_victim.nutrition = 450
+	surgery_victim.overeatduration = 0
+	REMOVE_TRAIT(surgery_victim, TRAIT_FAT, INNATE_TRAIT)
+	var/obj/item/weapon/reagent_containers/food/snacks/meat/fattymeat = new(surgery_victim.loc)
+	fattymeat.name = "fatty meat"
+	fattymeat.desc = "Extremely fatty tissue taken from a patient."
+	fattymeat.reagents.add_reagent ("nutriment", (max(75, (surgery_victim.nutrition + surgery_victim.overeatduration) - 450) / 15))
+	if(surgery_victim.reagents.total_volume > 0)
+		surgery_victim.reagents.total_volume
+		surgery_victim.reagents.remove_reagent("nutriment", surgery_victim.reagents.total_volume)
+	playsound(surgery_victim, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)

@@ -2,7 +2,7 @@
 #define CUT_SCREW                 (bodypart.open == BP_DEFAULT_OS || (surgery_victim.species.flags[IS_SYNTHETIC] && bodypart.open == BP_SCALPEL_OS))
 #define CUT_ORGAN                 (bodypart.open == BP_RIBCAGE_OS)
 #define EYES_SURGERY              (eyes?.surgery_stage <= BP_SCALPEL_OS)
-#define MOUTH_SURGERY             (head.ps_status == BP_DEFAULT_OS || head.ps_status == BP_INTERNALS_OS)
+#define MOUTH_SURGERY             (head.ps_status == BP_DEFAULT_OS || head.ps_status == BP_RETRACT_OS)
 #define PLASTIC_SURGERY           (target_zone == O_MOUTH && ishuman(target) && !ismachine(target))
 #define GENDER_SURGERY            (target_zone == BP_GROIN && bodypart.open >= BP_SCALPEL_OS && !surgery_victim.species.flags[TRAIT_NO_BLOOD] && surgery_victim.get_species() != VOX)
 
@@ -23,7 +23,7 @@
 // Mouth Action
 #define MACHINE_MOUTH_CUT_ACTION  "[bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s screen with \the [tool]"
 #define ORGANIC_MOUTH_CUT_ACTION  "[head.ps_status == BP_DEFAULT_OS ? "cut open [surgery_victim]'s face and neck with \the [tool]" : "to alter [surgery_victim]'s appearance with \the [tool]"]"
-#define SIMPLE_MOUTH_ACTION       "[surgery_victim.species.flags[IS_SYNTHETIC] ? MACHINE_MOUTH_CUT_ACTION : ORGANIC_MOUTH_CUT_ACTION]"
+#define SIMPLE_MOUTH_ACTION       "[bodypart.controller.bodypart_type == BODYPART_ROBOTIC ? MACHINE_MOUTH_CUT_ACTION : ORGANIC_MOUTH_CUT_ACTION]"
 
 // Detach brain on organic IPC and plant
 #define DETACH_BRAIN_ACTION       "separates [surgery_victim]'s brain from \his spine with \the [tool]"
@@ -33,7 +33,8 @@
 
 // Organics gender bender
 #define GENDER_BENDER_ACTION      "reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [tool]"
-//Action
+
+// Action
 /datum/surgery_step/cut
 	allowed_qualities = list(
 		QUALITY_SURG_CUTTING,
@@ -169,11 +170,12 @@
 			switch(head.ps_status)
 				if(BP_DEFAULT_OS)
 					head.ps_status = BP_SCALPEL_OS
+				if(BP_RETRACT_OS)
+					if(bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
+						head.ps_status = BP_DEFAULT_OS
 				if(BP_INTERNALS_OS)
 					surgery_victim.real_name = plastic_new_name
 					plastic_new_name = null
-					if(bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
-						head.ps_status = BP_DEFAULT_OS
 
 		else // Head, Chest, Groin, L|R Arm, L|R Leg
 			if(GENDER_SURGERY)
@@ -225,30 +227,6 @@
 
 	user.visible_message(msg, self_msg)
 
-/datum/surgery_step/cut/fail_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
-	msg = "<span class='warning'>[user] [FAIL_ACTION] [target]!</span>"
-	self_msg = "<span class='warning'>Yours [FAIL_ACTION] [target]!</span>"
-
-	var/mob/living/carbon/human/surgery_victim = target
-	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
-
-	switch(target_zone)
-		if(O_EYES)
-			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-			tool.damtype == BURN ? bodypart.take_damage(25, 45, DAM_SHARP|DAM_EDGE, tool) : bodypart.take_damage(60, 0, DAM_SHARP|DAM_EDGE, tool)
-			tool.damtype == BURN ? eyes.take_damage(0, 5) : eyes.take_damage(5, 0)
-		if(O_MOUTH)
-			tool.damtype == BURN ? bodypart.take_damage(15, 45, DAM_SHARP|DAM_EDGE, tool) : bodypart.take_damage(60, 0, DAM_SHARP|DAM_EDGE, tool)
-			surgery_victim.losebreath += 10
-		else
-			if(GENDER_SURGERY)
-				tool.damtype == BURN ? bodypart.take_damage(25, 45, DAM_SHARP|DAM_EDGE, tool) : bodypart.take_damage(60, 0, DAM_SHARP|DAM_EDGE, tool)
-			if(CUT_ORGAN)
-				tool.damtype == BURN ? bodypart.take_damage(15, 35, DAM_SHARP|DAM_EDGE, tool) : bodypart.take_damage(50, 0, DAM_SHARP|DAM_EDGE, tool)
-			if(CUT_SCREW)
-				tool.damtype == BURN ?	bodypart.take_damage(5, 15, DAM_SHARP|DAM_EDGE, tool) : bodypart.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
-	user.visible_message(msg, self_msg)
-
 /datum/surgery_step/cut/proc/prepare_to_detach_brain(mob/living/user, mob/living/carbon/human/surgery_victim, obj/item/organ/external/bodypart, obj/item/tool)
 	var/mob/living/simple_animal/borer/borer = surgery_victim.has_brain_worms()
 	if(borer)
@@ -276,3 +254,25 @@
 			mmi_positron.transfer_identity(surgery_victim)
 
 	surgery_victim.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
+// Condition content
+#undef CUT_SCREW
+#undef CUT_ORGAN
+#undef EYES_SURGERY
+#undef MOUTH_SURGERY
+#undef PLASTIC_SURGERY
+#undef GENDER_SURGERY
+#undef SLIME_CUT_ACTION
+#undef SCREWING_ACTION
+#undef CUT_ACTION
+#undef SIMPLE_CUT_SCREW_ACTION
+#undef MACHINE_EYES_SCREW_ACTION
+#undef ORGANIC_EYES_CUT_ACTION
+#undef SIMPLE_EYES_ACTION
+#undef MACHINE_MOUTH_CUT_ACTION
+#undef ORGANIC_MOUTH_CUT_ACTION
+#undef SIMPLE_MOUTH_ACTION
+#undef DETACH_BRAIN_ACTION
+#undef NYMPH_EXTRACT_ACTION
+#undef DETACH_POSITRON_ACTION
+#undef SIMPLE_DETACH_ACTION
+#undef GENDER_BENDER_ACTION
