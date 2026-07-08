@@ -108,9 +108,14 @@
 				surgery_victim.custom_pain(cp_msg, 1)
 			if(CUT_SCREW)
 			// Cut|Screw Default|Limb cut replace stump to health part
+				var/datum/reagents/R = surgery_victim.reagents
+				if(!R.has_reagent("metatrombine") || tool.damtype != BURN || !surgery_victim.species.flags[TRAIT_NO_BLOOD])
+					bodypart.status |= ORGAN_BLEEDING
+
 				msg = "[user] being to [SIMPLE_CUT_SCREW_ACTION]"
 				self_msg = "You start to [SIMPLE_CUT_SCREW_ACTION]"
 				cp_msg = "You feel a horrible pain as if from a sharp knife in your [bodypart.name]!"
+
 				user.visible_message(msg, self_msg)
 				return TRUE
 
@@ -215,10 +220,6 @@
 					playsound(surgery_victim, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
 			if(CUT_SCREW)
 			// Cut|Screw Default
-				var/datum/reagents/R = surgery_victim.reagents
-				if(!R.has_reagent("metatrombine") || tool.damtype != BURN)
-					bodypart.status |= ORGAN_BLEEDING
-
 				msg = "[user] finish to [SIMPLE_CUT_SCREW_ACTION]"
 				self_msg = "You finish to [SIMPLE_CUT_SCREW_ACTION]"
 				cp_msg = "You feel a horrible pain as if from a sharp knife in your [bodypart.name]!"

@@ -67,7 +67,7 @@
 	var/obj/item/organ/external/bodypart = target.get_bodypart(target_zone)
 	if(!bodypart)
 		return FALSE
-	if(bodypart.status & ORGAN_BLEEDING)
+	if(bodypart.status & ORGAN_BLEEDING && !tool.get_quality(QUALITY_CLAMP))
 		msg = "<span class='warning'>[target]`s [bodypart.name] bleeding!</span>"
 		self_msg = "<span class='warning'>You try to reach operation zone, but [target]`s [bodypart.name] bleeding!</span>"
 		user.visible_message(msg, self_msg)

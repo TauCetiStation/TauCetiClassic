@@ -632,11 +632,16 @@
 	med_hud_set_status()
 
 /mob/living/carbon/human/rejuvenate()
-	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-	if(istype(BP))
-		BP.disfigured = FALSE
+	var/obj/item/organ/external/head/head = bodyparts_by_name[BP_HEAD]
+	if(istype(head))
+		head.disfigured = FALSE
+		head.ps_status = BP_DEFAULT_OS
 
-	reset_op_stage()
+	var/obj/item/organ/internal/eyes/eyes = src:organs_by_name[O_EYES]
+	eyes?.surgery_stage = BP_DEFAULT_OS
+
+	for(var/obj/item/organ/external/bodypart in src.bodyparts)
+		bodypart.open = BP_DEFAULT_OS
 
 	for (var/obj/item/organ/external/head/H in lost_heads_list) // damn son, where'd you get this?
 		if(H.brainmob)
@@ -645,9 +650,6 @@
 					H.brainmob.mind.transfer_to(src)
 					qdel(H)
 	..()
-
-/mob/living/carbon/human/proc/reset_op_stage()
-    op_stage = new()
 
 /mob/living/proc/UpdateDamageIcon()
 	return
