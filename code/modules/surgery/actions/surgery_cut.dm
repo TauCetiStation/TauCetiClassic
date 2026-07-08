@@ -28,7 +28,7 @@
 // Detach brain on organic IPC and plant
 #define DETACH_BRAIN_ACTION       "separates [surgery_victim]'s brain from \his spine with \the [tool]"
 #define NYMPH_EXTRACT_ACTION      "separating connections roots to [surgery_victim]'s nymph with \the [tool]"
-#define DETACH_POSITRON_ACTION    "detach wires on [surgery_victim]'s [bodypart.name] connected to positron brain unit with \the [tool]."
+#define DETACH_POSITRON_ACTION    "detach wires on [surgery_victim]'s [bodypart.name] connected to positron brain unit with \the [tool]"
 #define SIMPLE_DETACH_ACTION      surgery_victim.get_species() == DIONA ? NYMPH_EXTRACT_ACTION : (surgery_victim.species.flags[IS_SYNTHETIC] ? DETACH_POSITRON_ACTION : DETACH_BRAIN_ACTION)
 
 // Organics gender bender
@@ -61,8 +61,8 @@
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
 		if(slime.stat == DEAD && slime.surgery_status != PREPARED)
-			msg = "[user] being [SLIME_CUT_ACTION]."
-			self_msg = "You start [SLIME_CUT_ACTION]."
+			msg = "<span class='notice'>[user] being [SLIME_CUT_ACTION].</span>"
+			self_msg = "<span class='notice'>You start [SLIME_CUT_ACTION].</span>"
 			user.visible_message(msg, self_msg)
 			return TRUE
 
@@ -77,8 +77,8 @@
 		// Cut|Screw Eyes
 			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
 			if(EYES_SURGERY)
-				msg = "[user] are beginning to [SIMPLE_EYES_ACTION]"
-				self_msg = "You are starting to [SIMPLE_EYES_ACTION]"
+				msg = "<span class='notice'>[user] are beginning to [SIMPLE_EYES_ACTION].</span>"
+				self_msg = "<span class='notice'>You are starting to [SIMPLE_EYES_ACTION].</span>"
 				user.visible_message(msg, self_msg)
 				return TRUE
 		if(O_MOUTH)
@@ -86,36 +86,29 @@
 			var/obj/item/organ/external/head/head = bodypart
 			if(MOUTH_SURGERY)
 			//start operate face|plastic surgery
-				msg = "[user] being to [SIMPLE_MOUTH_ACTION]."
-				self_msg = "You start to [SIMPLE_MOUTH_ACTION]."
+				msg = "<span class='notice'>[user] being to [SIMPLE_MOUTH_ACTION].</span>"
+				self_msg = "<span class='notice'>You start to [SIMPLE_MOUTH_ACTION].</span>"
 				user.visible_message(msg, self_msg)
 				return TRUE
 		else
 		// Head, Chest, Groin, L|R Arm, L|R Leg
 			if(GENDER_SURGERY)
 			//gender surgery, in this stage we need check only VOX
-				msg = "[user] begins to [GENDER_BENDER_ACTION]."
-				self_msg = "You start to [GENDER_BENDER_ACTION]."
-				cp_msg = "The pain in your groin is living hell!"
+				msg = "<span class='notice'>[user] begins to [GENDER_BENDER_ACTION].</span>"
+				self_msg = "<span class='notice'>You start to [GENDER_BENDER_ACTION].</span>"
 				user.visible_message(msg, self_msg)
-				surgery_victim.custom_pain(cp_msg, 1)
 				return TRUE
 			if(CUT_ORGAN)
-				msg = "[user] being [POKING_ACTION]"
-				self_msg = "You start [POKING_ACTION]"
-				cp_msg = "The pain in your chest is living hell!"
+				msg = "<span class='notice'>[user] being [POKING_ACTION]</span>"
+				self_msg = "<span class='notice'>You start [POKING_ACTION]</span>"
 				user.visible_message(msg, self_msg)
-				surgery_victim.custom_pain(cp_msg, 1)
 			if(CUT_SCREW)
 			// Cut|Screw Default|Limb cut replace stump to health part
 				var/datum/reagents/R = surgery_victim.reagents
 				if(!R.has_reagent("metatrombine") || tool.damtype != BURN || !surgery_victim.species.flags[TRAIT_NO_BLOOD])
 					bodypart.status |= ORGAN_BLEEDING
-
-				msg = "[user] being to [SIMPLE_CUT_SCREW_ACTION]"
-				self_msg = "You start to [SIMPLE_CUT_SCREW_ACTION]"
-				cp_msg = "You feel a horrible pain as if from a sharp knife in your [bodypart.name]!"
-
+				msg = "<span class='notice'>[user] being to [SIMPLE_CUT_SCREW_ACTION]</span>"
+				self_msg = "<span class='notice'>You start to [SIMPLE_CUT_SCREW_ACTION]</span>"
 				user.visible_message(msg, self_msg)
 				return TRUE
 
@@ -143,8 +136,8 @@
 		if(O_EYES)
 		// Cut|Screw Eyes
 			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-			msg = "[user] are finish to [SIMPLE_EYES_ACTION]"
-			self_msg = "You are finish to [SIMPLE_EYES_ACTION]"
+			msg = "<span class='notice'>[user] are finish to [SIMPLE_EYES_ACTION]</span>"
+			self_msg = "<span class='notice'>You are finish to [SIMPLE_EYES_ACTION]</span>"
 			cp_msg = "The pain in your head is living hell!"
 			if(eyes)
 				switch(eyes.surgery_stage)
@@ -161,16 +154,15 @@
 						eyes.loc = get_turf(surgery_victim)
 						bodypart.bodypart_organs  -= eyes
 						playsound(surgery_victim, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
-						surgery_victim.custom_pain(cp_msg, 1)
 				surgery_victim.blinded += 1.5
 			else
-				msg = "[user] [NO_POKING_MESSAGE]."
-				self_msg = "You [NO_POKING_MESSAGE]."
+				msg = "<span class='notice'>[user] [NO_POKING_MESSAGE].</span>"
+				self_msg = "<span class='notice'>You [NO_POKING_MESSAGE].</span>"
 		if(O_MOUTH)
 		// Cut|Screw Face
 			var/obj/item/organ/external/head/head = bodypart
-			msg = "[user] finish to [SIMPLE_MOUTH_ACTION]."
-			self_msg = "You finish to [SIMPLE_MOUTH_ACTION]."
+			msg = "<span class='notice'>[user] finish to [SIMPLE_MOUTH_ACTION].</span>"
+			self_msg = "<span class='notice'>You finish to [SIMPLE_MOUTH_ACTION].</span>"
 
 			switch(head.ps_status)
 				if(BP_DEFAULT_OS)
@@ -185,34 +177,34 @@
 		else // Head, Chest, Groin, L|R Arm, L|R Leg
 			if(GENDER_SURGERY)
 			// Gender surgery, in this stage we need check only VOX
-				msg = "[user] finish to [GENDER_BENDER_ACTION]."
-				self_msg = "You finish to [GENDER_BENDER_ACTION]."
+				msg = "<span class='notice'>[user] finish to [GENDER_BENDER_ACTION].</span>"
+				self_msg = "<span class='notice'>You finish to [GENDER_BENDER_ACTION].</span>"
 				target.gender = target.gender == MALE ? FEMALE : MALE
 				surgery_victim.regenerate_icons()
 			if(CUT_ORGAN)
 			// Detach organ or brain
 				if(!length(bodypart.bodypart_organs))
-					msg = "[user] [NO_POKING_MESSAGE]."
-					self_msg = "You [NO_POKING_MESSAGE]."
+					msg = "<span class='notice'>[user] [NO_POKING_MESSAGE].</span>"
+					self_msg = "<span class='notice'>You [NO_POKING_MESSAGE].</span>"
 					user.visible_message(msg, self_msg)
 					return FALSE
 				else
-					msg = "You finish to [POKING_ACTION]."
-					self_msg = "You finish to [POKING_ACTION]."
+					msg = "<span class='notice'>You finish to [POKING_ACTION].</span>"
+					self_msg = "<span class='notice'>You finish to [POKING_ACTION].</span>"
 					var/list/organs_list = list()
 					for(var/atom/embed_organ in bodypart.bodypart_organs)
 						organs_list[embed_organ] = embed_organ.appearance
 					var/choosen_organ = show_radial_menu(user, surgery_victim, organs_list, radius = 50, require_near = TRUE, tooltips = TRUE)
 					if(!choosen_organ)
-						msg = "[user] [NO_POKING_MESSAGE]."
-						self_msg = "You [NO_POKING_MESSAGE]."
+						msg = "<span class='notice'>[user] [NO_POKING_MESSAGE].</span>"
+						self_msg = "<span class='notice'>You [NO_POKING_MESSAGE].</span>"
 						user.visible_message(msg, self_msg)
 						return FALSE
 					var/obj/item/organ/internal/IO = choosen_organ
 					if(isbrain(IO))
 						prepare_to_detach_brain(user, surgery_victim, bodypart, tool)
-						msg = "You finish to [SIMPLE_DETACH_ACTION]."
-						self_msg = "You finish to [SIMPLE_DETACH_ACTION]."
+						msg = "You finish to [SIMPLE_DETACH_ACTION].</span>"
+						self_msg = "You finish to [SIMPLE_DETACH_ACTION].</span>"
 					IO.status |= ORGAN_CUT_AWAY
 					IO.remove(surgery_victim)
 					IO.loc = get_turf(surgery_victim)
@@ -220,13 +212,14 @@
 					playsound(surgery_victim, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
 			if(CUT_SCREW)
 			// Cut|Screw Default
-				msg = "[user] finish to [SIMPLE_CUT_SCREW_ACTION]"
-				self_msg = "You finish to [SIMPLE_CUT_SCREW_ACTION]"
+				msg = "<span class='notice'>[user] finish to [SIMPLE_CUT_SCREW_ACTION].</span>"
+				self_msg = "<span class='notice'>You finish to [SIMPLE_CUT_SCREW_ACTION].</span>"
 				cp_msg = "You feel a horrible pain as if from a sharp knife in your [bodypart.name]!"
 
 				bodypart.open = (bodypart.open == BP_SCALPEL_OS && bodypart.controller.bodypart_type == BODYPART_ROBOTIC) ? BP_DEFAULT_OS : BP_SCALPEL_OS
 
 	user.visible_message(msg, self_msg)
+	surgery_victim.custom_pain(cp_msg, 1)
 
 /datum/surgery_step/cut/proc/prepare_to_detach_brain(mob/living/user, mob/living/carbon/human/surgery_victim, obj/item/organ/external/bodypart, obj/item/tool)
 	var/mob/living/simple_animal/borer/borer = surgery_victim.has_brain_worms()

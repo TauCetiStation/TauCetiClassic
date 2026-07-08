@@ -1,7 +1,7 @@
 // Poking inside something with something
 #define POKING_ACTION             "poking around inside the [surgery_victim]'s [bodypart.name] with \the [tool]"
 #define NO_POKING_MESSAGE         "could not find anything inside [surgery_victim]'s [bodypart.name], and pulls \the [tool] out"
-#define EYES_MENDING_ACTION "mending the nerves and lenses in [surgery_victim]'s eyes with \the [tool]"
+#define EYES_MENDING_ACTION       "mending the nerves and lenses in [surgery_victim]'s eyes with \the [tool]"
 // Fail output
 #define F_ACTION_RANDOM           (pick("slips", "dragged", "spasms"))
 #define FAIL_ACTION               "hand [F_ACTION_RANDOM], when you operate"

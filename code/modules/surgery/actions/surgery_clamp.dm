@@ -1,3 +1,5 @@
+#define MACHINE_WRENCHING        (bodypart.controller.bodypart_type == BODYPART_ROBOTIC && (bodypart.open == BP_RETRACT_OS || bodypart.open == BP_INTERNALS_OS))
+#define MACHINE_WRENCHING_ACTION "[bodypart.open == BP_RETRACT_OS ? "loose" : "tighten" ] bolts on [surgery_victim]'s security panel with \the [tool]"
 
 // Output Sortcut Defines
 #define TISSUE_ACTION       "connecting regenerative membrane with damaged tissue inside of [surgery_victim]'s [bodypart.name]"
@@ -9,10 +11,11 @@
 // Action
 /datum/surgery_step/clamp
 	allowed_qualities = list(
-		QUALITY_CLAMP
+		QUALITY_CLAMP,
+		QUALITY_WRENCHING
 		)
 
-	allowed_species = list("exclude", IPC, DIONA)
+	allowed_species = list("exclude", DIONA)
 	min_duration = 6 SECONDS
 	max_duration = 8 SECONDS
 
@@ -22,23 +25,22 @@
 	if(!..())
 		return FALSE
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
-
 	if(bodypart.open == BP_DEFAULT_OS)
 	// Check open
 		return FALSE
 
 	if(bodypart.status & ORGAN_BLEEDING)
 	// clamp bleedin if exist
-		msg = "[user] starts [CLAMP_ACTION]."
-		self_msg = "You start [CLAMP_ACTION]."
+		msg = "<span class='notice'>[user] being to [CLAMP_ACTION].</span>"
+		self_msg = "<span class='notice'>You start to [CLAMP_ACTION].</span>"
 		cp_msg = "The pain in your [bodypart.name] is maddening!"
 		user.visible_message(msg, self_msg)
 		surgery_victim.custom_pain(cp_msg, 1)
 		return TRUE
 	else if(bodypart.trauma_kit || bodypart.burn_kit)
 	 // tissue, if salvaged
-		msg = "<span class='notice'>[user] starts [TISSUE_ACTION].</span>"
-		self_msg = "<span class='notice'>You start [TISSUE_ACTION].</span>"
+		msg = "<span class='notice'>[user] being to [TISSUE_ACTION].</span>"
+		self_msg = "<span class='notice'>You start to[TISSUE_ACTION].</span>"
 		cp_msg = "The pain in your [bodypart.name] is going to make you pass out!"
 		surgery_victim.custom_pain(cp_msg, 1)
 		user.visible_message(msg, self_msg)
@@ -47,13 +49,13 @@
 	// remove something inside
 		if(!(locate(/obj/item/alien_embryo) in bodypart))
 		// implant remove
-			msg = "[user] starts [POKING_ACTION]."
-			self_msg = "You start [POKING_ACTION]"
+			msg = "<span class='notice'>[user] being to [POKING_ACTION].</span>"
+			self_msg = "<span class='notice'>You start to [POKING_ACTION]</span>"
 			cp_msg = "The pain in your chest is living hell!"
 		else
 		// alien remove
-			msg = "[user] starts to [PULL_FROM_ACTION]."
-			self_msg = "You start to [PULL_FROM_ACTION]."
+			msg = "<span class='notice'>[user] being to [PULL_FROM_ACTION].</span>"
+			self_msg = "<span class='notice'>You start to [PULL_FROM_ACTION].</span>"
 			cp_msg = "Something hurts horribly in your chest!"
 
 		switch(target_zone)
@@ -68,6 +70,11 @@
 					surgery_victim.custom_pain(cp_msg, 1)
 					user.visible_message(msg, self_msg)
 					return TRUE
+	else if(MACHINE_WRENCHING)
+		msg = "<span class='notice'>[user] being to [MACHINE_WRENCHING_ACTION].</span>"
+		self_msg = "<span class='notice'>You start to [MACHINE_WRENCHING_ACTION].</span>"
+		user.visible_message(msg, self_msg)
+		return TRUE
 	else
 	// operate organs
 		switch(target_zone)
@@ -78,16 +85,16 @@
 				if(!eyes)
 					return FALSE
 				if(eyes.surgery_stage == BP_RETRACT_OS)
-					msg = "[user] starts [EYES_MENDING_ACTION]."
-					self_msg = "You start [EYES_MENDING_ACTION]."
+					msg = "<span class='notice'>[user] being to [EYES_MENDING_ACTION].</span>"
+					self_msg = "<span class='notice'>You start to [EYES_MENDING_ACTION].</span>"
 					user.visible_message(msg, self_msg)
 					return TRUE
 			if(O_MOUTH)
 			//face reconstruction & plastic surgery
 				var/obj/item/organ/external/head/head = bodypart
 				if(BP_DEFAULT_OS < head.ps_status && head.ps_status <= BP_INTERNALS_OS) // 0 < x <= 3
-					msg = "[user] starts [FACE_MENDING_ACTION]."
-					self_msg = "You start [FACE_MENDING_ACTION]."
+					msg = "<span class='notice'>[user] being to [FACE_MENDING_ACTION].</span>"
+					self_msg = "<span class='notice'>You start to [FACE_MENDING_ACTION].</span>"
 					user.visible_message(msg, self_msg)
 					return TRUE
 			if(BP_HEAD)
@@ -95,8 +102,8 @@
 				var/obj/item/organ/internal/brain/brain = surgery_victim:organs_by_name[O_BRAIN]
 				if(bodypart.open == BP_INTERNALS_OS && brain?.status & ORGAN_BLEEDING)
 					//brain chips
-					msg = "[user] starts [BONE_CHIPS_ACTION]."
-					self_msg = "You start [BONE_CHIPS_ACTION]."
+					msg = "<span class='notice'>[user] being to [BONE_CHIPS_ACTION].</span>"
+					self_msg = "<span class='notice'>You start to [BONE_CHIPS_ACTION].</span>"
 					user.visible_message(msg, self_msg)
 					return TRUE
 	return FALSE
@@ -108,13 +115,13 @@
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
 	if(bodypart.status & ORGAN_BLEEDING)
 	//clamp bleeding
-		msg = "<span class='notice'>[user] finish [CLAMP_ACTION].</span>"
-		self_msg = "<span class='notice'>You finish [CLAMP_ACTION].</span>"
+		msg = "<span class='notice'>[user] finish to [CLAMP_ACTION].</span>"
+		self_msg = "<span class='notice'>You finish to [CLAMP_ACTION].</span>"
 		bodypart.strap()
 	else if(bodypart.trauma_kit || bodypart.burn_kit)
 	//tissue
-		msg = "<span class='notice'>[user] finishes [TISSUE_ACTION].</span>"
-		self_msg = "<span class='notice'>[user] finish [TISSUE_ACTION].</span>"
+		msg = "<span class='notice'>[user] finishes to [TISSUE_ACTION].</span>"
+		self_msg = "<span class='notice'>[user] finish to [TISSUE_ACTION].</span>"
 		if(bodypart.trauma_kit)
 			bodypart.trauma_kit = FALSE
 			bodypart.heal_damage(20)
@@ -140,6 +147,10 @@
 			bodypart.hidden.blood_DNA[surgery_victim.dna.unique_enzymes] = surgery_victim.dna.b_type
 			bodypart.hidden.update_icon()
 			bodypart.hidden = null
+	else if(MACHINE_WRENCHING)
+		msg = "<span class='notice'>[user] finish to [MACHINE_WRENCHING_ACTION].</span>"
+		self_msg = "<span class='notice'>You finish to [MACHINE_WRENCHING_ACTION].</span>"
+		bodypart.open = bodypart.open == BP_INTERNALS_OS ? BP_RETRACT_OS : BP_INTERNALS_OS
 	else
 		var/obj/item/organ/external/head/head = bodypart
 		switch(target_zone)
@@ -149,15 +160,15 @@
 			if(O_MOUTH)
 			//face && plastic surgery
 				if(head.ps_status > BP_DEFAULT_OS)
-					msg = "<span class='notice'>[user] finish [FACE_MENDING_ACTION].</span>"
-					self_msg = "<span class='notice'>You finish [FACE_MENDING_ACTION].</span>"
+					msg = "<span class='notice'>[user] finish to [FACE_MENDING_ACTION].</span>"
+					self_msg = "<span class='notice'>You finish to [FACE_MENDING_ACTION].</span>"
 					head.disfigured = FALSE
 				head.ps_status = head.ps_status == BP_SCALPEL_OS ? BP_RETRACT_OS : BP_INTERNALS_OS
 			if(BP_HEAD)
 				if(bodypart.open == BP_INTERNALS_OS)
 				//brain chips
-					msg = "<span class='notice'>[user] finish [BONE_CHIPS_ACTION].</span>"
-					self_msg = "<span class='notice'>You finish [BONE_CHIPS_ACTION].</span>"
+					msg = "<span class='notice'>[user] finish to [BONE_CHIPS_ACTION].</span>"
+					self_msg = "<span class='notice'>You finish to [BONE_CHIPS_ACTION].</span>"
 					var/obj/item/organ/internal/brain/brain = surgery_victim:organs_by_name[O_BRAIN]
 					brain.status &= ~ORGAN_BLEEDING
 
