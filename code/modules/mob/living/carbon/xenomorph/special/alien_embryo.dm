@@ -90,7 +90,7 @@ This is emryo growth procs
 
 
 /obj/item/alien_embryo/proc/detach()
-	src.forceMove(affected_mob.loc)
+	forceMove(affected_mob.loc)
 	detach_from_host()
 
 /obj/item/alien_embryo/proc/detach_from_host()
