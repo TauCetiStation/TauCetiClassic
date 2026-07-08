@@ -273,15 +273,6 @@
 	target.chest_brain_op_stage = 2.0
 	target.death()
 
-/datum/surgery_step/ribcage/cut_diona_spine/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
-	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)
-	if (ishuman(user))
-		var/mob/living/carbon/human/H = user
-		H.bloody_body(target)
-		H.bloody_hands(target, 0)
 //////////////////////////////////////////////////////////////////
 //				EXTRACTING IPC'S BRAIN							//
 //////////////////////////////////////////////////////////////////
@@ -321,88 +312,6 @@
 	target.timeofdeath = 0
 
 
-//////////////////////////////////////////////////////////////////
-//				RIBCAGE	ROBOTIC SURGERY							//
-//////////////////////////////////////////////////////////////////
-/datum/surgery_step/ipc/ribcage
-
-	priority = 2
-	allowed_species = list(IPC)
-	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED, /datum/skill/engineering = SKILL_LEVEL_NOVICE)
-
-/datum/surgery_step/ipc/ribcage/pry_sec
-	allowed_tools = list(
-	/obj/item/weapon/crowbar = 100,
-	/obj/item/weapon/hatchet = 75,
-	/obj/item/weapon/circular_saw = 50
-	)
-	priority = 3
-
-	min_duration = 30
-	max_duration = 40
-
-/datum/surgery_step/ipc/ribcage/pry_sec/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.ribcage == 1
-
-/datum/surgery_step/ipc/ribcage/pry_sec/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts to pry open the security panel in [target]'s torso with \the [tool].",
-	"You start to pry open the security panel in [target]'s torso with \the [tool].")
-	if(!target.is_bruised_organ(O_KIDNEYS))
-		to_chat(target, "<span class='warning italics'>%MAIN SECURITY PANEL% DAMAGE DETECTED. CEASE APPLIED DAMAGE.</span>")
-	..()
-
-/datum/surgery_step/ipc/ribcage/pry_sec/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/msg = "<span class = 'notice'>[user] pries open [target]'s security panel with \the [tool].</span>"
-	var/self_msg = "<span class = 'notice'> You force open [target]'s ribcage with \the [tool].</span>"
-	user.visible_message(msg, self_msg)
-	target.op_stage.ribcage = 2
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.open = 3
-
-/datum/surgery_step/ipc/ribcage/pry_sec/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='warning'>[user]'s hand slips, breaking [target]'s security panel!</span>",
-	"<span class='warning'>Your hand slips, breaking [target]'s security panel!</span>")
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.fracture()
-	BP.take_damage(20, 0, used_weapon = tool)
-
-/datum/surgery_step/ipc/ribcage/shut_sec
-	allowed_tools = list(
-	/obj/item/weapon/crowbar = 100,
-	/obj/item/weapon/hatchet = 75,
-	/obj/item/weapon/circular_saw = 50
-	)
-
-	min_duration = 20
-	max_duration = 40
-
-/datum/surgery_step/ipc/ribcage/shut_sec/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.op_stage.ribcage == 2
-
-/datum/surgery_step/ipc/ribcage/shut_sec/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts prying [target]'s security panel back into place with \the [tool].", "You start prying [target]'s securty panel back into place with \the [tool].")
-	..()
-
-/datum/surgery_step/ipc/ribcage/shut_sec/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/msg = "<span class = 'notice'>[user] pry [target]'s security panel back into place with \the [tool].</span>"
-	var/self_msg = "<span class = 'notice'>You pry [target]'s security panel back into place with \the [tool].</span>"
-	user.visible_message(msg, self_msg)
-
-	target.op_stage.ribcage = 1
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.open = 2
-
-/datum/surgery_step/ipc/ribcage/shut_sec/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/msg = "<span class='warning'>[user]'s hand slips, bending [target]'s security panel the wrong way!</span>"
-	var/self_msg = "<span class='warning'>Your hand slips, bending [target]'s security panel the wrong way!</span>"
-	user.visible_message(msg, self_msg)
-	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
-	BP.fracture()
-	BP.take_damage(20, 0, used_weapon = tool)
-	if(prob(40))
-		user.visible_message("<span class='warning'>A loud bang can be heard.</span>")
-		target.rupture_lung()
-
 /datum/surgery_step/ipc/ribcage/take_accumulator
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
@@ -436,14 +345,6 @@
 	target.nutrition = 0
 	if(!target.is_bruised_organ(O_KIDNEYS))
 		to_chat(target, "<span class='warning italics'>%SHUTTING DOWN%</span>")
-
-/datum/surgery_step/ipc/ribcage/take_accumulator/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s accumulator with \the [tool]!</span>",
-	"<span class='warning'>Your hand slips, scratching [target]'s accumulator with \the [tool]!</span>")
-	var/obj/item/organ/internal/liver/ipc/A = target.organs_by_name[O_LIVER]
-	A.damage += 10
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/ipc/ribcage/put_accumulator
 	allowed_tools = list(
