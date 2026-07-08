@@ -289,46 +289,6 @@
 	color = "#664b63" // rgb: 102, 75, 99
 	taste_message = null
 
-/datum/reagent/nicotine
-	name = "Nicotine"
-	id = "nicotine"
-	description = "A highly addictive stimulant extracted from the tobacco plant."
-	reagent_state = LIQUID
-	color = "#181818" // rgb: 24, 24, 24
-	custom_metabolism = 0.005
-	var/alert_time = 0
-
-/datum/reagent/nicotine/on_mob_life(mob/living/M)
-	if(!..())
-		return
-	if(!holder.has_reagent("alkysine"))
-		if(volume >= 0.85)
-			if(world.time > (alert_time + 90 SECONDS))
-				to_chat(M, pick("<span class='danger'>You feel dizzy and weak</span>"))
-				alert_time = world.time
-			if(prob(60))
-				M.losebreath = max(M.losebreath + 1, 2)
-		if(volume < 0.7)
-			if(prob(10))
-				M.AdjustStunned(-1)
-				M.AdjustWeakened(-1)
-		if(volume > 1)
-			if(prob(80))
-				M.losebreath = max(M.losebreath + 1, 2)
-				M.drowsyness = min(40, (M.drowsyness + 2))
-			if(prob(3) & ishuman(M))
-				var/mob/living/carbon/human/H = M
-				H.invoke_vomit_async()
-		if(volume > 5)
-			if(prob(70))
-				M.losebreath = max(M.losebreath + 1, 2)
-	if(holder.has_reagent("anti_toxin"))
-		holder.remove_reagent("nicotine", 0.065)
-	return TRUE
-
-/datum/reagent/nicotine/on_diona_digest(mob/living/M)
-	return FALSE
-
 /datum/reagent/ammonia
 	name = "Ammonia"
 	id = "ammonia"

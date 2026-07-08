@@ -642,15 +642,6 @@
 	cost = 2
 	uplink_types = list(UPLINK_TYPE_NUCLEAR)
 
-/datum/uplink_item/stealthy_weapons/romerol_kit
-	name = "Romerol"
-	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. \
-			On death, these nodules take control of the dead body, causing limited revivification, \
-			along with slurred speech, aggression, and the ability to infect others with this agent."
-	item = /obj/item/weapon/storage/box/syndie_kit/romerol
-	cost = 50
-	uplink_types = list(UPLINK_TYPE_NUCLEAR)
-
 // STEALTHY TOOLS
 
 /datum/uplink_item/stealthy_tools
@@ -707,9 +698,9 @@
 	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/stealthy_tools/syndigolashes
-	name = "No-Slip Brown Shoes"
-	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces."
-	item = /obj/item/clothing/shoes/syndigaloshes
+	name = "Anti-Slip Soles"
+	desc = "A pair of rubberized soles that attach to any footwear and let you run on wet floors. Click them on your shoes to install, alt-click the shoes to pry them off. They do not work on lubricated surfaces."
+	item = /obj/item/noslip_sole
 	cost = 1
 	uplink_types = list(UPLINK_TYPE_TRAITOR)
 

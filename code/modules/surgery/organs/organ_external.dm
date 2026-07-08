@@ -195,6 +195,8 @@
 	if(surgically)
 		check_rejection()
 
+	SEND_SIGNAL(H, COMSIG_CARBON_ATTACH_LIMB)
+
 /obj/item/organ/external/proc/mod_skin_color(original_color)
 	// sorted in priority, maybe some day someone will experiment with colors mixing
 	if(is_slime)
@@ -634,6 +636,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 				owner.remove_from_mob(owner.shoes)
 			else
 				qdel(owner.shoes)
+
+	SEND_SIGNAL(owner, COMSIG_CARBON_REMOVE_LIMB)
+
 	if(pumped)
 		owner.mob_metabolism_mod.RemoveMods(src)
 
