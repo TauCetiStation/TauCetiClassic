@@ -74,6 +74,7 @@
 		/obj/item/weapon/tank,
 		/obj/item/device/suit_cooling_unit,
 		/obj/item/weapon/storage/bag/ore,
+		/obj/item/weapon/storage/bag/holding,
 		/obj/item/device/t_scanner,
 		/obj/item/weapon/rcd
 	)
@@ -666,7 +667,7 @@
 	item_state = "eng_hardsuit"
 	slowdown = 1.5
 	armor = list(melee = 50, bullet = 5, laser = 10,energy = 5, bomb = 65, bio = 100, rad = 80)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/holding,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	siemens_coefficient = 0
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
@@ -731,7 +732,7 @@
 	item_state = "RedMiner"
 	rig_variant = "RedMiner"
 	armor = list(melee = 40, bullet = 11, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/holding,/obj/item/weapon/pickaxe)
 	helmet_type = /obj/item/clothing/head/helmet/space/rig/RF_mining
 
 //Syndicate rig
