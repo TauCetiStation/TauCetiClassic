@@ -5,7 +5,7 @@
 /datum/surgery_step/ribcage
 	priority = 2
 
-	blood_level = 1
+
 
 /datum/surgery_step/ribcage/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(!ishuman(target))

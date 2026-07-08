@@ -227,7 +227,7 @@
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	qualities = list(
 		QUALITY_MENDING_BONE = 100,
-		QUALITY_MENDING_IPC = 25
+		QUALITY_MENDING_IPC = 75
 	)
 
 /obj/item/weapon/FixOVein

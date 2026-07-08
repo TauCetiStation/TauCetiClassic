@@ -6,7 +6,7 @@
 /datum/surgery_step/brain
 	clothless = 0
 	priority = 2
-	blood_level = 1
+
 
 /datum/surgery_step/brain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if (!ishuman(target))

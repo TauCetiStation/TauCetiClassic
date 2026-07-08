@@ -35,7 +35,7 @@
 	qualities = list(
 		QUALITY_WRENCHING = 100,
 		QUALITY_BONE_SET = 75,
-		QUALITY_MENDING_IPC = 75
+		QUALITY_MENDING_IPC = 50
 	)
 
 /obj/item/weapon/wrench/atom_init(mapload, param_color)

@@ -6,6 +6,11 @@
 #define F_ACTION_RANDOM           (pick("slips", "dragged", "spasms"))
 #define FAIL_ACTION               "hand [F_ACTION_RANDOM], when you operate"
 
+
+// Blood level defines
+#define NO_BLOOD_STEP        0
+#define HANDS_BLOOD_STEP     1
+#define FULLBBODY_BLOOD_STEP 2
 /* SURGERY STEPS */
 /datum/surgery_step
 	var/priority = 0	//steps with higher priority would be attempted first
@@ -21,7 +26,7 @@
 	var/max_duration = 0
 
 	//How much blood this step can get on surgeon. 1 - hands, 2 - full body.
-	var/blood_level = 0
+	var/blood_level = HANDS_BLOOD_STEP
 
 	//Cloth check
 	var/clothless = 1
@@ -87,9 +92,9 @@
 		spread_germs_to_organ(bodypart, user, tool)
 	if(ishuman(user) && prob(60))
 		var/mob/living/carbon/human/H = user
-		if(blood_level)
+		if(blood_level == HANDS_BLOOD_STEP)
 			H.bloody_hands(target, 0)
-		if(blood_level > 1)
+		if(blood_level == FULLBBODY_BLOOD_STEP)
 			H.bloody_body(target, 0)
 	return
 

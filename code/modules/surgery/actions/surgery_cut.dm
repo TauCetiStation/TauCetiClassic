@@ -41,7 +41,7 @@
 		QUALITY_SCREWING // for ipc, burn it
 		)
 
-	allowed_species = null
+	allowed_species = null // allowed for all species
 	var/plastic_new_name = null
 	min_duration = 9 SECONDS
 	max_duration = 11 SECONDS
@@ -61,7 +61,7 @@
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
 		if(slime.stat == DEAD && slime.surgery_status != PREPARED)
-			msg = "<span class='notice'>[user] being [SLIME_CUT_ACTION].</span>"
+			msg = "<span class='notice'>[user] begin [SLIME_CUT_ACTION].</span>"
 			self_msg = "<span class='notice'>You start [SLIME_CUT_ACTION].</span>"
 			user.visible_message(msg, self_msg)
 			return TRUE
@@ -86,7 +86,7 @@
 			var/obj/item/organ/external/head/head = bodypart
 			if(MOUTH_SURGERY)
 			//start operate face|plastic surgery
-				msg = "<span class='notice'>[user] being to [SIMPLE_MOUTH_ACTION].</span>"
+				msg = "<span class='notice'>[user] begin to [SIMPLE_MOUTH_ACTION].</span>"
 				self_msg = "<span class='notice'>You start to [SIMPLE_MOUTH_ACTION].</span>"
 				user.visible_message(msg, self_msg)
 				return TRUE
@@ -94,12 +94,12 @@
 		// Head, Chest, Groin, L|R Arm, L|R Leg
 			if(GENDER_SURGERY)
 			//gender surgery, in this stage we need check only VOX
-				msg = "<span class='notice'>[user] begins to [GENDER_BENDER_ACTION].</span>"
+				msg = "<span class='notice'>[user] begin to [GENDER_BENDER_ACTION].</span>"
 				self_msg = "<span class='notice'>You start to [GENDER_BENDER_ACTION].</span>"
 				user.visible_message(msg, self_msg)
 				return TRUE
 			if(CUT_ORGAN)
-				msg = "<span class='notice'>[user] being [POKING_ACTION]</span>"
+				msg = "<span class='notice'>[user] begin [POKING_ACTION]</span>"
 				self_msg = "<span class='notice'>You start [POKING_ACTION]</span>"
 				user.visible_message(msg, self_msg)
 			if(CUT_SCREW)
@@ -107,7 +107,7 @@
 				var/datum/reagents/R = surgery_victim.reagents
 				if(!R.has_reagent("metatrombine") || tool.damtype != BURN || !surgery_victim.species.flags[TRAIT_NO_BLOOD])
 					bodypart.status |= ORGAN_BLEEDING
-				msg = "<span class='notice'>[user] being to [SIMPLE_CUT_SCREW_ACTION]</span>"
+				msg = "<span class='notice'>[user] begin to [SIMPLE_CUT_SCREW_ACTION]</span>"
 				self_msg = "<span class='notice'>You start to [SIMPLE_CUT_SCREW_ACTION]</span>"
 				user.visible_message(msg, self_msg)
 				return TRUE

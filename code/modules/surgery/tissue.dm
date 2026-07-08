@@ -9,8 +9,6 @@
 	/obj/item/stack/medical/advanced/ointment = 100
 	)
 
-	blood_level = 1
-
 	min_duration = 50
 	max_duration = 60
 

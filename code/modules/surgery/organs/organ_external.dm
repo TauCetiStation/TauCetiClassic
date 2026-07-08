@@ -663,7 +663,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		IO.owner = null
 
 	owner.UpdateDamageIcon(src)
-	if(!clean && leaves_stump)
+	if(leaves_stump)
 		var/obj/item/organ/external/stump/S = new(null)
 		S.copy_original_limb(src)
 		S.insert_organ(owner, FALSE)
@@ -1499,7 +1499,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		owner.visible_message("<span class='warning'>[owner]'s face melts away, turning into mangled mess!</span>",	\
 		"<span class='warning'><b>Your face melts off!</b></span>",	\
 		"<span class='warning'>You hear a sickening sizzle.</span>")
-	disfigured = 1
+	disfigured = TRUE
 
 
 /obj/item/organ/external/proc/get_wounds_desc()
