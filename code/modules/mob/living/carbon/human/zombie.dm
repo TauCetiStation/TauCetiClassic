@@ -136,7 +136,6 @@
 	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
 
 	if(organs_by_name[O_BRAIN] && BP && !BP.is_stump())
-		var/free_body = TRUE
 		if(!key && mind)
 			var/free_body = TRUE
 			for(var/mob/dead/observer/ghost in player_list)

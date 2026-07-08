@@ -113,7 +113,4 @@
 	fattymeat.name = "fatty meat"
 	fattymeat.desc = "Extremely fatty tissue taken from a patient."
 	fattymeat.reagents.add_reagent ("nutriment", (max(75, (surgery_victim.nutrition + surgery_victim.overeatduration) - 450) / 15))
-	if(surgery_victim.reagents.total_volume > 0)
-		surgery_victim.reagents.total_volume
-		surgery_victim.reagents.remove_reagent("nutriment", surgery_victim.reagents.total_volume)
 	playsound(surgery_victim, 'sound/effects/splat.ogg', VOL_EFFECTS_MASTER)
