@@ -233,7 +233,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/arcademachine
 	name = "Circuit Design (Arcade Machine)"
-	desc = "Плата, используемая для сборки новых игровых автоматов."
+	desc = "Плата, используемая для сборки игрового автомата."
 	id = "arcademachine"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -296,7 +296,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rdconsole
 	name = "Circuit Design (R&D Console)"
-	desc = "Платп, используемая для сборки новой научно-исследовательской консоли."
+	desc = "Плата, используемая для сборки научно-исследовательской консоли."
 	id = "rdconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -323,7 +323,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/comm_monitor
 	name = "Circuit Design (Telecommunications Monitoring Console)"
-	desc = "Плата, используемая для сборки телекоммуникационного монитора."
+	desc = "Плата, используемая для сборки консоли телекоммуникаций."
 	id = "comm_monitor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -511,7 +511,7 @@ other types of metals and chemistry for reagents).
 ///////////////////////////////////
 /datum/design/subspace_receiver
 	name = "Circuit Design (Subspace Receiver)"
-	desc = "Плата, используемая для сборки оборудования для подпространственного приема радиосигнала."
+	desc = "Плата, используемая для сборки подпространственного приемника."
 	id = "s-receiver"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -520,7 +520,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telecomms_bus
 	name = "Circuit Design (Bus Mainframe)"
-	desc = "Плата, используемая для сборки базовых блоков телекоммуникационных шин."
+	desc = "Плата, используемая для сборки шины системы телекоммуникаций."
 	id = "s-bus"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -565,7 +565,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_broadcaster
 	name = "Circuit Design (Subspace Broadcaster)"
-	desc = "Плата, используемая для сборки оборудования подпространственного вещания."
+	desc = "Плата, используемая для сборки подпространсвенного вещателя системы телекоммуникаций."
 	id = "s-broadcaster"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -579,7 +579,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/intellicard
 	name = "Intellicard AI Transportation System"
-	desc = "Планшет для переноса и хранения личности ИИ."
+	desc = "Планшет для переноса и хранения образа ИИ."
 	id = "intellicard"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 1000, MAT_GOLD = 200)
