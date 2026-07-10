@@ -18,7 +18,7 @@
 	if(species == IPC)  // only ipc can change their voice at this moment
 		. += 					"<br><b>Voice:</b> <a href='byond://?_src_=prefs;preference=gendervoice'><b>[neuter_gender_voice == MALE ? "Male" : "Female"]</b></a>"
 	if(specie_obj.flags[HAS_BODYTYPE_SELECTION] && (gender == FEMALE))
-		. += 					"<br><b>Bodytype:</b> <a href='byond://?_src_=prefs;preference=bodytype'><b>[bodytype == AVERAGE_BODYTYPE ? "Average" : "Slim"]</b></a>"
+		. += 					"<br><b>Bodytype:</b> <a href='byond://?_src_=prefs;preference=bodytype'><b>[bodytype_name == AVERAGE_BODYTYPE ? "Average" : "Slim"]</b></a>"
 	. += 						"<br><b>Height:</b> <a href='byond://?_src_=prefs;preference=height;task=input'>[height]</a>"
 	. += 						"<br><b>Randomized Character Slot:</b> <a href='byond://?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
 	. += 						"<hr>"
@@ -318,9 +318,9 @@
 							if(!(species in lang.allowed_speak))
 								language = "None"
 						if(gender == FEMALE)
-							bodytype = specie_obj.females_standard_bodytype
+							bodytype_name = specie_obj.females_standard_bodytype
 						else
-							bodytype = AVERAGE_BODYTYPE
+							bodytype_name = AVERAGE_BODYTYPE
 
 				if("language")
 					var/list/new_languages = list("None")
@@ -676,10 +676,10 @@
 						return
 					if(gender == MALE)
 						gender = FEMALE
-						bodytype = specie_obj.females_standard_bodytype
+						bodytype_name = specie_obj.females_standard_bodytype
 					else
 						gender = MALE
-						bodytype = AVERAGE_BODYTYPE
+						bodytype_name = AVERAGE_BODYTYPE
 
 					f_style = random_facial_hair_style(gender, species)
 					h_style = random_hair_style(gender, species, ipc_head)
@@ -688,10 +688,10 @@
 					neuter_gender_voice = neuter_gender_voice == MALE ? FEMALE : MALE
 
 				if("bodytype")
-					if(bodytype == AVERAGE_BODYTYPE)
-						bodytype = SLIM_BODYTYPE
+					if(bodytype_name == AVERAGE_BODYTYPE)
+						bodytype_name = SLIM_BODYTYPE
 					else
-						bodytype = AVERAGE_BODYTYPE
+						bodytype_name = AVERAGE_BODYTYPE
 
 				if("randomslot")
 					randomslot = !randomslot

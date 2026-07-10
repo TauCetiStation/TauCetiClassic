@@ -492,7 +492,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(gender == FEMALE)
 			var/datum/species/specie_obj = all_species[species]
 			if(specie_obj)
-				bodytype = specie_obj.females_standard_bodytype
+				bodytype_name = specie_obj.females_standard_bodytype
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
@@ -808,7 +808,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["jumpsuit_base_color"] >> jumpsuit_base_color
 	S["pda_ringtone"]      >> chosen_ringtone
 	S["pda_custom_melody"] >> custom_melody
-	S["bodytype"]          >> bodytype
+	S["bodytype_name"]     >> bodytype_name
 
 	//Load prefs
 	S["alternate_option"] >> alternate_option
@@ -902,7 +902,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
 	chosen_ringtone  = sanitize_inlist(chosen_ringtone, pref_ringtones, initial(chosen_ringtone))
 	custom_melody = sanitize(custom_melody, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
-	bodytype = sanitize_inlist(bodytype, bodytypes_list, initial(bodytype))
+	bodytype_name = sanitize_inlist(bodytype_name, bodytypes_list, initial(bodytype_name))
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	neuter_gender_voice = sanitize_gender_voice(neuter_gender_voice)
 
@@ -1022,7 +1022,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["jumpsuit_base_color"]   << jumpsuit_base_color
 	S["pda_ringtone"]          << chosen_ringtone
 	S["pda_custom_melody"]     << custom_melody
-	S["bodytype"]              << bodytype
+	S["bodytype_name"]         << bodytype_name
 	//Write prefs
 	S["alternate_option"]      << alternate_option
 	S["job_preferences"]       << job_preferences

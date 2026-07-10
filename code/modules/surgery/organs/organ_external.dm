@@ -269,8 +269,8 @@
 	var/bodytype_suffix = ""
 	var/pump_suffix
 
-	if(fat_state && owner && owner.bodytype)
-		bodytype_suffix = owner.bodytype.external_organs_suffix
+	if(fat_state && owner && owner.bodytype_typepath)
+		bodytype_suffix = owner.bodytype_typepath.external_organs_suffix
 
 	if(gender_state)
 		var/gender_icon = FALSE
