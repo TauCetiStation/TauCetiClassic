@@ -269,6 +269,9 @@ SUBSYSTEM_DEF(ticker)
 		SSjob.ResetOccupations()
 		return FALSE
 
+	for(var/client/client as anything in clients)
+		client.tgui_panel?.check_health()
+
 	if(!bundle || !bundle.hide_mode_announce)
 		mode.announce()
 

@@ -70,8 +70,28 @@ const setupApp = () => {
   // Subscribe for Redux state updates
   store.subscribe(renderApp);
 
+  const attemptNode = document.getElementById('tgui-panel-attempt');
+  const panelAttempt = attemptNode
+    ? Number(attemptNode.getAttribute('content'))
+    : null;
+  let panelReadySent = false;
+
   // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
+  Byond.subscribe((type, payload) => {
+    store.dispatch({ type, payload });
+    if (type === 'panel/healthcheck') {
+      Byond.sendMessage('panel/healthy', payload);
+    }
+    if (type === 'update' && panelAttempt !== null && !panelReadySent) {
+      panelReadySent = true;
+      Byond.sendMessage('panel/ready', { attempt: panelAttempt });
+    }
+  });
+
+  // Ask the server for initial state after the panel bundle has subscribed.
+  if (panelAttempt !== null) {
+    Byond.sendMessage('panel/booted', { attempt: panelAttempt });
+  }
 
   // Unhide the panel
   Byond.winset('legacy_output_selector', {

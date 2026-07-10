@@ -44,17 +44,17 @@
 		for(var/_target in target)
 			var/client/client = CLIENT_FROM_VAR(_target)
 			if(client)
-				// Send to tgchat
-				client.tgui_panel?.window.send_raw_message(message_blob)
-				// Send to old chat
-				SEND_TEXT(client, message_html)
+				if(client.tgui_panel)
+					client.tgui_panel.send_chat_immediate(message, message_blob, message_html)
+				else
+					SEND_TEXT(client, message_html)
 		return
 	var/client/client = CLIENT_FROM_VAR(target)
 	if(client)
-		// Send to tgchat
-		client.tgui_panel?.window.send_raw_message(message_blob)
-		// Send to old chat
-		SEND_TEXT(client, message_html)
+		if(client.tgui_panel)
+			client.tgui_panel.send_chat_immediate(message, message_blob, message_html)
+		else
+			SEND_TEXT(client, message_html)
 
 /**
  * Sends the message to the recipient (target).

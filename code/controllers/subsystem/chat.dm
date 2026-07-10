@@ -17,8 +17,11 @@ SUBSYSTEM_DEF(chat)
 		var/payload = payload_by_client[client]
 		payload_by_client -= client
 		if(client)
-			// Send to tgchat
-			client.tgui_panel?.window.send_message("chat/message", payload)
+			if(client.tgui_panel)
+				client.tgui_panel.send_chat(payload)
+			else
+				for(var/message in payload)
+					SEND_TEXT(client, message_to_html(message))
 		if(MC_TICK_CHECK)
 			return
 
