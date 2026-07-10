@@ -323,7 +323,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/comm_monitor
 	name = "Circuit Design (Telecommunications Monitoring Console)"
-	desc = "Плата, используемая для сборки телекоммуникационного монитора."
+	desc = "Плата, используемая для сборки консоли телекоммуникаций."
 	id = "comm_monitor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
