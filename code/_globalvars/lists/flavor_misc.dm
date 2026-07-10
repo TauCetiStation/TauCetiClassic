@@ -17,7 +17,8 @@ var/global/list/backbaglist = list("Nothing", "Backpack", "Sporty Backpack", "Sa
 var/global/list/heights_list = list(HUMANHEIGHT_SHORTEST, HUMANHEIGHT_SHORT, HUMANHEIGHT_MEDIUM, HUMANHEIGHT_TALL, HUMANHEIGHT_TALLEST)
 
 var/global/list/bodytypes_list = list(
-	AVERAGE_BODYTYPE = /datum/bodytype/average,
-	SLIM_BODYTYPE = /datum/bodytype/slim,
-	FAT_BODYTYPE = /datum/bodytype/fat)
+	AVERAGE_BODYTYPE = new /datum/bodytype/average,
+	SLIM_BODYTYPE = new /datum/bodytype/slim,
+	FAT_BODYTYPE = new /datum/bodytype/fat)
+
 
