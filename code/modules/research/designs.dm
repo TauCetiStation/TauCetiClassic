@@ -80,7 +80,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/borgupload
 	name = "Circuit Design (Cyborg Upload)"
-	desc = "Плата, используемая для сборки консоли загрузки законов для боргов."
+	desc = "Плата, используемая для сборки консоли загрузки законов для киборгов."
 	id = "borgupload"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -116,7 +116,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/scan_console
 	name = "Circuit Design (DNA Machine)"
-	desc = "Плата, используемая для сборки новой консоли для сканирования ДНК."
+	desc = "Плата, используемая для сборки консоли для сканирования ДНК."
 	id = "scan_console"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -179,7 +179,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/air_management
 	name = "Circuit Design (Atmospheric Monitor)"
-	desc = "Плата, используемая для сборки атмосферного монитора."
+	desc = "Плата, используемая для сборки консоли мониторинга газового хранилища."
 	id = "air_management"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -188,7 +188,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/robocontrol
 	name = "Circuit Design (Robotics Control Console)"
-	desc = "Плата, используемая для сборки консоли управления боргами."
+	desc = "Плата, используемая для сборки консоли управления киборгами."
 	id = "robocontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1508,7 +1508,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cyborgrecharger
 	name = "Cyborg Recharger Board"
-	desc = "Плата, используемая для сборки зарядной станции боргов."
+	desc = "Плата, используемая для сборки зарядной станции киборгов."
 	id = "cyborgrecharger"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1696,7 +1696,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cyborg_analyzer
 	name = "Cyborg Analyzer"
-	desc = "Ручной сканер, способный диагностировать повреждения у боргов."
+	desc = "Ручной сканер, способный диагностировать повреждения у киборгов."
 	id = "cyborg_analyzer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000, MAT_SILVER = 1500, MAT_DIAMOND = 1000)
@@ -1971,7 +1971,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/laserrifle
 	name = "Extended-Capacity Laser Rifle"
-	desc = "Стандартное оружие, предназначенное для убийства с помощью концентрированных энергетических зарядов. Эта модель имеет батарейку повышенной емкости и обладает большими габаритами."
+	desc = "Стандартное оружие, предназначенное для убийства с помощью концентрированных энергетических зарядов. Эта модель имеет батарейку повышенной емкости  и выглядит крупнее обычной винтовки."
 	id = "laserrifle"
 	build_type = PROTOLATHE
 	materials = list (MAT_METAL = 8000, MAT_GLASS = 1000, MAT_URANIUM = 200)
@@ -2396,7 +2396,7 @@ other types of metals and chemistry for reagents).
 /////////////////////////////////////////
 /datum/design/borg_syndicate_module
 	name = "Borg Illegal Weapons Upgrade"
-	desc = "Модуль незаконного улучшения для боргов."
+	desc = "Модуль незаконного улучшения для киборгов."
 	id = "borg_syndicate_module"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/syndicate
