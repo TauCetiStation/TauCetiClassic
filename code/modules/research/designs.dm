@@ -296,7 +296,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rdconsole
 	name = "Circuit Design (R&D Console)"
-	desc = "Платп, используемая для сборки новой научно-исследовательской консоли."
+	desc = "Плата, используемая для сборки научно-исследовательской консоли."
 	id = "rdconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
