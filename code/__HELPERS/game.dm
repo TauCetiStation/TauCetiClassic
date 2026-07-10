@@ -730,4 +730,3 @@
 		if(stop_type && istype(turf_to_check, stop_type))
 			break
 	return turf_to_check
-
