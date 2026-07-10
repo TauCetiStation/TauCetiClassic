@@ -233,7 +233,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/arcademachine
 	name = "Circuit Design (Arcade Machine)"
-	desc = "Плата, используемая для сборки новых игровых автоматов."
+	desc = "Плата, используемая для сборки игрового автомата."
 	id = "arcademachine"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
