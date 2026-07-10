@@ -31,12 +31,17 @@
 	window = new(client, "browseroutput")
 	window.subscribe(src, PROC_REF(on_message))
 
-/datum/tgui_panel/Del()
+/datum/tgui_panel/Destroy()
 	initialization_request++
 	clear_initialization_timer()
 	clear_healthcheck_timer()
-	window.unsubscribe(src)
-	window.close()
+	pending_chat_messages = null
+	if(window)
+		window.unsubscribe(src)
+		window.close(can_be_suspended = FALSE)
+		client?.tgui_windows -= window.id
+		QDEL_NULL(window)
+	client = null
 	return ..()
 
 /**
