@@ -565,7 +565,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_broadcaster
 	name = "Circuit Design (Subspace Broadcaster)"
-	desc = "Плата, используемая для сборки оборудования подпространственного вещания."
+	desc = "Плата, используемая для сборки подпространсвенного вещателя системы телекоммуникаций."
 	id = "s-broadcaster"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
