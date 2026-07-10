@@ -511,7 +511,7 @@ other types of metals and chemistry for reagents).
 ///////////////////////////////////
 /datum/design/subspace_receiver
 	name = "Circuit Design (Subspace Receiver)"
-	desc = "Плата, используемая для сборки оборудования для подпространственного приема радиосигнала."
+	desc = "Плата, используемая для сборки подпространственного приемника."
 	id = "s-receiver"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
