@@ -359,7 +359,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/libraryconsole
 	name = "Computer Design (Library Console)"
-	desc = "Плата, используемая для сборки новой библиотечной консоли."
+	desc = "Позволяет создавать платы для сборки нового читательского терминала."
 	id = "libraryconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
