@@ -520,7 +520,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telecomms_bus
 	name = "Circuit Design (Bus Mainframe)"
-	desc = "Плата, используемая для сборки базовых блоков телекоммуникационных шин."
+	desc = "Плата, используемая для сборки шины системы телекоммуникаций."
 	id = "s-bus"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
