@@ -579,7 +579,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/intellicard
 	name = "Intellicard AI Transportation System"
-	desc = "Планшет для переноса и хранения личности ИИ."
+	desc = "Планшет для переноса и хранения образа ИИ."
 	id = "intellicard"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 1000, MAT_GOLD = 200)
