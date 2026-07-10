@@ -29,6 +29,8 @@
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
+	bodytype_typepath = global.bodytypes_list[/datum/preferences::bodytype_name]
+
 	AddComponent(/datum/component/mood)
 
 	dna = new
@@ -51,8 +53,6 @@
 	dna.b_type = random_blood_type()
 
 	. = ..()
-
-	bodytype_typepath = global.bodytypes_list[/datum/preferences::bodytype_name]
 
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN)
 	human_list += src
