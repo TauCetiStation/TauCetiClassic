@@ -15,7 +15,7 @@
 	var/obj/item/clothing/suit/space/rig/rig_connect
 	can_be_modded = TRUE
 
-	unacidable = TRUE //all helmets on rigs can be acidable
+	unacidable = FALSE //all helmets on rigs can be acidable
 
 	//Species-specific stuff.
 	species_restricted = list("exclude", UNATHI, TAJARAN, SKRELL, DIONA, VOX)
@@ -50,6 +50,11 @@
 
 	if(on)	set_light(brightness_on)
 	else	set_light(0)
+
+/obj/item/clothing/head/helmet/space/rig/Destroy()
+	if(rig_connect)
+		rig_connect.helmet = null
+	. = ..()
 
 /obj/item/clothing/suit/space/rig
 	name = "hardsuit"
