@@ -11,7 +11,7 @@
 		QUALITY_MENDING_IPC
 		)
 
-	allowed_species = list("exclude", DIONA, IPC)
+	allowed_species = list("exclude", DIONA)
 	min_duration = 4 SECONDS
 	max_duration = 6 SECONDS
 
