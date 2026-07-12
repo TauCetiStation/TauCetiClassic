@@ -71,7 +71,8 @@
 
 /obj/item/clothing/shoes/boots/swat
 	name = "SWAT shoes"
-	desc = "When you want to turn up the heat."
+	cases = list("обувь спецназа","обуви спецназа","обуви спецназа","обувь спецназа","обувью спецназа","обуви спецназа")
+	desc = "Когда нужно поддать жару."
 	icon_state = "swat"
 	flags = NOSLIP
 	siemens_coefficient = 0.6

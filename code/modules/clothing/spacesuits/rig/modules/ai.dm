@@ -20,7 +20,8 @@
 
 /obj/item/rig_module/simple_ai
 	name = "hardsuit automated diagnostic system"
-	desc = "A system designed to help hardsuit users."
+	cases = list("система автономной диагностики РИГа","системы автономной диагностики РИГа","системе автономной диагностики РИГа","систему автономной диагностики РИГа","системой автономной диагностики РИГа","системе автономной диагностики РИГа")
+	desc = "Система, помогающая пользователям РИГов."
 	origin_tech = "programming=2"
 	interface_name = "automated diagnostic system"
 	interface_desc = "System that will tell you exactly how you gonna die."

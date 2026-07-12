@@ -39,6 +39,8 @@ other types of metals and chemistry for reagents).
 
 /datum/design/New()
 	all_designs += src
+	name = build_path:name
+	desc = build_path:desc
 
 ///////////////////Computer Boards///////////////////////////////////
 
@@ -579,7 +581,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/intellicard
 	name = "Intellicard AI Transportation System"
-	desc = "Планшет для переноса и хранения образа ИИ."
 	id = "intellicard"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 1000, MAT_GOLD = 200)
@@ -588,7 +589,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/paicard
 	name = "Personal Artificial Intelligence Card"
-	desc = "Планшет с персональным искусственным интелектом. Искуственный - да, интелект - нет."
 	id = "paicard"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
@@ -2729,7 +2729,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigsimpleai
 	name = "Hardsuit Automated Diagnostic System"
-	desc = "Система, помогающая пользователям РИГов."
 	id = "rigsimpleai"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
@@ -2738,7 +2737,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigadvancedai
 	name = "Hardsuit Advanced Diagnostic System"
-	desc = "Система, помогающая пользователям РИГов."
 	id = "rigadvancedai"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 500)
@@ -2747,7 +2745,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigflash
 	name = "Hardsuit Mounted Flash"
-	desc = "Ты — закон."
 	id = "rigflash"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
@@ -2756,7 +2753,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/riggrenadelauncherflashbang
 	name = "Hardsuit Mounted Flashbang Grenade Launcher"
-	desc = "Плечевая установка для отстрела микрозарядов, предназначенное исключительно для использования стандартных светошумовых гранат."
 	id = "riggrenadelauncherflashbang"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GOLD = 4000, MAT_SILVER = 2000)
@@ -2819,7 +2815,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigrcd
 	name = "Hardsuit RCD Mount"
-	desc = "Устройство для быстрого возведения конструкций, работающее от энергоячейки и предназначенное для использования с РИГом."
 	id = "rigrcd"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 4000, MAT_GOLD = 4000, MAT_SILVER = 2000, MAT_DIAMOND = 1000)
@@ -2828,7 +2823,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigcombatinjector
 	name = "Hardsuit Combat Chemical Injector"
-	desc = "Сложная сеть трубок и игл, пригодная для использования в РИГе."
 	id = "rigcombatinjector"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 500, MAT_SILVER = 500)
@@ -2837,7 +2831,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigmedicalinjector
 	name = "Hardsuit Medical Chemical Injector"
-	desc = "Сложная сеть трубок и игл, пригодная для использования в РИГе."
 	id = "rigmedicalinjector"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 4000, MAT_GOLD = 1000, MAT_SILVER = 1000)
@@ -2846,7 +2839,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigselfrepair
 	name = "Hardsuit Self-Repair Module"
-	desc = "Выглядящий довольно сложным комплект, полный инструментов."
 	id = "rigselfrepair"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 20000, MAT_GLASS = 2000, MAT_GOLD = 1000)
@@ -2855,7 +2847,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigmedteleport
 	name = "Hardsuit Medical Teleport System"
-	desc = "Система, способная спасти владельца скафандра."
 	id = "rigmedteleport"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 4000, MAT_GOLD = 2000, MAT_DIAMOND = 500)
@@ -2864,7 +2855,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rignuclearreactor
 	name = "Hardsuit Nuclear Reactor Module"
-	desc = "Пассивно вырабатывает энергию. Становится крайне нестабильным при повреждении."
 	id = "rignuclearreactor"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_GOLD = 6000, MAT_URANIUM = 4000)
@@ -2873,7 +2863,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigcoolingunit
 	name = "Hardsuit Mounted Cooling Unit"
-	desc = "Радиатор с жидкостным охлаждением."
 	id = "rigcoolingunit"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_DIAMOND = 200)
@@ -2882,7 +2871,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigextinguisher
 	name = "Hardsuit Fire Extinguisher"
-	desc = "Огнетушитель, устанавливаемый на РИГ и предназначенный для работы в опасных условиях."
 	id = "rigextinguisher"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
@@ -2891,7 +2879,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigmetalfoamspray
 	name = "Hardsuit Metal Foam Spray"
-	desc = "Устройство для распыления металлической пены, устанавливаемое на РИГ и предназначенное для быстрой заделки пробоин."
 	id = "rigmetalfoamspray"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
@@ -2900,7 +2887,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/riganalyzer
 	name = "Hardsuit Analyzer Module"
-	desc = "Сканер атмосферных явлений и аномалий, устанавливаемый на РИГ."
 	id = "riganalyzer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
@@ -2909,7 +2895,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigsciencetool
 	name = "Hardsuit Science Tool Module"
-	desc = "Инструмент для сбора очков исследований, устанавливаемый на РИГ."
 	id = "rigsciencetool"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
@@ -2918,7 +2903,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigrelay
 	name = "Hardsuit Mounted Relay Module"
-	desc = "Может ретранслировать радиосигналы из других секторов."
 	id = "rigrelay"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_GOLD = 8000, MAT_URANIUM = 4000, MAT_PHORON = 8000, MAT_DIAMOND = 3000)
@@ -2927,7 +2911,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigstabilizer
 	name = "Hardsuit Teleporter stabilizer"
-	desc = "Специальное устройство для стабилизации помех в блюспейсе, возникающих во время телепортации."
 	id = "rigstabilizer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 2000, MAT_PHORON = 4000)
@@ -2936,7 +2919,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/hardsuit_emp_shield
 	name = "Hardsuit EMP shield"
-	desc = "Устройство для защиты РИГа от электромагнитного импульса."
 	id = "rigempshield"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
@@ -2944,7 +2926,6 @@ other types of metals and chemistry for reagents).
 	category = list("Rig Modules")
 /datum/design/rigstealth
 	name = "Hardsuit stealth system"
-	desc = "Система, делающая РИГ и её пользователя невидимым. Картонная коробка в комплект не входит."
 	id = "rigstealth"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_SILVER = 5000, MAT_GOLD = 5000, MAT_DIAMOND = 10000, MAT_PHORON = 5000)
@@ -2957,7 +2938,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tier1_hud_upgrade
 	name = "Damage Scan Upgrade"
-	desc = "Модификация, позволяющая HUD отображать повреждения, наносимые кому-либо."
 	id = "tier1_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
@@ -2966,7 +2946,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tier2_hud_upgrade
 	name = "Basic Nightvision HUD upgrade"
-	desc = "Модификация, позволяющая HUD активировать базовый режим ночного видения. Установка возможна только после установки улучшения для сканирования повреждений."
 	id = "tier2_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_URANIUM = 2000)
@@ -2975,7 +2954,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tier3_hud_upgrade
 	name = "Thermal HUD upgrade"
-	desc = "Модификация, позволяющая HUD активировать базовый тепловизионного режим и делает использование режима ночного видения более комфортным. Установка возможна только после установки системы ночного видения."
 	id = "tier3_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_PHORON = 2500)
@@ -2984,7 +2962,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tier4_hud_upgrade
 	name = "Advanced Thermal HUD upgrade"
-	desc = "Модификация, делающая использование тепловизионного режима более комфортным и совмещающая его с режимом ночного видения. Установка возможна только после установки тепловизора."
 	id = "tier4_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_GOLD = 1500, MAT_URANIUM = 3000, MAT_PHORON = 3500)
@@ -2997,7 +2974,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ds_helmet
 	name = "Deathsquad helmet"
-	desc = "Это не красная краска. Это кровь."
 	id = "ds_helmet"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 15000, MAT_GLASS = 8000, MAT_GOLD = 2500, MAT_URANIUM = 4500, MAT_PHORON = 5000)
@@ -3006,7 +2982,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ds_armor
 	name = "SWAT Suit"
-	desc = "Тяжелый бронированный костюм, защищающий от умеренного количества повреждений. Используется в специальных операциях."
 	id = "ds_armor"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50000, MAT_GLASS = 25000, MAT_GOLD = 8000, MAT_URANIUM = 12500, MAT_PHORON = 15000)
@@ -3015,7 +2990,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ds_boots
 	name = "SWAT shoes"
-	desc = "Когда нужно поддать жару."
 	id = "ds_boots"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GOLD = 2000, MAT_PHORON = 4000)

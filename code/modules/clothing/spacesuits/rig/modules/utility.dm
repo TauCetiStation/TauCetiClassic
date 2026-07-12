@@ -21,7 +21,8 @@
 
 /obj/item/rig_module/device/analyzer
 	name = "hardsuit analyzer module"
-	desc = "A hardsuit-mounted atmospherics and anomalies scanner."
+	cases = list("модуль-анализатор для РИГа","модуля-анализатора для РИГа","модулю-анализатору для РИГа","модуль-анализатор для РИГа","модулем-анализатором для РИГа","модуле-анализаторе для РИГа")
+	desc = "Сканер атмосферных явлений и аномалий, устанавливаемый на РИГ."
 	icon_state = "analyzer"
 	interface_name = "Analyzer"
 	interface_desc = "Shows anomalies frequencies and reports current gas levels when used."
@@ -36,7 +37,8 @@
 
 /obj/item/rig_module/device/science_tool
 	name = "hardsuit science tool module"
-	desc = "A hardsuit-mounted tool for gathering research points."
+	cases = list("научный модуль-инструмент для РИГа","научного модуля-инструмента для РИГа","научному модулю-инструменту для РИГа","научный модуль-инструмент для РИГа","научным модулем-инструментом для РИГа","научном модуле-инструменте для РИГа")
+	desc = "Инструмент для сбора очков исследований, устанавливаемый на РИГ."
 	icon_state = "scitool"
 	interface_name = "Science tool"
 	interface_desc = "Used to collect research data from different sources."
@@ -107,7 +109,8 @@
 
 /obj/item/rig_module/device/rcd
 	name = "hardsuit RCD mount"
-	desc = "A cell-powered rapid construction device for a hardsuit."
+	cases = list("модуль РИГа со встроенным RCD","модуля РИГа со встроенным RCD","модулю РИГа со встроенным RCD","модуль РИГа со встроенным RCD","модулем РИГа со встроенным RCD","модуле РИГа со встроенным RCD")
+	desc = "Устройство для быстрого возведения конструкций, работающее от энергоячейки и предназначенное для использования с РИГом."
 	icon_state = "rcd"
 	interface_name = "mounted RCD"
 	interface_desc = "A device for building or removing walls. Cell-powered."
@@ -153,7 +156,8 @@
 
 /obj/item/rig_module/chem_dispenser
 	name = "hardsuit mounted chemical dispenser"
-	desc = "A complex web of tubing and needles suitable for hardsuit use."
+	cases = list("модуль РИГа с химическим инъектором","модуля РИГа с химическим инъектором","модулю РИГа с химическим инъектором","модуль РИГа с химическим инъектором","модулем РИГа с химическим инъектором","модуле РИГа с химическим инъектором")
+	desc = "Сложная сеть трубок и игл, пригодная для использования в РИГе."
 	icon_state = "injector"
 	suit_overlay = "mounted-injector"
 	usable = TRUE
@@ -281,7 +285,6 @@
 
 /obj/item/rig_module/chem_dispenser/combat
 	name = "hardsuit combat chemical injector"
-	desc = "A complex web of tubing and needles suitable for hardsuit use."
 	suit_overlay = null // hidden
 
 	interface_name = "combat chem dispenser"
@@ -296,7 +299,6 @@
 
 /obj/item/rig_module/chem_dispenser/medical
 	name = "hardsuit mounted chemical injector"
-	desc = "A complex web of tubing and needles suitable for hardsuit use."
 	selectable = TRUE // Also can inject others
 
 	interface_name = "medical chem dispenser"
@@ -331,6 +333,8 @@
 
 /obj/item/rig_module/cooling_unit
 	name = "hardsuit mounted cooling unit"
+	cases = list("модуль РИГа с системой охлаждения","модуля РИГа с системой охлаждения","модулю РИГа с системой охлаждения","модуль РИГа с системой охлаждения","модулем РИГа с системой охлаждения","модуле РИГа с системой охлаждения")
+	desc = "Радиатор с жидкостным охлаждением."
 	icon_state = "cloak"
 	toggleable = TRUE
 	origin_tech = "engineering=3;programming=3"
@@ -366,6 +370,8 @@
 
 /obj/item/rig_module/emp_shield
 	name = "hardsuit EMP shield"
+	cases = list("модуль защиты от ЭМИ для РИГа","модуля защиты от ЭМИ для РИГа","модулю защиты от ЭМИ для РИГа","модуль защиты от ЭМИ для РИГа","модулем защиты от ЭМИ для РИГа","модуле защиты от ЭМИ для РИГа")
+	desc = "Устройство для защиты РИГа от электромагнитного импульса."
 	icon_state = "powersink"
 	interface_desc = "Device for protecting the hardsuit from EMP. Can withstand 5 EMPs."
 	origin_tech = "engineering=2;magnets=2"
@@ -380,6 +386,8 @@
 
 /obj/item/rig_module/teleporter_stabilizer
 	name = "hardsuit teleporter stabilizer"
+	cases = list("стабилизирующий модуль телепортации","стабилизирующего модуля телепортации","стабилизирующему модулю телепортации","стабилизирующий модуль телепортации","стабилизирующим модулем телепортации","стабилизирующем модуле телепортации")
+	desc = "Специальное устройство для стабилизации помех в блюспейсе, возникающих во время телепортации."
 	icon_state = "scanner"
 	origin_tech = "engineering=3;programming=3;bluespace=2;"
 	interface_name = "mounted wormhole stabilizer"
@@ -410,7 +418,8 @@
 
 /obj/item/rig_module/selfrepair
 	name = "hardsuit self-repair module"
-	desc = "A somewhat complicated looking complex full of tools."
+	cases = list("модуль РИГа для самопочинки","модуля РИГа для самопочинки","модулю РИГа для самопочинки","модуль РИГа для самопочинки","модулем РИГа для самопочинки","модуле РИГа для самопочинки")
+	desc = "Выглядящий довольно сложным комплект, полный инструментов."
 	icon_state = "selfrepair"
 	interface_name = "self-repair module"
 	interface_desc = "A module capable of repairing stuctural rig damage on the spot."
@@ -558,6 +567,8 @@
 
 /obj/item/rig_module/med_teleport
 	name = "hardsuit medical teleport system"
+	cases = list("аварийный модуль телепортации владельца РИГа","аварийного модуля телепортации владельца РИГа","аварийному модулю телепортации владельца РИГа","аварийный модуль телепортации владельца РИГа","аварийным модулем телепортации владельца РИГа","аварийном модуле телепортации владельца РИГа")
+	desc = "Система, способная спасти владельца скафандра."
 	origin_tech = "programming=2;materials=2;bluespace=1"
 	interface_name = "automated medical teleport system"
 	interface_desc = "System capable of saving the suit owner. But only once"
@@ -616,7 +627,9 @@
 
 /obj/item/rig_module/nuclear_generator
 	name = "hardsuit nuclear reactor module"
+	cases = list("модуль РИГа со встроенным ядерным реактором","модуля РИГа со встроенным ядерным реактором","модулю РИГа со встроенным ядерным реактором","модуль РИГа со встроенным ядерным реактором","модулем РИГа со встроенным ядерным реактором","модуле РИГа со встроенным ядерным реактором")
 	desc = "Looks like a small machine of doom"
+	desc = "Пассивно вырабатывает энергию. Становится крайне нестабильным при повреждении."
 	origin_tech = "programming=4;engineering=4;bluespace=4;powerstorage=4"
 	interface_name = "compact nuclear reactor"
 	interface_desc = "Passively generates energy. Becomes very unstable if damaged"
@@ -659,7 +672,8 @@
 
 /obj/item/rig_module/mounted_relay
 	name = "hardsuit mounted relay module"
-	desc = "Can relay radio signals from other sectors"
+	cases = list("ретрансляторный модуль для РИГа","ретрансляторного модуля для РИГа","ретрансляторному модулю для РИГа","ретрансляторный модуль для РИГа","ретрансляторным модулем для РИГа","ретрансляторном модуле для РИГа")
+	desc = "Модуль, что может ретранслировать радиосигналы из других секторов."
 	origin_tech = "programming=6;engineering=6;bluespace=6"
 	interface_name = "portable radio relay"
 	interface_desc = "Can transmit messages to other  sectors as well as receive. Consumes a lot of energy when active."
@@ -706,7 +720,8 @@
 
 /obj/item/rig_module/device/extinguisher
 	name = "hardsuit fire extinguisher"
-	desc = "Hardsuit mounted fire extinguisher designed to work in hazardous environments."
+	cases = list("модуль со встроенным огнетушителем","модуля со встроенным огнетушителем","модулю со встроенным огнетушителем","модуль со встроенным огнетушителем","модулем со встроенным огнетушителем","модуле со встроенным огнетушителем")
+	desc = "Огнетушитель, устанавливаемый на РИГ и предназначенный для работы в опасных условиях."
 	icon_state = "extinguisher"
 	interface_name = "fire extinguisher"
 	interface_desc = "Hardsuit mounted fire extinguisher."
@@ -739,7 +754,8 @@
 
 /obj/item/rig_module/metalfoam_spray
 	name = "hardsuit metal foam spray"
-	desc = "Hardsuit mounted metal foam spray designed to quickly patch holes."
+	cases = list("модуль распыления металлической пены","модуля распыления металлической пены","модулю распыления металлической пены","модуль распыления металлической пены","модулем распыления металлической пены","модуле распыления металлической пены")
+	desc = "Устройство для распыления металлической пены, устанавливаемое на РИГ и предназначенное для быстрой заделки пробоин."
 	icon_state = "metalfoam_spray"
 	interface_name = "metal foam spray"
 	interface_desc = "Hardsuit mounted metal foam spray designed to quickly patch holes."
@@ -818,7 +834,8 @@
 
 /obj/item/rig_module/stealth
 	name = "hardsuit stealth system"
-	desc = "System that makes hardsuit invisible."
+	cases = list("модуль невидимости для РИГа","модуля невидимости для РИГа","модулю невидимости для РИГа","модуль невидимости для РИГа","модулем невидимости для РИГа","модуле невидимости для РИГа")
+	desc = "Система, делающая РИГ и её пользователя невидимым. Картонная коробка в комплект не входит."
 	interface_name = "Turn invisibility"
 	interface_desc = "System that makes hardsuit invisible."
 	origin_tech = "engineering=6;programming=6;bluespace=6;combat=6;phorontech=6"

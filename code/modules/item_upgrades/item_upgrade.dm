@@ -107,7 +107,8 @@
 
 /obj/item/hud_upgrade/medscan
 	name = "Damage Scan Upgrade"
-	desc = "Allows HUD to show damage on person."
+	cases = list("модуль медицинского сканирования","модуля медицинского сканирования","модулю медицинского сканирования","модуль медицинского сканирования","модулем медицинского сканирования","модуле медицинского сканирования")
+	desc = "Модификация, позволяющая HUD отображать повреждения, наносимые кому-либо."
 	item_state_inventory = "medscan"
 	item_state_world = "medscan_w"
 	glasses_item_state = "mixhud"
@@ -122,7 +123,8 @@
 
 /obj/item/hud_upgrade/night
 	name = "Basic Nightvision HUD upgrade"
-	desc = "Allows HUD to turn a basic nightvision mode. Can be installed only after damage scan upgrade"
+	cases = list("модуль ночного видения","модуля ночного видения","модулю ночного видения","модуль ночного видения","модулем ночного видения","модуле ночного видения")
+	desc = "Модификация, позволяющая HUD активировать базовый режим ночного видения. Установка возможна только после установки улучшения для сканирования повреждений."
 	item_state_inventory = "nightvision"
 	item_state_world = "nightvision_w"
 	glasses_item_state = "nvghud"
@@ -136,7 +138,8 @@
 
 /obj/item/hud_upgrade/thermal
 	name = "Thermal HUD upgrade"
-	desc = "Allows HUD to turn a basic thermal mode, makes nightvision mode more comfortable for use. Can be installed only after basic nightvision upgrade"
+	cases = list("модуль тепловизора","модуля тепловизора","модулю тепловизора","модуль тепловизора","модулем тепловизора","модуле тепловизора")
+	desc = "Модификация, позволяющая HUD активировать базовый тепловизионного режим и делает использование режима ночного видения более комфортным. Установка возможна только после установки системы ночного видения."
 	item_state_inventory = "thermal"
 	item_state_world = "thermal_w"
 	glasses_item_state = "thermalhud"
@@ -150,7 +153,8 @@
 
 /obj/item/hud_upgrade/thermal_advanced
 	name = "Advanced Thermal HUD upgrade"
-	desc = "Makes thermal mode comfortable and combines it with nightvision mode. Can be installed only after thermal upgrade"
+	cases = list("улучшение модуля тепловизора","улучшения модуля тепловизора","улучшению модуля тепловизора","улучшение модуля тепловизора","улучшением модуля тепловизора","улучшении модуля тепловизора")
+	desc = "Модификация, делающая использование тепловизионного режима более комфортным и совмещающая его с режимом ночного видения. Установка возможна только после установки тепловизора."
 	item_state_inventory = "thermaladv"
 	item_state_world = "thermaladv_w"
 	glasses_item_state = "thermalhudadv"

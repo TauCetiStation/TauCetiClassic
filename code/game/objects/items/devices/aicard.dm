@@ -1,5 +1,7 @@
 /obj/item/device/aicard
 	name = "inteliCard"
+	cases = list("интеллект карта","интеллект карты","интеллект карте","интеллект карту","интеллект картой","интеллект карте")
+	desc = "Планшет для переноса и хранения образа ИИ."
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "aicard" // aicard-full
 	item_state_world = "aicard_world"
