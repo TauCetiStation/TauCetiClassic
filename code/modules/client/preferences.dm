@@ -472,7 +472,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	character.h_style = h_style
 	character.grad_style = grad_style
 	character.f_style = f_style
-	character.bodytype_typepath = global.bodytypes_list[bodytype_name]
+	character.bodytype_object = global.bodytypes_list[bodytype_name]
 
 	character.home_system = home_system
 	character.citizenship = citizenship

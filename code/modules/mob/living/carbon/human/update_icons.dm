@@ -135,7 +135,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	var/fem = ""
 	// narrow female-cut clothing (_fem) is only for slim bodies; average uses the base sprite
-	if(H.gender == FEMALE && S.gender_limb_icons && H.bodytype_typepath && H.bodytype_typepath.name == SLIM_BODYTYPE)
+	if(H.gender == FEMALE && S.gender_limb_icons && H.bodytype_object && H.bodytype_object.name == SLIM_BODYTYPE)
 		if(t_state != null)
 			if(icon_exists(icon_path, "[t_state]_fem"))
 				fem = "_fem"
@@ -276,21 +276,21 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	//Underwear
 	if(underwear && species.flags[HAS_UNDERWEAR])
-		var/mutable_appearance/MA = BODY_ICON(bodytype_typepath.underwear_path, "underwear[underwear]_[g]")
+		var/mutable_appearance/MA = BODY_ICON(bodytype_object.underwear_path, "underwear[underwear]_[g]")
 		MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
 		MA = update_height(MA)
 		standing += MA
 
 	if(undershirt && species.flags[HAS_UNDERWEAR])
-		var/mutable_appearance/MA = BODY_ICON(bodytype_typepath.undershirts_path, "undershirt[undershirt]_[g]")
+		var/mutable_appearance/MA = BODY_ICON(bodytype_object.undershirts_path, "undershirt[undershirt]_[g]")
 		MA.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		MA.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
 
 		if(undershirt_print)
 			MA.appearance_flags = KEEP_TOGETHER
 			var/mutable_appearance/print_appearance
-			print_appearance = mutable_appearance(bodytype_typepath.undershirts_prints_path, "[undershirt_print]_[g]")
+			print_appearance = mutable_appearance(bodytype_object.undershirts_prints_path, "[undershirt_print]_[g]")
 			print_appearance.blend_mode = BLEND_INSET_OVERLAY
 			MA.add_overlay(print_appearance)
 
@@ -302,7 +302,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		var/obj/item/organ/external/l_foot = bodyparts_by_name[BP_L_LEG]
 		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump && \
 			r_foot.species == l_foot.species && r_foot.owner_gender == l_foot.owner_gender)
-			var/mutable_appearance/MA = BODY_ICON(bodytype_typepath.socks_path, "socks[socks]")
+			var/mutable_appearance/MA = BODY_ICON(bodytype_object.socks_path, "socks[socks]")
 			MA.pixel_x += species.offset_features[OFFSET_SHOES][1]
 			MA.pixel_y += species.offset_features[OFFSET_SHOES][2]
 			MA = update_height(MA)
@@ -427,7 +427,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				to_chat(src, "<span class='warning'>You burst out of \the [U]!</span>")
 				drop_from_inventory(U)
 				return
-		var/image/standing = U.get_standing_overlay(src, bodytype_typepath.uniforms_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood", spare_icon_path = bodytype_typepath.uniforms_spare_path)
+		var/image/standing = U.get_standing_overlay(src, bodytype_object.uniforms_path, uniform_sheet, -UNIFORM_LAYER, "uniformblood", spare_icon_path = bodytype_object.uniforms_spare_path)
 		standing = update_height(standing)
 		standing.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		standing.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
@@ -484,7 +484,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				gloves.screen_loc = ui_gloves		//...draw the item in the inventory screen
 			client.screen += gloves					//Either way, add the item to the HUD
 
-		var/image/standing = gloves.get_standing_overlay(src, bodytype_typepath.gloves_path, SPRITE_SHEET_GLOVES, -GLOVES_LAYER, "bloodyhands", spare_icon_path = bodytype_typepath.gloves_spare_path)
+		var/image/standing = gloves.get_standing_overlay(src, bodytype_object.gloves_path, SPRITE_SHEET_GLOVES, -GLOVES_LAYER, "bloodyhands", spare_icon_path = bodytype_object.gloves_spare_path)
 		standing = human_update_offset(standing, FALSE)
 		standing.pixel_x += species.offset_features[OFFSET_GLOVES][1]
 		standing.pixel_y += species.offset_features[OFFSET_GLOVES][2]
@@ -561,7 +561,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				shoes.screen_loc = ui_shoes			//...draw the item in the inventory screen
 			client.screen += shoes					//Either way, add the item to the HUD
 
-		var/image/standing = shoes.get_standing_overlay(src, bodytype_typepath.shoes_path, SPRITE_SHEET_FEET, -SHOES_LAYER, "shoeblood", spare_icon_path = bodytype_typepath.shoes_spare_path)
+		var/image/standing = shoes.get_standing_overlay(src, bodytype_object.shoes_path, SPRITE_SHEET_FEET, -SHOES_LAYER, "shoeblood", spare_icon_path = bodytype_object.shoes_spare_path)
 		standing.pixel_x += species.offset_features[OFFSET_SHOES][1]
 		standing.pixel_y += species.offset_features[OFFSET_SHOES][2]
 		overlays_standing[SHOES_LAYER] = standing
@@ -664,7 +664,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				drop_from_inventory(wear_suit)
 				return
 
-		var/image/standing = S.get_standing_overlay(src, bodytype_typepath.suits_path, suit_sheet, -SUIT_LAYER, "[S.blood_overlay_type]blood")
+		var/image/standing = S.get_standing_overlay(src, bodytype_object.suits_path, suit_sheet, -SUIT_LAYER, "[S.blood_overlay_type]blood")
 		standing = update_height(standing)
 		standing.pixel_x += species.offset_features[OFFSET_SUIT][1]
 		standing.pixel_y += species.offset_features[OFFSET_SUIT][2]

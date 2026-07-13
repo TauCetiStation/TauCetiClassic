@@ -42,7 +42,7 @@
 	var/b_skin = /datum/preferences::b_skin
 
 	//Bodytype
-	var/datum/bodytype/bodytype_typepath
+	var/datum/bodytype/bodytype_object
 	var/prefat_bodytype_name // remembers the bodytype before getting fat, to restore on slimming down
 
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
