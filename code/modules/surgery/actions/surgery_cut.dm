@@ -102,6 +102,7 @@
 				msg = "<span class='notice'>[user] begin [POKING_ACTION]</span>"
 				self_msg = "<span class='notice'>You start [POKING_ACTION]</span>"
 				user.visible_message(msg, self_msg)
+				return TRUE
 			if(CUT_SCREW)
 			// Cut|Screw Default|Limb cut replace stump to health part
 				var/datum/reagents/R = surgery_victim.reagents

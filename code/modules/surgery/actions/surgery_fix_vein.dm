@@ -1,4 +1,4 @@
-#define MEND_ARTERY_SURGERY (bodypart.open >= BP_INTERNALS_OS && bodypart.status & ORGAN_ARTERY_CUT)
+#define MEND_ARTERY_SURGERY (bodypart.open >= BP_RETRACT_OS && bodypart.status & ORGAN_ARTERY_CUT)
 #define MEND_BRAIN_SURGERY (bodypart.open == BP_RIBCAGE_OS && target_zone == BP_HEAD && surgery_victim.has_brain())
 
 #define MEND_BRAIN_ACTION "mend hematoma in [surgery_victim]'s brain with \the [tool]"
@@ -20,8 +20,8 @@
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
 
 	if(MEND_ARTERY_SURGERY)
-		msg = "<span class='notice'>[user] finish [MEND_ARTERY_ACTION].</span>"
-		self_msg = "<span class='notice'>You finish [MEND_ARTERY_ACTION].</span>"
+		msg = "<span class='notice'>[user] begin [MEND_ARTERY_ACTION].</span>"
+		self_msg = "<span class='notice'>You start [MEND_ARTERY_ACTION].</span>"
 		user.visible_message(msg, self_msg)
 		return TRUE
 

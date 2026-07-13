@@ -890,7 +890,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_TORSO_LAYER
 	regen_bodypart_penalty = 150
 
-	max_open_state = BP_INTERNALS_OS
+	max_open_state = BP_RIBCAGE_OS
 	cannot_amputate = TRUE
 
 	max_damage = 75
@@ -1044,7 +1044,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_HEAD_LAYER
 	regen_bodypart_penalty = 100
 
-	max_open_state = BP_INTERNALS_OS
+	max_open_state = BP_RIBCAGE_OS
 	var/ps_status = BP_DEFAULT_OS
 	max_damage = 75
 	min_broken_damage = 35
