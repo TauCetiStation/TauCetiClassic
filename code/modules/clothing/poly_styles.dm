@@ -44,7 +44,7 @@
 	var/static/list/has_fat = list("mob_base_standard", "mob_base_rolled")
 	if(H && HAS_TRAIT(H, TRAIT_FAT) && (base in has_fat))
 		return "[base]_fat"
-	if(H && H.gender == FEMALE)
+	if(H && H.bodytype_typepath.name == SLIM_BODYTYPE)
 		return "[base]_fem"
 	return base
 
@@ -55,9 +55,9 @@
 		return "mob_detail_vox"
 	if(H && HAS_TRAIT(H, TRAIT_FAT))
 		return "mob_detail_fat"
-	if(U.poly_pattern == "5" && !is_belt && !(H && H.gender == FEMALE))
+	if(U.poly_pattern == "5" && !is_belt && !(H && H.bodytype_typepath.name == SLIM_BODYTYPE))
 		return "mob_detail_pattern5"               // pattern 5's zipper sits differently
-	if(H && H.gender == FEMALE)
+	if(H && H.bodytype_typepath.name == SLIM_BODYTYPE)
 		return is_belt ? "mob_detail_belt_fem" : "mob_detail_standard_fem"
 	return is_belt ? "mob_detail_belt" : "mob_detail_standard"
 
@@ -68,11 +68,11 @@
 	if(H && (HAS_TRAIT(H, TRAIT_FAT) || H.species?.name == VOX))
 		return null                                // fat and vox bases have no pattern overlays
 	if(pattern == POLY_PATTERN_TURT)
-		return (H && H.gender == FEMALE) ? "mob_pattern_turtleneck_fem" : "mob_pattern_turtleneck"
+		return (H &&  H.bodytype_typepath.name == SLIM_BODYTYPE) ? "mob_pattern_turtleneck_fem" : "mob_pattern_turtleneck"
 	var/pat = "mob_pattern_[pattern]"
 	if(is_belt && (pattern in belt_patterns))
 		pat = "mob_pattern_[pattern]_belt"
-	if(H && H.gender == FEMALE)
+	if(H && H.bodytype_typepath.name == SLIM_BODYTYPE)
 		return "[pat]_fem"
 	return pat
 
