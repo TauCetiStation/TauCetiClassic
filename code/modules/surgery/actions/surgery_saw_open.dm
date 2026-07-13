@@ -62,10 +62,10 @@
 		self_msg = "You finish to [SLIME_SAW_ACTION]."
 		if(slime.surgery_status == PREPARED)
 			if(slime.cores >= 0)
-				new target.coretype(target.loc)
+				new slime.coretype(slime.loc)
 			if(slime.cores <= 0)
-				var/origstate = initial(target.icon_state)
-				target.icon_state = "[origstate] dead-nocore"
+				var/origstate = initial(slime.icon_state)
+				slime.icon_state = "[origstate] dead-nocore"
 		return
 
 	var/mob/living/carbon/human/surgery_victim = target
