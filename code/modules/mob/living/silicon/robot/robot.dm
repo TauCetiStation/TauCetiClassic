@@ -247,6 +247,7 @@
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
 			module_sprites["Kodiak"] = "kodiak-miner"
+			module_sprites["Kerfus"] = "kerfusCargo"
 			give_hud(DATA_HUD_MINER)
 
 		if("Medical")
@@ -261,6 +262,7 @@
 			module_sprites["Drone Red"] = "drone-surgery"
 			module_sprites["Drone Green"] = "drone-medical"
 			module_sprites["Acheron"] = "mechoid-Medical"
+			module_sprites["NanoMed"] = "kerfusMed"
 
 		if("Security")
 			if(can_be_security)
