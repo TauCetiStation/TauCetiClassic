@@ -352,7 +352,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes_all = autolathe_recipes
 	take_item(I, amount)
 	icon_state = "autolathe"
 	busy = TRUE
-	use_power(min(max(1000, (m_amt + g_amt) * amount / 10), 10000))
+	use_power(max(1000, (m_amt + g_amt) / 10))
 	stored_material[MAT_METAL] += m_amt
 	stored_material[MAT_GLASS] += g_amt
 	to_chat(user, "You insert [amount] sheet[amount>1 ? "s" : ""] to the autolathe.")
