@@ -1,15 +1,15 @@
-#define MEND_BRAIN_ACTION "mend hematoma in [surgery_victim]'s brain with \the [tool]"
-#define MEND_ARTERY_ACTION "patching the damaged vein in [surgery_victim]'s [bodypart.name] with \the [tool]"
 #define MEND_ARTERY_SURGERY (bodypart.open >= BP_INTERNALS_OS && bodypart.status & ORGAN_ARTERY_CUT)
 #define MEND_BRAIN_SURGERY (bodypart.open == BP_RIBCAGE_OS && target_zone == BP_HEAD && surgery_victim.has_brain())
 
+#define MEND_BRAIN_ACTION "mend hematoma in [surgery_victim]'s brain with \the [tool]"
+#define MEND_ARTERY_ACTION "patching the damaged vein in [surgery_victim]'s [bodypart.name] with \the [tool]"
 
 /datum/surgery_step/fix_veins
 	allowed_qualities = list(
 		QUALITY_FIX_VEIN
 		)
 
-	allowed_species = list("exclude", DIONA)
+	allowed_species = list("exclude", DIONA, IPC)
 	min_duration = 8 SECONDS
 	max_duration = 10 SECONDS
 
@@ -18,7 +18,6 @@
 		return FALSE
 
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
-
 
 	if(MEND_ARTERY_SURGERY)
 		msg = "<span class='notice'>[user] finish [MEND_ARTERY_ACTION].</span>"

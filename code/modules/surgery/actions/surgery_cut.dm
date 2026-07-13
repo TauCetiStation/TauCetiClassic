@@ -221,33 +221,6 @@
 	user.visible_message(msg, self_msg)
 	surgery_victim.custom_pain(cp_msg, 1)
 
-/datum/surgery_step/cut/proc/prepare_to_detach_brain(mob/living/user, mob/living/carbon/human/surgery_victim, obj/item/organ/external/bodypart, obj/item/tool)
-	var/mob/living/simple_animal/borer/borer = surgery_victim.has_brain_worms()
-	if(borer)
-		borer.detatch() //Should remove borer if the brain is removed - RR
-	surgery_victim.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
-	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, surgery_victim)
-	if(surgery_victim.get_species() == IPC)
-		var/obj/item/organ/external/chest/robot/ipc/ipc_chest = bodypart
-		var/obj/item/device/mmi/mmi_positron = new ipc_chest.posibrain_type(surgery_victim.loc)
-		if(ipc_chest.posibrain_species == DIONA)
-			var/mob/living/carbon/monkey/diona/nymph = new(surgery_victim)
-			nymph.real_name = surgery_victim.real_name
-			nymph.name = surgery_victim.real_name
-			nymph.dna = surgery_victim.dna.Clone()
-			nymph.dna.SetSEState(MONKEYBLOCK, 1)
-			nymph.dna.SetSEValueRange(MONKEYBLOCK, 0xDAC, 0xFFF)
-			if(surgery_victim.mind)
-				surgery_victim.mind.transfer_to(nymph)
-			for(var/datum/language/L as anything in surgery_victim.languages)
-				nymph.add_language(L.name, surgery_victim.languages[L])
-			for(var/datum/quirk/Q in surgery_victim.roundstart_quirks)
-				nymph.saved_quirks += Q.type
-			mmi_positron.transfer_nymph(nymph)
-		else
-			mmi_positron.transfer_identity(surgery_victim)
-
-	surgery_victim.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
 // Condition content
 #undef CUT_SCREW
 #undef CUT_ORGAN

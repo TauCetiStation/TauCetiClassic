@@ -1,51 +1,3 @@
-//Procedures in this file: Generic ribcage opening steps, Removing alien embryo, Fixing organs.
-//////////////////////////////////////////////////////////////////
-//				GENERIC	RIBCAGE SURGERY							//
-//////////////////////////////////////////////////////////////////
-/datum/surgery_step/ribcage
-	priority = 2
-
-
-
-/datum/surgery_step/ribcage/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!ishuman(target))
-		return FALSE
-	return target_zone == BP_CHEST
-
-/datum/surgery_step/ribcage/saw_ribcage
-	allowed_tools = list(
-	/obj/item/weapon/circular_saw = 100, \
-	/obj/item/weapon/hatchet = 75,       \
-	/obj/item/weapon/crowbar = 50
-	)
-
-	min_duration = 50
-	max_duration = 70
-
-/datum/surgery_step/ribcage/saw_ribcage/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!..())
-		return FALSE
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	return target.op_stage.ribcage == 0 && BP.open >= 2
-
-/datum/surgery_step/ribcage/saw_ribcage/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] begins to cut through [target]'s ribcage with \the [tool].", \
-	"You begin to cut through [target]'s ribcage with \the [tool].")
-	target.custom_pain("Something hurts horribly in your chest!",1)
-	..()
-
-/datum/surgery_step/ribcage/saw_ribcage/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] has cut [target]'s ribcage open with \the [tool].</span>",		\
-	"<span class='notice'>You have cut [target]'s ribcage open with \the [tool].</span>")
-	target.op_stage.ribcage = 1
-
-/datum/surgery_step/ribcage/saw_ribcage/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='warning'>[user]'s hand slips, cracking [target]'s ribcage with \the [tool]!</span>" , \
-	"<span class='warning'>Your hand slips, cracking [target]'s ribcage with \the [tool]!</span>" )
-	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	BP.fracture()
-	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
-
 /datum/surgery_step/ribcage/mend_ribcage
 	allowed_tools = list(
 	/obj/item/weapon/bonegel = 100,	\
@@ -236,42 +188,6 @@
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO.damage > 0 && IO.is_robotic())
 			IO.take_damage(dam_amt,0)
-
-//////////////////////////////////////////////////////////////////
-//				EXTRACTING DIONA'S BRAIN						//
-//////////////////////////////////////////////////////////////////
-
-/datum/surgery_step/ribcage/cut_diona_spine
-	allowed_tools = list(
-	/obj/item/weapon/circular_saw = 100,
-	/obj/item/weapon/hatchet = 75,
-	/obj/item/weapon/crowbar = 50
-	)
-
-	min_duration = 50
-	max_duration = 70
-
-/datum/surgery_step/ribcage/cut_diona_spine/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	return ..() && target.chest_brain_op_stage == 1 && target.op_stage.ribcage == 2
-
-/datum/surgery_step/ribcage/cut_diona_spine/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts separating [target]'s brain from \his spine with \the [tool].",
-	"You start separating [target]'s brain from spine with \the [tool].")
-	..()
-
-/datum/surgery_step/ribcage/cut_diona_spine/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class='notice'>[user] separates [target]'s brain from \his spine with \the [tool].</span>",
-	"<span class='notice'>You separate [target]'s brain from spine with \the [tool].</span>")
-
-	var/mob/living/simple_animal/borer/borer = target.has_brain_worms()
-
-	if(borer)
-		borer.detatch()
-
-	target.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
-
-	target.chest_brain_op_stage = 2.0
-	target.death()
 
 //////////////////////////////////////////////////////////////////
 //				EXTRACTING IPC'S BRAIN							//

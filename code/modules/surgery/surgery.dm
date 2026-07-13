@@ -5,7 +5,7 @@
 // Fail output
 #define F_ACTION_RANDOM           (pick("slips", "dragged", "spasms"))
 #define FAIL_ACTION               "hand [F_ACTION_RANDOM], when you operate"
-
+#define SLIME_FAIL_ACTION         "hand [F_ACTION_RANDOM], causing \him to miss the core"
 
 // Blood level defines
 #define NO_BLOOD_STEP        0
@@ -72,14 +72,14 @@
 	var/obj/item/organ/external/bodypart = target.get_bodypart(target_zone)
 	if(!bodypart)
 		return FALSE
+	if(bodypart.is_stump())
+	//stump preparing, prevert etc checks, is target bodypart is stump
+		return TRUE
 	if(bodypart.status & ORGAN_BLEEDING && !tool.get_quality(QUALITY_CLAMP))
 		msg = "<span class='warning'>[target]`s [bodypart.name] bleeding!</span>"
 		self_msg = "<span class='warning'>You try to reach operation zone, but [target]`s [bodypart.name] bleeding!</span>"
 		user.visible_message(msg, self_msg)
 		return FALSE
-	if(bodypart.is_stump())
-	//stump preparing, prevert etc checks, is target bodypart is stump
-		return TRUE
 	return TRUE
 
 /datum/surgery_step/proc/prepare_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -103,34 +103,41 @@
 	return
 
 // stuff that happens when the step fails
-/datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
-	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
-	msg = "<span class='warning'>[user]'s [FAIL_ACTION] [surgery_victim]!</span>"
-	self_msg = "<span class='warning'>Your [FAIL_ACTION] [surgery_victim]!</span>"
+/datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
+	if(isslime(target))
+		msg = "<span class='warning'>[user]'s [SLIME_FAIL_ACTION]!</span>"
+		self_msg = "<span class='warning'>Your`s [SLIME_FAIL_ACTION]!</span>"
 
-	bodypart.take_damage(pick(10, 20, 30, 40, 50, 60), 0, DAM_SHARP|DAM_EDGE, tool)
-	bodypart.trauma_kit = FALSE
-	bodypart.burn_kit = FALSE
-	if(!bodypart.is_stump() && pick(0, 1))
-		bodypart.fracture()
-	if(pick(0, 1))
-		for(var/obj/item/organ in bodypart.bodypart_organs)
-			if(isorgan(organ))
-				if(pick(0, 1))
-					organ.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-	if(check_inside(bodypart))
-	//implant remove
-		bodypart.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
-		if(length(bodypart.embedded_objects))
-			var/fail_prob = 10
-			fail_prob += 100 - tool_quality(tool)
-			var/obj/item/weapon/implant/imp = locate(/obj/item/weapon/implant) in bodypart.embedded_objects
-			if(prob(fail_prob))
-				user.visible_message("<span class='warning'>Something cheeps inside [CASE(bodypart, GENITIVE_CASE)] [surgery_victim]!</span>")
-				playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
-				addtimer(CALLBACK(imp, TYPE_PROC_REF(/obj/item/weapon/implant, use_implant)), 3 SECONDS)
+	else if(ishuman(target))
+		var/mob/living/carbon/human/surgery_victim = target
+		var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
+		msg = "<span class='warning'>[user]'s [FAIL_ACTION] [surgery_victim]!</span>"
+		self_msg = "<span class='warning'>Your [FAIL_ACTION] [surgery_victim]!</span>"
 
-	user.visible_message(msg, self_msg)
+		bodypart.take_damage(pick(10, 20, 30, 40, 50, 60), 0, DAM_SHARP|DAM_EDGE, tool)
+		bodypart.trauma_kit = FALSE
+		bodypart.burn_kit = FALSE
+		if(!bodypart.is_stump() && pick(0, 1))
+			bodypart.fracture()
+		if(pick(0, 1))
+			for(var/obj/item/organ in bodypart.bodypart_organs)
+				if(isorgan(organ))
+					if(pick(0, 1))
+						organ.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
+		if(check_inside(bodypart))
+		//implant remove
+			bodypart.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
+			if(length(bodypart.embedded_objects))
+				var/fail_prob = 10
+				fail_prob += 100 - tool_quality(tool)
+				var/obj/item/weapon/implant/imp = locate(/obj/item/weapon/implant) in bodypart.embedded_objects
+				if(prob(fail_prob))
+					user.visible_message("<span class='warning'>Something cheeps inside [CASE(bodypart, GENITIVE_CASE)] [surgery_victim]!</span>")
+					playsound(imp, 'sound/items/countdown.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -3)
+					addtimer(CALLBACK(imp, TYPE_PROC_REF(/obj/item/weapon/implant, use_implant)), 3 SECONDS)
+
+	if(msg && self_msg)
+		user.visible_message(msg, self_msg)
 
 /// Outputs a consolidated warning about necrotic organs that can't be treated by "fix" step.
 /datum/surgery_step/proc/necrotic_organs_warning(mob/living/user, mob/living/carbon/human/target, list/dead_organs)
@@ -323,3 +330,32 @@
 	surgery_victim.cure_nearsighted(list(EYE_DAMAGE_TRAIT, EYE_DAMAGE_TEMPORARY_TRAIT))
 	surgery_victim.sdisabilities &= ~BLIND
 	eyes.damage = 0
+
+/datum/surgery_step/proc/prepare_to_detach_brain(mob/living/user, mob/living/carbon/human/surgery_victim, obj/item/organ/external/bodypart, obj/item/tool)
+	var/mob/living/simple_animal/borer/borer = surgery_victim.has_brain_worms()
+	if(borer)
+		borer.detatch() //Should remove borer if the brain is removed - RR
+	surgery_victim.log_combat(user, "debrained with [tool.name] (INTENT: [uppertext(user.a_intent)])")
+	SEND_SIGNAL(user, COMSIG_HUMAN_HARMED_OTHER, surgery_victim)
+
+	if(surgery_victim.get_species() == IPC)
+		var/obj/item/organ/external/chest/robot/ipc/ipc_chest = bodypart
+		var/obj/item/device/mmi/mmi_positron = new ipc_chest.posibrain_type(surgery_victim.loc)
+		if(ipc_chest.posibrain_species == DIONA)
+			var/mob/living/carbon/monkey/diona/nymph = new(surgery_victim)
+			nymph.real_name = surgery_victim.real_name
+			nymph.name = surgery_victim.real_name
+			nymph.dna = surgery_victim.dna.Clone()
+			nymph.dna.SetSEState(MONKEYBLOCK, 1)
+			nymph.dna.SetSEValueRange(MONKEYBLOCK, 0xDAC, 0xFFF)
+			if(surgery_victim.mind)
+				surgery_victim.mind.transfer_to(nymph)
+			for(var/datum/language/L as anything in surgery_victim.languages)
+				nymph.add_language(L.name, surgery_victim.languages[L])
+			for(var/datum/quirk/Q in surgery_victim.roundstart_quirks)
+				nymph.saved_quirks += Q.type
+			mmi_positron.transfer_nymph(nymph)
+		else
+			mmi_positron.transfer_identity(surgery_victim)
+
+	surgery_victim.death()//You want them to die after the brain was transferred, so not to trigger client death() twice.
