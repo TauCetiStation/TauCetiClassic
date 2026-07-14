@@ -542,7 +542,7 @@ BLIND     // can't see anything
 		3 = Report location
 		*/
 	var/displays_id = 1
-	var/rolled_down = 0
+	var/rolled_down = FALSE
 	var/basecolor
 
 	var/fresh_laundered_until = 0
@@ -552,6 +552,35 @@ BLIND     // can't see anything
 	restricted_accessory_slots = list("utility", "armband")
 
 	dyed_type = DYED_UNIFORM
+
+	// Polychromic jumpsuit. null = ordinary uniform; a style datum = polychromic (see poly_styles.dm).
+	var/datum/poly_style/poly_style = null
+	var/poly_pattern = null            // "1"-"5" / "turt" / null
+	var/list/poly_colors = null        // list("#base_color", "#pattern_color")
+
+var/global/list/poly_color_palette = list(
+	"Фиолетовый"       = "#6e39a9",
+	"Фиолетовый V2"    = "#8d45a9",
+	"Розовый"           = "#ac1b5b",
+	"Светло Розовый"    = "#b25266",
+	"Красный"           = "#ab1f1f",
+	"Светло Красный"    = "#b1372d",
+	"Оранжевый"         = "#b47538",
+	"Золотой"           = "#be902a",
+	"Желтый"            = "#c29700",
+	"Салатовый"         = "#adb834",
+	"Зеленый"           = "#149605",
+	"Зеленый V2"        = "#588142",
+	"Темно Синий"       = "#273b75",
+	"Синий"             = "#186abd",
+	"Светло Синий"      = "#2789cd",
+	"Голубой"           = "#309aa3",
+	"Белый"             = "#ffffff",
+	"Черный"            = "#444444",
+	"Черный V2"         = "#222222",
+	"Черный V3"         = "#000000"
+)
+
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
@@ -649,12 +678,18 @@ BLIND     // can't see anything
 	set src in usr
 	set_sensors(usr)
 
+/obj/item/clothing/under/proc/can_rollsuit(mob/user)
+	if(!isliving(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	return TRUE
+
 /obj/item/clothing/under/verb/rollsuit()
 	set name = "Roll Down Jumpsuit"
 	set category = "Object"
 	set src in usr
-	if(!isliving(usr)) return
-	if(usr.incapacitated())
+	if(!can_rollsuit(usr))
 		return
 
 	if(copytext(item_state,-2) != "_d")

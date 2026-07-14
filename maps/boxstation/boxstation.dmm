@@ -3194,6 +3194,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/machinery/recharger/wallcharger{
+	pixel_y = -30
+	},
 /turf/simulated/floor,
 /area/station/security/armoury)
 "aft" = (
@@ -3341,8 +3344,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/structure/table,
-/obj/machinery/recharger,
+/obj/structure/closet/secure_closet/tactical_armor,
 /turf/simulated/floor,
 /area/station/security/armoury)
 "afB" = (
@@ -15852,6 +15854,9 @@
 	name = "Escape Airlock";
 	req_access = list(1)
 	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/exit)
 "aBc" = (
@@ -19069,6 +19074,9 @@
 /obj/machinery/door/airlock/external{
 	dir = 4;
 	dock_tag = "pod1"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/chapel)
@@ -28363,6 +28371,10 @@
 	dir = 8;
 	network = list("MiniSat")
 	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 25
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -28506,6 +28518,9 @@
 	dir = 4;
 	dock_tag = "pod2"
 	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/medbay)
 "aYo" = (
@@ -28619,6 +28634,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/components/binary/pump/on,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 22
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -56631,6 +56650,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "bZB" = (
@@ -59483,6 +59503,9 @@
 	dir = 4;
 	dock_tag = "pod4"
 	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/engineering)
 "ciZ" = (
@@ -60915,6 +60938,9 @@
 	req_one_access = list(11,24)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden{
+	dir = 4
+	},
+/obj/machinery/door/firedoor{
 	dir = 4
 	},
 /turf/simulated/floor/grid_floor,
@@ -70212,6 +70238,9 @@
 	locked = 1;
 	name = "Escape Airlock"
 	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/exit)
 "dib" = (
@@ -70353,6 +70382,9 @@
 /obj/machinery/door/airlock/external{
 	dir = 4;
 	dock_tag = "pod3"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/dormitory)
@@ -70694,6 +70726,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "dFb" = (
@@ -71501,6 +71534,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "evP" = (
@@ -72337,6 +72371,7 @@
 	req_access = list(67)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/grid_floor,
 /area/station/cargo/recycleroffice)
 "ftb" = (
@@ -75273,16 +75308,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
-"idJ" = (
-/obj/item/device/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 20
-	},
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "neutralcorner"
-	},
-/area/station/hallway/primary/central)
 "ieb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -76690,12 +76715,6 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
-"jvG" = (
-/obj/machinery/door/airlock/external{
-	name = "Arrival Airlock"
-	},
-/turf/simulated/floor/grid_floor,
-/area/station/hallway/secondary/entry)
 "jwb" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/machinery/door/window/eastleft{
@@ -80310,6 +80329,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/machinery/door/firedoor,
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
 "mSi" = (
@@ -88792,6 +88812,9 @@
 	dock_tag = "specops_shuttle";
 	locked = 1;
 	name = "Arrival Airlock"
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/hallway/secondary/entry)
@@ -99652,7 +99675,7 @@ apT
 apT
 dCb
 aml
-jvG
+baY
 aro
 aro
 mQU
@@ -99909,7 +99932,7 @@ aYx
 cKo
 bwe
 aJK
-jvG
+baY
 aro
 aNG
 mQU
@@ -121981,7 +122004,7 @@ aef
 aef
 aOe
 aMS
-idJ
+aPE
 aKx
 aRR
 aGZ

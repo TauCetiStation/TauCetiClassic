@@ -176,6 +176,7 @@
 #define TRAIT_FRIENDLY            "friendly"
 #define TRAIT_VACCINATED          "vaccinated"
 #define TRAIT_DWARF               "dwarf"
+#define TRAIT_MELODIUS_VOICE      "melodious_voice"
 #define TRAIT_NO_SOUL             "no_soul"
 #define TRAIT_SEE_GHOSTS          "see_ghosts"
 #define TRAIT_SYRINGE_FEAR        "syringe_fear"

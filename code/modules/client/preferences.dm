@@ -98,6 +98,10 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/socks = 1						//socks type
 	var/backbag = 2						//backpack type
 	var/use_skirt = FALSE				//using skirt uniform version
+	var/jumpsuit_style = POLY_STYLE_JOB	//polychromic jumpsuit style (POLY_STYLE_JOB = use job default)
+	var/jumpsuit_pattern = null			//polychromic jumpsuit pattern
+	var/jumpsuit_color = "#ffffff"		//polychromic jumpsuit accent color
+	var/jumpsuit_base_color = "#ffffff"	//polychromic jumpsuit base color (for white-base styles)
 	var/h_style = "Bald"				//Hair type
 	var/r_hair = 0						//Hair color
 	var/g_hair = 0						//Hair color
@@ -555,3 +559,15 @@ var/global/list/datum/preferences/preferences_datums = list()
 		var/datum/browser/popup = new(user, "jobban_info", "Информация о джоббане", ntheme = CSS_THEME_LIGHT)
 		popup.set_content(dat)
 		popup.open()
+
+/datum/preferences/proc/spawn_custom_jumpsuit()
+	var/datum/poly_style/style = global.poly_styles_by_key[jumpsuit_style]
+	if(!style)                                  // "job" or unset = no polychromic jumpsuit
+		return null
+	var/obj/item/clothing/under/color/polychromic/J = new()
+	J.poly_style = style
+	J.poly_pattern = style.forced_pattern || (jumpsuit_pattern == POLY_PATTERN_TURT ? null : jumpsuit_pattern)
+	var/base_col = style.white_base ? jumpsuit_base_color : "#ffffff"
+	J.poly_colors = list(base_col, jumpsuit_color)
+	J.update_icon()
+	return J

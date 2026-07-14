@@ -263,8 +263,8 @@
 
 	for(var/i in 1 to 3)
 		var/obj/item/organ/external/BP = pick(bodyparts)
-		apply_damage(b_loss * rand(0.25, 1), BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
-		apply_damage(f_loss * rand(0.25, 1), BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
+		apply_damage(b_loss * rand(25, 100) * 0.01, BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
+		apply_damage(f_loss * rand(25, 100) * 0.01, BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
 
 	// minor "behind the armor" damage from the blast wave across the entire body
 	b_loss *= 0.25
@@ -2201,16 +2201,6 @@
 		QDEL_NULL(hand_dirt_datum)
 		update_inv_slot(SLOT_GLOVES)
 		germ_level = 0
-
-/mob/living/carbon/human/pickup_ore()
-	var/turf/simulated/floor/F = get_turf(src)
-	var/obj/item/weapon/storage/bag/ore/B
-	for(var/obj/item/weapon/storage/bag/ore/bag in list(l_store , r_store, l_hand, r_hand, belt, s_store))
-		B = bag
-		if(B.max_storage_space < B.storage_space_used() + SIZE_TINY)
-			continue
-		F.attackby(B, src)
-		break
 
 /mob/living/carbon/human/proc/randomize_appearance()
 	gender = pick(MALE, FEMALE)

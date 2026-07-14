@@ -127,6 +127,96 @@ var/global/list/SOUNDIN_GENHIT = list('sound/weapons/genhit1.ogg', 'sound/weapon
 var/global/list/SOUNDIN_BANDAGE = list('sound/items/bandage1.ogg', 'sound/items/bandage2.ogg')
 var/global/list/SOUNDIN_KNIFE_CUTTING = list('sound/items/knife_cutting1.ogg', 'sound/items/knife_cutting2.ogg', 'sound/items/knife_cutting3.ogg')
 
+// Instrumental voices
+
+var/global/list/SOUNDIN_HUMAN_MALE_VOICES = list(
+		'sound/music_voices/Human_male1.ogg',
+		'sound/music_voices/Human_male2.ogg',
+		'sound/music_voices/Human_male3.ogg',
+		'sound/music_voices/Human_male4.ogg',
+		'sound/music_voices/Human_male5.ogg',
+		'sound/music_voices/Human_male6.ogg',)
+
+var/global/list/SOUNDIN_HUMAN_FEMALE_VOICES = list(
+		'sound/music_voices/Human_female1.ogg',
+		'sound/music_voices/Human_female2.ogg',
+		'sound/music_voices/Human_female3.ogg',
+		'sound/music_voices/Human_female4.ogg',
+		'sound/music_voices/Human_female5.ogg',
+		'sound/music_voices/Human_female6.ogg',)
+
+
+var/global/list/SOUNDIN_UNATHI_MALE_VOICES = list(
+		'sound/music_voices/unathi_male1.ogg',
+		'sound/music_voices/unathi_male2.ogg',
+		'sound/music_voices/unathi_male3.ogg',
+		'sound/music_voices/unathi_male4.ogg',
+		'sound/music_voices/unathi_male5.ogg',
+		'sound/music_voices/unathi_male6.ogg',)
+
+var/global/list/SOUNDIN_UNATHI_FEMALE_VOICES = list(
+		'sound/music_voices/unathi_female1.ogg',
+		'sound/music_voices/unathi_female2.ogg',
+		'sound/music_voices/unathi_female3.ogg',
+		'sound/music_voices/unathi_female4.ogg',
+		'sound/music_voices/unathi_female5.ogg',
+		'sound/music_voices/unathi_female6.ogg',)
+
+
+var/global/list/SOUNDIN_TAJARAN_MALE_VOICES = list(
+		'sound/music_voices/tajaran_male1.ogg',
+		'sound/music_voices/tajaran_male2.ogg',
+		'sound/music_voices/tajaran_male3.ogg',
+		'sound/music_voices/tajaran_male4.ogg',
+		'sound/music_voices/tajaran_male5.ogg',
+		'sound/music_voices/tajaran_male6.ogg',)
+
+var/global/list/SOUNDIN_TAJARAN_FEMALE_VOICES = list(
+		'sound/music_voices/tajaran_female1.ogg',
+		'sound/music_voices/tajaran_female2.ogg',
+		'sound/music_voices/tajaran_female3.ogg',
+		'sound/music_voices/tajaran_female4.ogg',
+		'sound/music_voices/tajaran_female5.ogg',
+		'sound/music_voices/tajaran_female6.ogg',)
+
+
+var/global/list/SOUNDIN_SKRELL_MALE_VOICES = list(
+		'sound/music_voices/skrell_male1.ogg',
+		'sound/music_voices/skrell_male2.ogg',
+		'sound/music_voices/skrell_male3.ogg',)
+
+var/global/list/SOUNDIN_SKRELL_FEMALE_VOICES = list(
+		'sound/music_voices/skrell_female1.ogg',
+		'sound/music_voices/skrell_female2.ogg',
+		'sound/music_voices/skrell_female3.ogg',)
+
+
+var/global/list/SOUNDIN_DIONA_VOICES = list(
+		'sound/music_voices/diona1.ogg',
+		'sound/music_voices/diona2.ogg',
+		'sound/music_voices/diona3.ogg',
+		'sound/music_voices/diona4.ogg',
+		'sound/music_voices/diona5.ogg',
+		'sound/music_voices/diona6.ogg',)
+
+
+var/global/list/SOUNDIN_IPC_MALE_VOICES = list(
+		'sound/music_voices/ipc_male1.ogg',
+		'sound/music_voices/ipc_male2.ogg',
+		'sound/music_voices/ipc_male3.ogg',
+		'sound/music_voices/ipc_male4.ogg',
+		'sound/music_voices/ipc_male5.ogg',
+		'sound/music_voices/ipc_male6.ogg',)
+
+var/global/list/SOUNDIN_IPC_FEMALE_VOICES = list(
+		'sound/music_voices/ipc_female1.ogg',
+		'sound/music_voices/ipc_female2.ogg',
+		'sound/music_voices/ipc_female3.ogg',
+		'sound/music_voices/ipc_female4.ogg',
+		'sound/music_voices/ipc_female5.ogg',
+		'sound/music_voices/ipc_female6.ogg',)
+
+
 // ----- Footsteps -----
 /*
 id = list(

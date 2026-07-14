@@ -43,8 +43,22 @@
 
 /mob/living/carbon/human/proc/replace_in_slot(slot, obj/item/new_item)
 	var/obj/item/existing = get_equipped_item(slot)
+	var/list/uniform_dependants
 	if(existing)
+		if(slot == SLOT_W_UNIFORM)
+			// Dropping the uniform dumps pockets/ID/belt on the floor (see update_inv_w_uniform), re-equip them after.
+			uniform_dependants = list()
+			if(belt)
+				uniform_dependants[belt] = SLOT_BELT
+			if(wear_id)
+				uniform_dependants[wear_id] = SLOT_WEAR_ID
+			if(r_store)
+				uniform_dependants[r_store] = SLOT_R_STORE
+			if(l_store)
+				uniform_dependants[l_store] = SLOT_L_STORE
 		drop_from_inventory(existing)
 		qdel(existing)
 	if(new_item)
 		equip_to_slot_or_del(new_item, slot)
+	for(var/obj/item/I as anything in uniform_dependants)
+		equip_to_slot_if_possible(I, uniform_dependants[I], disable_warning = TRUE)
