@@ -72,6 +72,105 @@
 	// used for growing creatures
 	var/evolv_stage = 0
 
+/mob/living/simple_animal/proc/build_edible_reagents()
+	var/total_volume = edible_nutriment + edible_protein
+	if(total_volume <= 0)
+		return
+	var/datum/reagents/animal_reagents = new(total_volume)
+	if(edible_nutriment > 0)
+		animal_reagents.add_reagent("nutriment", edible_nutriment)
+	if(edible_protein > 0)
+		animal_reagents.add_reagent("protein", edible_protein)
+	return animal_reagents
+
+/mob/living/simple_animal/proc/sync_edible_reagents(datum/reagents/animal_reagents)
+	edible_nutriment = animal_reagents.get_reagent_amount("nutriment")
+	edible_protein = animal_reagents.get_reagent_amount("protein")
+
+/mob/living/simple_animal/proc/edible_reagent_list_text(datum/reagents/animal_reagents)
+	if(animal_reagents?.reagent_list?.len)
+		var/data
+		for(var/datum/reagent/R in animal_reagents.reagent_list)
+			data += "[R.id]([R.volume] units); "
+		return data
+	return "No reagents"
+
+/mob/living/simple_animal/proc/try_eat(mob/living/M, mob/user, obj/item/weapon/holder/food, silent = FALSE)
+	if(edible_nutriment <= 0 && edible_protein <= 0)
+		return FALSE
+
+	if(!istype(M))
+		return FALSE
+
+	var/mob/living/carbon/human/H = M
+	if(!istype(H) || !HAS_TRAIT(H, TRAIT_RAW_MEAT_EATER))
+		if(M == user)
+			to_chat(user, "<span class='warning'>Вам противно есть [CASE(food, GENITIVE_CASE)].</span>")
+		else
+			to_chat(user, "<span class='warning'>[M] не выглядит заинтересованным в поедании [CASE(food, GENITIVE_CASE)].</span>")
+		return TRUE
+
+	var/datum/reagents/animal_reagents = build_edible_reagents()
+	if(!animal_reagents || !animal_reagents.total_volume)
+		to_chat(user, "<span class='rose'>От [CASE(food, GENITIVE_CASE)] ничего не осталось!</span>")
+		user.drop_from_inventory(food)
+		qdel(food)
+		return TRUE
+
+	if(!CanEat(user, M, food, "eat"))
+		qdel(animal_reagents)
+		return TRUE
+
+	var/fullness = H.get_satiation()
+	if(H == user)
+		if(fullness > (NUTRITION_LEVEL_FAT * (1 + H.overeatduration / 2000) + 100))
+			to_chat(H, "<span class='rose'>Вы больше не в силах съесть даже хвост от [CASE(food, GENITIVE_CASE)].</span>")
+			qdel(animal_reagents)
+			return TRUE
+		else if(fullness > NUTRITION_LEVEL_NORMAL)
+			to_chat(H, "<span class='notice'>Вы нехотя жуёте [CASE(food, ACCUSATIVE_CASE)].</span>")
+		else if(fullness > NUTRITION_LEVEL_FED)
+			to_chat(H, "<span class='notice'>Вы откусываете кусок от [CASE(food, GENITIVE_CASE)].</span>")
+		else if(fullness > NUTRITION_LEVEL_HUNGRY)
+			to_chat(H, "<span class='notice'>Изголодавшись, вы начинаете есть [CASE(food, ACCUSATIVE_CASE)].</span>")
+		else
+			to_chat(H, "<span class='rose'>Вы с жадностью начинаете есть [CASE(food, ACCUSATIVE_CASE)].</span>")
+	else
+		if(fullness > (NUTRITION_LEVEL_FAT * (1 + H.overeatduration / 2000) + 100))
+			user.visible_message("<span class='rose'>[user] пытается скормить [H] ещё немного [CASE(food, GENITIVE_CASE)], но внутрь больше не лезет.</span>")
+			qdel(animal_reagents)
+			return TRUE
+		H.visible_message("<span class='rose'>[user] пытается скормить [H] [CASE(food, ACCUSATIVE_CASE)].</span>", \
+			"<span class='warning'><B>[user]</B> пытается скормить вам <B>[CASE(food, ACCUSATIVE_CASE)]</B>.</span>")
+		if(!do_mob(user, H))
+			qdel(animal_reagents)
+			return TRUE
+		H.log_combat(user, "fed [food.name], reagents: [edible_reagent_list_text(animal_reagents)] (INTENT: [uppertext(user.a_intent)])")
+		H.visible_message("<span class='rose'>[user] скармливает [H] [CASE(food, ACCUSATIVE_CASE)].</span>", \
+			"<span class='warning'><B>[user]</B> скармливает вам <B>[CASE(food, ACCUSATIVE_CASE)]</B>.</span>")
+
+	playsound(H, 'sound/items/eatfood.ogg', VOL_EFFECTS_MASTER, rand(20, 50))
+	var/remaining_food = animal_reagents.total_volume
+	var/bite_size = min(max(w_class, SIZE_MINUSCULE), remaining_food)
+	var/bite_damage = health * bite_size / remaining_food
+	animal_reagents.trans_to_ingest(H, bite_size)
+	sync_edible_reagents(animal_reagents)
+	health = clamp(health - bite_damage, 1, maxHealth)
+	SEND_SIGNAL(H, COMSIG_HUMAN_ON_CONSUME, food)
+
+	if(!animal_reagents.total_volume)
+		for(var/mob/living/simple_animal/eaten_animal in food.contents)
+			eaten_animal.ghostize(bancheck = TRUE)
+			qdel(eaten_animal)
+		if(!silent)
+			H.visible_message("<span class='notice'>[H] доедает [CASE(food, ACCUSATIVE_CASE)].</span>", "<span class='notice'>Вы доедаете [CASE(food, ACCUSATIVE_CASE)].</span>")
+		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "food_type", /datum/mood_event/natural_food)
+		SSStatistics.score.foodeaten++
+		user.drop_from_inventory(food)
+		qdel(food)
+	qdel(animal_reagents)
+	return TRUE
+
 /mob/living/simple_animal/atom_init()
 	if(!moveset_type)
 		if(animalistic)
