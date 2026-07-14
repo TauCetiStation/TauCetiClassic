@@ -51,7 +51,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		var/datum/job/J = SSjob.GetJob(t.fields["real_rank"])
 		var/custom_dep = t.fields["custom_department"]
 		if(custom_dep)
-			var/list/entry = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = J ? J.order : 99)
+			var/list/entry = list("name" = name, "rank" = rank, "active" = isactive, "account" = account_number, "priority" = J ? J.order : CREW_INTEND_UNDEFINED)
 			switch(custom_dep)
 				if(DEP_COMMAND)
 					heads[++heads.len] = entry
