@@ -39,12 +39,14 @@ other types of metals and chemistry for reagents).
 
 /datum/design/New()
 	all_designs += src
+	name = build_path:name
+	desc = build_path:desc
 
 ///////////////////Computer Boards///////////////////////////////////
 
 /datum/design/seccamera
 	name = "Circuit Design (Security)"
-	desc = "Allows for the construction of circuit boards used to build security camera computers."
+	desc = "Плата, используемая для сборки компьютера системы видеонаблюдения."
 	id = "seccamera"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -53,7 +55,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telepad_concole
 	name = " Circuit Design (Telescience Console) "
-	desc = "Allows for the construction of circuit boards used to build telescience computers."
+	desc = "Плата, используемая для сборки компьютера телепортации."
 	id = "telepad_concole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -62,7 +64,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/aicore
 	name = "Circuit Design (AI Core)"
-	desc = "Allows for the construction of circuit boards used to build new AI cores."
+	desc = "Плата, изпользуемая для сборки новых ядер ИИ."
 	id = "aicore"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -71,7 +73,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/aiupload
 	name = "Circuit Design (AI Upload)"
-	desc = "Allows for the construction of circuit boards used to build an AI Upload Console."
+	desc = "Плата, используемая для сборки консоли загрузки законов для ИИ."
 	id = "aiupload"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -80,7 +82,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/borgupload
 	name = "Circuit Design (Cyborg Upload)"
-	desc = "Allows for the construction of circuit boards used to build a Cyborg Upload Console."
+	desc = "Плата, используемая для сборки консоли загрузки законов для киборгов."
 	id = "borgupload"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -89,7 +91,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/med_data
 	name = "Circuit Design (Medical Records)"
-	desc = "Allows for the construction of circuit boards used to build a medical records console."
+	desc = "Плата, используемая для сборки консоли с медицинскими записями."
 	id = "med_data"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -98,7 +100,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/operating
 	name = "Circuit Design (Operating Computer)"
-	desc = "Allows for the construction of circuit boards used to build an operating computer console."
+	desc = "Плата, используемая для сборки компьютера хирургического стола."
 	id = "operating"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -107,7 +109,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/slime_management
 	name = "Circuit Design (Slime management console)"
-	desc = "Allows for the construction of circuit boards used to build a slime management console."
+	desc = "Плата, используемая для сборки консоли управления слаймами."
 	id = "slime_management"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -116,7 +118,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/scan_console
 	name = "Circuit Design (DNA Machine)"
-	desc = "Allows for the construction of circuit boards used to build a new DNA scanning console."
+	desc = "Плата, используемая для сборки консоли для сканирования ДНК."
 	id = "scan_console"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -125,7 +127,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/comconsole
 	name = "Circuit Design (Communications)"
-	desc = "Allows for the construction of circuit boards used to build a communications console."
+	desc = "Плата, используемая для сборки коммуникационной консоли."
 	id = "comconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -134,7 +136,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/idcardconsole
 	name = "Circuit Design (ID Computer)"
-	desc = "Allows for the construction of circuit boards used to build an ID computer."
+	desc = "Плата, используемая для сборки компьютера идентификации."
 	id = "idcardconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -143,7 +145,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/crewconsole
 	name = "Circuit Design (Crew monitoring computer)"
-	desc = "Allows for the construction of circuit boards used to build a Crew monitoring computer."
+	desc = "Плата, используемая для сборки компьютера мониторинга состояния экипажа."
 	id = "crewconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -152,7 +154,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/teleconsole
 	name = "Circuit Design (Teleporter Console)"
-	desc = "Allows for the construction of circuit boards used to build a teleporter control console."
+	desc = "Плата, используемая для сборки консоли управления телепортатором."
 	id = "teleconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -161,7 +163,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/secdata
 	name = "Circuit Design (Security Records Console)"
-	desc = "Allows for the construction of circuit boards used to build a security records console."
+	desc = "Плата, используемая для сборки консоли управления записями в системе безопасности."
 	id = "secdata"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -170,7 +172,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/atmosalerts
 	name = "Circuit Design (Atmosphere Alert)"
-	desc = "Allows for the construction of circuit boards used to build an atmosphere alert console."
+	desc = "Плата, используемая для сборки консоли оповещения об атмосферных тревогах."
 	id = "atmosalerts"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -179,7 +181,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/air_management
 	name = "Circuit Design (Atmospheric Monitor)"
-	desc = "Allows for the construction of circuit boards used to build an Atmospheric Monitor."
+	desc = "Плата, используемая для сборки консоли мониторинга газового хранилища."
 	id = "air_management"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -188,7 +190,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/robocontrol
 	name = "Circuit Design (Robotics Control Console)"
-	desc = "Allows for the construction of circuit boards used to build a Robotics Control console."
+	desc = "Плата, используемая для сборки консоли управления киборгами."
 	id = "robocontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -197,7 +199,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/dronecontrol
 	name = "Circuit Design (Drone Control Console)"
-	desc = "Allows for the construction of circuit boards used to build a Drone Control console."
+	desc = "Плата, используемая для сборки консоли управления ремонтными дронами."
 	id = "dronecontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -206,7 +208,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/clonecontrol
 	name = "Circuit Design (Cloning Machine Console)"
-	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
+	desc = "Плата, используемая для сборки консоли клонирующей капсулы."
 	id = "clonecontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -215,7 +217,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/clonepod
 	name = "Circuit Design (Clone Pod)"
-	desc = "Allows for the construction of circuit boards used to build a Cloning Pod."
+	desc = "Плата, используемая для сборки клонирующей капсулы."
 	id = "clonepod"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -224,7 +226,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/clonescanner
 	name = "Circuit Design (Cloning Scanner)"
-	desc = "Allows for the construction of circuit boards used to build a Cloning Scanner."
+	desc = "Плата, используемая для сборки сканера для клонирования."
 	id = "clonescanner"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -233,7 +235,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/arcademachine
 	name = "Circuit Design (Arcade Machine)"
-	desc = "Allows for the construction of circuit boards used to build a new arcade machine."
+	desc = "Плата, используемая для сборки игрового автомата."
 	id = "arcademachine"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -242,7 +244,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/powermonitor
 	name = "Circuit Design (Power Monitor)"
-	desc = "Allows for the construction of circuit boards used to build a new power monitor."
+	desc = "Плата, используемая для сборки консоли измерения энергопотребления."
 	id = "powermonitor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -251,7 +253,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/solarcontrol
 	name = "Circuit Design (Solar Control)"
-	desc = "Allows for the construction of circuit boards used to build a solar control console."
+	desc = "Плата, используемая для сборки консоли управления солнечной батареей."
 	id = "solarcontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -260,7 +262,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/prisonmanage
 	name = "Circuit Design (Prisoner Management Console)"
-	desc = "Allows for the construction of circuit boards used to build a prisoner management console."
+	desc = "Плата, используемая для сборки консоли управления имплантами заключенных."
 	id = "prisonmanage"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -269,7 +271,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mechacontrol
 	name = "Circuit Design (Exosuit Control Console)"
-	desc = "Allows for the construction of circuit boards used to build an exosuit control console."
+	desc = "Плата, используемая для сборки консоли мониторинга мехов."
 	id = "mechacontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -278,7 +280,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mechrecharger
 	name = "circuit board (Mechbay Recharger)"
-	desc = "Allows for the construction of circuit boards used to build a mechbay recharger."
+	desc = "Плата, используемая для сборки зарядного устройства для мехов."
 	id = "mechrecharger"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -287,7 +289,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mechapower
 	name = "Circuit Design (Mech Bay Power Control Console)"
-	desc = "Allows for the construction of circuit boards used to build a mech bay power control console."
+	desc = "Плата, используемая для сборки консоли зарядного устройства для мехов."
 	id = "mechapower"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -296,7 +298,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rdconsole
 	name = "Circuit Design (R&D Console)"
-	desc = "Allows for the construction of circuit boards used to build a new R&D console."
+	desc = "Плата, используемая для сборки научно-исследовательской консоли."
 	id = "rdconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -305,7 +307,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ordercomp
 	name = "Circuit Design (Supply ordering console)"
-	desc = "Allows for the construction of circuit boards used to build a Supply ordering console."
+	desc = "Плата, используемая для сборки консоли заказа товаров."
 	id = "ordercomp"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -314,7 +316,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/supplycomp
 	name = "Circuit Design (Supply shuttle console)"
-	desc = "Allows for the construction of circuit boards used to build a Supply shuttle console."
+	desc = "Плата, используемая для сборки консоли управления грузовым челноком."
 	id = "supplycomp"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -323,7 +325,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/comm_monitor
 	name = "Circuit Design (Telecommunications Monitoring Console)"
-	desc = "Allows for the construction of circuit boards used to build a telecommunications monitor."
+	desc = "Плата, используемая для сборки консоли телекоммуникаций."
 	id = "comm_monitor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -332,7 +334,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/comm_server
 	name = "Circuit Design (Telecommunications Server Monitoring Console)"
-	desc = "Allows for the construction of circuit boards used to build a telecommunication server browser and monitor."
+	desc = "Плата, используемая для сборки устройства просмотра и мониторинга телекоммуникационного сервера."
 	id = "comm_server"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -341,7 +343,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/message_monitor
 	name = "Circuit Design (Messaging Monitor Console)"
-	desc = "Allows for the construction of circuit boards used to build a messaging monitor console."
+	desc = "Плата, используемая для сборки консоли мониторинга сообщений."
 	id = "message_monitor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -350,7 +352,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/aifixer
 	name = "Circuit Design (AI Integrity Restorer)"
-	desc = "Allows for the construction of circuit boards used to build an AI Integrity Restorer."
+	desc = "Плата, используемая для восстановления целостности ИИ."
 	id = "aifixer"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -359,7 +361,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/libraryconsole
 	name = "Computer Design (Library Console)"
-	desc = "Allows for the construction of circuit boards used to build a new library console."
+	desc = "Позволяет создавать платы для сборки нового читательского терминала."
 	id = "libraryconsole"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -368,7 +370,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cmf_console
 	name = "Circuit Design (CMF Console)"
-	desc = "Allows for the construction of circuit boards used to build a CMF modifier console."
+	desc = "Плата, используемая для сборки консоли модификатора CMF."
 	id = "cmf_console"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -377,7 +379,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cmf_scanner
 	name = "Circuit Design (CMF table)"
-	desc = "Allows for the construction of circuit boards used to build a CMF manipulation table."
+	desc = "Плата, используемая для сборки стола манипулирования над CMF."
 	id = "cmf_scanner"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -389,7 +391,7 @@ other types of metals and chemistry for reagents).
 ///////////////////////////////////
 /datum/design/safeguard_module
 	name = "AI Module(Safeguard)"
-	desc = "Allows for the construction of a Safeguard AI Module."
+	desc = "Плата, с модулем законов для ИИ - эта с 'Safeguard'."
 	id = "safeguard_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -398,7 +400,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/onentemploye_module
 	name = "AI Module (One NT Employe)"
-	desc = "Allows for the construction of a 'One NT Employe' AI Module."
+	desc = "Плата, с модулем законов для ИИ - эта с 'One NT Employe'."
 	id = "onentemploye_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -407,7 +409,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/protectstation_module
 	name = "AI Module (ProtectStation)"
-	desc = "Allows for the construction of a ProtectStation AI Module."
+	desc = "Плата, с модулем законов для ИИ - эта с 'ProtectStation'."
 	id = "protectstation_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -416,7 +418,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/notele_module
 	name = "AI Module (TeleporterOffline Module)"
-	desc = "Allows for the construction of a TeleporterOffline AI Module."
+	desc = "Плата, с модулем законов для ИИ - эта с 'TeleporterOffline'."
 	id = "notele_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -425,7 +427,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/quarantine_module
 	name = "AI Module (Quarantine)"
-	desc = "Allows for the construction of a Quarantine AI Module."
+	desc = "Плата, с модулем законов для ИИ - эта с 'Quarantine'."
 	id = "quarantine_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -434,7 +436,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/oxygen_module
 	name = "AI Module (OxygenIsToxicToHumans)"
-	desc = "Allows for the construction of a Safeguard AI Module."
+	desc = "Плата, с модулем законов для ИИ - эта с 'Safeguard'."
 	id = "oxygen_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -443,7 +445,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/freeform_module
 	name = "AI Module (Freeform)"
-	desc = "Allows for the construction of a Freeform AI Module."
+	desc = "Плата, с модулем законов для ИИ - эта с 'Freeform'."
 	id = "freeform_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -452,7 +454,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/reset_module
 	name = "AI Module (Reset)"
-	desc = "Allows for the construction of a Reset AI Module."
+	desc = "Плата, с модулем законов для ИИ - эта с 'Reset'."
 	id = "reset_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_GOLD = 100, "sacid" = 20)
@@ -461,7 +463,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/purge_module
 	name = "AI Module (Purge)"
-	desc = "Allows for the construction of a Purge AI Module."
+	desc = "Плата, с модулем законов для ИИ - эта с 'Purge'."
 	id = "purge_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -470,7 +472,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/freeform/core_module
 	name = "AI Core Module (Freeform)"
-	desc = "Allows for the construction of a Freeform AI Core Module."
+	desc = "Плата, с модулем законов для ИИ - эта с 'Freeform'."
 	id = "freeformcore_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -479,7 +481,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/asimov
 	name = "AI Core Module (Asimov)"
-	desc = "Allows for the construction of a Asimov AI Core Module."
+	desc = "Плата, с модулем законов для ИИ - эта с 'Asimov'."
 	id = "asimov_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -488,7 +490,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/paladin_module
 	name = "AI Core Module (P.A.L.A.D.I.N.)"
-	desc = "Allows for the construction of a P.A.L.A.D.I.N. AI Core Module."
+	desc = "Плата, с модулем законов для ИИ - эта с 'P.A.L.A.D.I.N.'."
 	id = "paladin_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -497,7 +499,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tyrant_module
 	name = "AI Core Module (T.Y.R.A.N.T.)"
-	desc = "Allows for the construction of a T.Y.R.A.N.T. AI Module."
+	desc = "Плата, с модулем законов для ИИ - эта с 'T.Y.R.A.N.T.'."
 	id = "tyrant_module"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, MAT_DIAMOND = 100, "sacid" = 20)
@@ -511,7 +513,7 @@ other types of metals and chemistry for reagents).
 ///////////////////////////////////
 /datum/design/subspace_receiver
 	name = "Circuit Design (Subspace Receiver)"
-	desc = "Allows for the construction of Subspace Receiver equipment."
+	desc = "Плата, используемая для сборки подпространственного приемника."
 	id = "s-receiver"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -520,7 +522,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telecomms_bus
 	name = "Circuit Design (Bus Mainframe)"
-	desc = "Allows for the construction of Telecommunications Bus Mainframes."
+	desc = "Плата, используемая для сборки шины системы телекоммуникаций."
 	id = "s-bus"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -529,7 +531,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telecomms_hub
 	name = "Circuit Design (Hub Mainframe)"
-	desc = "Allows for the construction of Telecommunications Hub Mainframes."
+	desc = "Плата, используемая для сборки центральных узлов телекоммуникационной сети."
 	id = "s-hub"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -538,7 +540,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telecomms_relay
 	name = "Circuit Design (Relay Mainframe)"
-	desc = "Allows for the construction of Telecommunications Relay Mainframes."
+	desc = "Плата, используемая для сборки главных узлов телекоммуникационной ретрансляции."
 	id = "s-relay"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -547,7 +549,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telecomms_processor
 	name = "Circuit Design (Processor Unit)"
-	desc = "Allows for the construction of Telecommunications Processor equipment."
+	desc = "Плата, используемая для сборки оборудования телекоммуникационных процессоров."
 	id = "s-processor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -556,7 +558,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telecomms_server
 	name = "Circuit Design (Server Mainframe)"
-	desc = "Allows for the construction of Telecommunications Servers."
+	desc = "Плата, используемая для сборки телекоммуникационных серверов."
 	id = "s-server"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -565,7 +567,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_broadcaster
 	name = "Circuit Design (Subspace Broadcaster)"
-	desc = "Allows for the construction of Subspace Broadcasting equipment."
+	desc = "Плата, используемая для сборки подпространсвенного вещателя системы телекоммуникаций."
 	id = "s-broadcaster"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -579,7 +581,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/intellicard
 	name = "Intellicard AI Transportation System"
-	desc = "Allows for the construction of an intellicard."
 	id = "intellicard"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 1000, MAT_GOLD = 200)
@@ -588,7 +589,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/paicard
 	name = "Personal Artificial Intelligence Card"
-	desc = "Allows for the construction of a pAI Card."
 	id = "paicard"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
@@ -597,7 +597,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/posibrain
 	name = "Positronic Brain"
-	desc = "Allows for the construction of a positronic brain."
+	desc = "Позитронный мозг - это сложный компьютерный процессор служащий искусственным разумом для роботов и наделяющий их зачатками сознания, логики и эмоций. Авторские права принадлежат Айзеку Азимову."
 	id = "posibrain"
 
 	build_type = PROTOLATHE
@@ -611,7 +611,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ripley_main
 	name = "Circuit Design (APLU \"Ripley\" Central Control module)"
-	desc = "Allows for the construction of a \"Ripley\" Central Control module."
+	desc = "Плата центрального модуля управления \"Ripley\"."
 	id = "ripley_main"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -620,7 +620,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ripley_peri
 	name = "Circuit Design (APLU \"Ripley\" Peripherals Control module)"
-	desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
+	desc = "Плата переферийного модуля управления \"Ripley\"."
 	id = "ripley_peri"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -629,7 +629,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/odysseus_main
 	name = "Circuit Design (\"Odysseus\" Central Control module)"
-	desc = "Allows for the construction of a \"Odysseus\" Central Control module."
+	desc = "Плата центрального модуля управления \"Odysseus\"."
 	id = "odysseus_main"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -638,7 +638,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/odysseus_peri
 	name = "Circuit Design (\"Odysseus\" Peripherals Control module)"
-	desc = "Allows for the construction of a \"Odysseus\" Peripheral Control module."
+	desc = "Плата переферийного модуля управления \"Odysseus\"."
 	id = "odysseus_peri"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -647,7 +647,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/gygax_main
 	name = "Circuit Design (\"Gygax\" Central Control module)"
-	desc = "Allows for the construction of a \"Gygax\" Central Control module."
+	desc = "Плата центрального модуля управления \"Gygax\"."
 	id = "gygax_main"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -656,7 +656,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/gygax_peri
 	name = "Circuit Design (\"Gygax\" Peripherals Control module)"
-	desc = "Allows for the construction of a \"Gygax\" Peripheral Control module."
+	desc = "Плата переферийного модуля управления \"Gygax\"."
 	id = "gygax_peri"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -665,7 +665,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/gygax_targ
 	name = "Circuit Design (\"Gygax\" Weapons & Targeting Control module)"
-	desc = "Allows for the construction of a \"Gygax\" Weapons & Targeting Control module."
+	desc = "Плата управления модулем вооружения и наведения \"Gygax\"."
 	id = "gygax_targ"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -674,7 +674,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/durand_main
 	name = "Circuit Design (\"Durand\" Central Control module)"
-	desc = "Allows for the construction of a \"Durand\" Central Control module."
+	desc = "Плата центрального модуля управления \"Durand\"."
 	id = "durand_main"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -683,7 +683,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/durand_peri
 	name = "Circuit Design (\"Durand\" Peripherals Control module)"
-	desc = "Allows for the construction of a \"Durand\" Peripheral Control module."
+	desc = "Плата переферийного модуля управления \"Durand\"."
 	id = "durand_peri"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -692,7 +692,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/durand_targ
 	name = "Circuit Design (\"Durand\" Weapons & Targeting Control module)"
-	desc = "Allows for the construction of a \"Durand\" Weapons & Targeting Control module."
+	desc = "Плата управления модулем вооружения и наведения \"Durand\"."
 	id = "durand_targ"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -701,7 +701,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/vindicator_main
 	name = "Circuit Design (\"Vindicator\" Central Control module)"
-	desc = "Allows for the construction of a \"Vindicator\" Central Control module."
+	desc = "Плата центрального модуля управления \"Vindicator\"."
 	id = "vindicator_main"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -710,7 +710,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/vindicator_peri
 	name = "Circuit Design (\"Vindicator\" Peripherals Control module)"
-	desc = "Allows for the construction of a \"Vindicator\" Peripheral Control module."
+	desc = "Плата переферийного модуля управления \"Vindicator\"."
 	id = "vindicator_peri"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -719,7 +719,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/vindicator_targ
 	name = "Circuit Design (\"Vindicator\" Weapons & Targeting Control module)"
-	desc = "Allows for the construction of a \"Vindicator\" Weapons & Targeting Control module."
+	desc = "Плата управления модулем вооружения и наведения \"Vindicator\"."
 	id = "vindicator_targ"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -728,7 +728,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ultra_main
 	name = "Circuit Design (\"Gygax Ultra\" Central Control module)"
-	desc = "Allows for the construction of a \"Gygax Ultra\" Central Control module."
+	desc = "Плата центрального модуля управления \"Gygax Ultra\"."
 	id = "ultra_main"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -737,7 +737,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ultra_peri
 	name = "Circuit Design (\"Gygax Ultra\" Peripherals Control module)"
-	desc = "Allows for the construction of a \"Gygax Ultra\" Peripheral Control module."
+	desc = "Плата переферийного модуля управления \"Gygax Ultra\"."
 	id = "ultra_peri"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -746,7 +746,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ultra_targ
 	name = "Circuit Design (\"Gygax Ultra\" Weapons & Targeting Control module)"
-	desc = "Allows for the construction of a \"Gygax Ultra\" Weapons & Targeting Control module."
+	desc = "Плата управления модулем вооружения и наведения \"Gygax Ultra\"."
 	id = "ultra_targ"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -758,7 +758,7 @@ other types of metals and chemistry for reagents).
 ////////////////////////////////////////
 /datum/design/design_disk
 	name = "Design Storage Disk"
-	desc = "Produce additional disks for storing device designs."
+	desc = "Дополнительные диски для хранения данных прототипа устройств."
 	id = "design_disk"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 10)
@@ -767,7 +767,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tech_disk
 	name = "Technology Data Storage Disk"
-	desc = "Produce additional disks for storing technology data."
+	desc = "Дополнительные диски для хранения технологических данных."
 	id = "tech_disk"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 10)
@@ -776,7 +776,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/science_tool
 	name = "Science Tool"
-	desc = "A hand-held device capable of extracting usefull data from various sources, such as paper reports and slime cores."
+	desc = "Портативное устройство, способное оценивать полезные данные из различных источников, таких как бумажные отчеты, образцы слизистых оболочек и др."
 	id = "science_tool"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000)
@@ -785,7 +785,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/portalgun
 	name = "Portal Gun"
-	desc = "Experimental bluespace projector able to create interconnected wormholes at user's will."
+	desc = "Экспериментальный блюспейс проектор, способный создавать взаимосвязанные червоточины по желанию пользователя."
 	id = "portalgun"
 	build_type = PROTOLATHE
 	materials = list(MAT_DIAMOND = 5000, MAT_SILVER = 5000, MAT_PHORON = 10000, MAT_URANIUM = 5000)
@@ -798,7 +798,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/RPED
 	name = "Rapid Part Exchange Device"
-	desc = "Special mechanical module made to store, sort, and apply standart machine parts."
+	desc = "Механическое устройство, предназначенное для хранения, сортировки и подачи стандартных машиностроительных деталей."
 	id = "rped"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000) //hardcore
@@ -807,7 +807,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/BS_RPED
 	name = "Bluespace RPED"
-	desc = "Powered by bluespace technology, this RPED variant can upgrade buildings from a distance, without needing to remove the panel first."
+	desc = "Используя технологию блюспейс эта модификация RPED позволяет модернизировать устройства дистанционно, не снимая предварительно панель."
 	id = "bs_rped"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 15000, MAT_GLASS = 5000, MAT_SILVER = 2500) //hardcore
@@ -817,7 +817,7 @@ other types of metals and chemistry for reagents).
 //Tier1
 /datum/design/basic_capacitor
 	name = "Basic Capacitor"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "basic_capacitor"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 400, MAT_GLASS = 400) //2000 material per sheet.
@@ -826,7 +826,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/basic_sensor
 	name = "Basic Sensor Module"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "basic_sensor"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 400, MAT_GLASS = 160)
@@ -835,7 +835,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/micro_mani
 	name = "Micro Manipulator"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "micro_mani"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 240)
@@ -844,7 +844,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/basic_micro_laser
 	name = "Basic Micro-Laser"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "basic_micro_laser"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 80, MAT_GLASS = 160)
@@ -853,7 +853,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/basic_matter_bin
 	name = "Basic Matter Bin"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "basic_matter_bin"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 640)
@@ -863,7 +863,7 @@ other types of metals and chemistry for reagents).
 //Tier 2
 /datum/design/adv_capacitor
 	name = "Advanced Capacitor"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "adv_capacitor"
 	build_type = PROTOLATHE | MECHFAB | AUTOLATHE
 	materials = list(MAT_METAL = 650, MAT_GLASS = 400)
@@ -872,7 +872,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/adv_sensor
 	name = "Advanced Sensor Module"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "adv_sensor"
 	build_type = PROTOLATHE | MECHFAB | AUTOLATHE
 	materials = list(MAT_METAL = 400, MAT_GLASS = 310)
@@ -881,7 +881,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/nano_mani
 	name = "Nano Manipulator"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "nano_mani"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 240, MAT_GLASS = 250)
@@ -890,7 +890,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/high_micro_laser
 	name = "High-Power Micro-Laser"
-	desc = "A stock part used in the construction of various devices."
+	desc = "AСтандартная деталь, используемая при создании различных устройств."
 	id = "high_micro_laser"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 330, MAT_GLASS = 160)
@@ -899,7 +899,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/adv_matter_bin
 	name = "Advanced Matter Bin"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "adv_matter_bin"
 	build_type = PROTOLATHE | AUTOLATHE
 	materials = list(MAT_METAL = 640, MAT_GLASS = 300)
@@ -909,7 +909,7 @@ other types of metals and chemistry for reagents).
 //Tier 3
 /datum/design/super_capacitor
 	name = "Super Capacitor"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "super_capacitor"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 450)
@@ -918,7 +918,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/phasic_sensor
 	name = "Phasic Sensor Module"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "phasic_sensor"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 600, MAT_GLASS = 390)
@@ -927,7 +927,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/pico_mani
 	name = "Pico Manipulator"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "pico_mani"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 340, MAT_GLASS = 250)
@@ -936,7 +936,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ultra_micro_laser
 	name = "Ultra-High-Power Micro-Laser"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "ultra_micro_laser"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 380, MAT_GLASS = 310)
@@ -945,7 +945,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/super_matter_bin
 	name = "Super Matter Bin"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "super_matter_bin"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 840, MAT_GLASS = 300)
@@ -955,7 +955,7 @@ other types of metals and chemistry for reagents).
 //Tier 4
 /datum/design/quadratic_capacitor
 	name = "Quadratic Capacitor"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "quadratic_capacitor"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 800, MAT_GLASS = 800, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250)
@@ -964,7 +964,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/triphasic_scanning
 	name = "Triphasic Scanning Module"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "triphasic_scanning"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 800, MAT_GLASS = 320, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250)
@@ -973,7 +973,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/femto_mani
 	name = "Femto Manipulator"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "femto_mani"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 480, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250)
@@ -982,7 +982,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/quadultra_micro_laser
 	name = "Quad-Ultra Micro-Laser"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "quadultra_micro_laser"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 160, MAT_GLASS = 320, MAT_SILVER = 250, MAT_GOLD = 250, MAT_DIAMOND = 250, MAT_URANIUM = 160)
@@ -991,7 +991,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/bluespace_matter_bin
 	name = "Bluespace Matter Bin"
-	desc = "A stock part used in the construction of various devices."
+	desc = "Стандартная деталь, используемая при создании различных устройств."
 	id = "bluespace_matter_bin"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1280, MAT_SILVER = 300, MAT_GOLD = 300, MAT_DIAMOND = 400)
@@ -1001,7 +1001,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telesci_gps
 	name = "GPS Device"
-	desc = "Little thingie that can track its position at all times."
+	desc = "Устройство, способное в любой момент отслеживать свое местоположение."
 	id = "telesci_gps"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 1000)
@@ -1010,7 +1010,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_ansible
 	name = "Subspace Ansible"
-	desc = "A compact module capable of sensing extradimensional activity."
+	desc = "Компактный модуль, способный фиксировать внепространственную активность."
 	id = "s-ansible"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 80, MAT_SILVER = 20)
@@ -1019,7 +1019,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/hyperwave_filter
 	name = "Hyperwave Filter"
-	desc = "A tiny device capable of filtering and converting super-intense radiowaves."
+	desc = "Миниатюрное устройство, способное фильтровать и преобразовывать сверхмощные радиоволны."
 	id = "s-filter"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 40, MAT_SILVER = 10)
@@ -1028,7 +1028,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_amplifier
 	name = "Subspace Amplifier"
-	desc = "A compact micro-machine capable of amplifying weak subspace transmissions."
+	desc = "Компактное микроустройство, способное усиливать слабые подпространственные сигналы."
 	id = "s-amplifier"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10, MAT_GOLD = 30, MAT_URANIUM = 15)
@@ -1037,7 +1037,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_treatment
 	name = "Subspace Treatment Disk"
-	desc = "A compact micro-machine capable of stretching out hyper-compressed radio waves."
+	desc = "Компактное микроустройство, способное растягивать гиперсжатые радиоволны."
 	id = "s-treatment"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10, MAT_SILVER = 20)
@@ -1046,7 +1046,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_analyzer
 	name = "Subspace Analyzer"
-	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
+	desc = "Сложный анализатор, способный анализировать скрытые длины волн подпространства."
 	id = "s-analyzer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10, MAT_GOLD = 15)
@@ -1055,7 +1055,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_crystal
 	name = "Ansible Crystal"
-	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
+	desc = "Сложный анализатор, способный анализировать скрытые длины волн подпространства."
 	id = "s-crystal"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 1000, MAT_SILVER = 20, MAT_GOLD = 20)
@@ -1064,7 +1064,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/subspace_transmitter
 	name = "Subspace Transmitter"
-	desc = "A large piece of equipment used to open a window into the subspace dimension."
+	desc = "Крупногабаритное оборудование, используемое для открытия «окна» в подпространственное измерение."
 	id = "s-transmitter"
 	build_type = PROTOLATHE
 	materials = list(MAT_GLASS = 100, MAT_SILVER = 10, MAT_URANIUM = 15)
@@ -1077,7 +1077,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/basic_cell
 	name = "Basic Power Cell"
-	desc = "A basic power cell that holds 1000 units of energy"
+	desc = "Элемент питания, вмещающий 1000 условных единиц энергии."
 	id = "basic_cell"
 	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 50)
@@ -1087,7 +1087,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/high_cell
 	name = "High-Capacity Power Cell"
-	desc = "A power cell that holds 10000 units of energy"
+	desc = "Элемент питания, вмещающий 10000 условных единиц энергии."
 	id = "high_cell"
 	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 60)
@@ -1097,7 +1097,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/super_cell
 	name = "Super-Capacity Power Cell"
-	desc = "A power cell that holds 20000 units of energy"
+	desc = "Элемент питания, вмещающий 20000 условных единиц энергии."
 	id = "super_cell"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 70)
@@ -1107,7 +1107,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/hyper_cell
 	name = "Hyper-Capacity Power Cell"
-	desc = "A power cell that holds 30000 units of energy"
+	desc = "Элемент питания, вмещающий 30000 условных единиц энергии."
 	id = "hyper_cell"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 400, MAT_GLASS = 70, MAT_SILVER = 150, MAT_GOLD = 150)
@@ -1117,7 +1117,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/bluespace_cell
 	name = "Bluespace Power Cell"
-	desc = "A power cell that holds 40000 units of energy."
+	desc = "Элемент питания, вмещающий 40000 условных единиц энергии."
 	id = "bluespace_cell"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 800, MAT_GLASS = 160, MAT_SILVER = 300, MAT_GOLD = 300, MAT_DIAMOND = 160)
@@ -1128,7 +1128,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/light_replacer
 	name = "Light Replacer"
-	desc = "A device to automatically replace lights. Refill with reinforced glass."
+	desc = "Устройство для автоматической замены ламп. Чтобы восполнить лампы используйте укрепленное стекло."
 	id = "light_replacer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 3000, MAT_SILVER = 150)
@@ -1141,7 +1141,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/smes
 	name = "SMES Board"
-	desc = "The circuit board for a SMES."
+	desc = "Плата, используемая для сборки СПИНа."
 	id = "smes"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1150,7 +1150,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/space_heater
 	name = "Machine Design (Space Heater Board)"
-	desc = "The circuit board for a space heater."
+	desc = "Плата, используемая для сборки обогревателя."
 	id = "space_heater"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1159,7 +1159,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/teleport_station
 	name = "Teleportation Station Board"
-	desc = "The circuit board for a teleportation station."
+	desc = "Плата, используемая для сборки станции телепортации."
 	id = "tele_station"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1168,7 +1168,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/teleport_hub
 	name = "Teleportation Hub Board"
-	desc = "The circuit board for a teleportation hub."
+	desc = "Плата, используемая для сборки телепортационного узла."
 	id = "tele_hub"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1177,7 +1177,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/telepad
 	name = "Telepad Board"
-	desc = "The circuit board for a telescience telepad."
+	desc = "Плата, используемая для сборки теленаучной телеплатформы."
 	id = "telepad"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1186,7 +1186,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/sleeper
 	name = "Sleeper Board"
-	desc = "The circuit board for a sleeper."
+	desc = "Плата, используемая для сборки слипера."
 	id = "sleeper"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1195,7 +1195,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cryotube
 	name = "Cryotube Board"
-	desc = "The circuit board for a cryotube."
+	desc = "Плата, используемая для сборки криокапсулы."
 	id = "cryotube"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1204,7 +1204,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/board/reagentgrinder
 	name = "All-In-One Grinder Board"
-	desc = "The circuit board for an All-In-One Grinder."
+	desc = "Плата, используемая для сборки универсального миксера."
 	id = "reagentgrinder"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1213,7 +1213,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/gas_heater
 	name = "gas heating system"
-	desc = "The circuit board for a heater."
+	desc = "Плата, используемая для сборки вентиляционного обогревателя."
 	id = "gasheater"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1222,7 +1222,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/gas_cooler
 	name = "gas cooling system"
-	desc = "The circuit board for a freezer."
+	desc = "Плата, используемая для сборки вентиляционного кондиционера."
 	id = "gascooler"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1231,7 +1231,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/biogenerator
 	name = "Biogenerator Board"
-	desc = "The circuit board for a biogenerator."
+	desc = "Плата, используемая для сборки биогенератора."
 	id = "biogenerator"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1240,7 +1240,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/hydroponics
 	name = "Hydroponics Tray Board"
-	desc = "The circuit board for a hydroponics tray."
+	desc = "Плата, используемая для сборки гидропонного лотка."
 	id = "hydro_tray"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1249,7 +1249,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/gibber
 	name = "Machine Design (Gibber Board)"
-	desc = "The circuit board for a gibber."
+	desc = "Плата, используемая для сборки мясорубки. Она запросто перемалывает грызунов."
 	id = "gibber"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1258,7 +1258,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/smartfridge
 	name = "Machine Design (Smartfridge Board)"
-	desc = "The circuit board for a smartfridge."
+	desc = "Плата, используемая для сборки умного холодильника."
 	id = "smartfridge"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1267,7 +1267,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/bluespace_storage
 	name = "Machine Design (Bluespace Storage)"
-	desc = "The circuit board for a Bluespace Storage."
+	desc = "Плата, используемая для сборки Блюспейс хранилища."
 	id = "bluespace_storage"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1500, MAT_DIAMOND = 1000, "sacid" = 20)
@@ -1276,7 +1276,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/monkey_recycler
 	name = "Machine Design (Monkey Recycler Board)"
-	desc = "The circuit board for a monkey recycler."
+	desc = "Плата, используемая для сборки устройства по переработке обезьян."
 	id = "monkey_recycler"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1285,7 +1285,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/seed_extractor
 	name = "Machine Design (Seed Extractor Board)"
-	desc = "The circuit board for a seed extractor."
+	desc = "Плата, используемая для сборки устройства извлечения семян различных культур."
 	id = "seed_extractor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1294,7 +1294,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/processor
 	name = "Machine Design (Processor Board)"
-	desc = "The circuit board for a processor."
+	desc = "Плата, используемая для сборки кухонного комбайна"
 	id = "processor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1312,7 +1312,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/holopad
 	name = "Machine Design (AI Holopad Board)"
-	desc = "The circuit board for a holopad."
+	desc = "Плата, используемая для сборки голопанели."
 	id = "holopad"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1321,7 +1321,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/deepfryer
 	name = "Deep Fryer Board"
-	desc = "The circuit board for a deep fryer."
+	desc = "Плата, используемая для сборки фритюрницы."
 	id = "deepfryer"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1330,7 +1330,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/microwave
 	name = "Microwave Board"
-	desc = "The circuit board for a microwave."
+	desc = "Плата, используемая для сборки микроволновки."
 	id = "microwave"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1339,7 +1339,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/oven
 	name = "Oven Board"
-	desc = "The circuit board for a oven."
+	desc = "Плата, используемая для сборки духовки."
 	id = "oven"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1348,7 +1348,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/grill
 	name = "Grill Board"
-	desc = "The circuit board for a grill."
+	desc = "Плата, используемая для сборки гриля."
 	id = "grill"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1357,7 +1357,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/candymaker
 	name = "Candy Machine Board"
-	desc = "The circuit board for a candy machine."
+	desc = "Плата, используемая для сборки кондитерской машины."
 	id = "candymaker"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1366,7 +1366,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/chem_dispenser
 	name = "Portable Chem Dispenser Board"
-	desc = "The circuit board for a portable chem dispenser."
+	desc = "Плата, используемая для сборки портативного дозатора химических веществ."
 	id = "chem_dispenser"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1375,7 +1375,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/chem_master
 	name = "Machine Design (Chem Master Board)"
-	desc = "The circuit board for a Chem Master 2999."
+	desc = "Плата, используемая для сборки Chem Master 2999."
 	id = "chem_master"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1384,7 +1384,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/operating_table
 	name = "Machine Design (Operating Table)"
-	desc = "The circuit board for a Operating Table."
+	desc = "Плата, используемая для сборки операционного стола."
 	id = "operating_table"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 3000, "sacid" = 20)
@@ -1393,7 +1393,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/destructive_analyzer
 	name = "Destructive Analyzer Board"
-	desc = "The circuit board for a destructive analyzer."
+	desc = "Плата, используемая для сборки разрушительного анализатора."
 	id = "destructive_analyzer"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1402,7 +1402,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/protolathe
 	name = "Protolathe Board"
-	desc = "The circuit board for a protolathe."
+	desc = "Плата, используемая для сборки протолата."
 	id = "protolathe"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1411,7 +1411,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/circuit_imprinter
 	name = "Circuit Imprinter Board"
-	desc = "The circuit board for a circuit imprinter."
+	desc = "Плата, используемая для сборки устройства оттиска печатных дорожек."
 	id = "circuit_imprinter"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1420,7 +1420,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/emitter
 	name = "Circuit Board Emitter"
-	desc = "The circuit board for a emitter."
+	desc = "Плата, используемая для сборки излучателя."
 	id = "emitter"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1429,7 +1429,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/autolathe
 	name = "Autolathe Board"
-	desc = "The circuit board for an autolathe."
+	desc = "Плата, используемая для сборки автолата."
 	id = "autolathe"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1438,7 +1438,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/recharger
 	name = "Machine Design (Weapon Recharger Board)"
-	desc = "The circuit board for a Weapon Recharger."
+	desc = "Плата, используемая для сборки устройства перезарядки энергетического оружия."
 	id = "recharger"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20, MAT_GOLD = 100)
@@ -1446,7 +1446,7 @@ other types of metals and chemistry for reagents).
 	category = list("Machine")
 /datum/design/cell_recharger
 	name = "Cell Recharger Board"
-	desc = "The circuit board for a Cell Recharger."
+	desc = "Плата, используемая для сборки устройства зарядки аккумуляторов."
 	id = "cellcharger"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 500, "sacid" = 20)
@@ -1454,7 +1454,7 @@ other types of metals and chemistry for reagents).
 	category = list("Machine")
 /datum/design/vendor
 	name = "Machine Design (Vendor Board)"
-	desc = "The circuit board for a Vendor."
+	desc = "Плата, используемая для сборки торгового автомата."
 	id = "vendor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1463,7 +1463,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ore_redemption
 	name = "Machine Design (Ore Redemption Board)"
-	desc = "The circuit board for an Ore Redemption machine."
+	desc = "Плата, используемая для сборки устройства выкупа руды."
 	id = "ore_redemption"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1472,7 +1472,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mining_equipment_vendor
 	name = "Machine Design (Mining Rewards Vender Board)"
-	desc = "The circuit board for a Mining Rewards Vender."
+	desc = "Плата, используемая для сборки шахтёрского торгового автомата."
 	id = "mining_equipment_vendor"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1481,7 +1481,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rdservercontrol
 	name = "R&D Server Control Console Board"
-	desc = "The circuit board for an R&D Server Control Console"
+	desc = "Плата, используемая для сборки консоли управления научно-исследовательским сервером."
 	id = "rdservercontrol"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1490,7 +1490,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rdserver
 	name = "R&D Server Board"
-	desc = "The circuit board for an R&D Server"
+	desc = "Плата, используемая для сборки научно-исследовательского сервера."
 	id = "rdserver"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1499,7 +1499,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mechfab
 	name = "Exosuit Fabricator Board"
-	desc = "The circuit board for an Exosuit Fabricator"
+	desc = "Плата, используемая для сборки фабрикатора экзокостюмов."
 	id = "mechfab"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1508,7 +1508,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cyborgrecharger
 	name = "Cyborg Recharger Board"
-	desc = "The circuit board for a Cyborg Recharger"
+	desc = "Плата, используемая для сборки зарядной станции киборгов."
 	id = "cyborgrecharger"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1517,7 +1517,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tesla_coil
 	name = "Machine Design (Tesla Coil Board)"
-	desc = "The circuit board for a tesla coil."
+	desc = "Плата, используемая для сборки катушки Теслы."
 	id = "tesla_coil"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1526,7 +1526,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/grounding_rod
 	name = "Machine Design (Grounding Rod Board)"
-	desc = "The circuit board for a grounding rod."
+	desc = "Плата, используемая для сборки заземляющего стержня."
 	id = "grounding_rod"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1535,7 +1535,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mining_drill
 	name = "Machine Design (Mining Drill Head)"
-	desc = "Large drill for mining."
+	desc = "Крупная дрель для горных работ."
 	id = "mining_drill"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1544,7 +1544,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/expshovel
 	name = "Experimental shovel"
-	desc = "This is an experimental shovel that digs damn fast!"
+	desc = "Экспериментальная лопата, которая копает чертовски быстро!"
 	id = "expshovel"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 200)
@@ -1553,7 +1553,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mining_drill_brace
 	name = "Machine Design (Mining Drill Brace)"
-	desc = "Brace for mining drill."
+	desc = "Упор для буровой коронки."
 	id = "mining_drill_brace"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1562,7 +1562,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mining_fabricator
 	name = "Machine Design (Mining fabricator)"
-	desc = "For mining staff"
+	desc = "Плата, используемая для сборки шахтёрского фабрикатора."
 	id = "mining_fabricator"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1571,7 +1571,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/microscope
 	name = "Microscope Board"
-	desc = "The circuit board for a forensics microscope."
+	desc = "Плата, используемая для сборки криминалистического микроскопа."
 	id = "microscope"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
@@ -1584,7 +1584,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/pacman
 	name = "PACMAN-type Generator Board"
-	desc = "The circuit board that for a PACMAN-type portable generator."
+	desc = "Плата, используемая для сборки портативного генератора типа PACMAN."
 	id = "pacman"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1593,7 +1593,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/superpacman
 	name = "SUPERPACMAN-type Generator Board"
-	desc = "The circuit board that for a SUPERPACMAN-type portable generator."
+	desc = "Плата, используемая для сборки портативного генератора типа SUPERPACMAN."
 	id = "superpacman"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1602,7 +1602,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mrspacman
 	name = "MRSPACMAN-type Generator Board"
-	desc = "The circuit board that for a MRSPACMAN-type portable generator."
+	desc = "Плата, используемая для сборки портативного генератора типа MRSPACMAN."
 	id = "mrspacman"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1611,7 +1611,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/circulator
 	name = "Circulator Board"
-	desc = "The circuit board for a TEG circulator."
+	desc = "Плата, используемая для сборки турбины циркулятора на основе термоэлектрического генератора."
 	id = "circ"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1620,7 +1620,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/teg
 	name = "TEG Board"
-	desc = "The circuit board for a TEG generator."
+	desc = "Плата, используемая для сборки термоэлектрического генератора."
 	id = "teg"
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
@@ -1633,7 +1633,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mass_spectrometer
 	name = "Mass-Spectrometer"
-	desc = "A device for analyzing chemicals in the blood."
+	desc = "Устройство для анализа химических веществ в крови."
 	id = "mass_spectrometer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
@@ -1642,7 +1642,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/adv_mass_spectrometer
 	name = "Advanced Mass-Spectrometer"
-	desc = "A device for analyzing chemicals in the blood and their quantities."
+	desc = "Устройство для анализа химических веществ в крови и определения их количества."
 	id = "adv_mass_spectrometer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
@@ -1651,7 +1651,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/reagent_scanner
 	name = "Reagent Scanner"
-	desc = "A device for identifying chemicals."
+	desc = "Устройство для определения химических веществ."
 	id = "reagent_scanner"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
@@ -1660,7 +1660,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/adv_reagent_scanner
 	name = "Advanced Reagent Scanner"
-	desc = "A device for identifying chemicals and their proportions."
+	desc = "Устройство для определения химических веществ и их соотношения."
 	id = "adv_reagent_scanner"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 30, MAT_GLASS = 20)
@@ -1669,7 +1669,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mmi
 	name = "Man-Machine Interface"
-	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
+	desc = "Невзрачная аббревиатура MMI скрывает подлинный ужас этого устройства."
 	id = "mmi"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
@@ -1678,7 +1678,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mmi_radio
 	name = "Radio-enabled Man-Machine Interface"
-	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity. This one comes with a built-in radio."
+	desc = "Невзрачная аббревиатура MMI скрывает подлинный ужас этого устройства. Эта версия оснащена встроенным радиоприемником."
 	id = "mmi_radio"
 	build_type = PROTOLATHE | MECHFAB
 	materials = list(MAT_METAL = 1200, MAT_GLASS = 500)
@@ -1687,7 +1687,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/synthetic_flash
 	name = "Synthetic Flash"
-	desc = "When a problem arises, SCIENCE is the solution."
+	desc = "Когда возникает проблема, решение — это наука."
 	id = "sflash"
 	build_type = MECHFAB
 	materials = list(MAT_METAL = 750, MAT_GLASS = 750)
@@ -1696,7 +1696,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cyborg_analyzer
 	name = "Cyborg Analyzer"
-	desc = "A hand-held scanner able to diagnose robotic injuries."
+	desc = "Ручной сканер, способный диагностировать повреждения у киборгов."
 	id = "cyborg_analyzer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000, MAT_SILVER = 1500, MAT_DIAMOND = 1000)
@@ -1705,7 +1705,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/nanopaste
 	name = "nanopaste"
-	desc = "A tube of paste containing swarms of repair nanites. Very effective in repairing robotic machinery."
+	desc = "Тюбик с пастой, содержащей рои ремонтных нанитов. Очень эффективен при ремонте роботизированной техники."
 	id = "nanopaste"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000)
@@ -1714,7 +1714,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implanter
 	name = "implanter"
-	desc = "Implanter, used to inject implants."
+	desc = "Имплантер, используемый для введения имплантатов."
 	id = "implanter"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
@@ -1723,7 +1723,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implant_loyal
 	name = "Glass Case- 'Loyalty'"
-	desc = "A case containing a loyalty implant."
+	desc = "Футляр с имплантатом лояльности."
 	id = "implant_loyal"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000)
@@ -1732,7 +1732,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implant_mindshield
 	name = "Glass Case- 'MindShield'"
-	desc = "A case containing a mindshield implant."
+	desc = "Футляр с имплантатом защиты разума."
 	id = "implant_mindshield"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000)
@@ -1741,7 +1741,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implant_chem
 	name = "Glass Case- 'Chem'"
-	desc = "A case containing a chemical implant."
+	desc = "Футляр с химическим имплантатом."
 	id = "implant_chem"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000,)
@@ -1750,7 +1750,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implant_death
 	name = "Glass Case- 'Death Alarm'"
-	desc = "A case containing a death alarm implant."
+	desc = "Футляр с имплантатом 'оповещение о смерти'."
 	id = "implant_death"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
@@ -1759,7 +1759,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implant_tracking
 	name = "Glass Case- 'Tracking'"
-	desc = "A case containing a tracking implant."
+	desc = "Футляр с имплантатом отслеживания."
 	id = "implant_tracking"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
@@ -1768,7 +1768,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/implant_free
 	name = "Glass Case- 'Freedom'"
-	desc = "A case containing a freedom implant."
+	desc = "Футляр с имплантатом освобождения."
 	id = "implant_free"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000, MAT_DIAMOND = 1000)
@@ -1777,7 +1777,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/chameleon
 	name = "Chameleon Kit"
-	desc = "A set of clothes with dials on them."
+	desc = "Комплект одежды хамелеон."
 	id = "chameleon"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000)
@@ -1786,7 +1786,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ai_detector
 	name = "Artificial Intelligence Detector"
-	desc = "A device disguised as a multitool. Detects the activity of artificial intelligence."
+	desc = "Устройство, замаскированное под мультитул. Обнаруживает активность искусственного интеллекта."
 	id = "ai_detector"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 500, MAT_GOLD = 500)
@@ -1795,7 +1795,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/smuggler_satch
 	name = "Smuggler's Satchel"
-	desc = "An unusual satchel that fits under the floor tiles."
+	desc = "Необычная сумка, которую можно поместить под напольной плиткой."
 	id = "smuggler_satch"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000)
@@ -1804,7 +1804,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/voice_changer
 	name = "Voice Changer"
-	desc = "A gas mask with additional filters that affect the timbre of your voice."
+	desc = "Противогаз с дополнительными фильтрами, влияющими на тембр вашего голоса."
 	id = "voice_changer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_SILVER = 500)
@@ -1813,7 +1813,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/camera_bug
 	name = "Camera Bug"
-	desc = "An illegal device for illicit snooping through the camera network."
+	desc = "Незаконное устройство для тайного наблюдения через сеть камер."
 	id = "camera_bug"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 3000, MAT_DIAMOND = 2000, MAT_SILVER = 1000, MAT_GOLD = 500)
@@ -1822,7 +1822,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/bluespacebeaker
 	name = "bluespace beaker"
-	desc = "A bluespace beaker, powered by experimental bluespace technology and Element Cuban combined with the Compound Pete."
+	desc = "Блюспейс-колба, работающая на экспериментальной блюспейс-технологии и Element Cuban в сочетании с Compound Pete."//
 	id = "bluespacebeaker"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_PHORON = 3000, MAT_DIAMOND = 500)
@@ -1832,11 +1832,11 @@ other types of metals and chemistry for reagents).
 /datum/design/bluespacebeaker/New()
 	..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B = build_path
-	desc += "Can hold up to [initial(B.volume)] units."
+	desc += "Вмещает до [initial(B.volume)] единиц жидкости."
 
 /datum/design/noreactbeaker
 	name = "cryostasis beaker"
-	desc = "A cryostasis beaker that allows for chemical storage without reactions."
+	desc = "Криостатическая емкость, позволяющая хранить различные вещества избегая химических реакций."
 	id = "splitbeaker"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000)
@@ -1846,11 +1846,11 @@ other types of metals and chemistry for reagents).
 /datum/design/noreactbeaker/New()
 	..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B = build_path
-	desc += "Can hold up to [initial(B.volume)] units."
+	desc += "Вмещает до [initial(B.volume)] единиц жидкости."
 
 /datum/design/defibrillators_back
 	name = "Defibrillators"
-	desc = "Defibrillators to revive people."
+	desc = "Дефибриллятор для реанимации людей."
 	id = "defibrillators_back"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
@@ -1859,7 +1859,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/defibrillators_belt
 	name = "Compact defibrillators"
-	desc = "Defibrillators to revive people."
+	desc = "Дефибриллятор для реанимации людей."
 	id = "defibrillators_compact"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
@@ -1868,7 +1868,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/defibrillators_standalone
 	name = "Standalone defibrillators"
-	desc = "Defibrillators to revive people."
+	desc = "Дефибриллятор для реанимации людей."
 	id = "defibrillators_standalone"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000)
@@ -1877,7 +1877,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/sensor_device
 	name = "Handheld Crew Monitor"
-	desc = "A device for tracking crew members on the station."
+	desc = "Устройство для отслеживания экипажа на станции."
 	id = "sensor_device"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000)
@@ -1886,7 +1886,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/detective_scanner
 	name = "Forensic Scanner"
-	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
+	desc = "Используется для дистанционного сканирования объектов и биомассы на предмет наличия ДНК и отпечатков. Позволяет распечатать отчет о результатах сканирования."
 	id = "detective_scanner"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000)
@@ -1895,7 +1895,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/scalpel_laser1
 	name = "Basic Laser Scalpel"
-	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks basic and could be improved."
+	desc = "Скальпель, дополненный направленным лазером для более точного разреза без разбрызгивания крови на операционном столе. Эта модель выглядит простой и может быть усовершенствована."
 	id = "scalpel_laser1"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500)
@@ -1904,7 +1904,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/scalpel_laser2
 	name = "Improved Laser Scalpel"
-	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks somewhat advanced."
+	desc = "Скальпель, дополненный направленным лазером для более точного разреза без разбрызгивания крови на операционном столе. Эта модель выглядит довольно продвинуто."
 	id = "scalpel_laser2"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500)
@@ -1913,7 +1913,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/scalpel_laser3
 	name = "Advanced Laser Scalpel"
-	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks to be the pinnacle of precision energy cutlery!"
+	desc = "Скальпель, дополненный направленным лазером для более точного разреза без разбрызгивания крови на операционном столе. Похоже, это вершина высокоточных энергетических хирургических скальпелей!"
 	id = "scalpel_laser3"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500, MAT_SILVER = 2000, MAT_GOLD = 1500)
@@ -1922,7 +1922,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/scalpel_manager
 	name = "Incision Management System"
-	desc = "A true extension of the surgeon's body, this marvel instantly and completely prepares an incision allowing for the immediate commencement of therapeutic steps."
+	desc = "Будучи подлинным продолжением тела хирурга, это чудо техники мгновенно и безупречно подготавливает разрез, позволяя незамедлительно приступить к хирургическим манипуляциям."
 	id = "scalpel_manager"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500, MAT_SILVER = 1500, MAT_GOLD = 1500, MAT_DIAMOND = 750)
@@ -1931,7 +1931,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/biocan
 	name = "Biogel can"
-	desc = "Medical device for sustaining life in head"
+	desc = "Медицинское устройство для поддержания жизни головы."
 	id = "biocan"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1200, MAT_GLASS = 1000)
@@ -1940,7 +1940,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/changeling_test
 	name = "Changeling test"
-	desc = "Allows you to identify hidden changelings"
+	desc = "Позволяет выявлять скрытых генокрад."
 	id = "changtest"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GOLD = 2000, MAT_DIAMOND = 3750, MAT_URANIUM = 4000)
@@ -1953,7 +1953,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/nuclear_gun
 	name = "Advanced Energy Gun"
-	desc = "An energy gun with an experimental miniaturized reactor."
+	desc = "Энергетическое оружие с экспериментальным миниатюрным реактором."
 	id = "nuclear_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_URANIUM = 500)
@@ -1962,7 +1962,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/stunrevolver
 	name = "Stun Revolver"
-	desc = "The prize of the Head of Security."
+	desc = "Награда главы службы безопасности."
 	id = "stunrevolver"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000)
@@ -1971,7 +1971,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/laserrifle
 	name = "Extended-Capacity Laser Rifle"
-	desc = "An energy weapon with concentrated energy bolts."
+	desc = "Стандартное оружие, предназначенное для убийства с помощью концентрированных энергетических зарядов. Эта модель имеет батарейку повышенной емкости  и выглядит крупнее обычной винтовки."
 	id = "laserrifle"
 	build_type = PROTOLATHE
 	materials = list (MAT_METAL = 8000, MAT_GLASS = 1000, MAT_URANIUM = 200)
@@ -1980,7 +1980,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/laserpractice
 	name = "Practice Laser Gun"
-	desc = "A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice."
+	desc = "Модифицированная версия стандартной лазерной винтовки, стреляет менее концентрированными энергетическими зарядами, предназначенными для стрельбы по мишеням."
 	id = "laserpractice"
 	build_type = PROTOLATHE
 	materials = list (MAT_METAL = 1250, MAT_GLASS = 250)
@@ -1989,7 +1989,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/lasercannon
 	name = "Laser Cannon"
-	desc = "A heavy duty laser cannon."
+	desc = "В пушке Л.А.З.Е.Р. излучающая среда заключена в трубку с ураном-235 и подвергается воздействию высокого потока нейтронов в активной зоне ядерного реактора. Эта невероятная технология может помочь ВАМ достичь высоких скоростей электронного излучения при малых объемах лазера!"
 	id = "lasercannon"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 1000, MAT_DIAMOND = 2000, MAT_URANIUM = 100)
@@ -1998,7 +1998,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/decloner
 	name = "Decloner"
-	desc = "Your opponent will bubble into a messy pile of goop."
+	desc = "Оружие, которое за счет большого количества контролируемого излучения постепенно разрушает цель на составные элементы."
 	id = "decloner"
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 5000,MAT_URANIUM = 10000)
@@ -2007,7 +2007,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/chemsprayer
 	name = "Chem Sprayer"
-	desc = "An advanced chem spraying device."
+	desc = "Усовершенствованное устройство для распыления химикатов на большую площадь."
 	id = "chemsprayer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
@@ -2016,7 +2016,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rapidsyringe
 	name = "Rapid Syringe Gun"
-	desc = "A gun that fires many syringes."
+	desc = "Оружие, стреляющее множеством шприцев."
 	id = "rapidsyringe"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
@@ -2034,7 +2034,7 @@ other types of metals and chemistry for reagents).
 */
 /datum/design/temp_gun
 	name = "Temperature Gun"
-	desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want
+	desc = "Оружие, стреляющее снарядами, которые меняют температуру."//Change it if you want
 	id = "temp_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 500, MAT_SILVER = 3000)
@@ -2043,7 +2043,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/emp_mine
 	name = "EMP Mine"
-	desc = "A mine which will generate ion impulse upon activation."
+	desc = "Мина, которая при активации генерирует электромагнитный импульс."
 	id = "emp_mine"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 100, MAT_URANIUM = 150)
@@ -2052,7 +2052,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tesla_gun
 	name = "Tesla Cannon"
-	desc = "A gun which uses electrical discharges to hit multiple targets"
+	desc = "Оружие, использующие электрический заряд для поражения нескольких целей. Вращайте рукоятку генератора, чтобы зарядить её."
 	id = "tesla_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GOLD = 1000, MAT_SILVER = 4000)
@@ -2061,7 +2061,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/flora_gun
 	name = "Floral Somatoray"
-	desc = "A tool that discharges controlled radiation which induces mutation in plant cells. Harmless to other organic life."
+	desc = "Инструмент, чей принцип работы основывается на управляемом излучениее, вызывающий мутации в клетках растений."
 	id = "flora_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 500, MAT_URANIUM = 500)
@@ -2070,7 +2070,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/large_grenade
 	name = "Large Grenade"
-	desc = "A grenade that affects a larger area and use larger containers."
+	desc = "Крупная граната, поражающая большую область."
 	id = "large_Grenade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000)
@@ -2079,7 +2079,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/plasma_10_gun
 	name = "plasma 10-bc"
-	desc = "A basic plasma-based bullpup carbine with fast rate of fire."
+	desc = "Стандартный плазменный карабин типа булл-пап обладающий высокой скорострельностью."
 	id = "plasma_10_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 4500, MAT_DIAMOND = 500, MAT_URANIUM = 1000)
@@ -2088,7 +2088,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/plasma_104_gun
 	name = "plasma 104-sass"
-	desc = "A plasma-based semi-automatic short shotgun."
+	desc = "Полуавтоматический короткоствольный дробовик на основе плазмы."
 	id = "plasma_104_gun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 8000, MAT_DIAMOND = 750, MAT_URANIUM = 5000)
@@ -2097,7 +2097,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/plasma_mag
 	name = "plasma weapon battery pack"
-	desc = "A special battery case with protection against EM pulse. Has standardized dimensions and can be used with any plasma type gun of this series."
+	desc = "Специальный корпус аккумулятора с защитой от ЭМИ. Используется метод быстрой зарядки. Имеет стандартизированные размеры и может использоваться с любым плазмотроном данной серии. Возможна замена элемента питания."
 	id = "plasma_mag"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_GOLD = 2000, MAT_SILVER = 1500)
@@ -2106,7 +2106,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/smg
 	name = "Submachine Gun"
-	desc = "A lightweight, fast firing gun."
+	desc = "Легкий, скорострельный пистолет-пулемёт. Использует патроны калибра 9мм."
 	id = "smg"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 8000, MAT_SILVER = 2000, MAT_DIAMOND = 1000)
@@ -2115,7 +2115,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/msmg9mm
 	name = "SMG magazine (9mm)"
-	desc = "Magazine, full of 9mm submachine gun ammo."
+	desc = "Коробка с патронами, полный боеприпасов 9-мм для пистолета-пулемета."
 	id = "smg_ammo_9mm"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3750, MAT_SILVER = 100)
@@ -2124,7 +2124,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/stunshot
 	name = "Stun Shot"
-	desc = "Box of eight stunning, electrified shells for a shotgun."
+	desc = "Коробка для ружейных патронов 'Электрошок'."
 	id = "stunshell"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 20000)
@@ -2133,7 +2133,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/phoronpistol
 	name = "phoron pistol"
-	desc = "A specialized firearm designed to fire lethal bolts of phoron."
+	desc = "Специализированное огнестрельное оружие, предназначенное для стрельбы смертоносными зарядами форона."
 	id = "ppistol"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_PHORON = 3000)
@@ -2142,7 +2142,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/medigun
 	name = "Medigun"
-	desc = "Прототип лечебной пушки, которая медленно возвращает органику в прежнее состояние, исцеляя их."
+	desc = "Прототип лечебной пушки, которая медленно возвращает органику в прежнее состояние, исцеляя её."
 	id = "medigun"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000, MAT_PHORON = 5000, MAT_GOLD = 1500, MAT_SILVER = 1500, MAT_DIAMOND = 2000)
@@ -2173,7 +2173,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/jackhammer
 	name = "Sonic Jackhammer"
-	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
+	desc = "Раскалывает камни звуковыми импульсами — идеально подходит для уничтожения пещерных ящериц."
 	id = "jackhammer"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 500, MAT_SILVER = 500)
@@ -2184,7 +2184,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/drill
 	name = "Mining Drill"
-	desc = "Yours is the drill that will pierce through the rock walls."
+	desc = "Твой бур пронзит скалы."
 	id = "drill"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000) //expensive, but no need for miners.
@@ -2194,7 +2194,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/excavation_drill
 	name = "Excavation Drill"
-	desc = "Basic archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision."
+	desc = "Базовый археологический бур, сочетающий ультразвуковое воздействие и манипуляцию с блюспейс пространством для обеспечения высочайшей точности."
 	id = "excavation_drill"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
@@ -2204,7 +2204,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/excavation_drill_diamond
 	name = "Diamond Excavation Drill"
-	desc = "Advanced archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision."
+	desc = "Усовершенствованный археологический бур, сочетающий ультразвуковое воздействие и манипуляцию с блюспейс пространством для обеспечения исключительно высокой точности."
 	id = "excavation_drill_diamond"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_DIAMOND = 3750)
@@ -2214,7 +2214,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/plasmacutter
 	name = "Plasma Cutter"
-	desc = "You could use it to cut limbs off of xenos! Or, you know, mine stuff."
+	desc = "Этим можно отсекать конечности ксеносам! Или, ну, добывать ресурсы."
 	id = "plasmacutter"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 1500, MAT_GLASS = 500, MAT_GOLD = 500, MAT_PHORON = 500)
@@ -2224,7 +2224,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/pick_diamond
 	name = "Diamond Pickaxe"
-	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
+	desc = "Кирка с алмазным наконечником — прямо как в Minecraft."
 	id = "pick_diamond"
 	build_type = PROTOLATHE
 	materials = list(MAT_DIAMOND = 3000)
@@ -2233,7 +2233,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/drill_diamond
 	name = "Diamond Mining Drill"
-	desc = "Yours is the drill that will pierce the heavens!"
+	desc = "Твой бур пронзит небеса!"
 	id = "drill_diamond"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_DIAMOND = 3750) //Yes, a whole diamond is needed.
@@ -2244,7 +2244,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mesons
 	name = "Optical Meson Scanners"
-	desc = "Used for seeing walls, floors, and stuff through anything."
+	desc = "Используется для того, чтобы видеть стены, полы и прочие объекты сквозь любые преграды."
 	id = "mesons"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2254,7 +2254,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/scaner_imp
 	name = "Improved ore scaner"
-	desc = "A complex device used to locate ore deep underground."
+	desc = "Сложное устройство, используемое для обнаружения руды глубоко под землей."
 	id = "scaner_imp"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 500, MAT_GLASS = 2000)
@@ -2264,7 +2264,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/scaner_adv
 	name = "Advanced ore scaner"
-	desc = "A complex device used to locate ore deep underground."
+	desc = "Сложное устройство, используемое для обнаружения руды глубоко под землей."
 	id = "scaner_adv"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 8000, MAT_SILVER = 200, MAT_DIAMOND = 100)
@@ -2278,7 +2278,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/beacon
 	name = "Tracking Beacon"
-	desc = "A blue space tracking beacon."
+	desc = "Блюспейс маяк для отслеживания в космосе."
 	id = "beacon"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 20, MAT_GLASS = 10)
@@ -2287,7 +2287,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/bag_holding
 	name = "Bag of Holding"
-	desc = "A backpack that opens into a localized pocket of Blue Space."
+	desc = "Рюкзак, который при открытии образует локализованный карман блюспейса."
 	id = "bag_holding"
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 3000, MAT_DIAMOND = 1500, MAT_URANIUM = 250)
@@ -2296,7 +2296,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/bluespace_crystal
 	name = "Artificial Bluespace Crystal"
-	desc = "A small blue crystal with mystical properties."
+	desc = "Небольшой синий кристалл с мистическими свойствами."
 	id = "bluespace_crystal"
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 1500, MAT_DIAMOND = 3000, MAT_PHORON = 1500)
@@ -2305,7 +2305,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/bluespacesatchel_holding
 	name = "Bluespace Satchel"
-	desc = "A bluespace satchel that can hold an infinite amount of plant, ore, etc."
+	desc = "Блюспейс-cумка, способная вместить ОГРОМНОЕ количество растений, руды и тому подобного."
 	id = "bluespacesatchel_holding"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 500) //quite cheap, for more convenience
@@ -2318,7 +2318,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/health_hud
 	name = "Health Scanner HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
+	desc = "Вспомогательный монокль со встроенным сканером на стекле линз, который сканирует находящихся в поле зрения людей и предоставляет точные данные о состоянии их здоровья."
 	id = "health_hud"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2327,7 +2327,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/security_hud
 	name = "Security HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status."
+	desc = "Вспомогательный монокль со встроенным сканером на стекле линз, который сканирует находящихся в поле зрения людей и предоставляет сведения о правовом статусе личности."
 	id = "security_hud"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2336,7 +2336,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/secmed_hud
 	name = "Mixed HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
+	desc = "Вспомогательные очки со встроенными сканерами на стекле линз, которые сканируют находящихся в поле зрения людей и предоставляют точные данные о состоянии их здоровья и сведения о правовом статусе личности."
 	id = "secmed_hud"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2345,7 +2345,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/mining_hud
 	name = "Geological Optical Scanner"
-	desc = "A heads-up display that scans the rocks in view and provides some data about their composition."
+	desc = "Вспомогательный монокль со встроенным сканером на стекле линз, который сканирует попадающие в поле зрения камни и предоставляет данные об их составе."
 	id = "mining_hud"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2354,7 +2354,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/holochip
 	name = "Holographic chip"
-	desc = "A holographic chip for space helmet's HUD."
+	desc = "Голографический чип для системы индикации карты станции и положения вас на ней на лобовом стекле шлема."
 	id = "holochip"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100, MAT_GOLD = 200)
@@ -2372,7 +2372,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/hud_advanced
 	name = "Advanced HUD"
-	desc = "An advanced HUD that can be flexibly modified"
+	desc = "Продвинутый HUD с возможностью гибкой настройки."
 	id = "advanced_hud"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 150, MAT_GLASS = 150)
@@ -2396,7 +2396,7 @@ other types of metals and chemistry for reagents).
 /////////////////////////////////////////
 /datum/design/borg_syndicate_module
 	name = "Borg Illegal Weapons Upgrade"
-	desc = "Allows for the construction of illegal upgrades for cyborgs"
+	desc = "Модуль незаконного улучшения для киборгов."
 	id = "borg_syndicate_module"
 	build_type = MECHFAB
 	build_path = /obj/item/borg/upgrade/syndicate
@@ -2409,7 +2409,7 @@ other types of metals and chemistry for reagents).
 /////////////////////////////////////////
 /datum/design/standart_encrypt
 	name = "Standard Encryption Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
+	desc = "Ключ шифрования для радиогарнитуры. Содержит шифровальные ключи."
 	id = "standart_encrypt"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 300, MAT_GLASS = 600)
@@ -2418,7 +2418,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/binaryencrypt
 	name = "Binary Encrpytion Key"
-	desc = "An encyption key for a radio headset.  Contains cypherkeys."
+	desc = "Ключ шифрования для радиогарнитуры. Содержит шифровальные ключи."
 	id = "binaryencrypt"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 300, MAT_GLASS = 600)
@@ -2427,7 +2427,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/pda
 	name = "PDA"
-	desc = "A portable microcomputer by Thinktronic Systems, LTD. Functionality determined by a preprogrammed ROM cartridge."
+	desc = "Портативный микрокомпьютер производства Thinktronic Systems, LTD. Функциональные возможности определяются предварительно запрограммированным картриджем с ПЗУ."
 	id = "pda"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2436,7 +2436,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_basic
 	name = "Generic Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_basic"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2445,7 +2445,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_engineering
 	name = "Power-ON Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_engineering"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2454,7 +2454,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_atmos
 	name = "BreatheDeep Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_atmos"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2463,7 +2463,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_medical
 	name = "Med-U Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_medical"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2472,7 +2472,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_chemistry
 	name = "ChemWhiz Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_chemistry"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2481,7 +2481,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_security
 	name = "R.O.B.U.S.T. Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_security"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2490,7 +2490,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_janitor
 	name = "CustodiPRO Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_janitor"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2499,7 +2499,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/radio_grid
 	name = "Radio Grid"
-	desc = "A metal grid, attached to circuit to protect it from emitting."
+	desc = "Металлическая сетка, которая защищает электронику гарнитуры от ЭМИ."
 	id = "radio_grid"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 250, MAT_GLASS = 50)
@@ -2509,7 +2509,7 @@ other types of metals and chemistry for reagents).
 /*
 /datum/design/cart_clown
 	name = "Honkworks 5.0 Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_clown"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2518,7 +2518,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_mime
 	name = "Gestur-O 1000 Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_mime"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2528,7 +2528,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_science
 	name = "Signal Ace 2 Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_science"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2537,7 +2537,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_quartermaster
 	name = "Space Parts & Space Vendors Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_quartermaster"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2546,7 +2546,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_hop
 	name = "Human Resources 9001 Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_hop"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2555,7 +2555,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_hos
 	name = "R.O.B.U.S.T. DELUXE Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_hos"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2564,7 +2564,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_ce
 	name = "Power-On DELUXE Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_ce"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2573,7 +2573,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_cmo
 	name = "Med-U DELUXE Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_cmo"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2582,7 +2582,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_rd
 	name = "Signal Ace DELUXE Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_rd"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2591,7 +2591,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/cart_captain
 	name = "Value-PAK Cartridge"
-	desc = "A data cartridge for portable microcomputers."
+	desc = "Картридж с данными для портативного микрокомпьютера."
 	id = "cart_captain"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
@@ -2603,7 +2603,7 @@ other types of metals and chemistry for reagents).
 ///////////////////////////////
 /datum/design/beacon_warp
 	name = "Medical Tracking Beacon"
-	desc = "A beacon used by a body teleporter."
+	desc = "Маяк, используемый телепортером тел."
 	id = "beacon_warp"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000)
@@ -2612,7 +2612,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/body_warp
 	name = "Medical Body Teleporter Device"
-	desc = "A device used for teleporting injured or dead people."
+	desc = "Устройство, используемое для телепортации раненых или погибших людей."
 	id = "body_warp"
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 3500, MAT_GLASS = 3500)
@@ -2623,7 +2623,7 @@ other types of metals and chemistry for reagents).
 /datum/design/spraycan
 	name = "Spraycan"
 	id = "spraycan"
-	desc = "A metallic container containing tasty paint."
+	desc = "Металлический контейнер с вкусной краской."
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	build_path = /obj/item/toy/crayon/spraycan
@@ -2631,7 +2631,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/welding_mask
 	name = "Welding Gas Mask"
-	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
+	desc = "Противогаз со встроенными сварочными очками и защитным щитком для лица. Напоминает череп — явно работа какого-то гика."
 	id = "weldingmask"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
@@ -2640,7 +2640,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/exwelder
 	name = "Experimental Welding Tool"
-	desc = "An experimental welder capable of self-fuel generation."
+	desc = "Экспериментальный сварочный аппарат, способный самостоятельно вырабатывать топливо."
 	id = "exwelder"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PHORON = 1500, MAT_URANIUM = 200)
@@ -2649,7 +2649,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/jawsoflife
 	name = "Jaws of Life"
-	desc = "A small, compact Jaws of Life with an interchangable pry jaws and cutting jaws"
+	desc = "Небольшой, компактный инструмент Челюсти Жизни со сменными насадками: разжимными и режущими."
 	id = "jawsoflife"
 	build_path = /obj/item/weapon/multi/jaws_of_life
 	build_type = PROTOLATHE
@@ -2658,7 +2658,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/handdrill
 	name = "Hand Drill"
-	desc = "A small electric hand drill with an interchangable screwdriver and bolt bit"
+	desc = "Небольшая электрическая ручная дрель со сменными насадками для болтов и винтиков."
 	id = "handdrill"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_SILVER = 2000, MAT_GOLD = 1000)
@@ -2667,7 +2667,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/magboots
 	name = "Magnetic Boots"
-	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
+	desc = "Магнитные ботинки, часто используемые при работе в открытом космосе для надежного удержания космонавта на поверхности космического аппарата."
 	id = "magboots"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4500, MAT_SILVER = 1500, MAT_GOLD = 2500)
@@ -2676,7 +2676,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/airbag
 	name = "Personal airbag"
-	desc = "One-use protection from high-speed collisions and low pressure."
+	desc = "Одноразовая защита от сногсшибательных порывов ветра и низкого давления."
 	id = "airbag"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_SILVER = 500)
@@ -2685,7 +2685,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/universal_pyrometer
 	name = "Universal pyrometer"
-	desc = "A pyrometer with all possible modes built-in. Battery and micro-laser component not included!"
+	desc = "Пирометр со всеми возможными встроенными режимами. Элемент питания и модуль микролазера в комплект не входят!"
 	id = "universal_pyrometer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_SILVER = 100)
@@ -2698,7 +2698,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/advmop
 	name = "Advanced Mop"
-	desc = "An upgraded mop with a large internal capacity for holding water or other cleaning chemicals."
+	desc = "Усовершенствованная швабра с большим внутренним резервуаром для воды или других чистящих средств."
 	id = "advmop"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2500, MAT_GLASS = 200)
@@ -2707,7 +2707,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/blutrash
 	name = "Trashbag of Holding"
-	desc = "An advanced trashbag with bluespace properties; capable of holding a plethora of garbage."
+	desc = "Усовершенствованный мешок для мусора с технологией блюспейс, способный вместить огромное количество мусора."
 	id = "blutrash"
 	build_type = PROTOLATHE
 	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 250, MAT_PHORON = 1500)
@@ -2716,7 +2716,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/holosign
 	name = "Holographic Sign Projector"
-	desc = "A holograpic projector used to project various warning signs."
+	desc = "Голографический проектор, используемый для проецирования предупреждающих знаков."
 	id = "holosign"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
@@ -2729,7 +2729,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigsimpleai
 	name = "Hardsuit Automated Diagnostic System"
-	desc = "A system designed to help hardsuit users."
 	id = "rigsimpleai"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
@@ -2738,7 +2737,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigadvancedai
 	name = "Hardsuit Advanced Diagnostic System"
-	desc = "A system designed to help hardsuit users."
 	id = "rigadvancedai"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 500)
@@ -2747,7 +2745,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigflash
 	name = "Hardsuit Mounted Flash"
-	desc = "You are the law."
 	id = "rigflash"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
@@ -2756,7 +2753,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/riggrenadelauncherflashbang
 	name = "Hardsuit Mounted Flashbang Grenade Launcher"
-	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard flashbang grenades."
 	id = "riggrenadelauncherflashbang"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GOLD = 4000, MAT_SILVER = 2000)
@@ -2765,7 +2761,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigmountedlaserrifle
 	name = "Hardsuit Mounted Laser Rifle"
-	desc = "A shoulder-mounted battery-powered laser rifle mount."
+	desc = "Плечевая установка для лазерной винтовки с питанием от аккумулятора."
 	id = "rigmountedlaserrifle"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 4500, MAT_DIAMOND = 500, MAT_URANIUM = 1000)
@@ -2774,7 +2770,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigmountedtaser
 	name = "Hardsuit Mounted Taser"
-	desc = "A palm-mounted nonlethal energy projector."
+	desc = "Плечевая установка для излучателя энергии нелетального действия."
 	id = "rigmountedtaser"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 6000, MAT_SILVER = 500)
@@ -2783,7 +2779,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/righealthscanner
 	name = "Hardsuit Health Scanner Module"
-	desc = "A hardsuit-mounted health scanner."
+	desc = "Сканер здоровья, установленный на РИГе"
 	id = "righealthscanner"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 100)
@@ -2792,7 +2788,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigdrill
 	name = "Hardsuit Drill Mount"
-	desc = "A very heavy diamond-tipped drill."
+	desc = "Установка на которой очень тяжелый бур с алмазным наконечником."
 	id = "rigdrill"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 6000, MAT_GLASS = 2000, MAT_DIAMOND = 2000)
@@ -2801,7 +2797,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/riganomalyscanner
 	name = "Hardsuit Anomaly Scanner Module"
-	desc = "You think it's called an Elder Sarsparilla or something."
+	desc = "Кажется, это называется Elder Sarsparilla или что-то в этом роде."
 	id = "riganomalyscanner"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
@@ -2810,7 +2806,7 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigorescanner
 	name = "Hardsuit Ore Scanner Module"
-	desc = "A clunky old ore scanner."
+	desc = "Громоздкий старый сканер руды."
 	id = "rigorescanner"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 500, MAT_GLASS = 500)
@@ -2819,7 +2815,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigrcd
 	name = "Hardsuit RCD Mount"
-	desc = "A cell-powered rapid construction device for a hardsuit."
 	id = "rigrcd"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 4000, MAT_GOLD = 4000, MAT_SILVER = 2000, MAT_DIAMOND = 1000)
@@ -2828,7 +2823,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigcombatinjector
 	name = "Hardsuit Combat Chemical Injector"
-	desc = "A complex web of tubing and needles suitable for hardsuit use."
 	id = "rigcombatinjector"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 500, MAT_SILVER = 500)
@@ -2837,7 +2831,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigmedicalinjector
 	name = "Hardsuit Medical Chemical Injector"
-	desc = "A complex web of tubing and needles suitable for hardsuit use."
 	id = "rigmedicalinjector"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 4000, MAT_GOLD = 1000, MAT_SILVER = 1000)
@@ -2846,7 +2839,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigselfrepair
 	name = "Hardsuit Self-Repair Module"
-	desc = "A somewhat complicated looking complex full of tools."
 	id = "rigselfrepair"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 20000, MAT_GLASS = 2000, MAT_GOLD = 1000)
@@ -2855,7 +2847,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigmedteleport
 	name = "Hardsuit Medical Teleport System"
-	desc = "System capable of saving the suit owner."
 	id = "rigmedteleport"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 4000, MAT_GOLD = 2000, MAT_DIAMOND = 500)
@@ -2864,7 +2855,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rignuclearreactor
 	name = "Hardsuit Nuclear Reactor Module"
-	desc = "Passively generates energy. Becomes very unstable if damaged."
 	id = "rignuclearreactor"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_GOLD = 6000, MAT_URANIUM = 4000)
@@ -2873,7 +2863,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigcoolingunit
 	name = "Hardsuit Mounted Cooling Unit"
-	desc = "A heat sink with a liquid cooled radiator."
 	id = "rigcoolingunit"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_DIAMOND = 200)
@@ -2882,7 +2871,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigextinguisher
 	name = "Hardsuit Fire Extinguisher"
-	desc = "Hardsuit mounted fire extinguisher designed to work in hazardous environments."
 	id = "rigextinguisher"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 500)
@@ -2891,7 +2879,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigmetalfoamspray
 	name = "Hardsuit Metal Foam Spray"
-	desc = "Hardsuit mounted metal foam spray designed to quickly patch holes."
 	id = "rigmetalfoamspray"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000)
@@ -2900,7 +2887,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/riganalyzer
 	name = "Hardsuit Analyzer Module"
-	desc = "A hardsuit-mounted atmospherics and anomalies scanner."
 	id = "riganalyzer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
@@ -2909,7 +2895,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigsciencetool
 	name = "Hardsuit Science Tool Module"
-	desc = "A hardsuit-mounted tool for gathering research points."
 	id = "rigsciencetool"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
@@ -2918,7 +2903,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigrelay
 	name = "Hardsuit Mounted Relay Module"
-	desc = "Can relay radio signals from other sectors."
 	id = "rigrelay"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_GOLD = 8000, MAT_URANIUM = 4000, MAT_PHORON = 8000, MAT_DIAMOND = 3000)
@@ -2927,7 +2911,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/rigstabilizer
 	name = "Hardsuit Teleporter stabilizer"
-	desc = "Special device to stabilize bluespace interferences occuring during teleportation."
 	id = "rigstabilizer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 2000, MAT_GOLD = 2000, MAT_PHORON = 4000)
@@ -2936,7 +2919,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/hardsuit_emp_shield
 	name = "Hardsuit EMP shield"
-	desc = "Device for protecting hardsuit against EMPs."
 	id = "rigempshield"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
@@ -2944,7 +2926,6 @@ other types of metals and chemistry for reagents).
 	category = list("Rig Modules")
 /datum/design/rigstealth
 	name = "Hardsuit stealth system"
-	desc = "System that makes hardsuit invisible."
 	id = "rigstealth"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GLASS = 10000, MAT_SILVER = 5000, MAT_GOLD = 5000, MAT_DIAMOND = 10000, MAT_PHORON = 5000)
@@ -2957,7 +2938,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tier1_hud_upgrade
 	name = "Damage Scan Upgrade"
-	desc = "Allows HUD to show damage on person."
 	id = "tier1_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000)
@@ -2966,7 +2946,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tier2_hud_upgrade
 	name = "Basic Nightvision HUD upgrade"
-	desc = "Allows HUD to turn a basic nightvision mode. Can be installed only after damage scan upgrade"
 	id = "tier2_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_URANIUM = 2000)
@@ -2975,7 +2954,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tier3_hud_upgrade
 	name = "Thermal HUD upgrade"
-	desc = "Allows HUD to turn a basic thermal mode, makes nightvision mode more comfortable for use. Can be installed only after basic nightvision upgrade"
 	id = "tier3_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_PHORON = 2500)
@@ -2984,7 +2962,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/tier4_hud_upgrade
 	name = "Advanced Thermal HUD upgrade"
-	desc = "Makes thermal mode comfortable and combines it with nightvision mode. Can be installed only after thermal upgrade"
 	id = "tier4_hud_upgrade"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 2000, MAT_GOLD = 1500, MAT_URANIUM = 3000, MAT_PHORON = 3500)
@@ -2997,7 +2974,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ds_helmet
 	name = "Deathsquad helmet"
-	desc = "That's not red paint. That's real blood."
 	id = "ds_helmet"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 15000, MAT_GLASS = 8000, MAT_GOLD = 2500, MAT_URANIUM = 4500, MAT_PHORON = 5000)
@@ -3006,7 +2982,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ds_armor
 	name = "SWAT Suit"
-	desc = "Тяжелый бронированный костюм, защищающий от умеренного количества повреждений. Используется в специальных операциях."
 	id = "ds_armor"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50000, MAT_GLASS = 25000, MAT_GOLD = 8000, MAT_URANIUM = 12500, MAT_PHORON = 15000)
@@ -3015,7 +2990,6 @@ other types of metals and chemistry for reagents).
 
 /datum/design/ds_boots
 	name = "SWAT shoes"
-	desc = "When you want to turn up the heat."
 	id = "ds_boots"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 10000, MAT_GOLD = 2000, MAT_PHORON = 4000)
