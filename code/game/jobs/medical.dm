@@ -8,7 +8,7 @@
 	title = JOB_CMO
 	departments = list(DEP_MEDICAL, DEP_COMMAND)
 	order = CREW_INTEND_HEADS(6)
-	total_positions = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ffddf0"
@@ -40,7 +40,7 @@
 	departments = list(DEP_MEDICAL)
 	order = CREW_INTEND_EMPLOYEE(1)
 	title = "Medical Doctor"
-	total_positions = 4
+	baseline_positions = 4
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
@@ -72,7 +72,7 @@
 	title = JOB_PARAMEDIC
 	departments = list(DEP_MEDICAL)
 	order = CREW_INTEND_EMPLOYEE(2)
-	total_positions = 2
+	baseline_positions = 2
 	spawn_positions = 2
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
@@ -97,7 +97,7 @@
 	title = JOB_CHEMIST
 	departments = list(DEP_MEDICAL)
 	order = CREW_INTEND_EMPLOYEE(3)
-	total_positions = 2
+	baseline_positions = 2
 	spawn_positions = 2
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
@@ -115,7 +115,7 @@
 	title = JOB_GENETICIST
 	departments = list(DEP_MEDICAL, DEP_SCIENCE)
 	order = CREW_INTEND_EMPLOYEE(4)
-	total_positions = 2
+	baseline_positions = 2
 	spawn_positions = 2
 	supervisors = "the chief medical officer and research director"
 	selection_color = "#ffeef0"
@@ -132,7 +132,7 @@
 	title = JOB_VIROLOGIST
 	departments = list(DEP_MEDICAL)
 	order = CREW_INTEND_EMPLOYEE(5)
-	total_positions = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
@@ -157,7 +157,7 @@
 	title = JOB_PSYCHIATRIST
 	departments = list(DEP_MEDICAL)
 	order = CREW_INTEND_EMPLOYEE(6)
-	total_positions = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
@@ -177,7 +177,7 @@
 	title = JOB_INTERN
 	departments = list(DEP_MEDICAL)
 	order = CREW_INTEND_ASSIST(1)
-	total_positions = 3
+	baseline_positions = 3
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"

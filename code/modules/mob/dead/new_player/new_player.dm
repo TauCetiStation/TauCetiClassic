@@ -79,10 +79,10 @@
 					else if(istype(J, /datum/job/assistant) && (player.client.prefs.job_preferences[J.title] == JP_LOW)) // assistant > other jobs
 						job_occupations += 1
 				if(job_occupations >= 1)
-					if(J.total_positions == -1)
+					if(J.baseline_positions == -1)
 						stat("[J.title]", "[job_occupations]/∞")
 					else
-						stat("[J.title]", "[job_occupations]/[J.total_positions]")
+						stat("[J.title]", "[job_occupations]/[J.baseline_positions]")
 
 
 /mob/dead/new_player/Topic(href, href_list[])

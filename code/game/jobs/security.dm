@@ -8,7 +8,7 @@
 	title = JOB_HOS
 	departments = list(DEP_SECURITY, DEP_COMMAND)
 	order = CREW_INTEND_HEADS(3)
-	total_positions = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ffdddd"
@@ -37,7 +37,7 @@
 	title = JOB_WARDEN
 	departments = list(DEP_SECURITY)
 	order = CREW_INTEND_EMPLOYEE(1)
-	total_positions = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
@@ -64,7 +64,7 @@
 	title = JOB_DETECTIVE
 	departments = list(DEP_SECURITY)
 	order = CREW_INTEND_EMPLOYEE(2)
-	total_positions = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
@@ -87,7 +87,7 @@
 	title = JOB_FORENSIC
 	departments = list(DEP_SECURITY)
 	order = CREW_INTEND_EMPLOYEE(3)
-	total_positions = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
@@ -110,8 +110,10 @@
 	title = JOB_OFFICER
 	departments = list(DEP_SECURITY)
 	order = CREW_INTEND_EMPLOYEE(4)
-	total_positions = 5
+	baseline_positions = 2
 	spawn_positions = 5
+	total_positions = 5
+	players_scale = 10
 	supervisors = "the head of security and warden"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
@@ -138,8 +140,10 @@
 	title = JOB_CADET
 	departments = list(DEP_SECURITY)
 	order = CREW_INTEND_ASSIST(1)
-	total_positions = 3
+	baseline_positions = 2
 	spawn_positions = 3
+	total_positions = 5
+	players_scale = 10
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
