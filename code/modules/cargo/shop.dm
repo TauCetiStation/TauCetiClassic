@@ -41,6 +41,8 @@ var/global/online_shop_referrer_revenue = 0.50
 	var/referrer_account = null
 	var/referrer_revenue = 0
 
+	var/brand_item = FALSE
+
 /datum/shop_lot/New(name, description, price, category, account, icon, lot_item_ref, market_price)
 	global.online_shop_number++
 	global.online_shop_lots["[global.online_shop_number]"] = src
@@ -97,6 +99,7 @@ var/global/online_shop_referrer_revenue = 0.50
 		"postpayment" = get_discounted_price(),
 		"icon" = item_icon,
 		"lot_item_ref" = lot_item_ref,
+		"brand" = brand_item,
 	)
 
 /datum/shop_lot/proc/get_delivery_cost()
@@ -170,6 +173,11 @@ var/global/online_shop_referrer_revenue = 0.50
 	Lot.sold = TRUE
 	if(Lot == SScargoshop.get_advertisement_lot())
 		SScargoshop.update_advertisement_lot()
+
+	if(Lot.brand_item)
+		var/atom/A = locate(Lot.lot_item_ref)
+		if(A)
+			SSshuttle.cargoshop_orders += A
 
 	for(var/i in 1 to 3)
 		if(global.online_shop_lots_latest[i] == Lot)
@@ -256,6 +264,8 @@ var/global/online_shop_referrer_revenue = 0.50
 
 
 /proc/get_item_shop_category(obj/target)
+	if(istype(target, /obj/item/pizzabox))
+		return "Еда"
 	if(istype(target, /obj/item/weapon/reagent_containers/food))
 		return "Еда"
 	else if(istype(target, /obj/item/weapon/storage/food))

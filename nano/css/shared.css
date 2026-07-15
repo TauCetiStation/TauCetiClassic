@@ -240,6 +240,10 @@ h4 {
 	color: #90642c;
 }
 
+.cargobrand {
+	color: #bf3f3f;
+}
+
 .caption {
 	font-size: 10px;
 	font-weight: bold;
@@ -649,6 +653,12 @@ th.misc {
 
 th.cargo {
 	background: #90642c;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+th.cargobrand {
+	background: #bf3f3f;
 	font-weight: bold;
 	color: #ffffff;
 }

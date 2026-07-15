@@ -79,13 +79,21 @@
 
 	shop_lots = list()
 	if(mode == 11)
+		var/brand_lots = list()
 		for(var/index in global.online_shop_lots_hashed)
 			var/list/Lots = global.online_shop_lots_hashed[index]
 			for(var/datum/shop_lot/Lot in Lots)
 				if(Lot && Lot.category == category && !Lot.sold)
+					if(Lot.brand_item)
+						brand_lots += Lot
+						break
 					shop_lots.len++
 					shop_lots[shop_lots.len] = Lot.to_list()
 					break
+
+		for(var/datum/shop_lot/Lot in brand_lots)
+			shop_lots.len++
+			shop_lots[shop_lots.len] = Lot.to_list()
 
 	shop_lots_frontend = list()
 	if(shop_lots.len)
