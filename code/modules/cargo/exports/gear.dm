@@ -36,6 +36,16 @@
 	unit_name = "bulletproof armor vest"
 	export_types = list(/obj/item/clothing/suit/storage/flak/bulletproof)
 
+/datum/export/gear/marine_helmet
+	cost = 100
+	unit_name = "tactical helmet"
+	export_types = list(/obj/item/clothing/head/helmet/tactical/marinad)
+
+/datum/export/gear/marine_armor
+	cost = 150
+	unit_name = "tactical armor"
+	export_types = list(/obj/item/clothing/suit/marinad)
+
 /datum/export/gear/reflector_helmet
 	cost = 150
 	unit_name = "reflector helmet"
