@@ -250,22 +250,27 @@
 
 	animate(I, pixel_x = to_x, pixel_y = to_y, time = PUTDOWN_ANIMATION_DURATION, transform = matrix(), easing = CUBIC_EASING)
 
-/atom/movable/proc/do_putdown_animation(atom/target, mob/user, additional_pixel_x = 0, additional_pixel_y = 0)
+/atom/movable/proc/can_do_putdown_animation(atom/target, mob/user)
 	if (QDELETED(src))
-		return
+		return FALSE
 	if (QDELETED(target))
-		return
+		return FALSE
 	if (QDELETED(user))
-		return
+		return FALSE
 	if (!target.Adjacent(user))
-		return
+		return FALSE
 
 	if(isliving(user))
 		var/mob/living/L = user
 		if(L.prevent_item_animations())
-			return
+			return FALSE
 
 	if(is_invis_anim)
+		return FALSE
+	return TRUE
+
+/atom/movable/proc/do_putdown_animation(atom/target, mob/user, additional_pixel_x = 0, additional_pixel_y = 0)
+	if(!can_do_putdown_animation(target, user))
 		return
 	is_invis_anim = TRUE
 
