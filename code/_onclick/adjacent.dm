@@ -109,6 +109,12 @@ Quick adjacency (to turf):
 			if( O.dir & target_dir || O.dir&(O.dir-1) ) // *insert explaining comment here*
 				return FALSE
 
+		if(istype(O, /obj/machinery/portable_atmospherics/tile_atmos))
+			var/obj/machinery/portable_atmospherics/tile_atmos/atmos = O
+			if(atmos.state_open && (O.dir & target_dir))
+				return TRUE
+			return FALSE
+
 		else if( !border_only ) // dense, not on border, cannot pass over
 			return FALSE
 	return TRUE

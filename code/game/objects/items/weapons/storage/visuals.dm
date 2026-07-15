@@ -6,6 +6,52 @@
 	// Whether this storage can only be viewed/put items in when opened.
 	var/require_opened = FALSE
 
+/obj/item/weapon/storage/visuals/atom_init()
+	. = ..()
+
+	var/datum/reagents/R = new/datum/reagents(100)
+	reagents = R
+	R.my_atom = src
+
+/obj/item/weapon/storage/visuals/afterattack(atom/target, mob/user, proximity, params)
+	if(!opened || !proximity)
+		return
+
+	if(target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
+		if(!reagents.total_volume)
+			to_chat(user, "<span class = 'rose'>В [CASE(src, PREPOSITIONAL_CASE)] ничего нет.</span>")
+			return
+
+		if(target.reagents.total_volume >= target.reagents.maximum_volume)
+			to_chat(user, "<span class = 'rose'>[capitalize(CASE(target, NOMINATIVE_CASE))] [(ANYMORPH(target, "полон", "полна", "полно", "полны"))].</span>")
+			return
+
+		var/trans = reagents.trans_to(target, 100)
+		handle_reagents_change()
+		to_chat(user, "<span class = 'notice'>Вы переливаете [trans] юнитов вещества в [CASE(target, ACCUSATIVE_CASE)].</span>")
+		playsound(src, 'sound/effects/Liquid_transfer_mono.ogg', VOL_EFFECTS_MASTER) // Sound taken from "Eris" build
+
+	else if(reagents && reagents.total_volume)
+		to_chat(user, "<span class = 'notice'>Вы разлили содержимое на [CASE(target, ACCUSATIVE_CASE)].</span>")
+		reagents.standard_splash(target, user=user)
+		handle_reagents_change()
+		return
+
+/obj/item/weapon/storage/visuals/attackby(obj/item/O, mob/user)
+	if(!opened)
+		return ..()
+
+	if(O.is_open_container())
+		var/obj/item/weapon/reagent_containers/RC = O
+		if(!RC.reagents)
+			return TRUE
+		var/trans = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this)
+		handle_reagents_change()
+		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [src].</span>")
+		return
+
+	return ..()
+
 /obj/item/weapon/storage/visuals/proc/gen_item_overlay(obj/item/I)
 	var/image/IO = image(I.icon, I.icon_state)
 	var/matrix/M = matrix()
@@ -67,6 +113,9 @@
 	if(.)
 		remove_item(I)
 
+/obj/item/weapon/storage/visuals/proc/handle_reagents_change()
+	return TRUE
+
 /obj/item/weapon/storage/visuals/proc/update_overlays()
 	if(opened)
 		cut_overlays()
@@ -82,11 +131,17 @@
 
 /obj/item/weapon/storage/visuals/attack_self(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
+	toggle_open()
+
+/obj/item/weapon/storage/visuals/proc/toggle_open()
 	opened = !opened
 	if(!opened)
 		close_all()
 	update_overlays()
 
+/obj/item/weapon/storage/visuals/AltClick(mob/user)
+	add_fingerprint(user)
+	toggle_open()
 
 
 /obj/item/weapon/storage/visuals/surgery
