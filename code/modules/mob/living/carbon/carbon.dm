@@ -625,7 +625,7 @@
 				AdjustSleeping(-10 SECONDS)
 				if (!M.lying)
 					if((!IsSleeping()) || ((src.crawling) && (crawl_can_use())))
-						SetCrawling(FALSE)
+						get_up(has_do_after_delay = FALSE)
 					M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
 										"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
 				else
@@ -1356,3 +1356,9 @@
 			nutrition_to_remove += pain * 0.01
 	nutrition_to_remove *= mob_metabolism_mod.Get()
 	nutrition = max(0.0, nutrition - nutrition_to_remove)
+
+/mob/living/carbon/is_can_get_up(has_do_after_delay = TRUE, do_after_can_move = FALSE, look_at_intent = TRUE)
+	if(traumatic_shock >= TRAUMATIC_SHOCK_CRITICAL)
+		to_chat(src, "<span class='danger'>I'm in so much pain! I can't get up!</span>")
+		return FALSE
+	return ..()
