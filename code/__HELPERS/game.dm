@@ -730,3 +730,47 @@
 		if(stop_type && istype(turf_to_check, stop_type))
 			break
 	return turf_to_check
+
+
+
+/proc/get_box_and_section_intercection_coordinates_list_or_null(s_x1, s_x2, s_y1, s_y2, b_x1, b_x2, b_y1, b_y2)
+	var/list/sides = list(
+		list(b_x1, b_x2, b_y1, b_y1),
+		list(b_x1, b_x2, b_y2, b_y2),
+		list(b_x1, b_x1, b_y1, b_y2),
+		list(b_x2, b_x2, b_y1, b_y2),
+	)
+
+	for(var/side in sides)
+		var/list/coordinates = get_section_and_section_intercection_coordinates_list_or_null(s_x1, s_x2, s_y1, s_y2, side[1], side[2], side[3], side[4])
+		if(isnull(coordinates))
+			continue
+
+		return coordinates
+
+	return null
+
+
+/proc/get_section_and_section_intercection_coordinates_list_or_null(s_x1, s_x2, s_y1, s_y2, b_x1, b_x2, b_y1, b_y2)
+	var/delta_section_x = s_x2 - s_x1
+	var/delta_section_y = s_y2 - s_y1
+
+
+	var/delta_box_x = b_x2 - b_x1
+	var/delta_box_y = b_y2 - b_y1
+
+
+	var/det = delta_section_x * delta_box_y - delta_section_y * delta_box_x
+	if(det != 0)
+		var/acx = b_x1 - s_x1
+		var/acy = b_y1 - s_y1
+
+		var/t = (acx * delta_box_y - acy * delta_box_x) / det
+		var/s = (acx * delta_section_y - acy * delta_section_x) / det
+
+		if((t >= 0) && (t <= 1) && (s >= 0) && (s <= 1))
+			var/ix = s_x1 + t * delta_section_x
+			var/iy = s_y1 + t * delta_section_y
+			return list(ix, iy)
+
+	return null
