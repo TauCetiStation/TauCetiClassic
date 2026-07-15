@@ -1,4 +1,4 @@
-#define SET_BONE_SURGERY (bodypart.open >= BP_RETRACT_OS && bodypart.stage & BP_GEL && !(bodypart.stage & BP_SET))
+#define SET_BONE_SURGERY (bodypart.open >= BP_RETRACT_OS && (bodypart.stage & BP_GEL) && !(bodypart.stage & BP_SET))
 #define SET_BONE_ACTION  "set the bone in [surgery_victim]'s [bodypart.name] in place with \the [tool]"
 /datum/surgery_step/bone_set
 	allowed_qualities = list(

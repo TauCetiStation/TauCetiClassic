@@ -61,7 +61,7 @@
 	var/open = BP_DEFAULT_OS
 	var/max_open_state = BP_RETRACT_OS
 	var/stage = null                  // uses binary flags, allow in mob
-	var/cavity = 0
+	var/cavity = FALSE
 	var/trauma_kit = FALSE
 	var/burn_kit = FALSE
 	var/atom/movable/applied_pressure

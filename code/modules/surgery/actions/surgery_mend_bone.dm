@@ -53,7 +53,7 @@
 		msg = "<span class='notice'>[user] finish to [MEND_IPC_FACE_ACTION].</span>"
 		self_msg = "<span class='notice'>You finish to [MEND_IPC_FACE_ACTION].</span>"
 		user.visible_message(msg, self_msg)
-	else
+	else if(BONE_GEL_SURGERY)
 		msg = "<span class='notice'>[user] finish to [BONE_GEL_ACTION].</span>"
 		self_msg = "<span class='notice'>You finish to [BONE_GEL_ACTION].</span>"
 		user.visible_message(msg, self_msg)

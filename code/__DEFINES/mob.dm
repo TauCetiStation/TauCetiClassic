@@ -39,9 +39,10 @@
 #define IS_STUMP       (1<<2)
 
 // Operation stages
-#define BP_GEL 	    (0<<2)
-#define BP_SET 	    (1<<2)
-#define BP_VEIN     (2<<2)
+#define NO_STAGE    (0<<2)
+#define BP_GEL 	    (1<<2)
+#define BP_SET 	    (2<<2)
+#define BP_VEIN     (3<<2)
 
 // Slime
 #define NORMAL      0

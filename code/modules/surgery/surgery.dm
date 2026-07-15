@@ -41,7 +41,13 @@
 		if(get_suiteble_quality(quality, allowed_qualities, C))
 			return tool.get_quality(quality)
 
-	return 0
+	return FALSE
+
+/datum/surgery_step/proc/tool_allowed(obj/item/tool)
+	for(var/T in allowed_tools)
+		if(istype(tool, T))
+			return allowed_tools[T]
+	return FALSE
 
 /datum/surgery_step/proc/get_suiteble_quality(quality, list/allowed_qualities, mob/living/carbon/C)
 	if(isslime(C))
@@ -259,7 +265,7 @@
 			return FALSE
 
 		//check if tool is right or close enough and if this step is possible
-		if(S.tool_quality(tool, M) && S.can_use(user, M, target_zone, tool) && S.is_valid_mutantrace(M))
+		if((S.tool_allowed(tool) || S.tool_quality(tool, M)) && S.can_use(user, M, target_zone, tool) && S.is_valid_mutantrace(M))
 			if(!S.prepare_step(user, M, target_zone, tool))	//for some kind of checks
 				return TRUE
 
@@ -272,7 +278,7 @@
 				if(prob(H.traumatic_shock) && !H.incapacitated(NONE))
 					to_chat(user, "<span class='warning'>The patient is writhing in pain, this interferes with the operation!</span>")
 					S.fail_step(user, H, target_zone, tool) //patient movements due to pain interfere with surgery
-			if(user.mood_prob(S.tool_quality(tool, M))\
+			if((user.mood_prob(S.tool_quality(tool, M)) || user.mood_prob(S.tool_allowed(tool)))\
 			   && tool.use_tool(M, user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus, particle_type = /particles/tool/surgery)\
 			   && user.get_targetzone()\
 			   && target_zone == user.get_targetzone())

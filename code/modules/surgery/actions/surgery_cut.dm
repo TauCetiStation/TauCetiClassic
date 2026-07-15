@@ -219,6 +219,9 @@
 
 				bodypart.open = (bodypart.open == BP_SCALPEL_OS && bodypart.controller.bodypart_type == BODYPART_ROBOTIC) ? BP_DEFAULT_OS : BP_SCALPEL_OS
 
+				if(bodypart.controller.bodypart_type != BODYPART_ROBOTIC)
+					bodypart.take_damage(1, 1, DAM_SHARP|DAM_EDGE, tool)
+
 	user.visible_message(msg, self_msg)
 	surgery_victim.custom_pain(cp_msg, 1)
 

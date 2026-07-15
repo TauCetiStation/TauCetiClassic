@@ -1919,7 +1919,7 @@
 		else
 			massages_done_right--
 			to_chat(user, "<span class='warning'>You've skipped a beat.</span>")
-			if ((BP.body_zone == BP_CHEST && op_stage.ribcage != 2) || BP.open < 2)
+			if (BP.body_zone == BP_CHEST && BP.open != BP_RIBCAGE_OS)
 				apply_damage(fail_damage, BRUTE, BP.body_zone)
 
 	else

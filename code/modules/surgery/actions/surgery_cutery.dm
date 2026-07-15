@@ -51,6 +51,8 @@
 			var/obj/item/organ/internal/eyes/eyes = bodypart.bodypart_organs[O_EYES]
 			eyes.surgery_stage = BP_DEFAULT_OS
 		else
+			if(bodypart.cavity)
+				bodypart.cavity = FALSE
 			bodypart.open = BP_DEFAULT_OS
 
 	bodypart.status &= ~ORGAN_BLEEDING
