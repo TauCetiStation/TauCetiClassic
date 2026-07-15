@@ -185,6 +185,7 @@
 #define TRAIT_ANATOMIST           "anatomist"
 #define TRAIT_SOULSTONE_IMMUNE    "soulstone_immune"
 #define TRAIT_PICKY_EATER         "picky_eater"
+#define TRAIT_RAW_MEAT_EATER      "raw_meat_eater"
 #define TRAIT_CULT_EYES           "cult_eyes"
 #define TRAIT_CULT_HALO           "cult_halo"
 #define TRAIT_PLUVIAN_BLESSED     "pluvian_blessed"

@@ -543,6 +543,7 @@
 
 	race_traits = list(
 		TRAIT_NO_MINORCUTS,
+		TRAIT_RAW_MEAT_EATER,
 	)
 
 	flags = list(
@@ -635,6 +636,7 @@
 	race_traits = list(
 		TRAIT_NATURAL_AGILITY,
 		TRAIT_NIGHT_EYES,
+		TRAIT_RAW_MEAT_EATER,
 	)
 
 	flags = list(
@@ -775,6 +777,7 @@
 	race_traits = list(
 		TRAIT_INCOMPATIBLE_DNA,
 		TRAIT_NEVER_FAT,
+		TRAIT_RAW_MEAT_EATER,
 	)
 
 	flags = list(
@@ -905,6 +908,7 @@
 		TRAIT_NO_BLOOD,
 		TRAIT_NEVER_FAT,
 		TRAIT_VIRUS_IMMUNE,
+		TRAIT_RAW_MEAT_EATER,
 	)
 
 	flags = list(
