@@ -47,3 +47,18 @@
 
 /datum/status_effect/array_turn_back/on_apply()
 	return isreplicator(owner)
+
+/atom/movable/screen/alert/status_effect/laughweed
+	name = "Смехотворно"
+	desc = "Мир вокруг стал выглядеть спокойнее.. и смешнее?"
+	icon_state = "laughweed"
+
+/datum/status_effect/laughweed
+	id = "laughweed"
+	alert_type = /atom/movable/screen/alert/status_effect/laughweed
+
+/datum/status_effect/laughweed/on_creation(mob/living/new_owner, duration)
+	. = ..()
+	if(!.)
+		return
+	src.duration = world.time + duration

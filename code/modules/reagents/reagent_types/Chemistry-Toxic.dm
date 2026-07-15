@@ -1109,7 +1109,7 @@
 /datum/reagent/laughbidiol
 	name = "Laughbidiol"
 	id = "laughbidiol"
-	description = "Extract from laughweed"
+	description = "Extract from laughweed."
 	reagent_state = LIQUID
 	color = "#3d9e29"
 	custom_metabolism = REAGENTS_METABOLISM * 0.5
@@ -1122,10 +1122,13 @@
 
 	M.adjustDrugginess(2)
 	if(prob(25))
-		M.make_dizzy(10)
-		M.emote(pick("cough","laugh","giggle"))
-	if(prob(10))
-		M.Stuttering(1)
+		var/datum/status_effect/E = M.has_status_effect(STATUS_EFFECT_LAUGHWEED)
+		if(E)
+			E.duration += 6 SECONDS
+		else
+			M.apply_status_effect(STATUS_EFFECT_LAUGHWEED, 30 SECONDS)
+	if(prob(15))
+		M.emote(pick("cough", "laugh", "giggle"))
 
 /datum/reagent/laughbidiol/on_diona_digest(mob/living/M)
 	return FALSE
