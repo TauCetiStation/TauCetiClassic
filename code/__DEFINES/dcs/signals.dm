@@ -316,6 +316,8 @@
 #define COMSIG_MOB_Z_CHANGED "mob_z_changed"
 ///from base of /mob/proc/set_lighting_alpha(): (value)
 #define COMSIG_MOB_LIGHTING_ALPHA_CHANGED "LIGHTING_ALPHA_CHANGED"
+///from base of mob/pointed(): (atom/pointed_target)
+#define COMSIG_GLOB_MOB_POINTED "!mob_pointed"
 
 // living signals
 ///from base of mob/living/rejuvenate(): ()

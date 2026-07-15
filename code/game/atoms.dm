@@ -725,26 +725,3 @@
 
 /atom/proc/update_icon()
 	return
-
-/**
- * Point at an atom
- *
- * Intended to enable and standardise the pointing animation for all atoms
- *
- * Not intended as a replacement for the mob verb
- */
-/atom/proc/point_at(atom/pointed_atom, arrow_type = /obj/effect/decal/point)
-	if (!isturf(loc))
-		return FALSE
-
-	var/turf/tile = get_turf(pointed_atom)
-	if (!tile)
-		return FALSE
-
-	var/turf/our_tile = get_turf(src)
-	var/obj/visual = new arrow_type(our_tile, invisibility)
-	QDEL_IN(visual, 20)
-
-	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
-
-	return TRUE

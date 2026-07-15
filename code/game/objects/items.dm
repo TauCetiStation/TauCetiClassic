@@ -947,6 +947,7 @@
 
 /obj/item/proc/showoff(mob/user)
 	user.visible_message("[user] holds up [src]. <a href=byond://?_src_=usr;lookitem=\ref[src]>Take a closer look.</a>")
+	user.create_point_bubble(src)
 
 /mob/living/carbon/verb/showoff()
 	set name = "Show Held Item"

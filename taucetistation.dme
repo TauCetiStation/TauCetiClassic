@@ -549,6 +549,7 @@
 #include "code\game\atoms_movable.dm"
 #include "code\game\communications.dm"
 #include "code\game\periodic_news.dm"
+#include "code\game\pointing.dm"
 #include "code\game\say.dm"
 #include "code\game\shuttle_engines.dm"
 #include "code\game\sound.dm"
