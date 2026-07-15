@@ -24,7 +24,7 @@
 /obj/item/clothing/under/color/polychromic/update_world_icon()
 	update_icon()
 
-/obj/item/clothing/under/color/polychromic/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
+/obj/item/clothing/under/color/polychromic/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null, spare_icon_path = FALSE)
 	if(sprite_sheet_slot == SPRITE_SHEET_HELD || !length(poly_colors))
 		return ..()
 	return poly.build_worn(src, H, layer, bloodied_icon_state)

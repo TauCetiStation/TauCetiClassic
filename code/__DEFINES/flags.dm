@@ -79,6 +79,7 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define HAS_SKIN_TONE      "has_skin_tone" // species use presets colors from /datum/skin_tone (humans only atm)
 #define HAS_SKIN_COLOR     "has_skin_color" // species can colorpick any color
 #define HAS_HAIR_COLOR     "has_hair_color"
+#define HAS_BODYTYPE_SELECTION "has_bodytype_selection"
 #define HAS_LIPS           "has_lips"
 #define HAS_UNDERWEAR      "has_underwear"
 #define IS_SOCIAL          "is_social"

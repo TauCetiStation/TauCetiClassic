@@ -29,6 +29,8 @@
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
+	bodytype_object = global.bodytypes_list[/datum/preferences::bodytype_name]
+
 	AddComponent(/datum/component/mood)
 
 	dna = new
@@ -1119,6 +1121,7 @@
 			gender = MALE
 		else
 			gender = FEMALE
+		set_bodytype_for_gender()
 	regenerate_icons(update_body_preferences = TRUE)
 	check_dna()
 
@@ -2311,3 +2314,24 @@
 	forceMove(P)
 
 	return P
+
+// keeps bodytype in sync with the current gender/species (males have no slim sprites)
+/mob/living/carbon/human/proc/set_bodytype_for_gender()
+	if(gender == FEMALE && species)
+		bodytype_object = global.bodytypes_list[species.females_standard_bodytype]
+	else
+		bodytype_object = global.bodytypes_list[AVERAGE_BODYTYPE]
+
+// switch to fat, remembering the previous bodytype so we can restore it later
+/mob/living/carbon/human/proc/set_bodytype_fat()
+	if(bodytype_object.name != FAT_BODYTYPE)
+		prefat_bodytype_name = bodytype_object.name
+	bodytype_object = global.bodytypes_list[FAT_BODYTYPE]
+
+// restore the bodytype we had before getting fat (fallback to gender default)
+/mob/living/carbon/human/proc/restore_bodytype_after_fat()
+	if(prefat_bodytype_name && prefat_bodytype_name != FAT_BODYTYPE)
+		bodytype_object = global.bodytypes_list[prefat_bodytype_name]
+		prefat_bodytype_name = null
+	else
+		set_bodytype_for_gender()

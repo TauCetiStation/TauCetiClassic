@@ -3,7 +3,7 @@
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
 
-#define SAVEFILE_VERSION_MAX 57
+#define SAVEFILE_VERSION_MAX 58
 
 //For repetitive updates, should be the same or below SAVEFILE_VERSION_MAX
 //set this to (current SAVEFILE_VERSION_MAX)+1 when you need to update:
@@ -488,6 +488,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		for(var/i in list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM, O_HEART, O_EYES, O_LUNGS))
 			organ_data[i] = null
 
+	if(current_version < 58)
+		if(gender == FEMALE)
+			var/datum/species/specie_obj = all_species[species]
+			if(specie_obj)
+				bodytype_name = specie_obj.females_standard_bodytype
 //
 /datum/preferences/proc/repetitive_updates_character(current_version, savefile/S)
 
@@ -803,6 +808,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["jumpsuit_base_color"] >> jumpsuit_base_color
 	S["pda_ringtone"]      >> chosen_ringtone
 	S["pda_custom_melody"] >> custom_melody
+	S["bodytype_name"]     >> bodytype_name
 
 	//Load prefs
 	S["alternate_option"] >> alternate_option
@@ -896,6 +902,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/list/pref_ringtones = global.ringtones_by_names + CUSTOM_RINGTONE_NAME
 	chosen_ringtone  = sanitize_inlist(chosen_ringtone, pref_ringtones, initial(chosen_ringtone))
 	custom_melody = sanitize(custom_melody, MAX_CUSTOM_RINGTONE_LENGTH, extra = FALSE, ascii_only = TRUE)
+	bodytype_name = sanitize_inlist(bodytype_name, bodytypes_list, initial(bodytype_name))
 	alternate_option = sanitize_integer(alternate_option, 0, 2, initial(alternate_option))
 	neuter_gender_voice = sanitize_gender_voice(neuter_gender_voice)
 
@@ -1015,6 +1022,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["jumpsuit_base_color"]   << jumpsuit_base_color
 	S["pda_ringtone"]          << chosen_ringtone
 	S["pda_custom_melody"]     << custom_melody
+	S["bodytype_name"]         << bodytype_name
 	//Write prefs
 	S["alternate_option"]      << alternate_option
 	S["job_preferences"]       << job_preferences

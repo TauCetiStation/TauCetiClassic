@@ -63,6 +63,7 @@
 			if("female")
 				H.gender = FEMALE
 
+		H.set_bodytype_for_gender()
 		H.update_body(update_preferences = TRUE)
 
 	if(fixed_name)
