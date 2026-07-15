@@ -31,6 +31,9 @@
 	//the assoc value can either be the quantity, or a list whose first value is the quantity and the rest are args.
 	var/list/startswith
 
+	//allows for stealth item insertion
+	var/silent = FALSE
+
 /obj/item/weapon/storage/atom_init()
 	. = ..()
 	use_sound = SOUNDIN_RUSTLE
@@ -124,7 +127,7 @@
 		storage_ui.hide_from(user)
 
 /obj/item/weapon/storage/proc/open(mob/user)
-	if (length(use_sound))
+	if(!silent && length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 
 	prepare_ui()
@@ -263,11 +266,14 @@
 
 		if(!(prevent_warning || istype(W, /obj/item/weapon/gun/energy/crossbow)))
 			//If someone is standing close enough or item is larger than TINY, they can tell what it is...
-			usr.visible_message(
-				"<span class='notice'>[usr] puts [W] into [src].</span>",
-				"<span class='notice'>You put \the [W] into [src].</span>",
-				viewing_distance = (W.w_class > SIZE_TINY ? world.view : 1)
-				)
+			if(silent)
+				to_chat(usr, "<span class='notice'>You silently put \the [W] into [src].</span>")
+			else
+				usr.visible_message(
+					"<span class='notice'>[usr] puts [W] into [src].</span>",
+					"<span class='notice'>You put \the [W] into [src].</span>",
+					viewing_distance = (W.w_class > SIZE_TINY ? world.view : 1)
+					)
 		if(crit_fail && prob(25))
 			remove_from_storage(W, get_turf(src))
 		if(!NoUpdate)
