@@ -103,6 +103,7 @@
 	// but for some reason not adds fat metabolism factor?
 	// anyway better to replace fat trait with element mutation
 	var/mob/living/carbon/human/H = quirk_holder
+	H.set_bodytype_fat()
 	H.update_body()
 	H.update_underwear()
 	H.update_mutations()
