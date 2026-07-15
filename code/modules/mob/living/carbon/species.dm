@@ -1403,8 +1403,9 @@
 	icobase = 'icons/mob/human/shadowling.dmi'
 	deformed = null
 	skeleton = null
-	eyes_colorable_layer = null
+	eyes_colorable_layer = "default"
 	eyes_static_layer = "shadowling"
+	default_eyes_color = "#ff0000"
 
 	language = LANGUAGE_SOLCOMMON
 	unarmed_type = /datum/unarmed_attack/claws
@@ -1438,7 +1439,9 @@
 	has_organ = list(
 		O_BRAIN   = /obj/item/organ/internal/brain
 		,O_HEART = /obj/item/organ/internal/heart
-		,O_EYES    = /obj/item/organ/internal/eyes/dark_vision) // A huge buff to be honest.
+		,O_EYES    = /obj/item/organ/internal/eyes/dark_vision // A huge buff to be honest.
+		,O_LIVER   = /obj/item/organ/internal/liver
+		,O_KIDNEYS = /obj/item/organ/internal/kidneys)
 
 	race_traits = list(
 		TRAIT_NO_BREATHE,
@@ -1458,7 +1461,7 @@
 	,NO_GENDERS = TRUE
 	)
 
-	burn_mod = 2
+	burn_mod = 1.8
 	brain_mod = 0
 
 	gender_body_icons = FALSE
@@ -1472,7 +1475,7 @@
 	var/light_amount = 0
 	if(isturf(H.loc))
 		var/turf/T = H.loc
-		light_amount = round(10 * T.get_lumcount())
+		light_amount = round(T.get_lumcount(), 0.1)
 
 	if(light_amount > LIGHT_DAM_THRESHOLD)
 		H.take_overall_damage(0, LIGHT_DAMAGE_TAKEN)
@@ -1488,6 +1491,7 @@
 		H.SetWeakened(0)
 		H.SetStunned(0)
 
+	H.verbs += /mob/proc/toggle_telepathy_hear //Not gene cause we dont need two other abilities from gene
 /datum/species/golem
 	name = GOLEM
 	icobase = 'icons/mob/human/golem.dmi'
