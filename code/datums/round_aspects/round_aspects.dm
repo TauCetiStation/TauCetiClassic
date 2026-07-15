@@ -56,7 +56,7 @@
 			smg.materials[M] *= 5
 
 	for(var/datum/supply_pack/ballistic/b in global.all_supply_pack)
-		b.cost *= 50
+		b.cost *= 5
 
 	new /datum/event/feature/area/replace/station_rearmament_energy
 
@@ -85,7 +85,7 @@
 			plsmsh.materials[M] *= 5
 
 	for(var/datum/supply_pack/energy/e in global.all_supply_pack)
-		e.cost *= 50
+		e.cost *= 5
 
 	new /datum/event/feature/area/replace/station_rearmament_bullets
 
@@ -134,10 +134,10 @@
 			plsmsh.materials[M] *= 5
 
 	for(var/datum/supply_pack/energy/e in global.all_supply_pack)
-		e.cost *= 50
+		e.cost *= 5
 
 	for(var/datum/supply_pack/ballistic/b in global.all_supply_pack)
-		b.cost *= 50
+		b.cost *= 5
 
 	new /datum/event/feature/area/replace/sec_rearmament_elite
 
