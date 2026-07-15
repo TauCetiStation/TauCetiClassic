@@ -661,6 +661,31 @@
 			. = 0
 		electrocution_animation(4 SECONDS)
 
+	if(!.) //electrocuting people makes them randomly tell things they know
+		return
+	if(!can_remember())
+		return
+	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_MEDIUM)
+		return
+
+	var/probability = .
+	if(HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD))
+		probability += 25
+	if(HAS_TRAIT(src, TRAIT_HIGH_PAIN_THRESHOLD))
+		probability -= 25
+	probability = clamp(probability, 0, 100)
+
+	if(!prob(probability))
+		return
+
+	var/memory_key = pick(mind.key_memories)
+	var/memory = mind.get_key_memory(memory_key)
+
+	say(stutter("[memory]!"))
+
+	if(prob(25)) //sometimes they forget these things
+		mind.clear_key_memory(memory_key)
+
 /mob/living/carbon/human/Topic(href, href_list)
 	if(href_list["skill"])
 		update_skills(href_list)

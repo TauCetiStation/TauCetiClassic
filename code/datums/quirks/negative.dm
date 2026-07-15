@@ -280,3 +280,15 @@
 	blacklisted_species_traits = list(
 		TRAIT_NO_BLOOD,
 	)
+
+/datum/quirk/low_pain_threshold
+	name = QUIRK_LOW_PAIN_THRESHOLD
+	desc = "Ваш болевой порог понижен."
+	value = -1
+	mob_trait = TRAIT_LOW_PAIN_THRESHOLD
+	gain_text = "<span class='danger'>Вам страшно от одной лишь мысли о боли.</span>"
+	lose_text = "<span class='notice'>Вы больше не хотите выглядеть слабаком. Теперь вы пытаетесь терпеть боль.</span>"
+
+	blacklisted_species_traits = list(
+		TRAIT_NO_PAIN,
+	)

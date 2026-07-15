@@ -135,3 +135,15 @@
 	mob_trait = TRAIT_FRIENDLY
 	gain_text = "<span class='notice'>Вы хотите кого-нибудь обнять.</span>"
 	lose_text = "<span class='danger'>Ваши объятия теперь мало радуют.</span>"
+
+/datum/quirk/high_pain_threshold
+	name = QUIRK_HIGH_PAIN_THRESHOLD
+	desc = "Ваш болевой порог повышен."
+	value = 1
+	mob_trait = TRAIT_HIGH_PAIN_THRESHOLD
+	gain_text = "<span class='danger'>Вы хотите показать свою силу. Вы попытаетесь игнорировать любую боль.</span>"
+	lose_text = "<span class='notice'>Вы устали превозмогать боль.</span>"
+
+	blacklisted_species_traits = list(
+		TRAIT_NO_PAIN,
+	)
