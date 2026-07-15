@@ -27,6 +27,9 @@
 	if(modifiers[SHIFT_CLICK] && modifiers[CTRL_CLICK])
 		CtrlShiftClickOn(A)
 		return
+	if(modifiers[SHIFT_CLICK] && modifiers[ALT_CLICK])
+		AltShiftClickOn(A)
+		return
 	if(modifiers[MIDDLE_CLICK])
 		MiddleClickOn(A)
 		return
@@ -112,6 +115,9 @@
 /mob/living/silicon/robot/CtrlShiftClickOn(atom/A)
 	A.BorgCtrlShiftClick(src)
 
+/mob/living/silicon/robot/AltShiftClickOn(atom/A)
+	A.BorgAltShiftClick(src)
+
 /mob/living/silicon/robot/ShiftClickOn(atom/A)
 	A.BorgShiftClick(src)
 
@@ -153,11 +159,19 @@
 	AltClick(user)
 	return
 
+
 /obj/machinery/door/airlock/BorgAltClick(mob/M) // Eletrifies doors. Forwards to AI code.
 	AIAltClick(M)
 
-/obj/machinery/turretid/BorgAltClick(mob/M) //turret lethal on/off. Forwards to AI code.
-	AIAltClick(M)
+/obj/machinery/turretid/BorgAltClick() //turret lethal on/off. Forwards to AI code.
+	AIAltClick()
+
+/atom/proc/BorgAltShiftClick(mob/living/silicon/robot/user)
+	AltShiftClick(user)
+	return
+
+/obj/machinery/door/airlock/BorgAltShiftClick(mob/M) // Emergency mode doors on/off. Forwards to AI code.
+	AIAltShiftClick(M)
 
 /*
 	As with AI, these are not used in click code,
