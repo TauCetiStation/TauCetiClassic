@@ -3,7 +3,7 @@
 	set name = "Who"
 	set category = "OOC"
 
-	var/msg = "<b>Current Players:</b>\n"
+	var/msg
 
 	var/list/Lines = list()
 
@@ -71,7 +71,7 @@
 		msg += "[line]\n"
 
 	msg += "<b>Total Players: [length(Lines)]</b>"
-	to_chat(src, msg)
+	to_chat(src, fieldset_block("<b>Current Players</b>", msg, "boxed_message"))
 
 #define SW_NAME       1
 #define SW_WHOTEXT    2
