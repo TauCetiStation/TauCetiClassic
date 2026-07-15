@@ -1405,7 +1405,7 @@
 		return FALSE
 
 // Unlike set_species(), this proc simply changes owner's specie and thats it.
-// todo: why we need to support two set species procedures just because of abductors,
+// todo: why we need to support two set species procedures just because of abductors, 
 // merge it with the one above and add args to toggle behavior
 /mob/living/carbon/human/proc/set_species_soft(new_species)
 	if(species.name == new_species)
@@ -1973,7 +1973,7 @@
 	if(deadtime > DEFIB_TIME_LOSS)
 		// damage for every second above DEFIB_TIME_LOSS till DEFIB_TIME_LIMIT
 		// 60 is often used as threshold for brainloss to trigger funny interactions
-		adjustBrainLoss(LERP(0, 60, (deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS)))
+		adjustBrainLoss(LERP(0, 60, (deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS))) 
 
 	med_hud_set_health()
 
@@ -2249,7 +2249,6 @@
 /mob/living/carbon/human/get_blood_datum()
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_SLIME))
 		return /datum/dirt_cover/blue_blood
-
 	if(species.blood_datum_path)
 		return species.blood_datum_path
 
