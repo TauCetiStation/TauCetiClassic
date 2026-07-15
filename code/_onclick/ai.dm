@@ -101,20 +101,26 @@
 		if(!active_module.AIAltClickHandle(A))
 			return
 	A.AIAltClick(src)
+/mob/living/silicon/ai/CtrlShiftClickOn(atom/A)
+	A.AICtrlShiftClick(src)
 
 /*
 	The following criminally helpful code is just the previous code cleaned up;
 	I have no idea why it was in atoms.dm instead of respective files.
 */
 
-/atom/proc/AICtrlShiftClick()
+/atom/proc/AICtrlShiftClick(mob/M)
 	return
 
-/obj/machinery/door/airlock/AICtrlShiftClick()
-	if(emagged)
+/obj/machinery/door/airlock/AICtrlShiftClick(mob/M)
+
+	if(!can_still_interact_with(M))
 		return
-	return
-
+	if(!secondsMainPowerLost && !secondsBackupPowerLost)
+		loseMainPower()
+		loseBackupPower()
+	else
+		to_chat(M, "<span class='notice'>Питание уже отключено!</span>")
 /atom/proc/AIShiftClick(mob/living/silicon/ai/user)
 	user.examinate(src)
 
@@ -134,14 +140,16 @@
 	return
 
 
-/atom/proc/AICtrlClick()
+/atom/proc/AICtrlClick(mob/M)
 	return
 
-/obj/machinery/door/airlock/AICtrlClick() // Bolts doors
+/obj/machinery/door/airlock/AICtrlClick(mob/M) // Bolts doors
+	if(!can_still_interact_with(M))
+		return
 	if(locked)
-		Topic("aiEnable=4", list("aiEnable"="4"), 1)// 1 meaning no window (consistency!)
+		AIUnbolt(M)
 	else
-		Topic("aiDisable=4", list("aiDisable"="4"), 1)
+		AIBolt(M)
 
 /obj/machinery/power/apc/AICtrlClick(mob/user) // turns off/on APCs.
 	if(user.incapacitated() || aidisabled)
@@ -168,7 +176,6 @@
 		enable_emergency_access(M)
 	else
 		disable_emergency_access(M)
-
 //
 // Override AdjacentQuick for AltClicking
 //
