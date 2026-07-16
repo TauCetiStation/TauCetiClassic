@@ -235,6 +235,9 @@
 #define COMSIG_ITEM_EQUIPPED "item_equip"
 ///from base of obj/item/dropped(): (mob/user)
 #define COMSIG_ITEM_DROPPED "item_drop"
+///from base of obj/item/get_standing_overlay(): (list/result, mob/wearer, sprite_sheet_slot, layer, bloodied_icon_state). Handler puts a replacement appearance into result[1].
+#define COMSIG_ITEM_GET_WORN_OVERLAY "item_get_worn_overlay"
+	#define COMPONENT_WORN_OVERLAY_OVERRIDE 1
 /// from base of mob/ShiftClickOn(): (atom/target, mob/user)
 #define COMSIG_ITEM_SHIFTCLICKWITH "item_shiftclickwith"
 /// from base of mob/MiddleShiftClickOn(): (atom/target, mob/user)
@@ -274,6 +277,10 @@
 #define COMSIG_HAND_PUT_IN "hand_put_in"
 /// from mob/living/silicon/robot/get_active_hand(): (mob/user)
 #define COMSIG_HAND_GET_ITEM "hand_get_item"
+/// from mob/living/silicon/robot/proc/activate_module(obj/item/O)
+#define COMSIG_HAND_ACTIVATE_MODULE "hand_activate_module"
+/// from mob/living/silicon/robot/proc/unequip_module(obj/O)
+#define COMSIG_HAND_UNEQUIP_MODULE "hand_unequip_module"
 
 //Mood (/datum/component/mood) signals
 ///called when you send a mood event from anywhere in the code.

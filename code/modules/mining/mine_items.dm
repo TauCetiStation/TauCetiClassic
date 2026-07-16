@@ -765,11 +765,11 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			power_supply.give(500)
 			to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 			update_icon()
-	else if(istype(A, /obj/item/weapon/storage/bag/ore))
+	else if(istype(A, /obj/item/weapon/storage/bag))
 		if(power_supply.charge >= power_supply.maxcharge)
 			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
 			return
-		var/obj/item/weapon/storage/bag/ore/O = A
+		var/obj/item/weapon/storage/bag/O = A
 		for(var/obj/item/weapon/ore/phoron/P in O.contents)
 			if(power_supply.charge >= power_supply.maxcharge)
 				return

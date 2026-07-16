@@ -27,7 +27,7 @@
 		recharge_coeff = C.rating
 
 /obj/machinery/cell_charger/update_icon()
-	icon_state = "ccharger[charging ? 1 : 0]"
+	icon_state = "ccharger[charging ? 1 : 0][panel_open ? "-o" : ""]"
 
 	if(charging && !(stat & (BROKEN|NOPOWER)) )
 
@@ -57,32 +57,45 @@
 		if(charging)
 			to_chat(user, "<span class='warning'>There is already a cell in the charger.</span>")
 			return
-		else
-			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
-			if(!isarea(a))
-				return
-			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>")
-				return
+		if(panel_open)
+			to_chat(user, "<span class='warning'>Close the maintenance hatch first!</span>")
+			return
 
-			user.drop_from_inventory(W, src)
-			add_fingerprint(user)
-			charging = W
-			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
-			chargelevel = -1
+		var/area/a = loc.loc // Gets our locations location, like a dream within a dream
+		if(!isarea(a))
+			return
+		if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
+			to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>")
+			return
+
+		user.drop_from_inventory(W, src)
+		add_fingerprint(user)
+		charging = W
+		user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
+		chargelevel = -1
 		update_icon()
-	else if(iswrenching(W))
+		return
+
+	if(iswrenching(W))
 		if(charging)
 			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
 			return
 		anchored = !anchored
 		to_chat(user, "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground")
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), W))
-		update_icon()
 		return
+
+	if(isscrewing(W))
+		if(charging)
+			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
+			return
+		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), W))
+			return
+
 	if(default_deconstruction_crowbar(W))
+		return
+
+	if(exchange_parts(user, W))
 		return
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
