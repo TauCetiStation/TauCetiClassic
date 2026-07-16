@@ -73,7 +73,7 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/drill_open/place_item
-	priority = 0
+	priority = 3
 	allowed_tools = list(
 		/obj/item = 100
 		)

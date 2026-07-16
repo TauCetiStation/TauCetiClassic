@@ -36,28 +36,29 @@
 	var/self_msg = null
 	var/cp_msg = null
 // returns how well tool is suited for this step
-/datum/surgery_step/proc/tool_quality(obj/item/tool, mob/living/carbon/C)
+/datum/surgery_step/proc/tool_quality(obj/item/tool, mob/living/carbon/C, target_zone)
 	for(var/quality in allowed_qualities)
-		if(get_suiteble_quality(quality, allowed_qualities, C))
+		if(get_suiteble_quality(quality, allowed_qualities, C, target_zone))
 			return tool.get_quality(quality)
 
 	return FALSE
+
+/datum/surgery_step/proc/get_suiteble_quality(quality, list/allowed_qualities, mob/living/carbon/C, target_zone)
+	if(isslime(C))
+		return get_surg_quality(quality)
+
+	var/mob/living/carbon/human/H = C
+	var/obj/item/organ/external/bodypart = H.get_bodypart(target_zone)
+	if(bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
+		return get_technic_quality(quality)
+	else
+		return get_surg_quality(quality)
 
 /datum/surgery_step/proc/tool_allowed(obj/item/tool)
 	for(var/T in allowed_tools)
 		if(istype(tool, T))
 			return allowed_tools[T]
 	return FALSE
-
-/datum/surgery_step/proc/get_suiteble_quality(quality, list/allowed_qualities, mob/living/carbon/C)
-	if(isslime(C))
-		return get_surg_quality(quality)
-
-	var/mob/living/carbon/human/H = C
-	if(H.species.flags[IS_SYNTHETIC] || H.species.flags[TRAIT_NO_BLOOD])
-		return get_technic_quality(quality)
-	else
-		return get_surg_quality(quality)
 
 /datum/surgery_step/proc/can_infect(obj/item/organ/external/bodypart)
 	if(bodypart.status & ORGAN_ROBOT)
@@ -253,7 +254,8 @@
 	var/skillcheck = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.species.flags[IS_SYNTHETIC])
+		var/obj/item/organ/external/bodypart = H.get_bodypart(target_zone)
+		if(bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
 			skillcheck = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 
 	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, skillcheck, "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
@@ -265,7 +267,7 @@
 			return FALSE
 
 		//check if tool is right or close enough and if this step is possible
-		if((S.tool_allowed(tool) || S.tool_quality(tool, M)) && S.can_use(user, M, target_zone, tool) && S.is_valid_mutantrace(M))
+		if((S.tool_allowed(tool) || S.tool_quality(tool, M, target_zone)) && S.can_use(user, M, target_zone, tool) && S.is_valid_mutantrace(M))
 			if(!S.prepare_step(user, M, target_zone, tool))	//for some kind of checks
 				return TRUE
 
@@ -278,7 +280,7 @@
 				if(prob(H.traumatic_shock) && !H.incapacitated(NONE))
 					to_chat(user, "<span class='warning'>The patient is writhing in pain, this interferes with the operation!</span>")
 					S.fail_step(user, H, target_zone, tool) //patient movements due to pain interfere with surgery
-			if((user.mood_prob(S.tool_quality(tool, M)) || user.mood_prob(S.tool_allowed(tool)))\
+			if((user.mood_prob(S.tool_quality(tool, M, target_zone)) || user.mood_prob(S.tool_allowed(tool)))\
 			   && tool.use_tool(M, user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus, particle_type = /particles/tool/surgery)\
 			   && user.get_targetzone()\
 			   && target_zone == user.get_targetzone())

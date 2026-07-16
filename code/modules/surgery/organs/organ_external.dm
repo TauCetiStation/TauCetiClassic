@@ -1575,6 +1575,21 @@ Note that amputating the affected organ does in fact remove the infection from t
 			missing += BP
 	return missing
 
+/obj/item/organ/external/chest/vox
+	controller_type = /datum/bodypart_controller/vox
+/obj/item/organ/external/groin/vox
+	controller_type = /datum/bodypart_controller/vox
+/obj/item/organ/external/head/vox
+	controller_type = /datum/bodypart_controller/vox
+/obj/item/organ/external/l_arm/vox
+	controller_type = /datum/bodypart_controller/vox
+/obj/item/organ/external/l_leg/vox
+	controller_type = /datum/bodypart_controller/vox
+/obj/item/organ/external/r_arm/vox
+	controller_type = /datum/bodypart_controller/vox
+/obj/item/organ/external/r_leg/vox
+	controller_type = /datum/bodypart_controller/vox
+
 // lol yes
 /obj/item/organ/external/chest/homunculus
 /obj/item/organ/external/chest/homunculus/atom_init()

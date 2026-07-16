@@ -1,5 +1,5 @@
 // Condition content
-#define CUT_SCREW                 (bodypart.open == BP_DEFAULT_OS || (surgery_victim.species.flags[IS_SYNTHETIC] && bodypart.open == BP_SCALPEL_OS))
+#define CUT_SCREW                 (bodypart.open == BP_DEFAULT_OS || (bodypart.controller.bodypart_type == BODYPART_ROBOTIC && bodypart.open == BP_SCALPEL_OS))
 #define CUT_ORGAN                 (bodypart.open == BP_RIBCAGE_OS)
 #define EYES_SURGERY              (eyes?.surgery_stage <= BP_SCALPEL_OS)
 #define MOUTH_SURGERY             (head.ps_status == BP_DEFAULT_OS || head.ps_status == BP_RETRACT_OS)
