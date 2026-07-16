@@ -121,17 +121,18 @@
 		msg = "<span class='warning'>[user]'s [FAIL_ACTION] [surgery_victim]!</span>"
 		self_msg = "<span class='warning'>Your [FAIL_ACTION] [surgery_victim]!</span>"
 
-		bodypart.take_damage(pick(10, 20, 30, 40, 50, 60), 0, DAM_SHARP|DAM_EDGE, tool)
+		bodypart.take_damage(pick(5, 10, 20), 0, DAM_SHARP|DAM_EDGE, tool)
 		bodypart.trauma_kit = FALSE
 		bodypart.burn_kit = FALSE
-		if(!bodypart.is_stump() && pick(0, 1))
+		if((issawopen(tool) || isretract(tool)) && !bodypart.is_stump() && pick(0, 1))
 			bodypart.fracture()
-		if(pick(0, 1))
-			for(var/obj/item/organ in bodypart.bodypart_organs)
-				if(isorgan(organ))
-					if(pick(0, 1))
-						organ.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
-		if(check_inside(bodypart))
+		if((issurgcutt(tool) || issawopen(tool)) && bodypart.open == BP_RIBCAGE_OS)
+			if(pick(0, 1))
+				for(var/obj/item/organ in bodypart.bodypart_organs)
+					if(isorgan(organ))
+						if(pick(0, 1))
+							organ.take_damage(10, 0, DAM_SHARP|DAM_EDGE, tool)
+		if(bodypart.open >= BP_RETRACT_OS && check_inside(bodypart))
 		//implant remove
 			bodypart.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 			if(length(bodypart.embedded_objects))
@@ -311,18 +312,6 @@
 			if(l.priority < r.priority)
 				surgery_steps.Swap(i, gap + i)
 				swapped = 1
-
-/datum/surgery_status
-	var/plastic_new_name = null
-	var/plasticsur = 0
-	var/eyes = 0
-	var/face = 0
-	var/appendix = 0
-	var/ribcage = 0
-	var/skull = 0
-	var/brain_cut = 0
-	var/brain_fix = 0
-	var/list/bodyparts = list() // Holds info about removed bodyparts
 
 /datum/surgery_step/ipc
 
