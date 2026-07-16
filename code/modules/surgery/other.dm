@@ -826,7 +826,7 @@
 
 /datum/surgery_step/limb/attach/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP
-
+	var/obj/item/organ/external/stump/stump = target.get_bodypart(target_zone)
 	if(istype(tool, /obj/item/robot_parts))
 		var/obj/item/robot_parts/L = tool
 		if(!L.can_attach())
@@ -843,6 +843,7 @@
 	"<span class='notice'>You have attached \the [tool] where [target]'s [parse_zone(target_zone)] used to be.</span>")
 
 	user.remove_from_mob(tool)
+	qdel(stump)
 	BP.insert_organ(target, surgically = TRUE)
 
 	if(istype(tool, /obj/item/robot_parts))
@@ -850,6 +851,7 @@
 	target.update_body(BP.body_zone)
 	target.updatehealth()
 	target.UpdateDamageIcon(BP)
+	target.update_surgery()
 
 	if(istype(BP, /obj/item/organ/external/head))
 		var/obj/item/organ/external/head/B = BP

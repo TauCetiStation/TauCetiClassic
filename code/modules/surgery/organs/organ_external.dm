@@ -182,7 +182,7 @@
 
 	owner.bodyparts += src
 	owner.bodyparts_by_name[body_zone] = src
-
+	species = owner.species
 	if(!controller)
 		controller = new controller_type(src)
 
