@@ -79,7 +79,7 @@
 	var/obj/item/organ/external/bodypart = target.get_bodypart(target_zone)
 	if(!bodypart)
 		return FALSE
-	if(bodypart.is_stump())
+	if(isstump(bodypart))
 	//stump preparing, prevert etc checks, is target bodypart is stump
 		return TRUE
 	if(bodypart.status & ORGAN_BLEEDING && !tool.get_quality(QUALITY_CLAMP))
@@ -124,7 +124,7 @@
 		bodypart.take_damage(pick(5, 10, 20), 0, DAM_SHARP|DAM_EDGE, tool)
 		bodypart.trauma_kit = FALSE
 		bodypart.burn_kit = FALSE
-		if((issawopen(tool) || isretract(tool)) && !bodypart.is_stump() && pick(0, 1))
+		if((issawopen(tool) || isretract(tool)) && !isstump(bodypart) && pick(0, 1))
 			bodypart.fracture()
 		if((issurgcutt(tool) || issawopen(tool)) && bodypart.open == BP_RIBCAGE_OS)
 			if(pick(0, 1))

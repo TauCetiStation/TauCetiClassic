@@ -15,82 +15,81 @@
 	icon_state = "[initial(icon_state)][reagents?.total_volume ? "_full" : "_empty"]"
 
 /obj/item/weapon/reagent_containers/dropper/afterattack(atom/target, mob/user, proximity, params)
-	if(!..())
+	if(reagents.total_volume > 0)
 
-		if(reagents.total_volume > 0)
+		if(target.reagents?.total_volume >= target.reagents.maximum_volume)
+			to_chat(user, "<span class='warning'>[target] is full.</span>")
+			return
 
-			if(target.reagents?.total_volume >= target.reagents.maximum_volume)
-				to_chat(user, "<span class='warning'>[target] is full.</span>")
+		if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/clothing/mask/cigarette)) //You can inject humans and food but you cant remove the shit.
+			to_chat(user, "<span class='warning'>You cannot directly fill this object.</span>")
+			return
+
+		var/trans = 0
+
+		if(ismob(target))
+
+			var/time = 20 //2/3rds the time of a syringe
+			user.visible_message("<span class='warning'><B>[user] is trying to squirt something into [target]'s eyes!</B></span>")
+
+			if(!do_mob(user, target, time))
 				return
 
-			if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food) && !istype(target, /obj/item/clothing/mask/cigarette)) //You can inject humans and food but you cant remove the shit.
-				to_chat(user, "<span class='warning'>You cannot directly fill this object.</span>")
-				return
+			if(istype(target , /mob/living/carbon/human))
+				var/mob/living/carbon/human/victim = target
 
-			var/trans = 0
+				var/obj/item/safe_thing = null
+				if( victim.wear_mask )
+					if ( victim.wear_mask.flags & MASKCOVERSEYES )
+						safe_thing = victim.wear_mask
+				if( victim.head )
+					if ( victim.head.flags & MASKCOVERSEYES )
+						safe_thing = victim.head
+				if(victim.glasses)
+					if ( !safe_thing )
+						safe_thing = victim.glasses
 
-			if(ismob(target))
+				if(safe_thing)
+					if(!safe_thing.reagents)
+						safe_thing.create_reagents(100)
+					trans = reagents.trans_to(safe_thing, amount_per_transfer_from_this)
 
-				var/time = 20 //2/3rds the time of a syringe
-				user.visible_message("<span class='warning'><B>[user] is trying to squirt something into [target]'s eyes!</B></span>")
+					user.visible_message("<span class='warning'><B>[user] tries to squirt something into [target]'s eyes, but fails!</B></span>")
+					spawn(5)
+						reagents.reaction(safe_thing, TOUCH)
 
-				if(!do_mob(user, target, time)) return
+					to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
+					update_icon()
+					return
 
-				if(istype(target , /mob/living/carbon/human))
-					var/mob/living/carbon/human/victim = target
+			user.visible_message("<span class='warning'><B>[user] squirts something into [target]'s eyes!</B></span>")
+			reagents.reaction(target, TOUCH)
 
-					var/obj/item/safe_thing = null
-					if( victim.wear_mask )
-						if ( victim.wear_mask.flags & MASKCOVERSEYES )
-							safe_thing = victim.wear_mask
-					if( victim.head )
-						if ( victim.head.flags & MASKCOVERSEYES )
-							safe_thing = victim.head
-					if(victim.glasses)
-						if ( !safe_thing )
-							safe_thing = victim.glasses
+			var/mob/living/M = target
 
-					if(safe_thing)
-						if(!safe_thing.reagents)
-							safe_thing.create_reagents(100)
-						trans = reagents.trans_to(safe_thing, amount_per_transfer_from_this)
+			var/list/injected = list()
+			for(var/datum/reagent/R in src.reagents.reagent_list)
+				injected += R.name
+			var/contained = get_english_list(injected)
+			M.log_combat(user, "squirted with [name], reagents: [contained]")
 
-						user.visible_message("<span class='warning'><B>[user] tries to squirt something into [target]'s eyes, but fails!</B></span>")
-						spawn(5)
-							reagents.reaction(safe_thing, TOUCH)
+		trans = reagents.trans_to(target, amount_per_transfer_from_this)
+		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
+		update_icon()
+	else
 
-						to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
-						update_icon()
-						return
+		if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
+			to_chat(user, "<span class='warning'>You cannot directly remove reagents from [target].</span>")
+			return
 
-				user.visible_message("<span class='warning'><B>[user] squirts something into [target]'s eyes!</B></span>")
-				reagents.reaction(target, TOUCH)
+		if(!target.reagents.total_volume)
+			to_chat(user, "<span class='warning'>[target] is empty.</span>")
+			return
 
-				var/mob/living/M = target
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 
-				var/list/injected = list()
-				for(var/datum/reagent/R in src.reagents.reagent_list)
-					injected += R.name
-				var/contained = get_english_list(injected)
-				M.log_combat(user, "squirted with [name], reagents: [contained]")
-
-			trans = reagents.trans_to(target, amount_per_transfer_from_this)
-			to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
-			update_icon()
-		else
-
-			if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
-				to_chat(user, "<span class='warning'>You cannot directly remove reagents from [target].</span>")
-				return
-
-			if(!target.reagents.total_volume)
-				to_chat(user, "<span class='warning'>[target] is empty.</span>")
-				return
-
-			var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
-
-			to_chat(user, "<span class='notice'>You fill the dropper with [trans] units of the solution.</span>")
-			update_icon()
+		to_chat(user, "<span class='notice'>You fill the dropper with [trans] units of the solution.</span>")
+		update_icon()
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Pipette

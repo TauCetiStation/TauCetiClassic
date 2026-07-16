@@ -68,8 +68,8 @@
 		return
 
 	var/mob/messagesource = M
-	if (can_operate(M, user))  //Checks if mob is lying down on table for surgery
-		if (do_surgery(M, user, src))
+	if(can_operate(M, user))  //Checks if mob is lying down on table for surgery
+		if(do_surgery(M, user, src))
 			return FALSE
 
 	if(stab_eyes && user.a_intent != INTENT_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))

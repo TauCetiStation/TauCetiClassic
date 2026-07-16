@@ -196,7 +196,7 @@
 				infected_organ = BP
 				break
 
-	if(QDELETED(infected_organ) || !infected_organ || !infected_organ.is_flesh() || infected_organ.is_stump() || !infected_organ.is_attached())
+	if(QDELETED(infected_organ) || !infected_organ || !infected_organ.is_flesh() || isstump(infected_organ) || !infected_organ.is_attached())
 		disease.dead = TRUE
 		UnregisterSignal(A, COMSIG_MOB_DIED)
 		to_chat(H, "<span class='notice'>You suddenly feel better.</span>")
@@ -402,7 +402,7 @@
 				var/mob/living/carbon/human/H = mob
 				var/bodypart = pick(list(BP_R_ARM , BP_L_ARM , BP_R_LEG , BP_L_LEG))
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
-				if (BP && (!BP.is_stump()))
+				if(BP && !isstump(BP))
 					mob.emote("scream")
 					BP.droplimb(no_explode = FALSE, clean = FALSE, disintegrate = DROPLIMB_BLUNT)
 			else

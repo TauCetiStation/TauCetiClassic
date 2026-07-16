@@ -207,7 +207,7 @@
 			var/list/organData = list()
 
 			organData["name"] = C_CASE(E, NOMINATIVE_CASE)
-			if(E.is_stump())
+			if(isstump(E))
 				organData["name"] = capitalize(parse_zone_ru(E.body_zone))
 
 			organData["open"] = E.open
@@ -217,7 +217,7 @@
 			organData["totalLoss"] = E.brute_dam + E.burn_dam
 			organData["maxHealth"] = E.max_damage
 			organData["broken"] = E.min_broken_damage
-			organData["stump"] = E.is_stump()
+			organData["stump"] = isstump(E)
 
 			var/list/embed_info = get_embedded_data(E)
 			organData["embedded"] = embed_info["items"]
@@ -448,7 +448,7 @@
 		if(!AN && !open && !infected && !imp)
 			AN = "Не обнаружено:"
 
-		if(!BP.is_stump())
+		if(!isstump(BP))
 			dat += "<td>[C_CASE(BP, NOMINATIVE_CASE)]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][rejecting]</td>"
 		else
 			dat += "<td>[capitalize(parse_zone_ru(BP.body_zone))]</td><td>-</td><td>-</td><td>Отсутствует</td>"

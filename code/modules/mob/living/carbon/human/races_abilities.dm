@@ -195,7 +195,7 @@
 	if(stat != CONSCIOUS)
 		return
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
-	if(!BP || BP.is_stump())
+	if(!BP || isstump(BP))
 		return
 
 	if(!BP.screen_toggle)
@@ -232,7 +232,7 @@
 	if(stat != CONSCIOUS)
 		return
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
-	if(!BP || BP.is_stump())
+	if(!BP || isstump(BP))
 		set_light(0)
 		return
 
@@ -258,7 +258,7 @@
 		return
 
 	var/obj/item/organ/external/head/robot/ipc/BP = bodyparts_by_name[BP_HEAD]
-	if(!BP || BP.is_stump())
+	if(!BP || isstump(BP))
 		return
 
 	if(BP.ipc_head != "Default")

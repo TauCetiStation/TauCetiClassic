@@ -71,7 +71,6 @@
 /datum/surgery_step/groin_organs
 	priority = 3
 
-
 	allowed_species = null // Allows surgery for all species, whereas previously it was only allowed for DIONA, IPC, VOX, and PODMAN
 
 /datum/surgery_step/groin_organs/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -189,7 +188,7 @@
 			IO.take_damage(dam_amt,0)
 
 /datum/surgery_step/groin_organs/fixing_robot //For artificial organs
-	allowed_tools = list(
+	allowed_qualities = list(
 	QUALITY_MENDING_IPC
 	)
 
@@ -350,7 +349,7 @@
 			IO.take_damage(dam_amt,0)
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot //For artificial organs
-	allowed_tools = list(
+	allowed_qualities = list(
 	QUALITY_MENDING_IPC
 	)
 	allowed_species = null
@@ -452,7 +451,7 @@
 	target.timeofdeath = 0
 
 /datum/surgery_step/ipc/ribcage/take_accumulator
-	allowed_tools = list(
+	allowed_qualities = list(
 	QUALITY_SCREWING
 	)
 
@@ -677,7 +676,7 @@
 /datum/surgery_step/organ_manipulation/treat_necrosis
 	priority = 0
 
-	allowed_tools = list(
+	allowed_qualities = list(
 		QUALITY_DROP_LIQUID
 	)
 
@@ -784,7 +783,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if(target_zone in list(O_EYES , O_MOUTH))
 		return FALSE
-	if(target_zone != BP_CHEST && BP.is_stump())
+	if(target_zone != BP_CHEST && isstump(BP))
 		return TRUE
 	return FALSE
 

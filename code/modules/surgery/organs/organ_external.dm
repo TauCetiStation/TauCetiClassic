@@ -44,7 +44,6 @@
 	var/sabotaged = 0                 // If a prosthetic limb is emagged, it will detonate when it fails.
 	var/list/embedded_objects = list()// Currently implanted objects. Includes embed objects, implants like mindshield, borers...
 	var/bandaged = FALSE              // Are there any visual bandages on this bodypart
-	var/stump_status = NO_STUMP       // Is it just a leftover of a destroyed bodypart
 	var/leaves_stump = TRUE           // Does this bodypart leaves a stump when destroyed
 	// PUMPED, yo
 	var/pumped = 0
@@ -303,7 +302,7 @@
 	RETURN_TYPE(/list)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(is_stump())
+	if(isstump(src))
 		return
 
 	// todo: it can rewrite things we don't want to rewrite
@@ -488,7 +487,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 // new damage icon system
 // returns just the brute/burn damage code
 /obj/item/organ/external/proc/damage_state_text()
-	if(is_stump())
+	if(isstump(src))
 		return "--"
 
 	var/tburn = 0
@@ -519,11 +518,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 /****************************************************
 			   DISMEMBERMENT
 ****************************************************/
-/obj/item/organ/external/proc/is_stump()
-	if(stump_status & IS_STUMP)
-		return TRUE
-	return FALSE
-
 //Handles dismemberment
 /obj/item/organ/external/proc/droplimb(no_explode = FALSE, clean = FALSE, disintegrate = DROPLIMB_EDGE)
 	if(cannot_amputate || !owner)
@@ -569,7 +563,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(BP.parent == src)
 			BP.droplimb(null, clean, disintegrate)
 
-	if(parent && !parent.is_stump() && disintegrate != DROPLIMB_BURN)
+	if(parent && !isstump(parent) && disintegrate != DROPLIMB_BURN)
 		if(clean)
 			if(prob(10))
 				parent.sever_artery()
@@ -1523,7 +1517,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return get_english_list(descriptors)
 
 	var/list/flavor_text = list()
-	if(is_stump())
+	if(isstump(src))
 		flavor_text += "a tear and hangs by a scrap of flesh" // TODO ZAKONCHIT'
 
 	var/list/wound_descriptors = list()

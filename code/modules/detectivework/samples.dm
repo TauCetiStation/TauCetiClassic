@@ -41,7 +41,7 @@
 	if(!target_zone)
 		return FALSE
 	var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
-	if(!BP || BP.is_stump())
+	if(!BP || isstump(BP))
 		to_chat(user, "<span class='warning'>They have no [BP.name]!</span>")
 		return FALSE
 	var/obj/item/clothing/C = get_target_sample_protection(H, BP.body_part)
@@ -62,7 +62,7 @@
 		to_chat(user, "<span class='warning'>They moved away!</span>")
 		inuse = FALSE
 		return FALSE
-	if(!BP || BP.is_stump())
+	if(!BP || isstump(BP))
 		to_chat(user, "<span class='warning'>They have no [BP.name]!</span>")
 		inuse = FALSE
 		return FALSE

@@ -11,8 +11,8 @@
 #define SLIME_CUT_ACTION          "cut through [slime]'s [slime.surgery_status == CUTTED ? "silky innards" : "flesh"] with \the [tool]"
 
 // Default cut|screw action
-#define SCREWING_ACTION            bodypart.is_stump() ? "reposition wires where [surgery_victim]'s [bodypart] used to be with \the [tool]" : "[bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s maintenance hatch with \the [tool]"
-#define CUT_ACTION                 bodypart.is_stump() ? "cut away flesh on [surgery_victim]'s [bodypart.name] used to be with \the [tool]." : "make a [bodypart.status & ORGAN_BLEEDING ? null : "bloodless "]incision on [surgery_victim]'s [bodypart.name] with \the [tool]"
+#define SCREWING_ACTION            isstump(bodypart) ? "reposition wires where [surgery_victim]'s [bodypart] used to be with \the [tool]" : "[bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s maintenance hatch with \the [tool]"
+#define CUT_ACTION                 isstump(bodypart) ? "cut away flesh on [surgery_victim]'s [bodypart.name] used to be with \the [tool]." : "make a [bodypart.status & ORGAN_BLEEDING ? null : "bloodless "]incision on [surgery_victim]'s [bodypart.name] with \the [tool]"
 #define SIMPLE_CUT_SCREW_ACTION    bodypart.controller.bodypart_type == BODYPART_ROBOTIC ? SCREWING_ACTION : CUT_ACTION
 
 // Eyes action

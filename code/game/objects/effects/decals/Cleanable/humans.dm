@@ -92,7 +92,7 @@ var/global/list/image/splatter_cache=list()
 			var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
 			var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
 
-			if((!l_foot || l_foot.is_stump()) && (!r_foot || r_foot.is_stump()))
+			if((!l_foot || isstump(l_foot)) && (!r_foot || isstump(r_foot)))
 				hasfeet = FALSE
 			else if(H.shoes) //Adding dirt to shoes
 				var/obj/item/clothing/shoes/S = H.shoes

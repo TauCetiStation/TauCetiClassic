@@ -182,7 +182,7 @@
 		var/mob/living/carbon/human/H = user
 		for(var/obj/item/organ/external/BP in H.bodyparts)
 			if(prob(drain * 1.5))
-				if((BP.is_stump()) || BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED | ORGAN_DEAD | ORGAN_ARTERY_CUT))
+				if(isstump(BP) || BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED | ORGAN_DEAD | ORGAN_ARTERY_CUT))
 					BP.rejuvenate()
 					to_chat(user, "<span class='[religion.style_text]'>Ты чувствуешь прилив сил в [BP].</span>")
 	if(isliving(user))

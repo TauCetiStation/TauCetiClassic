@@ -39,7 +39,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/attack(mob/M, mob/user, def_zone)
-	if(user.a_intent == INTENT_HARM) // Since we usually splash mobs or whatever, now we will also hit them.
+	if(user.a_intent == INTENT_HARM || can_operate(M, user)) // Since we usually splash mobs or whatever, now we will also hit them.
 		..()
 
 /obj/item/weapon/reagent_containers/proc/treat_organ(mob/living/carbon/human/target)

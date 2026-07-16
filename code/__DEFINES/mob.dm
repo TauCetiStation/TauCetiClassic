@@ -34,10 +34,6 @@
 #define IO_NORMAL_STATE (0<<2)
 #define IO_ORGAN_CUTTED (1<<2)
 
-// Stump status
-#define NO_STUMP       (0<<2)
-#define IS_STUMP       (1<<2)
-
 // Operation stages
 #define NO_STAGE    (0<<2)
 #define BP_GEL 	    (1<<2)

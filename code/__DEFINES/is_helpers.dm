@@ -216,9 +216,11 @@
 							 || ispulsing(I)\
 							 || iscoil(I))
 
+// SURGERY
 #define isalienembryo(A)    istype(A, /obj/item/alien_embryo)
 #define isborer(A)          istype(A, /mob/living/simple_animal/borer)
 #define isorgan(A)			istype(A, /obj/item/organ)
+#define isstump(P)          istype(P, /obj/item/organ/external/stump)
 
 // OBJECTS
 

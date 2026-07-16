@@ -337,8 +337,8 @@
 
 /mob/living/carbon/human/proc/find_damaged_bodypart()
 	for(var/obj/item/organ/external/BP in bodyparts) // find a broken/destroyed limb
-		if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED) || BP.is_stump())
-			if(BP.parent && (BP.parent.is_stump()))
+		if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED) || isstump(BP))
+			if(BP.parent && isstump(BP.parent))
 				continue
 			else
 				return BP
@@ -346,7 +346,7 @@
 
 /mob/living/carbon/human/proc/make_pumped()
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if((BP.is_stump()) || BP.parent && (BP.parent.is_stump()))
+		if((isstump(BP)) || BP.parent && isstump(BP.parent))
 			continue
 
 		if(!BP.max_pumped)
@@ -359,7 +359,7 @@
 		if(remove_blood_amount)
 			blood_remove(remove_blood_amount)
 		var/regenerating_capacity_penalty = 0 // Used as time till organ regeneration.
-		if(regenerating_bodypart.is_stump())
+		if(isstump(regenerating_bodypart))
 			regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty
 		else
 			regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty/2
@@ -602,7 +602,7 @@
 
 	if(istype(bodyparts_by_name[BP_HEAD], /obj/item/organ/external/head))
 		var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-		if(!BP || BP.disfigured || BP.is_stump())
+		if(!BP || BP.disfigured || isstump(BP))
 			return TRUE
 
 	return FALSE
@@ -1731,7 +1731,7 @@
 	var/mutable_appearance/MA = new()
 	MA.appearance_flags = KEEP_TOGETHER
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if((BP.is_stump()) || BP.is_robotic_part() || !BP.species.skeleton)
+		if((isstump(BP)) || BP.is_robotic_part() || !BP.species.skeleton)
 			continue
 		var/skeleton_state = BP.get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE) // there is no fat or pumped skeletons
 		MA.add_overlay(mutable_appearance(species.skeleton, skeleton_state))
@@ -1742,7 +1742,7 @@
 	var/mutable_appearance/MA = new()
 	MA.appearance_flags = KEEP_TOGETHER
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_stump())
+		if(isstump(BP))
 			continue
 		// or we can use BP.generate_appearances() right away, but it will generate hairs too
 		var/mutable_appearance/nude_appearance = mutable_appearance(BP.icon, BP.get_icon_state())
