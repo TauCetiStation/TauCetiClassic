@@ -896,7 +896,9 @@
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/organ_manipulation/place_eye
 	priority = 2
-	allowed_tools = list(/obj/item/organ/internal/eyes = 100)
+	allowed_tools = list(
+		/obj/item/organ/internal/eyes = 100
+		)
 
 	allowed_species = list("exclude", IPC, DIONA)
 

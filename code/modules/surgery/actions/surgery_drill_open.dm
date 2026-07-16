@@ -37,7 +37,7 @@
 	return 0
 
 /datum/surgery_step/drill_open/make_space
-	allowed_tools = list(
+	allowed_qualities = list(
 		QUALITY_DRILL_OPEN
 	)
 
