@@ -488,6 +488,8 @@ var/global/list/datum/preferences/preferences_datums = list()
 
 		if(status == "amputated" && BP)
 			qdel(BP)
+			var/obj/item/organ/external/stump/stump = new(null)
+			stump.insert_organ(character)
 		else if(status == "cyborg")
 			if(BP)
 				qdel(BP)

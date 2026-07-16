@@ -24,6 +24,9 @@
 	origin_tech = "materials=1;biotech=1"
 	usesound = 'sound/items/surgery/Retract.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
+	qualities = list(
+		QUALITY_RETRACT = 100
+	)
 /*
  * Hemostat
  */
@@ -41,6 +44,10 @@
 	attack_verb = list("attacked", "pinched")
 	usesound = 'sound/items/surgery/Hemostat.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
+	qualities = list(
+		QUALITY_CLAMP = 100,
+		QUALITY_SCREWING = 50
+	)
 /*
  * Cautery
  */
@@ -58,7 +65,9 @@
 	attack_verb = list("burnt")
 	usesound = 'sound/items/surgery/cautery.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
-
+	qualities = list(
+		QUALITY_CAUTER = 100
+	)
 /*
  * Surgical Drill
  */
@@ -78,6 +87,10 @@
 	attack_verb = list("drilled")
 	usesound = 'sound/items/surgery/SurgDrill.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
+	qualities = list(
+		QUALITY_DRILL_OPEN = 100,
+		QUALITY_ROCK_DRILL = 25
+	)
 
 /obj/item/weapon/surgicaldrill/suicide_act(mob/user)
 	to_chat(viewers(user), pick("<span class='warning'><b>[user] is pressing the [src.name] to \his temple and activating it! It looks like \he's trying to commit suicide.</b></span>", \
@@ -108,7 +121,8 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	qualities = list(
-		QUALITY_CUTTING = 1
+		QUALITY_CUTTING = 50,
+		QUALITY_SURG_CUTTING = 100
 	)
 
 /obj/item/weapon/scalpel/suicide_act(mob/user)
@@ -127,7 +141,10 @@
 	item_state_world = "scalpel_laser1_on_w"
 	damtype = BURN
 	usesound = 'sound/items/surgery/laserscalp.ogg'
-	toolspeed = 1.2
+	qualities = list(
+		QUALITY_CUTTING = 50,
+		QUALITY_SURG_CUTTING = 125
+	)
 
 /obj/item/weapon/scalpel/laser2
 	name = "laser scalpel"
@@ -137,6 +154,10 @@
 	damtype = BURN
 	force = 12.0
 	usesound = 'sound/items/surgery/laserscalp.ogg'
+	qualities = list(
+		QUALITY_CUTTING = 50,
+		QUALITY_SURG_CUTTING = 150
+	)
 
 /obj/item/weapon/scalpel/laser3
 	name = "laser scalpel"
@@ -146,7 +167,10 @@
 	damtype = BURN
 	force = 15.0
 	usesound = 'sound/items/surgery/laserscalp.ogg'
-	toolspeed = 0.6
+	qualities = list(
+		QUALITY_CUTTING = 50,
+		QUALITY_SURG_CUTTING = 175
+	)
 
 /obj/item/weapon/scalpel/manager
 	name = "incision management system"
@@ -154,8 +178,13 @@
 	icon_state = "scalpel_manager_on"
 	item_state_world = "scalpel_manager_on_w"
 	force = 7.5
-	toolspeed = 0.6
-	qualities = null
+	damtype = BURN
+	qualities = list(
+		QUALITY_CUTTING = 50,
+		QUALITY_SURG_CUTTING = 175,
+		QUALITY_CLAMP   = 175,
+		QUALITY_RETRACT = 175
+	)
 /*
  * Circular Saw
  */
@@ -180,7 +209,10 @@
 	edge = 1
 	usesound = 'sound/items/surgery/Bone_Saw.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
-
+	qualities = list(
+		QUALITY_SAW_OPEN = 100,
+		QUALITY_CUTTING = 25
+	)
 
 //misc, formerly from code/defines/weapons.dm
 /obj/item/weapon/bonegel
@@ -193,6 +225,10 @@
 	throwforce = 1.0
 	usesound = 'sound/items/surgery/Bone_Gel.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
+	qualities = list(
+		QUALITY_MENDING_BONE = 100,
+		QUALITY_MENDING_IPC = 75
+	)
 
 /obj/item/weapon/FixOVein
 	name = "FixOVein"
@@ -206,6 +242,9 @@
 	var/usage_amount = 10
 	usesound = 'sound/items/surgery/Fix-O-vein.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
+	qualities = list(
+		QUALITY_FIX_VEIN = 100
+	)
 
 /obj/item/weapon/bonesetter
 	name = "bone setter"
@@ -220,5 +259,7 @@
 	attack_verb = list("attacked", "hit", "bludgeoned")
 	usesound = 'sound/items/surgery/BonSet.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
-
-
+	qualities = list(
+		QUALITY_BONE_SET = 100,
+		QUALITY_WRENCHING = 75
+	)

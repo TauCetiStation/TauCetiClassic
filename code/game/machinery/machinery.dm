@@ -535,7 +535,7 @@ Class Procs:
 	return 0
 
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/I, time = SKILL_TASK_VERY_EASY)
-	if(iswrenching(I) &&  !(flags & NODECONSTRUCT))
+	if(iswrenching(I) && !(flags & NODECONSTRUCT))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
 		if(I.use_tool(src, user, time, volume = 50, quality = QUALITY_WRENCHING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))

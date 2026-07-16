@@ -203,7 +203,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(bodypart_index)
 		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_index]
-		if(BP && !BP.is_stump)
+		if(BP && !isstump(BP))
 			bodypart_overlays_standing[bodypart_index] = BP.generate_appearances(update_preferences)
 		else
 			bodypart_overlays_standing -= bodypart_index
@@ -211,7 +211,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		bodypart_overlays_standing = list()
 
 		for(var/obj/item/organ/external/BP in bodyparts)
-			if(BP.is_stump)
+			if(isstump(BP))
 				continue
 			bodypart_overlays_standing[BP.body_zone] = BP.generate_appearances(update_preferences)
 
@@ -300,7 +300,7 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(socks && species.flags[HAS_UNDERWEAR])
 		var/obj/item/organ/external/r_foot = bodyparts_by_name[BP_R_LEG]
 		var/obj/item/organ/external/l_foot = bodyparts_by_name[BP_L_LEG]
-		if(r_foot && !r_foot.is_stump && l_foot && !l_foot.is_stump && \
+		if(r_foot && !isstump(r_foot) && l_foot && !isstump(l_foot) && \
 			r_foot.species == l_foot.species && r_foot.owner_gender == l_foot.owner_gender)
 			var/foot_g = "m"
 			if(gender == FEMALE && r_foot.species.gender_limb_icons)
@@ -839,7 +839,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/list/standing = list()
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.open)
-			standing += image("icon" = species.surgery_icobase, "icon_state" = "[BP.body_zone][round(BP.open)]", "layer" = -SURGERY_LAYER)
+			var/datum/bodypart_controller/BP_type = BP.controller
+			standing += image("icon" = BP_type.surgery_icobase, "icon_state" = "[BP.body_zone][round(BP.open)]", "layer" = -SURGERY_LAYER)
 
 	if(standing.len)
 		for(var/image/I in standing)

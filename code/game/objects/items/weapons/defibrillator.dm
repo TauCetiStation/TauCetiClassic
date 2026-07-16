@@ -305,7 +305,7 @@
 	if(!H.organs_by_name[O_BRAIN])
 		return FALSE
 	var/obj/item/organ/external/bodypart_head = H.bodyparts_by_name[BP_HEAD]
-	if(!bodypart_head || (bodypart_head.is_stump))
+	if(!bodypart_head || (isstump(bodypart_head)))
 		return FALSE
 	return TRUE
 

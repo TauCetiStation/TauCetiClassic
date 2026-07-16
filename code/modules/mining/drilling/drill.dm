@@ -389,7 +389,7 @@
 	H.apply_damage(damage_to_user, BRUTE, BP, H.run_armor_check(BP, MELEE)/2, 1)
 	to_chat(H, "<span class='danger'>You feel, that [src] try to cut your [BP]!</span>")
 
-	if(BP.is_stump)
+	if(isstump(BP))
 		return
 
 	BP = BP.parent

@@ -204,8 +204,6 @@
 
 	var/prothesis_icobase = 'icons/mob/human/robotic.dmi'
 
-	var/surgery_icobase = 'icons/mob/surgery.dmi'
-
 /datum/species/New()
 	unarmed = new unarmed_type()
 
@@ -754,7 +752,6 @@
 	language = LANGUAGE_VOXPIDGIN
 	additional_languages = list(LANGUAGE_TRADEBAND = LANGUAGE_CAN_SPEAK)
 	gender_body_icons = FALSE
-	surgery_icobase = 'icons/mob/species/vox/surgery.dmi'
 
 	species_common_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
@@ -794,7 +791,15 @@
 		O_LIVER   = /obj/item/organ/internal/liver/vox,
 		O_KIDNEYS = /obj/item/organ/internal/kidneys/vox
 		)
-
+	has_bodypart = list(
+		BP_CHEST  = /obj/item/organ/external/chest/vox,
+		BP_GROIN  = /obj/item/organ/external/groin/vox,
+		BP_HEAD   = /obj/item/organ/external/head/vox,
+		BP_L_ARM  = /obj/item/organ/external/l_arm/vox,
+		BP_R_ARM  = /obj/item/organ/external/r_arm/vox,
+		BP_L_LEG  = /obj/item/organ/external/l_leg/vox,
+		BP_R_LEG  = /obj/item/organ/external/r_leg/vox
+		)
 	blood_datum_path = /datum/dirt_cover/blue_blood
 	flesh_color = "#808d11"
 
@@ -1209,7 +1214,6 @@
 	dietflags = 0		//IPCs can't eat, so no diet
 	pluvian_social_credit = 0 // have no soul
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
-	surgery_icobase = 'icons/mob/species/ipc/surgery.dmi'
 	eyes_colorable_layer = null
 
 	warning_low_pressure = 50
@@ -1906,7 +1910,7 @@
 	var/mob/living/carbon/human/H = G.affecting
 	var/hit_zone = assailant.get_targetzone()
 	var/obj/item/organ/external/L = H.get_bodypart(hit_zone)
-	if(!L || (L.is_stump) || istype(L, /obj/item/organ/external/chest) || istype(L, /obj/item/organ/external/groin))
+	if(!L || (isstump(L)) || istype(L, /obj/item/organ/external/chest) || istype(L, /obj/item/organ/external/groin))
 		return FALSE
 	var/limb_time = rand(40,60)
 	if(istype(L, /obj/item/organ/external/head))
@@ -1919,7 +1923,7 @@
 		to_chat(assailant, "<span class='notice'>You stop ripping off the limb.</span>")
 		return FALSE
 
-	if(!L || (L.is_stump))
+	if(!L || isstump(L))
 		return FALSE
 
 	if(L.is_robotic_part())
@@ -1940,7 +1944,7 @@
 		to_chat(assailant, "<span class='notice'>You stop ripping off the limb.</span>")
 		return FALSE
 
-	if(!L || (L.is_stump))
+	if(!L || isstump(L))
 		return FALSE
 
 	assailant.visible_message("<span class='shadowling'>[assailant] rips [H]'s [L.name] away from \his body!</span>", \

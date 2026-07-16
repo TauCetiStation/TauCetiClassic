@@ -8,6 +8,10 @@
 	amount = 10
 	var/delay = 1 SECOND
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
+	qualities = list(
+		QUALITY_MENDING_IPC = 100,
+		QUALITY_MENDING_BONE = 75
+	)
 
 /obj/item/stack/nanopaste/attack(mob/living/M, mob/user, def_zone)
 	var/skill_delay = apply_skill_bonus(user, delay, required_skills, multiplier = -0.25)

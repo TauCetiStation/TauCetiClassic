@@ -42,9 +42,8 @@
 	var/list/children = list()        // Sub-limbs.
 	var/list/bodypart_organs = list() // Internal organs of this body part
 	var/sabotaged = 0                 // If a prosthetic limb is emagged, it will detonate when it fails.
-	var/list/embedded_objects = list() // Currently implanted objects. Includes embed objects, implants like mindshield, borers...
+	var/list/embedded_objects = list()// Currently implanted objects. Includes embed objects, implants like mindshield, borers...
 	var/bandaged = FALSE              // Are there any visual bandages on this bodypart
-	var/is_stump = FALSE              // Is it just a leftover of a destroyed bodypart
 	var/leaves_stump = TRUE           // Does this bodypart leaves a stump when destroyed
 	// PUMPED, yo
 	var/pumped = 0
@@ -53,14 +52,15 @@
 	var/max_pumped = 60
 
 	// Joint/state stuff.
-	var/cannot_amputate               // Impossible to amputate.
+	var/cannot_amputate = FALSE       // Impossible to amputate.
 	var/artery_name = "artery"        // Flavour text for cartoid artery, aorta, etc.
 	var/arterial_bleed_severity = 1   // Multiplier for bleeding in a limb.
 
 	// Surgery vars.
-	var/open = 0
-	var/stage = 0
-	var/cavity = 0
+	var/open = BP_DEFAULT_OS
+	var/max_open_state = BP_RETRACT_OS
+	var/stage = null                  // uses binary flags, allow in mob
+	var/cavity = FALSE
 	var/trauma_kit = FALSE
 	var/burn_kit = FALSE
 	var/atom/movable/applied_pressure
@@ -182,7 +182,7 @@
 
 	owner.bodyparts += src
 	owner.bodyparts_by_name[body_zone] = src
-
+	species = owner.species
 	if(!controller)
 		controller = new controller_type(src)
 
@@ -302,7 +302,7 @@
 	RETURN_TYPE(/list)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(is_stump)
+	if(isstump(src))
 		return
 
 	// todo: it can rewrite things we don't want to rewrite
@@ -487,7 +487,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 // new damage icon system
 // returns just the brute/burn damage code
 /obj/item/organ/external/proc/damage_state_text()
-	if(is_stump)
+	if(isstump(src))
 		return "--"
 
 	var/tburn = 0
@@ -518,7 +518,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 /****************************************************
 			   DISMEMBERMENT
 ****************************************************/
-
 //Handles dismemberment
 /obj/item/organ/external/proc/droplimb(no_explode = FALSE, clean = FALSE, disintegrate = DROPLIMB_EDGE)
 	if(cannot_amputate || !owner)
@@ -564,7 +563,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(BP.parent == src)
 			BP.droplimb(null, clean, disintegrate)
 
-	if(parent && !(parent.is_stump) && disintegrate != DROPLIMB_BURN)
+	if(parent && !isstump(parent) && disintegrate != DROPLIMB_BURN)
 		if(clean)
 			if(prob(10))
 				parent.sever_artery()
@@ -658,7 +657,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		IO.owner = null
 
 	owner.UpdateDamageIcon(src)
-	if(!clean && leaves_stump)
+	if(leaves_stump)
 		var/obj/item/organ/external/stump/S = new(null)
 		S.copy_original_limb(src)
 		S.insert_organ(owner, FALSE)
@@ -885,14 +884,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_TORSO_LAYER
 	regen_bodypart_penalty = 150
 
+	max_open_state = BP_RIBCAGE_OS
 	cannot_amputate = TRUE
 
 	max_damage = 75
 	min_broken_damage = 35
 	vital = TRUE
 	w_class = SIZE_BIG // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
-
-/obj/item/organ/external/chest
 
 /obj/item/organ/external/groin
 	name = "groin"
@@ -1040,6 +1038,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	limb_layer = LIMB_HEAD_LAYER
 	regen_bodypart_penalty = 100
 
+	max_open_state = BP_RIBCAGE_OS
+	var/ps_status = BP_DEFAULT_OS
 	max_damage = 75
 	min_broken_damage = 35
 	vital = TRUE
@@ -1493,7 +1493,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		owner.visible_message("<span class='warning'>[owner]'s face melts away, turning into mangled mess!</span>",	\
 		"<span class='warning'><b>Your face melts off!</b></span>",	\
 		"<span class='warning'>You hear a sickening sizzle.</span>")
-	disfigured = 1
+	disfigured = TRUE
 
 
 /obj/item/organ/external/proc/get_wounds_desc()
@@ -1517,7 +1517,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return get_english_list(descriptors)
 
 	var/list/flavor_text = list()
-	if(is_stump)
+	if(isstump(src))
 		flavor_text += "a tear and hangs by a scrap of flesh" // TODO ZAKONCHIT'
 
 	var/list/wound_descriptors = list()
@@ -1568,6 +1568,21 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(!bodyparts_by_name[BP])
 			missing += BP
 	return missing
+
+/obj/item/organ/external/chest/vox
+	controller_type = /datum/bodypart_controller/vox
+/obj/item/organ/external/groin/vox
+	controller_type = /datum/bodypart_controller/vox
+/obj/item/organ/external/head/vox
+	controller_type = /datum/bodypart_controller/vox
+/obj/item/organ/external/l_arm/vox
+	controller_type = /datum/bodypart_controller/vox
+/obj/item/organ/external/l_leg/vox
+	controller_type = /datum/bodypart_controller/vox
+/obj/item/organ/external/r_arm/vox
+	controller_type = /datum/bodypart_controller/vox
+/obj/item/organ/external/r_leg/vox
+	controller_type = /datum/bodypart_controller/vox
 
 // lol yes
 /obj/item/organ/external/chest/homunculus

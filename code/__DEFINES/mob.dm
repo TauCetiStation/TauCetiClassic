@@ -1,13 +1,13 @@
 ///////////////////ORGAN STATUS DEFINES///////////////////
-#define ORGAN_CUT_AWAY   1
-#define ORGAN_ATTACHABLE 2
-#define ORGAN_BLEEDING   4
-#define ORGAN_BROKEN     8
-#define ORGAN_SPLINTED   16
-#define ORGAN_ROBOT      32
-#define ORGAN_DEAD       64
-#define ORGAN_MUTATED    128
-#define ORGAN_ARTERY_CUT 256
+#define ORGAN_CUT_AWAY   (0<<2)
+#define ORGAN_ATTACHABLE (1<<2)
+#define ORGAN_BLEEDING   (2<<2)
+#define ORGAN_BROKEN     (3<<2)
+#define ORGAN_SPLINTED   (4<<2)
+#define ORGAN_ROBOT      (5<<2)
+#define ORGAN_DEAD       (6<<2)
+#define ORGAN_MUTATED    (7<<2)
+#define ORGAN_ARTERY_CUT (8<<2)
 
 #define DROPLIMB_EDGE  0
 #define DROPLIMB_BLUNT 1
@@ -21,6 +21,29 @@
 #define BODYPART_ORGANIC   1
 #define BODYPART_ROBOTIC   2
 #define BODYPART_SKELETON  3
+
+#define BP_DEFAULT_OS            0
+
+// External organic organs and plastick surgery
+#define BP_SCALPEL_OS      1
+#define BP_RETRACT_OS      2
+#define BP_INTERNALS_OS    3
+#define BP_RIBCAGE_OS      4
+
+// Internal organs
+#define IO_NORMAL_STATE (0<<2)
+#define IO_ORGAN_CUTTED (1<<2)
+
+// Operation stages
+#define NO_STAGE    (0<<2)
+#define BP_GEL 	    (1<<2)
+#define BP_SET 	    (2<<2)
+#define BP_VEIN     (3<<2)
+
+// Slime
+#define NORMAL      0
+#define CUTTED      1
+#define PREPARED    2
 
 // Bodypart defines
 #define BP_CHEST  "chest"

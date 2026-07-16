@@ -258,7 +258,7 @@
 		if(ishuman(affecting))
 			var/mob/living/carbon/human/H = affecting
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-			if(!BP || BP.is_stump)
+			if(!BP || isstump(BP))
 				qdel(src)
 				return PROCESS_KILL
 			BP.add_autopsy_data("Strangled", 0, BRUISE) //if 0, then unknow
@@ -382,7 +382,7 @@
 		if(ishuman(affecting))
 			var/mob/living/carbon/human/H = affecting
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-			if(!BP || BP.is_stump)
+			if(!BP || isstump(BP))
 				to_chat(assailant, "<span class='warning'>You can't take a headless man by the neck!</span>")
 				return
 		assailant.visible_message("<span class='warning'>[assailant] has reinforced \his grip on [affecting] (now neck)!</span>")
@@ -599,7 +599,7 @@
 	var/foundorganwound = FALSE
 	var/foundorgangerm = FALSE
 
-	if(!BP || (BP.is_stump))
+	if(!BP || isstump(BP))
 		to_chat(user, "<span class='notice'>[H] is missing that bodypart.</span>")
 		return
 

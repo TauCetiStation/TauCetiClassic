@@ -264,7 +264,7 @@
 			continue
 		O.emplode(severity)
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_stump)
+		if(isstump(BP))
 			continue
 		BP.emplode(severity)
 		for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
@@ -279,7 +279,7 @@
 		return FALSE
 
 	var/obj/item/organ/external/BP = get_bodypart(def_zone)
-	if(!BP || BP.is_stump)
+	if(!BP || isstump(BP))
 		to_chat(user, "What [parse_zone(def_zone)]?")
 		return FALSE
 	var/hit_area = BP.name
@@ -442,7 +442,7 @@
 	if(target_zone)
 		BP = get_bodypart(target_zone)
 
-	if(!BP || (BP.is_stump))
+	if(!BP || isstump(BP))
 		return NOLIMB
 
 	var/list/items = get_equipped_items() - list(l_hand, r_hand)
