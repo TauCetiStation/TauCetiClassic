@@ -46,7 +46,7 @@
 	var/mob/living/carbon/C = user
 	if(C.internal == src && src.loc != C)
 		close_internals(C)
-		if(user.wear_mask && user.wear_mask.flags & MASKINTERNALS)
+		if(user && user.wear_mask && user.wear_mask.flags & MASKINTERNALS)
 			var/obj/item/clothing/mask/breath/bmask = user.wear_mask
 			bmask.update_action_icons(user)
 	..()
