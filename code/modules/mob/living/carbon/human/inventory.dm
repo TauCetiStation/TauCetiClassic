@@ -156,10 +156,10 @@
 	else if (W == belt)
 		belt = null
 	else if (W == wear_mask)
-		wear_mask.update_action_icons(src)
+		if(isbreathmask(wear_mask))
+			var/obj/item/clothing/mask/breath/breath_mask = wear_mask
+			breath_mask.detach_tank(src)
 		wear_mask = null
-		if(internal)
-			internal = null
 		sec_hud_set_security_status()
 	else if (W == neck)
 		neck = null

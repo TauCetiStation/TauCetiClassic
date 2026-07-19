@@ -54,7 +54,7 @@
 
 /datum/action/item_action/hands_free/connect_tank/Deactivate()
 	var/obj/item/clothing/mask/breath/bmask = owner.wear_mask
-	if(bmask.adjustible)
+	if(bmask?.adjustible)
 		bmask.update_hanging()
 		bmask.update_inv_mob()
 
@@ -88,8 +88,7 @@
 
 	hanging = !hanging
 
-/obj/item/clothing/mask/breath/dropped(mob/user)
-	. = ..()
+/obj/item/clothing/mask/breath/proc/detach_tank(mob/user)
 	if(user.internal)
 		user.internal.close_internals(user)
 		update_action_icons(user)
@@ -100,7 +99,6 @@
 			CT.active = FALSE
 			CT.UpdateButtonIcon()
 	user.update_action_buttons()
-
 
 /obj/item/clothing/mask/breath/medical
 	desc = "A close-fitting sterile mask that can be connected to an air supply."

@@ -41,15 +41,17 @@
 	QDEL_NULL(air_contents)
 	return ..()
 
-
 /obj/item/weapon/tank/dropped(mob/user)
-	var/mob/living/carbon/C = user
-	if(C.internal == src && src.loc != C)
-		close_internals(C)
+	RegisterSignal(src, COMSIG_ITEM_DROPPED, CALLBACK(src, PROC_REF(detach_breath), user))
+	..()
+	UnregisterSignal(src, COMSIG_ITEM_DROPPED)
+
+/obj/item/weapon/tank/proc/detach_breath(mob/user)
+	if(user.internal == src && src.loc != user)
+		close_internals(user)
 		if(user && user.wear_mask && user.wear_mask.flags & MASKINTERNALS)
 			var/obj/item/clothing/mask/breath/bmask = user.wear_mask
 			bmask.update_action_icons(user)
-	..()
 
 /obj/item/weapon/tank/examine(mob/user)
 	..()
