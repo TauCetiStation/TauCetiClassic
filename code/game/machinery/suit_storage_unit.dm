@@ -540,7 +540,7 @@
 	name = "Test Storage Unit"
 	suit_type = /obj/item/clothing/suit/space
 	helmet_type = /obj/item/clothing/head/helmet/space
-	mask_type = /obj/item/clothing/mask/gas
+	mask_type = /obj/item/clothing/mask/breath/gas
 	tank_type = /obj/item/weapon/tank/oxygen
 	boot_type = /obj/item/clothing/shoes/magboots
 
@@ -551,7 +551,7 @@
 	name = "Suit Storega Unit"
 	suit_type = /obj/item/clothing/suit/space/syndicate
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate
-	mask_type = /obj/item/clothing/mask/gas/syndicate
+	mask_type = /obj/item/clothing/mask/breath/gas/syndicate
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 
 	req_access = list(access_syndicate)
@@ -574,48 +574,48 @@
 		switch(choose)
 			if(1)
 				suit_type = /obj/item/clothing/suit/space/rig/syndi
-				mask_type = /obj/item/clothing/mask/gas/syndicate
+				mask_type = /obj/item/clothing/mask/breath/gas/syndicate
 				tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 			if(2)
 				suit_type = /obj/item/clothing/suit/space/rig/wizard
-				mask_type = /obj/item/clothing/mask/gas/coloured
+				mask_type = /obj/item/clothing/mask/breath/gas/coloured
 				tank_type = /obj/item/weapon/tank/emergency_oxygen/double
 	return ..()
 
 /obj/machinery/suit_storage_unit/syndicate_unit/light
 	name = "Syndicate Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/syndi
-	mask_type = /obj/item/clothing/mask/gas/syndicate
+	mask_type = /obj/item/clothing/mask/breath/gas/syndicate
 
 /obj/machinery/suit_storage_unit/syndicate_unit/light/heavy
 	name = "Syndicate Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/heavy
-	mask_type = /obj/item/clothing/mask/gas/syndicate
+	mask_type = /obj/item/clothing/mask/breath/gas/syndicate
 
 /obj/machinery/suit_storage_unit/syndicate_unit/light/chem
 	name = "Hazmat Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/hazmat
-	mask_type = /obj/item/clothing/mask/gas/syndicate
+	mask_type = /obj/item/clothing/mask/breath/gas/syndicate
 
 /obj/machinery/suit_storage_unit/syndicate_unit/striker
 	name = "Syndicate Striker Suit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/syndicate/elite
 	helmet_type = /obj/item/clothing/suit/space/syndicate/elite
-	mask_type = /obj/item/clothing/mask/gas/syndicate
+	mask_type = /obj/item/clothing/mask/breath/gas/syndicate
 	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
 /obj/machinery/suit_storage_unit/syndicate_unit/elite
 	name = "Elite Syndicate Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/elite
 	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/elite
-	mask_type = /obj/item/clothing/mask/gas/syndicate
+	mask_type = /obj/item/clothing/mask/breath/gas/syndicate
 	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
 /obj/machinery/suit_storage_unit/syndicate_unit/elite/comander
 	name = "Comander Syndicate Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/syndi/elite/comander
 	helmet_type = /obj/item/clothing/head/helmet/space/rig/syndi/elite/comander
-	mask_type = /obj/item/clothing/mask/gas/syndicate
+	mask_type = /obj/item/clothing/mask/breath/gas/syndicate
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen/harness
 	boot_type = /obj/item/clothing/shoes/magboots/syndie
 
@@ -626,7 +626,7 @@
 	name = "Science Hardsuit Storage Unit"
 
 	suit_type = /obj/item/clothing/suit/space/rig/science
-	mask_type = /obj/item/clothing/mask/gas/coloured
+	mask_type = /obj/item/clothing/mask/breath/gas/coloured
 	tank_type = /obj/item/weapon/tank/jetpack/carbondioxide
 
 	req_access = list(access_research)
@@ -636,7 +636,7 @@
 /obj/machinery/suit_storage_unit/science/rd
 	name = "Research Director Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/science/rd
-	mask_type = /obj/item/clothing/mask/gas/coloured
+	mask_type = /obj/item/clothing/mask/breath/gas/coloured
 
 	req_access = list(access_rd)
 	icon_state = "RD"
@@ -646,7 +646,7 @@
 /obj/machinery/suit_storage_unit/engine
 	name = "Engineer Hardsuit Storage Unit"
 	suit_type  = /obj/item/clothing/suit/space/rig/engineering
-	mask_type = /obj/item/clothing/mask/gas/coloured
+	mask_type = /obj/item/clothing/mask/breath/gas/coloured
 
 	req_access = list(access_engine)
 	icon_state = "engineer"
@@ -656,7 +656,7 @@
 	name = "Atmospheric Hardsuit Storage Unit"
 	req_access = list(access_atmospherics)
 	suit_type = /obj/item/clothing/suit/space/rig/atmos
-	mask_type = /obj/item/clothing/mask/gas/coloured
+	mask_type = /obj/item/clothing/mask/breath/gas/coloured
 
 	icon_state = "atmos"
 	icon = 'icons/obj/suit_storage/atmos.dmi'
@@ -665,7 +665,7 @@
 	name = "Chief Engineer Hardsuit Storage Unit"
 	req_access = list(access_ce)
 	suit_type = /obj/item/clothing/suit/space/rig/engineering/chief
-	mask_type = /obj/item/clothing/mask/gas/coloured
+	mask_type = /obj/item/clothing/mask/breath/gas/coloured
 
 	icon_state = "CE"
 	icon = 'icons/obj/suit_storage/chief.dmi'
@@ -675,7 +675,7 @@
 	name = "Security Officer Hardsuit Storage Unit"
 	req_access = list(access_security)
 	suit_type = /obj/item/clothing/suit/space/rig/security
-	mask_type = /obj/item/clothing/mask/gas/sechailer
+	mask_type = /obj/item/clothing/mask/breath/gas/sechailer
 
 	icon_state = "security"
 	icon = 'icons/obj/suit_storage/security.dmi'
@@ -684,7 +684,7 @@
 	name = "Head of Security Hardsuit Storage Unit"
 	req_access = list(access_hos)
 	suit_type = /obj/item/clothing/suit/space/rig/security/hos
-	mask_type = /obj/item/clothing/mask/gas/sechailer
+	mask_type = /obj/item/clothing/mask/breath/gas/sechailer
 	icon_state = "HOS"
 	icon = 'icons/obj/suit_storage/hos.dmi'
 
@@ -693,7 +693,7 @@
 	name = "Medical Hardsuit Storage Unit"
 	req_access = list(access_medbay_storage)
 	suit_type = /obj/item/clothing/suit/space/rig/medical
-	mask_type = /obj/item/clothing/mask/gas/coloured
+	mask_type = /obj/item/clothing/mask/breath/gas/coloured
 
 	icon_state = "med"
 	icon = 'icons/obj/suit_storage/medical.dmi'
@@ -702,13 +702,13 @@
 	name = "Paremedic Hardsuit Storage Unit"
 	req_access = list(access_paramedic)
 	suit_type = /obj/item/clothing/suit/space/rig/medical
-	mask_type = /obj/item/clothing/mask/gas/coloured
+	mask_type = /obj/item/clothing/mask/breath/gas/coloured
 
 /obj/machinery/suit_storage_unit/medical/cmo
 	name = "Chief Medical Officer Hardsuit Storage Unit"
 	req_access = list(access_cmo)
 	suit_type = /obj/item/clothing/suit/space/rig/medical/cmo
-	mask_type = /obj/item/clothing/mask/gas/coloured
+	mask_type = /obj/item/clothing/mask/breath/gas/coloured
 
 	icon_state = "CMO"
 	icon = 'icons/obj/suit_storage/cmo.dmi'
@@ -744,7 +744,7 @@
 
 /obj/machinery/suit_storage_unit/globose/skrell
 	build_type =  SUIT_STORAGE_BUILD_NONE
-	mask_type = /obj/item/clothing/mask/gas/coloured
+	mask_type = /obj/item/clothing/mask/breath/gas/coloured
 	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/oxygen
 
@@ -762,7 +762,7 @@
 	name = "NT Unathi Suit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/unathi/rig_cheap
 	helmet_type = /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
-	mask_type = /obj/item/clothing/mask/gas/coloured
+	mask_type = /obj/item/clothing/mask/breath/gas/coloured
 	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/oxygen
 
@@ -781,7 +781,7 @@
 	name = "Captain Suit Storage Unit"
 	suit_type = /obj/item/clothing/suit/armor/captain
 	helmet_type = /obj/item/clothing/head/helmet/space/capspace
-	mask_type = /obj/item/clothing/mask/gas/coloured
+	mask_type = /obj/item/clothing/mask/breath/gas/coloured
 	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen
 
@@ -794,7 +794,7 @@
 
 	suit_type = /obj/item/clothing/suit/space/nasavoid
 	helmet_type = /obj/item/clothing/head/helmet/space/nasavoid
-	mask_type = /obj/item/clothing/mask/gas/coloured
+	mask_type = /obj/item/clothing/mask/breath/gas/coloured
 	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/jetpack/void
 
@@ -806,7 +806,7 @@
 	build_type =  SUIT_STORAGE_BUILD_NONE
 	name = "Strange Hardsuit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/rig/wizard
-	mask_type = /obj/item/clothing/mask/gas/coloured
+	mask_type = /obj/item/clothing/mask/breath/gas/coloured
 	tank_type = /obj/item/weapon/tank/emergency_oxygen/double
 	req_access = list(access_syndicate)
 
@@ -815,7 +815,7 @@
 
 /obj/machinery/suit_storage_unit/vox
 	build_type =  SUIT_STORAGE_BUILD_NONE
-	mask_type = /obj/item/clothing/mask/gas/vox
+	mask_type = /obj/item/clothing/mask/breath/gas/vox
 	boot_type = /obj/item/clothing/shoes/magboots/vox
 	tank_type = /obj/item/weapon/tank/nitrogen
 

@@ -53,7 +53,7 @@
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/gloves/swat(src)
 		new /obj/item/clothing/head/helmet/swat(src)
-		new /obj/item/clothing/mask/gas/coloured(src)
+		new /obj/item/clothing/mask/breath/gas/coloured(src)
 		new /obj/item/clothing/shoes/boots/swat(src)
 		new /obj/item/clothing/suit/armor/swat(src)
 		new /obj/item/clothing/under/syndicate/tacticool(src)

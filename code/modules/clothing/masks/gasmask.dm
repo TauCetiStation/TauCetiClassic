@@ -1,4 +1,4 @@
-/obj/item/clothing/mask/gas
+/obj/item/clothing/mask/breath/gas
 	name = "gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. Filters harmful gases from the air."
 	icon = 'icons/obj/clothing/masks.dmi'
@@ -13,10 +13,11 @@
 	siemens_coefficient = 0.9
 	var/gas_filter_strength = 1			//For gas mask filters
 	var/filter = list("phoron", "sleeping_agent", "fractol")
+	adjustible = FALSE
 
 // **** Welding gas mask ****
 
-/obj/item/clothing/mask/gas/welding
+/obj/item/clothing/mask/breath/gas/welding
 	name = "welding mask"
 	desc = "A gas mask with built-in welding goggles and a face shield. Looks like a skull - clearly designed by a nerd."
 	icon_state = "weldingmask"
@@ -30,15 +31,15 @@
 	flash_protection = FLASHES_FULL_PROTECTION
 	flash_protection_slots = list(SLOT_WEAR_MASK)
 	var/up = 0
-	item_action_types = list(/datum/action/item_action/hands_free/toggle_welding_mask)
+	item_action_types = list(/datum/action/item_action/hands_free/connect_tank, /datum/action/item_action/hands_free/toggle_welding_mask)
 
 /datum/action/item_action/hands_free/toggle_welding_mask
 	name = "Toggle Welding Mask"
 
-/obj/item/clothing/mask/gas/welding/attack_self()
+/obj/item/clothing/mask/breath/gas/welding/attack_self()
 	toggle()
 
-/obj/item/clothing/mask/gas/welding/verb/toggle()
+/obj/item/clothing/mask/breath/gas/welding/verb/toggle()
 	set category = "Object"
 	set name = "Adjust welding mask"
 	set src in usr
@@ -67,7 +68,7 @@
 // ********************************************************************
 
 // **** Security gas mask (TG-stuff) ****
-/obj/item/clothing/mask/gas/sechailer
+/obj/item/clothing/mask/breath/gas/sechailer
 	name = "security gas mask"
 	desc = "Стандартный противогаз охраны с модификацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока офицер забивает преступника насмерть."
 	icon_state = "secmask"
@@ -76,8 +77,6 @@
 	var/last_phrase_text = ""
 	var/shitcurity_mode = FALSE
 	flags = MASKCOVERSMOUTH | MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
-	item_action_types = list(/datum/action/item_action/hands_free/toggle_mask)
-
 
 	var/static/list/phrases_lawful = list(
 		"Не двигаться!" = 'sound/voice/complionator/lawful_ne_dvigatsya.ogg',
@@ -98,10 +97,7 @@
 		"Я - закон. Ты - убогое ничтожество." = 'sound/voice/complionator/ya_zakon_ty.ogg',
 		"Живым или мертвым - ты пиздуешь со мной." = 'sound/voice/complionator/zhivym_ili_mertvym.ogg')
 
-/datum/action/item_action/hands_free/toggle_mask
-	name = "Toggle Mask"
-
-/obj/item/clothing/mask/gas/sechailer/attackby(obj/item/I, mob/user, params)
+/obj/item/clothing/mask/breath/gas/sechailer/attackby(obj/item/I, mob/user, params)
 	if(isscrewing(I))
 		var/obj/item/weapon/screwdriver/S = I
 		if(S.use_tool(src, user, SKILL_TASK_TRIVIAL, volume = 40, quality = QUALITY_SCREWING))
@@ -110,10 +106,10 @@
 	else
 		return ..()
 
-/obj/item/clothing/mask/gas/sechailer/attack_self()
+/obj/item/clothing/mask/breath/gas/sechailer/attack_self()
 	halt()
 
-/obj/item/clothing/mask/gas/sechailer/verb/halt()
+/obj/item/clothing/mask/breath/gas/sechailer/verb/halt()
 	set category = "Object"
 	set name = "HALT"
 	set src in usr
@@ -142,7 +138,7 @@
 		playsound(src, phrase_sound, VOL_EFFECTS_MASTER, 100, FALSE, falloff = 5)
 		usr.visible_message("[usr] compli-o-nator, <font color='red' size='4'><b>\"[phrase_text]\"</b></font>")
 
-/obj/item/clothing/mask/gas/sechailer/police
+/obj/item/clothing/mask/breath/gas/sechailer/police
 	name = "police respirator"
 	desc = "Стандартный распиратор полиции с модификацией Compli-o-nator 3000. Применяется для убеждения не двигаться, пока полицейский забивает преступника насмерть."
 	icon_state = "police_mask"
@@ -150,7 +146,7 @@
 	flags = MASKCOVERSMOUTH | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
 //Plague Dr suit can be found in clothing/suits/bio.dm
-/obj/item/clothing/mask/gas/plaguedoctor
+/obj/item/clothing/mask/breath/gas/plaguedoctor
 	name = "plague doctor mask"
 	desc = "A modernised version of the classic design, this mask will not only filter out phoron but it can also be connected to an air supply."
 	icon_state = "plaguedoctor"
@@ -158,7 +154,7 @@
 	armor = list(melee = 0, bullet = 0, laser = 2,energy = 2, bomb = 0, bio = 75, rad = 0)
 	body_parts_covered = HEAD|FACE
 
-/obj/item/clothing/mask/gas/swat
+/obj/item/clothing/mask/breath/gas/swat
 	name = "SWAT mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "swat"
@@ -166,14 +162,14 @@
 	siemens_coefficient = 0.7
 	body_parts_covered = FACE|EYES
 
-/obj/item/clothing/mask/gas/syndicate
+/obj/item/clothing/mask/breath/gas/syndicate
 	name = "syndicate mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
 	icon_state = "mask_syndi"
 	item_state = "mask_syndi"
 	siemens_coefficient = 0.7
 
-/obj/item/clothing/mask/gas/voice
+/obj/item/clothing/mask/breath/gas/voice
 	name = "gas mask"
 	icon_state = "gas_mask_orange"
 	//desc = "A face-covering mask that can be connected to an air supply. It seems to house some odd electronics."
@@ -182,7 +178,7 @@
 	var/vchange = 0//This didn't do anything before. It now checks if the mask has special functions/N
 	origin_tech = "syndicate=4"
 
-/obj/item/clothing/mask/gas/voice/space_ninja
+/obj/item/clothing/mask/breath/gas/voice/space_ninja
 	name = "ninja mask"
 	desc = "A close-fitting mask that acts both as an air filter and a post-modern fashion statement."
 	icon_state = "s-ninja"
@@ -191,74 +187,74 @@
 	siemens_coefficient = 0.2
 	var/hud = FALSE
 
-/obj/item/clothing/mask/gas/clown_hat
+/obj/item/clothing/mask/breath/gas/clown_hat
 	name = "clown wig and mask"
 	desc = "A true prankster's facial attire. A clown is incomplete without his wig and mask."
 	icon_state = "clown"
 	item_state = "clown_hat"
 	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
-/obj/item/clothing/mask/gas/sexyclown
+/obj/item/clothing/mask/breath/gas/sexyclown
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
 	icon_state = "sexyclown"
 	item_state = "sexyclown"
 	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
-/obj/item/clothing/mask/gas/mime
+/obj/item/clothing/mask/breath/gas/mime
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
 	icon_state = "mime"
 	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
-/obj/item/clothing/mask/gas/fawkes //--getup1
+/obj/item/clothing/mask/breath/gas/fawkes //--getup1
 	name = "strange mask"
 	desc = "Remember, remember, the fifth of November"
 	icon_state = "fawkes"
 
-/obj/item/clothing/mask/gas/monkeymask
+/obj/item/clothing/mask/breath/gas/monkeymask
 	name = "monkey mask"
 	desc = "A mask used when acting as a monkey."
 	icon_state = "monkeymask"
 	item_state = "monkeymask"
 	body_parts_covered = HEAD|FACE|EYES
 
-/obj/item/clothing/mask/gas/sexymime
+/obj/item/clothing/mask/breath/gas/sexymime
 	name = "sexy mime mask"
 	desc = "A traditional female mime's mask."
 	icon_state = "sexymime"
 	flags = MASKCOVERSEYES | BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 
-/obj/item/clothing/mask/gas/death_commando
+/obj/item/clothing/mask/breath/gas/death_commando
 	name = "death commando mask"
 	icon_state = "death_commando_mask"
 	item_state = "death_commando_mask"
 	siemens_coefficient = 0.2
 
-/obj/item/clothing/mask/gas/cyborg
+/obj/item/clothing/mask/breath/gas/cyborg
 	name = "cyborg visor"
 	desc = "Beep boop."
 	icon_state = "death"
 
-/obj/item/clothing/mask/gas/owl_mask
+/obj/item/clothing/mask/breath/gas/owl_mask
 	name = "owl mask"
 	desc = "Twoooo!"
 	icon_state = "owl"
 
-/obj/item/clothing/mask/gas/coloured
+/obj/item/clothing/mask/breath/gas/coloured
 	icon_state = "gas_mask_orange"
 
-/obj/item/clothing/mask/gas/coloured/examine(mob/user)
+/obj/item/clothing/mask/breath/gas/coloured/examine(mob/user)
 	..()
 	if(src in user)
 		to_chat(user, "The small label on the back side tells: \"Designed by W&J Company\".")
 
-/obj/item/clothing/mask/gas/coloured/atom_init()
+/obj/item/clothing/mask/breath/gas/coloured/atom_init()
 	. = ..()
 	var/color = pick("orange", "blue")
 	icon_state = "gas_mask_[color]"
 
-/obj/item/clothing/mask/gas/vox
+/obj/item/clothing/mask/breath/gas/vox
 	name = "vox breath mask"
 	desc = "A weirdly-shaped breath mask."
 	icon_state = "voxmask"
@@ -271,7 +267,7 @@
 	filter = list("phoron", "sleeping_agent", "oxygen", "fractol")
 	species_restricted = list(VOX , VOX_ARMALIS)
 
-/obj/item/clothing/mask/gas/German
+/obj/item/clothing/mask/breath/gas/German
 	name = "German Gas Mask"
 	desc = "Soldier's black gas mask."
 	icon_state = "German_gasmask"

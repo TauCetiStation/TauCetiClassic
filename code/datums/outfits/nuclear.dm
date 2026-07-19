@@ -8,7 +8,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	shoes = /obj/item/clothing/shoes/boots/combat
 	glasses = /obj/item/clothing/glasses/night
-	mask = /obj/item/clothing/mask/gas/syndicate
+	mask = /obj/item/clothing/mask/breath/gas/syndicate
 	gloves = /obj/item/clothing/gloves/combat
 	l_ear = /obj/item/device/radio/headset/syndicate
 	l_pocket = /obj/item/weapon/storage/pouch/ammo
@@ -51,4 +51,4 @@
 /datum/outfit/nuclear/vox_equip()
 	backpack_contents += list(/obj/item/device/modkit/vox)
 	l_hand = /obj/item/weapon/tank/nitrogen
-	mask = /obj/item/clothing/mask/gas/vox
+	mask = /obj/item/clothing/mask/breath/gas/vox

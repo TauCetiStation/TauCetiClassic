@@ -156,6 +156,7 @@
 	else if (W == belt)
 		belt = null
 	else if (W == wear_mask)
+		wear_mask.update_action_icons(src)
 		wear_mask = null
 		if(internal)
 			internal = null

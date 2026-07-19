@@ -2396,8 +2396,8 @@
 /area/space)
 "nT" = (
 /obj/structure/rack,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "yellow"

@@ -13,7 +13,7 @@
 //	new /obj/item/weapon/cartridge/signal/science(src)
 	new /obj/item/device/radio/headset/headset_sci(src)
 	new /obj/item/weapon/tank/air(src)
-	new /obj/item/clothing/mask/gas/coloured(src)
+	new /obj/item/clothing/mask/breath/gas/coloured(src)
 
 /obj/structure/closet/secure_closet/RD
 	name = "Research Director's Locker"
@@ -36,7 +36,7 @@
 	new /obj/item/clothing/gloves/latex(src)
 	new /obj/item/device/radio/headset/heads/rd(src)
 	new /obj/item/weapon/tank/air(src)
-	new /obj/item/clothing/mask/gas/coloured(src)
+	new /obj/item/clothing/mask/breath/gas/coloured(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/device/remote_device/research_director(src)
 	new /obj/item/clothing/neck/airbag(src)

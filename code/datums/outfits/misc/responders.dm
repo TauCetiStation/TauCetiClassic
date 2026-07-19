@@ -4,7 +4,7 @@
 	glasses = /obj/item/clothing/glasses/night
 	shoes = /obj/item/clothing/shoes/boots/combat
 	belt = /obj/item/weapon/storage/belt/security/cops
-	mask = /obj/item/clothing/mask/gas/sechailer
+	mask = /obj/item/clothing/mask/breath/gas/sechailer
 	gloves = /obj/item/clothing/gloves/combat
 	id = /obj/item/weapon/card/id/centcom/ert
 	l_ear = /obj/item/device/radio/headset/ert
@@ -155,7 +155,7 @@
 	glasses = /obj/item/clothing/glasses/night
 	shoes = /obj/item/clothing/shoes/boots/combat
 	belt = /obj/item/weapon/storage/belt/military
-	mask = /obj/item/clothing/mask/gas/syndicate
+	mask = /obj/item/clothing/mask/breath/gas/syndicate
 	gloves = /obj/item/clothing/gloves/combat
 	id = /obj/item/weapon/card/id/syndicate/nuker
 	back = PREFERENCE_BACKPACK
@@ -195,7 +195,7 @@
 	suit = /obj/item/clothing/suit/armor/swat
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/helmet/space/deathsquad
-	mask = /obj/item/clothing/mask/gas/swat
+	mask = /obj/item/clothing/mask/breath/gas/swat
 	glasses = /obj/item/clothing/glasses/thermal
 	back = /obj/item/weapon/storage/backpack/security
 
@@ -279,7 +279,7 @@
 	suit = /obj/item/clothing/suit/space/globose/black/pirate
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/helmet/space/globose/black/pirate
-	mask = /obj/item/clothing/mask/gas/coloured
+	mask = /obj/item/clothing/mask/breath/gas/coloured
 	glasses = /obj/item/clothing/glasses/eyepatch
 	back = /obj/item/weapon/storage/backpack/santabag
 	suit_store = /obj/item/weapon/gun/projectile/automatic/a28/nonlethal
@@ -390,7 +390,7 @@
 	uniform = /obj/item/clothing/under/rank/security
 	suit = /obj/item/clothing/suit/storage/flak
 	head = /obj/item/clothing/head/helmet
-	mask = /obj/item/clothing/mask/gas/sechailer
+	mask = /obj/item/clothing/mask/breath/gas/sechailer
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
 	gloves = /obj/item/clothing/gloves/security
 	belt = /obj/item/weapon/storage/belt/security/ert
@@ -563,7 +563,7 @@
 /datum/outfit/responders/clown
 	name = "Responders: Clown"
 	uniform = /obj/item/clothing/under/rank/clown
-	mask = /obj/item/clothing/mask/gas/clown_hat
+	mask = /obj/item/clothing/mask/breath/gas/clown_hat
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	l_ear = /obj/item/device/radio/headset
 	back = /obj/item/weapon/storage/backpack/clown

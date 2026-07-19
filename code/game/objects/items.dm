@@ -18,7 +18,6 @@
 	pass_flags = PASSTABLE
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
-	var/datum/weakref/carryer_weakref = null
 
 	var/flags_pressure = 0
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, UPPER_TORSO, LOWER_TORSO, etc. flags. See setup.dm
@@ -306,7 +305,6 @@
 
 		if(!(. || isturf(loc)))
 			forceMove(get_turf(user))
-		carryer_weakref = WEAKREF(user)
 
 /obj/item/attack_hand(mob/user)
 	mob_pickup(user)

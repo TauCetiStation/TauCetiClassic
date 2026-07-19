@@ -5210,7 +5210,7 @@
 /obj/structure/sign/warning/biohazard{
 	pixel_x = -32
 	},
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
@@ -11192,7 +11192,7 @@
 /area/station/civilian/bar)
 "bzY" = (
 /obj/structure/closet/l3closet/virology,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/structure/disposalpipe/sortjunction{
 	dir = 4;
 	sortType = "Вирусология"
@@ -13930,7 +13930,7 @@
 /area/station/hallway/secondary/exit)
 "cco" = (
 /obj/structure/closet/l3closet/general,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/item/device/radio/intercom{
 	name = "Station Intercom (General)";
 	pixel_x = -28
@@ -14633,15 +14633,15 @@
 	pixel_x = 2;
 	pixel_y = 5
 	},
-/obj/item/clothing/mask/gas/coloured{
+/obj/item/clothing/mask/breath/gas/coloured{
 	pixel_x = 4;
 	pixel_y = -10
 	},
-/obj/item/clothing/mask/gas/coloured{
+/obj/item/clothing/mask/breath/gas/coloured{
 	pixel_x = 1;
 	pixel_y = -10
 	},
-/obj/item/clothing/mask/gas/coloured{
+/obj/item/clothing/mask/breath/gas/coloured{
 	pixel_x = -3;
 	pixel_y = -10
 	},
@@ -15256,7 +15256,7 @@
 /area/station/maintenance/science)
 "cpX" = (
 /obj/structure/table/woodentable,
-/obj/item/clothing/mask/gas/owl_mask,
+/obj/item/clothing/mask/breath/gas/owl_mask,
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/wood,
 /area/station/maintenance/bridge)
@@ -31512,7 +31512,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
@@ -46409,7 +46409,7 @@
 /area/station/maintenance/outerlabs)
 "ipb" = (
 /obj/structure/rack,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/gloves/black,
 /obj/item/weapon/crowbar,
@@ -58523,8 +58523,8 @@
 	},
 /obj/structure/closet/crate,
 /obj/item/weapon/wrench,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/incinerator)
@@ -70227,7 +70227,7 @@
 "naX" = (
 /obj/structure/rack,
 /obj/item/device/multitool,
-/obj/item/clothing/mask/gas/fawkes,
+/obj/item/clothing/mask/breath/gas/fawkes,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
@@ -71336,12 +71336,12 @@
 /area/station/maintenance/brigright)
 "nmI" = (
 /obj/structure/rack,
-/obj/item/clothing/mask/gas/coloured{
+/obj/item/clothing/mask/breath/gas/coloured{
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/clothing/mask/gas/coloured{
+/obj/item/clothing/mask/breath/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured{
 	pixel_x = 2;
 	pixel_y = 2
 	},
@@ -76762,12 +76762,12 @@
 /area/station/medical/surgeryobs)
 "oqF" = (
 /obj/structure/rack,
-/obj/item/clothing/mask/gas/coloured{
+/obj/item/clothing/mask/breath/gas/coloured{
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/clothing/mask/gas/coloured{
+/obj/item/clothing/mask/breath/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured{
 	pixel_x = 2;
 	pixel_y = 2
 	},
@@ -76791,7 +76791,7 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/structure/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -83018,7 +83018,7 @@
 "pFz" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/glasses/welding,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -83259,7 +83259,7 @@
 /area/station/civilian/garden)
 "pHQ" = (
 /obj/structure/closet/secure_closet/warden,
-/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/breath/gas/sechailer,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -94674,7 +94674,7 @@
 /area/station/bridge/hop_office)
 "rTw" = (
 /obj/structure/rack,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/weapon/reagent_containers/spray/extinguisher,
 /turf/simulated/floor/plating,
@@ -96798,36 +96798,36 @@
 "sqg" = (
 /obj/structure/table,
 /obj/item/weapon/wirerod,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "sqk" = (
 /obj/structure/rack,
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = 6
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = 6
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = 3
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = 3
 	},
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer,
+/obj/item/clothing/mask/breath/gas/sechailer,
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = -3
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = -3
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = -6
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = -6
 	},
 /obj/machinery/light/small,
@@ -97903,7 +97903,7 @@
 "szN" = (
 /obj/effect/decal/cleanable/cobweb2,
 /obj/structure/rack,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/item/clothing/glasses/sunglasses,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/orange{
@@ -98756,9 +98756,9 @@
 "sIq" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
@@ -104969,7 +104969,7 @@
 /area/station/maintenance/brigright)
 "tSd" = (
 /obj/structure/closet/emcloset,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
@@ -111318,7 +111318,7 @@
 /area/station/hallway/primary/bridgehall)
 "vbB" = (
 /obj/structure/rack,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/item/clothing/glasses/meson,
 /obj/item/clothing/gloves/black,
 /obj/item/weapon/crowbar,
@@ -114425,7 +114425,7 @@
 "vKc" = (
 /obj/structure/rack,
 /obj/item/weapon/reagent_containers/spray/extinguisher,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "vKd" = (
@@ -119785,7 +119785,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,
@@ -126425,8 +126425,8 @@
 /obj/item/clothing/suit/storage/hazardvest,
 /obj/item/weapon/tank/emergency_oxygen/engi,
 /obj/item/weapon/tank/emergency_oxygen/engi,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},

@@ -25,7 +25,7 @@
 						//If they have and we haven't scanned it with the PDA or gas analyzer then we might just breath whatever they put in it.
 
 	var/reaction_in_progress = FALSE
-	item_action_types = list(/datum/action/item_action/hands_free/toggle_internals)
+	item_action_types = list()
 
 /obj/item/weapon/tank/atom_init()
 	. = ..()
@@ -41,18 +41,14 @@
 	QDEL_NULL(air_contents)
 	return ..()
 
-/datum/action/item_action/hands_free/toggle_internals
-	name = "Toggle internals"
 
-/datum/action/item_action/hands_free/toggle_internals/Activate()
-	var/obj/item/weapon/tank/tank = target
-	tank.toggle_internals()
-
-/obj/item/weapon/tank/dropped()
-	var/mob/living/carbon/C = carryer_weakref?.resolve()
+/obj/item/weapon/tank/dropped(mob/user)
+	var/mob/living/carbon/C = user
 	if(C.internal == src && src.loc != C)
 		close_internals(C)
-		update_actions_icons(C)
+		if(user.wear_mask && user.wear_mask.flags & MASKINTERNALS)
+			var/obj/item/clothing/mask/breath/bmask = user.wear_mask
+			bmask.update_action_icons(user)
 	..()
 
 /obj/item/weapon/tank/examine(mob/user)
@@ -213,17 +209,6 @@
 		open_internals(C)
 
 	internal_switch = world.time + 16
-	update_actions_icons(C)
-
-/obj/item/weapon/tank/proc/update_actions_icons(mob/living/carbon/C, turn_off = FALSE)
-	for(var/datum/action/item_action/hands_free/toggle_internals/TI in C.actions)
-		if((TI.target == src) && (C.internal == src) && !turn_off)
-			TI.active = TRUE
-			TI.UpdateButtonIcon()
-		else
-			TI.active = FALSE
-			TI.UpdateButtonIcon()
-	C.update_action_buttons()
 
 /obj/item/weapon/tank/remove_air(amount)
 	return air_contents.remove(amount)

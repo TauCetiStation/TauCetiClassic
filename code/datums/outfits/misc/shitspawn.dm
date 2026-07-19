@@ -109,7 +109,7 @@
 	uniform = /obj/item/clothing/under/rank/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	gloves = /obj/item/clothing/gloves/black
-	mask = /obj/item/clothing/mask/gas/clown_hat
+	mask = /obj/item/clothing/mask/breath/gas/clown_hat
 	head = /obj/item/clothing/head/chaplain_hood
 	l_ear = /obj/item/device/radio/headset
 	glasses = /obj/item/clothing/glasses/thermal/monocle
@@ -188,7 +188,7 @@
 	suit = /obj/item/clothing/suit/armor/swat
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/helmet/space/deathsquad
-	mask = /obj/item/clothing/mask/gas/swat
+	mask = /obj/item/clothing/mask/breath/gas/swat
 	glasses = /obj/item/clothing/glasses/thermal
 	back = /obj/item/weapon/storage/backpack/security
 
@@ -261,7 +261,7 @@
 	implants = list(/obj/item/weapon/implant/dexplosive)
 	shoes = /obj/item/clothing/shoes/boots/combat
 	gloves = /obj/item/clothing/gloves/combat
-	mask = /obj/item/clothing/mask/gas/syndicate
+	mask = /obj/item/clothing/mask/breath/gas/syndicate
 	glasses = /obj/item/clothing/glasses/thermal
 	back = /obj/item/weapon/storage/backpack/security
 	l_pocket = /obj/item/weapon/melee/energy/sword

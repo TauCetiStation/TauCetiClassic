@@ -12,13 +12,13 @@
 	reagents.add_reagent(spawning_id, 0.3)
 
 // a talking gas mask!
-/obj/item/clothing/mask/gas/poltergeist
+/obj/item/clothing/mask/breath/gas/poltergeist
 	flags = HEAR_TALK
 	var/list/heard_talk = list()
 	var/last_twitch = 0
 	var/max_stored_messages = 100
 
-/obj/item/clothing/mask/gas/poltergeist/atom_init()
+/obj/item/clothing/mask/breath/gas/poltergeist/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -29,7 +29,7 @@ var/global/list/bad_messages = list("Never take me off, please!",
 		"I want to be only yours!",
 		"Help me!")
 
-/obj/item/clothing/mask/gas/poltergeist/process(mob/living/H)
+/obj/item/clothing/mask/breath/gas/poltergeist/process(mob/living/H)
 	if(heard_talk.len && isliving(src.loc) && prob(20))
 		var/mob/living/M = src.loc
 		if(M.stat == CONSCIOUS)
@@ -38,7 +38,7 @@ var/global/list/bad_messages = list("Never take me off, please!",
 		var/mob/living/M = src.loc
 		to_chat(M, "A strange voice goes through your head: <font color='red' size='[num2text(rand(1,3))]'><b>[pick(bad_messages)]</b></font>")
 
-/obj/item/clothing/mask/gas/poltergeist/hear_talk(mob/M, text)
+/obj/item/clothing/mask/breath/gas/poltergeist/hear_talk(mob/M, text)
 	..()
 	if(heard_talk.len > max_stored_messages)
 		heard_talk.Remove(pick(heard_talk))

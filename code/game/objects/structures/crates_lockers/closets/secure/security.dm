@@ -229,7 +229,7 @@
 	new /obj/item/clothing/suit/storage/flak(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/storage/belt/security(src)
-	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/clothing/mask/breath/gas/sechailer(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/device/flash(src)
