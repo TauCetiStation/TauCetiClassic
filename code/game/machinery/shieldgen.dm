@@ -67,9 +67,10 @@
 
 
 /obj/machinery/shieldgen/proc/shields_up()
-	if(active) return 0 //If it's already turned on, how did this get called?
+	if(active)
+		return FALSE //If it's already turned on, how did this get called?
 
-	src.active = 1
+	active = TRUE
 	update_icon()
 
 	for(var/turf/environment/target_tile in range(2, src))
@@ -78,9 +79,10 @@
 				deployed_shields += new /obj/machinery/shield(target_tile)
 
 /obj/machinery/shieldgen/proc/shields_down()
-	if(!active) return 0 //If it's already off, how did this get called?
+	if(!active)
+		return FALSE //If it's already off, how did this get called?
 
-	src.active = 0
+	active = FALSE
 	update_icon()
 
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
@@ -116,7 +118,7 @@
 		to_chat(user, "The panel must be closed before operating this machine.")
 		return 1
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if (src.active)
+	if(active)
 		user.visible_message("<span class='notice'>[bicon(src)] [user] deactivated the shield generator.</span>", \
 			"<span class='notice'>[bicon(src)] You deactivate the shield generator.</span>", \
 			"You hear heavy droning fade out.")
@@ -171,10 +173,9 @@
 			to_chat(user, "<span class='notice'>You secure the [src] to the floor!</span>")
 			anchored = TRUE
 
-
 	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
 		if(allowed(user))
-			src.locked = !src.locked
+			locked = !locked
 			to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
@@ -207,6 +208,7 @@
 
 ////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
 #define maxstoredpower 500
+
 /obj/machinery/shieldwallgen
 	name = "Shield Generator"
 	desc = "A shield generator."
@@ -229,16 +231,15 @@
 	var/obj/structure/cable/attached		// the attached cable
 	var/storedpower = 0
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
+	var/next_process_time = 0
 
 /obj/machinery/shieldwallgen/proc/power()
-	if(!anchored)
-		power = 0
-		return 0
 	var/turf/T = src.loc
 
 	var/obj/structure/cable/C = T.get_cable_node()
 	var/datum/powernet/PN
-	if(C)	PN = C.powernet		// find the powernet of the connected cable
+	if(C)
+		PN = C.powernet		// find the powernet of the connected cable
 
 	if(!PN)
 		power = 0
@@ -272,52 +273,53 @@
 		return 1
 
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(src.active >= 1)
-		src.active = 0
+	if(active == TRUE)
+		active = FALSE
 		icon_state = "Shield_Gen"
 
 		user.visible_message("[user] turned the shield generator off.", \
 			"You turn off the shield generator.", \
 			"You hear heavy droning fade out.")
 		for(var/dir in list(1,2,4,8)) cleanup(dir)
+		STOP_PROCESSING(SSmachines, src)
 	else
-		src.active = 1
+		active = TRUE
 		icon_state = "Shield_Gen +a"
 		user.visible_message("[user] turned the shield generator on.", \
 			"You turn on the shield generator.", \
 			"You hear heavy droning.")
+		START_PROCESSING(SSmachines, src)
 
 /obj/machinery/shieldwallgen/process()
-	spawn(100)
-		power()
-		if(power)
-			storedpower -= 50 //this way it can survive longer and survive at all
-	if(storedpower >= maxstoredpower)
-		storedpower = maxstoredpower
-	if(storedpower <= 0)
-		storedpower = 0
-//	if(shieldload >= maxshieldload) //there was a loop caused by specifics of process(), so this was needed.
-//		shieldload = maxshieldload
+	if(!anchored)
+		return PROCESS_KILL
+	if(next_process_time <= world.time)
+		next_process_time = world.time + 100		// todo: do cool procces later
+		addtimer(CALLBACK(src, PROC_REF(power)), 10 SECONDS)
 
-	if(src.active == 1)
-		if(!src.state == 1)
-			src.active = 0
-			return
-		spawn(1)
-			setup_field(1)
-		spawn(2)
-			setup_field(2)
-		spawn(3)
-			setup_field(4)
-		spawn(4)
-			setup_field(8)
-		src.active = 2
-	if(src.active >= 1)
-		if(src.power == 0)
+		storedpower -= 50 //this way it can survive longer and survive at all
+		if(storedpower >= maxstoredpower)
+			storedpower = maxstoredpower
+		if(storedpower <= 0)
+			storedpower = 0
+	//	if(shieldload >= maxshieldload) //there was a loop caused by specifics of process(), so this was needed.
+	//		shieldload = maxshieldload
+
+		if(active == TRUE)
+			if(!state == 1)
+				active = FALSE
+				return
+			// todo: refactor this next time
+			addtimer(CALLBACK(src, PROC_REF(setup_field), 1), 1 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(setup_field), 2), 2 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(setup_field), 4), 3 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(setup_field), 8), 4 SECONDS)
+
+		if(!power)
 			visible_message("<span class='warning'>The [src.name] shuts down due to lack of power!</span>", \
 				"You hear heavy droning fade out")
 			icon_state = "Shield_Gen"
-			src.active = 0
+			active = FALSE
 			for(var/dir in list(1,2,4,8)) cleanup(dir)
 
 /obj/machinery/shieldwallgen/proc/setup_field(NSEW = 0)
@@ -364,7 +366,6 @@
 		CF.loc = T
 		CF.set_dir(field_dir)
 
-
 /obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
 	if(iswrenching(W))
 		if(active)
@@ -376,7 +377,8 @@
 			if(!do_skill_checks(user))
 				return
 			to_chat(user, "You secure the external reinforcing bolts to the floor.")
-			src.anchored = TRUE
+			anchored = TRUE
+			power()
 			return
 
 		else if(state == 1)
@@ -385,7 +387,7 @@
 			if(!do_skill_checks(user))
 				return
 			to_chat(user, "You undo the external reinforcing bolts.")
-			src.anchored = FALSE
+			anchored = FALSE
 			return
 
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
