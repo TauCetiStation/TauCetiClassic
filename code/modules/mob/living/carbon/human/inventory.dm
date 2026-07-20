@@ -158,7 +158,8 @@
 	else if (W == wear_mask)
 		if(isbreathmask(wear_mask))
 			var/obj/item/clothing/mask/breath/breath_mask = wear_mask
-			breath_mask.detach_tank(src)
+			if(breath_mask.active)
+				breath_mask.toggle_breath(src, src)
 		wear_mask = null
 		sec_hud_set_security_status()
 	else if (W == neck)

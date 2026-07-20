@@ -181,7 +181,7 @@
 
 #define ishardhelmet(A)  istype(A,/obj/item/clothing/head/helmet/space/rig)
 
-#define isbreathmask(A)  istype(A,/obj/item/clothing/mask)
+#define isbreathmask(A)  istype(A,/obj/item/clothing/mask/breath)
 
 #define ismagboots(A)	 istype(A, /obj/item/clothing/shoes/magboots)
 
