@@ -10,28 +10,6 @@
 /*
  * Tables
  */
-/proc/is_under_table_surface_interaction(mob/user, atom/target, include_table_surface = FALSE)
-	if(!iscarbon(user) || !user.checkpass(PASSCRAWL) || !target)
-		return FALSE
-
-	var/turf/user_turf = get_turf(user)
-	var/turf/target_turf = get_turf(target)
-	if(!user_turf || !target_turf || get_dist(user_turf, target_turf) > 1)
-		return FALSE
-
-	var/obj/structure/table/user_table = locate() in user_turf
-	if(!user_table)
-		return FALSE
-
-	var/obj/structure/table/target_table = locate() in target_turf
-	if(!target_table)
-		return FALSE
-
-	if(include_table_surface && target == target_table)
-		return TRUE
-
-	return target.layer > target_table.layer
-
 /obj/structure/table
 	name = "table"
 	cases = list("стол", "стола", "столу", "стол", "столом", "столе")

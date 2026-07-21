@@ -76,9 +76,6 @@
 	if(!climbable || !can_touch(user) || (!post_climb_check && (climber in climbers)))
 		return FALSE
 
-	if(is_under_table_surface_interaction(user, src, TRUE))
-		return FALSE
-
 	if((climber.loc == loc) && !(flags & ON_BORDER)) //You can't climb something you are already standing on, except if this thing is on border (fence).
 		return FALSE
 

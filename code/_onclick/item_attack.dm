@@ -1,8 +1,5 @@
 
 /obj/item/proc/melee_attack_chain(atom/target, mob/user, params)
-	if(is_under_table_surface_interaction(user, target, TRUE))
-		return
-
 	if(user.a_intent == INTENT_HARM && (target.resistance_flags & CAN_BE_HIT))
 		if(attack_atom(target, user, params))
 			return
@@ -27,9 +24,6 @@
 	return FALSE
 
 /mob/living/attackby(obj/item/I, mob/user, params)
-	if(is_under_table_surface_interaction(user, src))
-		return TRUE
-
 	if(..())
 		return TRUE
 

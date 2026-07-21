@@ -5,9 +5,6 @@
 	Otherwise pretty standard.
 */
 /mob/living/carbon/human/UnarmedAttack(atom/A)
-	if(is_under_table_surface_interaction(src, A))
-		return
-
 	var/obj/item/organ/external/BP = bodyparts_by_name[hand ? BP_L_ARM : BP_R_ARM]
 	if(!BP || !BP.is_usable())
 		to_chat(src, "<span class='notice'>You try to move your [BP ? BP.name : "hand"], but cannot!</span>")
@@ -44,9 +41,6 @@
 	Monkeys
 */
 /mob/living/carbon/monkey/UnarmedAttack(atom/A)
-	if(is_under_table_surface_interaction(src, A))
-		return
-
 	..()
 	A.attack_paw(src)
 
@@ -81,9 +75,6 @@
 	Nothing happening here
 */
 /mob/living/carbon/slime/UnarmedAttack(atom/A)
-	if(is_under_table_surface_interaction(src, A))
-		return
-
 	..()
 	A.attack_slime(src)
 

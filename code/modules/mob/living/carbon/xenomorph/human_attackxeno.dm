@@ -2,9 +2,6 @@
 This is what happens, when alien attack.
 ----------------------------------------*/
 /mob/living/carbon/xenomorph/UnarmedAttack(atom/A)
-	if(is_under_table_surface_interaction(src, A))
-		return
-
 	..()
 	A.attack_alien(src)
 
@@ -14,9 +11,6 @@ This is what happens, when alien attack.
 
 // Baby aliens
 /mob/living/carbon/xenomorph/facehugger/UnarmedAttack(atom/A)
-	if(is_under_table_surface_interaction(src, A))
-		return
-
 	if(ismob(A))
 		SetNextMove(CLICK_CD_MELEE)
 	A.attack_facehugger(src)
@@ -26,9 +20,6 @@ This is what happens, when alien attack.
 	return
 
 /mob/living/carbon/xenomorph/larva/UnarmedAttack(atom/A)
-	if(is_under_table_surface_interaction(src, A))
-		return
-
 	if(ismob(A))
 		SetNextMove(CLICK_CD_MELEE)
 	A.attack_larva(src)

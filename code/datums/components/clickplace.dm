@@ -52,8 +52,6 @@
 /datum/component/clickplace/proc/can_place(atom/place_on, obj/item/I, mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(is_under_table_surface_interaction(user, place_on, TRUE))
-		return FALSE
 	if(user.incapacitated())
 		return FALSE
 	if(user.a_intent == INTENT_HARM)
@@ -209,9 +207,6 @@
 	var/mob/living/assailant = G.assailant
 	var/mob/living/victim = G.affecting
 	var/atom/A = parent
-
-	if(is_under_table_surface_interaction(assailant, A, TRUE))
-		return
 
 	if(!A.density)
 		assailant.SetNextMove(CLICK_CD_INTERACT)

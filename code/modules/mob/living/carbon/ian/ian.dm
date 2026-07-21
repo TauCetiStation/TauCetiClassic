@@ -67,9 +67,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/carbon/ian, chief_animal_list)
 	. = ..()
 
 /mob/living/carbon/ian/UnarmedAttack(atom/A)
-	if(is_under_table_surface_interaction(src, A))
-		return
-
 	..()
 	if(ian_action)
 		if(is_busy(A))
