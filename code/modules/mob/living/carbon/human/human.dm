@@ -269,9 +269,10 @@
 
 		apply_damage(fire_damge * rand(50, 100) * 0.01, BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
 		apply_damage(brute_damge * rand(50, 100) * 0.01, BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
-		if(!prob(bomb_protection) && (EXPLODE_HEAVY || EXPLODE_DEVASTATE))
+		var/BP_bomb_protection = run_armor_check(BP, BOMB)
+		if(!prob(BP_bomb_protection) && (EXPLODE_HEAVY || EXPLODE_DEVASTATE))
 			if(BP)
-				if(prob(50))
+				if(prob(50) && !BP.is_broken())
 					BP.fracture()
 					BP.sever_artery()
 				else if(prob(50))
