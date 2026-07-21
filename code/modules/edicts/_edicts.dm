@@ -2,7 +2,8 @@
  * Edicts: persistent, cross-round station laws.
  *
  * State lives in the `edicts` DB table as an append-only history: every change is a NEW row.
- * The current state of an edict is therefore the row with the highest `id` for that name.
+ * The current state of an edict is therefore the row with the highest `id` for that name and server
+ * port. The database is shared between servers, but each server keeps an independent edict history.
  * Never UPDATE existing rows - always INSERT a new one.
  *
  * The `active` column stores an integer VALUE, not just a flag: 0 means the edict is off, and a
@@ -65,7 +66,7 @@ var/global/list/available_edicts = list(
 	if(!establish_db_connection("edicts"))
 		return 0
 
-	var/DBQuery/query = dbcon.NewQuery("SELECT active FROM edicts WHERE name = '[sanitize_sql(edict_name)]' ORDER BY id DESC LIMIT 1")
+	var/DBQuery/query = dbcon.NewQuery("SELECT active FROM edicts WHERE server_port = [sanitize_sql(world.port)] AND name = '[sanitize_sql(edict_name)]' ORDER BY id DESC LIMIT 1")
 	if(!query.Execute())
 		return 0
 	if(!query.NextRow())
@@ -90,6 +91,6 @@ var/global/list/available_edicts = list(
 	var/actor_ckey = actor ? actor.ckey : ""
 	var/actor_name = actor ? actor.real_name : "system"
 
-	var/DBQuery/query = dbcon.NewQuery("INSERT INTO edicts (datetime, round_id, actor_ckey, actor_character_name, name, active) \
-		VALUES (Now(), [global.round_id], '[sanitize_sql(actor_ckey)]', '[sanitize_sql(actor_name)]', '[sanitize_sql(edict_name)]', [value])")
+	var/DBQuery/query = dbcon.NewQuery("INSERT INTO edicts (datetime, round_id, server_port, actor_ckey, actor_character_name, name, active) \
+		VALUES (Now(), [global.round_id], [sanitize_sql(world.port)], '[sanitize_sql(actor_ckey)]', '[sanitize_sql(actor_name)]', '[sanitize_sql(edict_name)]', [value])")
 	return query.Execute()
