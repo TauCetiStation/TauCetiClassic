@@ -289,6 +289,7 @@
 			IO.take_damage(dam_amt,0)
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot //For artificial organs
+	name = "Fix robotic organ"
 	allowed_tools = list(
 	/obj/item/stack/nanopaste = 100,
 	/obj/item/weapon/bonegel = 30,

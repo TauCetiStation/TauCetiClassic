@@ -168,7 +168,7 @@
 	min_duration = 110
 	max_duration = 150
 
-/datum/surgery_step/organ_manipulation/place_eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/organ_manipulation/place_eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, silent = FALSE)
     if(!ishuman(target))
         return FALSE
 
@@ -178,15 +178,18 @@
 
     var/obj/item/organ/internal/I = tool
     if(I.requires_robotic_bodypart)
-        user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
+        if(!silent)
+            user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
         return FALSE
 
     if(I.damage > (I.max_damage * 0.75))
-        user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
+        if(!silent)
+            user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
         return FALSE
 
     if(target.get_int_organ(I))
-        user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
+        if(!silent)
+            user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
         return FALSE
 
     return TRUE

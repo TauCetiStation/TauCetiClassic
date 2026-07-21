@@ -28,7 +28,7 @@
 	min_duration = 50
 	max_duration = 50
 
-/datum/surgery_step/organ_manipulation/place/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/organ_manipulation/place/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, silent = FALSE)
 	if(!ishuman(target))
 		return FALSE
 
@@ -37,23 +37,28 @@
 
 	var/obj/item/organ/internal/I = tool
 	if(I.requires_robotic_bodypart)
-		user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
+		if(!silent)
+			user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
 		return FALSE
 
 	if(target_zone != I.parent_bodypart)
-		user.visible_message ( "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
+		if(!silent)
+			user.visible_message ( "<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
 		return FALSE
 
 	if(I.damage > (I.max_damage * 0.75))
-		user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
+		if(!silent)
+			user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
 		return FALSE
 
 	if(target.get_int_organ(I))
-		user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
+		if(!silent)
+			user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
 		return FALSE
 
 	if(!(target.get_species() in I.compability))
-		user.visible_message ( "<span class='warning'> \The [I] not compability to [target]</span>")
+		if(!silent)
+			user.visible_message ( "<span class='warning'> \The [I] not compability to [target]</span>")
 		return FALSE
 
 	return TRUE
@@ -158,14 +163,15 @@
 	min_duration = 110
 	max_duration = 150
 
-/datum/surgery_step/organ_manipulation/treat_necrosis/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/organ_manipulation/treat_necrosis/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, silent = FALSE)
 	if(..())
 		var/obj/item/weapon/reagent_containers/C = tool
 		if(!C.reagents.has_reagent("peridaxon"))
-			user.visible_message(
-				"[user] looks at \the [tool] and ponders.",
-				"You are not sure if \the [tool] contains the peridaxon necessary to treat the necrosis.",
-			)
+			if(!silent)
+				user.visible_message(
+					"[user] looks at \the [tool] and ponders.",
+					"You are not sure if \the [tool] contains the peridaxon necessary to treat the necrosis.",
+				)
 			return FALSE
 
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)

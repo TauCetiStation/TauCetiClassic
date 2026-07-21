@@ -37,7 +37,7 @@
 	return TRUE
 
 // checks whether this step can be applied with the given user and target
-/datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, silent = FALSE)
 	return FALSE
 
 /datum/surgery_step/proc/prepare_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -135,13 +135,8 @@
 	return !check_covered_bodypart(T, zone)
 
 /proc/has_medical_hud(mob/living/user)
-	var/datum/atom_hud/med = global.huds[DATA_HUD_MEDICAL]
-	var/datum/atom_hud/med_adv = global.huds[DATA_HUD_MEDICAL_ADV]
-	if((med && (med.hudusers[user])) || (med_adv && (med_adv.hudusers[user])))
-		return TRUE
-	return FALSE
+	return user.has_atom_hud(DATA_HUD_MEDICAL) || user.has_atom_hud(DATA_HUD_MEDICAL_ADV)
 
-// Only trained surgeons get the assist menu. Borgs are always allowed.
 /proc/can_use_surgery_radial(mob/living/user)
 	if(isrobot(user))
 		return TRUE
@@ -149,47 +144,223 @@
 		return FALSE
 	return is_skill_competent(user, list(/datum/skill/surgery = SKILL_LEVEL_PRO))
 
-// Checks one item against the surgery steps and records it as the best tool for the highest-priority step it fits.
-/proc/match_surgery_tool(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I, list/best_for_step, list/best_quality)
-	for(var/datum/surgery_step/S in surgery_steps)
-		if(!S.is_valid_mutantrace(target))
-			continue
-		var/quality = S.tool_quality(I)
-		if(!quality)
-			continue
-		if(!S.can_use(user, target, target_zone, I))
-			continue
-		if(!best_for_step[S] || quality > best_quality[S])
-			best_for_step[S] = I
-			best_quality[S] = quality
-		return
-
-/proc/get_available_surgery_tools(mob/living/user, mob/living/carbon/human/target, target_zone)
-	var/list/best_for_step = list()
-	var/list/best_quality = list()
+/proc/get_surgery_environment_items(mob/living/user, list/robot_slots, list/robot_carriers)
+	var/list/items = list()
 
 	if(isrobot(user))
 		var/mob/living/silicon/robot/R = user
-		if(R.module)
-			for(var/obj/item/I in R.module.modules)
-				if(I.required_skills && I.required_skills.len)
-					match_surgery_tool(user, target, target_zone, I, best_for_step, best_quality)
-		return best_for_step
+		var/list/active_modules = list(R.module_state_1, R.module_state_2, R.module_state_3)
+		for(var/slot in 1 to active_modules.len)
+			var/obj/item/carrier = active_modules[slot]
+			if(!carrier)
+				continue
+			var/obj/item/I = SEND_SIGNAL(carrier, COMSIG_HAND_GET_ITEM)
+			if(!I)
+				I = carrier
+			items |= I
+			if(robot_slots)
+				robot_slots[I] = slot
+			if(robot_carriers)
+				robot_carriers[I] = carrier
+		return items
 
 	var/datum/personal_crafting/C = new
 	for(var/obj/item/I in C.get_environment(user))
-		match_surgery_tool(user, target, target_zone, I, best_for_step, best_quality)
+		items |= I
 		if(istype(I, /obj/item/weapon/storage))
 			var/obj/item/weapon/storage/S = I
 			if(S.try_open(user, check_only = TRUE))
 				for(var/obj/item/SI in S.contents)
-					match_surgery_tool(user, target, target_zone, SI, best_for_step, best_quality)
+					items |= SI
 	qdel(C)
+	return items
+
+/proc/get_available_surgery_tools(mob/living/user, mob/living/carbon/human/target, target_zone, list/robot_slots, list/robot_carriers)
+	var/list/best_for_step = list()
+	var/list/items = get_surgery_environment_items(user, robot_slots, robot_carriers)
+
+	if(!items.len)
+		return best_for_step
+
+	for(var/datum/surgery_step/S in surgery_steps)
+		if(!S.is_valid_mutantrace(target))
+			continue
+		var/best_quality = 0
+		var/obj/item/best_tool
+		for(var/obj/item/I in items)
+			if(isrobot(user) && istype(S, /datum/surgery_step/cavity/place_item) && robot_carriers && robot_carriers[I] == I)
+				continue
+			var/quality = S.tool_quality(I)
+			if(!quality || quality <= best_quality)
+				continue
+			if(!S.can_use(user, target, target_zone, I, TRUE))
+				continue
+			best_tool = I
+			best_quality = quality
+			if(best_quality >= 100)
+				break
+		if(best_tool)
+			best_for_step[S] = best_tool
+
 	return best_for_step
+
+/proc/build_surgery_radial_choices(list/best_for_step, list/choice_to_step, list/choice_to_tool_loc, list/choice_to_tool_parent_loc)
+	var/list/step_choices = list()
+	var/list/used_step_names = list()
+
+	for(var/datum/surgery_step/S in best_for_step)
+		var/obj/item/tool = best_for_step[S]
+		var/choice_name = avoid_assoc_duplicate_keys(S.name, used_step_names)
+		step_choices[choice_name] = image(icon = tool.icon, icon_state = tool.icon_state)
+		choice_to_step[choice_name] = S
+		choice_to_tool_loc[choice_name] = tool.loc
+		if(istype(tool.loc, /obj/item/weapon/storage))
+			choice_to_tool_parent_loc[choice_name] = tool.loc.loc
+
+	return step_choices
+
+/proc/restore_displaced_surgery_item(mob/living/carbon/human/user, list/tool_state)
+	var/obj/item/dropped_item = tool_state["dropped_item"]
+	var/turf/dropped_turf = tool_state["dropped_turf"]
+	if(QDELETED(dropped_item) || dropped_item.loc != dropped_turf || !user.Adjacent(dropped_turf))
+		return
+
+	var/dropped_hand = tool_state["dropped_hand"]
+	var/hand_slot = dropped_hand ? SLOT_L_HAND : SLOT_R_HAND
+	if(!dropped_item.mob_can_equip(user, hand_slot, TRUE))
+		return
+	dropped_item.mob_pickup(user, dropped_hand)
+
+/proc/is_surgery_tool_source_valid(mob/living/carbon/human/user, obj/item/chosen, atom/tool_original_loc, atom/tool_original_parent_loc)
+	if(QDELETED(chosen) || chosen.loc != tool_original_loc)
+		return FALSE
+	if(istype(tool_original_loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = tool_original_loc
+		return S.loc == tool_original_parent_loc && S.try_open(user, check_only = TRUE)
+	if(isturf(tool_original_loc))
+		return user.Adjacent(chosen)
+	return tool_original_loc == user && (user.l_hand == chosen || user.r_hand == chosen)
+
+/proc/can_restore_surgery_tool_to_storage(mob/living/carbon/human/user, obj/item/chosen, obj/item/weapon/storage/S, atom/tool_original_parent_loc)
+	if(QDELETED(chosen) || QDELETED(S) || S.loc != tool_original_parent_loc || !S.try_open(user, check_only = TRUE))
+		return FALSE
+	if(chosen.loc == S)
+		return TRUE
+	return S.can_be_inserted(chosen, TRUE)
+
+/proc/try_restore_surgery_tool_to_storage(mob/living/carbon/human/user, obj/item/chosen, obj/item/weapon/storage/S, atom/tool_original_parent_loc)
+	if(!can_restore_surgery_tool_to_storage(user, chosen, S, tool_original_parent_loc))
+		return FALSE
+	if(chosen.loc == S)
+		return TRUE
+	if(!isturf(chosen.loc))
+		return FALSE
+	return S.handle_item_insertion(chosen, prevent_warning = TRUE)
+
+/proc/prepare_surgery_tool(mob/living/carbon/human/user, obj/item/chosen, atom/tool_original_loc, atom/tool_original_parent_loc)
+	var/list/tool_state = list(
+		"original_hand" = user.hand,
+		"tool_original_loc" = tool_original_loc,
+		"tool_original_parent_loc" = tool_original_parent_loc,
+	)
+
+	if(chosen.loc == user)
+		var/chosen_hand
+		if(user.l_hand == chosen)
+			chosen_hand = 1
+		else if(user.r_hand == chosen)
+			chosen_hand = 0
+		else
+			return
+		user.activate_hand(chosen_hand)
+		if(user.hand != chosen_hand || user.get_active_hand() != chosen)
+			return
+		return tool_state
+
+	var/chosen_hand
+	for(var/i in 1 to 2)
+		var/hand_index = i == 1 ? user.hand : !user.hand
+		var/hand_slot = hand_index ? SLOT_L_HAND : SLOT_R_HAND
+		if(chosen.mob_can_equip(user, hand_slot, TRUE))
+			chosen_hand = hand_index
+			break
+
+	if(isnull(chosen_hand))
+		for(var/i in 1 to 2)
+			var/hand_index = i == 1 ? user.hand : !user.hand
+			var/hand_slot = hand_index ? SLOT_L_HAND : SLOT_R_HAND
+			var/obj/item/held_item = hand_index ? user.l_hand : user.r_hand
+			if(!held_item || held_item == tool_original_loc || held_item.flags & (NODROP | DROPDEL | ABSTRACT))
+				continue
+			if(!user.has_bodypart_for_slot(hand_slot) || !user.specie_has_slot(hand_slot))
+				continue
+
+			user.activate_hand(hand_index)
+			if(user.hand != hand_index)
+				continue
+			var/turf/dropped_turf = get_turf(user)
+			if(!user.drop_item(dropped_turf) || held_item.loc != dropped_turf)
+				return
+			tool_state["dropped_item"] = held_item
+			tool_state["dropped_turf"] = dropped_turf
+			tool_state["dropped_hand"] = hand_index
+			if(!chosen.mob_can_equip(user, hand_slot, TRUE))
+				restore_displaced_surgery_item(user, tool_state)
+				return
+			chosen_hand = hand_index
+			break
+
+	if(isnull(chosen_hand))
+		return
+
+	user.activate_hand(chosen_hand)
+	if(user.hand != chosen_hand)
+		restore_displaced_surgery_item(user, tool_state)
+		return
+
+	var/picked_up = chosen.mob_pickup(user, chosen_hand)
+	if(!picked_up || user.get_active_hand() != chosen)
+		if(istype(tool_original_loc, /obj/item/weapon/storage))
+			var/obj/item/weapon/storage/S = tool_original_loc
+			try_restore_surgery_tool_to_storage(user, chosen, S, tool_original_parent_loc)
+		restore_displaced_surgery_item(user, tool_state)
+		return
+
+	return tool_state
+
+/proc/restore_surgery_tool(mob/living/carbon/human/user, obj/item/chosen, list/tool_state)
+	var/atom/tool_original_loc = tool_state["tool_original_loc"]
+	var/atom/tool_original_parent_loc = tool_state["tool_original_parent_loc"]
+
+	if(!QDELETED(chosen) && (user.l_hand == chosen || user.r_hand == chosen))
+		var/chosen_hand = user.l_hand == chosen ? 1 : 0
+		user.activate_hand(chosen_hand)
+		if(user.hand == chosen_hand && user.get_active_hand() == chosen)
+			if(istype(tool_original_loc, /obj/item/weapon/storage))
+				var/obj/item/weapon/storage/S = tool_original_loc
+				var/returned = FALSE
+				if(can_restore_surgery_tool_to_storage(user, chosen, S, tool_original_parent_loc))
+					var/turf/drop_turf = get_turf(user)
+					if(user.drop_item(drop_turf) && chosen.loc == drop_turf)
+						returned = try_restore_surgery_tool_to_storage(user, chosen, S, tool_original_parent_loc)
+				if(!returned && user.get_active_hand() == chosen)
+					user.drop_item(get_turf(user))
+				if(!returned)
+					to_chat(user, "<span class='warning'>[chosen] can no longer be returned to [S], leaving it on the floor.</span>")
+			else if(isturf(tool_original_loc))
+				var/atom/drop_target = user.Adjacent(tool_original_loc) ? tool_original_loc : get_turf(user)
+				user.drop_item(drop_target)
+			else if(tool_original_loc != user)
+				user.drop_item(get_turf(user))
+
+	restore_displaced_surgery_item(user, tool_state)
+	user.activate_hand(tool_state["original_hand"])
 
 /proc/try_show_surgery_radial_menu(mob/living/user, mob/living/carbon/human/target, target_zone)
 	set waitfor = FALSE
 
+	if(QDELETED(user) || QDELETED(target))
+		return
 	if(!ishuman(user) && !isrobot(user))
 		return
 	if(!has_medical_hud(user))
@@ -203,71 +374,74 @@
 	if(!user.Adjacent(target) || user.incapacitated())
 		return
 
-	var/list/best_for_step = get_available_surgery_tools(user, target, target_zone)
+	var/list/robot_slots = list()
+	var/list/robot_carriers = list()
+	var/list/best_for_step = get_available_surgery_tools(user, target, target_zone, robot_slots, robot_carriers)
 	if(!best_for_step.len)
 		return
 
-	var/list/step_choices = list()
-	var/list/name_to_tool = list()
-
-	for(var/datum/surgery_step/S in best_for_step)
-		var/obj/item/tool = best_for_step[S]
-		step_choices[S.name] = image(icon = tool.icon, icon_state = tool.icon_state)
-		name_to_tool[S.name] = tool
+	var/list/choice_to_step = list()
+	var/list/choice_to_tool_loc = list()
+	var/list/choice_to_tool_parent_loc = list()
+	var/list/step_choices = build_surgery_radial_choices(best_for_step, choice_to_step, choice_to_tool_loc, choice_to_tool_parent_loc)
 
 	var/chosen_name = show_radial_menu(user, target, step_choices, radius = 36, require_near = TRUE, tooltips = TRUE)
 
-	if(!chosen_name || !user.Adjacent(target) || user.incapacitated())
+	if(!chosen_name || QDELETED(user) || QDELETED(target))
+		return
+	if(!user.client || !has_medical_hud(user) || !can_use_surgery_radial(user))
+		return
+	if(user.incapacitated() || HAS_TRAIT(user, TRAIT_IMMOBILIZED) || user.get_targetzone() != target_zone)
+		return
+	if(!checks_for_surgery(target, user, FALSE))
 		return
 
-	var/obj/item/chosen = name_to_tool[chosen_name]
-	if(QDELETED(chosen))
+	var/datum/surgery_step/chosen_step = choice_to_step[chosen_name]
+	var/obj/item/chosen = best_for_step[chosen_step]
+	if(QDELETED(chosen) || !(chosen_step in surgery_steps))
+		return
+	if(!chosen_step.tool_quality(chosen) || !chosen_step.is_valid_mutantrace(target) || !chosen_step.can_use(user, target, target_zone, chosen, TRUE))
 		return
 
-	// borg path: tools stay in module, no pickup/return needed
 	if(isrobot(user))
-		do_surgery(target, user, chosen, from_radial = TRUE, forced_zone = target_zone)
-		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(try_show_surgery_radial_menu), user, target, target_zone)
+		var/mob/living/silicon/robot/R = user
+		var/slot = robot_slots[chosen]
+		var/obj/item/carrier = robot_carriers[chosen]
+		var/list/active_modules = list(R.module_state_1, R.module_state_2, R.module_state_3)
+		if(!slot || active_modules[slot] != carrier)
+			return
+		var/obj/item/current_tool = SEND_SIGNAL(carrier, COMSIG_HAND_GET_ITEM)
+		if(!current_tool)
+			current_tool = carrier
+		if(current_tool != chosen)
+			return
+		R.select_module(slot)
+		if(R.get_active_hand() != chosen)
+			return
+		if(do_surgery(target, user, chosen, from_radial = TRUE, forced_zone = target_zone, selected_step = chosen_step))
+			INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(try_show_surgery_radial_menu), user, target, target_zone)
 		return
 
-	var/atom/tool_original_loc = chosen.loc
-	var/obj/item/dropped_item = null
+	var/atom/tool_original_loc = choice_to_tool_loc[chosen_name]
+	var/atom/tool_original_parent_loc = choice_to_tool_parent_loc[chosen_name]
+	var/mob/living/carbon/human/H = user
+	if(!is_surgery_tool_source_valid(H, chosen, tool_original_loc, tool_original_parent_loc))
+		return
+	var/list/tool_state = prepare_surgery_tool(H, chosen, tool_original_loc, tool_original_parent_loc)
+	if(!tool_state)
+		to_chat(user, "<span class='warning'>You can't safely pick up [chosen].</span>")
+		return
 
-	if(chosen.loc != user)
-		if(!user.Adjacent(chosen))
-			to_chat(user, "<span class='warning'>[chosen] is no longer within reach!</span>")
-			return
-		if(!user.put_in_hands(chosen))
-			// both hands full, drop active hand first
-			dropped_item = user.get_active_hand()
-			if(dropped_item)
-				user.drop_from_inventory(dropped_item, get_turf(target))
-			if(!user.put_in_hands(chosen))
-				to_chat(user, "<span class='warning'>You can't pick up [chosen]!</span>")
-				if(dropped_item)
-					user.put_in_hands(dropped_item)
-				return
+	var/surgery_started = do_surgery(target, user, chosen, from_radial = TRUE, forced_zone = target_zone, selected_step = chosen_step)
+	restore_surgery_tool(H, chosen, tool_state)
+	if(surgery_started)
+		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(try_show_surgery_radial_menu), user, target, target_zone)
 
-	do_surgery(target, user, chosen, from_radial = TRUE, forced_zone = target_zone)
-
-	// put the tool back where we found it
-	if(tool_original_loc && tool_original_loc != user && chosen.loc == user)
-		user.drop_from_inventory(chosen, get_turf(target))
-		if(!QDELETED(tool_original_loc))
-			if(istype(tool_original_loc, /obj/item/weapon/storage))
-				var/obj/item/weapon/storage/S = tool_original_loc
-				if(!S.handle_item_insertion(chosen, prevent_warning = TRUE))
-					to_chat(user, "<span class='warning'>[chosen] no longer fits in [S], leaving it on the floor.</span>")
-			else
-				chosen.forceMove(tool_original_loc)
-	if(dropped_item && !QDELETED(dropped_item) && dropped_item.loc != user)
-		user.put_in_hands(dropped_item)
-
-	// re-open for the next step instead of looping: a fresh async stack, so an error can't spin the server
-	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(try_show_surgery_radial_menu), user, target, target_zone)
-
-/proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool, from_radial = FALSE, forced_zone = null)
-	checks_for_surgery(M, user, FALSE)
+/proc/do_surgery(mob/living/carbon/M, mob/living/user, obj/item/tool, from_radial = FALSE, forced_zone = null, datum/surgery_step/selected_step = null)
+	if(from_radial && !selected_step)
+		return FALSE
+	if(selected_step && !(selected_step in surgery_steps))
+		return FALSE
 	var/target_zone = forced_zone || user.get_targetzone()
 	var/covered
 	if(ishuman(M))
@@ -282,7 +456,8 @@
 	if(!handle_fumbling(user, M, SKILL_TASK_AVERAGE, skillcheck, "<span class='notice'>You fumble around figuring out how to operate [M].</span>"))
 		return
 
-	for(var/datum/surgery_step/S in surgery_steps)
+	var/list/steps_to_try = selected_step ? list(selected_step) : surgery_steps
+	for(var/datum/surgery_step/S in steps_to_try)
 		//check, if target undressed for clothless operations
 		if(S.clothless && ishuman(M) && !check_human_covering(M, user, covered))
 			return FALSE
@@ -305,7 +480,7 @@
 					S.fail_step(user, H, target_zone, tool) //patient movements due to pain interfere with surgery
 			if(user.mood_prob(S.tool_quality(tool)) && tool.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus) && user.get_targetzone() && target_zone == user.get_targetzone())
 				S.end_step(user, M, target_zone, tool)		//finish successfully
-			else if(tool.loc == user && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
+			else if(user.get_active_hand() == tool && user.Adjacent(M))		//or (also check for tool in hands and being near the target)
 				S.fail_step(user, M, target_zone, tool)		//malpractice~
 			else	// this failing silently was a pain.
 				to_chat(user, "<span class='warning'>You must remain close to your patient to conduct surgery.</span>")

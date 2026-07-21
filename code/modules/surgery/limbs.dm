@@ -128,24 +128,28 @@
 	min_duration = 80
 	max_duration = 100
 
-/datum/surgery_step/limb/attach/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/limb/attach/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, silent = FALSE)
 	if(..())
 		if(istype(tool, /obj/item/robot_parts))
 			var/obj/item/robot_parts/p = tool
 			if (target_zone != p.part)
-				to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
+				if(!silent)
+					to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
 				return FALSE
 			if(!p.can_attach())
-				to_chat(user, "<span class='userdanger'>You need to attach a flash to [p] first!</span>")
+				if(!silent)
+					to_chat(user, "<span class='userdanger'>You need to attach a flash to [p] first!</span>")
 				return FALSE
 			return target.op_stage.bodyparts[target_zone] == ORGAN_ATTACHABLE
 		if(isbodypart(tool))
 			var/obj/item/organ/external/p = tool
 			if (target_zone != p.body_zone)
-				to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
+				if(!silent)
+					to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
 				return FALSE
 			if(!p.is_compatible(target))
-				to_chat(user, "<span class='userdanger'>This does not fit!</span>")
+				if(!silent)
+					to_chat(user, "<span class='userdanger'>This does not fit!</span>")
 				return FALSE
 			return target.op_stage.bodyparts[target_zone] == ORGAN_ATTACHABLE
 

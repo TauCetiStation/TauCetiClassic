@@ -250,7 +250,7 @@
 	if(freeze_movement || !user.can_pickup(src))
 		return
 
-	remove_outline()
+	remove_outline(user)
 	add_fingerprint(user)
 
 	if(!pickup(user))
@@ -337,7 +337,7 @@
 		to_chat(user, "<span class='notice'>Your claws aren't capable of such fine manipulation!</span>")
 		return
 
-	remove_outline()
+	remove_outline(user)
 	if(!pickup(user))
 		return
 	user.put_in_active_hand(src)
