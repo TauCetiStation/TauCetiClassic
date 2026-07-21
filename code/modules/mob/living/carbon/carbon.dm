@@ -379,6 +379,30 @@
 
 	handle_footsteps(oldLoc, NewLoc, Dir)
 
+/mob/living/carbon/Moved(atom/old_loc, dir)
+	. = ..()
+	update_crawl_layer(old_loc)
+
+/mob/living/carbon/SetCrawling(value)
+	. = ..()
+	update_crawl_layer()
+
+/mob/living/carbon/proc/update_crawl_layer(atom/old_loc)
+	var/was_crawling_under_structure = is_crawling_under_structure
+	var/turf/current_turf = isturf(loc) ? loc : null
+	if(!crawling)
+		is_crawling_under_structure = FALSE
+	else if(current_turf)
+		if(!current_turf.has_crawl_hiding_structure(src))
+			is_crawling_under_structure = FALSE
+		else if(isturf(old_loc) && !old_loc:has_crawl_hiding_structure(src))
+			is_crawling_under_structure = TRUE
+
+	if(current_turf && is_crawling_under_structure)
+		layer = BELOW_CONTAINERS_LAYER
+	else if(was_crawling_under_structure)
+		layer = default_layer
+
 /mob/living/carbon/proc/handle_footsteps(turf/oldLoc, turf/newLoc, Dir)
 	if(lying && !crawling)
 		return

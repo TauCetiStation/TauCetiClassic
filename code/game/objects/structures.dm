@@ -1,6 +1,7 @@
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
 	var/climbable
+	var/hides_crawling_mobs = FALSE
 	var/list/climbers = list()
 	w_class = SIZE_MASSIVE
 
