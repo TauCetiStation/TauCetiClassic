@@ -83,8 +83,32 @@ Quick adjacency (to turf):
 	if(!isturf(loc)) return FALSE
 	for(var/turf/T in locs)
 		if(isnull(T)) continue
-		if(T.Adjacent(neighbor,src)) return TRUE
+		if(!T.Adjacent(neighbor,src))
+			continue
+		// Adjacent is called in both directions, so check every human participant.
+		if(ishuman(src))
+			var/mob/living/carbon/human/source_human = src
+			if(!source_human.table_layer_adjacent(neighbor))
+				return FALSE
+		if(ishuman(neighbor))
+			var/mob/living/carbon/human/neighbor_human = neighbor
+			if(!neighbor_human.table_layer_adjacent(src))
+				return FALSE
+		return TRUE
 	return FALSE
+
+/mob/living/carbon/human/proc/table_layer_adjacent(atom/neighbor)
+	if(!checkpass(PASSCRAWL))
+		return TRUE
+
+	var/turf/source_turf = get_turf(src)
+	var/turf/neighbor_turf = get_turf(neighbor)
+	var/obj/structure/table/source_table = locate() in source_turf
+	var/obj/structure/table/neighbor_table = locate() in neighbor_turf
+	if(!source_table || !neighbor_table)
+		return TRUE
+
+	return (layer < source_table.layer) == (neighbor.layer < neighbor_table.layer)
 
 // This is necessary for storage items not on your person.
 /obj/item/Adjacent(atom/neighbor, recurse = MAX_STORAGE_DEEP_LEVEL)
