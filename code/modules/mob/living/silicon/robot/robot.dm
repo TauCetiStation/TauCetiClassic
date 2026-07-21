@@ -247,6 +247,7 @@
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
 			module_sprites["Kodiak"] = "kodiak-miner"
+			module_sprites["Kerfus"] = "kerfusCargo"
 			give_hud(DATA_HUD_MINER)
 
 		if("Medical")
@@ -261,6 +262,7 @@
 			module_sprites["Drone Red"] = "drone-surgery"
 			module_sprites["Drone Green"] = "drone-medical"
 			module_sprites["Acheron"] = "mechoid-Medical"
+			module_sprites["NanoMed"] = "kerfusMed"
 
 		if("Security")
 			if(can_be_security)
@@ -868,7 +870,7 @@
 	if(opened && !wiresexposed && (!issilicon(attacker)))
 		var/datum/robot_component/cell_component = components["power cell"]
 		if(cell)
-			cell.updateicon()
+			cell.update_icon()
 			cell.add_fingerprint(attacker)
 			attacker.put_in_active_hand(cell)
 			to_chat(attacker, "You remove \the [cell].")
@@ -1200,14 +1202,5 @@
 	toggle_all_components()
 	to_chat(src, "<span class='notice'>You toggle all your components.</span>")
 
-/mob/living/silicon/robot/pickup_ore()
-	var/turf/simulated/floor/F = get_turf(src)
-	var/obj/item/weapon/storage/bag/ore/B
-	if(istype(module, /obj/item/weapon/robot_module/miner))
-		for(var/bag in module.modules)
-			if(istype(bag, /obj/item/weapon/storage/bag/ore))
-				B = bag
-				if(B.max_storage_space == B.storage_space_used())
-					return
-				F.attackby(B, src)
-				break
+/mob/living/silicon/robot/is_antag()
+	return emagged || laws?.zeroth

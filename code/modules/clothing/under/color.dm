@@ -1,3 +1,51 @@
+// Polychromic jumpsuit - greyscale base + pattern overlay with independent colors
+/obj/item/clothing/under/color/polychromic
+	name = "polychromic jumpsuit"
+	desc = "A jumpsuit with custom coloring."
+	icon = 'icons/mob/uniform_poly.dmi'
+	icon_state = "world_base_standard"
+	item_state = "white"
+	flags = ONESIZEFITSALL|HEAR_TALK
+	poly_colors = list("#ffffff", "#ffffff")
+	// This cached ref is for the icon/dye/worn render paths below.
+	// TODO: rework update_icon and add COMSIG_ATOM_UPDATE_ICON
+	var/datum/element/polychromic/poly
+
+/obj/item/clothing/under/color/polychromic/atom_init()
+	poly_style = global.poly_styles_by_key[POLY_STYLE_STD]
+	AddElement(/datum/element/polychromic)
+	poly = SSdcs.GetElement(list(/datum/element/polychromic))
+	. = ..()
+
+/obj/item/clothing/under/color/polychromic/update_icon()
+	..()
+	poly.build_icon(src)
+
+/obj/item/clothing/under/color/polychromic/update_world_icon()
+	update_icon()
+
+/obj/item/clothing/under/color/polychromic/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
+	if(sprite_sheet_slot == SPRITE_SHEET_HELD || !length(poly_colors))
+		return ..()
+	return poly.build_worn(src, H, layer, bloodied_icon_state)
+
+/obj/item/clothing/under/color/polychromic/wash_act(w_color)
+	if(w_color && poly.try_dye(src, w_color))
+		return
+	return ..()
+
+/obj/item/clothing/under/color/polychromic/rollsuit()
+	set name = "Roll Down Jumpsuit"
+	set category = "Object"
+	set src in usr
+	if(!can_rollsuit(usr))
+		return
+	if(!poly_style.can_roll)
+		to_chat(usr, "<span class='notice'>You cannot roll down a turtleneck!</span>")
+		return
+	rolled_down = !rolled_down
+	update_inv_mob()
+
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	icon_state = "black"

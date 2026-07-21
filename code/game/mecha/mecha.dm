@@ -43,6 +43,7 @@
 	var/maint_access = 1
 	var/dna_lockable = FALSE
 	var/dna	//dna-locking the mech
+	var/emagged = FALSE		// Whether security systems have been compromised by emag
 	var/list/proc_res = list() //stores proc owners, like proc_res["functionname"] = owner reference
 	var/datum/effect/effect/system/spark_spread/spark_system = new
 	var/lights = 0
@@ -277,6 +278,10 @@
 	if(hasInternalDamage(MECHA_INT_CONTROL_LOST))
 		move_result = mechsteprand()
 	else if(strafe)
+		if(occupant?.client?.keys_held["Alt"])
+			if(direction != dir)
+				return mechturn(direction)
+			return FALSE
 		move_result	= mechstep(direction)
 	else if(direction == dir || direction == prev_move_dir)
 		move_result = mechstep(dir)
@@ -605,6 +610,30 @@
 //////////////////////
 ////// AttackBy //////
 //////////////////////
+
+/obj/mecha/emag_act(mob/user)
+	if(emagged)
+		to_chat(user, "<span class='warning'>Системы безопасности [src] уже взломаны.</span>")
+		return FALSE
+	if(occupant)
+		to_chat(user, "<span class='warning'>Невозможно взломать системы управления, пока внутри находится пилот!</span>")
+		return FALSE
+
+	user.visible_message("<span class='warning'>[user] подключает карту к интерфейсу доступа [src]...</span>", \
+						 "<span class='notice'>Вы начинаете взлом систем безопасности [src]...</span>")
+
+	if(!do_after(user, 5 SECONDS, target = src))
+		return FALSE
+
+	emagged = TRUE
+	operation_req_access = list()
+	dna = null
+	dna_lockable = FALSE
+
+	spark_system.start()
+	user.visible_message("<span class='warning'>[src] издает серию электронных щелчков, индикаторы доступа гаснут.</span>", \
+						 "<span class='notice'>Системы безопасности [src] успешно взломаны. Любой может зайти внутрь.</span>")
+	return TRUE
 
 /obj/mecha/attackby(obj/item/weapon/W, mob/user)
 
@@ -940,7 +969,10 @@
 		return
 
 	var/passed
-	if(dna_lockable && dna)
+
+	if(emagged)
+		passed = 1
+	else if(dna_lockable && dna)
 		if(usr.dna.unique_enzymes==dna)
 			passed = 1
 	else if(operation_allowed(usr))
@@ -1141,7 +1173,7 @@
 
 /obj/mecha/proc/log_message(message,red=null)
 	log.len++
-	log[log.len] = list("time"=world.timeofday,"message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
+	log[log.len] = list("time"=world.time,"message"="[red?"<font color='red'>":null][message][red?"</font>":null]")
 	return log.len
 
 /obj/mecha/proc/log_append_to_last(message,red=null)

@@ -363,7 +363,10 @@
 
 			department_data += "<a class='jobPosition [quota_class] [head_class]' href='byond://?src=\ref[src];SelectedJob=[J.title]'>[J.title]"
 			if(J.current_positions)
-				department_data += " ([J.current_positions])<br><i>(Active: [SSjob.GetActiveCount(J.title)])</i>"
+				department_data += " ([J.current_positions])"
+				var/active = SSjob.GetActiveCount(J.title)
+				if(active < J.current_positions)
+					department_data += "<br><i>(Active: [active])</i>"
 			department_data += "</a>"
 		if(length(department_data))
 			var/datum/department/D = SSjob.name_departments[department_tag]
@@ -419,8 +422,9 @@
 	new_character.dna.UpdateSE()
 	new_character.dna.original_character_name = new_character.real_name
 
-	// little randomize hunger parameters
-	new_character.nutrition = rand(NUTRITION_LEVEL_NORMAL, NUTRITION_LEVEL_WELL_FED)
+	// little randomize hunger parameters; synthetics handle their own (see liver/ipc/set_owner)
+	if(!(new_character.species && new_character.species.flags[IS_SYNTHETIC]))
+		new_character.nutrition = rand(NUTRITION_LEVEL_NORMAL, NUTRITION_LEVEL_WELL_FED)
 	// random individual metabolism mod from -10% to +10%
 	// so people don't get hungry at the same time
 	// but it affects all metabolism including chemistry, so i don't know if we need it

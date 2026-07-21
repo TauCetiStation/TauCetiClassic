@@ -1537,9 +1537,6 @@
 		make_dizzy(150)
 	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "scared", /datum/mood_event/scared)
 
-/mob/living/proc/pickup_ore()
-	return
-
 /mob/living/carbon/human/trigger_syringe_fear() // move to carbon/human
 	..()
 	if(prob(15))
@@ -1561,3 +1558,22 @@
 
 /mob/living/proc/get_trail_state()
 	return null
+
+/mob/living/Crossed(atom/movable/AM)
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(L.a_intent == INTENT_HARM && L.is_bigger_than(src) && is_usable_leg())
+			if(prob(LERP(10, 0, health/maxHealth)))
+				visible_message("<span class='warning bold'>[src] has been stepped on by [L]!</span>")
+				log_combat(L, "stepped on")
+				playsound(src, pick(SOUNDIN_DESCERATION), VOL_EFFECTS_MASTER)
+				gib()
+			else
+				visible_message("<span class='warning bold'>[src] has been kicked away by [L]!</span>")
+				log_combat(L, "kicked")
+				playsound(src, pick(SOUNDIN_PUNCH_MEDIUM), VOL_EFFECTS_MASTER)
+
+				var/turf/target = get_step(src, pick(turn(L.dir, 45), turn(L.dir, -45)))
+				throw_at(target, range = 1, speed = 1, thrower = L, spin = prob(50), diagonals_first = TRUE)
+				apply_damage(10, BRUTE)
+	. = ..()

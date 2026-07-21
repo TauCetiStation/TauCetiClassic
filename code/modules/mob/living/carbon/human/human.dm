@@ -226,61 +226,51 @@
 		rig_setup_stat(rig)
 
 /mob/living/carbon/human/ex_act(severity)
-	if(!blinded)
+	if(eyecheck() < FLASHES_FULL_PROTECTION)
 		flash_eyes()
 
-	var/shielded = 0
-	var/b_loss = null
-	var/f_loss = null
+	var/weapon_message = "Explosive Blast"
+	var/bomb_protection = run_armor_check(null, BOMB)
+	var/b_loss = null //brute damage
+	var/f_loss = null //burn (fire) damage
 	switch (severity)
 		if(EXPLODE_DEVASTATE)
 			b_loss += 500
-			if (!prob(getarmor(null, BOMB)))
+			if(!prob(bomb_protection))
 				gib()
 				return
 			else
 				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(target, 200, 4)
-			//return
-//				var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
-				//user.throw_at(target, 200, 4)
 
 		if(EXPLODE_HEAVY)
-			if (!shielded)
-				b_loss += 60
-
+			b_loss += 60
 			f_loss += 60
-
-			if (prob(getarmor(null, BOMB)))
-				b_loss = b_loss/1.5
-				f_loss = f_loss/1.5
 
 			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 30
 				ear_deaf += 120
-			if (prob(70) && !shielded)
+			if (prob(70) && !prob(bomb_protection))
 				Paralyse(10)
 
 		if(EXPLODE_LIGHT)
 			b_loss += 30
-			if (prob(getarmor(null, BOMB)))
-				b_loss = b_loss/2
 			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 15
 				ear_deaf += 60
-			if (prob(50) && !shielded)
+			if(prob(50) && !prob(bomb_protection))
 				Paralyse(10)
 
-	// focus most of the blast on one organ
-	var/obj/item/organ/external/BP = pick(bodyparts)
-	BP.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
+	for(var/i in 1 to 3)
+		var/obj/item/organ/external/BP = pick(bodyparts)
+		apply_damage(b_loss * rand(25, 100) * 0.01, BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
+		apply_damage(f_loss * rand(25, 100) * 0.01, BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
 
-	// distribute the remaining 10% on all limbs equally
-	b_loss *= 0.1
-	f_loss *= 0.1
+	// minor "behind the armor" damage from the blast wave across the entire body
+	b_loss *= 0.25
+	f_loss *= 0.25
 
-	var/weapon_message = "Explosive Blast"
-	take_overall_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
+	take_overall_damage(b_loss, f_loss, used_weapon = weapon_message)
 
 /mob/living/carbon/human/airlock_crush_act()
 	..()
@@ -401,8 +391,9 @@
 			regenerating_bodypart = null
 
 /mob/living/carbon/human/restrained(check_type = ARMS)
-	if ((check_type & ARMS) && handcuffed)
-		return TRUE
+	if (check_type & ARMS)
+		if(handcuffed || istype(buckled, /obj/structure/stool/bed/nest))
+			return TRUE
 	if ((check_type & LEGS) && legcuffed)
 		return TRUE
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
@@ -1133,56 +1124,6 @@
 
 	visible_message("<span class='notice'>\The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!</span>", "<span class='notice'>You change your appearance!</span>", "<span class='warning'>Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!</span>")
 
-/mob/living/carbon/human/proc/remotesay() //#Z2
-	set name = "Project mind"
-	set category = "Superpower"
-
-	if(stat!=CONSCIOUS)
-		reset_view(0)
-		remoteview_target = null
-		return
-
-	if(!(REMOTE_TALK in src.mutations))
-		src.verbs -= /mob/living/carbon/human/proc/remotesay
-		return
-
-	var/list/names = list()
-	var/list/creatures = list()
-	var/list/namecounts = list()
-
-	var/turf/src_turf = get_turf(src)
-	if(!src_turf)
-		return
-
-	for(var/mob/living/carbon/M as anything in carbon_list)
-		var/name = M.real_name
-		if(name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		var/turf/temp_turf = get_turf(M)
-		if(!temp_turf || temp_turf.z != src_turf.z)
-			continue
-		creatures[name] += M
-
-	var/mob/target = input ("Who do you want to project your mind to ?") as null|anything in creatures
-	if(isnull(target))
-		return
-
-	var/say = sanitize(input("What do you wish to say"))
-	if(!say)
-		return
-	var/mob/T = creatures[target]
-	if(REMOTE_TALK in T.mutations)
-		to_chat(T, "<span class='notice'>You hear [src.real_name]'s voice: [say]</span>")
-	else
-		to_chat(T, "<span class='notice'>You hear a voice that seems to echo around the room: [say]</span>")
-	to_chat(usr, "<span class='notice'>You project your mind into [T.real_name]: [say]</span>")
-	to_chat(observer_list, "<i>Telepathic message from <b>[src]</b> to <b>[T]</b>: [say]</i>")
-	log_say("Telepathic message from [key_name(src)] to [key_name(T)]: [say]")
-
 /mob/living/carbon/human/proc/remoteobserve()
 	set name = "Remote View"
 	set category = "Superpower"
@@ -1276,6 +1217,14 @@
 	if(!IO.is_bruised())
 		custom_pain("You feel a stabbing pain in your chest!", 1)
 		IO.damage = IO.min_bruised_damage
+
+/mob/living/carbon/human/proc/rupture_heart()
+	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
+
+	if(!IO || IO.is_robotic())
+		return
+
+	IO.damage = max(IO.damage, IO.min_broken_damage)
 
 /*
 /mob/living/carbon/human/verb/simulate()
@@ -1904,7 +1853,7 @@
 	if(HAS_TRAIT(src, TRAIT_NO_BLOOD)) // this checks for ipc/dionea/etc., but probably we should check for can_breathe and lungs
 		return
 
-	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT)
+	if(stat == DEAD && world.time - timeofdeath >= DEFIB_TIME_LIMIT)
 		to_chat(user, "<span class='notice'>It seems [src] is far too gone to be reanimated... Your efforts are futile.</span>")
 		return
 
@@ -2050,11 +1999,14 @@
 
 	var/new_w_class = initial(w_class)
 
-	if(SMALLSIZE in mutations)
-		new_w_class -= 1
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SMOLL))
+		new_w_class = SIZE_MINUSCULE
+	else
+		if(SMALLSIZE in mutations)
+			new_w_class -= 1
 
-	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
-		new_w_class += 1
+		if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
+			new_w_class += 1
 
 	w_class = new_w_class
 
@@ -2250,16 +2202,6 @@
 		update_inv_slot(SLOT_GLOVES)
 		germ_level = 0
 
-/mob/living/carbon/human/pickup_ore()
-	var/turf/simulated/floor/F = get_turf(src)
-	var/obj/item/weapon/storage/bag/ore/B
-	for(var/obj/item/weapon/storage/bag/ore/bag in list(l_store , r_store, l_hand, r_hand, belt, s_store))
-		B = bag
-		if(B.max_storage_space < B.storage_space_used() + SIZE_TINY)
-			continue
-		F.attackby(B, src)
-		break
-
 /mob/living/carbon/human/proc/randomize_appearance()
 	gender = pick(MALE, FEMALE)
 
@@ -2356,11 +2298,11 @@
 		return
 	return md5(dna.uni_identity)
 
-/mob/living/carbon/human/try_wrap_up(texture_name = "cardboard", details_name = null)
+/mob/living/carbon/human/try_wrap_up(wrap_type)
 	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
 	P.icon_state = "deliveryhuman"
 
-	P.add_texture(texture_name, details_name)
+	P.add_texture(wrap_type)
 
 	if(client)
 		client.perspective = EYE_PERSPECTIVE

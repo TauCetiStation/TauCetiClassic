@@ -365,10 +365,9 @@
 	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR)
 
 /datum/uplink_item/dangerous/gygax/special_conditions(uplink_type)
-	if(uplink_type == UPLINK_TYPE_NUCLEAR)
-		return TRUE
-	if(HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS) && uplink_type == UPLINK_TYPE_TRAITOR)
-		cost = 20
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS))
+		cost *= 0.5
+	if((uplink_type == UPLINK_TYPE_NUCLEAR) || (HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS) && uplink_type == UPLINK_TYPE_TRAITOR))
 		return TRUE
 	return FALSE
 
@@ -379,6 +378,10 @@
 	item = /obj/mecha/combat/marauder/mauler
 	cost = 60
 	uplink_types = list(UPLINK_TYPE_NUCLEAR)
+
+/datum/uplink_item/dangerous/mauler/special_conditions(uplink_type)
+	if(HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS))
+		cost *= 0.5
 
 /datum/uplink_item/dangerous/syndieborg
 	name = "Syndicate Robot"
@@ -638,13 +641,6 @@
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 2
 	uplink_types = list(UPLINK_TYPE_NUCLEAR)
-/*
-/datum/uplink_item/stealthy_weapons/silencer
-	name = "Stetchkin Silencer"
-	desc = "Fitted for use on the Stetchkin pistol, this silencer will make its shots quieter when equipped onto it."
-	item = /obj/item/weapon/silencer
-	cost = 2
-	uplink_types = list(UPLINK_TYPE_NUCLEAR) */
 
 // STEALTHY TOOLS
 
@@ -702,9 +698,9 @@
 	uplink_types = list(UPLINK_TYPE_NUCLEAR, UPLINK_TYPE_TRAITOR, UPLINK_TYPE_DEALER)
 
 /datum/uplink_item/stealthy_tools/syndigolashes
-	name = "No-Slip Brown Shoes"
-	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces."
-	item = /obj/item/clothing/shoes/syndigaloshes
+	name = "Anti-Slip Soles"
+	desc = "A pair of rubberized soles that attach to any footwear and let you run on wet floors. Click them on your shoes to install, alt-click the shoes to pry them off. They do not work on lubricated surfaces."
+	item = /obj/item/noslip_sole
 	cost = 1
 	uplink_types = list(UPLINK_TYPE_TRAITOR)
 
@@ -1231,12 +1227,12 @@
 	name = "Mosin-Nagant Rifle"
 	desc = "A simple yet powerful bolt-action rifle chambered in 7.74."
 	item = /obj/item/weapon/gun/projectile/shotgun/bolt_action
-	cost = 4
+	cost = 2
 
 /datum/uplink_item/revolution/mosin_ammo
-	name = "Mosin-Nagant Clip"
-	desc = "A simple clip of 7.74 ammo for a simple rifle."
-	item = /obj/item/ammo_box/magazine/a774clip
+	name = "Mosin-Nagant Ammo Box"
+	desc = "A box containing several 5-round stripper clips of 7.74mm ammunition for the Mosin-Nagant bolt-action rifle."
+	item = /obj/item/weapon/storage/box/a774clip
 	cost = 1
 
 /datum/uplink_item/revolution/stechkin

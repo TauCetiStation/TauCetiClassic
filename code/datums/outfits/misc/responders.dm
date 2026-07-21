@@ -35,7 +35,6 @@
 /datum/outfit/responders/nanotrasen_ert/security
 	name = "Responders: NT ERT Security"
 	suit = /obj/item/clothing/suit/space/rig/ert/security
-	head = /obj/item/clothing/head/helmet/space/rig/ert/security
 	back = /obj/item/weapon/storage/backpack/ert/security
 
 	assignment = "Emergency Response Team Security"
@@ -58,7 +57,6 @@
 /datum/outfit/responders/nanotrasen_ert/leader
 	name = "Responders: NT ERT Leader"
 	suit = /obj/item/clothing/suit/space/rig/ert/commander
-	head = /obj/item/clothing/head/helmet/space/rig/ert/commander
 	back = /obj/item/weapon/storage/backpack/ert/commander
 	id = /obj/item/weapon/card/id/centcom/ert/leader
 
@@ -97,7 +95,6 @@
 /datum/outfit/responders/nanotrasen_ert/engineer
 	name = "Responders: NT ERT Engineer"
 	suit = /obj/item/clothing/suit/space/rig/ert/engineer
-	head = /obj/item/clothing/head/helmet/space/rig/ert/engineer
 	back = /obj/item/weapon/storage/backpack/ert/engineer
 
 	belt = /obj/item/weapon/storage/belt/utility/cool
@@ -113,7 +110,6 @@
 /datum/outfit/responders/nanotrasen_ert/engineer/ect
 	name = "Responders: NT ERT Engineer (ECT)"
 	suit = /obj/item/clothing/suit/space/rig/ert/engineer
-	head = /obj/item/clothing/head/helmet/space/rig/ert/engineer
 	back = /obj/item/weapon/storage/backpack/ert/engineer
 
 	belt = /obj/item/weapon/storage/belt/utility/cool
@@ -128,14 +124,13 @@
 	name = "Responders: NT ERT Medic"
 	glasses = /obj/item/clothing/glasses/hud/health/night
 	suit = /obj/item/clothing/suit/space/rig/ert/medical
-	head = /obj/item/clothing/head/helmet/space/rig/ert/medical
 	back = /obj/item/weapon/storage/backpack/ert/medical
 
 	belt = /obj/item/weapon/storage/belt/medical/full
 
 	suit_store = /obj/item/weapon/gun/medbeam
 
-	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/bodybag/cryobag = 2, /obj/item/weapon/storage/box/bodybags, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/storage/firstaid/adv, /obj/item/weapon/shockpaddles/standalone)
+	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/bodybag/cryobag = 2, /obj/item/weapon/storage/box/bodybags, /obj/item/weapon/reagent_containers/syringe, /obj/item/weapon/storage/firstaid/adv, /obj/item/weapon/shockpaddles/standalone, /obj/item/weapon/melee/baton)
 
 	assignment = "Emergency Response Team Medic"
 
@@ -143,7 +138,8 @@
 	name = "Responders: NT ERT Medic (EMT)"
 
 	l_pocket = /obj/item/weapon/storage/pouch/medical_supply/combat
-
+	backpack_contents = list(/obj/item/weapon/gun/energy/gun/nuclear, /obj/item/bodybag/cryobag = 2, /obj/item/weapon/storage/box/bodybags, /obj/item/weapon/storage/firstaid/adv, /obj/item/weapon/shockpaddles/standalone, /obj/item/weapon/melee/baton, /obj/item/weapon/gun/projectile/automatic/pistol/glock/spec)
+	r_ear = /obj/item/weapon/reagent_containers/syringe
 	assignment = "Emergency Medical Team Medic"
 
 /datum/outfit/responders/nanotrasen_ert/medic/emt/surgeon
@@ -154,7 +150,6 @@
 
 /datum/outfit/responders/gorlex_marauders
 	name = "Responders: Gorlex Marauder"
-	head = /obj/item/clothing/head/helmet/space/rig/syndi
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/rig/syndi
 	glasses = /obj/item/clothing/glasses/night
@@ -187,7 +182,6 @@
 	H.equip_to_slot(new N(H), SLOT_L_HAND)
 
 /datum/outfit/responders/gorlex_marauders/leader
-	head = /obj/item/clothing/head/helmet/space/rig/syndi/heavy
 	suit = /obj/item/clothing/suit/space/rig/syndi/heavy
 	id = /obj/item/weapon/card/id/syndicate/commander
 	r_hand = /obj/item/device/radio/uplink
@@ -684,14 +678,12 @@
 
 /obj/item/weapon/storage/box/space_suit/security/atom_init()
 	. = ..()
-	new /obj/item/clothing/head/helmet/space/rig/security(src)
 	new /obj/item/clothing/suit/space/rig/security(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 
 /obj/item/weapon/storage/box/space_suit/hos/atom_init()
 	. = ..()
-	new /obj/item/clothing/head/helmet/space/rig/security/hos(src)
 	new /obj/item/clothing/suit/space/rig/security/hos(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)

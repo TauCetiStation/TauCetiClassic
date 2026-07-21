@@ -394,7 +394,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		else
 			power_supply.loc = get_turf(src.loc)
 			user.put_in_hands(power_supply)
-			power_supply.updateicon()
+			power_supply.update_icon()
 			power_supply = null
 			to_chat(user, "<span class='notice'>You pull the powercell out of \the [src].</span>")
 		return
@@ -751,11 +751,11 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 			power_supply.give(500)
 			to_chat(user, "<span class='notice'>You insert [A] in [src], recharging it.</span>")
 			update_icon()
-	else if(istype(A, /obj/item/weapon/storage/bag/ore))
+	else if(istype(A, /obj/item/weapon/storage/bag))
 		if(power_supply.charge >= power_supply.maxcharge)
 			to_chat(user,"<span class='notice'>[src] is already fully charged.</span>")
 			return
-		var/obj/item/weapon/storage/bag/ore/O = A
+		var/obj/item/weapon/storage/bag/O = A
 		for(var/obj/item/weapon/ore/phoron/P in O.contents)
 			if(power_supply.charge >= power_supply.maxcharge)
 				return

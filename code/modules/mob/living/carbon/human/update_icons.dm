@@ -99,6 +99,10 @@ Please contact me on #coderbus IRC. ~Carn x
 */
 
 /obj/item/proc/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
+	var/list/worn_override = list()
+	if(SEND_SIGNAL(src, COMSIG_ITEM_GET_WORN_OVERLAY, worn_override, H, sprite_sheet_slot, layer, bloodied_icon_state) & COMPONENT_WORN_OVERLAY_OVERRIDE)
+		return worn_override[1]
+
 	var/icon_path = def_icon_path
 
 	var/t_state
@@ -188,6 +192,8 @@ Please contact me on #coderbus IRC. ~Carn x
 		update_body(BP_WINGS)
 	if(render_flags & (HIDE_TOP_HAIR | HIDE_FACIAL_HAIR))
 		update_body(BP_HEAD)
+	if(render_flags & HIDE_EARS)
+		update_body(BP_EARS)
 	//if(render_flags & HIDE_UNIFORM) // update_inv_w_uniform should be called by equip anyway
 	//	update_inv_w_uniform()
 
@@ -430,8 +436,10 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing = update_height(standing)
 		standing.pixel_x += species.offset_features[OFFSET_UNIFORM][1]
 		standing.pixel_y += species.offset_features[OFFSET_UNIFORM][2]
-		overlays_standing[UNIFORM_LAYER] = standing
 
+		// Accessories must sit beside the uniform in overlays_standing: as sub-overlays of a
+		// colored poly appearance they lose their layer and get buried under pattern/detail.
+		var/list/uniform_stack = list(standing)
 		for(var/obj/item/clothing/accessory/A in U.accessories)
 			var/t_state = A.icon_state
 			var/icon_path = 'icons/mob/accessory.dmi'
@@ -444,11 +452,13 @@ Please contact me on #coderbus IRC. ~Carn x
 				if(icon_exists(icon_path, "[t_state]_fem"))
 					t_state += "_fem"
 
-			var/image/accessory
-			accessory = image("icon" = icon_path, "icon_state" = t_state, "layer" = -UNIFORM_LAYER + A.layer_priority)
+			var/image/accessory = image("icon" = icon_path, "icon_state" = t_state, "layer" = -UNIFORM_LAYER + 0.1 + A.layer_priority)
 			accessory.color = A.color
+			accessory.appearance_flags |= RESET_COLOR
 			accessory = human_update_offset(accessory, TRUE)
-			standing.add_overlay(accessory)
+			uniform_stack += accessory
+
+		overlays_standing[UNIFORM_LAYER] = uniform_stack
 	else
 		// Automatically drop anything in store / id / belt if you're not wearing a uniform.	//CHECK IF NECESARRY
 		for(var/obj/item/thing in list(r_store, l_store, wear_id, belt))						//

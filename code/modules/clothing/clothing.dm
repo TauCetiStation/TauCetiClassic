@@ -6,6 +6,7 @@
 	var/rig_restrict_helmet = 0 // Stops the user from equipping a rig helmet without attaching it to the suit first.
 	var/gang //Is this a gang outfit?
 	var/species_restricted_locked = FALSE
+	var/list/potentially_protected_organs = list() //These organs can be protected by armor if it has high protective properties
 
 	/*
 		Sprites used when the clothing item is refit. This is done by setting icon_override.
@@ -26,6 +27,12 @@
 	var/can_be_modded = FALSE //modding hardsuits with modkits
 
 	var/flashbang_protection = FALSE
+
+
+/obj/item/clothing/atom_init()
+	. = ..()
+	if(body_parts_covered & UPPER_TORSO)
+		potentially_protected_organs |= O_HEART
 
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)
@@ -177,8 +184,23 @@
 
 /obj/item/clothing/examine(mob/user)
 	..()
+	var/check_stats = armor[MELEE] >= PROTECTION_REQUIRED_FOR_ORGANS || armor[BULLET] >= PROTECTION_REQUIRED_FOR_ORGANS || armor[LASER] >= PROTECTION_REQUIRED_FOR_ORGANS || armor[ENERGY] >= PROTECTION_REQUIRED_FOR_ORGANS
+	if(potentially_protected_organs.len && check_stats)
+		to_chat(user, "<a href='byond://?src=\ref[src];show_organ_protection=1'>Show vital organs protection</a>")
 	for(var/obj/item/clothing/accessory/A in accessories)
 		to_chat(user, "[bicon(A)] \A [A] is attached to it.")
+
+/obj/item/clothing/Topic(href, href_list)
+	..()
+	if(href_list["show_organ_protection"])
+		if(armor[MELEE] >= PROTECTION_REQUIRED_FOR_ORGANS)
+			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>impacts.</b></span>")
+		if(armor[BULLET] >= PROTECTION_REQUIRED_FOR_ORGANS)
+			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>bullets.</b></span>")
+		if(armor[LASER] >= PROTECTION_REQUIRED_FOR_ORGANS)
+			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>lasers.</b></span>")
+		if(armor[ENERGY] >= PROTECTION_REQUIRED_FOR_ORGANS)
+			to_chat(usr, "<span class='notice'>\The [name] can protect vital organs from <b>energy weapons.</b></span>")
 
 /obj/item/clothing/proc/attach_accessory(obj/item/clothing/accessory/A, mob/user)
 	if(can_attach_accessory(A))
@@ -520,7 +542,7 @@ BLIND     // can't see anything
 		3 = Report location
 		*/
 	var/displays_id = 1
-	var/rolled_down = 0
+	var/rolled_down = FALSE
 	var/basecolor
 
 	var/fresh_laundered_until = 0
@@ -530,6 +552,35 @@ BLIND     // can't see anything
 	restricted_accessory_slots = list("utility", "armband")
 
 	dyed_type = DYED_UNIFORM
+
+	// Polychromic jumpsuit. null = ordinary uniform; a style datum = polychromic (see poly_styles.dm).
+	var/datum/poly_style/poly_style = null
+	var/poly_pattern = null            // "1"-"5" / "turt" / null
+	var/list/poly_colors = null        // list("#base_color", "#pattern_color")
+
+var/global/list/poly_color_palette = list(
+	"Фиолетовый"       = "#6e39a9",
+	"Фиолетовый V2"    = "#8d45a9",
+	"Розовый"           = "#ac1b5b",
+	"Светло Розовый"    = "#b25266",
+	"Красный"           = "#ab1f1f",
+	"Светло Красный"    = "#b1372d",
+	"Оранжевый"         = "#b47538",
+	"Золотой"           = "#be902a",
+	"Желтый"            = "#c29700",
+	"Салатовый"         = "#adb834",
+	"Зеленый"           = "#149605",
+	"Зеленый V2"        = "#588142",
+	"Темно Синий"       = "#273b75",
+	"Синий"             = "#186abd",
+	"Светло Синий"      = "#2789cd",
+	"Голубой"           = "#309aa3",
+	"Белый"             = "#ffffff",
+	"Черный"            = "#444444",
+	"Черный V2"         = "#222222",
+	"Черный V3"         = "#000000"
+)
+
 
 /obj/item/clothing/under/equipped(mob/user, slot)
 	..()
@@ -627,12 +678,18 @@ BLIND     // can't see anything
 	set src in usr
 	set_sensors(usr)
 
+/obj/item/clothing/under/proc/can_rollsuit(mob/user)
+	if(!isliving(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	return TRUE
+
 /obj/item/clothing/under/verb/rollsuit()
 	set name = "Roll Down Jumpsuit"
 	set category = "Object"
 	set src in usr
-	if(!isliving(usr)) return
-	if(usr.incapacitated())
+	if(!can_rollsuit(usr))
 		return
 
 	if(copytext(item_state,-2) != "_d")

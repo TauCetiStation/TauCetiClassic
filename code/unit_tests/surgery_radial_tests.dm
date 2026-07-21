@@ -48,6 +48,20 @@
 /datum/surgery_step/surgery_radial_test/low/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	executions++
 
+/datum/surgery_step/ribcage/fix_chest_internal/surgery_radial_silent_test
+	name = "Silent chest warning test"
+	var/warning_calls = 0
+
+/datum/surgery_step/ribcage/fix_chest_internal/surgery_radial_silent_test/necrotic_organs_warning(mob/living/user, mob/living/carbon/human/target, list/dead_organs)
+	warning_calls++
+
+/datum/surgery_step/groin_organs/fixing/surgery_radial_silent_test
+	name = "Silent groin warning test"
+	var/warning_calls = 0
+
+/datum/surgery_step/groin_organs/fixing/surgery_radial_silent_test/necrotic_organs_warning(mob/living/user, mob/living/carbon/human/target, list/dead_organs)
+	warning_calls++
+
 /datum/unit_test/surgery_radial_selected_step
 	name = "SURGERY RADIAL: selected step overrides surgery priority."
 
@@ -121,6 +135,60 @@
 		fail("Selectable steps still use the default name: [jointext(unnamed_steps, ", ")].")
 	else
 		pass("Every selectable surgery step has an explicit name.")
+	return TRUE
+
+/datum/unit_test/surgery_radial_silent_necrotic_warnings
+	name = "SURGERY RADIAL: necrotic organ checks stay silent during discovery."
+
+/datum/unit_test/surgery_radial_silent_necrotic_warnings/proc/check_step(datum/surgery_step/step, target_zone, turf/test_turf)
+	var/mob/living/carbon/human/surgery_radial_test/user = new(test_turf)
+	var/mob/living/carbon/human/surgery_radial_test/target = new(test_turf)
+	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+	if(!BP || !BP.bodypart_organs.len)
+		qdel(user)
+		qdel(target)
+		return "Test target has no internal organ in [target_zone]."
+
+	for(var/obj/item/organ/internal/other_organ as anything in BP.bodypart_organs)
+		other_organ.damage = 0
+		other_organ.status &= ~ORGAN_DEAD
+	var/obj/item/organ/internal/IO = BP.bodypart_organs[1]
+	IO.damage = 1
+	IO.status |= ORGAN_DEAD
+	if(target_zone == BP_CHEST)
+		target.op_stage.ribcage = 2
+	else if(target_zone == BP_GROIN)
+		BP.open = 1
+
+	step.vars["warning_calls"] = 0
+	if(step.can_use(user, target, target_zone, null, TRUE) || step.vars["warning_calls"])
+		qdel(user)
+		qdel(target)
+		return "Silent availability check emitted a necrotic organ warning for [target_zone]."
+	if(step.can_use(user, target, target_zone, null) || step.vars["warning_calls"] != 1)
+		qdel(user)
+		qdel(target)
+		return "Normal availability check did not emit exactly one necrotic organ warning for [target_zone]."
+
+	qdel(user)
+	qdel(target)
+	return null
+
+/datum/unit_test/surgery_radial_silent_necrotic_warnings/start_test()
+	var/datum/surgery_step/ribcage/fix_chest_internal/surgery_radial_silent_test/chest_step = locate(/datum/surgery_step/ribcage/fix_chest_internal/surgery_radial_silent_test) in surgery_steps
+	var/datum/surgery_step/groin_organs/fixing/surgery_radial_silent_test/groin_step = locate(/datum/surgery_step/groin_organs/fixing/surgery_radial_silent_test) in surgery_steps
+	if(!chest_step || !groin_step)
+		fail("Silent warning test steps were not initialized.")
+		return TRUE
+
+	var/turf/test_turf = locate(1, 1, 1)
+	var/error = check_step(chest_step, BP_CHEST, test_turf)
+	if(!error)
+		error = check_step(groin_step, BP_GROIN, test_turf)
+	if(error)
+		fail(error)
+	else
+		pass("Silent discovery suppressed warnings while normal checks preserved them.")
 	return TRUE
 
 /datum/unit_test/surgery_radial_nodrop

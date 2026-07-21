@@ -133,6 +133,10 @@
 	can_hold = list() // any
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
 
+
+/obj/item/weapon/storage/bag/plasticbag/coal
+	startswith = list(/obj/item/weapon/ore/coal = 7)
+
 // -----------------------------
 //        Mining Satchel
 // -----------------------------
@@ -146,6 +150,10 @@
 	w_class = SIZE_SMALL
 	max_storage_space = 100
 	can_hold = list(/obj/item/weapon/ore, /obj/item/bluespace_crystal)
+
+/obj/item/weapon/storage/bag/ore/atom_init()
+	. = ..()
+	AddComponent(/datum/component/autopickup_bag, list(/obj/item/weapon/ore))
 
 // -----------------------------
 //          Plant bag
@@ -200,7 +208,12 @@
 	max_storage_space = 300
 	origin_tech = "bluespace=4;materials=3;engineering=3"
 	icon_state = "satchel_bspace"
+	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_POCKET
 	can_hold = list(/obj/item/weapon/ore, /obj/item/bluespace_crystal, /obj/item/weapon/reagent_containers/food/snacks/grown, /obj/item/seeds, /obj/item/weapon/grown, /obj/item/slime_extract,/obj/item/weapon/reagent_containers/syringe,/obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/glass/beaker, /obj/item/weapon/reagent_containers/blood, /obj/item/weapon/reagent_containers/food/snacks/monkeycube, /obj/item/organ, /obj/item/weapon/reagent_containers/glass/bottle, /obj/item/weapon/reagent_containers/pill, /obj/item/weapon/storage/pill_bottle)
+
+/obj/item/weapon/storage/bag/holding/atom_init()
+	. = ..()
+	AddComponent(/datum/component/autopickup_bag, list(/obj/item/weapon/ore))
 
 // -----------------------------
 //        Sheet Snatcher

@@ -176,6 +176,7 @@
 #define TRAIT_FRIENDLY            "friendly"
 #define TRAIT_VACCINATED          "vaccinated"
 #define TRAIT_DWARF               "dwarf"
+#define TRAIT_MELODIUS_VOICE      "melodious_voice"
 #define TRAIT_NO_SOUL             "no_soul"
 #define TRAIT_SEE_GHOSTS          "see_ghosts"
 #define TRAIT_SYRINGE_FEAR        "syringe_fear"
@@ -210,6 +211,7 @@
 #define TRAIT_AIRBAG_PROTECTION   "airbag_protection"
 #define TRAIT_DYSLALIA            "dyslalia"
 #define TRAIT_NO_BREATHE          "no_breathe"
+#define TRAIT_CURSED_TALK         "cursed_talk"
 /// Mod has DNA that is not compatible with station (genetics) machinery, also prevents changeling from targeting some mobs
 #define TRAIT_INCOMPATIBLE_DNA    "incompatible_dna"
 /// Character can't be cloned
@@ -239,6 +241,7 @@
 #define TRAIT_HUSK                "husk"
 /// no hair, scorched body
 #define TRAIT_BURNT               "burnt"
+#define TRAIT_VENTCRAWLER         "ventcrawler"
 
 
 
@@ -254,6 +257,7 @@
 #define ELEMENT_TRAIT_SKELETON    /datum/element/mutation/skeleton
 #define ELEMENT_TRAIT_SLIME       /datum/element/mutation/slime
 #define ELEMENT_TRAIT_ZOMBIE      /datum/element/mutation/zombie
+#define ELEMENT_TRAIT_SMOLL       /datum/element/mutation/smoll
 
 /*
  * Used for movables that need to be updated, via COMSIG_ENTER_AREA and COMSIG_EXIT_AREA, when transitioning areas.

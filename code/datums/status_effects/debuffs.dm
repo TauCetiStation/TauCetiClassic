@@ -70,8 +70,8 @@
 		return
 	owner.weakened = TRUE
 	ADD_TRAIT(owner, TRAIT_INCAPACITATED, id)
-	owner.drop_from_inventory(owner.l_hand)
-	owner.drop_from_inventory(owner.r_hand)
+	owner.drop_l_hand()
+	owner.drop_r_hand()
 
 /datum/status_effect/incapacitating/weakened/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, id)
@@ -122,8 +122,8 @@
 		if(prob(10) && owner.health)
 			if(!carbon_owner || !carbon_owner.hal_crit)
 				owner.emote("snore")
-	owner.drop_from_inventory(owner.l_hand)
-	owner.drop_from_inventory(owner.r_hand)
+	owner.drop_l_hand()
+	owner.drop_r_hand()
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Сон"
@@ -484,3 +484,26 @@
 	var/mutable_appearance/fake_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "[source.body_zone][5]") //bodyparts[source]
 	owner.healthdoll.add_overlay(fake_overlay)
 	return COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD
+
+//WEAKENED
+/datum/status_effect/cursed_talk
+	id = "cursed_talk"
+	alert_type = /atom/movable/screen/alert/status_effect/cursed_talk
+
+/atom/movable/screen/alert/status_effect/cursed_talk
+	name = "Паранормальный ужас"
+	desc = "Вы против своей воли говорите о ужасных и мерзких вещах."
+	icon_state = "cursed_talk"
+
+/datum/status_effect/cursed_talk/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	if(!.)
+		return
+	duration = world.time + set_duration
+
+/datum/status_effect/cursed_talk/on_apply()
+	ADD_TRAIT(owner, TRAIT_CURSED_TALK, id)
+	return TRUE
+
+/datum/status_effect/cursed_talk/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_CURSED_TALK, id)

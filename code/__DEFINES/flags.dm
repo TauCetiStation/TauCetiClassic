@@ -190,3 +190,8 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define WATER_CHOKE_EPILEPSY (1<<1)
 
 #define STANDARD_PDA_RINGTONE (1<<0)
+
+// SUIT STORAGE BUILD FLAGS
+#define SUIT_STORAGE_BUILD_NONE "none"
+#define SUIT_STORAGE_BUILD_DEFAULT "default"
+#define SUIT_STORAGE_BUILD_SYNDIE "syndie"

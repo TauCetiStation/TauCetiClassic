@@ -131,7 +131,7 @@
 	storage_ui.on_open(user)
 	show_to(user)
 
-// Returns TRUE if user can open the storage and opens it. Returns FALSE otherwise.
+// Returns TRUE if user can open the storage; opens it unless check_only is set.
 /obj/item/weapon/storage/proc/try_open(mob/user, check_only = FALSE)
 	if(!user)
 		return FALSE
@@ -412,6 +412,7 @@
 	hide_from(usr)
 	for(var/obj/item/I in contents)
 		remove_from_storage(I, T, NoUpdate = TRUE)
+		I.on_found(usr)
 	finish_bulk_removal()
 
 /obj/item/weapon/storage/emp_act(severity)

@@ -318,7 +318,7 @@
 		extencion_cd = bound_extencion_cd
 
 	enable()
-	notify_ghosts("Появился портал культа. Нажмите на него, чтобы стать конструктом.", source = src, action = NOTIFY_ATTACK, header = "Cult Portal")
+	notify_ghosts("Появился портал культа. Нажмите на него, чтобы стать конструктом.", source = src, action = NOTIFY_ORBIT, header = "Cult Portal")
 
 /obj/effect/anomaly/bluespace/cult_portal/Destroy()
 	disable()
