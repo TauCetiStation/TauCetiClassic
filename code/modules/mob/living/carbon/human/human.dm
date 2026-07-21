@@ -231,11 +231,12 @@
 
 	var/weapon_message = "Explosive Blast"
 	var/bomb_protection = run_armor_check(null, BOMB)
-	var/b_loss = null //brute damage
-	var/f_loss = null //burn (fire) damage
+	var/brute_damge
+	var/fire_damge
 	switch (severity)
 		if(EXPLODE_DEVASTATE)
-			b_loss += 500
+			brute_damge = 150
+			fire_damge = 200
 			if(!prob(bomb_protection))
 				gib()
 				return
@@ -244,8 +245,8 @@
 				throw_at(target, 200, 4)
 
 		if(EXPLODE_HEAVY)
-			b_loss += 60
-			f_loss += 60
+			brute_damge = 15
+			fire_damge = 30
 
 			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 30
@@ -254,23 +255,36 @@
 				Paralyse(10)
 
 		if(EXPLODE_LIGHT)
-			b_loss += 30
+			brute_damge = 5
+			fire_damge = 10
 			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 15
 				ear_deaf += 60
 			if(prob(50) && !prob(bomb_protection))
 				Paralyse(10)
 
-	for(var/i in 1 to 3)
-		var/obj/item/organ/external/BP = pick(bodyparts)
-		apply_damage(b_loss * rand(25, 100) * 0.01, BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
-		apply_damage(f_loss * rand(25, 100) * 0.01, BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
+	var/list/selecteble_bodyparts = bodyparts.Copy()
+	for(var/i = 0; i < 3; i++)
+		var/obj/item/organ/external/BP = pick(selecteble_bodyparts)
+
+		apply_damage(fire_damge * rand(50, 100) * 0.01, BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
+		apply_damage(brute_damge * rand(50, 100) * 0.01, BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
+		var/BP_bomb_protection = run_armor_check(BP, BOMB)
+		if(!prob(BP_bomb_protection) && (EXPLODE_HEAVY || EXPLODE_DEVASTATE))
+			if(BP)
+				if(prob(50) && !BP.is_broken())
+					BP.fracture()
+					BP.sever_artery()
+				else if(prob(50))
+					BP.droplimb()
+
+		selecteble_bodyparts -= BP
 
 	// minor "behind the armor" damage from the blast wave across the entire body
-	b_loss *= 0.25
-	f_loss *= 0.25
+	brute_damge *= 0.25
+	fire_damge *= 0.25
 
-	take_overall_damage(b_loss, f_loss, used_weapon = weapon_message)
+	take_overall_damage(brute_damge, fire_damge, used_weapon = weapon_message)
 
 /mob/living/carbon/human/airlock_crush_act()
 	..()
