@@ -6,16 +6,16 @@
 	var/datum/edict/cargo_guard/E = get_edict(EDICT_CARGO_GUARD)
 	if(!E)
 		return
-	var/n = get_edict_value(EDICT_CARGO_GUARD)
+	var/guard_amount = get_edict_value(EDICT_CARGO_GUARD)
 	. += "<HR><B>Указ «ЧОП Карго»</B><BR>"
-	. += "Слотов ЧОП: [n] из [CARGO_GUARD_MAX]. Содержание к концу смены: [n * CARGO_GUARD_PRICE]$.<BR>"
-	if(n >= CARGO_GUARD_MAX)
+	. += "Слотов ЧОП: [guard_amount] из [CARGO_GUARD_MAX]. Содержание к концу смены: [guard_amount * CARGO_GUARD_PRICE]$.<BR>"
+	if(guard_amount >= CARGO_GUARD_MAX)
 		return . + "Достигнут максимум слотов.<BR>"
 	if(E.requested)
 		return . + "Заявка на +1 слот в этой смене уже оформлена.<BR>"
 	if(COOLDOWN_FINISHED(E, request_window))
 		return . + "<font color='gray'>Окно заявки закрыто (первые 15 минут смены).</font><BR>"
-	. += "Для +1 слота держать к концу смены: [(n + 1) * CARGO_GUARD_PRICE]$.<BR>"
+	. += "Для +1 слота держать к концу смены: [(guard_amount + 1) * CARGO_GUARD_PRICE]$.<BR>"
 	. += "<A href='byond://?src=\ref[src];request_cargo_guard=1'>ЗАПРОСИТЬ +1 ЧОП НА БУДУЩИЕ СМЕНЫ</A><BR>"
 
 /obj/machinery/computer/cargo/qm/Topic(href, href_list)

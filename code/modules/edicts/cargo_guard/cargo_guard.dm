@@ -41,12 +41,14 @@
 	if(num_players() < CARGO_GUARD_MIN_POP)
 		return
 
-	var/n = get_edict_value(EDICT_CARGO_GUARD)
-	var/money = global.cargo_account ? global.cargo_account.money : 0
+	var/guard_amount = get_edict_value(EDICT_CARGO_GUARD)
+	if(!global.cargo_account)
+		return // no economy to evaluate - leave the law unchanged instead of resetting it
+	var/money = global.cargo_account.money
 
-	if(n > 0)
+	if(guard_amount > 0)
 		// 1. Cargo can no longer fund the guards it has -> full reset.
-		if(money < n * CARGO_GUARD_PRICE)
+		if(money < guard_amount * CARGO_GUARD_PRICE)
 			set_edict_value(EDICT_CARGO_GUARD, 0)
 			return
 		// 2. More security escaped than cargo -> full reset.
@@ -61,10 +63,10 @@
 			return
 
 	// 4. Growth: the QM requested another slot, cargo can fund N+1, and we're below the cap (+1 only).
-	if(n < CARGO_GUARD_MAX && money >= (n + 1) * CARGO_GUARD_PRICE)
+	if(guard_amount < CARGO_GUARD_MAX && money >= (guard_amount + 1) * CARGO_GUARD_PRICE)
 		var/mob/qm = find_qm_with_form_at_centcom()
 		if(qm)
-			set_edict_value(EDICT_CARGO_GUARD, n + 1, qm)
+			set_edict_value(EDICT_CARGO_GUARD, guard_amount + 1, qm)
 	// else: value unchanged - the law is simply maintained for another shift.
 
 // The QM personally delivered the request form to CentComm, alive and not under arrest. Returns the
