@@ -83,6 +83,8 @@
 
 	department_stocks = list("Cargo" = 20)
 
+// The Cargo Guard ("ЧОП Карго") job lives with its edict: code/modules/edicts/cargo_guard/job.dm
+
 /datum/job/mining
 	title = JOB_MINER
 	departments = list(DEP_CIVILIAN)

@@ -549,6 +549,8 @@ SUBSYSTEM_DEF(ticker)
 		to_chat(world, "<span class='notice bold'>OOC-канал включен для всех!</span>")
 		ooc_allowed = TRUE
 
+	SEND_SIGNAL(src, COMSIG_TICKER_DECLARE_COMPLETION)
+
 	var/station_evacuated
 	if(SSshuttle.location > 0)
 		station_evacuated = 1
