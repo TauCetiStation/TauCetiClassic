@@ -25,7 +25,6 @@
 						//If they have and we haven't scanned it with the PDA or gas analyzer then we might just breath whatever they put in it.
 
 	var/reaction_in_progress = FALSE
-	item_action_types = list()
 
 /obj/item/weapon/tank/atom_init()
 	. = ..()
