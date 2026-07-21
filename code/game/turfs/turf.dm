@@ -253,9 +253,9 @@
 			return FALSE
 	return TRUE
 
-/turf/proc/has_container_layer_movable()
-	for(var/atom/movable/on_turf as anything in contents)
-		if(on_turf.layer == CONTAINER_STRUCTURE_LAYER)
+/turf/proc/has_crawl_hiding_structure(mob/living/carbon/crawler)
+	for(var/obj/structure/on_turf as anything in contents)
+		if(on_turf.hides_crawling_mobs && on_turf.buckled_mob != crawler)
 			return TRUE
 	return FALSE
 

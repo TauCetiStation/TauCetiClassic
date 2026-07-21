@@ -360,18 +360,8 @@
 
 /mob/living/carbon/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	var/turf/oldLoc = loc
-	var/was_under_container_layer = layer <= CONTAINER_STRUCTURE_LAYER
 
 	. = ..()
-
-	if(. && crawling && isturf(oldLoc) && isturf(loc))
-		var/turf/currentLoc = loc
-		var/old_loc_has_container_layer = oldLoc.has_container_layer_movable()
-		var/current_loc_has_container_layer = currentLoc.has_container_layer_movable()
-		if(current_loc_has_container_layer)
-			layer = (!old_loc_has_container_layer || was_under_container_layer) ? BELOW_CONTAINERS_LAYER : MOB_LAYER
-		else if(old_loc_has_container_layer && was_under_container_layer)
-			layer = MOB_LAYER
 
 	if(!. || ISDIAGONALDIR(Dir))
 		return .
@@ -389,10 +379,29 @@
 
 	handle_footsteps(oldLoc, NewLoc, Dir)
 
+/mob/living/carbon/Moved(atom/old_loc, dir)
+	. = ..()
+	update_crawl_layer(old_loc)
+
 /mob/living/carbon/SetCrawling(value)
 	. = ..()
-	if(!value && layer <= CONTAINER_STRUCTURE_LAYER)
-		layer = MOB_LAYER
+	update_crawl_layer()
+
+/mob/living/carbon/proc/update_crawl_layer(atom/old_loc)
+	var/was_crawling_under_structure = is_crawling_under_structure
+	var/turf/current_turf = isturf(loc) ? loc : null
+	if(!crawling)
+		is_crawling_under_structure = FALSE
+	else if(current_turf)
+		if(!current_turf.has_crawl_hiding_structure(src))
+			is_crawling_under_structure = FALSE
+		else if(isturf(old_loc) && !old_loc:has_crawl_hiding_structure(src))
+			is_crawling_under_structure = TRUE
+
+	if(current_turf && is_crawling_under_structure)
+		layer = BELOW_CONTAINERS_LAYER
+	else if(was_crawling_under_structure)
+		layer = default_layer
 
 /mob/living/carbon/proc/handle_footsteps(turf/oldLoc, turf/newLoc, Dir)
 	if(lying && !crawling)

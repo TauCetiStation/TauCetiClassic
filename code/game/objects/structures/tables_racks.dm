@@ -20,6 +20,7 @@
 	density = TRUE
 	anchored = TRUE
 	layer = CONTAINER_STRUCTURE_LAYER
+	hides_crawling_mobs = TRUE
 	throwpass = 1	//You can throw objects over this, despite it's density.")
 	climbable = TRUE
 	smooth = SMOOTH_TRUE
