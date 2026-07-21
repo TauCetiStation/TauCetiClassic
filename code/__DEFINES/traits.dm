@@ -172,6 +172,7 @@
 #define TRAIT_AGEUSIA             "ageusia"
 #define TRAIT_DALTONISM           "daltonism"
 #define TRAIT_NO_RUN              "no_run"
+#define TRAIT_NOSLIP              "noslip"
 #define TRAIT_FAST_EQUIP          "fast_equip"
 #define TRAIT_FRIENDLY            "friendly"
 #define TRAIT_VACCINATED          "vaccinated"
@@ -279,6 +280,7 @@
 
 // idk why this exists on TG
 #define GENERIC_TRAIT "generic"
+#define CLOTHING_TRAIT "clothing"
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define QUALITY_TRAIT      "quality"

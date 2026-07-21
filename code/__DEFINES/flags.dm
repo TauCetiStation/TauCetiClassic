@@ -45,8 +45,6 @@ var/global/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define IS_SPINNING            (1<<17)  // Is the thing currently spinning?
 
-#define NOSLIP                 (1<<18)   // Prevents from slipping on wet floors, in space etc.
-
 #define AIR_FLOW_PROTECT       (1<<19)   //  Protects against air flow.
 
 #define NOATTACKANIMATION      (1<<20)   // Removes attack animation

@@ -596,7 +596,8 @@
 	icon_state = "golem"
 	item_state = null
 	canremove = 0
-	flags = ABSTRACT | DROPDEL | NOSLIP | AIR_FLOW_PROTECT
+	flags = ABSTRACT | DROPDEL | AIR_FLOW_PROTECT
+	clothing_traits = list(TRAIT_NOSLIP)
 	unacidable = 1
 
 
