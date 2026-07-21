@@ -199,8 +199,7 @@
 /obj/item/weapon/tank/proc/toggle_internals()
 	if(!iscarbon(loc))
 		return
-	if(internal_switch > world.time)
-		return
+
 	var/mob/living/carbon/C = loc
 	if(C.internal == src)
 		close_internals(C)

@@ -80,7 +80,7 @@
 
 	if(!length(tanks))
 		to_chat(user, "You didn`t have some tank.")
-		return
+		return FALSE
 
 	var/choose
 
@@ -91,14 +91,17 @@
 
 	if(!choose)
 		to_chat(user, "You didn`t choose some tank.")
-		return
+		return FALSE
 
 	var/obj/item/weapon/tank/tank = choose
 	tank.toggle_internals()
+	return TRUE
 
 /obj/item/clothing/mask/breath/proc/detach_tank(mob/user)
 	if(user.internal)
 		user.internal.close_internals(user)
+		return TRUE
+	return FALSE
 
 /obj/item/clothing/mask/breath/proc/update_action_icons(mob/user, status)
 	for(var/datum/action/item_action/hands_free/connect_tank/CT in user.actions)
