@@ -62,9 +62,6 @@
 #define SLOT_EARS          22 // Used in obscured checks
 #define SLOT_NECK          23
 
-#define ADD_CLOTHING_TRAIT(mob, trait) ADD_TRAIT(mob, trait, "[CLOTHING_TRAIT]_[REF(src)]")
-#define REMOVE_CLOTHING_TRAIT(mob, trait) REMOVE_TRAIT(mob, trait, "[CLOTHING_TRAIT]_[REF(src)]")
-
 //sprite sheet slot types(as also seen in update_icon.dm)
 #define SPRITE_SHEET_HELD "held"
 #define SPRITE_SHEET_UNIFORM "uniform"

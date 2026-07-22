@@ -280,7 +280,6 @@
 
 // idk why this exists on TG
 #define GENERIC_TRAIT "generic"
-#define CLOTHING_TRAIT "clothing"
 // common trait sources
 #define ROUNDSTART_TRAIT   "roundstart" //cannot be removed without admin intervention
 #define QUALITY_TRAIT      "quality"
@@ -305,6 +304,7 @@
 
 // trait sources
 #define TRAIT_FROM_ELEMENT(source) "element_trait_[source]"
+#define TRAIT_FROM_CLOTHING(source) "clothing_[REF(source)]"
 #define INNATE_TRAIT "innate"
 #define ADMIN_TRAIT "admin"
 #define EYE_DAMAGE_TRAIT "eye_damage"

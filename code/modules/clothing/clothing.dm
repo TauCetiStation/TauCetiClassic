@@ -40,12 +40,12 @@
 	if(!is_worn_slot(user, slot))
 		return
 	for(var/trait in clothing_traits)
-		ADD_CLOTHING_TRAIT(user, trait)
+		ADD_TRAIT(user, trait, TRAIT_FROM_CLOTHING(src))
 
 /obj/item/clothing/dropped(mob/user)
 	if(ismob(user))
 		for(var/trait in clothing_traits)
-			REMOVE_CLOTHING_TRAIT(user, trait)
+			REMOVE_TRAIT(user, trait, TRAIT_FROM_CLOTHING(src))
 	return ..()
 
 /obj/item/clothing/proc/is_worn_slot(mob/wearer, slot)
@@ -68,7 +68,7 @@
 	if(!istype(wearer) || !is_worn_slot(wearer, slot_equipped))
 		return
 	for(var/trait in trait_or_traits)
-		ADD_CLOTHING_TRAIT(wearer, trait)
+		ADD_TRAIT(wearer, trait, TRAIT_FROM_CLOTHING(src))
 
 /obj/item/clothing/proc/detach_clothing_traits(trait_or_traits)
 	if(!islist(trait_or_traits))
@@ -79,7 +79,7 @@
 	if(!istype(wearer) || !is_worn_slot(wearer, slot_equipped))
 		return
 	for(var/trait in trait_or_traits)
-		REMOVE_CLOTHING_TRAIT(wearer, trait)
+		REMOVE_TRAIT(wearer, trait, TRAIT_FROM_CLOTHING(src))
 
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)
