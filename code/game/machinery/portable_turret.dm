@@ -66,6 +66,8 @@
 
 	var/last_target			//last target fired at, prevents turrets from erratically firing at all valid targets in range
 
+	var/datum/proximity_monitor/proximity_monitor //Proximity cheker, to prevert spam process checks
+
 /obj/machinery/porta_turret/station_default
 	check_n_synth = TRUE
 
@@ -88,7 +90,6 @@
 /obj/machinery/porta_turret/atom_init()
 	..()
 	req_one_access = list(access_security, access_heads)
-
 	//Sets up a spark system
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
@@ -126,6 +127,8 @@
 		eprojectile = projectile
 	shot_sound = t_gun.fire_sound
 	eshot_sound = shot_sound
+
+	proximity_monitor = new(src, anchored ? world.view : null)
 
 	switch(t_gun.type)
 		if(/obj/item/weapon/gun/energy/laser/selfcharging/lasertag/bluetag)
@@ -268,7 +271,7 @@ var/global/list/turret_icons
 	popup.open()
 
 /obj/machinery/porta_turret/is_operational()
-	return !(stat & (NOPOWER | BROKEN)) && anchored
+	return ..() && anchored
 
 /obj/machinery/porta_turret/Topic(href, href_list)
 	. = ..()
@@ -439,24 +442,34 @@ var/global/list/turret_icons
 			return
 	qdel(src)
 
+/obj/machinery/porta_turret/HasProximity(atom/movable/AM)
+	if(enabled && !isprocessing && (iscarbon(AM) || ismecha(AM)))
+		START_PROCESSING(SSmachines, src)
+
 /obj/machinery/porta_turret/process()
 	//the main machinery process
 
 	if(!is_operational())
 		//if the turret has no power or is broken, make the turret pop down if it hasn't already
 		popDown()
-		return
+		return PROCESS_KILL
 
 	if(!enabled)
 		//if the turret is off, make it pop down
 		popDown()
-		return
+		return PROCESS_KILL
+
+	if(!proximity_monitor)
+		proximity_monitor = new(src, anchored ? world.view : null)
 
 	var/list/targets = list()			//list of primary targets
 	var/list/secondarytargets = list()	//targets that are least important
 
 	for(var/mob/M in mobs_in_view(world.view, src))
 		assess_and_assign(M, targets, secondarytargets)
+	if((!targets.len && !secondarytargets.len) || !anchored)
+		popDown()
+		return PROCESS_KILL
 	if(!tryToShootAt(targets))
 		if(!tryToShootAt(secondarytargets)) // if no valid targets, go for secondary targets
 			popDown() // no valid targets, close the cover
@@ -468,8 +481,8 @@ var/global/list/turret_icons
 /obj/machinery/porta_turret/proc/assess_and_assign(mob/living/L, list/targets, list/secondarytargets)
 	if(istype(L.loc, /obj/mecha))
 		var/obj/mecha/mech_target = L.loc
-		if(assess_mechs(mech_target) == TURRET_SECONDARY_TARGET)
-			secondarytargets += mech_target
+		if(assess_mechs(mech_target) == TURRET_PRIORITY_TARGET)
+			targets += mech_target
 	else
 		switch(assess_living(L))
 			if(TURRET_PRIORITY_TARGET)
@@ -487,7 +500,7 @@ var/global/list/turret_icons
 	if(L.faction == "untouchable") //check faction that shouldn't be attacked by mobs
 		return TURRET_NOT_TARGET
 
-	if(get_dist(src, L) > 7)	//if it's too far away, why bother?
+	if(get_dist(src, L) > world.view)	//if it's too far away, why bother?
 		return TURRET_NOT_TARGET
 
 	if(!check_trajectory(L, src) && !istype(L.loc, /obj/mecha))	//check if we have true line of sight and not in mecha.
@@ -714,7 +727,8 @@ var/global/list/turret_icons
 	ailock = TC.ailock
 
 	power_change()
-
+	if(enabled)
+		START_PROCESSING(SSmachines, src)
 /*
 		Portable turret constructions
 		Known as "turret frame"s
