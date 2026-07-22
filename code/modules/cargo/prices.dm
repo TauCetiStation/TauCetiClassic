@@ -311,7 +311,7 @@
 /obj/machinery/recharger/price = 350
 /obj/machinery/shield_gen/price = 11000
 /obj/machinery/shieldgen/price = 700
-/obj/machinery/shieldwallgen/price = 700
+/obj/machinery/power/shieldwallgen/price = 700
 /obj/machinery/the_singularitygen/price = 25223
 /obj/machinery/vending/price = 1500
 
