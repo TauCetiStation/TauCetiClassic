@@ -12218,30 +12218,30 @@
 /area/centcom/specops)
 "aCb" = (
 /obj/structure/rack,
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = 6
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = 6
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = 3
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = 3
 	},
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer,
+/obj/item/clothing/mask/breath/gas/sechailer,
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = -3
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = -3
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = -6
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = -6
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -21513,7 +21513,7 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/backpack/security,
 /obj/item/weapon/reagent_containers/watertank_backpack/janitor,
-/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/breath/gas,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
@@ -25123,7 +25123,7 @@
 /area/velocity/locker)
 "geb" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/breath/gas,
 /obj/item/weapon/storage/backpack/security,
 /obj/item/weapon/storage/belt/utility/full,
 /obj/item/device/multitool,
@@ -25133,7 +25133,7 @@
 /area/centcom/specops)
 "ggb" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/breath/gas,
 /obj/item/weapon/storage/backpack/security,
 /obj/item/weapon/storage/belt/medical,
 /obj/item/weapon/storage/box,
@@ -25581,7 +25581,7 @@
 /area/centcom/specops)
 "gUb" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/breath/gas,
 /obj/item/weapon/storage/backpack/security,
 /obj/item/weapon/storage/belt/security,
 /obj/item/weapon/storage/box,

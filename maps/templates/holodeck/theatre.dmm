@@ -15,7 +15,7 @@
 /obj/item/clothing/head/chicken,
 /obj/item/weapon/reagent_containers/food/snacks/egg,
 /obj/item/clothing/under/owl,
-/obj/item/clothing/mask/gas/owl_mask,
+/obj/item/clothing/mask/breath/gas/owl_mask,
 /turf/simulated/floor/holofloor{
 	icon_state = "cult"
 	},
@@ -26,8 +26,8 @@
 /obj/item/clothing/head/helmet/gladiator,
 /obj/item/clothing/under/sexyclown,
 /obj/item/clothing/under/sexymime,
-/obj/item/clothing/mask/gas/sexyclown,
-/obj/item/clothing/mask/gas/sexymime,
+/obj/item/clothing/mask/breath/gas/sexyclown,
+/obj/item/clothing/mask/breath/gas/sexymime,
 /turf/simulated/floor/holofloor{
 	icon_state = "cult"
 	},
@@ -49,7 +49,7 @@
 /obj/item/clothing/under/soviet,
 /obj/item/clothing/head/ushanka,
 /obj/item/clothing/suit/imperium_monk,
-/obj/item/clothing/mask/gas/cyborg,
+/obj/item/clothing/mask/breath/gas/cyborg,
 /turf/simulated/floor/holofloor{
 	icon_state = "cult"
 	},

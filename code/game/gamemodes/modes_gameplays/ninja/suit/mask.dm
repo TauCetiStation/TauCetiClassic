@@ -1,11 +1,11 @@
 // SPACE NINJA MASK
 
-/obj/item/clothing/mask/gas/voice/space_ninja/atom_init()
+/obj/item/clothing/mask/breath/gas/voice/space_ninja/atom_init()
 	. = ..()
-	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev
-	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/switchm
+	verbs += /obj/item/clothing/mask/breath/gas/voice/space_ninja/proc/togglev
+	verbs += /obj/item/clothing/mask/breath/gas/voice/space_ninja/proc/switchm
 
-/obj/item/clothing/mask/gas/voice/space_ninja/proc/togge_huds()
+/obj/item/clothing/mask/breath/gas/voice/space_ninja/proc/togge_huds()
 	set name = "Toggle rat-HUD" // Lore name for antagonists
 	set desc = "Toggles the huds, who see the soul of people."
 	set category = "Ninja Equip"
@@ -21,7 +21,7 @@
 			var/datum/atom_hud/antag/H = hud
 			H.remove_hud_from(usr)
 
-/obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev()
+/obj/item/clothing/mask/breath/gas/voice/space_ninja/proc/togglev()
 	set name = "Toggle Voice"
 	set desc = "Toggles the voice synthesizer on or off."
 	set category = "Ninja Equip"
@@ -49,7 +49,7 @@
 		voice = "Unknown"
 	return
 
-/obj/item/clothing/mask/gas/voice/space_ninja/proc/switchm()
+/obj/item/clothing/mask/breath/gas/voice/space_ninja/proc/switchm()
 	set name = "Switch Mode"
 	set desc = "Switches between Night Vision, Meson, or Thermal vision modes."
 	set category = "Ninja Equip"
@@ -74,7 +74,7 @@
 			U.sight &= ~SEE_TURFS
 			to_chat(U, "Switching mode to <B>Scouter</B>.")
 
-/obj/item/clothing/mask/gas/voice/space_ninja/examine(mob/user)
+/obj/item/clothing/mask/breath/gas/voice/space_ninja/examine(mob/user)
 	..()
 	var/mode
 	switch(mode)

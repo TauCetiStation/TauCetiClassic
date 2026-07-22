@@ -40,7 +40,7 @@
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/head/hardhat/red(src)
 	new /obj/item/weapon/tank/air(src)
-	new /obj/item/clothing/mask/gas/coloured(src)
+	new /obj/item/clothing/mask/breath/gas/coloured(src)
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/clothing/head/soft/cargo(src)
 	new /obj/item/weapon/mining_voucher(src)

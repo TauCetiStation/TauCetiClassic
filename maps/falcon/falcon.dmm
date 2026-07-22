@@ -1111,7 +1111,7 @@
 "abV" = (
 /obj/structure/rack,
 /obj/item/weapon/tank/oxygen,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "warn"
@@ -1135,7 +1135,7 @@
 /area/station/maintenance/portsolar)
 "abX" = (
 /obj/structure/closet/secure_closet/security,
-/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/breath/gas/sechailer,
 /obj/item/weapon/kitchenknife/combat,
 /obj/item/ammo_box/magazine/glock/rubber,
 /obj/item/ammo_box/magazine/glock/rubber,
@@ -3522,7 +3522,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "agc" = (
-/obj/item/clothing/mask/gas/owl_mask,
+/obj/item/clothing/mask/breath/gas/owl_mask,
 /obj/effect/decal/cleanable/dirt,
 /obj/random/foods/food_trash,
 /obj/effect/decal/turf_decal/set_damaged,
@@ -5718,7 +5718,7 @@
 /area/station/maintenance/science)
 "akp" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/mask/gas/coloured{
+/obj/item/clothing/mask/breath/gas/coloured{
 	pixel_x = 7;
 	pixel_y = 9
 	},
@@ -11406,7 +11406,7 @@
 "bJm" = (
 /obj/structure/rack,
 /obj/effect/spawner/lootdrop/maintenance/two,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
@@ -13751,7 +13751,7 @@
 	},
 /obj/structure/table,
 /obj/item/weapon/screwdriver,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "dXb" = (
@@ -15390,7 +15390,7 @@
 /obj/item/ammo_box/magazine/glock/rubber,
 /obj/item/weapon/tank/jetpack/carbondioxide,
 /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
-/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/breath/gas/sechailer,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkredfull"
@@ -16229,7 +16229,7 @@
 /area/station/security/lobby)
 "gww" = (
 /obj/structure/closet/secure_closet/security,
-/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/breath/gas/sechailer,
 /obj/item/weapon/kitchenknife/combat,
 /obj/item/ammo_box/magazine/glock/rubber,
 /obj/item/ammo_box/magazine/glock/rubber,
@@ -18606,7 +18606,7 @@
 /obj/structure/rack,
 /obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/weapon/storage/belt/utility,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
@@ -22685,7 +22685,7 @@
 /area/station/medical/reception)
 "mvf" = (
 /obj/structure/closet/emcloset,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "mvQ" = (
@@ -31783,7 +31783,7 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/briefcase/inflatable,
 /obj/item/clothing/suit/storage/hazardvest,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "uzx" = (
@@ -32849,7 +32849,7 @@
 /area/asteroid/research_outpost/outpost_misc_lab)
 "vzF" = (
 /obj/structure/closet/secure_closet/security,
-/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/breath/gas/sechailer,
 /obj/item/weapon/kitchenknife/combat,
 /obj/machinery/requests_console/security{
 	pixel_y = 25
@@ -34840,7 +34840,7 @@
 /obj/structure/rack,
 /obj/item/clothing/suit/fire/firefighter,
 /obj/item/weapon/tank/oxygen,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/item/weapon/reagent_containers/spray/extinguisher,
 /obj/item/clothing/head/hardhat/red,
 /obj/item/clothing/glasses/meson,

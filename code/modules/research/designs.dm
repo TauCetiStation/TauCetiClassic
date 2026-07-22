@@ -1808,7 +1808,7 @@ other types of metals and chemistry for reagents).
 	id = "voice_changer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_SILVER = 500)
-	build_path = /obj/item/clothing/mask/gas/voice
+	build_path = /obj/item/clothing/mask/breath/gas/voice
 	category = list("Illegal")
 
 /datum/design/camera_bug
@@ -2635,7 +2635,7 @@ other types of metals and chemistry for reagents).
 	id = "weldingmask"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
-	build_path = /obj/item/clothing/mask/gas/welding
+	build_path = /obj/item/clothing/mask/breath/gas/welding
 	category = list("Equipment")
 
 /datum/design/exwelder

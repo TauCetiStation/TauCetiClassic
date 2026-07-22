@@ -826,7 +826,7 @@
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
 	replace_outfit = list(
-			/obj/item/clothing/mask/gas/syndicate = /obj/item/clothing/mask/gas/vox,
+			/obj/item/clothing/mask/breath/gas/syndicate = /obj/item/clothing/mask/breath/gas/vox,
 			)
 
 	prothesis_icobase = 'icons/mob/human/robotic_vox.dmi'
@@ -840,7 +840,7 @@
 
 	if(H.wear_mask)
 		qdel(H.wear_mask)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/gas/vox(src), SLOT_WEAR_MASK)
 
 /datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.vox_equip(H)
@@ -1567,7 +1567,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem, SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem, SLOT_WEAR_SUIT)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem, SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, SLOT_WEAR_MASK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/gas/golem, SLOT_WEAR_MASK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
 
 	for(var/x in items_to_remove)
@@ -1585,7 +1585,7 @@
 				/obj/item/clothing/head/helmet/space/golem,
 				/obj/item/clothing/suit/space/golem,
 				/obj/item/clothing/shoes/golem,
-				/obj/item/clothing/mask/gas/golem,
+				/obj/item/clothing/mask/breath/gas/golem,
 				/obj/item/clothing/gloves/golem
 				)
 

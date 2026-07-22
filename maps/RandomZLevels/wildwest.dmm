@@ -1960,7 +1960,7 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/suit/space/syndicate/infiltrator,
 /obj/item/clothing/head/helmet/space/syndicate/infiltrator,
-/obj/item/clothing/mask/gas/syndicate,
+/obj/item/clothing/mask/breath/gas/syndicate,
 /obj/item/weapon/tank/oxygen,
 /turf/simulated/shuttle{
 	icon_state = "floor2"
@@ -1984,8 +1984,8 @@
 /area/awaymission/wildwest/mines)
 "oV" = (
 /obj/machinery/door/airlock/vault{
-	locked = 1;
-	dir = 4
+	dir = 4;
+	locked = 1
 	},
 /turf/simulated/floor/engine/cult,
 /area/awaymission/wildwest/vaultdoors)

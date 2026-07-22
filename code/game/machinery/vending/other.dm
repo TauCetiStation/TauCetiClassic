@@ -93,7 +93,7 @@
 	products = list(
 		/obj/item/weapon/occult_pinpointer = 3,
 		/obj/item/device/occult_scanner = 3,
-		/obj/item/clothing/mask/gas/owl_mask = 3,
+		/obj/item/clothing/mask/breath/gas/owl_mask = 3,
 		/obj/item/clothing/mask/pig = 3,
 		/obj/item/clothing/mask/horsehead = 3,
 		/obj/item/clothing/mask/cowmask = 3,
@@ -103,7 +103,7 @@
 	prices = list(
 		/obj/item/weapon/occult_pinpointer = 150,
 		/obj/item/device/occult_scanner = 150,
-		/obj/item/clothing/mask/gas/owl_mask = 100,
+		/obj/item/clothing/mask/breath/gas/owl_mask = 100,
 		/obj/item/clothing/mask/pig = 100,
 		/obj/item/clothing/mask/horsehead = 100,
 		/obj/item/clothing/mask/cowmask = 100,

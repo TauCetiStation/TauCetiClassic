@@ -49,7 +49,7 @@
 			equip_to_slot_or_del(new /obj/item/weapon/circular_saw, SLOT_L_STORE)
 			equip_to_slot_or_del(new /obj/item/weapon/gun/dartgun/vox/medical, SLOT_IN_BACKPACK)
 
-	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox, SLOT_WEAR_MASK)
+	equip_to_slot_or_del(new /obj/item/clothing/mask/breath/gas/vox, SLOT_WEAR_MASK)
 	equip_to_slot_or_del(new /obj/item/device/flashlight, SLOT_R_STORE)
 
 	var/obj/item/weapon/tank/nitrogen/NITRO = new

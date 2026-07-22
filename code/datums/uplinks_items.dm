@@ -712,7 +712,7 @@
 
 /datum/uplink_item/stealthy_tools/voice_changer
 	name = "Voice Changer"
-	item = /obj/item/clothing/mask/gas/voice
+	item = /obj/item/clothing/mask/breath/gas/voice
 	desc = "A conspicuous gas mask that mimics the voice named on your identification card. When no identification is worn, the mask will render your voice unrecognizable."
 	cost = 3
 

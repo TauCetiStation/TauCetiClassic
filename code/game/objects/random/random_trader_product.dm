@@ -208,7 +208,7 @@
 	/obj/item/weapon/storage/box/syndie_kit/chameleon = 5,
 	/obj/item/seeds/kudzuseed = 5,
 	/obj/item/weapon/storage/box/syndie_kit/posters = 3,
-	/obj/item/clothing/mask/gas/swat = 3,
+	/obj/item/clothing/mask/breath/gas/swat = 3,
 	/obj/item/borg/upgrade/syndicate = 5,
 	/obj/item/weapon/grenade/syndieminibomb = 3,
 	/obj/item/weapon/grenade/chem_grenade/acid = 3,

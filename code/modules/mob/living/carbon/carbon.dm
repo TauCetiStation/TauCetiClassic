@@ -103,8 +103,8 @@
 	return null
 
 /mob/living/carbon/proc/handle_external_pre_breathing(datum/gas_mixture/breath)
-	if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
-		var/obj/item/clothing/mask/gas/G = wear_mask
+	if(istype(wear_mask, /obj/item/clothing/mask/breath/gas) && breath)
+		var/obj/item/clothing/mask/breath/gas/G = wear_mask
 		for(var/g in  G.filter)
 			if(breath.gas[g])
 				breath.gas[g] -= breath.gas[g] * G.gas_filter_strength
@@ -1210,8 +1210,8 @@
 		if(!druggy)
 			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
-		var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
+	if(istype(wear_mask, /obj/item/clothing/mask/breath/gas/voice/space_ninja))
+		var/obj/item/clothing/mask/breath/gas/voice/space_ninja/O = wear_mask
 		switch(O.mode)
 			if(0)
 				O.togge_huds()

@@ -600,7 +600,7 @@
 	unacidable = 1
 
 
-/obj/item/clothing/mask/gas/golem
+/obj/item/clothing/mask/breath/gas/golem
 	name = "golem's face"
 	desc = "The imposing face of an adamantine golem."
 	icon_state = "golem"
