@@ -471,6 +471,13 @@
 	for(var/i in 1 to storage_slots)
 		new /obj/item/weapon/match(src)
 
+/obj/item/weapon/storage/box/matches/can_be_inserted(obj/item/I, stop_messages = FALSE)
+	if(istype(I, /obj/item/weapon/match))
+		var/obj/item/weapon/match/match = I
+		if(match.lit || match.burnt)
+			return FALSE
+	return ..()
+
 /obj/item/weapon/storage/box/matches/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/match))
 		var/obj/item/weapon/match/M = I

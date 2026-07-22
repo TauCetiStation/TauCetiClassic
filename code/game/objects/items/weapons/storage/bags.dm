@@ -68,12 +68,12 @@
 	if(.)
 		update_w_class()
 
-/obj/item/weapon/storage/bag/trash/can_be_inserted(obj/item/W, mob/user, stop_messages = FALSE)
+/obj/item/weapon/storage/bag/trash/can_be_inserted(obj/item/W, stop_messages = FALSE)
 	if(istype(loc, /obj/item/weapon/storage))
 		if(!stop_messages)
-			to_chat(user, "<span class='notice'>Take [src] out of [loc] first.</span>")
+			to_chat(usr, "<span class='notice'>Take [src] out of [loc] first.</span>")
 		return FALSE //causes problems if the bag expands and becomes larger than loc can hold, so disallow it
-	return ..()
+	return ..(W, stop_messages)
 
 /obj/item/weapon/storage/bag/trash/proc/update_w_class()
 	w_class = initial(w_class)
@@ -241,7 +241,7 @@
 	var/current = 0
 	for(var/obj/item/stack/sheet/S in contents)
 		current += S.get_amount()
-	if(capacity == current)//If it's full, you're done
+	if(capacity <= current)//If it's full, you're done
 		if(!stop_messages)
 			to_chat(usr, "<span class='warning'>The snatcher is full.</span>")
 		return 0
@@ -251,37 +251,47 @@
 // Modified handle_item_insertion.  Would prefer not to, but...
 /obj/item/weapon/storage/bag/sheetsnatcher/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
 	var/obj/item/stack/sheet/S = W
-	if(!istype(S)) return 0
+	if(!istype(S))
+		return FALSE
 
-	var/amount
-	var/inserted = 0
 	var/current = 0
 	for(var/obj/item/stack/sheet/S2 in contents)
 		current += S2.get_amount()
-	if(capacity < current + S.get_amount())//If the stack will fill it up
-		amount = capacity - current
-	else
-		amount = S.get_amount()
+	var/amount = min(S.get_amount(), capacity - current)
+	if(amount <= 0)
+		return FALSE
 
+	var/inserted = FALSE
 	for(var/obj/item/stack/sheet/sheet in contents)
 		if(S.type == sheet.type) // we are violating the amount limitation because these are not sane objects
-			sheet.amount += amount	// they should only be removed through procs in this file, which split them up.
-			S.amount -= amount
-			inserted = 1
+			sheet.add(amount) // they should only be removed through procs in this file, which split them up.
+			S.use(amount, TRUE)
+			inserted = TRUE
 			break
 
-	if(!inserted || !S.get_amount())
-		usr.remove_from_mob(S)
-		usr.update_icons()	//update our overlays
-		if(!S.get_amount())
-			qdel(S)
+	if(!inserted)
+		if(amount == S.get_amount())
+			if(usr && S.loc == usr)
+				usr.remove_from_mob(S, src)
+				usr.update_icons()
+			else
+				S.forceMove(src)
 		else
-			S.loc = src
+			var/obj/item/stack/sheet/inserted_stack = new S.type(src, amount)
+			inserted_stack.copy_evidences(S)
+			S.use(amount, TRUE)
 
 	if(!NoUpdate)
 		update_ui_after_item_insertion()
 	update_icon()
-	return 1
+	return TRUE
+
+/obj/item/weapon/storage/bag/sheetsnatcher/transfer_item_from(obj/item/weapon/storage/source_storage, obj/item/I, mob/user, NoUpdate = FALSE)
+	. = ..()
+	if(. && !QDELETED(I) && I.loc != src && !QDELETED(source_storage))
+		source_storage.handle_item_insertion(I, prevent_warning = TRUE, NoUpdate = NoUpdate)
+		if(!QDELETED(I) && !QDELETED(source_storage) && I.loc != source_storage)
+			I.forceMove(source_storage)
 
 // Modified quick_empty verb drops appropriate sized stacks
 /obj/item/weapon/storage/bag/sheetsnatcher/quick_empty()
