@@ -14,11 +14,11 @@
 
 /obj/item/clothing/mask/breath/atom_init()
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_ATTACK_SELF, PROC_REF(toggle_breath))
+	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(toggle_breath))
 
 /obj/item/clothing/mask/breath/Destroy()
 	. = ..()
-	UnregisterSignal(src, COMSIG_ITEM_ATTACK_SELF)
+	UnregisterSignal(src, COMSIG_ITEM_EQUIPPED)
 
 /datum/action/item_action/hands_free/connect_tank
 	name = "Adjust mask"
@@ -46,17 +46,16 @@
 
 /obj/item/clothing/mask/breath/proc/toggle_breath(source, mob/user = usr)
 	if(!user.incapacitated())
-		if(adjustible) // if mask on face but pushed down
-			update_hanging()
-
 		if(src == user.wear_mask)
+			if(adjustible) // if mask on face but pushed down
+				update_hanging()
 			if(!active)
 				connect_tank(user)
 			else
 				detach_tank(user)
 
 			update_item_actions()
-		active = !active
+			active = !active
 
 /obj/item/clothing/mask/breath/proc/update_hanging()
 	if(!active)
