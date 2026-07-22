@@ -443,7 +443,7 @@ var/global/list/turret_icons
 	qdel(src)
 
 /obj/machinery/porta_turret/HasProximity(atom/movable/AM)
-	if(!isprocessing && (iscarbon(AM) || ismecha(AM)))
+	if(enabled && !isprocessing && (iscarbon(AM) || ismecha(AM)))
 		START_PROCESSING(SSmachines, src)
 
 /obj/machinery/porta_turret/process()
@@ -458,6 +458,7 @@ var/global/list/turret_icons
 		//if the turret is off, make it pop down
 		popDown()
 		return PROCESS_KILL
+
 	if(!proximity_monitor)
 		proximity_monitor = new(src, anchored ? world.view : null)
 
