@@ -1,19 +1,12 @@
 /atom
 	// To prevent the item from being forever invisible, check this flag. If it's TRUE, don't animate.
 	var/is_invis_anim = FALSE
-	// Guards do_squish_animation() against re-entry, which would otherwise capture a mid-squish transform and break it permanently.
-	var/is_squishing = FALSE
 	//For handling persistent filters
 
 // A small squish to telegraph that something opened or shuffled its contents.
 /atom/movable/proc/do_squish_animation()
-	if(is_squishing)
-		return
-	is_squishing = TRUE
-	var/matrix/rest = matrix(transform)
 	animate(src, time = 1.5, transform = matrix(transform).Scale(1.07, 0.9))
-	animate(time = 2, transform = rest)
-	VARSET_IN(src, is_squishing, FALSE, 3.5)
+	animate(time = 2, transform = matrix(transform).Scale(1/1.07, 1/0.9))
 
 /atom/proc/before_shake_animation(intensity, time, intensity_dropoff, list/viewers)
 	return

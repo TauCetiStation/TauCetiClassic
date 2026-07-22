@@ -241,10 +241,11 @@
 	add_overlay(crayon_overlays)
 	return
 
-/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/storage/fancy/crayons/can_be_inserted(obj/item/I, stop_messages = FALSE)
 	if(istype(I, /obj/item/toy/crayon/chalk) || istype(I, /obj/item/toy/crayon/spraycan))
-		to_chat(user, "\The [I] is too bulky to be contained in [src].")
-		return
+		if(!stop_messages)
+			to_chat(usr, "\The [I] is too bulky to be contained in [src].")
+		return FALSE
 	return ..()
 
 /*

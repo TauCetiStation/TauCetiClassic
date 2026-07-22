@@ -108,16 +108,13 @@
 
 // Dumps all contents into another storage container via drag and drop.
 /obj/item/weapon/storage/proc/dump_into(obj/item/weapon/storage/target, mob/M)
-	if(target == src || !M.CanUseMouseDrop(target, src))
+	if(!can_dump_into(target, M))
 		return
-
-	if(istype(src, /obj/item/weapon/storage/lockbox))
-		var/obj/item/weapon/storage/lockbox/L = src
-		if(L.locked)
-			return
 
 	if(!contents.len)
 		to_chat(M, "<span class='notice'>[src] is empty.</span>")
+		return
+	if(M.is_busy(target))
 		return
 
 	// Collect what actually fits before we commit to the transfer.
@@ -135,23 +132,27 @@
 	to_chat(M, "<span class='notice'>You start dumping the contents of [src] into [target]...</span>")
 	if(!do_after(M, 0.5 SECONDS, target = target))
 		return
+	if(!can_dump_into(target, M))
+		return
 
 	var/inserted = 0
+	var/attempted_transfer = FALSE
 	for(var/obj/item/I in to_dump)
 		if(QDELETED(I) || I.loc != src)
 			continue
 		if(!target.can_be_inserted(I, stop_messages = TRUE))
 			continue
-		remove_from_storage(I, null, NoUpdate = TRUE)
-		target.handle_item_insertion(I, prevent_warning = TRUE, NoUpdate = TRUE)
-		I.add_fingerprint(M)
-		inserted++
+		attempted_transfer = TRUE
+		if(target.transfer_item_from(src, I, M, NoUpdate = TRUE))
+			inserted++
+
+	if(attempted_transfer)
+		finish_bulk_removal()
 
 	if(!inserted)
 		to_chat(M, "<span class='notice'>You fail to dump anything from [src] into [target].</span>")
 		return
 
-	finish_bulk_removal()
 	target.update_ui_after_item_insertion()
 	target.add_fingerprint(M)
 	if(length(use_sound))
@@ -159,6 +160,11 @@
 	M.visible_message(
 		"<span class='notice'>[M] dumps the contents of [src] into [target].</span>",
 		"<span class='notice'>You dump the contents of [src] into [target].</span>")
+
+/obj/item/weapon/storage/proc/can_dump_into(obj/item/weapon/storage/target, mob/M)
+	if(!M || QDELETED(src) || QDELETED(target) || target == src)
+		return FALSE
+	return M.CanUseMouseDrop(target, src) && try_open(M, check_only = TRUE) && target.try_open(M, check_only = TRUE)
 
 /obj/item/weapon/storage/proc/return_inv()
 	var/list/L = list(  )
@@ -191,13 +197,14 @@
 	show_to(user)
 
 // Returns TRUE if user can open the storage and opens it. Returns FALSE otherwise.
-/obj/item/weapon/storage/proc/try_open(mob/user)
+/obj/item/weapon/storage/proc/try_open(mob/user, check_only = FALSE)
 	if(!user)
 		return FALSE
 	if(!user.in_interaction_vicinity(src))
 		return FALSE
 
-	open(user)
+	if(!check_only)
+		open(user)
 	return TRUE
 
 /obj/item/weapon/storage/proc/prepare_ui()
@@ -293,6 +300,32 @@
 		return FALSE
 
 	return TRUE
+
+// Checks storage-specific insertion rules before moving the item.
+/obj/item/weapon/storage/proc/try_insert(obj/item/I, mob/user, prevent_warning = FALSE, NoUpdate = FALSE)
+	if(!can_be_inserted(I, stop_messages = prevent_warning))
+		return FALSE
+
+	if((istype(I, /obj/item/weapon/packageWrap) || istagger(I)) && (!user || !(src in user)))
+		return FALSE
+
+	I.add_fingerprint(user)
+	return handle_item_insertion(I, prevent_warning, NoUpdate)
+
+// Moves an item between storages and restores it to the source if insertion fails.
+/obj/item/weapon/storage/proc/transfer_item_from(obj/item/weapon/storage/source_storage, obj/item/I, mob/user, NoUpdate = FALSE)
+	if(!source_storage || source_storage == src || QDELETED(source_storage) || QDELETED(I) || I.loc != source_storage)
+		return FALSE
+	if(!source_storage.remove_from_storage(I, null, NoUpdate))
+		return FALSE
+	if(try_insert(I, user, prevent_warning = TRUE, NoUpdate = NoUpdate))
+		return TRUE
+
+	if(!QDELETED(I) && !QDELETED(source_storage))
+		source_storage.handle_item_insertion(I, prevent_warning = TRUE, NoUpdate = NoUpdate)
+		if(!QDELETED(I) && !QDELETED(source_storage) && I.loc != source_storage)
+			I.forceMove(source_storage)
+	return FALSE
 
 // low level proc just to handle Move/ForceMove
 /obj/item/weapon/storage/Entered(obj/item/mover)
@@ -398,15 +431,7 @@
 		to_chat(user, "<span class='notice'>You're a robot. No.</span>")
 		return //Robots can't interact with storage items. FALSE
 
-	if(!can_be_inserted(I))
-		return FALSE
-
-	if((istype(I, /obj/item/weapon/packageWrap) || istagger(I)) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
-		return FALSE
-
-	I.add_fingerprint(user)
-	handle_item_insertion(I)
-	return TRUE
+	return try_insert(I, user)
 
 /obj/item/weapon/storage/dropped(mob/user)
 	..()
