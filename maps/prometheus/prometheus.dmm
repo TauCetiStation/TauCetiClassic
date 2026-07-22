@@ -32568,7 +32568,7 @@
 	},
 /area/station/aisat/antechamber_interior)
 "hhz" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
@@ -49276,23 +49276,23 @@
 "lsZ" = (
 /obj/structure/rack,
 /obj/item/ammo_box/shotgun/beanbag{
-	pixel_y = 2;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 2
 	},
 /obj/item/ammo_box/shotgun/beanbag{
-	pixel_y = -2;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = -2
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
 /obj/item/ammo_box/magazine/plasma{
-	pixel_y = -2;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = -2
 	},
 /obj/item/ammo_box/magazine/plasma{
-	pixel_y = 2;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -68232,7 +68232,7 @@
 /turf/simulated/floor/wood,
 /area/station/security/lawyer_office)
 "qeY" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /turf/simulated/floor/engine,
 /area/station/rnd/misc_lab)
 "qfb" = (
@@ -80798,7 +80798,7 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "tnQ" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "tnU" = (

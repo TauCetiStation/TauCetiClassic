@@ -8560,7 +8560,7 @@
 /turf/simulated/floor/grid_floor,
 /area/asteroid/mine/production)
 "yi" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
@@ -9208,7 +9208,7 @@
 /turf/simulated/floor/grid_floor,
 /area/asteroid/mine/production)
 "Au" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},

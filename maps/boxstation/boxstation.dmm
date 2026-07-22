@@ -14761,8 +14761,8 @@
 	icon_state = "1-8"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_line";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_line"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -14783,8 +14783,8 @@
 	icon_state = "0-4"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_line";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_line"
 	},
 /obj/machinery/light/smart{
 	dir = 1
@@ -15461,8 +15461,8 @@
 	icon_state = "loadingarea"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_corner"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
@@ -16157,8 +16157,8 @@
 	icon_state = "loadingarea"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_corner"
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -16285,8 +16285,8 @@
 /area/station/civilian/toilet)
 "aBQ" = (
 /obj/effect/decal/turf_decal/metal{
-	icon_state = "siding_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_corner"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 8;
@@ -16336,8 +16336,8 @@
 /area/station/security/prison)
 "aBV" = (
 /obj/effect/decal/turf_decal/metal{
-	icon_state = "siding_corner";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_corner"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 8;
@@ -16518,8 +16518,8 @@
 "aCp" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_line";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_line"
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -16558,8 +16558,8 @@
 /area/station/ai_monitored/eva)
 "aCv" = (
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_line";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_line"
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -16598,8 +16598,8 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 4;
-	color = "#b79044"
+	color = "#b79044";
+	dir = 4
 	},
 /obj/machinery/suit_storage_unit/globose{
 	filled = 1
@@ -16638,8 +16638,8 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 8;
-	color = "#b79044"
+	color = "#b79044";
+	dir = 8
 	},
 /obj/machinery/alarm{
 	pixel_y = 23
@@ -16959,8 +16959,8 @@
 /area/station/ai_monitored/eva)
 "aDn" = (
 /obj/effect/decal/turf_decal/metal{
-	icon_state = "siding_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_corner"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 4;
@@ -17158,8 +17158,8 @@
 "aDJ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_line";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_line"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -18329,8 +18329,8 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_corner";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_corner"
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -18597,8 +18597,8 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_line";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_line"
 	},
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/engine,
@@ -20209,8 +20209,8 @@
 "aJD" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_line";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_line"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable{
@@ -44291,7 +44291,7 @@
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
 "bAb" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
@@ -44301,7 +44301,7 @@
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
 "bAc" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
@@ -50755,8 +50755,8 @@
 /area/station/medical/virology)
 "bLR" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(12);
-	dir = 4
+	dir = 4;
+	req_access = list(12)
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -53709,7 +53709,7 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "bQX" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/cable,
 /turf/simulated/floor/engine,
 /area/station/rnd/misc_lab)
@@ -56914,8 +56914,8 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "stand_clear_white";
-	dir = 8
+	dir = 8;
+	icon_state = "stand_clear_white"
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -57464,13 +57464,13 @@
 	},
 /obj/effect/landmark/start/psychiatrist,
 /obj/machinery/light_switch{
-	pixel_y = -27;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = -27
 	},
 /obj/machinery/windowtint{
 	id = "Psycho";
-	pixel_y = -27;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = -27
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood14"
@@ -65898,8 +65898,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
-	req_access = list(64);
-	name = "Psychiatric Office Maintenance"
+	name = "Psychiatric Office Maintenance";
+	req_access = list(64)
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -70290,8 +70290,8 @@
 /obj/random/foods/food_trash,
 /obj/item/weapon/flora/random,
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_line";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_line"
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -70840,8 +70840,8 @@
 /area/station/medical/cmo)
 "dNk" = (
 /obj/structure/fence/metal{
-	dir = 4;
-	color = "#b79044"
+	color = "#b79044";
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -74854,8 +74854,8 @@
 /area/station/medical/hallway)
 "hKf" = (
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_corner"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -74883,8 +74883,8 @@
 /area/shuttle/supply/station)
 "hMb" = (
 /turf/simulated/floor{
-	icon_state = "medstairs_wide";
-	dir = 8
+	dir = 8;
+	icon_state = "medstairs_wide"
 	},
 /area/station/ai_monitored/eva)
 "hNO" = (
@@ -75140,16 +75140,16 @@
 "hXz" = (
 /obj/machinery/telescience_jammer,
 /obj/effect/decal/turf_decal/metal{
-	icon_state = "siding_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_corner"
 	},
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "warn"
 	},
 /obj/effect/decal/turf_decal/metal{
-	icon_state = "siding_corner";
-	dir = 4
+	dir = 4;
+	icon_state = "siding_corner"
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
@@ -76764,8 +76764,8 @@
 /area/station/maintenance/disposal)
 "jyB" = (
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_line";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_line"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -79238,8 +79238,8 @@
 	icon_state = "loadingarea"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_corner";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_corner"
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/eva)
@@ -79282,8 +79282,8 @@
 /area/station/medical/cmo)
 "lSp" = (
 /turf/simulated/floor{
-	icon_state = "medstairs_wide";
-	dir = 4
+	dir = 4;
+	icon_state = "medstairs_wide"
 	},
 /area/station/ai_monitored/eva)
 "lTb" = (
@@ -79397,8 +79397,8 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 8;
-	color = "#b79044"
+	color = "#b79044";
+	dir = 8
 	},
 /obj/structure/fence/metal{
 	color = "#b79044"
@@ -79597,7 +79597,7 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "mfF" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "mgb" = (
@@ -80000,8 +80000,8 @@
 /area/station/civilian/locker)
 "mzY" = (
 /turf/simulated/floor{
-	icon_state = "medstairs2_wide";
-	dir = 8
+	dir = 8;
+	icon_state = "medstairs2_wide"
 	},
 /area/station/ai_monitored/eva)
 "mAO" = (
@@ -80783,8 +80783,8 @@
 /area/station/engineering/singularity)
 "nsX" = (
 /turf/simulated/floor{
-	icon_state = "medstairs2_wide";
-	dir = 4
+	dir = 4;
+	icon_state = "medstairs2_wide"
 	},
 /area/station/ai_monitored/eva)
 "ntb" = (
@@ -81055,8 +81055,8 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 8;
-	color = "#b79044"
+	color = "#b79044";
+	dir = 8
 	},
 /obj/effect/decal/turf_decal/metal{
 	icon_state = "siding_line"
@@ -81692,8 +81692,8 @@
 	icon_state = "warn"
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_line";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_line"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -81982,16 +81982,16 @@
 	icon_state = "warn"
 	},
 /obj/effect/decal/turf_decal/metal{
-	icon_state = "siding_line";
+	dir = 1;
+	icon_state = "siding_line"
+	},
+/obj/structure/fence/metal{
+	color = "#b79044";
 	dir = 1
 	},
 /obj/structure/fence/metal{
-	dir = 1;
-	color = "#b79044"
-	},
-/obj/structure/fence/metal{
-	dir = 8;
-	color = "#b79044"
+	color = "#b79044";
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
@@ -82247,20 +82247,20 @@
 /area/station/maintenance/cargo)
 "oWh" = (
 /obj/structure/fence/metal{
-	dir = 4;
-	color = "#b79044"
+	color = "#b79044";
+	dir = 4
 	},
 /obj/structure/fence/metal{
-	dir = 1;
-	color = "#b79044"
+	color = "#b79044";
+	dir = 1
 	},
 /obj/effect/decal/turf_decal{
 	dir = 5;
 	icon_state = "warn"
 	},
 /obj/effect/decal/turf_decal/metal{
-	icon_state = "siding_line";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_line"
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
@@ -82798,8 +82798,8 @@
 	icon_state = "warn"
 	},
 /obj/effect/decal/turf_decal/metal{
-	icon_state = "siding_corner";
-	dir = 8
+	dir = 8;
+	icon_state = "siding_corner"
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
@@ -82856,8 +82856,8 @@
 	icon_state = "warn"
 	},
 /obj/structure/fence/metal{
-	dir = 4;
-	color = "#b79044"
+	color = "#b79044";
+	dir = 4
 	},
 /obj/effect/decal/turf_decal/metal{
 	icon_state = "siding_line"
@@ -83105,8 +83105,8 @@
 /obj/machinery/telescience_jammer,
 /obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/turf_decal/metal{
-	icon_state = "siding_corner";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_corner"
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
@@ -85238,8 +85238,8 @@
 	dir = 8
 	},
 /obj/effect/decal/turf_decal/white{
-	icon_state = "siding_line";
-	dir = 1
+	dir = 1;
+	icon_state = "siding_line"
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
@@ -86147,7 +86147,7 @@
 	},
 /area/station/medical/virology)
 "sNO" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
