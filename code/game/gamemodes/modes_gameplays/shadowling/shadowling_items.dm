@@ -35,7 +35,8 @@
 	desc = "Charred-looking feet. They have minature hooks that latch onto flooring."
 	icon_state = "shadowling_shoes"
 	unacidable = 1
-	flags = NOSLIP | ABSTRACT | DROPDEL
+	flags = ABSTRACT | DROPDEL
+	clothing_traits = list(TRAIT_NOSLIP)
 	canremove = 0
 
 

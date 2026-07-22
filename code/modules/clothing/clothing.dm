@@ -7,6 +7,7 @@
 	var/gang //Is this a gang outfit?
 	var/species_restricted_locked = FALSE
 	var/list/potentially_protected_organs = list() //These organs can be protected by armor if it has high protective properties
+	var/list/clothing_traits
 
 	/*
 		Sprites used when the clothing item is refit. This is done by setting icon_override.
@@ -33,6 +34,52 @@
 	. = ..()
 	if(body_parts_covered & UPPER_TORSO)
 		potentially_protected_organs |= O_HEART
+
+/obj/item/clothing/equipped(mob/user, slot)
+	. = ..()
+	if(!is_worn_slot(user, slot))
+		return
+	for(var/trait in clothing_traits)
+		ADD_TRAIT(user, trait, TRAIT_FROM_CLOTHING(src))
+
+/obj/item/clothing/dropped(mob/user)
+	if(ismob(user))
+		for(var/trait in clothing_traits)
+			REMOVE_TRAIT(user, trait, TRAIT_FROM_CLOTHING(src))
+	return ..()
+
+/obj/item/clothing/proc/is_worn_slot(mob/wearer, slot)
+	if(isIAN(wearer))
+		switch(slot)
+			if(SLOT_BACK, SLOT_IAN_NECK, SLOT_HEAD)
+				return TRUE
+		return FALSE
+	switch(slot)
+		if(SLOT_BACK, SLOT_WEAR_MASK, SLOT_NECK, SLOT_BELT, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_GLASSES, SLOT_GLOVES, SLOT_HEAD, SLOT_SHOES, SLOT_WEAR_SUIT, SLOT_W_UNIFORM)
+			return TRUE
+	return FALSE
+
+/obj/item/clothing/proc/attach_clothing_traits(trait_or_traits)
+	if(!islist(trait_or_traits))
+		trait_or_traits = list(trait_or_traits)
+	clothing_traits = LAZYCOPY(clothing_traits)
+	LAZYDISTINCTADD(clothing_traits, trait_or_traits)
+	var/mob/wearer = loc
+	if(!istype(wearer) || !is_worn_slot(wearer, slot_equipped))
+		return
+	for(var/trait in trait_or_traits)
+		ADD_TRAIT(wearer, trait, TRAIT_FROM_CLOTHING(src))
+
+/obj/item/clothing/proc/detach_clothing_traits(trait_or_traits)
+	if(!islist(trait_or_traits))
+		trait_or_traits = list(trait_or_traits)
+	clothing_traits = LAZYCOPY(clothing_traits)
+	LAZYREMOVE(clothing_traits, trait_or_traits)
+	var/mob/wearer = loc
+	if(!istype(wearer) || !is_worn_slot(wearer, slot_equipped))
+		return
+	for(var/trait in trait_or_traits)
+		REMOVE_TRAIT(wearer, trait, TRAIT_FROM_CLOTHING(src))
 
 //BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)
