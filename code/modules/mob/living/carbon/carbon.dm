@@ -815,6 +815,8 @@
 
 	dat += "<tr><td><B>Mask:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_WEAR_MASK]'>[(wear_mask && !(wear_mask.flags & ABSTRACT)) ? wear_mask : "<font color=grey>Empty</font>"]</A></td></tr>"
 
+	dat += "<tr><td><B>Neck:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_NECK]'>[(neck && !(neck.flags & ABSTRACT)) ? neck : "<font color=grey>Empty</font>"]</A></td></tr>"
+
 	if(handcuffed)
 		dat += "<tr><td><B>Handcuffed:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_HANDCUFFED]'>Remove</A></td></tr>"
 	if(legcuffed)
