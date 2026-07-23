@@ -385,6 +385,7 @@
 #include "code\datums\elements\_element.dm"
 #include "code\datums\elements\awkward.dm"
 #include "code\datums\elements\beauty.dm"
+#include "code\datums\elements\chameleon.dm"
 #include "code\datums\elements\cult_eyes.dm"
 #include "code\datums\elements\cult_halo.dm"
 #include "code\datums\elements\digitalcamo.dm"
