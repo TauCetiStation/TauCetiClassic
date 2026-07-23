@@ -81,11 +81,19 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 300
 	var/chem_volume = 15
 	var/nicotine_per_smoketime = 0.006
+	var/list/ember_standing_overlays
+	var/list/ember_world_overlays
 
 /obj/item/clothing/mask/cigarette/atom_init()
 	. = ..()
 	flags |= NOREACT // so it doesn't react until you light it
 	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
+
+/obj/item/clothing/mask/cigarette/Destroy()
+	clear_ember_world_overlay()
+	QDEL_LIST(ember_standing_overlays)
+	ember_standing_overlays = null
+	return ..()
 
 /obj/item/clothing/mask/cigarette/get_current_temperature()
 	if(lit)
@@ -146,10 +154,66 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.handle_reactions()
 		icon_state = icon_on
 		item_state = icon_on
+		update_world_icon()
 		update_inv_mob()
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/mask/cigarette/proc/build_ember_overlays(_icon, _state)
+	var/static/list/ember_icons = list()
+	var/cache_key = "[_icon]|[_state]|[icon_off]"
+	var/icon/ember_icon = ember_icons[cache_key]
+	if(!ember_icon)
+		var/icon/off_icon = icon(_icon, icon_off)
+		off_icon.Opaque()
+		ember_icon = icon(_icon, _state)
+		ember_icon.Blend(off_icon, ICON_SUBTRACT)
+		ember_icon.SwapColor("#abbbbb", null)
+		ember_icon.SwapColor("#bbbbbb", null)
+		ember_icon.BecomeAlphaMask()
+		ember_icons[cache_key] = ember_icon
+	var/image/ember = image(ember_icon)
+	ember.color = "#ffb347"
+	ember.plane = LIGHTING_LAMPS_PLANE
+	ember.appearance_flags = KEEP_APART
+	ember.add_filter("ember_halo", 1, drop_shadow_filter(x = 0, y = 0, size = 1, offset = 0, color = "#E24A2FCC"))
+	ember.alpha = 220
+
+	var/image/local_light = image(ember_icon)
+	local_light.color = "#ff8a32"
+	local_light.plane = DYNAMIC_LIGHTING_PLANE
+	local_light.blend_mode = BLEND_ADD
+	local_light.appearance_flags = RESET_ALPHA | RESET_COLOR | KEEP_APART | NO_CLIENT_COLOR
+	local_light.alpha = 230
+	local_light.add_filter("ember_light", 1, drop_shadow_filter(x = 0, y = 0, size = 8, offset = 4, color = "#FF6A24EE"))
+
+	return list(ember, local_light)
+
+/obj/item/clothing/mask/cigarette/proc/clear_ember_world_overlay()
+	if(!ember_world_overlays)
+		return
+	cut_overlay(ember_world_overlays)
+	QDEL_LIST(ember_world_overlays)
+	ember_world_overlays = null
+
+/obj/item/clothing/mask/cigarette/update_world_icon()
+	. = ..()
+	clear_ember_world_overlay()
+	QDEL_LIST(ember_standing_overlays)
+	ember_standing_overlays = null
+	if(lit && isturf(loc))
+		ember_world_overlays = build_ember_overlays(icon, icon_state)
+		add_overlay(ember_world_overlays)
+
+/obj/item/clothing/mask/cigarette/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null)
+	var/mutable_appearance/standing = ..()
+	if(!lit)
+		return standing
+	QDEL_LIST(ember_standing_overlays)
+	ember_standing_overlays = build_ember_overlays(standing.icon, standing.icon_state)
+	standing.add_overlay(ember_standing_overlays)
+	return standing
 
 
 /obj/item/clothing/mask/cigarette/process()
@@ -278,6 +342,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		damtype = BURN
 		icon_state = icon_on
 		item_state = icon_on
+		update_world_icon()
 		update_inv_mob()
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
@@ -292,10 +357,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(ismob(loc))
 			var/mob/living/M = loc
 			to_chat(M, "<span class='notice'>Your [name] goes out, and you empty the ash.</span>")
-			lit = 0
-			icon_state = icon_off
-			item_state = icon_off
-			update_inv_mob()
+		lit = 0
+		icon_state = icon_off
+		item_state = icon_off
+		update_world_icon()
+		update_inv_mob()
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(location)
@@ -308,6 +374,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
+		update_world_icon()
+		update_inv_mob()
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(smoketime <= 0)
