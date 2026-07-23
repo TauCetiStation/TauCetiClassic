@@ -703,12 +703,8 @@ Please contact me on #coderbus IRC. ~Carn x
 			client.screen += r_store
 
 
-/mob/living/carbon/human/var/image/cig_ember_overlay
-
 /mob/living/carbon/human/update_inv_wear_mask()
 	remove_standing_overlay(FACEMASK_LAYER)
-	cut_overlay(cig_ember_overlay)
-	cig_ember_overlay = null
 
 	if(istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/accessory))
 		if(client && hud_used && hud_used.hud_shown)
@@ -721,17 +717,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing.pixel_x += species.offset_features[OFFSET_FACEMASK][1]
 		standing.pixel_y += species.offset_features[OFFSET_FACEMASK][2]
 		overlays_standing[FACEMASK_LAYER]	= standing
-
-		// Lit cigarette ember: emissive overlay so the tip glows through darkness while staying occluded normally.
-		var/obj/item/clothing/mask/cigarette/cig = wear_mask
-		if(istype(cig) && cig.lit)
-			var/image/ember = cig.build_ember_overlay(standing.icon, standing.icon_state)
-			ember = human_update_offset(ember, TRUE)
-			ember.pixel_x += species.offset_features[OFFSET_FACEMASK][1]
-			ember.pixel_y += species.offset_features[OFFSET_FACEMASK][2]
-			ember.plane = EMISSIVE_PLANE
-			add_overlay(ember)
-			cig_ember_overlay = ember
 
 	apply_standing_overlay(FACEMASK_LAYER)
 

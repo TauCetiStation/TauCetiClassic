@@ -52,16 +52,6 @@
 	blend_mode = BLEND_ADD
 	render_relay_planes = list(LIGHTING_PLANE)
 
-// emissive: self-illuminated sprite pixels. Added onto the lighting plane so the marked pixels
-// stay fully lit through darkness, while the actual sprite stays on the game plane (so it is still
-// occluded by tables/objects normally). Same relay trick as dynamic/environment lighting.
-/atom/movable/screen/plane_master/emissive
-	name = "emissive plane master"
-	plane = EMISSIVE_PLANE
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	blend_mode = BLEND_ADD
-	render_relay_planes = list(LIGHTING_PLANE)
-
 // second, simple and unsimulated, lighting system for environment lighting like starlight
 // blends on lighting plane and illuminates masked turfs
 // can be used for any global light, planetary sun/sky including
