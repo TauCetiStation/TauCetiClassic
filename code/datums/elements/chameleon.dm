@@ -149,17 +149,9 @@ var/global/list/chameleon_blocked_disguises = list(
 
 /datum/action/chameleon_outfit/proc/pick_item()
 	var/list/choices = list()
-	var/list/by_name = list()
 	for(var/obj/item/I as anything in items)
-		var/name = I.name
-		while(by_name[name])
-			name = "[name] "
-		by_name[name] = I
-		choices[name] = image(icon = I.icon, icon_state = I.icon_state)
-	var/picked = show_radial_menu(owner, owner, choices, require_near = TRUE, tooltips = TRUE)
-	if(!picked)
-		return
-	var/obj/item/I = by_name[picked]
+		choices[I] = image(icon = I.icon, icon_state = I.icon_state)
+	var/obj/item/I = show_radial_menu(owner, owner, choices, require_near = TRUE, tooltips = TRUE)
 	if(!I)
 		return
 	if(!(I in items) || !(I in owner) || owner.incapacitated())

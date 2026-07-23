@@ -26,6 +26,7 @@
 	name = "grey cap"
 	icon_state = "greysoft"
 	item_state = "greysoft"
+	item_state_world = "greysoft_world"
 	desc = "It looks like a plain hat, but upon closer inspection, there's an advanced holographic array installed inside. It seems to have a small dial inside."
 	origin_tech = "syndicate=3"
 	body_parts_covered = 0
