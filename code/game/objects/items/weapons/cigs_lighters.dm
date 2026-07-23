@@ -174,14 +174,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		ember_icon.BecomeAlphaMask()
 		ember_icons[cache_key] = ember_icon
 	var/image/ember = image(ember_icon)
-	ember.color = "#FFB347"
+	ember.color = "#ffb347"
 	ember.plane = LIGHTING_LAMPS_PLANE
 	ember.appearance_flags = KEEP_APART
 	ember.add_filter("ember_halo", 1, drop_shadow_filter(x = 0, y = 0, size = 1, offset = 0, color = "#E24A2FCC"))
 	ember.alpha = 220
 
 	var/image/local_light = image(ember_icon)
-	local_light.color = "#FF8A32"
+	local_light.color = "#ff8a32"
 	local_light.plane = DYNAMIC_LIGHTING_PLANE
 	local_light.blend_mode = BLEND_ADD
 	local_light.appearance_flags = RESET_ALPHA | RESET_COLOR | KEEP_APART | NO_CLIENT_COLOR
