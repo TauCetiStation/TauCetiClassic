@@ -311,6 +311,9 @@
 	for(var/package_wrap_type as anything in typesof(/datum/package_wrap))
 		global.package_wrap_by_type[package_wrap_type] = new package_wrap_type
 
+	global.elevator_saveables_list += subtypesof(/obj/item/weapon/ore)
+	global.elevator_saveables_list += subtypesof(/obj/item/weapon/reagent_containers/food/snacks/grown)
+
 	init_washing_items_list()
 
 /proc/init_washing_items_list()

@@ -28074,6 +28074,9 @@
 	req_access = list(31)
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/random/tools/tool,
+/obj/random/tools/tool,
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "aXA" = (
@@ -39872,7 +39875,8 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	dir = 1;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -42960,6 +42964,7 @@
 	pixel_x = -4;
 	pixel_y = 7
 	},
+/obj/random/tools/tool,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -47975,7 +47980,8 @@
 	icon_state = "4-8"
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+	dir = 1;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -48377,13 +48383,16 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bHw" = (
-/obj/structure/closet/crate,
-/obj/random/tools/tool,
-/obj/structure/disposalpipe/segment{
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "delivery"
+	dir = 4;
+	icon_state = "loadingarea"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -72012,6 +72021,10 @@
 "eVv" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/elevator/cargo,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "eVy" = (
@@ -73077,11 +73090,10 @@
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/engineering)
 "gdb" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
+/obj/structure/elevator/cargo,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
@@ -75594,7 +75606,8 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	dir = 1;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -75943,6 +75956,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 4;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -78264,7 +78281,8 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	dir = 2;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -82897,6 +82915,10 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "pGk" = (
@@ -83847,7 +83869,6 @@
 /area/station/engineering/singularity)
 "qLl" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/random/tools/tool,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -83855,7 +83876,8 @@
 	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
+	dir = 2;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -84967,9 +84989,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
-	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "rMb" = (
@@ -85590,14 +85609,10 @@
 /area/shuttle/supply/station)
 "sox" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/random/tools/tool,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/effect/decal/turf_decal/alpha/yellow{
-	icon_state = "bot"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -86864,6 +86879,14 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
+	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "tIb" = (
@@ -87544,6 +87567,14 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 4;
+	icon_state = "loadingarea"
+	},
+/obj/effect/decal/turf_decal/alpha/yellow{
+	dir = 8;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor,
 /area/station/cargo/storage)
@@ -104295,9 +104326,9 @@ aXz
 jbp
 bnp
 brb
-brG
-pGd
-ofm
+bGI
+gdb
+kTw
 bFS
 bxC
 byS
@@ -104552,9 +104583,9 @@ mfD
 ihg
 eGf
 hUF
-bGI
+brG
 uEX
-bHw
+ofm
 bFS
 bxk
 byT
@@ -104810,7 +104841,7 @@ ooW
 krW
 sEe
 bsC
-pGd
+gdb
 kTw
 bFS
 bxx
@@ -105067,7 +105098,7 @@ ooW
 ofm
 vBO
 sox
-pGd
+bHw
 rLZ
 bFS
 bxz
@@ -105580,9 +105611,9 @@ pal
 jbp
 ofm
 vBO
-gdb
+brG
 tHV
-kTw
+ofm
 bFS
 byo
 bzd
@@ -105837,9 +105868,9 @@ aFg
 aFg
 qJL
 vBO
-brG
-pGd
-ofm
+bGI
+gdb
+kTw
 bFS
 byq
 bze
