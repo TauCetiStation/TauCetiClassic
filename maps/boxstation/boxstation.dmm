@@ -10439,6 +10439,12 @@
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency3)
+"arh" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/emergency3)
 "arj" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
@@ -135920,7 +135926,7 @@ cak
 mUb
 lOb
 cbz
-arg
+arh
 cer
 cfB
 cer
