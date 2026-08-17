@@ -37,7 +37,7 @@
 		url_params += "Issue reported from [global.round_id ? " Round ID: [global.round_id][servername ? " ([servername])" : ""]" : servername]\n"
 	url_params += "Testmerges: ```[test_merges ? "#" + jointext(test_merges, " #") : "No test merges"]```\n"
 	url_params += "Reporting client version: [byond_version].[byond_build]\n"
-	DIRECT_OUTPUT(src, link("[githuburl]/issues/new?labels=Bug&template=bug_report.yml&additional=[url_encode(url_params)]"))
+	DIRECT_OUTPUT(src, link("[githuburl]/issues/new?template=bug_report.yml&additional=[url_encode(url_params)]"))
 
 /client/verb/changes()
 	set name = "Changelog"
