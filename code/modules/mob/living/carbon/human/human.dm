@@ -266,7 +266,7 @@
 				Paralyse(10)
 
 	var/list/selecteble_bodyparts = bodyparts.Copy()
-	for(var/i = 0; i < 3; i++)
+	for(var/i = 0; i < 2; i++)
 		var/obj/item/organ/external/BP = pick(selecteble_bodyparts)
 
 		apply_damage(fire_damge * rand(50, 100) * 0.01, BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
@@ -274,10 +274,9 @@
 		var/BP_bomb_protection = run_armor_check(BP, BOMB)
 		if(!prob(BP_bomb_protection) && (EXPLODE_HEAVY || EXPLODE_DEVASTATE))
 			if(BP)
-				if(prob(50) && !BP.is_broken())
+				if(prob(25) && !BP.is_broken())
 					BP.fracture()
-					BP.sever_artery()
-				else if(prob(50))
+				else if(prob(25))
 					BP.droplimb()
 
 		selecteble_bodyparts -= BP
