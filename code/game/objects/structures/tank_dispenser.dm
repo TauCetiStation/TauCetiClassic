@@ -62,7 +62,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/dispenser, tank_dispenser_list)
 			user.drop_from_inventory(I, src)
 			platanks.Add(I)
 			phorontanks++
-			to_chat(user, "<span class='notice'>Вы положили [CASE(src, NOMINATIVE_CASE)] в [CASE(src, NOMINATIVE_CASE)].</span>")
+			to_chat(user, "<span class='notice'>Вы положили [CASE(I, NOMINATIVE_CASE)] в [CASE(src, NOMINATIVE_CASE)].</span>")
 		else
 			to_chat(user, "<span class='notice'>CASE(src, NOMINATIVE_CASE)] полон.</span>")
 		updateUsrDialog()
