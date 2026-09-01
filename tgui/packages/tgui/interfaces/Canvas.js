@@ -1,6 +1,6 @@
 import { Component, createRef } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button } from '../components';
+import { Box, Button, Slider } from '../components';
 import { Window } from '../layouts';
 
 const PX_PER_UNIT = 24;
@@ -10,6 +10,7 @@ class PaintCanvas extends Component {
     super(props);
     this.canvasRef = createRef();
     this.onCVClick = props.onCanvasClick;
+    this.onCVFill = props.onCanvasFill;
   }
 
   componentDidMount() {
@@ -43,7 +44,7 @@ class PaintCanvas extends Component {
     ctx.restore();
   }
 
-  clickwrapper(event) {
+  clickwrapper(event, button_type) {
     const x_size = this.props.value.length;
     if (!x_size) {
       return;
@@ -53,7 +54,7 @@ class PaintCanvas extends Component {
     const y_scale = this.canvasRef.current.height / y_size;
     const x = Math.floor(event.offsetX / x_scale) + 1;
     const y = Math.floor(event.offsetY / y_scale) + 1;
-    this.onCVClick(x, y);
+    this.onCVClick(x, y, button_type);
   }
 
   render() {
@@ -65,7 +66,11 @@ class PaintCanvas extends Component {
         width={width * dotsize || 300}
         height={height * dotsize || 300}
         {...rest}
-        onClick={(e) => this.clickwrapper(e)}>
+        onClick={(e) => this.clickwrapper(e, 'draw')}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          this.clickwrapper(e, 'fill');
+        }}>
         Canvas failed to render.
       </canvas>
     );
@@ -91,16 +96,36 @@ export const Canvas = (props, context) => {
           <PaintCanvas
             value={data.grid}
             dotsize={dotsize}
-            onCanvasClick={(x, y) => act('paint', { x, y })}
+            onCanvasClick={(x, y, button_type) =>
+              act('paint', { x, y, button_type })
+            }
           />
-          <Box>
-            {!data.finalized && (
-              <Button.Confirm
-                onClick={() => act('finalize')}
-                content="Finalize"
+          <Box width="80%" textAlign="center">
+            <Box width="50%" inline position="absolute" left="5px">
+              <Box width="50%" inline>
+                Draw size:
+              </Box>
+              <Slider
+                width="50%"
+                value={data.draw_size}
+                minValue={0}
+                maxValue={2}
+                step={1}
+                stepPixelSize={50}
+                onChange={(_e, value) => {
+                  act('change_size', { size: value });
+                }}
               />
-            )}
-            {data.name}
+            </Box>
+            <Box width="50%" inline position="absolute" right="5%">
+              {!data.finalized && (
+                <Button.Confirm
+                  onClick={() => act('finalize')}
+                  content="Finalize"
+                />
+              )}
+              {data.name}
+            </Box>
           </Box>
         </Box>
       </Window.Content>

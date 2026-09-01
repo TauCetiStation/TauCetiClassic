@@ -72,3 +72,13 @@
   background-position: center;
   background-repeat: no-repeat;
 }
+
+// Fonts
+
+@font-face {
+  font-family: 'Gys14Segment';
+  src:
+    url(~custom-fonts/Gys14Segment.ttf) format('truetype'),
+    url(~custom-fonts/Gys14Segment.eot) format('embedded-opentype'),
+    url(~custom-fonts/Gys14Segment.woff) format('woff');
+}

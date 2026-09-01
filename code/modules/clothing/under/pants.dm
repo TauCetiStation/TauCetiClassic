@@ -80,16 +80,22 @@
 	name = "olive field pants"
 	desc = "They look suspiciously similiar to the M65 standard military jacket, classic olive one."
 	icon_state = "milipants_army"
+	item_state_world = "milipants_army_w"
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/pants/milipants_army/ranger
 	name = "desert field pants"
 	desc = "They look suspiciously similiar to the M65 standard military jacket, marine cold desert one."
 	icon_state = "milipants_ranger"
+	item_state_world = "milipants_ranger_w"
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/pants/milipants_army/navy
 	name = "navy field pants"
 	desc = "They look suspiciously similiar to the M65 standard military jacket, navy seal one."
 	icon_state = "milipants_navy"
+	item_state_world = "milipants_navy_w"
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/pants/ddr_sport
 	name = "Black sport pants"

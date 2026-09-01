@@ -48,6 +48,7 @@
 	data["antibodies"] = null
 	data["pathogens"] = null
 	data["is_antibody_sample"] = null
+	data["busy"] = null
 
 	if (curing)
 		data["busy"] = "Isolating antibodies..."

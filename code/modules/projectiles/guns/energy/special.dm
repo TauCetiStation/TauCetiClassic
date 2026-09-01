@@ -562,12 +562,7 @@
 	desc = "Устаревшая модель стандартного лазерного оружия, больше не используемая ни службами безопасности, ни военными силами НаноТрейзен. Тем не менее, он все еще достаточно смертоносен и прост в обслуживании, что делает его любимым среди пиратов и других преступников."
 	can_be_holstered = TRUE
 	ammo_type = list(/obj/item/ammo_casing/energy/phaser)
-
-/obj/item/weapon/gun/energy/retro/atom_init()
-	. = ..()
-	if(power_supply)
-		power_supply.maxcharge = 1500
-		power_supply.charge = 1500
+	cell_type = /obj/item/weapon/stock_parts/cell/energy_weapon
 
 /obj/item/weapon/gun/medbeam
 	name = "prototype medical retrosynchronizer"

@@ -5,6 +5,8 @@
 	icon_state = "fitnesslifter"
 	density = TRUE
 	anchored = TRUE
+	max_integrity = 500
+	resistance_flags = CAN_BE_HIT
 
 	var/taken = FALSE
 
@@ -89,6 +91,8 @@
 	icon_state = "fitnessweight"
 	density = TRUE
 	anchored = TRUE
+	max_integrity = 500
+	resistance_flags = CAN_BE_HIT
 
 	var/taken = FALSE
 
@@ -104,6 +108,52 @@
 
 /obj/structure/weightlifter/Destroy()
 	QDEL_NULL(weight_overlay)
+	return ..()
+
+/obj/structure/stacklifter/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/plasteel(loc, 2)
+	new /obj/item/stack/rods (loc, 2)
+	return ..()
+
+/obj/structure/weightlifter/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	new /obj/item/stack/sheet/plasteel(loc, 2)
+	new /obj/item/stack/rods (loc, 2)
+	return ..()
+
+/obj/structure/stacklifter/attackby(obj/item/weapon/W, mob/user)
+	if(iswrenching(W))
+		if(user.is_busy())
+			return
+		if(anchored)
+			if(W.use_tool(src, user, 5 SECONDS, volume = 100, quality = QUALITY_WRENCHING))
+				anchored = FALSE
+				to_chat(user, "<span class='notice'>You unfasten \the [src] with \the [W].</span>")
+				return
+		else
+			if(W.use_tool(src, user, 5 SECONDS, volume = 100, quality = QUALITY_WRENCHING))
+				anchored = TRUE
+				to_chat(user, "<span class='notice'>You fasten \the [src] to the floor with \the [W].</span>")
+				return
+	return ..()
+
+/obj/structure/weightlifter/attackby(obj/item/weapon/W, mob/user)
+	if(iswrenching(W))
+		if(user.is_busy())
+			return
+		if(anchored)
+			if(W.use_tool(src, user, 5 SECONDS, volume = 100, quality = QUALITY_WRENCHING))
+				anchored = FALSE
+				to_chat(user, "<span class='notice'>You unfasten \the [src] with \the [W].</span>")
+				return
+		else
+			if(W.use_tool(src, user, 5 SECONDS, volume = 100, quality = QUALITY_WRENCHING))
+				anchored = TRUE
+				to_chat(user, "<span class='notice'>You fasten \the [src] to the floor with \the [W].</span>")
+				return
 	return ..()
 
 /obj/structure/weightlifter/proc/finish_pump(mob/living/carbon/human/user)
@@ -190,6 +240,8 @@
 	icon_state = "dumbbells_rack"
 	density = TRUE
 	anchored = TRUE
+	max_integrity = 300
+	resistance_flags = CAN_BE_HIT
 
 	var/obj/item/weapon/storage/internal/dumbbells
 
@@ -226,6 +278,16 @@
 	dumbbells_overlays = null
 	UnregisterSignal(dumbbells, list(COMSIG_STORAGE_ENTERED, COMSIG_STORAGE_EXITED))
 	QDEL_NULL(dumbbells)
+	return ..()
+
+/obj/structure/dumbbells_rack/deconstruct(disassembled)
+	if(dumbbells)
+		for(var/obj/item/I in dumbbells)
+			I.forceMove(loc)
+	QDEL_NULL(dumbbells)
+	dumbbells_overlays = null
+	if(!(flags & NODECONSTRUCT))
+		new /obj/item/stack/sheet/metal(loc, 2)
 	return ..()
 
 /obj/structure/dumbbells_rack/proc/add_dumbbell(datum/source, obj/item/I)
@@ -267,6 +329,20 @@
 	return ..()
 
 /obj/structure/dumbbells_rack/attackby(obj/item/I, mob/user, params)
+	if(iswrenching(I))
+		if(user.is_busy())
+			return
+		if(anchored)
+			if(I.use_tool(src, user, 3 SECONDS, volume = 100, quality = QUALITY_WRENCHING))
+				anchored = FALSE
+				to_chat(user, "<span class='notice'>You unfasten \the [src] with \the [I].</span>")
+				return
+		else
+			if(I.use_tool(src, user, 3 SECONDS, volume = 100, quality = QUALITY_WRENCHING))
+				anchored = TRUE
+				to_chat(user, "<span class='notice'>You fasten \the [src] to the floor with \the [I].</span>")
+				return
+		return
 	if(user.a_intent != INTENT_HARM && dumbbells.attackby(I, user, params))
 		return
 	return ..()

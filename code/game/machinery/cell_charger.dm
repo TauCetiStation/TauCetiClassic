@@ -26,8 +26,8 @@
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
 
-/obj/machinery/cell_charger/proc/updateicon()
-	icon_state = "ccharger[charging ? 1 : 0]"
+/obj/machinery/cell_charger/update_icon()
+	icon_state = "ccharger[charging ? 1 : 0][panel_open ? "-o" : ""]"
 
 	if(charging && !(stat & (BROKEN|NOPOWER)) )
 
@@ -57,32 +57,45 @@
 		if(charging)
 			to_chat(user, "<span class='warning'>There is already a cell in the charger.</span>")
 			return
-		else
-			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
-			if(!isarea(a))
-				return
-			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-				to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>")
-				return
+		if(panel_open)
+			to_chat(user, "<span class='warning'>Close the maintenance hatch first!</span>")
+			return
 
-			user.drop_from_inventory(W, src)
-			add_fingerprint(user)
-			charging = W
-			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
-			chargelevel = -1
-		updateicon()
-	else if(iswrenching(W))
+		var/area/a = loc.loc // Gets our locations location, like a dream within a dream
+		if(!isarea(a))
+			return
+		if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
+			to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>")
+			return
+
+		user.drop_from_inventory(W, src)
+		add_fingerprint(user)
+		charging = W
+		user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
+		chargelevel = -1
+		update_icon()
+		return
+
+	if(iswrenching(W))
 		if(charging)
 			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
 			return
 		anchored = !anchored
 		to_chat(user, "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground")
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), W))
-		update_icon()
 		return
+
+	if(isscrewing(W))
+		if(charging)
+			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
+			return
+		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), W))
+			return
+
 	if(default_deconstruction_crowbar(W))
+		return
+
+	if(exchange_parts(user, W))
 		return
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
@@ -94,12 +107,12 @@
 		usr.put_in_hands(charging)
 		add_fingerprint(user)
 		charging.add_fingerprint(user)
-		charging.updateicon()
+		charging.update_icon()
 
 		charging = null
 		user.visible_message("[user] removes the cell from the charger.", "You remove the cell from the charger.")
 		chargelevel = -1
-		updateicon()
+		update_icon()
 
 /obj/machinery/cell_charger/attack_ai(mob/user)
 	if(IsAdminGhost(user)) // why not?
@@ -123,7 +136,7 @@
 	power_used = charging.give(recharge_coeff*power_used*CELLRATE*efficiency)
 	use_power(power_used)
 
-	updateicon()
+	update_icon()
 
 /obj/machinery/cell_charger/deconstruct(disassembled = TRUE)
 	if(charging)

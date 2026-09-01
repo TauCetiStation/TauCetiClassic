@@ -471,6 +471,13 @@
 	for(var/i in 1 to storage_slots)
 		new /obj/item/weapon/match(src)
 
+/obj/item/weapon/storage/box/matches/can_be_inserted(obj/item/I, stop_messages = FALSE)
+	if(istype(I, /obj/item/weapon/match))
+		var/obj/item/weapon/match/match = I
+		if(match.lit || match.burnt)
+			return FALSE
+	return ..()
+
 /obj/item/weapon/storage/box/matches/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/match))
 		var/obj/item/weapon/match/M = I
@@ -644,6 +651,17 @@
 	. = ..()
 	for(var/i in 1 to 16)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+	make_exact_fit()
+
+/obj/item/weapon/storage/box/a774clip
+	name = "box of Mosin-Nagant clips"
+	desc = "A small cardboard box. It holds several 5-round stripper clips of 7.74x54mm ammunition, ready to be loaded into a Mosin-Nagant."
+	icon_state = "box"
+
+/obj/item/weapon/storage/box/a774clip/atom_init()
+	. = ..()
+	for(var/i in 1 to 5)
+		new /obj/item/ammo_box/magazine/a774clip(src)
 	make_exact_fit()
 
 //Hair sprays

@@ -2,7 +2,7 @@
 	key = "list"
 
 /datum/emote/list/get_emote_message_1p(mob/living/carbon/human/user)
-	var/msg = "Available emotes, you can do them by saying \"*emote\"(\"*laugh\"):<br>"
+	var/msg = "Доступные эмоуты, вы можете использовать их, написав \"*emote\"(\"*laugh\"):<br>"
 	var/first = TRUE
 
 	for(var/emo_key in user.current_emotes)

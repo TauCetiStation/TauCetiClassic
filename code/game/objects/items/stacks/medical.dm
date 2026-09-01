@@ -148,9 +148,9 @@
 				W.germ_level += min(germ_level, 3)
 			break
 
-			BP.update_damages()
-			H.update_bandage()
-			return TRUE
+		BP.update_damages()
+		H.update_bandage()
+		return TRUE
 	return ..()
 
 /obj/item/stack/medical/bruise_pack/update_icon()

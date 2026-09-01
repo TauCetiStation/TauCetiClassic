@@ -56,7 +56,7 @@
 	prob(33);/obj/item/ammo_box/magazine/borg45,\
 	prob(33);/obj/item/ammo_box/speedloader/a357,\
 	prob(33);/obj/item/device/encryptionkey/binary,\
-	prob(33);/obj/item/clothing/mask/gas/voice,\
+	prob(33);/obj/item/clothing/mask/breath/gas/voice,\
 	prob(33);/obj/item/clothing/gloves/black/silence,\
 	prob(33);/obj/item/clothing/gloves/black/strip,\
 	prob(50);/obj/item/device/encryptionkey/syndicate,\
@@ -76,6 +76,7 @@
 	prob(100);/obj/item/weapon/plastique,\
 	prob(100);/obj/item/weapon/storage/backpack/satchel/flat,\
 	prob(100);/obj/item/clothing/shoes/syndigaloshes,\
+	prob(100);/obj/item/noslip_sole,\
 	prob(100);/obj/item/weapon/storage/belt/military,\
 	prob(100);/obj/item/weapon/storage/toolbox/syndicate,\
 	prob(100);/obj/item/weapon/reagent_containers/food/snacks/soap/syndie,\

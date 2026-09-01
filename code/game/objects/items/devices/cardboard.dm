@@ -5,7 +5,7 @@
 	icon_state = "cutout_basic"
 	w_class = SIZE_NORMAL
 	var/list/possible_appearances = list("Assistant", "Clown", "Mime",
-		"Traitor", "Nuke Op", "Cultist","Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Deathsquad Officer", "Ian")
+		"Traitor", "Nuke Op", "Cultist","Revolutionary", "Wizard", "Shadowling", "Xenomorph", "Deathsquad Officer", "Vox Raider", "Ian")
 	var/pushed_over = FALSE //If the cutout is pushed over and has to be righted
 	var/painting = FALSE
 	var/static/list/coloring
@@ -81,6 +81,7 @@
 			"Shadowling" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_shadowling"),
 			"Xenomorph" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_fukken_xeno"),
 			"Deathsquad Officer" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_deathsquad"),
+			"Vox Raider" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_voxraider"),
 			"Ian" = image(icon = 'icons/obj/cardboard_cutout.dmi', icon_state = "cutout_ian")
 			)
 
@@ -152,6 +153,14 @@
 			name = pick(commando_names)
 			desc = "A cardboard cutout of a death commando."
 			icon_state = "cutout_deathsquad"
+		if("Vox Raider")
+			var/sounds = rand(2, 8)
+			var/newname = ""
+			for(var/i in 1 to sounds)
+				newname += pick(list("ti","hi","ki","ya","ta","ha","ka","ya","chi","cha","kah"))
+			name = capitalize(newname)
+			desc = "A cardboard cutout of a vox raider."
+			icon_state = "cutout_voxraider"
 		if("Ian")
 			name = "Ian"
 			desc = "A cardboard cutout of the HoP's beloved corgi."

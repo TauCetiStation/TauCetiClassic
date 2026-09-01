@@ -1,151 +1,3 @@
-/proc/tgui_alert(mob/user, message = null, title = null, list/buttons = list("Ok"), timeout = 0)
-	if (!user)
-		user = usr
-	if (!istype(user))
-		if (isclient(user))
-			var/client/client = user
-			user = client.mob
-		else
-			return
-	var/datum/tgui_modal/alert = new(user, message, title, buttons, timeout)
-	alert.tgui_interact(user)
-	alert.wait()
-	if (alert)
-		. = alert.choice
-		qdel(alert)
-
-/**
- * Creates an asynchronous TGUI alert window with an associated callback.
- *
- * This proc should be used to create alerts that invoke a callback with the user's chosen option.
- * Arguments:
- * * user - The user to show the alert to.
- * * message - The content of the alert, shown in the body of the TGUI window.
- * * title - The of the alert modal, shown on the top of the TGUI window.
- * * buttons - The options that can be chosen by the user, each string is assigned a button on the UI.
- * * callback - The callback to be invoked when a choice is made.
- * * timeout - The timeout of the alert, after which the modal will close and qdel itself. Disabled by default, can be set to seconds otherwise.
- */
-/proc/tgui_alert_async(mob/user, message = null, title = null, list/buttons = list("Ok"), datum/callback/callback, timeout = 0)
-	if (!user)
-		user = usr
-	if (!istype(user))
-		if (!isclient(user))
-			return
-		var/client/client = user
-		user = client.mob
-
-	var/datum/tgui_modal/async/alert = new(user, message, title, buttons, callback, timeout)
-	alert.tgui_interact(user)
-
-/**
- * # tgui_modal
- *
- * Datum used for instantiating and using a TGUI-controlled modal that prompts the user with
- * a message and has buttons for responses.
- */
-/datum/tgui_modal
-	/// The title of the TGUI window
-	var/title
-	/// The textual body of the TGUI window
-	var/message
-	/// The list of buttons (responses) provided on the TGUI window
-	var/list/buttons
-	/// The button that the user has pressed, null if no selection has been made
-	var/choice
-	/// The time at which the tgui_modal was created, for displaying timeout progress.
-	var/start_time
-	/// The lifespan of the tgui_modal, after which the window will close and delete itself.
-	var/timeout
-	/// Boolean field describing if the tgui_modal was closed by the user.
-	var/closed
-
-/datum/tgui_modal/New(mob/user, message, title, list/buttons, timeout)
-	src.title = title
-	src.message = message
-	src.buttons = buttons.Copy()
-	if (timeout)
-		src.timeout = timeout
-		start_time = world.time
-		QDEL_IN(src, timeout)
-
-/datum/tgui_modal/Destroy(force, ...)
-	SStgui.close_uis(src)
-	. = ..()
-
-/**
- * Waits for a user's response to the tgui_modal's prompt before returning. Returns early if
- * the window was closed by the user.
- */
-/datum/tgui_modal/proc/wait()
-	while (!choice && !closed)
-		stoplag(1)
-
-/datum/tgui_modal/tgui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "AlertModal")
-		ui.open()
-
-/datum/tgui_modal/tgui_close(mob/user)
-	. = ..()
-	closed = TRUE
-
-/datum/tgui_modal/tgui_state(mob/user)
-	return global.always_state
-
-/datum/tgui_modal/tgui_data(mob/user)
-	. = list(
-		"title" = title,
-		"message" = message,
-		"buttons" = buttons
-	)
-	if(timeout)
-		.["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
-
-/datum/tgui_modal/tgui_act(action, list/params)
-	. = ..()
-	if (.)
-		return
-	switch(action)
-		if("choose")
-			if (!(params["choice"] in buttons))
-				return
-			choice = params["choice"]
-			SStgui.close_uis(src)
-			return TRUE
-
-/**
- * # async tgui_modal
- *
- * An asynchronous version of tgui_modal to be used with callbacks instead of waiting on user responses.
- */
-/datum/tgui_modal/async
-	/// The callback to be invoked by the tgui_modal upon having a choice made.
-	var/datum/callback/callback
-
-/datum/tgui_modal/async/New(mob/user, message, title, list/buttons, callback, timeout)
-	..(user, title, message, buttons, timeout)
-	src.callback = callback
-
-/datum/tgui_modal/async/Destroy(force, ...)
-	QDEL_NULL(callback)
-	. = ..()
-
-/datum/tgui_modal/async/tgui_close(mob/user)
-	. = ..()
-	qdel(src)
-
-/datum/tgui_modal/async/tgui_act(action, list/params)
-	. = ..()
-	if (!. || choice == null)
-		return
-	callback.InvokeAsync(choice)
-	qdel(src)
-
-/datum/tgui_modal/async/wait()
-	return
-
  //A system to manage and display alerts on screen without needing you to do it yourself
 
 //PUBLIC -  call these wherever you want
@@ -492,6 +344,23 @@
 	R.acquire_array_upgrade()
 
 //OBJECT-BASED
+/atom/movable/screen/alert/inside
+	name = "Внутри"
+	desc = "Вы внутри чего-то и не можете двинуться. \
+			Нажмите на предупреждение, чтобы вылезти, если на вас не надеты наручники."
+	icon_state = "inside"
+
+/atom/movable/screen/alert/inside/Click()
+	if(!mob_viewer)
+		return
+	if(mob_viewer.restrained())
+		to_chat(mob_viewer, "Вы в наручниках! Сначала разберитесь с ними!")
+		return
+	if(mob_viewer.incapacitated() || mob_viewer.is_busy())
+		return
+	var/obj/machinery/machine = master
+	machine.container_resist()
+	machine.update_icon()
 
 /atom/movable/screen/alert/buckled
 	name = "Пристёгнут"
@@ -505,7 +374,7 @@
 	if(mob_viewer.restrained())
 		to_chat(mob_viewer, "Вы в наручниках! Сначала разберитесь с ними!")
 		return
-	if(mob_viewer.incapacitated() || mob_viewer.crawling || mob_viewer.is_busy())
+	if(mob_viewer.incapacitated() || mob_viewer.is_busy())
 		return
 	master.user_unbuckle_mob(mob_viewer)
 
@@ -549,8 +418,13 @@
 	var/atom/target = null
 	var/action = NOTIFY_JUMP
 
-/atom/movable/screen/alert/notify_action/Click()
-	. = ..()
+/atom/movable/screen/alert/notify_action/Click(location, control, params)
+	if(!usr || !usr.client)
+		return
+	var/paramslist = params2list(params)
+	if(paramslist[SHIFT_CLICK])
+		to_chat(usr, "<span class='boldnotice'>[name]</span> - <span class='info'>[desc]</span>")
+		return
 	if(!target)
 		return
 	var/mob/dead/observer/ghost_owner = mob_viewer
@@ -564,7 +438,12 @@
 			if(target_turf && isturf(target_turf))
 				ghost_owner.abstract_move(target_turf)
 		if(NOTIFY_ORBIT)
-			ghost_owner.ManualFollow(target)
+			if(ismovable(target))
+				ghost_owner.ManualFollow(target)
+			else
+				var/turf/target_turf = get_turf(target)
+				if(target_turf && isturf(target_turf))
+					ghost_owner.abstract_move(target_turf)
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 

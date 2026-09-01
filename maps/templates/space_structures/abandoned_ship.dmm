@@ -463,8 +463,8 @@
 /area/space_structures/abandoned_ship)
 "bp" = (
 /obj/machinery/door/airlock/glass{
-	name = "Living Module";
-	dir = 4
+	dir = 4;
+	name = "Living Module"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -697,16 +697,15 @@
 /obj/machinery/light_construct/small{
 	dir = 1
 	},
+/obj/item/weapon/storage/toolbox/emergency,
 /turf/simulated/floor{
 	icon_state = "brownfull"
 	},
 /area/space_structures/abandoned_ship)
 "bU" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/syndicate,
-/obj/item/clothing/head/helmet/space/syndicate,
-/obj/item/clothing/mask/breath,
-/obj/item/weapon/storage/toolbox/emergency,
+/obj/machinery/suit_storage_unit/syndicate_unit{
+	filled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "brownfull"
 	},
@@ -765,9 +764,9 @@
 /area/space_structures/abandoned_ship)
 "ca" = (
 /obj/machinery/door/poddoor{
+	dir = 4;
 	id = "oldship_gun";
-	name = "Pod Bay Door";
-	dir = 4
+	name = "Pod Bay Door"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -806,8 +805,8 @@
 /area/space_structures/abandoned_ship)
 "ce" = (
 /obj/machinery/door/airlock/glass{
-	name = "Pod Bay";
-	dir = 4
+	dir = 4;
+	name = "Pod Bay"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -903,8 +902,8 @@
 /area/space_structures/abandoned_ship)
 "ev" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "swallc1";
-	dir = 9
+	dir = 9;
+	icon_state = "swallc1"
 	},
 /area/space_structures/abandoned_ship)
 "fk" = (
@@ -1397,8 +1396,8 @@
 /area/space_structures/abandoned_ship)
 "Xi" = (
 /obj/effect/decal/turf_decal/dark_red{
-	icon_state = "loadingarea";
-	dir = 1
+	dir = 1;
+	icon_state = "loadingarea"
 	},
 /turf/simulated/floor{
 	icon_state = "dark"

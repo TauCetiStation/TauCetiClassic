@@ -415,7 +415,7 @@
 	var/display_chest = 0
 	var/display_shoes = 0
 	var/display_gloves = 0
-	if(wound_flavor_text["head"] && (is_destroyed["head"] || (!skipmask && !(wear_mask && istype(wear_mask, /obj/item/clothing/mask/gas)))))
+	if(wound_flavor_text["head"] && (is_destroyed["head"] || (!skipmask && !(wear_mask && istype(wear_mask, /obj/item/clothing/mask/breath/gas)))))
 		msg += wound_flavor_text["head"]
 	else if(is_bleeding["head"])
 		msg += "<span class='warning'>[src] has blood running down [t_his] face!</span>\n"

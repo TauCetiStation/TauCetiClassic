@@ -392,7 +392,7 @@
 	if(species.flags[NO_SLIP])
 		return FALSE
 	if(!(lube & GALOSHES_DONT_HELP))
-		if((shoes && (shoes.flags & NOSLIP)) || (wear_suit && (wear_suit.flags & NOSLIP) || (get_species() == SKRELL && !shoes)))
+		if(HAS_TRAIT(src, TRAIT_NOSLIP) || (get_species() == SKRELL && !shoes))
 			return FALSE
 	return ..()
 

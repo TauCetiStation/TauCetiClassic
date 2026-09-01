@@ -58,6 +58,8 @@
 	client.images = null //remove the images such as AIs being unable to see runes
 	client.screen = list() //remove hud items just in case
 
+	closeToolTip(src) //dismiss any stuck tooltip on mob transition
+
 	create_mob_hud()
 
 	client.set_main_screen_plane_masters()

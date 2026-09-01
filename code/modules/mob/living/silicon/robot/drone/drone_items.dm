@@ -82,7 +82,7 @@
 				wrap(A.cell)
 
 				A.cell.add_fingerprint(user)
-				A.cell.updateicon()
+				A.cell.update_icon()
 				A.cell = null
 
 				A.charging = FALSE

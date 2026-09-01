@@ -715,8 +715,9 @@
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
 
 /obj/machinery/chem_master/constructable/attackby(obj/item/B, mob/user, params)
+	. = ..()
 
-	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0_", B))
+	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", B))
 		if(beaker)
 			beaker.loc = src.loc
 			beaker = null
@@ -736,27 +737,6 @@
 		else
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while it's panel is opened.</span>")
 			return TRUE
-
-	if(istype(B, /obj/item/weapon/reagent_containers/glass))
-		if(src.beaker)
-			to_chat(user, "<span class='alert'>A beaker is already loaded into the machine.</span>")
-			return
-		src.beaker = B
-		user.drop_from_inventory(B, src)
-		to_chat(user, "You add the beaker to the machine!")
-		updateUsrDialog()
-		icon_state = "mixer1"
-
-	else if(!condi && istype(B, /obj/item/weapon/storage/pill_bottle))
-		if(src.loaded_pill_bottle)
-			to_chat(user, "<span class='alert'>A pill bottle is already loaded into the machine.</span>")
-			return
-		src.loaded_pill_bottle = B
-		user.drop_from_inventory(B, src)
-		to_chat(user, "You add the pill bottle into the dispenser slot!")
-		updateUsrDialog()
-
-	return
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////

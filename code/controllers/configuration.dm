@@ -96,7 +96,8 @@ var/global/bridge_secret = null
 	var/siteurl
 	var/wikiurl
 	var/forumurl
-	var/media_base_url
+	var/list/media_base_urls
+	var/media_secret
 	var/server_rules_url
 	var/discord_invite_url
 	var/customitems_info_url
@@ -417,8 +418,11 @@ var/global/bridge_secret = null
 				if ("usewhitelist")
 					config.usewhitelist = 1
 
-				if("media_base_url")
-					media_base_url = value
+				if("media_base_urls")
+					media_base_urls = splittext(value, " ")
+
+				if("media_secret")
+					media_secret = value
 
 				if ("server_rules_url")
 					server_rules_url = value

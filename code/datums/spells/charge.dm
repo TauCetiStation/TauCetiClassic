@@ -95,4 +95,4 @@
 	if(prob(50))
 		Cell.maxcharge = max(0, Cell.maxcharge - 200)
 	Cell.charge = bad_charge ? 0 : Cell.maxcharge
-	Cell.updateicon()
+	Cell.update_icon()

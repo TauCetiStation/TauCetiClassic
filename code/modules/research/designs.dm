@@ -1808,7 +1808,7 @@ other types of metals and chemistry for reagents).
 	id = "voice_changer"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_SILVER = 500)
-	build_path = /obj/item/clothing/mask/gas/voice
+	build_path = /obj/item/clothing/mask/breath/gas/voice
 	category = list("Illegal")
 
 /datum/design/camera_bug
@@ -1970,12 +1970,12 @@ other types of metals and chemistry for reagents).
 	category = list("Weapons")
 
 /datum/design/laserrifle
-	name = "Laser Rifle"
+	name = "Extended-Capacity Laser Rifle"
 	desc = "An energy weapon with concentrated energy bolts."
 	id = "laserrifle"
 	build_type = PROTOLATHE
 	materials = list (MAT_METAL = 8000, MAT_GLASS = 1000, MAT_URANIUM = 200)
-	build_path = /obj/item/weapon/gun/energy/laser
+	build_path = /obj/item/weapon/gun/energy/laser/big
 	category = list("Weapons")
 
 /datum/design/laserpractice
@@ -2635,7 +2635,7 @@ other types of metals and chemistry for reagents).
 	id = "weldingmask"
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
-	build_path = /obj/item/clothing/mask/gas/welding
+	build_path = /obj/item/clothing/mask/breath/gas/welding
 	category = list("Equipment")
 
 /datum/design/exwelder

@@ -76,7 +76,7 @@ var/global/list/common_loot = list(
 		) = 1,
 
 	list(
-		/obj/item/clothing/mask/gas = 1,
+		/obj/item/clothing/mask/breath/gas = 1,
 		/obj/item/device/radio/headset = 1,
 		/obj/item/weapon/storage/backpack = 1,
 		/obj/item/clothing/shoes/black = 1,

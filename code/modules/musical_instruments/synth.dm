@@ -44,9 +44,16 @@
 	return ..()
 
 /obj/item/device/synth/unable_to_play(mob/living/user)
+	if(isrobot(user))
+		var/mob/living/silicon/robot/R = user
+		if(R.module_active != src)
+			return FALSE
+
 	return ..() || loc != user
 
 /obj/item/device/synth/attack_self(mob/living/user)
+	if(unable_to_play(user))
+		return
 	MP.interact(user)
 
 /obj/item/device/synth/examine(mob/user)

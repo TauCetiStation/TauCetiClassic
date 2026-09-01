@@ -17,6 +17,8 @@
 		. += 					"<br><b>Gender:</b> <a href='byond://?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
 	if(species == IPC)  // only ipc can change their voice at this moment
 		. += 					"<br><b>Voice:</b> <a href='byond://?_src_=prefs;preference=gendervoice'><b>[neuter_gender_voice == MALE ? "Male" : "Female"]</b></a>"
+	if(specie_obj.flags[HAS_BODYTYPE_SELECTION] && (gender == FEMALE))
+		. += 					"<br><b>Bodytype:</b> <a href='byond://?_src_=prefs;preference=bodytype'><b>[bodytype_name == AVERAGE_BODYTYPE ? "Average" : "Slim"]</b></a>"
 	. += 						"<br><b>Height:</b> <a href='byond://?_src_=prefs;preference=height;task=input'>[height]</a>"
 	. += 						"<br><b>Randomized Character Slot:</b> <a href='byond://?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
 	. += 						"<hr>"
@@ -127,6 +129,18 @@
 				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks ? socks_t[socks] : "None"]</a><br>"
 			. += "Backpack Type: <a href ='byond://?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
 			. += "Using skirt uniform: <a href ='byond://?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
+			. += "Jumpsuit Style: <a href='byond://?_src_=prefs;preference=jumpsuit_style;task=input'>[poly_style_name(jumpsuit_style)]</a><br>"
+			if(jumpsuit_style != POLY_STYLE_JOB)
+				. += "<table style='margin-left:8px;border-spacing:0 2px'>"
+				if(species != VOX)
+					if(is_poly_white_base(jumpsuit_style))
+						. += "<tr><td>Base:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_base_color;task=input'><font color='[jumpsuit_base_color]'>&#9608;&#9608;</font></a></td></tr>"
+					if(jumpsuit_style != POLY_STYLE_TURT)
+						. += "<tr><td>Pattern:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_pattern;task=input'>[jumpsuit_pattern ? (poly_pattern_display[jumpsuit_pattern] || jumpsuit_pattern) : "None"]</a></td></tr>"
+				else
+					. += "<tr><td>Base:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_base_color;task=input'><font color='[jumpsuit_base_color]'>&#9608;&#9608;</font></a></td></tr>"
+				. += "<tr><td>Accent:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_color;task=input'><font color='[jumpsuit_color]'>&#9608;&#9608;</font></a></td></tr>"
+				. += "</table>"
 			. += "PDA Ringtone: <a href ='byond://?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
 
 	. += 								"</td>"
@@ -303,6 +317,10 @@
 							var/datum/language/lang = all_languages[language]
 							if(!(species in lang.allowed_speak))
 								language = "None"
+						if(gender == FEMALE)
+							bodytype_name = specie_obj.females_standard_bodytype
+						else
+							bodytype_name = AVERAGE_BODYTYPE
 
 				if("language")
 					var/list/new_languages = list("None")
@@ -484,6 +502,40 @@
 				if("use_skirt")
 					use_skirt = !use_skirt
 
+				if("jumpsuit_style")
+					// Vox has no belt/turt sprites, so offer them only the white-base styles.
+					var/list/style_choices = list("Job Default" = POLY_STYLE_JOB)
+					for(var/key in global.poly_styles_by_key)
+						if(species == VOX && (key == POLY_STYLE_BELT || key == POLY_STYLE_TURT))
+							continue
+						var/datum/poly_style/S = global.poly_styles_by_key[key]
+						style_choices[S.display_name] = key
+					var/choice = input(user, "Choose jumpsuit style:", "Character Preference") as null|anything in style_choices
+					if(choice)
+						jumpsuit_style = style_choices[choice]
+
+				if("jumpsuit_pattern")
+					// turt is applied automatically by the turt_w style, so it isn't user-selectable here.
+					var/list/patterns = list("None" = null)
+					for(var/key in poly_pattern_display)
+						if(key != POLY_PATTERN_TURT)
+							patterns[poly_pattern_display[key]] = key
+					var/choice = input(user, "Choose jumpsuit pattern:", "Character Preference") as null|anything in patterns
+					if(!isnull(choice))
+						jumpsuit_pattern = patterns[choice]
+
+				if("jumpsuit_color")
+					var/list/choices = global.poly_color_palette
+					var/choice = input(user, "Choose accent color:", "Character Preference") as null|anything in choices
+					if(choice)
+						jumpsuit_color = global.poly_color_palette[choice]
+
+				if("jumpsuit_base_color")
+					var/list/base_choices = global.poly_color_palette
+					var/base_choice = input(user, "Choose base color:", "Character Preference") as null|anything in base_choices
+					if(base_choice)
+						jumpsuit_base_color = global.poly_color_palette[base_choice]
+
 				if("nt_relation")
 					var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Nanotrasen Relation", nanotrasen_relation) as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
 					if(new_relation)
@@ -624,14 +676,22 @@
 						return
 					if(gender == MALE)
 						gender = FEMALE
+						bodytype_name = specie_obj.females_standard_bodytype
 					else
 						gender = MALE
+						bodytype_name = AVERAGE_BODYTYPE
 
 					f_style = random_facial_hair_style(gender, species)
 					h_style = random_hair_style(gender, species, ipc_head)
 
 				if("gendervoice")
 					neuter_gender_voice = neuter_gender_voice == MALE ? FEMALE : MALE
+
+				if("bodytype")
+					if(bodytype_name == AVERAGE_BODYTYPE)
+						bodytype_name = SLIM_BODYTYPE
+					else
+						bodytype_name = AVERAGE_BODYTYPE
 
 				if("randomslot")
 					randomslot = !randomslot

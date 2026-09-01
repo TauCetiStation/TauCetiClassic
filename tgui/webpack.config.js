@@ -35,7 +35,9 @@ module.exports = (env = {}, argv) => {
       'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
     },
     output: {
-      path: argv.useTmpFolder ? path.resolve(__dirname, './public/.tmp') : path.resolve(__dirname, './public'),
+      path: argv.useTmpFolder
+        ? path.resolve(__dirname, './public/.tmp')
+        : path.resolve(__dirname, './public'),
       filename: '[name].bundle.js',
       chunkFilename: '[name].bundle.js',
       chunkLoadTimeout: 15000,
@@ -43,7 +45,9 @@ module.exports = (env = {}, argv) => {
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
-      alias: {},
+      alias: {
+        'custom-fonts': path.resolve(__dirname, '../html/custom-fonts'),
+      },
     },
     module: {
       rules: [
@@ -79,6 +83,15 @@ module.exports = (env = {}, argv) => {
         {
           test: /\.(png|jpg|svg|gif)$/,
           type: 'asset/inline',
+        },
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/,
+          issuer: /\.scss$/,
+          type: 'asset/resource',
+          generator: {
+            filename: '[name][ext]',
+            emit: false,
+          },
         },
       ],
     },

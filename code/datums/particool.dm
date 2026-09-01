@@ -155,7 +155,7 @@ var/global/list/master_particle_info = list()
 				. = TRUE
 		if("modify_icon_value")
 			var/icon/new_icon = input("Pick icon:", "Icon") as null|icon
-			if(new_icon && target.particles)
+			if(new_icon)
 				modify_particle_value("icon", new_icon)
 				. = TRUE
 

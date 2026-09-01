@@ -187,7 +187,7 @@
 	switch(href_list["choice"])
 		if ("modify")
 			if (modify)
-				data_core.manifest_modify(modify.registered_name, modify.assignment)
+				data_core.manifest_modify(modify.registered_name, modify.assignment, modify.custom_department)
 				modify.name = text("[modify.registered_name]'s ID Card ([modify.assignment])")
 				if(ishuman(usr))
 					modify.loc = usr.loc
@@ -264,6 +264,17 @@
 					//let custom jobs function as an impromptu alt title, mainly for sechuds
 					if(temp_t && modify)
 						modify.assignment = temp_t
+						var/list/dep_choices = list(
+							DEP_COMMAND,
+							DEP_SPECIAL,
+							DEP_SECURITY,
+							DEP_ENGINEERING,
+							DEP_MEDICAL,
+							DEP_SCIENCE,
+							DEP_CIVILIAN
+						)
+						var/chosen_dep = input("Select department for '[temp_t]' (determines position in crew manifest):", "Department") as anything in dep_choices | null
+						modify.custom_department = chosen_dep
 				else
 					var/list/access = list()
 					for(var/datum/job/J as anything in SSjob.active_occupations)

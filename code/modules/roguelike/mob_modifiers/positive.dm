@@ -53,7 +53,7 @@
 	updates = TRUE
 	need_updates = TRUE
 
-	var/obj/item/possessed
+	var/obj/item/toy/possessed
 
 	var/rejuve_timer
 
@@ -87,7 +87,8 @@
 
 /datum/component/mob_modifier/ghostly/apply(update = FALSE)
 	if(!update)
-		possessed = new PATH_OR_RANDOM_PATH(/obj/random/misc/toy)
+		var/new_path = PATH_OR_RANDOM_PATH(/obj/random/misc/toy)
+		possessed = new new_path(null)
 
 	. = ..()
 	if(!.)

@@ -374,6 +374,12 @@
 	icon_state = "meson"
 	item_state_world = "meson_w"
 	origin_tech = "magnets=3;syndicate=4"
+	toggleable = FALSE			//thermal optics are always on; appearance is changed via the chameleon dial
+	item_action_types = null
+
+/obj/item/clothing/glasses/thermal/syndi/atom_init()
+	. = ..()
+	AddElement(/datum/element/chameleon, /obj/item/clothing/glasses)
 
 /obj/item/clothing/glasses/thermal/monocle
 	name = "thermoncle"

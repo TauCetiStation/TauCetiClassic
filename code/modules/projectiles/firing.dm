@@ -56,6 +56,7 @@
 	BB.current = curloc
 	BB.yo = targloc.y - curloc.y
 	BB.xo = targloc.x - curloc.x
+	BB.dispersion *= weapon.dispersion_multiplier
 
 	if(params)
 		var/list/mouse_control = params2list(params)

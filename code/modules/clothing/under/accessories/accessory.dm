@@ -14,6 +14,7 @@
 /obj/item/clothing/accessory/atom_init()
 	. = ..()
 	inv_overlay = image("icon" = 'icons/obj/clothing/accessory_overlay.dmi', "icon_state" = icon_state)
+	inv_overlay.appearance_flags = RESET_COLOR // don't tint with the clothing's color (e.g. polychromic jumpsuits)
 
 //when user attached an accessory to S
 /obj/item/clothing/accessory/proc/on_attached(obj/item/clothing/S, mob/user, silent)

@@ -143,6 +143,13 @@
 /datum/announcement/centcomm/carp_major/New()
 	message = "Внимание! Обнаружена массовая миграция неизвестных форм жизни вблизи станции."
 
+/datum/announcement/centcomm/portal_storm
+	name = "Event: Portal Storm"
+	subtitle = "Тревога. Блюспейс аномалия"
+	sound = "portal"
+/datum/announcement/centcomm/portal_storm/New()
+	message = "Внимание! Зафиксирована мощная блюспейс аномалия, движущаяся в сторону станции. Возможны неконтролируемые блюспейс перемещения враждебных форм жизни на борт. Всему экипажу приготовиться."
+
 /datum/announcement/centcomm/comms_blackout
 	name = "Event: Communication Blackout"
 	message = "Ионносфе:%дз˝ МКаaдж^ж<.3-БЗЗЗЗЗЗТ"

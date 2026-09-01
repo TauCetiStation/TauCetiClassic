@@ -49,15 +49,16 @@
 	max_w_class = SIZE_NORMAL
 	max_storage_space = 56
 
-/obj/item/weapon/storage/backpack/holding/attackby(obj/item/I, mob/user, params)
+/obj/item/weapon/storage/backpack/holding/try_insert(obj/item/I, mob/user, prevent_warning = FALSE, NoUpdate = FALSE)
 	if(crit_fail)
-		to_chat(user, "<span class='red'>The Bluespace generator isn't working.</span>")
-		return
+		if(!prevent_warning)
+			to_chat(user, "<span class='red'>The Bluespace generator isn't working.</span>")
+		return FALSE
 
 	if(istype(I, /obj/item/weapon/storage/backpack/holding) && !I.crit_fail)
 		to_chat(user, "<span class='red'>The Bluespace interfaces of the two devices conflict and malfunction.</span>")
 		qdel(I)
-		return
+		return FALSE
 
 	return ..()
 

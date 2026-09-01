@@ -463,7 +463,7 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 /obj/effect/landmark/costume/nightowl/atom_init()
 	..()
 	new /obj/item/clothing/under/owl(loc)
-	new /obj/item/clothing/mask/gas/owl_mask(loc)
+	new /obj/item/clothing/mask/breath/gas/owl_mask(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/costume/waiter/atom_init()
@@ -493,7 +493,7 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 	..()
 	new /obj/item/clothing/suit/imperium_monk(loc)
 	if (prob(25))
-		new /obj/item/clothing/mask/gas/cyborg(loc)
+		new /obj/item/clothing/mask/breath/gas/cyborg(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/costume/holiday_priest/atom_init()
@@ -523,13 +523,13 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 
 /obj/effect/landmark/costume/sexyclown/atom_init()
 	..()
-	new /obj/item/clothing/mask/gas/sexyclown(loc)
+	new /obj/item/clothing/mask/breath/gas/sexyclown(loc)
 	new /obj/item/clothing/under/sexyclown(loc)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/costume/sexymime/atom_init()
 	..()
-	new /obj/item/clothing/mask/gas/sexymime(loc)
+	new /obj/item/clothing/mask/breath/gas/sexymime(loc)
 	new /obj/item/clothing/under/sexymime(loc)
 	return INITIALIZE_HINT_QDEL
 

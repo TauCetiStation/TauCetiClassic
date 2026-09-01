@@ -93,7 +93,7 @@
 "q" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/space/syndicate,
-/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/breath/gas,
 /obj/item/clothing/head/helmet/space/syndicate,
 /turf/simulated/floor,
 /area/awaymission/listeningpost)

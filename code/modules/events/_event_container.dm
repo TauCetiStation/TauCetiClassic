@@ -182,7 +182,7 @@ var/global/list/severity_to_string = list("RoundStart", "Mundane", "Moderate", "
 /datum/event_container/mundane
 	severity = EVENT_LEVEL_MUNDANE
 	available_events = list(
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Nothing",                /datum/event/nothing,                                 1100),
+		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Nothing",                /datum/event/nothing,                                 1000),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "APC Damage",             /datum/event/apc_damage,                              200,   list(ASSIGNMENT_ENGINEER = 60)),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "PDA Spam",               /datum/event/pda_spam,                                0,     list(ASSIGNMENT_ANY = 4),       0, 1, 0, 25, 50),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Money Lotto",            /datum/event/money_lotto,                             0,     list(ASSIGNMENT_ANY = 1), ONESHOT, 1, 0,  5, 15),
@@ -194,7 +194,7 @@ var/global/list/severity_to_string = list("RoundStart", "Mundane", "Moderate", "
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Wallrot",                /datum/event/wallrot,                                 0,     list(ASSIGNMENT_ENGINEER = 30, ASSIGNMENT_BOTANIST = 50)),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Xenohive",               /datum/event/feature/area/maintenance_spawn/xenohive, 300),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Camera Malfunction",     /datum/event/camera_damage,                           200,   list(ASSIGNMENT_ENGINEER = 60)),
-		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Cargo Mail",             /datum/event/cargo_mail,                                0,   list(ASSIGNMENT_CARGO = 30, ASSIGNMENT_ANY = 4)),
+		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Cargo Mail",             /datum/event/cargo_mail,                                0,   list(ASSIGNMENT_CARGO = 60, ASSIGNMENT_ANY = 5)),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Rogue Drones",           /datum/event/rogue_drone,                             0,     list(ASSIGNMENT_SECURITY = 20)),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Gas Anomaly",            /datum/event/anomaly/anomaly_gas,                     75,    list(ASSIGNMENT_ENGINEER = 60)),
 		new /datum/event_meta(EVENT_LEVEL_MUNDANE, "Flux Anomaly",           /datum/event/anomaly/anomaly_flux,                    75,    list(ASSIGNMENT_ENGINEER = 50)),
@@ -234,6 +234,7 @@ var/global/list/severity_to_string = list("RoundStart", "Mundane", "Moderate", "
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Sandstorm",               /datum/event/sandstorm,                 0,     list(ASSIGNMENT_ENGINEER = 25), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Portal of Cult",          /datum/event/anomaly/cult_portal,       60,    list(ASSIGNMENT_SECURITY = 40), ONESHOT),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Heist",                   /datum/event/heist,                     40,    list(ASSIGNMENT_SECURITY = 15, ASSIGNMENT_ENGINEER = 15), ONESHOT),
+		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Portal Storm",            /datum/event/portal_storm,              75,    list(ASSIGNMENT_SECURITY = 40), ONESHOT, 1, 10),
 		new /datum/event_meta(EVENT_LEVEL_MODERATE, "Replicator",              /datum/event/replicator,                0,     list(ASSIGNMENT_SECURITY = 30), ONESHOT, 1, 35),
 		new /datum/event_meta/alien(EVENT_LEVEL_MODERATE, "Alien Infestation", /datum/event/alien_infestation,         0,     list(ASSIGNMENT_SECURITY = 15, ASSIGNMENT_MEDICAL = 15), ONESHOT, 1, 35),
 	)

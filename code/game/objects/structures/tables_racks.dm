@@ -244,6 +244,9 @@
 /obj/structure/table/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
 		return ..()
+	if(!parts)
+		return ..()
+
 	var/obj/item/weapon/table_parts/t_parts = new parts(loc)
 	if(disassembled)
 		transfer_fingerprints_to(t_parts)
@@ -511,7 +514,7 @@
  */
 /obj/structure/table/reinforced
 	name = "reinforced table"
-	cases = list("укрепленный стол", "укрепленного стола", "укрепленному столу", "укрепленной стол", "укрепленным столом", "укрепленном столе")
+	cases = list("укреплённый стол", "укреплённого стола", "укреплённому столу", "укреплённый стол", "укреплённым столом", "укреплённом столе")
 	desc = "Вариант стола на четырех ножках. Он прочнее, чем ты."
 	gender = MALE
 	icon = 'icons/obj/smooth_structures/reinforced_table.dmi'
@@ -760,7 +763,7 @@
 
 /obj/structure/table/rglass
 	name = "reinforced glass table"
-	cases = list("укрепленный стеклянный стол", "укрепленного стеклянного стола", "укрепленному стеклянному столу", "укрепленный стеклянный стол", "укрепленным стеклянным столом", "укрепленном стеклянном столе")
+	cases = list("укреплённый стеклянный стол", "укреплённого стеклянного стола", "укреплённому стеклянному столу", "укреплённый стеклянный стол", "укреплённым стеклянным столом", "укреплённом стеклянном столе")
 	desc = "Укрепленная версия стеклянного стола."
 	gender = MALE
 	icon = 'icons/obj/smooth_structures/rglass.dmi'
@@ -894,3 +897,191 @@
 
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return FALSE
+
+
+/obj/structure/mangal
+	name = "mangal"
+	cases = list("мангал", "мангала", "мангалу", "мангал", "мангалом", "мангале")
+	desc = "Сборный мангал из листов металла."
+	gender = MALE
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "mangal_empty"
+	density = TRUE
+	anchored = TRUE
+	layer = CONTAINER_STRUCTURE_LAYER
+	throwpass = 1	//You can throw objects over this, despite it's density.")
+	climbable = TRUE
+
+	max_integrity = 25
+	resistance_flags = CAN_BE_HIT
+
+	hit_particle_type = /particles/tool/digging/metal
+
+	light_color = LIGHT_COLOR_FIRE
+
+	var/coal_amount = 0
+	var/coal_max = 25
+	var/lit = FALSE
+
+	COOLDOWN_DECLARE(last_burn_time)
+	var/coal_consumption_time = 1 MINUTE
+
+/obj/structure/mangal/atom_init(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/clickplace)
+
+	if(mapload)
+		coal_amount = rand(10, coal_max)
+		update_icon()
+
+/obj/structure/mangal/airlock_crush_act()
+	deconstruct(TRUE)
+
+/obj/structure/mangal/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	var/obj/item/weapon/mangal_parts/parts = new (loc)
+	if(coal_amount > 0)
+		for(var/i in 1 to coal_amount)
+			new /obj/item/weapon/ore/coal (loc)
+
+	if(disassembled)
+		transfer_fingerprints_to(parts)
+	else
+		parts.deconstruct(FALSE)
+	..()
+
+/obj/structure/mangal/attackby(obj/item/weapon/W, mob/user)
+	if(iswrenching(W))
+		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
+		deconstruct(TRUE)
+		return
+
+	if(istype(W, /obj/item/weapon/ore/coal) && (coal_amount < coal_max))
+		qdel(W)
+		coal_amount++
+		visible_message("<span class='notice'>[user] добавляет [CASE(W, ACCUSATIVE_CASE)] в мангал</span>")
+		update_icon()
+		return
+
+	if(W.get_current_temperature() && (coal_amount > 0))
+		visible_message("<span class='notice'>[user] поджигает [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)].</span>")
+		StartBurning()
+		return
+
+	if(W.is_open_container() && W.reagents && W.reagents.remove_reagent("water", 1))
+		visible_message("<span class='notice'>[user] тушит [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)].</span>")
+		extinguish()
+		return
+
+	. = ..()
+
+/obj/structure/mangal/update_icon()
+	if(!coal_amount)
+		icon_state = "mangal_empty"
+		return
+
+	if(lit)
+		icon_state = "mangal_lit"
+		return
+
+	icon_state = "mangal_coal"
+
+/obj/structure/mangal/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	StartBurning()
+
+/obj/structure/mangal/water_act()
+	extinguish()
+
+/obj/structure/mangal/get_current_temperature()
+	if(lit)
+		return 500
+	return 0
+
+/obj/structure/mangal/process()
+	if(!CheckOxygen())
+		extinguish()
+		return
+
+	if(COOLDOWN_FINISHED(src, last_burn_time))
+		COOLDOWN_START(src, last_burn_time, coal_consumption_time)
+		coal_amount--
+		if(coal_amount <= 0)
+			coal_amount = 0
+			extinguish()
+			return
+
+	Burn()
+
+/obj/structure/mangal/proc/Burn()
+	var/turf/current_location = get_turf(src)
+	current_location.hotspot_expose(500, 250)
+	for(var/A in current_location)
+		if(A == src)
+			continue
+		if(isobj(A))
+			var/obj/O = A
+			O.fire_act(exposed_temperature = T0C+1000, exposed_volume = 250)
+		else if(ismob(A))
+			var/mob/M = A
+			M.fire_act(exposed_temperature = T0C+1000, exposed_volume = 250)
+
+/obj/structure/mangal/proc/StartBurning()
+	if(lit || !CheckOxygen())
+		return
+
+	lit = TRUE
+	START_PROCESSING(SSobj, src)
+	update_icon()
+	set_light(3)
+
+/obj/structure/mangal/proc/extinguish()
+	if(!lit)
+		return
+
+	lit = FALSE
+	set_light(0)
+	STOP_PROCESSING(SSobj, src)
+	update_icon()
+
+/obj/structure/mangal/proc/CheckOxygen()
+	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
+	if(G.get_by_flag(XGM_GAS_OXIDIZER) > 1)
+		return 1
+	return 0
+
+
+/obj/structure/table/park_table
+	name = "park table"
+	cases = list("парковый столик", "паркового столика", "парковому столику", "парковый столик", "парковым столиком", "парковом столике")
+	desc = "Простой дощатый стол."
+	gender = MALE
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "table_park"
+	smooth = FALSE
+
+	max_integrity = 75
+	resistance_flags = CAN_BE_HIT
+
+	hit_particle_type = /particles/tool/digging/wood
+
+	parts = null
+	flipable = FALSE
+	canconnect = FALSE
+
+/obj/structure/table/park_table/atom_init(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/clickplace)
+
+/obj/structure/table/park_table/airlock_crush_act()
+	deconstruct(TRUE)
+
+/obj/structure/table/park_table/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	new /obj/item/stack/sheet/wood(loc, 4)
+
+	..()

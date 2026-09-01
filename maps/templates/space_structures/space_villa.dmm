@@ -706,10 +706,10 @@
 /area/space_structures/space_villa)
 "zy" = (
 /obj/structure/table/woodentable,
-/obj/item/painting_frame{
+/obj/item/weapon/picture_frame/wooden{
 	pixel_y = 4
 	},
-/obj/item/painting_frame{
+/obj/item/weapon/picture_frame/wooden{
 	pixel_y = -4
 	},
 /obj/item/stack/sheet/cloth{

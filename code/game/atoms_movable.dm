@@ -473,9 +473,11 @@
 	usr.client.outlined_item[src] = IMG
 
 
-/atom/movable/proc/remove_outline()
-	usr.client.images -= usr.client.outlined_item[src]
-	usr.client.outlined_item -= src
+/atom/movable/proc/remove_outline(mob/user = usr)
+	if(!user || !user.client)
+		return
+	user.client.images -= user.client.outlined_item[src]
+	user.client.outlined_item -= src
 
 /**
  * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like camera mobs or ghosts)
@@ -579,7 +581,7 @@
 			rad_power *= sqrt(1 / (distance_rad_signal + 1))
 			counter.recieve_rad_signal(rad_power, distance_rad_signal)
 
-/atom/movable/proc/try_wrap_up(texture_name = "cardboard", details_name = null)
+/atom/movable/proc/try_wrap_up(wrap_type)
 	return null
 
 #undef GEIGER_RANGE

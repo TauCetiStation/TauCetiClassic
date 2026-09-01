@@ -158,7 +158,7 @@
 	else if(isscrewing(I))
 		if(bcell)
 			to_chat(user, "<span class='notice'>You remove \the [bcell] from the [src].</span>")
-			bcell.updateicon()
+			bcell.update_icon()
 			bcell.forceMove(get_turf(loc))
 			bcell = null
 			status = 0

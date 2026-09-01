@@ -86,13 +86,6 @@
 	..()
 	SSticker.nar_sie_has_risen = TRUE
 
-// I'm commenting this out in favor of the new lighting effect
-// this sound is terrible and does more harm than good for the atmosphere
-// if no one is against it in the future - delete comment and the ogg file
-//	for(var/mob/M in player_list)
-//		if(!isnewplayer(M))
-//			M.playsound_local(null, 'sound/effects/dimensional_rend.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
-
 	// probably should be white list or something, maybe check by linkage?
 	for(var/Z in SSmapping.levels_not_having_any_trait(list(ZTRAIT_CENTCOM, ZTRAIT_JUNKYARD)))
 		var/datum/space_level/SL = SSmapping.get_level(Z)
@@ -103,6 +96,9 @@
 
 /datum/religion_rites/pedestals/cult/narsie/proc/summon(turf/T)
 	new /obj/singularity/narsie(T, religion)
+	for(var/mob/M as anything in player_list)
+		if(!isnewplayer(M))
+			M.playsound_local(null, 'sound/antag/bloodcult_scribe.ogg', VOL_EFFECTS_VOICE_ANNOUNCEMENT, vary = FALSE, frequency = null, ignore_environment = TRUE)
 	global.cult_religion.eminence.start_process()
 
 /datum/religion_rites/pedestals/cult/cult_portal

@@ -71,7 +71,7 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 
 /datum/emote/proc/get_emote_message_3p(mob/user)
 	var/msg = message_3p
-	if(message_miming && HAS_TRAIT(src, TRAIT_MIMING))
+	if(message_miming && HAS_TRAIT(user, TRAIT_MIMING))
 		msg = message_miming
 	else if(message_muzzled && istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
 		msg = message_muzzled
@@ -135,16 +135,21 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 /datum/emote/proc/can_emote(mob/user, intentional)
 	if(!check_cooldown(user.next_emote_use, intentional))
 		if(intentional)
-			to_chat(user, "<span class='notice'>You can't emote so much, give it a rest.</span>")
+			to_chat(user, "<span class='notice'>Вы не можете использовать эмоуты так часто, передохните.</span>")
 		return FALSE
 
-	if(!isnull(required_stat) && user.stat > required_stat)
+	if(user.status_flags & FAKEDEATH)
 		if(intentional)
 			to_chat(user, "<span class='notice'>You can't emote in this state.</span>")
 		return FALSE
 
+	if(!isnull(required_stat) && user.stat > required_stat)
+		if(intentional)
+			to_chat(user, "<span class='notice'>Вы не можете использовать эмоуты в текущем состоянии.</span>")
+		return FALSE
+
 	if(!isnull(required_intentional_stat) && intentional && user.stat > required_stat)
-		to_chat(user, "<span class='notice'>You can't emote in this state.</span>")
+		to_chat(user, "<span class='notice'>Вы не можете использовать эмоуты в текущем состоянии.</span>")
 		return FALSE
 
 	if(blocklist_traits)
@@ -160,7 +165,7 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 	if(require_usable_hand)
 		if(user.restrained())
 			if(intentional)
-				to_chat(user, "<span class='notice'>You can't perform this emote while being restrained.</span>")
+				to_chat(user, "<span class='notice'>Вы не можете использовать этот эмоут, пока связаны.</span>")
 			return FALSE
 
 		if(ishuman(user))
@@ -182,7 +187,7 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 			var/obj/item/organ/external/BP = H.get_bodypart(zone)
 			if(!BP)
 				if(intentional)
-					to_chat(H, "<span class='notice'>You can't perform this emote without a [parse_zone(zone)]</span>")
+					to_chat(H, "<span class='notice'>Вы не можете использовать этот эмоут без [parse_zone_ru_genitive(zone)]</span>")
 				return FALSE
 
 	return TRUE

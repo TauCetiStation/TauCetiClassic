@@ -187,7 +187,7 @@ var/global/const/INGEST = 2
 	for(var/datum/reagent/R as anything in reagent_list)
 		var/remove_amount = R.custom_metabolism * M.mob_metabolism_mod.Get()
 		if(remove_amount > 0) // i think it should be always true, there is no reagents with 0 metabolism and zero metabolism mobs should not reach this code
-			R.on_mob_life(M)
+			R.on_mob_life(M, remove_amount)
 			remove_reagent(R.id, remove_amount)
 	update_total()
 

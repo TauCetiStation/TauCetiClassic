@@ -307,6 +307,10 @@
 	for(var/datum/ringtone/Ring as anything in subtypesof(/datum/ringtone))
 		global.ringtones_by_names["[initial(Ring.name)]"] = new Ring
 
+	global.package_wrap_by_type = list()
+	for(var/package_wrap_type as anything in typesof(/datum/package_wrap))
+		global.package_wrap_by_type[package_wrap_type] = new package_wrap_type
+
 	init_washing_items_list()
 
 /proc/init_washing_items_list()
@@ -327,7 +331,7 @@
 	global.washing_items_list -= /obj/item/clothing/suit/cyborg_suit
 	global.washing_items_list -= /obj/item/clothing/suit/bomb_suit
 	global.washing_items_list -= /obj/item/clothing/suit/armor
-	global.washing_items_list -= /obj/item/clothing/mask/gas
+	global.washing_items_list -= /obj/item/clothing/mask/breath/gas
 	global.washing_items_list -= /obj/item/clothing/mask/cigarette
 	global.washing_items_list -= /obj/item/clothing/head/syndicatefake
 	global.washing_items_list -= /obj/item/clothing/head/helmet

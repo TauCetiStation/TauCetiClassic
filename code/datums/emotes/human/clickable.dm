@@ -32,8 +32,8 @@
 
 /datum/emote/clickable/help
 	key = "help"
-	message_1p = "You asked for help."
-	message_3p = "needs help."
+	message_1p = "Вы просите помощи."
+	message_3p = "нуждается в помощи."
 	cooldown = 10 SECONDS
 	duration = 7 SECONDS
 	message_type = SHOWMSG_AUDIO

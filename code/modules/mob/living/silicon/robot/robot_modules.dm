@@ -262,6 +262,7 @@
 	modules += new /obj/item/weapon/gripper/paperwork(src)
 	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 	modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
+	modules += new /obj/item/device/synth(src)
 
 	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 	M.matter = 30

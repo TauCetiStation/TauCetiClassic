@@ -201,7 +201,7 @@
 	else if(cell)
 		cell.loc = loc
 		cell.add_fingerprint(user)
-		cell.updateicon()
+		cell.update_icon()
 
 		if(anchored)
 			icon_state = "suspension_no_cell_anchored"

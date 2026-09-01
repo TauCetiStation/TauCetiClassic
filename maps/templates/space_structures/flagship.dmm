@@ -9,8 +9,8 @@
 /area/space_structures/flagship)
 "bq" = (
 /obj/effect/landmark/corpse/syndicatesoldier{
-	corpsehelmet = /obj/item/clothing/head/helmet;
 	corpsegloves = /obj/item/clothing/gloves/black;
+	corpsehelmet = /obj/item/clothing/head/helmet;
 	corpseshoes = /obj/item/clothing/shoes/boots
 	},
 /turf/simulated/floor/airless{
@@ -63,15 +63,15 @@
 /area/space_structures/flagship)
 "cw" = (
 /turf/simulated/floor/airless{
-	icon_state = "darkred";
-	dir = 9
+	dir = 9;
+	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
 "cE" = (
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 4
+	dir = 4;
+	icon_state = "darkpurple"
 	},
 /area/space_structures/flagship)
 "cM" = (
@@ -192,8 +192,8 @@
 /area/space_structures/flagship)
 "ix" = (
 /turf/simulated/floor/airless{
-	icon_state = "darkbrown";
-	dir = 10
+	dir = 10;
+	icon_state = "darkbrown"
 	},
 /area/space_structures/flagship)
 "iH" = (
@@ -223,8 +223,8 @@
 /obj/structure/table/reinforced,
 /obj/item/clothing/head/beret/black,
 /obj/item/weapon/stamp/syndicate{
-	pixel_y = 10;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = 10
 	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
@@ -265,8 +265,8 @@
 	dir = 1
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkredcorners";
-	dir = 1
+	dir = 1;
+	icon_state = "darkredcorners"
 	},
 /area/space_structures/flagship)
 "lM" = (
@@ -287,8 +287,8 @@
 /area/space_structures/flagship)
 "mq" = (
 /turf/simulated/floor/airless{
-	icon_state = "darkred";
-	dir = 5
+	dir = 5;
+	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
 "mE" = (
@@ -305,8 +305,8 @@
 "nq" = (
 /obj/effect/decal/mecha_wreckage/mauler,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 4
+	dir = 4;
+	icon_state = "darkpurple"
 	},
 /area/space_structures/flagship)
 "nu" = (
@@ -341,8 +341,8 @@
 "pn" = (
 /obj/structure/stool/bed/chair/office/dark,
 /turf/simulated/floor/airless{
-	icon_state = "darkredcorners";
-	dir = 8
+	dir = 8;
+	icon_state = "darkredcorners"
 	},
 /area/space_structures/flagship)
 "pU" = (
@@ -404,8 +404,8 @@
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/snacks/syndicake,
 /obj/item/weapon/book/manual/nuclear{
-	pixel_y = -2;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = -2
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -414,8 +414,8 @@
 	use_power = 1
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkred";
-	dir = 8
+	dir = 8;
+	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
 "rl" = (
@@ -566,8 +566,8 @@
 /area/space_structures/flagship)
 "xp" = (
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 1
+	dir = 1;
+	icon_state = "darkpurple"
 	},
 /area/space_structures/flagship)
 "xE" = (
@@ -578,8 +578,8 @@
 	use_power = 1
 	},
 /obj/effect/landmark/corpse/syndicatesoldier{
-	corpsehelmet = /obj/item/clothing/head/helmet;
 	corpsegloves = /obj/item/clothing/gloves/black;
+	corpsehelmet = /obj/item/clothing/head/helmet;
 	corpseshoes = /obj/item/clothing/shoes/boots
 	},
 /turf/simulated/floor{
@@ -810,8 +810,8 @@
 	},
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 9
+	dir = 9;
+	icon_state = "darkpurple"
 	},
 /area/space_structures/flagship)
 "GW" = (
@@ -822,8 +822,8 @@
 /area/space_structures/flagship)
 "Hb" = (
 /obj/effect/landmark/corpse/syndicatesoldier{
-	corpsehelmet = /obj/item/clothing/head/helmet;
 	corpsegloves = /obj/item/clothing/gloves/black;
+	corpsehelmet = /obj/item/clothing/head/helmet;
 	corpseshoes = /obj/item/clothing/shoes/boots
 	},
 /turf/simulated/floor{
@@ -837,8 +837,8 @@
 "HB" = (
 /obj/effect/decal/mecha_wreckage/gygax/dark,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 5
+	dir = 5;
+	icon_state = "darkpurple"
 	},
 /area/space_structures/flagship)
 "HR" = (
@@ -940,8 +940,8 @@
 	use_power = 1
 	},
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 6
+	dir = 6;
+	icon_state = "darkpurple"
 	},
 /area/space_structures/flagship)
 "Of" = (
@@ -986,8 +986,8 @@
 /obj/structure/table/reinforced,
 /obj/item/device/megaphone,
 /obj/item/weapon/disk/research_points/rare{
-	pixel_y = 9;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = 9
 	},
 /turf/simulated/floor{
 	icon_state = "darkblue"
@@ -997,22 +997,22 @@
 /obj/structure/rack,
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 8
+	dir = 8;
+	icon_state = "darkpurple"
 	},
 /area/space_structures/flagship)
 "Qw" = (
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/airless{
-	icon_state = "darkred";
-	dir = 6
+	dir = 6;
+	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
 "QG" = (
 /obj/effect/decal/cleanable/blood,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 10
+	dir = 10;
+	icon_state = "darkpurple"
 	},
 /area/space_structures/flagship)
 "QV" = (
@@ -1055,14 +1055,14 @@
 /area/space_structures/flagship)
 "SL" = (
 /turf/simulated/floor/airless{
-	icon_state = "darkredcorners";
-	dir = 4
+	dir = 4;
+	icon_state = "darkredcorners"
 	},
 /area/space_structures/flagship)
 "SU" = (
 /turf/simulated/floor/airless{
-	icon_state = "darkbrown";
-	dir = 8
+	dir = 8;
+	icon_state = "darkbrown"
 	},
 /area/space_structures/flagship)
 "SX" = (
@@ -1129,14 +1129,14 @@
 "Wq" = (
 /obj/effect/spawner/mob_spawn/drone,
 /turf/simulated/floor/airless{
-	icon_state = "darkpurple";
-	dir = 8
+	dir = 8;
+	icon_state = "darkpurple"
 	},
 /area/space_structures/flagship)
 "Wv" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/syndicate/civilian,
-/obj/item/clothing/head/helmet/space/syndicate/civilian,
+/obj/machinery/suit_storage_unit/globose{
+	filled = 1
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "darkred"
@@ -1149,8 +1149,8 @@
 "Xg" = (
 /obj/effect/spawner/mob_spawn/drone,
 /turf/simulated/floor/airless{
-	icon_state = "darkred";
-	dir = 10
+	dir = 10;
+	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
 "Xk" = (
@@ -1169,14 +1169,14 @@
 	},
 /obj/effect/decal/turf_decal/set_damaged,
 /turf/simulated/floor/airless{
-	icon_state = "darkred";
-	dir = 4
+	dir = 4;
+	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
 "Yv" = (
 /turf/simulated/floor/airless{
-	icon_state = "darkred";
-	dir = 1
+	dir = 1;
+	icon_state = "darkred"
 	},
 /area/space_structures/flagship)
 "ZF" = (

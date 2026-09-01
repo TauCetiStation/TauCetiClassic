@@ -20,6 +20,12 @@
 
 	var/list/drops = list(/obj/item/weapon/shard)
 
+	// Full repair time (deciseconds) when integrity is at 0. Actual time scales with damage.
+	var/repair_time = 12 SECONDS
+
+	// Welding fuel spent on a full repair from 0 integrity. Actual cost scales with damage.
+	var/repair_fuel = 5
+
 /obj/structure/window/atom_init()
 	update_nearby_tiles()
 	return ..()
@@ -78,6 +84,31 @@
 	return !density
 
 /obj/structure/window/attackby(obj/item/W, mob/user)
+	if(iswelding(W))
+		if((flags & NODECONSTRUCT) || (resistance_flags & INDESTRUCTIBLE))
+			return ..()
+		var/obj/item/weapon/weldingtool/WT = W
+		if(!WT.use(0, user)) // сварка должна быть включена (и тут же eyecheck)
+			return
+		if(weld_react(user, WT))
+			return
+		if(get_integrity() >= max_integrity)
+			to_chat(user, "<span class='notice'>[src] уже в хорошем состоянии.</span>")
+			return
+		var/damage_fraction = 1 - (get_integrity() / max_integrity)
+		var/cur_repair_time = max(30, round(repair_time * damage_fraction))
+		var/cur_repair_fuel = max(1, round(repair_fuel * damage_fraction))
+		if(WT.tool_start_check(user, amount = cur_repair_fuel))
+			user.visible_message("<span class='notice'>[user] начинает чинить [CASE(src, ACCUSATIVE_CASE)]...</span>", \
+								 "<span class='notice'>Вы начинаете чинить [CASE(src, ACCUSATIVE_CASE)]...</span>")
+			if(WT.use_tool(src, user, cur_repair_time, amount = cur_repair_fuel, volume = 50, quality = QUALITY_WELDING))
+				repair_damage(max_integrity)
+				integrity_failure = initial(integrity_failure)
+				update_icon()
+				user.visible_message("<span class='notice'>[user] чинит [CASE(src, ACCUSATIVE_CASE)].</span>", \
+									 "<span class='notice'>Вы починили [CASE(src, ACCUSATIVE_CASE)].</span>")
+		return
+
 	if(istype(W, /obj/item/weapon/airlock_painter))
 		change_paintjob(W, user)
 		return
@@ -180,6 +211,17 @@
 
 /obj/structure/window/proc/change_color(new_color)
 	color = new_color
+
+// Reaction to being welded. Base glass returns FALSE and gets repaired by the caller;
+// phoron glass overrides this to detonate and returns TRUE to skip the repair.
+/obj/structure/window/proc/weld_react(mob/user, obj/item/weapon/weldingtool/WT)
+	return FALSE
+
+/obj/structure/window/proc/weld_explode(dev, heavy, light)
+	visible_message("<span class='userdanger'>Сварка поджигает фороновое стекло, и [src] взрывается!</span>")
+	var/turf/T = get_turf(src)
+	qdel(src)
+	explosion(T, dev, heavy, light, light + 1)
 
 /obj/structure/window/proc/change_paintjob(obj/item/weapon/airlock_painter/W, mob/user)
 	if(!istype(W))

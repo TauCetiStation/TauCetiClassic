@@ -1,10 +1,10 @@
 /datum/emote/robot/clap
 	key = "clap"
 
-	message_1p = "You clap."
-	message_3p = "claps."
+	message_1p = "Вы хлопаете."
+	message_3p = "хлопает."
 
-	message_impaired_reception = "You hear someone clapping."
+	message_impaired_reception = "Вы слышите, как кто-то хлопает."
 
 	message_type = SHOWMSG_VISUAL
 
@@ -14,8 +14,8 @@
 /datum/emote/robot/salute
 	key = "salute"
 
-	message_1p = "You salute."
-	message_3p = "salutes."
+	message_1p = "Вы салютуете."
+	message_3p = "салютует."
 
 	message_type = SHOWMSG_VISUAL
 

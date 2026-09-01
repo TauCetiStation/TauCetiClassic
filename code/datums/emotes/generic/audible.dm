@@ -1,14 +1,14 @@
 /datum/emote/whimper
 	key = "whimper"
 
-	message_1p = "You whimper."
-	message_3p = "whimpers."
+	message_1p = "Вы хнычете."
+	message_3p = "хнычет."
 
-	message_impaired_production = "makes a weak noise."
-	message_impaired_reception = "makes a sad face."
+	message_impaired_production = "издаёт слабый звук."
+	message_impaired_reception = "делает печальное лицо."
 
-	message_miming = "whimpers."
-	message_muzzled = "makes a weak noise."
+	message_miming = "беззвучно поскуливает, скривив лицо в страдальческой гримасе."
+	message_muzzled = "издаёт сдавленный звук."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -19,33 +19,33 @@
 /datum/emote/roar
 	key = "roar"
 
-	message_1p = "You roar!"
-	message_3p = "roars!"
+	message_1p = "Вы рычите!"
+	message_3p = "рычит!"
 
-	message_impaired_production = "makes a loud noise!"
+	message_impaired_production = "издаёт громкий звук!"
 
-	message_miming = "acts out a roar!"
-	message_muzzled = "makes a loud noise!"
+	message_miming = "широко разевает рот в яростной гримасе!"
+	message_muzzled = "издаёт громкий звук!"
 
 	message_type = SHOWMSG_AUDIO
 
 	required_stat = CONSCIOUS
 
 /datum/emote/roar/get_impaired_msg(mob/user)
-	return "opens [P_THEIR(user)] mouth wide and scary!"
+	return "пугающе разевает рот!"
 
 
 /datum/emote/gasp
 	key = "gasp"
 
-	message_1p = "You gasp!"
-	message_3p = "gasps!"
+	message_1p = "Вы судорожно вдыхаете!"
+	message_3p = "судорожно вдыхает!"
 
-	message_impaired_production = "sucks in air violently!"
-	message_impaired_reception = "sucks in air violently!"
+	message_impaired_production = "жадно ловит ртом воздух!"
+	message_impaired_reception = "жадно ловит ртом воздух!"
 
-	message_miming = "appears to be gasping!"
-	message_muzzled = "makes a weak noise."
+	message_miming = "беззвучно ловит ртом воздух!"
+	message_muzzled = "издаёт сдавленный звук."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -58,13 +58,13 @@
 /datum/emote/choke
 	key = "choke"
 
-	message_1p = "You choke."
-	message_3p = "chokes."
+	message_1p = "Вы задыхаетесь."
+	message_3p = "задыхается."
 
-	message_impaired_production = "makes a weak noise."
+	message_impaired_production = "издаёт сдавленный звук."
 
-	message_miming = "chokes."
-	message_muzzled = "makes a weak noise."
+	message_miming = "театрально хватается за горло, изображая удушье."
+	message_muzzled = "издаёт сдавленный звук."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -74,19 +74,19 @@
 	cloud = "cloud-gasp"
 
 /datum/emote/choke/get_impaired_msg(mob/user)
-	return "clutches [P_THEIR(user)] throat desperately!"
+	return "отчаянно хватается за горло!"
 
 
 /datum/emote/moan
 	key = "moan"
 
-	message_1p = "You moan!"
-	message_3p = "moans!"
+	message_1p = "Вы стонете!"
+	message_3p = "стонет!"
 
-	message_impaired_production = "moans silently."
+	message_impaired_production = "тихо стонет."
 
-	message_miming = "appears to moan!"
-	message_muzzled = "moans silently!"
+	message_miming = "закатывает глаза в немом стоне!"
+	message_muzzled = "тихо стонет!"
 
 	message_type = SHOWMSG_AUDIO
 
@@ -94,22 +94,22 @@
 	blocklist_unintentional_traits = list(TRAIT_EMOTIONLESS)
 
 /datum/emote/moan/get_impaired_msg(mob/user)
-	return "opens [P_THEIR(user)] mouth wide"
+	return "широко открывает рот"
 
 
 /datum/emote/cough
 	key = "cough"
 
-	message_1p = "You cough."
-	message_3p = "coughs."
+	message_1p = "Вы кашляете."
+	message_3p = "кашляет."
 
-	message_impaired_production = "spasms violently!"
+	message_impaired_production = "сильно содрогается!"
 
-	message_miming = "acts out a cough."
-	message_muzzled = "appears to cough."
+	message_miming = "содрогается в беззвучном кашле."
+	message_muzzled = "глухо кашляет."
 
 	required_stat = CONSCIOUS
 	blocklist_unintentional_traits = list(TRAIT_NO_BREATHE)
 
 /datum/emote/cough/get_impaired_msg(mob/user)
-	return "moves [P_THEIR(user)] face forward as [P_THEY(user)] open and close [P_THEIR(user)] mouth!"
+	return "подаётся вперёд, открывая и закрывая рот!"

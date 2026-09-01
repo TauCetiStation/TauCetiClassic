@@ -477,9 +477,9 @@
 		if(35)
 			//gas mask
 			if(prob(25))
-				new_item = new /obj/item/clothing/mask/gas/poltergeist(loc)
+				new_item = new /obj/item/clothing/mask/breath/gas/poltergeist(loc)
 			else
-				new_item = new /obj/item/clothing/mask/gas(loc)
+				new_item = new /obj/item/clothing/mask/breath/gas(loc)
 		if(36)
 			apply_prefix = 0
 			item_type = "strange device"

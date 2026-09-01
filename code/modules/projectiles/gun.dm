@@ -48,7 +48,7 @@
 	var/spread_increase = 0 // per shot
 	var/spread_max = 0
 	var/spread = 0
-
+	var/dispersion_multiplier = 1
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 

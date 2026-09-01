@@ -16,6 +16,7 @@
 	recoil = MEDIUM_RECOIL
 	var/pump_cooldown = 10
 	var/pump_sound = list('sound/weapons/guns/shotgun_pump1.ogg', 'sound/weapons/guns/shotgun_pump2.ogg', 'sound/weapons/guns/shotgun_pump3.ogg')
+	dispersion_multiplier = 0.5
 
 /obj/item/weapon/gun/projectile/shotgun/attackby(obj/item/I, mob/user, params)
 	var/num_loaded = magazine.attackby(I, user, 1)
@@ -62,7 +63,6 @@
 	item_state = "cshotgun"
 	origin_tech = "combat=5;materials=2"
 	initial_mag = /obj/item/ammo_box/magazine/internal/shotcom
-	w_class = SIZE_BIG
 
 /obj/item/weapon/gun/projectile/shotgun/combat/nonlethal
 	initial_mag = /obj/item/ammo_box/magazine/internal/shotcom/nonlethal
@@ -84,6 +84,8 @@
 	var/short = FALSE
 	var/can_be_shortened = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
+	dispersion_multiplier = 0.5
+	has_cylinder = FALSE
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/update_icon()
 	if(short)
@@ -121,6 +123,7 @@
 			desc = "Omar's coming!"
 			short = TRUE
 			can_be_holstered = TRUE
+			dispersion_multiplier = 1
 			update_icon()
 		return
 
@@ -173,6 +176,7 @@
 	desc = "Omar's coming!"
 	can_be_holstered = TRUE
 	short = TRUE
+	dispersion_multiplier = 1
 
 /obj/item/weapon/gun/projectile/shotgun/repeater
 	name = "repeater rifle"

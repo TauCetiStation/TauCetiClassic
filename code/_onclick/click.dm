@@ -69,6 +69,9 @@
 		client.click_intercept.InterceptClickOn(src, params, A)
 		return
 
+	if(incapacitated(NONE))
+		return
+
 	var/list/modifiers = params2list(params)
 
 	if(client.cob && client.cob.in_building_mode)
@@ -97,9 +100,6 @@
 		CtrlClickOn(A)
 		return
 	if(RegularClickOn(A, params))
-		return
-
-	if(incapacitated(NONE))
 		return
 
 	face_atom(A) // change direction to face what you clicked on
@@ -331,6 +331,8 @@
 	return
 
 /atom/proc/AltClick(mob/user)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ALTCLICK, user) & COMPONENT_CANCEL_ALTCLICK)
+		return
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)
