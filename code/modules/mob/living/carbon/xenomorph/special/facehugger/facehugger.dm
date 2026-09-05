@@ -318,6 +318,10 @@
 		Die()
 		icon_state = "[initial(icon_state)]_impregnated"
 		var/obj/item/alien_embryo/new_embryo = new /obj/item/alien_embryo(target)
+		if(ishuman(target))
+			var/mob/living/carbon/human/victim = target
+			var/obj/item/organ/external/chest/chest = victim.get_bodypart(BP_CHEST)
+			chest.embedded_objects += new_embryo
 		if(current_hugger)
 			var/mob/living/carbon/xenomorph/larva/new_xeno = new /mob/living/carbon/xenomorph/larva(new_embryo)
 			new_xeno.loc = new_embryo

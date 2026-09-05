@@ -19,7 +19,7 @@
 	var/deadman = 0
 
 	qualities = list(
-		QUALITY_SIGNALLING = 1
+		QUALITY_SIGNALLING = 100
 	)
 
 /obj/item/device/assembly/signaler/atom_init(mapload, my_new_frequency)

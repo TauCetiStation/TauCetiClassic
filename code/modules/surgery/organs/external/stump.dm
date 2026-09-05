@@ -3,7 +3,6 @@
 	name = "limb stump"
 	cases = list("культя", "культи", "культе", "культю", "культей", "культе")
 	icon_state = ""
-	is_stump = TRUE
 
 /datum/bodypart_controller/stump/adjust_pumped(value)
 	return 0

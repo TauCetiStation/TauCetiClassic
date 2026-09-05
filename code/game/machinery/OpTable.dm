@@ -13,6 +13,10 @@
 	var/strapped = 0.0
 
 	var/obj/machinery/computer/operating/computer = null
+	qualities = list(
+		QUALITY_OPERATE_TABLE = 100
+	)
+
 
 /obj/machinery/optable/atom_init()
 	. = ..()

@@ -367,7 +367,7 @@
 		return FALSE
 
 	var/obj/item/organ/external/BP = M.bodyparts_by_name[BP_HEAD]
-	if(!BP || BP.is_stump)
+	if(!BP || isstump(isstump(BP)))
 		to_chat(user, "<span class='warning'>[M] has no head!</span>")
 		return FALSE
 
@@ -429,7 +429,7 @@
 	if(buckled_mob.mob_has_gravity())
 		var/mob/living/carbon/human/bm = buckled_mob
 		var/obj/item/organ/external/BP = bm.bodyparts_by_name[BP_HEAD]
-		if(BP && !BP.is_stump)
+		if(BP && !isstump(BP))
 			if(bm.stat != DEAD)
 				if(!HAS_TRAIT(bm, TRAIT_NO_BREATHE))
 					bm.adjustOxyLoss(5)

@@ -1571,7 +1571,7 @@
 
 		if (!BP.hidden && prob(60)) //set it snuggly
 			BP.hidden = surprise
-			BP.cavity = 0
+			BP.cavity = FALSE
 		else 		//someone is having a bad day
 			BP.embed(surprise)
 			BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, "Animal escaping the ribcage")

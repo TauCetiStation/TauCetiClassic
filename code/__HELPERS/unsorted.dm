@@ -1204,34 +1204,12 @@ Turf and target are seperate in case you want to teleport some distance from a t
 /obj/item/weapon/shovel/can_puncture()
 	return TRUE
 
-/proc/is_surgery_tool(obj/item/W)
-	return (	\
-	istype(W, /obj/item/weapon/scalpel)			||	\
-	istype(W, /obj/item/weapon/hemostat)		||	\
-	istype(W, /obj/item/weapon/retractor)		||	\
-	istype(W, /obj/item/weapon/cautery)			||	\
-	istype(W, /obj/item/weapon/bonegel)			||	\
-	istype(W, /obj/item/weapon/bonesetter)
-	)
-
-/proc/get_surg_chance(atom/location)
-	// please make this an obj var ~Luduk
-	if(locate(/obj/machinery/optable) in location)
-		return 100
-	if(locate(/obj/structure/stool/bed/roller/roller_surg) in location)
-		return 95
-	if(locate(/obj/structure/stool/bed/roller) in location)
-		return 75
-	if(locate(/obj/structure/table) in location)
-		return 66
-	return 0
-
 //check if mob is lying down on something we can operate him on.
 /proc/can_operate(mob/living/carbon/M, mob/user)
-	if(locate(/obj/machinery/optable, M.loc) && M.crawling)
-		return TRUE
-	if((M.buckled || M.incapacitated()) && user.mood_prob(get_surg_chance(M.loc)))
-		return TRUE
+	for(var/obj/O in M.loc)
+		if(O.get_quality(QUALITY_OPERATE_TABLE) && M.crawling)
+			if(user.mood_prob(O.get_quality(QUALITY_OPERATE_TABLE)))
+				return TRUE
 	return FALSE
 
 /*

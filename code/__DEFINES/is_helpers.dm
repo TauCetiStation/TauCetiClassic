@@ -27,6 +27,8 @@
 
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
+#define ismachine(A) (istype(A, /mob/living/carbon/human/machine))
+
 #define ispluvian(A) (A.get_species() == PLUVIAN)
 
 #define isskeleton(A) HAS_TRAIT(A, ELEMENT_TRAIT_SKELETON) // replace with trait checks, zombie too
@@ -155,7 +157,7 @@
 
 #define iswelding(I) 	I.get_quality(QUALITY_WELDING)
 
-#define iscutter(I) 	I.get_quality(QUALITY_CUTTING)
+#define iscutter(I) 	I.get_quality(QUALITY_CUTTING) // also use in surgery like scalpel and etc
 
 #define isscrewing(I) 	I.get_quality(QUALITY_SCREWING)
 
@@ -166,6 +168,59 @@
 #define issignaling(I)  I.get_quality(QUALITY_SIGNALLING)
 
 #define iscoil(A) 		(istype(A, /obj/item/stack/cable_coil))
+
+#define isrockdrill(I) 	I.get_quality(QUALITY_ROCK_DRILL)
+
+#define isdropliquid(I) I.get_quality(QUALITY_DROP_LIQUID)
+
+// SURGERY HELPERS
+
+#define iscanoptable(O) O.get_quality(QUALITY_OPERATE_TABLE)
+
+#define issurgcutt(I)   I.get_quality(QUALITY_SURG_CUTTING)
+
+#define isclamp(I) 		I.get_quality(QUALITY_CLAMP)
+
+#define isretract(I) 	I.get_quality(QUALITY_RETRACT)
+
+#define issawopen(I) 	I.get_quality(QUALITY_SAW_OPEN)
+
+#define isdrillopen(I)  I.get_quality(QUALITY_DRILL_OPEN)
+
+#define isboneset(I) 	I.get_quality(QUALITY_BONE_SET)
+
+#define ismendingbone(I)I.get_quality(QUALITY_MENDING_BONE)
+
+#define isfixvein(I) 	I.get_quality(QUALITY_FIX_VEIN)
+
+#define iscautery(I)	I.get_quality(QUALITY_CAUTER)
+
+#define ismendingipc(I) I.get_quality(QUALITY_MENDING_IPC)
+
+#define isorganicsurgery(I) (  issurgcutt(I)\
+							|| isclamp(I)\
+							|| isretract(I)\
+							|| issawopen(I)\
+							|| isdrillopen(I)\
+							|| isboneset(I)\
+							|| ismendingbone(I)\
+							|| isfixvein(I)\
+							|| iscautery(I)\
+							|| isdropliquid(I))
+
+#define issynteticsurgery(I) (  iscutter(I)\
+							 || iswrenching(I)\
+							 || iswelding(I)\
+							 || isscrewing(I)\
+							 || isprying(I)\
+							 || ispulsing(I)\
+							 || iscoil(I))
+
+// SURGERY
+#define isalienembryo(A)    istype(A, /obj/item/alien_embryo)
+#define isborer(A)          istype(A, /mob/living/simple_animal/borer)
+#define isorgan(A)			istype(A, /obj/item/organ)
+#define isstump(P)          istype(P, /obj/item/organ/external/stump)
 
 // OBJECTS
 
