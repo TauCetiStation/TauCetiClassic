@@ -10,5 +10,6 @@
     "space_ruin_levels": 2,
     "space_empty_levels": 1,
     "load_junkyard": 1,
-    "minetype": null
+    "minetype": null,
+    "blocked_edicts": ["cargo_guard"]
 }

@@ -33,6 +33,11 @@
 
 	var/map_module = null
 
+	// Edict keys (EDICT_* values) this map opts out of, e.g. ["cargo_guard"]. A blocked edict is
+	// fully inert here: its job is gated out and its round hooks are skipped (see SSedicts). Lets a
+	// map refuse an edict that does not fit it, from the map side rather than the edict's code.
+	var/list/blocked_edicts = list()
+
 /proc/load_map_config(filename = "data/next_map.json", default_to_box, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
 	if (global.config.load_testmap)
@@ -151,6 +156,9 @@
 
 	if("map_module" in json)
 		map_module = json["map_module"]
+
+	if(islist(json["blocked_edicts"]))
+		blocked_edicts = json["blocked_edicts"]
 
 	defaulted = FALSE
 	return TRUE
