@@ -1,6 +1,7 @@
 /obj/item/clothing/shoes/magboots
-	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
 	name = "magboots"
+	cases = list("магбутсы","магбутсов","магбутсам","магбутсы","магбутсами","магбутсах")
+	desc = "Магнитные ботинки, часто используемые при работе в открытом космосе для надежного удержания космонавта на поверхности космического аппарата."
 	icon_state = "magboots0"
 	item_state = "magboots"
 	item_state_world = "magboots0_w"

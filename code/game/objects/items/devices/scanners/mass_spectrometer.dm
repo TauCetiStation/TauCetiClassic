@@ -1,6 +1,7 @@
 /obj/item/device/mass_spectrometer
-	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
 	name = "mass-spectrometer"
+	cases = list("масс-спектрометр","масс-спектрометра","масс-спектрометру","масс-спектрометр","масс-спектрометром","масс-спектрометре")
+	desc = "Ручной масс-спектрометр, используемый для выявления химических соединений в образце крови."
 	icon_state = "spectrometer"
 	item_state = "analyzer"
 	w_class = SIZE_TINY
@@ -64,6 +65,7 @@
 
 /obj/item/device/mass_spectrometer/adv
 	name = "advanced mass-spectrometer"
+	desc = "Устройство для анализа химических веществ в крови и определения их количества."
 	icon_state = "adv_spectrometer"
 	details = 1
 	origin_tech = "magnets=4;biotech=2"

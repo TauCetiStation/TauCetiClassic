@@ -322,7 +322,8 @@
 
 /obj/item/weapon/storage/backpack/satchel/flat
 	name = "smuggler's satchel"
-	desc = "A very slim satchel that can easily fit into tight spaces."
+	cases = list("контрабандная сумка","контрабандной сумки","контрабандной сумке","контрабандную сумку","контрабандной сумкой","контрабандной сумке")
+	desc = "Необычная тонкая сумка, которую можно спрятать в узком месте, например под напольной плиткой."
 	icon_state = "satchel-flat"
 	item_state = "satchel-flat"
 	w_class = SIZE_SMALL //Can fit in backpacks itself.

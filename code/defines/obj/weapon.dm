@@ -584,7 +584,8 @@
 
 /obj/item/weapon/storage/part_replacer
 	name = "Rapid Part Exchange Device"
-	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
+	cases = list("устройство оперативной замены комплектующих","устройства оперативной замены комплектующих","устройству оперативной замены комплектующих","устройство оперативной замены комплектующих","устройством оперативной замены комплектующих","устройстве оперативной замены комплектующих")
+	desc = "Механическое устройство, предназначенное для хранения, сортировки и подачи стандартных машиностроительных деталей."
 	icon_state = "RPED"
 	item_state = "RPED"
 	w_class = SIZE_BIG
@@ -612,7 +613,8 @@
 
 /obj/item/weapon/storage/part_replacer/bluespace
 	name = "bluespace rapid part exchange device"
-	desc = "A version of the RPED that allows for replacement of parts and scanning from a distance, along with higher capacity for parts."
+	cases = list("блюспейс устройство оперативной замены комплектующих","блюспейс устройства оперативной замены комплектующих","блюспейс устройству оперативной замены комплектующих","блюспейс устройство оперативной замены комплектующих","блюспейс устройством оперативной замены комплектующих","блюспейс устройстве оперативной замены комплектующих")
+	desc = "Используя технологию блюспейс эта модификация RPED позволяет модернизировать устройства дистанционно, не снимая предварительно панель."
 	icon_state = "BS_RPED"
 	item_state = "BS_RPED"
 	w_class = SIZE_SMALL
@@ -636,6 +638,7 @@
 
 /obj/item/weapon/stock_parts
 	name = "stock part"
+	cases = list("компонент","компонента","компоненту","компонент","компонентом","компоненте")
 	desc = "What?"
 	icon = 'icons/obj/stock_parts.dmi'
 	w_class = SIZE_TINY
@@ -650,14 +653,16 @@
 
 /obj/item/weapon/stock_parts/console_screen
 	name = "console screen"
-	desc = "Used in the construction of computers and other devices with a interactive console."
+	cases = list("дисплей консоли","дисплея консоли","дисплею консоли","дисплей консоли","дисплеем консоли","дисплее консоли")
+	desc = "Используется при сборке компьютеров и других устройств с интерактивной консолью." //glass is used for computers
 	icon_state = "screen"
 	origin_tech = "materials=1"
 	g_amt = 200
 
 /obj/item/weapon/stock_parts/capacitor
 	name = "capacitor"
-	desc = "A basic capacitor used in the construction of a variety of devices."
+	cases = list("конденсатор","конденсатора","конденсатору","конденсатор","конденсатором","конденсаторе")
+	desc = "Базовый конденсатор, используемый при сборке различных устройств."
 	icon_state = "capacitor"
 	origin_tech = "powerstorage=1"
 	m_amt = 150
@@ -665,7 +670,8 @@
 
 /obj/item/weapon/stock_parts/scanning_module
 	name = "scanning module"
-	desc = "A compact, high resolution scanning module used in the construction of certain devices."
+	cases = list("сканер-модуль","сканер-модуля","сканер-модулю","сканер-модуль","сканер-модулем","сканер-модуле")
+	desc = "Компактный сканирующий модуль высокого разрешения, используемый при сборке некоторых устройств."
 	icon_state = "scan_module"
 	origin_tech = "magnets=1"
 	m_amt = 100
@@ -673,7 +679,8 @@
 
 /obj/item/weapon/stock_parts/manipulator
 	name = "micro-manipulator"
-	desc = "A tiny little manipulator used in the construction of certain devices."
+	cases = list("манипулятор","манипулятора","манипулятору","манипулятор","манипулятором","манипуляторе")
+	desc = "Крошечный манипулятор, используемый при сборке некоторых устройств."
 	icon_state = "micro_mani"
 	origin_tech = "materials=1;programming=1"
 	m_amt = 100
@@ -681,7 +688,8 @@
 
 /obj/item/weapon/stock_parts/micro_laser
 	name = "micro-laser"
-	desc = "A tiny laser used in certain devices."
+	cases = list("лазер","лазера","лазеру","лазер","лазером","лазере")
+	desc = "Крошечный лазер, используемый в некоторых устройствах."
 	icon_state = "micro_laser"
 	origin_tech = "magnets=1"
 	m_amt = 100
@@ -689,7 +697,8 @@
 
 /obj/item/weapon/stock_parts/matter_bin
 	name = "matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
+	cases = list("контейнер материи","контейнера материи","контейнеру материи","контейнер материи","контейнером материи","контейнере материи")
+	desc = "Контейнер для хранения уплотнённой материи, подготовленной к пересборке."
 	icon_state = "matter_bin"
 	origin_tech = "materials=1"
 	m_amt = 300
@@ -698,7 +707,7 @@
 
 /obj/item/weapon/stock_parts/capacitor/adv
 	name = "advanced capacitor"
-	desc = "An advanced capacitor used in the construction of a variety of devices."
+	desc = "Продвинутый конденсатор, используемый при сборке различных устройств."
 	icon_state = "adv_capacitor"
 	origin_tech = "powerstorage=3"
 	rating = 2
@@ -707,7 +716,7 @@
 
 /obj/item/weapon/stock_parts/scanning_module/adv
 	name = "advanced scanning module"
-	desc = "A compact, high resolution scanning module used in the construction of certain devices."
+	desc = "Компактный сканирующий модуль высокого разрешения, используемый при сборке некоторых устройств."
 	icon_state = "adv_scan_module"
 	origin_tech = "magnets=3"
 	rating = 2
@@ -716,7 +725,6 @@
 
 /obj/item/weapon/stock_parts/manipulator/nano
 	name = "nano-manipulator"
-	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "nano_mani"
 	origin_tech = "materials=3,programming=2"
 	rating = 2
@@ -725,7 +733,6 @@
 
 /obj/item/weapon/stock_parts/micro_laser/high
 	name = "high-power micro-laser"
-	desc = "A tiny laser used in certain devices."
 	icon_state = "high_micro_laser"
 	origin_tech = "magnets=3"
 	rating = 2
@@ -734,7 +741,6 @@
 
 /obj/item/weapon/stock_parts/matter_bin/adv
 	name = "advanced matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "advanced_matter_bin"
 	origin_tech = "materials=3"
 	rating = 2
@@ -745,7 +751,7 @@
 
 /obj/item/weapon/stock_parts/capacitor/adv/super
 	name = "super capacitor"
-	desc = "A super-high capacity capacitor used in the construction of a variety of devices."
+	desc = "Сверхъёмкий конденсатор, используемый при сборке различных устройств."
 	icon_state = "super_capacitor"
 	origin_tech = "powerstorage=5;materials=4"
 	rating = 3
@@ -754,7 +760,7 @@
 
 /obj/item/weapon/stock_parts/scanning_module/adv/phasic
 	name = "phasic scanning module"
-	desc = "A compact, high resolution phasic scanning module used in the construction of certain devices."
+	desc = "Компактный высокоразрешающий фазовый сканирующий модуль, используемый при сборке некоторых устройств."
 	icon_state = "super_scan_module"
 	origin_tech = "magnets=5"
 	rating = 3
@@ -763,7 +769,6 @@
 
 /obj/item/weapon/stock_parts/manipulator/nano/pico
 	name = "pico-manipulator"
-	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "pico_mani"
 	origin_tech = "materials=5,programming=2"
 	rating = 3
@@ -773,7 +778,6 @@
 /obj/item/weapon/stock_parts/micro_laser/high/ultra
 	name = "ultra-high-power micro-laser"
 	icon_state = "ultra_high_micro_laser"
-	desc = "A tiny laser used in certain devices."
 	origin_tech = "magnets=5"
 	rating = 3
 	m_amt = 310
@@ -781,7 +785,6 @@
 
 /obj/item/weapon/stock_parts/matter_bin/adv/super
 	name = "super matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "super_matter_bin"
 	origin_tech = "materials=5"
 	rating = 3
@@ -792,7 +795,7 @@
 
 /obj/item/weapon/stock_parts/capacitor/adv/super/quadratic
 	name = "quadratic capacitor"
-	desc = "An capacity capacitor used in the construction of a variety of devices."
+	desc = "Высокоёмкостный конденсатор, используемый при сборке различных устройств."
 	icon_state = "quadratic_capacitor"
 	origin_tech = "powerstorage=6;materials=5"
 	rating = 4
@@ -801,7 +804,7 @@
 
 /obj/item/weapon/stock_parts/scanning_module/adv/phasic/triphasic
 	name = "triphasic scanning module"
-	desc = "A compact, ultra resolution triphasic scanning module used in the construction of certain devices."
+	desc = "Компактный ультравысокоразрешающий трёхфазный сканирующий модуль, используемый при сборке некоторых устройств."
 	icon_state = "triphasic_scan_module"
 	origin_tech = "magnets=6"
 	rating = 4
@@ -810,7 +813,6 @@
 
 /obj/item/weapon/stock_parts/manipulator/nano/pico/femto
 	name = "femto-manipulator"
-	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "femto_mani"
 	origin_tech = "materials=6;programming=3"
 	rating = 4
@@ -819,7 +821,6 @@
 /obj/item/weapon/stock_parts/micro_laser/high/ultra/quadultra
 	name = "quad-ultra micro-laser"
 	icon_state = "quadultra_micro_laser"
-	desc = "A tiny laser used in certain devices."
 	origin_tech = "magnets=6"
 	rating = 4
 	m_amt = 80
@@ -827,7 +828,6 @@
 
 /obj/item/weapon/stock_parts/matter_bin/adv/super/bluespace
 	name = "bluespace matter bin"
-	desc = "A container for hold compressed matter awaiting re-construction."
 	icon_state = "bluespace_matter_bin"
 	origin_tech = "materials=6"
 	rating = 4
@@ -838,7 +838,7 @@
 /obj/item/weapon/stock_parts/subspace/ansible
 	name = "subspace ansible"
 	icon_state = "subspace_ansible"
-	desc = "A compact module capable of sensing extradimensional activity."
+	desc = "Компактный модуль, способный фиксировать внепространственную активность."
 	origin_tech = "programming=3;magnets=5;materials=4;bluespace=2"
 	m_amt = 30
 	g_amt = 10
@@ -846,7 +846,7 @@
 /obj/item/weapon/stock_parts/subspace/filter
 	name = "hyperwave filter"
 	icon_state = "hyperwave_filter"
-	desc = "A tiny device capable of filtering and converting super-intense radiowaves."
+	desc = "Миниатюрное устройство, способное фильтровать и преобразовывать сверхмощные радиоволны."
 	origin_tech = "programming=4;magnets=2"
 	m_amt = 30
 	g_amt = 10
@@ -854,7 +854,7 @@
 /obj/item/weapon/stock_parts/subspace/amplifier
 	name = "subspace amplifier"
 	icon_state = "subspace_amplifier"
-	desc = "A compact micro-machine capable of amplifying weak subspace transmissions."
+	desc = "Компактное микроустройство, способное усиливать слабые подпространственные сигналы."
 	origin_tech = "programming=3;magnets=4;materials=4;bluespace=2"
 	m_amt = 30
 	g_amt = 10
@@ -862,7 +862,7 @@
 /obj/item/weapon/stock_parts/subspace/treatment
 	name = "subspace treatment disk"
 	icon_state = "treatment_disk"
-	desc = "A compact micro-machine capable of stretching out hyper-compressed radio waves."
+	desc = "Компактное микроустройство, способное растягивать гиперсжатые радиоволны."
 	origin_tech = "programming=3;magnets=2;materials=5;bluespace=2"
 	m_amt = 30
 	g_amt = 10
@@ -870,7 +870,7 @@
 /obj/item/weapon/stock_parts/subspace/analyzer
 	name = "subspace wavelength analyzer"
 	icon_state = "wavelength_analyzer"
-	desc = "A sophisticated analyzer capable of analyzing cryptic subspace wavelengths."
+	desc = "Сложный анализатор, способный анализировать скрытые длины волн подпространства."
 	origin_tech = "programming=3;magnets=4;materials=4;bluespace=2"
 	m_amt = 30
 	g_amt = 10
@@ -885,7 +885,7 @@
 /obj/item/weapon/stock_parts/subspace/transmitter
 	name = "subspace transmitter"
 	icon_state = "subspace_transmitter"
-	desc = "A large piece of equipment used to open a window into the subspace dimension."
+	desc = "Крупногабаритное оборудование, используемое для открытия «окна» в подпространственное измерение."
 	origin_tech = "magnets=5;materials=5;bluespace=3"
 	m_amt = 50
 

@@ -1,5 +1,6 @@
 /obj/item/clothing/mask/breath/gas
 	name = "gas mask"
+	cases = list("противогаз","противогаза","противогазу","противогаз","противогазом","противогазе")
 	desc = "A face-covering mask that can be connected to an air supply. Filters harmful gases from the air."
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "gas_mask_tc"
@@ -19,7 +20,7 @@
 
 /obj/item/clothing/mask/breath/gas/welding
 	name = "welding mask"
-	desc = "A gas mask with built-in welding goggles and a face shield. Looks like a skull - clearly designed by a nerd."
+	desc = "Противогаз со встроенными сварочными очками и защитным щитком для лица. Напоминает череп — явно работа какого-то гика."
 	icon_state = "weldingmask"
 	item_state = "weldingmask"
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)

@@ -1,6 +1,7 @@
 /obj/item/rig_module/device/flash
 	name = "hardsuit mounted flash"
-	desc = "You are the law."
+	cases = list("встроенная в скафандр вспышка","встроенной в скафандр вспышки","встроенной в скафандр вспышке","встроенную в скафандр вспышку","встроенной в скафандр вспышкой","встроенной в скафандр вспышке")
+	desc = "Ты — закон."
 	icon_state = "flash"
 	interface_name = "mounted flash"
 	interface_desc = "Disorientates your target by blinding them with a bright light."
@@ -118,8 +119,9 @@
 
 /obj/item/rig_module/grenade_launcher/flashbang
 	name = "hardsuit mounted flashbang grenade launcher"
+	cases = list("встроенный в РИГ гранатомёт со светошумовыми гранатами","встроенного в РИГ гранатомёта со светошумовыми гранатами","встроенному в РИГ гранатомёту со светошумовыми гранатами","встроенный в РИГ гранатомёт со светошумовыми гранатами","встроенным в РИГ гранатомётом со светошумовыми гранатами","встроенном в РИГ гранатомёте со светошумовыми гранатами")
+	desc = "Плечевая установка для отстрела микрозарядов, предназначенное исключительно для использования стандартных светошумовых гранат."
 	interface_name = "flashbang grenade launcher"
-	desc = "A shoulder-mounted micro-explosive dispenser designed only to accept standard flashbang grenades."
 
 /obj/item/rig_module/grenade_launcher/flashbang/init_charges()
 	charges = list()
@@ -127,7 +129,8 @@
 
 /obj/item/rig_module/mounted
 	name = "hardsuit mounted laser rifle"
-	desc = "A shoulder-mounted battery-powered laser rifle mount."
+	cases = list("модуль-лазер","модуля-лазера","модулю-лазеру","модуль-лазер","модулем-лазером","модуле-лазере")
+	desc = "Плечевая установка для лазерной винтовки с питанием от аккумулятора."
 	selectable = TRUE
 	usable = FALSE
 	module_cooldown = 0
@@ -181,7 +184,8 @@
 
 /obj/item/rig_module/mounted/taser
 	name = "hardsuit mounted taser"
-	desc = "A palm-mounted nonlethal energy projector."
+	cases = list("модуль-тазер","модуля-тазера","модулю-тазеру","модуль-тазер","модулем-тазером","модуле-тазере")
+	desc = "Плечевая установка для излучателя энергии нелетального действия."
 	icon_state = "taser"
 	suit_overlay = "mounted-taser"
 	use_power_cost = 0

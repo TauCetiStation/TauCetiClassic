@@ -121,8 +121,8 @@
 			to_chat(user, "<span class='notice'>You have finished mopping!</span>")
 
 /obj/item/weapon/mop/advanced
-	desc = "The most advanced tool in a custodian's arsenal. Just think of all the viscera you will clean up with this!"
 	name = "advanced mop"
+	desc = "Самый передовой инструмент в арсенале уборщика. Только представьте, сколько всего вы сможете отмыть этим!"
 	icon_state = "advmop"
 	item_state = "advmop"
 	item_state_world = "advmop_world"

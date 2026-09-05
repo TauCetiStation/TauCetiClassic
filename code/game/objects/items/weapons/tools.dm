@@ -142,6 +142,7 @@
  */
 /obj/item/weapon/weldingtool
 	name = "welding tool"
+	cases = list("сварочный аппарат","сварочного аппарата","сварочному аппарату","сварочный аппарат","сварочным аппаратом","сварочном аппарате")
 	desc = "Apply the hot spot to the metal."
 	icon = 'icons/obj/tools.dmi'
 	hitsound = 'sound/items/tools/tool-hit.ogg'
@@ -495,6 +496,7 @@
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"
+	desc = "Экспериментальный сварочный аппарат, способный самостоятельно вырабатывать топливо."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "expwelder"
 	max_fuel = 40
@@ -597,7 +599,7 @@
 
 /obj/item/weapon/multi/hand_drill
 	name = "Hand Drill"
-	desc ="A simple powered drill with a bolt bit"
+	desc = "Небольшая электрическая ручная дрель со сменными насадками для болтов и винтиков."
 	hitsound = list('sound/items/tools/tool-hit.ogg')
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "drill_bolt"

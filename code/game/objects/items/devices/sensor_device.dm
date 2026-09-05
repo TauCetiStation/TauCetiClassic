@@ -1,6 +1,7 @@
 /obj/item/device/sensor_device
 	name = "handheld crew monitor"
-	desc = "A miniature machine that tracks suit sensors across the station."
+	cases = list("ручной монитор состояния экипажа","ручного монитора состояния экипажа","ручному монитору состояния экипажа","ручной монитор состояния экипажа","ручным монитором состояния экипажа","ручном мониторе состояния экипажа")
+	desc = "Устройство для отслеживания экипажа на станции."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "scanner"
 	w_class = SIZE_TINY

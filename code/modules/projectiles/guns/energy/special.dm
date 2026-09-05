@@ -366,6 +366,7 @@
 
 /obj/item/weapon/gun/energy/pyrometer/universal
 	name = "universal pyrometer"
+	cases = list("пирометр","пирометра","пирометру","пирометр","пирометром","пирометре")
 	desc = "Инструмент, используемый для быстрого измерения температуры без опасения получения вреда при непосредственном физическом контакте. Поставляется со встроенным многоцветным лазерным указателем и способен работать во всех возможных режимах!"
 	icon_state = "pyrometer_robotics"
 	item_state = "pyrometer_robotics"
@@ -566,7 +567,8 @@
 
 /obj/item/weapon/gun/medbeam
 	name = "prototype medical retrosynchronizer"
-	desc = "Прототип лечебной пушки, которая медленно возвращает органику в прежнее состояние, исцеляя их."
+	cases = list("медпушка","медпушки","медпушке","медпушку","медпушкой","медпушке")
+	desc = "Прототип лечебной пушки, которая медленно возвращает органику в прежнее состояние, исцеляя её."
 	icon_state = "medigun"
 	item_state = "medigun"
 	var/mob/living/current_target

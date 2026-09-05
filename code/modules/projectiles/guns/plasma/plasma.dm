@@ -13,6 +13,7 @@
 
 /obj/item/weapon/gun/plasma // this will act as placeholder too (previously it was L10-C under projectile guns).
 	name = "plasma 10-bc"
+	cases = list("плазменное оружие","плазменного оружия","плазменному оружию","плазменное оружие","плазменным оружием","плазменном оружии")
 	desc = "Стандартный плазменный карабин типа булл-пап обладающий высокой скорострельностью."
 	icon_state = "plasma10_car"
 	item_state = "plasma10_car"

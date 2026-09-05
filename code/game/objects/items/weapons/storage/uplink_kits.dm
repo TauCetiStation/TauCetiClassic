@@ -162,7 +162,7 @@
 
 /obj/item/weapon/storage/box/syndie_kit/chameleon
 	name = "Chameleon Kit"
-	desc = "Comes with all the clothes you need to impersonate most people.  Acting lessons sold seperately."
+	desc = "В комплекте вся одежда, чтобы притворяться кем угодно. Уроки актёрского мастерства продаются отдельно."
 
 /obj/item/weapon/storage/box/syndie_kit/chameleon/atom_init()
 	. = ..()

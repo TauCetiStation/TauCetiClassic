@@ -110,7 +110,7 @@
 
 /obj/item/weapon/storage/bag/trash/bluespace
 	name = "trash bag of holding"
-	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
+	desc = "Последнее слово в удобстве для уборщиков — мусорный мешок, способный вмещать огромные объёмы отходов."
 	icon_state = "bluetrashbag"
 	item_state_world = "bluetrashbag_world"
 	max_storage_space = 56

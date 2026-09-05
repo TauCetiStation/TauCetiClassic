@@ -1,7 +1,8 @@
 /obj/item/stack/nanopaste
 	name = "nanopaste"
 	singular_name = "nanite swarm"
-	desc = "A tube of paste containing swarms of repair nanites. Very effective in repairing robotic machinery."
+	cases = list("нанопаста","нанопасты","нанопасте","нанопасту","нанопастой","нанопасте")
+	desc = "Тюбик с пастой, содержащей рои ремонтных нанитов. Очень эффективен при ремонте роботизированной техники."
 	icon = 'icons/obj/nanopaste.dmi'
 	icon_state = "tube"
 	origin_tech = "materials=4;engineering=3"

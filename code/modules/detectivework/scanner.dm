@@ -1,6 +1,7 @@
 /obj/item/device/detective_scanner
 	name = "forensic scanner"
-	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
+	cases = list("криминалистический сканер","криминалистического сканера","криминалистическому сканеру","криминалистический сканер","криминалистическим сканером","криминалистическом сканере")
+	desc = "Используется для дистанционного сканирования объектов и биомассы на предмет наличия ДНК и отпечатков. Позволяет распечатать отчет о результатах сканирования."
 	icon = 'icons/obj/detective_work.dmi'
 	icon_state = "detective_scanner"
 	item_state_world = "detective_scanner_world"

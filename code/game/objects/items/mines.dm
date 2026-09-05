@@ -1,6 +1,7 @@
 /obj/item/mine
 	name = "mine"
-	desc = "A friendly-looking pancake with a happy light on top. Absolute opposite of libertarian - this mine BEGS to be stepped on."
+	cases = list("мина","мины","мине","мину","миной","мине")
+	desc = "Дружелюбно выглядящий блинчик с весёлым огоньком сверху. Полная противоположность либертарианцам — эта мина УМОЛЯЕТ, чтобы на неё наступили."
 	icon = 'icons/obj/mines.dmi'
 	icon_state = "mine"
 	layer = 3
@@ -88,7 +89,7 @@
 
 /obj/item/mine/shock
 	name = "shock mine"
-	desc = "A security issued less-than-lethal mine, this one will shock and stun anyone unfortunate to step on it."
+	desc = "Штатная мина нелетального действия. Любой, кому не повезёт на неё наступить, получит мощный разряд и будет оглушён."
 	icon_state = "shockmine"
 	var/stepped_by = BP_R_LEG
 
@@ -109,7 +110,7 @@
 
 /obj/item/mine/incendiary
 	name = "incendiary mine"
-	desc = "This thing definitely violates Space Geneva Convention."
+	desc = "Эта вещь точно нарушает Космическую Женевскую конвенцию."
 	icon_state = "incendiarymine"
 
 /obj/item/mine/incendiary/trigger_act(obj)
@@ -124,7 +125,7 @@
 
 /obj/item/mine/emp
 	name = "ion mine"
-	desc = "When you hate your roomba really, really much."
+	desc = "Когда вы по-настоящему сильно ненавидите своего робота-пылесоса."
 	icon_state = "empmine"
 
 /obj/item/mine/emp/trigger_act(obj)

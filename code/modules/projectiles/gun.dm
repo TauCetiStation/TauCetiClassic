@@ -10,6 +10,7 @@
 
 /obj/item/weapon/gun
 	name = "gun"
+	cases = list("оружие","оружия","оружию","оружие","оружием","оружии")
 	desc = "It's a gun. It's pretty terrible, though."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "detective"

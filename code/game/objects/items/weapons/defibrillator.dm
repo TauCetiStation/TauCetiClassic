@@ -3,7 +3,8 @@
 //backpack item
 /obj/item/weapon/defibrillator
 	name = "defibrillator"
-	desc = "A device that delivers powerful shocks via detachable paddles to resuscitate incapacitated patients."
+	cases = list("дефибриллятор","дефибриллятора","дефибриллятору","дефибриллятор","дефибриллятором","дефибрилляторе")
+	desc = "Устройство, подающее мощные разряды через съёмные электроды для реанимации пациентов в критическом состоянии."
 	icon = 'icons/obj/defibrillator.dmi'
 	icon_state = "defibunit"
 	item_state = "defibunit"
@@ -178,7 +179,7 @@
 
 /obj/item/weapon/defibrillator/compact
 	name = "compact defibrillator"
-	desc = "A belt-equipped defibrillator that can be rapidly deployed."
+	desc = "Портативный дефибриллятор с поясным креплением, готовый к мгновенному использованию."
 	icon_state = "defibcompact"
 	item_state = "defibcompact"
 	w_class = SIZE_SMALL
@@ -192,7 +193,7 @@
 
 /obj/item/weapon/defibrillator/compact/combat
 	name = "combat defibrillator"
-	desc = "A belt-equipped blood-red defibrillator that can be rapidly deployed. Does not have the restrictions or safeties of conventional defibrillators and can revive through almost all space suits."
+	desc = "Кроваво-красный дефибриллятор на поясе для экстренного применения. В отличие от штатных моделей, лишён ограничений и блокировок и способен пробить почти любой скафандр."
 	paddles = /obj/item/weapon/shockpaddles/linked/combat
 	charge_time = 0.25 SECONDS
 
@@ -209,7 +210,7 @@
 
 /obj/item/weapon/shockpaddles
 	name = "defibrillator paddles"
-	desc = "A pair of plastic-gripped paddles with flat metal surfaces that are used to deliver powerful electric shocks."
+	desc = "Пара электродов с пластиковыми рукоятками и плоскими металлическими поверхностями для подачи мощных электрических разрядов."
 	icon = 'icons/obj/defibrillator.dmi'
 	icon_state = "defibpaddles0"
 	item_state = "defibpaddles"

@@ -1,6 +1,7 @@
 /obj/item/device/reagent_scanner
 	name = "reagent scanner"
-	desc = "A hand-held reagent scanner which identifies chemical agents."
+	cases = list("химический сканер","химического сканера","химическому сканеру","химический сканер","химическим сканером","химическом сканере")
+	desc = "Устройство для определения химических веществ."
 	icon_state = "spectrometer"
 	item_state = "analyzer"
 	w_class = SIZE_TINY
@@ -52,6 +53,8 @@
 
 /obj/item/device/reagent_scanner/adv
 	name = "advanced reagent scanner"
+	cases = list("продвинутый химический сканер","продвинутого химического сканера","продвинутому химическому сканеру","продвинутый химический сканер","продвинутым химическим сканером","продвинутом химическом сканере")
+	desc = "Устройство для определения химических веществ и их соотношения."
 	icon_state = "adv_spectrometer"
 	details = 1
 	origin_tech = "magnets=4;biotech=2"

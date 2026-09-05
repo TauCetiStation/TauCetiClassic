@@ -1,7 +1,8 @@
 //Deathsquad suit
 /obj/item/clothing/head/helmet/space/deathsquad
 	name = "deathsquad helmet"
-	desc = "That's not red paint. That's real blood."
+	cases = list("шлем эскадрона смерти","шлема эскадрона смерти","шлему эскадрона смерти","шлем эскадрона смерти","шлемом эскадрона смерти","шлеме эскадрона смерти")
+	desc = "Это не красная краска. Это кровь."
 	icon_state = "deathsquad"
 	item_state = "deathsquad"
 	armor = list(melee = 80, bullet = 70, laser = 70,energy = 70, bomb = 70, bio = 30, rad = 30)

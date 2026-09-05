@@ -184,7 +184,8 @@
 
 /obj/item/device/flash/synthetic
 	name = "synthetic flash"
-	desc = "When a problem arises, SCIENCE is the solution."
+	cases = list("имитационная вспышка","имитационной вспышки","имитационной вспышке","имитационную вспышку","имитационной вспышкой","имитационной вспышке")
+	desc = "Когда возникает проблема, НАУКА становится решением."
 	icon_state = "sflash"
 	item_state = "sflash"
 	origin_tech = "magnets=2;combat=1"
