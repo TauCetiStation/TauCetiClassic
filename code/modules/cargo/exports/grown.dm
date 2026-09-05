@@ -40,6 +40,16 @@ use it if low potency results garbage from harvested crop
 	cost = 50
 	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/fraxinella)
 
+/datum/export/growm/megaweed
+	unit_name = "rainbow weed"
+	cost = 75
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/megaweed)
+
+/datum/export/growm/deathweed
+	unit_name = "poisonous weed"
+	cost = 75
+	export_types = list(/obj/item/weapon/reagent_containers/food/snacks/grown/deathweed)
+
 /datum/export/seed/get_cost(obj/O)
 	var/obj/item/seeds/S = O
 	var/ratio = S.potency / 100
@@ -104,6 +114,16 @@ use it if low potency results garbage from harvested crop
 	unit_name = "pack of egg seeds"
 	cost = 20
 	export_types = list(/obj/item/seeds/eggyseed)
+
+/datum/export/seed/megaweed
+	unit_name = "pack of megaweed seeds"
+	cost = 25
+	export_types = list(/obj/item/seeds/megaweedseed)
+
+/datum/export/seed/deathweed
+	unit_name = "pack of deathweed seeds"
+	cost = 25
+	export_types = list(/obj/item/seeds/deathweedseed)
 
 /datum/export/seed/replicapod
 	unit_name = "pack of dionaea-replicant seeds"
