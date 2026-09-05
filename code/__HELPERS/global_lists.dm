@@ -311,6 +311,10 @@
 	for(var/package_wrap_type as anything in typesof(/datum/package_wrap))
 		global.package_wrap_by_type[package_wrap_type] = new package_wrap_type
 
+	global.geode_by_type = list()
+	for(var/geode_type as anything in subtypesof(/datum/geode))
+		global.geode_by_type[geode_type] = new geode_type
+
 	init_washing_items_list()
 
 /proc/init_washing_items_list()

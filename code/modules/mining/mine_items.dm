@@ -652,6 +652,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/projectile/kinetic/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
 	var/turf/target_turf = get_turf(target)
+	target_turf.hotspot_expose(2000, 500)
 	if(istype(target_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target_turf
 		M.GetDrilled(firer, mineral_drop_coefficient = mineral_multiply_coefficient)
@@ -714,6 +715,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 /obj/item/projectile/beam/plasma_cutter/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
 	. = ..()
 	var/turf/target_turf = get_turf(target)
+	target_turf.hotspot_expose(5000, 500)
 	if(istype(target_turf, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = target_turf
 		M.GetDrilled(firer)
@@ -1230,6 +1232,13 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	if(T)
 		SSair?.mark_for_update(T)
 	return ..()
+
+/obj/structure/fans/tiny/asteroid_lians
+	name = "asteroid lians"
+	icon_state = "space_lians"
+
+	resistance_flags = CAN_BE_HIT
+	max_integrity = 5
 
 //Signs
 /obj/structure/sign/mining
