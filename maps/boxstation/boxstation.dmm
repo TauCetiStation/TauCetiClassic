@@ -44313,7 +44313,7 @@
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
 "bAb" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
@@ -44323,7 +44323,7 @@
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
 "bAc" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
@@ -53731,7 +53731,7 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "bQX" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/cable,
 /turf/simulated/floor/engine,
 /area/station/rnd/misc_lab)
@@ -79599,7 +79599,7 @@
 /turf/simulated/floor,
 /area/station/cargo/storage)
 "mfF" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /turf/simulated/floor/plating,
 /area/station/engineering/engine)
 "mgb" = (
@@ -86149,7 +86149,7 @@
 	},
 /area/station/medical/virology)
 "sNO" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},

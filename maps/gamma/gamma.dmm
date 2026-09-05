@@ -24198,7 +24198,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "edk" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
@@ -56035,7 +56035,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brigright)
 "kiZ" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/effect/decal/turf_decal/purple{
 	dir = 10;
 	icon_state = "bot"
@@ -69978,7 +69978,7 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/xenobiology)
 "mZG" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
@@ -97995,7 +97995,7 @@
 	},
 /area/station/engineering/rust)
 "sBn" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/sign/warning/securearea{
 	pixel_x = -32
 	},

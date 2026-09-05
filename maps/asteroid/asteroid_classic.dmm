@@ -4481,7 +4481,7 @@
 	},
 /area/asteroid/research_outpost/hallway)
 "jb" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
@@ -12190,7 +12190,7 @@
 /turf/environment/space,
 /area/shuttle/vox/mining)
 "Bk" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},

@@ -117,7 +117,6 @@
 	if(powered(power_channel))
 		stat &= ~NOPOWER
 	else
-
 		stat |= NOPOWER
 
 	update_power_use()

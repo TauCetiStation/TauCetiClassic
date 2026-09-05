@@ -2072,7 +2072,7 @@
 /turf/simulated/floor/plating,
 /area/awaymission/academy/classrooms)
 "fF" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/cable{
 	d1 = 4;
 	d2 = 8;
@@ -2492,8 +2492,8 @@
 /area/awaymission/academy/academyaft)
 "gM" = (
 /obj/machinery/door/airlock/gold{
-	locked = 1;
-	dir = 4
+	dir = 4;
+	locked = 1
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -2541,7 +2541,7 @@
 /turf/simulated/floor,
 /area/awaymission/academy/classrooms)
 "gR" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/cable{
 	d2 = 8;
 	icon_state = "0-8"
