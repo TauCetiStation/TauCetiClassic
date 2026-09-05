@@ -133,7 +133,7 @@
 	if(M.lying)
 		if(!M.IsSleeping())
 			if(M.crawling)
-				M.SetCrawling(FALSE)
+				M.get_up(has_do_after_delay = FALSE)
 		user.visible_message("<span class='notice'>[user] shakes [M] trying to wake [P_THEM(M)] up!</span>", \
 							"<span class='notice'>You shake [M] trying to wake [P_THEM(M)] up!</span>")
 	else

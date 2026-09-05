@@ -222,7 +222,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			var/mob/living/silicon/robot/robot = usr
 			robot.set_all_components(FALSE)
 		else if(!immune_to_ssd)
-			SetCrawling(TRUE)
+			lay_down()
 			Sleeping(2 SECONDS)
 
 		var/leave_type = "Ghosted"

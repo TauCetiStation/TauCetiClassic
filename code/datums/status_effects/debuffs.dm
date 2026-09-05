@@ -1,4 +1,30 @@
 //Largely negative status effects go here, even if they have small benificial effects
+
+/datum/status_effect/force_crawl
+	id = "force_crawl"
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = /atom/movable/screen/alert/status_effect/force_crawl
+
+/atom/movable/screen/alert/status_effect/force_crawl
+	name = "Дисфункция нижних конечностей"
+	desc = "Вы не можете стоять на ногах, придётся как-то выползать из передряги."
+	icon_state = "force_crawl"
+
+/datum/status_effect/force_crawl/on_creation(mob/living/new_owner, set_duration, updating_canmove)
+	if(isnum(set_duration))
+		duration = set_duration
+	. = ..()
+
+/datum/status_effect/force_crawl/on_apply()
+	. = ..()
+	owner.lay_down(change_crawling_intent = FALSE)
+	owner.drop_l_hand()
+	owner.drop_r_hand()
+
+/datum/status_effect/force_crawl/on_remove()
+	owner.get_up(do_after_can_move = TRUE, change_crawling_intent = FALSE)
+	return ..()
+
 //STUN EFFECTS
 
 /datum/status_effect/incapacitating
