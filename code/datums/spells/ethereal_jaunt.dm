@@ -96,9 +96,8 @@
 	panel = "Shadowling Abilities"
 	charge_max = 60 SECONDS
 	clothes_req = 0
-	action_icon_state = "jaunt"
-	jaunt_duration = 6 SECONDS
-	movement_cooldown = -1
+	jaunt_duration = 7 SECONDS
+	movement_cooldown = 0.5
 	action_icon_state = "shadow_walk"
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shadow_walk/cast(list/targets)
@@ -106,6 +105,12 @@
 	usr.visible_message("<span class='warning'>[usr] vanishes in a puff of black mist!</span>", "<span class='shadowling'>You enter the space between worlds as a passageway.</span>")
 	sleep(jaunt_duration)
 	usr.visible_message("<span class='warning'>[usr] suddenly manifests!</span>", "<span class='shadowling'>The pressure becomes too much and you vacate the interdimensional darkness.</span>")
+
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shadow_walk/lesser
+	name = "Lesser Shadow Walk"
+	movement_cooldown = 3
+	jaunt_duration = 4 SECONDS
+	charge_max = 3 MINUTES
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/wizard
 	school = "transmutation"
@@ -143,7 +148,7 @@
 		return
 
 	last_move = world.time
-	
+
 	var/turf/newLoc = get_step(src,direction)
 
 	if(SEND_SIGNAL(newLoc, COMSIG_ATOM_INTERCEPT_TELEPORT))
