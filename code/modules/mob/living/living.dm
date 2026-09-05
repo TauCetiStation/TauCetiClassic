@@ -697,12 +697,20 @@
 	return
 
 /mob/living/pointed(atom/A)
-	if(incapacitated() || (status_flags & FAKEDEATH))
+	if(incapacitated(NONE) || (status_flags & FAKEDEATH))
 		return FALSE
+
+	if(restrained(ARMS))
+		if(!has_bodypart(BP_HEAD))
+			return FALSE
+		if(!can_point_at(A))
+			return FALSE
+		visible_message("<span class='notice'><b>[src]</b> указывает головой на <b>[CASE(A, ACCUSATIVE_CASE)]</b>.</span>")
+		return TRUE
 
 	. = ..()
 	if(.)
-		usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
+		visible_message("<span class='notice'><b>[src]</b> указывает на <b>[CASE(A, ACCUSATIVE_CASE)]</b>.</span>")
 
 /mob/living/Move(NewLoc, Dir = 0, step_x = 0, step_y = 0)
 	if (buckled && buckled.loc != NewLoc)

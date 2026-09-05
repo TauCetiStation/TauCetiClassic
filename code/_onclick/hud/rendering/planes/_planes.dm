@@ -65,6 +65,7 @@
 	name = "point plane master"
 	plane = POINT_PLANE
 	blend_mode = BLEND_OVERLAY
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /atom/movable/screen/plane_master/area
 	name = "area plane"

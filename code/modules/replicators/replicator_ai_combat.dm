@@ -4,7 +4,7 @@
 	icon = 'icons/mob/replicator.dmi'
 	icon_state = "arrow"
 
-/mob/living/simple_animal/hostile/replicator/point_at(atom/pointed_atom, arrow_type = /obj/effect/decal/point)
+/mob/living/simple_animal/hostile/replicator/point_at(atom/pointed_atom, arrow_type = /obj/effect/decal/point, params)
 	for(var/mob/living/simple_animal/hostile/replicator/R as anything in global.alive_replicators)
 		if(get_dist(src, R) > 7)
 			continue
@@ -17,7 +17,7 @@
 		else
 			R.clear_priority_target()
 
-	return ..(pointed_atom, /obj/effect/decal/point/crystal)
+	return ..(pointed_atom, /obj/effect/decal/point/crystal, params)
 
 
 /mob/living/simple_animal/hostile/replicator
