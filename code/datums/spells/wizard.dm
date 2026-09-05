@@ -425,3 +425,8 @@
 
 /obj/effect/proc_holder/spell/targeted/communicate/fastener
 	charge_max = 100
+
+/obj/effect/proc_holder/spell/targeted/communicate/chaplain
+	favor_cost = 10
+	action_background_icon_state = "bg_default"
+	action_icon_state = "cult_comms"
