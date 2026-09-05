@@ -42,7 +42,6 @@
 		/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack = 1,
 		/obj/item/device/sensor_device = 1,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/medical
 	private = TRUE
 
 /obj/machinery/vending/wallmed1

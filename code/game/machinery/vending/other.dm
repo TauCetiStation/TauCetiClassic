@@ -52,7 +52,6 @@
 		/obj/item/weapon/lighter/random = 15,
 		/obj/item/clothing/mask/ecig = 40,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/cigarette
 	private = FALSE
 
 /obj/machinery/vending/security
@@ -169,7 +168,6 @@
 	product_slogans = "Spread the colour, like butter, onto toast... Onto their hair.; Sometimes, I dream about dyes...; Paint 'em up and call me Mr. Painter.; Look brother, I'm a vendomat, I solve practical problems."
 	product_ads = "Cut 'em all!; To sheds!; Hair be gone!; Prettify!; Beautify!"
 	req_access = list(69)
-	refill_canister = /obj/item/weapon/vending_refill/barbervend
 	products = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/white = 10,
 		/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/red = 10,
@@ -221,7 +219,6 @@
 	syndie = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/alphaamanitin/syndie = 1,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/dinnerware
 	private = TRUE
 
 /obj/machinery/vending/blood
@@ -244,7 +241,6 @@
 		/obj/item/weapon/reagent_containers/pill/stox = 10,
 		/obj/item/weapon/reagent_containers/blood/empty = 10,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/blood
 	private = TRUE
 
 /obj/machinery/vending/syndi

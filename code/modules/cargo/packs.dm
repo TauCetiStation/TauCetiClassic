@@ -523,173 +523,147 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 //----------------------------------------------
 
 /datum/supply_pack/vending_bar
-	name = "Bartending supply crate"
-	contains = list(/obj/item/weapon/vending_refill/boozeomat,
-					/obj/item/weapon/vending_refill/boozeomat,
-					/obj/item/weapon/vending_refill/boozeomat)
-	additional_costs = 5800
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "bartending supply crate"
+	name = "Bartending vending machine"
+	contains = list(/obj/machinery/vending/boozeomat)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "bartending vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_coffee
-	name = "Hotdrinks supply crate"
-	contains = list(/obj/item/weapon/vending_refill/coffee,
-					/obj/item/weapon/vending_refill/coffee,
-					/obj/item/weapon/vending_refill/coffee)
-	additional_costs = 1630
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "hotdrinks supply crate"
+	name = "Hotdrinks vending machine"
+	contains = list(/obj/machinery/vending/coffee)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "hotdrinks vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_snack
-	name = "Snack supply crate"
-	contains = list(/obj/item/weapon/vending_refill/snack,
-					/obj/item/weapon/vending_refill/snack,
-					/obj/item/weapon/vending_refill/snack)
-	additional_costs = 1690
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "snack supply crate"
+	name = "Snack vending machine"
+	contains = list(/obj/random/vending/snack)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "snack vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_cola
-	name = "Softdrinks supply crate"
-	contains = list(/obj/item/weapon/vending_refill/cola,
-					/obj/item/weapon/vending_refill/cola,
-					/obj/item/weapon/vending_refill/cola)
-	additional_costs = 730
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "softdrinks supply crate"
+	name = "Softdrinks vending machine"
+	contains = list(/obj/random/vending/cola)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "softdrinks vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_cigarette
-	name = "Cigarette supply crate"
-	contains = list(/obj/item/weapon/vending_refill/cigarette,
-					/obj/item/weapon/vending_refill/cigarette,
-					/obj/item/weapon/vending_refill/cigarette)
-	additional_costs = 1170
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "cigarette supply crate"
+	name = "Cigarette vending machine"
+	contains = list(/obj/machinery/vending/cigarette)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "cigarette vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_barber
-	name = "Barbershop supply crate"
-	contains = list(/obj/item/weapon/vending_refill/barbervend,
-					/obj/item/weapon/vending_refill/barbervend,
-					/obj/item/weapon/vending_refill/barbervend)
-	additional_costs = 4500
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "barbershop supply crate"
+	name = "Barbershop vending machine"
+	contains = list(/obj/machinery/vending/barbervend)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "barbershop vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_clothing
-	name = "ClothesMate supply crate"
-	contains = list(/obj/item/weapon/vending_refill/clothing,
-					/obj/item/weapon/vending_refill/clothing,
-					/obj/item/weapon/vending_refill/clothing)
-	additional_costs = 8900
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "ClothesMate supply crate"
+	name = "ClothesMate vending machine"
+	contains = list(/obj/machinery/vending/clothing)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "ClothesMate vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_hydroseeds
-	name = "MegaSeed supply crate"
-	contains = list(/obj/item/weapon/vending_refill/hydroseeds,
-					/obj/item/weapon/vending_refill/hydroseeds,
-					/obj/item/weapon/vending_refill/hydroseeds)
-	additional_costs = 4200
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "MegaSeed supply crate"
+	name = "MegaSeed vending machine"
+	contains = list(/obj/machinery/vending/hydroseeds)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "MegaSeed vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_hydronutrients
-	name = "NutriMax supply crate"
-	contains = list(/obj/item/weapon/vending_refill/hydronutrients,
-					/obj/item/weapon/vending_refill/hydronutrients,
-					/obj/item/weapon/vending_refill/hydronutrients)
-	additional_costs = 5700
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "NutriMax supply crate"
+	name = "NutriMax vending machine"
+	contains = list(/obj/machinery/vending/hydronutrients)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "NutriMax vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_medical
-	name = "NanoMed Plus supply crate"
-	contains = list(/obj/item/weapon/vending_refill/medical,
-					/obj/item/weapon/vending_refill/medical,
-					/obj/item/weapon/vending_refill/medical)
-	additional_costs = 3100
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "NanoMed Plus supply crate"
+	name = "NanoMed Plus vending machine"
+	contains = list(/obj/machinery/vending/medical)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "NanoMed Plus vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_chinese
-	name = "Mr. Chang supply crate"
-	contains = list(/obj/item/weapon/vending_refill/chinese,
-					/obj/item/weapon/vending_refill/chinese,
-					/obj/item/weapon/vending_refill/chinese)
-	additional_costs = 1270
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "Mr. Chang supply crate"
+	name = "Mr. Chang vending machine"
+	contains = list(/obj/machinery/vending/chinese)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "Mr. Chang vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_tool
-	name = "YouTool supply crate"
-	contains = list(/obj/item/weapon/vending_refill/tool,
-					/obj/item/weapon/vending_refill/tool,
-					/obj/item/weapon/vending_refill/tool)
-	additional_costs = 2100
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "YouTool supply crate"
+	name = "YouTool vending machine"
+	contains = list(/obj/machinery/vending/tool)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "YouTool vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_engivend
-	name = "Engi-Vend supply crate"
-	contains = list(/obj/item/weapon/vending_refill/engivend,
-					/obj/item/weapon/vending_refill/engivend,
-					/obj/item/weapon/vending_refill/engivend)
-	additional_costs = 2500
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "Engi-Vend supply crate"
+	name = "Engi-Vend vending machine"
+	contains = list(/obj/machinery/vending/engivend)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "Engi-Vend vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_blood
-	name = "Blood'O'Matic supply crate"
-	contains = list(/obj/item/weapon/vending_refill/blood,
-					/obj/item/weapon/vending_refill/blood,
-					/obj/item/weapon/vending_refill/blood)
-	additional_costs = 6900
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "Blood'O'Matic supply crate"
+	name = "Blood'O'Matic vending machine"
+	contains = list(/obj/machinery/vending/blood)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "Blood'O'Matic vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_junkfood
-	name = "Fast Food supply crate"
-	contains = list(/obj/item/weapon/vending_refill/junkfood,
-					/obj/item/weapon/vending_refill/junkfood,
-					/obj/item/weapon/vending_refill/junkfood)
-	additional_costs = 780
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "Fast Food supply crate"
+	name = "Fast Food vending machine"
+	contains = list(/obj/machinery/vending/junkfood)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "Fast Food vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_donut
-	name = "Monkin' Donuts supply crate"
-	contains = list(/obj/item/weapon/vending_refill/donut,
-					/obj/item/weapon/vending_refill/donut,
-					/obj/item/weapon/vending_refill/donut)
-	additional_costs = 590
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "Monkin' Donuts supply crate"
+	name = "Monkin' Donuts vending machine"
+	contains = list(/obj/machinery/vending/donut)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "Monkin' Donuts vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/vending_assist
-	name = "Vendomat supply crate"
-	contains = list(/obj/item/weapon/vending_refill/assist,
-					/obj/item/weapon/vending_refill/assist,
-					/obj/item/weapon/vending_refill/assist)
-	additional_costs = 700
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "Vendomat supply crate"
+	name = "Vendomat vending machine"
+	contains = list(/obj/machinery/vending/assist)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "Vendomat vending machine"
+	group = "Hospitality"
+
+/datum/supply_pack/vending_dinnerware
+	name = "Dinnerware vending machine"
+	contains = list(/obj/machinery/vending/dinnerware)
+	additional_costs = 0
+	crate_type = /obj/structure/largecrate
+	crate_name = "Dinnerware vending machine"
 	group = "Hospitality"
 
 /datum/supply_pack/kvasstank
@@ -697,16 +671,6 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/structure/reagent_dispensers/kvasstank)
 	crate_type = /obj/structure/largecrate
 	crate_name = "Kvass tank crate"
-	group = "Hospitality"
-
-/datum/supply_pack/vending_dinnerware
-	name = "Dinnerware supply crate"
-	contains = list(/obj/item/weapon/vending_refill/dinnerware,
-					/obj/item/weapon/vending_refill/dinnerware,
-					/obj/item/weapon/vending_refill/dinnerware)
-	additional_costs = 3800
-	crate_type = /obj/structure/closet/crate/freezer
-	crate_name = "Dinnerware supply crate"
 	group = "Hospitality"
 
 /datum/supply_pack/party

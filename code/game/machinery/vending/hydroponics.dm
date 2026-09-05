@@ -22,7 +22,6 @@
 	prices = list(
 		/obj/item/weapon/reagent_containers/glass/bottle/mutagen = 250,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/hydronutrients
 	private = TRUE
 
 /obj/machinery/vending/hydroseeds
@@ -86,5 +85,4 @@
 		/obj/item/seeds/mtearseed = 60,
 		/obj/item/seeds/shandseed = 60,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/hydroseeds
 	private = TRUE
