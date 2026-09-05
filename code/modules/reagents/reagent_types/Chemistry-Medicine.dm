@@ -283,6 +283,12 @@
 	if(holder.has_reagent("lexorin"))
 		holder.remove_reagent("lexorin", 2 * REM)
 
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/internal/lungs/L = H.organs_by_name[O_LUNGS]
+		if(L && L.fractol_addiction > 0)
+			L.fractol_addiction = max(0, L.fractol_addiction - 2 * REM) // 2x recovery speedup (+1/tick)
+
 /datum/reagent/dexalin/on_diona_digest(mob/living/M)
 	return FALSE
 
@@ -347,6 +353,12 @@
 
 	if(holder.has_reagent("lexorin"))
 		holder.remove_reagent("lexorin", 2 * REM)
+
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/obj/item/organ/internal/lungs/L = H.organs_by_name[O_LUNGS]
+		if(L && L.fractol_addiction > 0)
+			L.fractol_addiction = max(0, L.fractol_addiction - 6 * REM) // 4x recovery speedup (+3/tick)
 
 /datum/reagent/dexalinp/on_diona_digest(mob/living/M)
 	return FALSE
