@@ -30,8 +30,7 @@
 	var/world_pattern = "world_pattern_standard"
 	var/inv_pattern = "inv_pattern_standard"
 
-// Style to actually render as for this mob. Fat mobs have no turtleneck sprites, so a fat
-// turtleneck renders as standard to keep base/detail/pattern consistent.
+
 /datum/poly_style/proc/get_effective(mob/living/carbon/human/H)
 	return src
 
@@ -39,9 +38,7 @@
 	var/base = U.rolled_down ? "mob_base_rolled" : mob_base
 	if(H && H.species?.name == VOX)
 		return "mob_base_vox"                      // vox has a single base sprite
-	if(H && HAS_TRAIT(H, TRAIT_FAT) && base == "mob_base_belt")
-		return "mob_base_standard_fat"             // belt has no fat sprite
-	var/static/list/has_fat = list("mob_base_standard", "mob_base_rolled")
+	var/static/list/has_fat = list("mob_base_standard", "mob_base_rolled", "mob_base_belt", "mob_base_turtleneck")
 	if(H && HAS_TRAIT(H, TRAIT_FAT) && (base in has_fat))
 		return "[base]_fat"
 	if(H && H.bodytype_object.name == SLIM_BODYTYPE)
@@ -53,10 +50,10 @@
 		return null
 	if(H && H.species?.name == VOX)
 		return "mob_detail_vox"
-	if(H && HAS_TRAIT(H, TRAIT_FAT))
-		return "mob_detail_fat"
 	if(U.poly_pattern == "5" && !is_belt && !(H && H.bodytype_object.name == SLIM_BODYTYPE))
-		return "mob_detail_pattern5"               // pattern 5's zipper sits differently
+		return (H && HAS_TRAIT(H, TRAIT_FAT)) ? "mob_detail_pattern5_fat" : "mob_detail_pattern5"
+	if(H && HAS_TRAIT(H, TRAIT_FAT))
+		return is_belt ? "mob_detail_belt_fat" : "mob_detail_standard_fat"
 	if(H && H.bodytype_object.name == SLIM_BODYTYPE)
 		return is_belt ? "mob_detail_belt_fem" : "mob_detail_standard_fem"
 	return is_belt ? "mob_detail_belt" : "mob_detail_standard"
@@ -65,13 +62,19 @@
 	var/pattern = U.poly_pattern
 	if(!pattern || U.rolled_down)
 		return null
-	if(H && (HAS_TRAIT(H, TRAIT_FAT) || H.species?.name == VOX))
-		return null                                // fat and vox bases have no pattern overlays
+	if(H && (H.species?.name == VOX))
+		return null						// vox bases have no pattern overlays.
 	if(pattern == POLY_PATTERN_TURT)
-		return (H &&  H.bodytype_object.name == SLIM_BODYTYPE) ? "mob_pattern_turtleneck_fem" : "mob_pattern_turtleneck"
+		if(H && H.bodytype_object.name == FAT_BODYTYPE)
+			return "mob_pattern_turtleneck_fat"
+		if(H && H.bodytype_object.name == SLIM_BODYTYPE)
+			return "mob_pattern_turtleneck_fem"
+		return "mob_pattern_turtleneck"
 	var/pat = "mob_pattern_[pattern]"
 	if(is_belt && (pattern in belt_patterns))
 		pat = "mob_pattern_[pattern]_belt"
+	if(H && (HAS_TRAIT(H, TRAIT_FAT)))
+		return "[pat]_fat"
 	if(H && H.bodytype_object.name == SLIM_BODYTYPE)
 		return "[pat]_fem"
 	return pat
@@ -111,12 +114,6 @@
 	world_base = "world_base_turtleneck"
 	world_pattern = "world_pattern_turtleneck"
 	inv_pattern = "inv_pattern_turtleneck"
-
-/datum/poly_style/turtleneck/get_effective(mob/living/carbon/human/H)
-	if(H && HAS_TRAIT(H, TRAIT_FAT))
-		return global.poly_styles_by_key[POLY_STYLE_STD]
-	return src
-
 
 // key => singleton datum. "job" is absent on purpose — it means "no polychromic jumpsuit".
 var/global/list/poly_styles_by_key = build_poly_styles()
