@@ -749,12 +749,7 @@
 								qdel(G)
 
 					if(!M.grabbed_by.len)
-						var/atom/movable/AM = M.pulling
-						M.stop_pulling()
-
-						pulling.Move(old_loc, get_dir(pulling, old_loc))
-						if(M && AM)
-							M.start_pulling(AM)
+						drag_pull_chain(pulling, old_loc)
 				else
 					pulling.Move(old_loc, get_dir(pulling, old_loc))
 	else
