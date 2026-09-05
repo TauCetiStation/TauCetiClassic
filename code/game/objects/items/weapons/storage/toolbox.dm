@@ -101,6 +101,7 @@
 	item_state = "toolbox_syndi"
 	origin_tech = "combat=1;syndicate=1"
 	force = 7.0
+	silent = TRUE
 
 /obj/item/weapon/storage/toolbox/syndicate/atom_init()
 	. = ..()
