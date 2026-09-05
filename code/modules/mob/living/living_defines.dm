@@ -70,6 +70,10 @@
 	var/default_pixel_x = 0
 	var/default_pixel_y = 0
 	var/default_layer = 0
+	/// TRUE while this mob has entered beneath a crawl-hiding structure through normal movement.
+	var/is_crawling_under_structure = FALSE
+	/// Distinguishes nested forceMove() calls from ordinary movement in Moved().
+	var/crawl_layer_forced_move_depth = 0
 
 	// Moveset type that this mob is spawned with(What the mob should know "by nature")
 	var/moveset_type = /datum/combat_moveset/living

@@ -253,6 +253,12 @@
 			return FALSE
 	return TRUE
 
+/turf/proc/has_crawl_hiding_structure(mob/living/crawler)
+	for(var/obj/structure/on_turf as anything in contents)
+		if(on_turf.hides_crawling_mobs && on_turf.buckled_mob != crawler)
+			return TRUE
+	return FALSE
+
 /turf/Entered(atom/movable/AM)
 	if(!istype(AM, /atom/movable))
 		return
@@ -278,6 +284,12 @@
 	if (Obj && Obj.opacity)
 		recalc_atom_opacity() // Make sure to do this before reconsider_lights(), incase we're on instant updates.
 		reconsider_lights()
+
+	if(istype(Obj, /obj/structure))
+		var/obj/structure/exited_structure = Obj
+		if(exited_structure.hides_crawling_mobs)
+			for(var/mob/living/crawler in contents)
+				crawler.update_crawl_layer()
 
 /turf/proc/adjacent_fire_act(turf/simulated/floor/source, temperature, volume)
 	return

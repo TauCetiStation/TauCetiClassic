@@ -24,6 +24,7 @@ var/global/list/mechtoys = list(
 	anchored = TRUE
 	can_block_air = TRUE
 	layer = 4
+	hides_crawling_mobs = TRUE
 
 	resistance_flags = CAN_BE_HIT
 
