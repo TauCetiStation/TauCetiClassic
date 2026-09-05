@@ -309,11 +309,10 @@
 
 ///Generate the full examine string of this atom (including icon for goonchat)
 /atom/proc/get_examine_string(mob/user, thats = FALSE, atom/alt_obj)
-	return "[bicon(alt_obj ? alt_obj : src)] [thats ? "That's ": ""][get_examine_name(user, alt_obj)]"
+	return "[bicon(alt_obj ? alt_obj : src)] [thats ? "That's ": ""]<b>[get_examine_name(user, alt_obj)]</b>"
 
 /atom/proc/examine(mob/user, distance = -1)
 	var/atom/alt_obj
-
 	if(alternate_appearances)
 		for(var/key in alternate_appearances)
 			var/datum/atom_hud/alternate_appearance/AA = alternate_appearances[key]
@@ -322,32 +321,33 @@
 			alt_obj = AA.alternate_obj
 			break
 
-	var/msg = get_examine_string(user, TRUE, alt_obj)
+	var/title = get_examine_string(user, TRUE, alt_obj)
+
+	var/list/content_parts = list()
 
 	var/visible_desc = alt_obj?.desc || desc
 	if(visible_desc)
-		msg += "<br>[visible_desc]"
+		content_parts += visible_desc
 
 	// *****RM
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
-		msg += "<br>It contains:"
+		content_parts += "It contains:"
 		if(reagents.reagent_list.len)
 			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
 				for(var/datum/reagent/R in reagents.reagent_list)
-					msg += "<br><span class='info'>[R.volume] units of [R.name]</span>"
-			else if (is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_MASTER)))
+					content_parts += "<span class='info'>[R.volume] units of [R.name]</span>"
+			else if(is_skill_competent(user, list(/datum/skill/chemistry = SKILL_LEVEL_MASTER)))
 				if(length(reagents.reagent_list) == 1)
-					msg += "<br><span class='info'>[reagents.reagent_list[1].volume] units of [reagents.reagent_list[1].name]</span>"
+					content_parts += "<span class='info'>[reagents.reagent_list[1].volume] units of [reagents.reagent_list[1].name]</span>"
 				else
 					for(var/datum/reagent/R in reagents.reagent_list)
-						msg += "<br><span class='info'>[R.volume + R.volume * rand(-25,25) / 100] units of [R.name]</span>"
+						content_parts += "<span class='info'>[R.volume + R.volume * rand(-25,25) / 100] units of [R.name]</span>"
 			else
-				msg += "<br><span class='info'>[reagents.total_volume] units of liquid.</span>"
+				content_parts += "<span class='info'>[reagents.total_volume] units of liquid.</span>"
 		else
-			msg += "<br>Nothing."
+			content_parts += "Nothing."
 
-	to_chat(user, msg)
-
+	to_chat(user, fieldset_block(title, jointext(content_parts, "<br>"), "examine_box"))
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user)
 	return distance == -1 || isobserver(user) || (get_dist(src, user) <= distance)
 

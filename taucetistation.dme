@@ -120,6 +120,7 @@
 #include "code\__HELPERS\_lists.dm"
 #include "code\__HELPERS\atmospherics.dm"
 #include "code\__HELPERS\atom.dm"
+#include "code\__HELPERS\chat_boxes.dm"
 #include "code\__HELPERS\cmp.dm"
 #include "code\__HELPERS\colors.dm"
 #include "code\__HELPERS\constants.dm"

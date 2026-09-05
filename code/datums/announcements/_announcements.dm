@@ -137,6 +137,7 @@ var/global/list/announcement_sounds = list(
 	var/flags
 
 	var/datum/faction/faction_filter
+	var/chat_alert_color = "blue"
 
 /datum/announcement/New()
 	randomize()
@@ -165,14 +166,17 @@ var/global/list/announcement_sounds = list(
 		randomize()
 
 	if(flags & ANNOUNCE_TEXT)
+		var/list/parts = list()
 		if(title)
-			announce_text += "<div><h1>[title]</h1></div>"
+			parts += "<span class='major_announcement_title'>[title]</span>"
 		if(subtitle)
-			announce_text += "<div><h2>[subtitle]</h2></div>"
+			parts += "<span class='subheader_announcement_text'>[subtitle]</span>"
 		if(message)
-			announce_text += "<p class='alert'>[message]</p>"
+			parts += "<span class='major_announcement_text'>[message]</span>"
 		if(announcer)
-			announce_text += "<p class='alert'> -[announcer]</p>"
+			parts += "<span class='major_announcement_text'>-[announcer]</span>"
+		if(length(parts))
+			announce_text = create_announcement_div(jointext(parts, ""), chat_alert_color)
 
 	if(flags & ANNOUNCE_SOUND)
 		if(sound)
