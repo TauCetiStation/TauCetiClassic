@@ -232,15 +232,70 @@
 
 	update()
 
+/obj/machinery/status_display/attackby(obj/item/I, mob/user)
+	if(iswrenching(I))
+		if(I.use_tool(src, user, 2 SECOND, volume = 100, quality = QUALITY_WRENCHING))
+			to_chat(user, "<span class='notice'>You unfasten \the [src] with \the [I].</span>")
+			deconstruct(TRUE)
+			return
+	..()
+
 /obj/machinery/status_display/deconstruct(disassembled)
 	if(flags & NODECONSTRUCT)
 		return ..()
-	new /obj/item/stack/sheet/metal(loc, 2)
-	new /obj/item/weapon/shard(loc)
-	new /obj/item/weapon/shard(loc)
-	// new /obj/item/wallframe/status_display(loc) // TODO add?
+	if(disassembled)
+		new /obj/item/status_display_frame(loc)
+	else
+		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
 	..()
 
+/obj/item/status_display_frame
+	name = "display frame"
+	desc = "Используется для сборки дисплеев статуса. Выберите тип дисплея при установке на стену."
+	icon = 'icons/obj/status_display.dmi'
+	icon_state = "unanchoreddisplay"
+	flags = CONDUCT
+	m_amt = 15000
+	g_amt = 5000
+
+/obj/item/status_display_frame/proc/try_build(turf/on_wall)
+	if(get_dist(on_wall, usr) > 1)
+		return
+	var/ndir = get_dir(usr, on_wall)
+	if(!(ndir in cardinal))
+		return
+	var/turf/loc = get_turf(usr)
+	if(!isfloorturf(loc))
+		to_chat(usr, "<span class='warning'>Дисплей нельзя установить в этом месте.</span>")
+		return
+	if(gotwallitem(loc, ndir))
+		to_chat(usr, "<span class='warning'>Здесь уже есть дисплей.</span>")
+		return
+	for(var/obj/machinery/status_display/D in loc)
+		if(D.anchored)
+			to_chat(usr, "<span class='warning'>Здесь уже есть дисплей.</span>")
+			return
+	for(var/obj/machinery/ai_status_display/D in loc)
+		if(D.anchored)
+			to_chat(usr, "<span class='warning'>Здесь уже есть дисплей.</span>")
+			return
+
+	var/display_choice = input(usr, "Выберите тип дисплея для установки.", "Тип дисплея", "Status display") as null|anything in list("Status display", "AI display")
+	if(!display_choice)
+		return
+
+	var/obj/machinery/display = null
+	if(display_choice == "AI display")
+		display = new /obj/machinery/ai_status_display(loc)
+	else
+		display = new /obj/machinery/status_display(loc)
+
+	display.pixel_y -= (loc.y - on_wall.y) * 32
+	display.pixel_x -= (loc.x - on_wall.x) * 32
+	display.set_dir(ndir)
+	qdel(src)
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
@@ -257,6 +312,14 @@
 
 	var/emotion = "Neutral"
 
+/obj/machinery/ai_status_display/attackby(obj/item/I, mob/user)
+	if(iswrenching(I))
+		if(I.use_tool(src, user, 2 SECOND, volume = 100, quality = QUALITY_WRENCHING))
+			to_chat(user, "<span class='notice'>You unfasten \the [src] with \the [I].</span>")
+			deconstruct(TRUE)
+			return
+	..()
+
 /obj/machinery/ai_status_display/atom_init()
 	. = ..()
 	ai_status_display_list += src
@@ -264,6 +327,17 @@
 /obj/machinery/ai_status_display/Destroy()
 	ai_status_display_list -= src
 	return ..()
+
+/obj/machinery/ai_status_display/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+	if(disassembled)
+		new /obj/item/status_display_frame(loc)
+	else
+		new /obj/item/stack/sheet/metal(loc, 2)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
+	..()
 
 /obj/machinery/ai_status_display/process()
 	if(stat & NOPOWER)
