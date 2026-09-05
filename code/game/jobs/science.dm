@@ -8,7 +8,7 @@
 	title = JOB_RD
 	departments = list(DEP_SCIENCE, DEP_COMMAND)
 	order = CREW_INTEND_HEADS(5)
-	total_positions = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ffddff"
@@ -38,7 +38,7 @@
 	title = JOB_SCIENTIST
 	departments = list(DEP_SCIENCE)
 	order = CREW_INTEND_EMPLOYEE(1)
-	total_positions = 3
+	baseline_positions = 3
 	spawn_positions = 3
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
@@ -57,7 +57,7 @@
 	title = JOB_XENOARCHAEOLOGIST
 	departments = list(DEP_SCIENCE)
 	order = CREW_INTEND_EMPLOYEE(2)
-	total_positions = 3
+	baseline_positions = 3
 	spawn_positions = 3
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
@@ -78,7 +78,7 @@
 	title = JOB_XENOBIOLOGIST
 	departments = list(DEP_SCIENCE)
 	order = CREW_INTEND_EMPLOYEE(3)
-	total_positions = 2
+	baseline_positions = 2
 	spawn_positions = 2
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
@@ -93,7 +93,7 @@
 	title = JOB_ROBOTICIST
 	departments = list(DEP_SCIENCE)
 	order = CREW_INTEND_EMPLOYEE(4)
-	total_positions = 2
+	baseline_positions = 2
 	spawn_positions = 2
 	supervisors = "research director"
 	selection_color = "#ffeeff"
@@ -113,7 +113,7 @@
 	title = JOB_RESEARCH_ASSISTANT
 	departments = list(DEP_SCIENCE)
 	order = CREW_INTEND_ASSIST(1)
-	total_positions = 3
+	baseline_positions = 3
 	spawn_positions = 3
 	supervisors = "research director"
 	selection_color = "#ffeeff"
