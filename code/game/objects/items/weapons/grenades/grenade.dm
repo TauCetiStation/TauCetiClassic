@@ -107,3 +107,16 @@
 /obj/item/weapon/grenade/syndieminibomb/prime()
 	explosion(src.loc,1,2,4,5)
 	qdel(src)
+
+/obj/item/weapon/grenade/frag
+	name = "M69 Fragmentation Grenade"
+	desc = "Боевая осколочная граната, используется для поражения живой силы."
+	icon_state = "frag"
+	item_state = "flashbang"
+	det_time = 30
+	origin_tech = "materials=3;combat=5"
+
+/obj/item/weapon/grenade/frag/prime()
+	explosion(src.loc,0,0,1)
+	create_blast_of_frags(16, get_turf(src), /obj/item/projectile/bullet/fragment)
+	qdel(src)

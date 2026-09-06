@@ -33,6 +33,7 @@
 	prob(14);/obj/item/device/healthanalyzer/rad_laser,\
 	prob(16);/obj/item/weapon/gun/projectile/automatic/pistol/stechkin,\
 	prob(16);/obj/item/weapon/grenade/syndieminibomb,\
+	prob(16);/obj/item/weapon/grenade/frag,\
 	prob(16);/obj/item/weapon/storage/box/syndie_kit/throwing_weapon,\
 	prob(16);/obj/item/weapon/card/emag,\
 	prob(20);/obj/item/weapon/storage/box/emps,\

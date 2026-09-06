@@ -15,6 +15,7 @@
 	var/mob/firer = null // who shot it, can be changed after reflecs/redirects
 	var/redirected = FALSE // if projectile was redirected and firer changed
 	var/silenced = 0	//Attack message
+	var/pass_laying_mobs = TRUE
 	var/yo = null
 	var/xo = null
 	var/current = null
@@ -394,4 +395,26 @@ var/global/static/list/taser_projectiles = list(
 		if(damage_type == BRUTE)
 			damage += damage * 0.1
 	return full_impact_force
+
+
+/proc/create_blast_of_frags(radius, turf/epicenter, obj/item/projectile/projectile_type)
+	var/list/all_the_turfs_were_gonna_lacerate = BORDER_TURFS(radius, epicenter)
+	for(var/T in all_the_turfs_were_gonna_lacerate)
+		var/turf/shootat_turf = T
+		var/obj/item/projectile/pellet = new projectile_type(epicenter)
+		if(prob(30)) // you can't dodge all the shrapnel just by crawling.
+			pellet.pass_laying_mobs = FALSE
+		pellet.dispersion = rand(5, 25) * 0.1 // shrapnel should not always fly in the same strictly defined direction.
+		pellet.original = shootat_turf
+		pellet.yo = shootat_turf.y - epicenter.y
+		pellet.xo = shootat_turf.x - epicenter.x
+		pellet.def_zone = ran_zone()
+		pellet.current = epicenter
+		pellet.starting = epicenter
+		pellet.muzzle_type = null
+		pellet.process()
+		for(var/mob/M in epicenter) // the hero who will absorb all fragments
+			if((M.stat != DEAD) && (prob(75)))
+				M.bullet_act(pellet, pellet.def_zone)
+				qdel(pellet)
 
