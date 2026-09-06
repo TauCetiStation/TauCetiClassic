@@ -313,6 +313,8 @@
 
 	init_washing_items_list()
 
+	init_food_recipes()
+
 /proc/init_washing_items_list()
 	var/list/path_list = list(/obj/item/clothing/mask,
 							/obj/item/clothing/head,
@@ -336,6 +338,35 @@
 	global.washing_items_list -= /obj/item/clothing/head/syndicatefake
 	global.washing_items_list -= /obj/item/clothing/head/helmet
 	global.washing_items_list -= /obj/item/clothing/gloves/pipboy
+
+/proc/init_food_recipes()
+	for(var/recipe_type as anything in subtypesof(/datum/recipe/candy))
+		var/datum/recipe/recipe = new recipe_type
+		if(!recipe.recipe_ingredients_count)
+			qdel(recipe)
+			continue
+		global.candy_recipes += new recipe_type
+
+	for(var/recipe_type as anything in subtypesof(/datum/recipe/grill))
+		var/datum/recipe/recipe = new recipe_type
+		if(!recipe.recipe_ingredients_count)
+			qdel(recipe)
+			continue
+		global.grill_recipes += new recipe_type
+
+	for(var/recipe_type as anything in subtypesof(/datum/recipe/oven))
+		var/datum/recipe/recipe = new recipe_type
+		if(!recipe.recipe_ingredients_count)
+			qdel(recipe)
+			continue
+		global.oven_recipes += new recipe_type
+
+	for(var/recipe_type as anything in subtypesof(/datum/recipe/microwave))
+		var/datum/recipe/recipe = new recipe_type
+		if(!recipe.recipe_ingredients_count)
+			qdel(recipe)
+			continue
+		global.microwave_recipes += new recipe_type
 
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()

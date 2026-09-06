@@ -195,14 +195,6 @@
 	being_cooked.trash = paper //so the paper is left behind as trash without special-snowflake(TM Nodrak) code ~carn
 	return being_cooked
 
-/datum/recipe/oven/fortunecookie/check_items(obj/container)
-	. = ..()
-	if(.)
-		var/obj/item/weapon/paper/paper = locate() in container
-		if(!paper || !paper.info)
-			return -1
-	return .
-
 /datum/recipe/oven/pizzamargherita
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
