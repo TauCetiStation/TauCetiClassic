@@ -6640,6 +6640,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-yaml@npm:^4.3.2":
+  version: 4.3.2
+  resolution: "js-yaml@npm:4.3.2"
+  dependencies:
+    argparse: "npm:^2.0.1"
+  bin:
+    js-yaml: bin/js-yaml.js
+  checksum: 10/05c44b9c73e4901d92703b155e76518df64bf01ac62e4c036b47de4b391e19b72e32656e8954d51b436307f08cc9d0c0d4ec617d061cf2f65fffee9f3114bee7
+  languageName: node
+  linkType: hard
+
 "jsbn@npm:~0.1.0":
   version: 0.1.1
   resolution: "jsbn@npm:0.1.1"
@@ -9079,7 +9090,7 @@ __metadata:
     highlight.js: "npm:^11.10.0"
     inferno: "npm:^8.2.3"
     inferno-vnode-flags: "npm:^8.2.3"
-    js-yaml: "npm:^4.1.0"
+    js-yaml: "npm:^4.3.2"
     prop-types: "npm:^15.8.1"
     tgui-dev-server: "workspace:*"
     tgui-polyfill: "workspace:*"
