@@ -30,6 +30,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 	name = "alarm"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm0"
+	light_color = LIGHT_COLOR_WHITE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 80
@@ -67,6 +68,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 	var/list/trace_gas = list("sleeping_agent") //list of other gases that this air alarm is able to detect
 
 	var/danger_level = 0
+	var/mutable_appearance/emissive_overlay
 	var/pressure_dangerlevel = 0
 	var/oxygen_dangerlevel = 0
 	var/co2_dangerlevel = 0
@@ -108,6 +110,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 	if (!master_is_operating())
 		elect_master()
 	first_run()
+	update_icon()
 
 /obj/machinery/alarm/proc/first_run()
 	alarm_area = get_area(src)
@@ -127,6 +130,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 
 /obj/machinery/alarm/Destroy()
 	alarm_list -= src
+	emissive_overlay = null
 	if(wires)
 		QDEL_NULL(wires)
 	if(alarm_area && alarm_area.master_air_alarm == src)
@@ -297,6 +301,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 	return 0
 
 /obj/machinery/alarm/update_icon()
+	cut_overlay(emissive_overlay)
+	emissive_overlay = null
+	var/new_light_range = !wiresexposed && !shorted && !(stat & (NOPOWER|BROKEN)) ? MINIMUM_USEFUL_LIGHT_RANGE : 0
+	if(light_range != new_light_range)
+		set_light(new_light_range)
 	if(wiresexposed)
 		icon_state="alarm_build[buildstage]"
 		return
@@ -312,6 +321,15 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 	if (alarm_area.atmosalm)
 		icon_level = max(icon_level, 1)	//if there's an atmos alarm but everything is okay locally, no need to go past yellow
 	icon_state = "alarm[icon_level]"
+	emissive_overlay = get_alarm_emissive_overlay(icon_state)
+	add_overlay(emissive_overlay)
+
+/proc/get_alarm_emissive_overlay(icon_state, mask_only = FALSE)
+	var/static/list/masks = list()
+	var/cache_key = "[icon_state]_[mask_only]"
+	if(!masks[cache_key])
+		masks[cache_key] = mask_only ? emissive_mask_appearance('icons/obj/monitors_emissive.dmi', icon_state) : emissive_appearance('icons/obj/monitors_emissive.dmi', icon_state)
+	return masks[cache_key]
 
 /obj/machinery/alarm/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
@@ -898,8 +916,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 		stat &= ~NOPOWER
 	else
 		stat |= NOPOWER
-	spawn(rand(0,15))
-		update_icon()
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), rand(0, 1.5 SECONDS))
 	update_power_use()
 
 /obj/machinery/alarm/examine(mob/user)
@@ -975,6 +992,7 @@ FIRE ALARM
 	desc = "<i>\"Pull this in case of emergency\"</i>. Thus, keep pulling it forever."
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "fire0"
+	light_color = LIGHT_COLOR_WHITE
 	var/detecting = 1.0
 	var/time = 10.0
 	var/timing = 0.0
@@ -988,20 +1006,40 @@ FIRE ALARM
 	var/last_process = 0
 	var/wiresexposed = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
+	var/mutable_appearance/emissive_overlay
+	var/mutable_appearance/security_overlay
 
 /obj/machinery/firealarm/update_icon()
+	cut_overlay(emissive_overlay)
+	cut_overlay(security_overlay)
+	emissive_overlay = null
+	security_overlay = null
+	var/new_light_range = !wiresexposed && !(stat & (NOPOWER|BROKEN)) ? MINIMUM_USEFUL_LIGHT_RANGE : 0
+	if(light_range != new_light_range)
+		set_light(new_light_range)
 	if(wiresexposed)
 		icon_state="fire_build[buildstage]"
 		return
 
 	if(stat & BROKEN)
 		icon_state = "fire_broken"
-	else if(stat & NOPOWER)
+		return
+	if(stat & NOPOWER)
 		icon_state = "fire_unpowered"
-	else if(!detecting)
-		icon_state = "fire1"
-	else
-		icon_state = "fire0"
+		return
+	icon_state = detecting ? "fire0" : "fire1"
+	emissive_overlay = get_alarm_emissive_overlay(icon_state, mask_only = TRUE)
+	add_overlay(emissive_overlay)
+	if(is_station_level(z) || is_mining_level(z))
+		var/security_state = "overlay_green"
+		if(security_level)
+			security_state = "overlay_[code_name_eng[security_level]]"
+		var/static/list/security_overlays = list()
+		security_overlay = security_overlays[security_state]
+		if(!security_overlay)
+			security_overlay = mutable_appearance(icon, security_state)
+			security_overlays[security_state] = security_overlay
+		add_overlay(security_overlay)
 
 /obj/machinery/firealarm/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(detecting)
@@ -1249,16 +1287,12 @@ FIRE ALARM
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 
-	if(is_station_level(z) || is_mining_level(z))
-		if(security_level)
-			add_overlay(image('icons/obj/monitors.dmi', "overlay_[code_name_eng[security_level]]"))
-		else
-			add_overlay(image('icons/obj/monitors.dmi', "overlay_green"))
-
 	update_icon()
 
 /obj/machinery/firealarm/Destroy()
 	firealarm_list -= src
+	emissive_overlay = null
+	security_overlay = null
 	return ..()
 
 /*

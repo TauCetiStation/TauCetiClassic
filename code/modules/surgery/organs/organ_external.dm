@@ -1153,11 +1153,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 		. += eyes_static_layer
 
 	if(species.eyes_colorable_layer)
-		var/mutable_appearance/eyes_colorable_layer = mutable_appearance(
-			species.eyes_icon,
-			species.eyes_colorable_layer,
-			-EYES_LAYER
-		)
+		var/mutable_appearance/eyes_colorable_layer
+		if(owner && HAS_TRAIT(owner, TRAIT_GLOWING_EYES))
+			eyes_colorable_layer = emissive_appearance(species.eyes_icon, species.eyes_colorable_layer, ABOVE_LIGHTING_LAYER)
+		else
+			eyes_colorable_layer = mutable_appearance(species.eyes_icon, species.eyes_colorable_layer, -EYES_LAYER)
 
 		eyes_colorable_layer.color = rgb(r_eyes, g_eyes, b_eyes)
 		if(owner)
@@ -1165,10 +1165,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 				eyes_colorable_layer.color = "#00ffff"
 			else if((HULK in owner.mutations) || (LASEREYES in owner.mutations) || iszombie(owner) || HAS_TRAIT(owner, TRAIT_CULT_EYES)) // todo: red eyes trait
 				eyes_colorable_layer.color = "#ff0000"
-
-			if(HAS_TRAIT(owner, TRAIT_GLOWING_EYES))
-				eyes_colorable_layer.plane = LIGHTING_LAMPS_PLANE
-				eyes_colorable_layer.layer = ABOVE_LIGHTING_LAYER
 
 		. += eyes_colorable_layer
 
@@ -1241,10 +1237,21 @@ Note that amputating the affected organ does in fact remove the infection from t
 					hair_appearance.appearance_flags = KEEP_TOGETHER
 					hair_appearance.add_overlay(list(main_color, gradient))
 
+			if(is_hair_emissive())
+				var/static/list/emissive_hair_masks = list()
+				var/cache_key = "[hair_style.icon]_[hair_style.icon_state]"
+				if(!emissive_hair_masks[cache_key])
+					emissive_hair_masks[cache_key] = emissive_mask_appearance(hair_style.icon, "[hair_style.icon_state]_s")
+				hair_appearance.appearance_flags |= KEEP_APART
+				hair_appearance.add_overlay(emissive_hair_masks[cache_key])
+
 			hair_appearance.pixel_x = species.offset_features[OFFSET_HAIR][1]
 			hair_appearance.pixel_y = species.offset_features[OFFSET_HAIR][2]
 
 			. += hair_appearance
+
+/obj/item/organ/external/head/proc/is_hair_emissive()
+	return FALSE
 
 /obj/item/organ/external/head/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/scalpel) || istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/shard))

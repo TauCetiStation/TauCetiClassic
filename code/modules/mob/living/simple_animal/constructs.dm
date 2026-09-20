@@ -43,8 +43,7 @@
 	AddComponent(/datum/component/forcefield, "blood aura", 20, 5 SECONDS, 3 SECONDS, R, TRUE, TRUE)
 	SEND_SIGNAL(src, COMSIG_FORCEFIELD_PROTECT, src)
 
-	var/image/glow = image(icon, src, "glow_[icon_state]", ABOVE_LIGHTING_LAYER)
-	glow.plane = LIGHTING_LAMPS_PLANE
+	var/image/glow = emissive_appearance(icon, "glow_[icon_state]")
 	add_overlay(glow)
 
 	ADD_TRAIT(src, TRAIT_ARIBORN, TRAIT_ARIBORN_FLYING)

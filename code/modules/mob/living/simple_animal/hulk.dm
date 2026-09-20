@@ -5,6 +5,7 @@
 	icon = 'icons/mob/hulk.dmi'
 	icon_state = "hulk"
 	icon_living = "hulk"
+	layer = LARGE_MOB_LAYER
 	maxHealth = 300
 	health = 300
 	immune_to_ssd = 1

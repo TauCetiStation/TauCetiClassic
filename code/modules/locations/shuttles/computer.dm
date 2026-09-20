@@ -17,6 +17,7 @@
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
 		icon_state += "b"
+	update_emissive()
 	return
 
 /obj/machinery/computer/crew/erokez
@@ -31,4 +32,5 @@
 	icon_state = initial(icon_state)
 	if(stat & BROKEN)
 		icon_state += "b"
+	update_emissive()
 	return

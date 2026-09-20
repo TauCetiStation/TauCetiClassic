@@ -127,6 +127,55 @@
 
 #define LIGHTING_LAMPS_RENDER_TARGET PM_RENDER_NAME(/atom/movable/screen/plane_master/lamps)
 
+/atom/movable/screen/plane_master/emissive_mask
+	name = "emissive mask plane master"
+	plane = EMISSIVE_MASK_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_planes = null
+	color = list(0,0,0,1, 0,0,0,0, 0,0,0,0, 0,0,0,0, 1,1,1,0)
+
+/atom/movable/screen/plane_master/emissive_mask/update_effects(client/client)
+	if(!..())
+		return
+	var/enabled = !client.prefs || client.prefs.emissive_lighting
+	if(enabled)
+		// Setting alpha would overwrite the mask's red-to-alpha conversion.
+		color = initial(color)
+	else
+		alpha = 0
+	render_target = enabled ? PM_RENDER_NAME(type) : null
+
+/atom/movable/screen/plane_master/emissive
+	name = "emissive plane master"
+	plane = EMISSIVE_COLOR_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blend_mode = BLEND_OVERLAY
+	render_relay_planes = list(RENDER_PLANE_GAME)
+
+/atom/movable/screen/plane_master/emissive/update_effects(client/client)
+	if(!..())
+		return
+	var/enabled = !client.prefs || client.prefs.emissive_lighting
+	alpha = enabled ? 255 : 0
+	if(!enabled)
+		return
+	add_filter("emissive_colors", 1, layering_filter(render_source = PM_RENDER_NAME(/atom/movable/screen/plane_master/game_world)))
+	add_filter("visible_emissives", 2, alpha_mask_filter(render_source = PM_RENDER_NAME(/atom/movable/screen/plane_master/emissive_mask)))
+	add_filter("emissive_visibility", 3, alpha_mask_filter(render_source = PM_RENDER_NAME(/atom/movable/screen/plane_master/emissive_visibility)))
+
+/atom/movable/screen/plane_master/emissive_visibility
+	name = "emissive visibility plane master"
+	plane = EMISSIVE_VISIBILITY_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_planes = null
+
+/atom/movable/screen/plane_master/emissive_visibility/update_effects(client/client)
+	if(!..())
+		return
+	var/enabled = !client.prefs || client.prefs.emissive_lighting
+	alpha = enabled ? 255 : 0
+	render_target = enabled ? PM_RENDER_NAME(type) : null
+
 /atom/movable/screen/plane_master/lamps_selfglow
 	name = "lamps selfglow plane master"
 	plane = LIGHTING_LAMPS_SELFGLOW

@@ -182,6 +182,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/auto_fit_viewport = TRUE
 	var/lobbyanimation = FALSE
 	// lighting settings
+	var/emissive_lighting = TRUE
 	var/glowlevel = GLOW_MED // or bloom
 	var/lampsexposure = TRUE // idk how we should name it
 	var/lampsglare = FALSE // aka lens flare

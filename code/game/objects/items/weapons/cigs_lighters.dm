@@ -166,10 +166,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!icon_exists(_icon, ember_state))
 		return null
 
-	var/image/ember = image(_icon, icon_state = ember_state)
-	ember.plane = LIGHTING_LAMPS_PLANE
-	ember.appearance_flags = RESET_COLOR | KEEP_APART
-	return ember
+	return emissive_appearance(_icon, ember_state)
 
 /obj/item/clothing/mask/cigarette/update_world_icon()
 	. = ..()
@@ -188,6 +185,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return standing
 	var/image/ember = build_ember_overlay(standing.icon, standing.icon_state)
 	if(ember)
+		// Let the nested ember inherit the mob transform outside its KEEP_TOGETHER group.
+		standing.appearance_flags |= KEEP_APART
 		standing.add_overlay(ember)
 	return standing
 

@@ -146,8 +146,7 @@
 					qdel(spawned_item)
 
 	mannequin.update_inv_back()
-	COMPILE_OVERLAYS(mannequin)
-	parent.show_character_previews(new /mutable_appearance(mannequin))
+	parent.show_character_previews(mannequin.get_preview_appearance())
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
 
 /proc/_preview_slot_from_flags(slot_flags)

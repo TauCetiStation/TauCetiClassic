@@ -16,6 +16,19 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/Life()
 	return
 
+/mob/living/carbon/human/dummy/proc/get_preview_appearance()
+	COMPILE_OVERLAYS(src)
+	var/mutable_appearance/preview = copy_without_emissive_planes(new /mutable_appearance(src))
+	var/matrix/upright = matrix(default_transform)
+	if(lying_prev)
+		upright.TurnTo(lying_current, 0)
+		preview.pixel_x = initial(pixel_x)
+		preview.pixel_y = initial(pixel_y)
+		preview.layer = initial(layer)
+	preview.transform = upright
+	preview.render_target = null
+	return preview
+
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()
 	cut_overlays()

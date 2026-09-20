@@ -23,6 +23,10 @@
 #define APC_UPOVERLAY_ENVIRON2 2048
 #define APC_UPOVERLAY_LOCKED 4096
 #define APC_UPOVERLAY_OPERATING 8192
+#define APC_UPOVERLAY_POWERED 16384
+
+#define APC_LIGHT_RANGE 1.5
+#define APC_LIGHT_POWER 0.6
 
 #define APC_UPDATE_ICON_COOLDOWN 50 // 5 seconds
 
@@ -276,33 +280,37 @@
 		status_overlays_lighting.len = 4
 		status_overlays_environ.len = 4
 
-		status_overlays_lock[1] = image(icon, "apcox-0") // 0=blue 1=red
-		status_overlays_lock[2] = image(icon, "apcox-1")
+		status_overlays_lock[1] = emissive_appearance(icon, "apcox-0") // 0=blue 1=red
+		status_overlays_lock[2] = emissive_appearance(icon, "apcox-1")
 
-		status_overlays_charging[1] = image(icon, "apco3-0")
-		status_overlays_charging[2] = image(icon, "apco3-1")
-		status_overlays_charging[3] = image(icon, "apco3-2")
+		status_overlays_charging[1] = emissive_appearance(icon, "apco3-0")
+		status_overlays_charging[2] = emissive_appearance(icon, "apco3-1")
+		status_overlays_charging[3] = emissive_appearance(icon, "apco3-2")
 
-		status_overlays_equipment[1] = image(icon, "apco0-0") // 0=red, 1=green, 2=blue
-		status_overlays_equipment[2] = image(icon, "apco0-1")
-		status_overlays_equipment[3] = image(icon, "apco0-2")
-		status_overlays_equipment[4] = image(icon, "apco0-3")
+		status_overlays_equipment[1] = emissive_appearance(icon, "apco0-0") // 0=red, 1=green, 2=blue
+		status_overlays_equipment[2] = emissive_appearance(icon, "apco0-1")
+		status_overlays_equipment[3] = emissive_appearance(icon, "apco0-2")
+		status_overlays_equipment[4] = emissive_appearance(icon, "apco0-3")
 
-		status_overlays_lighting[1] = image(icon, "apco1-0")
-		status_overlays_lighting[2] = image(icon, "apco1-1")
-		status_overlays_lighting[3] = image(icon, "apco1-2")
-		status_overlays_lighting[4] = image(icon, "apco1-3")
+		status_overlays_lighting[1] = emissive_appearance(icon, "apco1-0")
+		status_overlays_lighting[2] = emissive_appearance(icon, "apco1-1")
+		status_overlays_lighting[3] = emissive_appearance(icon, "apco1-2")
+		status_overlays_lighting[4] = emissive_appearance(icon, "apco1-3")
 
-		status_overlays_environ[1] = image(icon, "apco2-0")
-		status_overlays_environ[2] = image(icon, "apco2-1")
-		status_overlays_environ[3] = image(icon, "apco2-2")
-		status_overlays_environ[4] = image(icon, "apco2-3")
+		status_overlays_environ[1] = emissive_appearance(icon, "apco2-0")
+		status_overlays_environ[2] = emissive_appearance(icon, "apco2-1")
+		status_overlays_environ[3] = emissive_appearance(icon, "apco2-2")
+		status_overlays_environ[4] = emissive_appearance(icon, "apco2-3")
 
 	var/update = check_updates() // returns 0 if no need to update icons.
 	                             // 1 if we need to update the icon_state
 	                             // 2 if we need to update the overlays
 	if(!update)
 		return
+
+	var/new_light_range = ((update_state & UPSTATE_ALLGOOD) && (update_overlay & APC_UPOVERLAY_POWERED)) ? APC_LIGHT_RANGE : 0
+	if(light_range != new_light_range)
+		set_light(new_light_range, APC_LIGHT_POWER, LIGHT_COLOR_WHITE)
 
 	if(update & 1) // Updating the icon state
 		if(update_state & UPSTATE_ALLGOOD)
@@ -324,14 +332,13 @@
 		else if(update_state & UPSTATE_WIREEXP)
 			icon_state = "apcewires"
 
-	if(!(update_state & UPSTATE_ALLGOOD)) // Not normal state - no overlays
-		if(overlays.len)
-			cut_overlays()
-			return
+	if(!(update_state & UPSTATE_ALLGOOD) || !(update_overlay & APC_UPOVERLAY_POWERED))
+		cut_overlays()
+		COMPILE_OVERLAYS(src)
+		return
 
 	if(update & 2) // Updating the overlays
-		if(overlays.len)
-			cut_overlays()
+		cut_overlays()
 
 		if(!(stat & (BROKEN | MAINT)) && (update_state & UPSTATE_ALLGOOD))
 			add_overlay(status_overlays_lock[locked + 1])
@@ -340,6 +347,10 @@
 				add_overlay(status_overlays_equipment[equipment + 1])
 				add_overlay(status_overlays_lighting[lighting + 1])
 				add_overlay(status_overlays_environ[environ + 1])
+		COMPILE_OVERLAYS(src)
+
+/obj/machinery/power/apc/proc/status_lights_powered()
+	return opened == APC_COVER_CLOSED && !(stat & (BROKEN | MAINT | EMPED)) && !shorted && cell && cell.charge > 0
 
 /obj/machinery/power/apc/proc/check_updates()
 	var/last_update_state = update_state
@@ -365,6 +376,8 @@
 
 	if(operating)
 		update_overlay |= APC_UPOVERLAY_OPERATING
+	if(status_lights_powered())
+		update_overlay |= APC_UPOVERLAY_POWERED
 
 	if(update_state & UPSTATE_ALLGOOD)
 		if(locked)
@@ -1234,6 +1247,8 @@
 		update()
 	else if(last_ch != charging)
 		queue_icon_update()
+	if(status_lights_powered() != !!(update_overlay & APC_UPOVERLAY_POWERED))
+		update_icon()
 
 // val 0=off, 1=off(auto) 2=on 3=on(auto)
 // on 0=off, 1=on, 2=autooff
@@ -1427,6 +1442,10 @@
 #undef APC_WAIT_FOR_CHARGE
 
 #undef APC_UPDATE_ICON_COOLDOWN
+
+#undef APC_UPOVERLAY_POWERED
+#undef APC_LIGHT_RANGE
+#undef APC_LIGHT_POWER
 
 #undef APC_COVER_CLOSED
 #undef APC_COVER_OPENED

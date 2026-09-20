@@ -4,6 +4,8 @@
 #define FONT_STYLE "StatusDisplays"
 #define SCROLL_SPEED 2
 #define LINE_HEIGHT 0.75
+#define STATUS_DISPLAY_LIGHT_RANGE 1.5
+#define STATUS_DISPLAY_LIGHT_POWER 0.6
 
 // Status display
 // (formerly Countdown timer display)
@@ -62,9 +64,14 @@
 	return ..()
 
 /obj/machinery/status_display/process()
-	if(stat & NOPOWER)
-		remove_display()
-		return
+	update()
+
+/obj/machinery/status_display/power_change()
+	. = ..()
+	update()
+
+/obj/machinery/status_display/update_icon()
+	. = ..()
 	update()
 
 /obj/machinery/status_display/emp_act(severity)
@@ -77,11 +84,14 @@
 // set what is displayed
 
 /obj/machinery/status_display/proc/update()
+	if(stat & (NOPOWER|BROKEN))
+		remove_display()
+		return
 	if(friendc && mode != 4)	//Makes all status displays except supply shuttle timer display the eye -- Urist
 		set_picture("ai_friend")
 		return
 
-	if(mode == 3 && overlays.len)	//Why we must update diplay if picture is already set?
+	if(mode == 3 && overlays.len && !(flags_2 & OVERLAY_QUEUED_2))	//Why we must update diplay if picture is already set?
 		return
 
 	if(overlays.len && !friendc || mode == 4)
@@ -125,6 +135,8 @@
 				if(index2 > message2_len)
 					index2 -= message2_len
 			update_display(line1, line2)
+		if(3)
+			set_picture(picture_state)
 		if(4)				// supply shuttle timer
 			var/line1 = "SUPPLY"
 			var/line2
@@ -169,13 +181,20 @@
 
 /obj/machinery/status_display/proc/set_picture(state)
 	picture_state = state
-	remove_display()
+	cut_overlays()
+	if(maptext)
+		maptext = ""
+	if(!state || (stat & (NOPOWER|BROKEN)))
+		set_status_display_emissive(src, FALSE)
+		return
 	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
+	set_status_display_emissive(src, state != "ai_off")
 
 /obj/machinery/status_display/proc/update_display(line1, line2)
 	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];line-height:[LINE_HEIGHT];font-family:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
 	if(maptext != new_text)
 		maptext = new_text
+	set_status_display_emissive(src, line1 || line2)
 
 /obj/machinery/status_display/proc/get_shuttle_timer()
 	var/timeleft = SSshuttle.timeleft()
@@ -192,8 +211,8 @@
 	return ""
 
 /obj/machinery/status_display/proc/remove_display()
-	if(overlays.len)
-		cut_overlays()
+	cut_overlays()
+	set_status_display_emissive(src, FALSE)
 	if(maptext)
 		maptext = ""
 
@@ -266,10 +285,14 @@
 	return ..()
 
 /obj/machinery/ai_status_display/process()
-	if(stat & NOPOWER)
-		cut_overlays()
-		return
+	update()
 
+/obj/machinery/ai_status_display/power_change()
+	. = ..()
+	update()
+
+/obj/machinery/ai_status_display/update_icon()
+	. = ..()
 	update()
 
 /obj/machinery/ai_status_display/emp_act(severity)
@@ -280,9 +303,14 @@
 	..(severity)
 
 /obj/machinery/ai_status_display/proc/update()
+	if(stat & (NOPOWER|BROKEN))
+		cut_overlays()
+		set_status_display_emissive(src, FALSE)
+		return
 
 	if(mode==0) //Blank
 		cut_overlays()
+		set_status_display_emissive(src, FALSE)
 		return
 
 	if(mode==1)	// AI emoticon
@@ -337,9 +365,29 @@
 
 /obj/machinery/ai_status_display/proc/set_picture(state)
 	picture_state = state
-	if(overlays.len)
-		cut_overlays()
+	cut_overlays()
+	if(!state || (stat & (NOPOWER|BROKEN)))
+		set_status_display_emissive(src, FALSE)
+		return
 	add_overlay(image('icons/obj/status_display.dmi', icon_state=picture_state))
+	set_status_display_emissive(src, state != "ai_off")
+
+/proc/set_status_display_emissive(obj/machinery/display, enabled)
+	enabled = enabled && !(display.stat & (NOPOWER|BROKEN))
+	if(enabled)
+		display.underlays |= get_status_display_emissive_mask()
+	else
+		display.underlays -= get_status_display_emissive_mask()
+	var/new_range = enabled ? STATUS_DISPLAY_LIGHT_RANGE : 0
+	if(display.light_range != new_range)
+		display.set_light(new_range, STATUS_DISPLAY_LIGHT_POWER, LIGHT_COLOR_WHITE)
+
+/proc/get_status_display_emissive_mask()
+	var/static/mask
+	if(!mask)
+		var/mutable_appearance/mask_appearance = emissive_mask_appearance('icons/obj/status_display.dmi', "outline")
+		mask = mask_appearance.appearance
+	return mask
 
 #undef CHARS_PER_LINE
 #undef FONT_SIZE
@@ -347,3 +395,5 @@
 #undef FONT_STYLE
 #undef SCROLL_SPEED
 #undef LINE_HEIGHT
+#undef STATUS_DISPLAY_LIGHT_RANGE
+#undef STATUS_DISPLAY_LIGHT_POWER

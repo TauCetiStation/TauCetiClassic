@@ -17,8 +17,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 	var/subname = null // subname for vendor's circuit name
 
-	var/light_range_on = 3
+	var/light_range_on = 2
 	var/light_power_on = 1
+	var/mutable_appearance/emissive_overlay
 	layer = 2.9
 	anchored = TRUE
 	density = TRUE
@@ -104,7 +105,31 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
 	QDEL_NULL(camera)
+	emissive_overlay = null
 	return ..()
+
+/obj/machinery/vending/set_dir(new_dir)
+	. = ..()
+	if(.)
+		update_emissive()
+
+/obj/machinery/vending/update_icon()
+	. = ..()
+	update_emissive()
+
+/obj/machinery/vending/proc/update_emissive()
+	cut_overlay(emissive_overlay)
+	emissive_overlay = null
+	var/mask_state = initial(icon_state)
+	if((stat & (NOPOWER|BROKEN)) || icon != 'icons/obj/vending.dmi' || !icon_exists('icons/obj/vending_emissive.dmi', mask_state))
+		return
+	var/static/list/emissive_overlays = list()
+	var/cache_key = "[mask_state]_[dir]"
+	emissive_overlay = emissive_overlays[cache_key]
+	if(!emissive_overlay)
+		emissive_overlay = emissive_mask_appearance('icons/obj/vending_emissive.dmi', mask_state, dir = dir)
+		emissive_overlays[cache_key] = emissive_overlay
+	add_overlay(emissive_overlay)
 
 /obj/machinery/vending/RefreshParts()
 	..()
@@ -221,6 +246,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		cut_overlays()
 		if(src.panel_open)
 			add_overlay(image(src.icon, "[initial(icon_state)]-panel"))
+		update_emissive()
 		updateUsrDialog()
 
 		return
@@ -252,6 +278,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 					icon_state = initial(icon_state)
 					stat &= ~NOPOWER
 					set_light(light_range_on, light_power_on)
+				update_emissive()
 				wrenched_change()
 
 	else if(currently_vending && istype(W, /obj/item/device/pda) && W.GetID())
@@ -631,13 +658,16 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 				stat |= NOPOWER
 				set_light(0)
 				update_power_use()
+				update_emissive()
 	update_power_use()
+	update_emissive()
 
 /obj/machinery/vending/turn_light_off()
 	. = ..()
 	stat |= NOPOWER
 	icon_state = "[initial(icon_state)]-off"
 	update_power_use()
+	update_emissive()
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()
@@ -670,6 +700,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 	stat |= BROKEN
 	src.icon_state = "[initial(icon_state)]-broken"
+	update_emissive()
 
 	send_emergency_photo()
 
