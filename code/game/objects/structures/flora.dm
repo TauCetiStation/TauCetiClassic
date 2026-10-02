@@ -27,9 +27,33 @@
 	icon_state = "plant-1"
 	var/obj/item/weapon/storage/internal/hidden_storage
 
+/obj/item/weapon/storage/internal/flower/attackby(obj/item/I, mob/user, params)
+	if(!user)
+		return ..()
+	if(!can_be_inserted(I, stop_messages = TRUE))
+		return try_insert(I, user)
+	user.visible_message(
+		"<span class='notice'>[user] прячет [I] в [master_item], присыпая землёй и листьями.</span>",
+		"<span class='notice'>Вы прячете [I] в [master_item], присыпая землёй и листьями...</span>",
+		viewing_distance = 2)
+	if(!do_after(user, 1 SECOND, target = master_item))
+		return TRUE
+	return try_insert(I, user, prevent_warning = TRUE)
+
+/obj/item/weapon/storage/internal/flower/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
+	if(ismob(usr))
+		var/mob/user = usr
+		user.visible_message(
+			"<span class='notice'>[user] откапывает [W] из [master_item].</span>",
+			"<span class='notice'>Вы откапываете [W] из-под земли и листьев...</span>",
+			viewing_distance = 2)
+		if(!do_after(user, 1 SECOND, needhand = FALSE, target = master_item))
+			return FALSE
+	return ..()
+
 /obj/item/weapon/flora/pottedplant/atom_init()
 	. = ..()
-	hidden_storage = new /obj/item/weapon/storage/internal(src)
+	hidden_storage = new /obj/item/weapon/storage/internal/flower(src)
 	hidden_storage.set_slots(slots = 1, slot_size = SIZE_SMALL)
 
 /obj/item/weapon/flora/pottedplant/Destroy()
@@ -37,12 +61,28 @@
 	hidden_storage = null
 	return ..()
 
+/obj/item/weapon/flora/pottedplant/proc/open_hidden_storage(mob/user)
+	if(!hidden_storage || !hidden_storage.try_open(user, check_only = TRUE))
+		return FALSE
+	user.visible_message(
+		"<span class='notice'>[user] роется в [src].</span>",
+		"<span class='notice'>Вы роетесь в [src]...</span>",
+		viewing_distance = 2)
+	if(!do_after(user, 3 SECOND, needhand = FALSE, target = src))
+		return TRUE
+	hidden_storage.add_fingerprint(user)
+	hidden_storage.open(user)
+	return TRUE
+
 /obj/item/weapon/flora/pottedplant/attack_hand(mob/user)
+	if(hidden_storage && loc == user)
+		open_hidden_storage(user)
+		return
 	if(hidden_storage && hidden_storage.handle_attack_hand(user))
 		..(user)
 
 /obj/item/weapon/flora/pottedplant/AltClick(mob/user)
-	if(hidden_storage && hidden_storage.try_open(user))
+	if(open_hidden_storage(user))
 		return
 	return ..()
 
