@@ -25,6 +25,35 @@
 	desc = "Really brings the room together."
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-1"
+	var/obj/item/weapon/storage/internal/hidden_storage
+
+/obj/item/weapon/flora/pottedplant/atom_init()
+	. = ..()
+	hidden_storage = new /obj/item/weapon/storage/internal(src)
+	hidden_storage.set_slots(slots = 1, slot_size = SIZE_SMALL)
+
+/obj/item/weapon/flora/pottedplant/Destroy()
+	qdel(hidden_storage)
+	hidden_storage = null
+	return ..()
+
+/obj/item/weapon/flora/pottedplant/attack_hand(mob/user)
+	if(hidden_storage && hidden_storage.handle_attack_hand(user))
+		..(user)
+
+/obj/item/weapon/flora/pottedplant/AltClick(mob/user)
+	if(hidden_storage && hidden_storage.try_open(user))
+		return
+	return ..()
+
+/obj/item/weapon/flora/pottedplant/MouseDrop(obj/over_object)
+	if(hidden_storage && hidden_storage.handle_mousedrop(usr, over_object))
+		..(over_object)
+
+/obj/item/weapon/flora/pottedplant/attackby(obj/item/I, mob/user, params)
+	if(hidden_storage && user.a_intent != INTENT_HARM && hidden_storage.attackby(I, user, params))
+		return
+	return ..()
 
 /obj/item/weapon/flora/pottedplant/fern
 	name = "potted fern"
