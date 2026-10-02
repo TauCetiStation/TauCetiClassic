@@ -17,7 +17,7 @@
 	return ..()
 
 /obj/item/device/violin/unable_to_play(mob/living/user)
-	return ..() || loc != user
+	return user.incapacitated() || loc != user
 
 /obj/item/device/violin/attack_self(mob/living/user)
 	MP.interact(user)
