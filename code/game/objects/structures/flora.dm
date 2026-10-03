@@ -61,7 +61,7 @@
 	hidden_storage = null
 	return ..()
 
-/obj/item/weapon/flora/pottedplant/proc/open_hidden_storage(mob/user)
+/obj/item/weapon/flora/pottedplant/proc/try_open_hidden_storage(mob/user)
 	if(!hidden_storage || !hidden_storage.try_open(user, check_only = TRUE))
 		return FALSE
 	user.visible_message(
