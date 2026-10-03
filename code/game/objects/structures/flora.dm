@@ -25,6 +25,103 @@
 	desc = "Really brings the room together."
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-1"
+	var/obj/item/weapon/storage/internal/hidden_storage
+
+/obj/item/weapon/flora/pottedplant/atom_init()
+	. = ..()
+
+/obj/item/weapon/flora/pottedplant/Destroy()
+	if(hidden_storage)
+		qdel(hidden_storage)
+		hidden_storage = null
+	return ..()
+
+/obj/item/weapon/flora/pottedplant/proc/ensure_hidden_storage()
+	if(!hidden_storage)
+		hidden_storage = new /obj/item/weapon/storage/internal/flower(src)
+		hidden_storage.set_slots(slots = 1, slot_size = SIZE_SMALL)
+	return hidden_storage
+
+/obj/item/weapon/storage/internal/flower/attackby(obj/item/I, mob/user, params)
+	if(!user)
+		return ..()
+	if(!can_be_inserted(I, stop_messages = TRUE))
+		return try_insert(I, user)
+	if(istype(master_item, /obj/item/weapon/flora/pottedplant))
+		var/obj/item/weapon/flora/pottedplant/plant = master_item
+		plant.notify_hiding(I, user)
+	if(!do_after(user, 1 SECOND, target = master_item))
+		return TRUE
+	return try_insert(I, user, prevent_warning = TRUE)
+
+/obj/item/weapon/storage/internal/flower/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
+	if(ismob(usr))
+		var/mob/user = usr
+		if(istype(master_item, /obj/item/weapon/flora/pottedplant))
+			var/obj/item/weapon/flora/pottedplant/plant = master_item
+			plant.notify_unhiding(W, user)
+		if(!do_after(user, 1 SECOND, needhand = FALSE, target = master_item))
+			return FALSE
+	return ..()
+
+/obj/item/weapon/storage/internal/flower/close(mob/user)
+	. = ..()
+	if(master_item && istype(master_item, /obj/item/weapon/flora/pottedplant))
+		var/obj/item/weapon/flora/pottedplant/plant = master_item
+		if(plant.hidden_storage == src)
+			plant.hidden_storage = null
+	if(!QDELETED(src))
+		qdel(src)
+
+/obj/item/weapon/flora/pottedplant/proc/notify_opening(mob/user)
+	user.visible_message(
+		"<span class='notice'>[user] роется в [src].</span>",
+		"<span class='notice'>Вы роетесь в [src]...</span>",
+		viewing_distance = 2)
+
+/obj/item/weapon/flora/pottedplant/proc/notify_hiding(obj/item/I, mob/user)
+	user.visible_message(
+		"<span class='notice'>[user] прячет [I] в [src], присыпая землёй и листьями.</span>",
+		"<span class='notice'>Вы прячете [I] в [src], присыпая землёй и листьями...</span>",
+		viewing_distance = 2)
+
+/obj/item/weapon/flora/pottedplant/proc/notify_unhiding(obj/item/W, mob/user)
+	user.visible_message(
+		"<span class='notice'>[user] откапывает [W] из [src].</span>",
+		"<span class='notice'>Вы откапываете [W] из-под земли и листьев...</span>",
+		viewing_distance = 2)
+
+/obj/item/weapon/flora/pottedplant/proc/try_open_hidden_storage(mob/user)
+	var/obj/item/weapon/storage/internal/flower/storage = ensure_hidden_storage()
+	if(!storage.try_open(user, check_only = TRUE))
+		return FALSE
+	notify_opening(user)
+	if(!do_after(user, 3 SECOND, needhand = FALSE, target = src))
+		return TRUE
+	storage.add_fingerprint(user)
+	storage.open(user)
+	return TRUE
+
+/obj/item/weapon/flora/pottedplant/attack_hand(mob/user)
+	if(hidden_storage && loc == user)
+		try_open_hidden_storage(user)
+		return
+	if(hidden_storage && hidden_storage.handle_attack_hand(user))
+		..(user)
+
+/obj/item/weapon/flora/pottedplant/AltClick(mob/user)
+	if(try_open_hidden_storage(user))
+		return
+	return ..()
+
+/obj/item/weapon/flora/pottedplant/MouseDrop(obj/over_object)
+	if(hidden_storage && hidden_storage.handle_mousedrop(usr, over_object))
+		..(over_object)
+
+/obj/item/weapon/flora/pottedplant/attackby(obj/item/I, mob/user, params)
+	if(hidden_storage && user.a_intent != INTENT_HARM && hidden_storage.attackby(I, user, params))
+		return
+	return ..()
 
 /obj/item/weapon/flora/pottedplant/fern
 	name = "potted fern"
