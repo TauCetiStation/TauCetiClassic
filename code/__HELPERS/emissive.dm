@@ -31,7 +31,7 @@ var/global/mutable_appearance/emissive_visibility_mask = create_emissive_visibil
 	return mask
 
 /proc/copy_without_emissive_planes(image/source)
-	if(!source || source.plane == EMISSIVE_MASK_PLANE || source.plane == EMISSIVE_COLOR_PLANE)
+	if(!source || IS_EMISSIVE_RENDER_PLANE(source.plane))
 		return null
 	var/mutable_appearance/copy = new(source)
 	copy.plane = source.plane

@@ -77,6 +77,7 @@
 /atom/movable/emissive_blocker
 	name = "emissive blocker"
 	plane = EMISSIVE_MASK_PLANE
+	flags_2 = PROHIBIT_FOR_DEMO_2
 	layer = FLOAT_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = KEEP_APART | KEEP_TOGETHER | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE

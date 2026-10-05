@@ -34,6 +34,7 @@
 		source.vis_contents += source.emissive_blocker; \
 	}
 
+#define IS_EMISSIVE_RENDER_PLANE(P) ((P) == EMISSIVE_MASK_PLANE || (P) == EMISSIVE_COLOR_PLANE || (P) == EMISSIVE_VISIBILITY_PLANE)
 #define EMISSIVE_LIGHTING_ENABLED(C) (!C.prefs || C.prefs.emissive_lighting)
 
 #define LIGHTING_PLANE_ALPHA_VISIBLE 255
