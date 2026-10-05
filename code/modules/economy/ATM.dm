@@ -53,10 +53,7 @@ log transactions
 
 /obj/machinery/atm/update_icon()
 	. = ..()
-	var/static/mask
-	if(!mask)
-		var/mutable_appearance/mask_appearance = emissive_mask_appearance('icons/obj/monitors_emissive.dmi', "atm")
-		mask = mask_appearance.appearance
+	var/mask = get_emissive_overlay('icons/obj/monitors_emissive.dmi', "atm", mask_only = TRUE)
 	cut_overlay(mask)
 	var/emissive_enabled = !(stat & (NOPOWER|BROKEN)) && icon == 'icons/obj/terminals.dmi' && icon_state == "atm"
 	if(emissive_enabled)

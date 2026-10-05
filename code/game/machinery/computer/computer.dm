@@ -41,7 +41,6 @@
 
 /obj/machinery/computer/Destroy()
 	computer_list -= src
-	emissive_overlay = null
 	return ..()
 
 /obj/machinery/computer/set_dir(new_dir)
@@ -151,12 +150,7 @@
 	emissive_overlay = null
 	if((stat & (NOPOWER|BROKEN)) || icon != 'icons/obj/computer.dmi' || !icon_exists('icons/obj/computer_emissive.dmi', icon_state))
 		return
-	var/static/list/emissive_overlays = list()
-	var/cache_key = "[icon_state]_[dir]"
-	emissive_overlay = emissive_overlays[cache_key]
-	if(!emissive_overlay)
-		emissive_overlay = emissive_mask_appearance('icons/obj/computer_emissive.dmi', icon_state, dir = dir)
-		emissive_overlays[cache_key] = emissive_overlay
+	emissive_overlay = get_emissive_overlay('icons/obj/computer_emissive.dmi', icon_state, dir, mask_only = TRUE)
 	add_overlay(emissive_overlay)
 
 /obj/machinery/computer/power_change()

@@ -374,20 +374,14 @@
 
 /proc/set_status_display_emissive(obj/machinery/display, enabled)
 	enabled = enabled && !(display.stat & (NOPOWER|BROKEN))
+	var/mutable_appearance/mask = get_emissive_overlay('icons/obj/status_display.dmi', "outline", mask_only = TRUE)
 	if(enabled)
-		display.underlays |= get_status_display_emissive_mask()
+		display.underlays |= mask.appearance
 	else
-		display.underlays -= get_status_display_emissive_mask()
+		display.underlays -= mask.appearance
 	var/new_range = enabled ? STATUS_DISPLAY_LIGHT_RANGE : 0
 	if(display.light_range != new_range)
 		display.set_light(new_range, STATUS_DISPLAY_LIGHT_POWER, LIGHT_COLOR_WHITE)
-
-/proc/get_status_display_emissive_mask()
-	var/static/mask
-	if(!mask)
-		var/mutable_appearance/mask_appearance = emissive_mask_appearance('icons/obj/status_display.dmi', "outline")
-		mask = mask_appearance.appearance
-	return mask
 
 #undef CHARS_PER_LINE
 #undef FONT_SIZE

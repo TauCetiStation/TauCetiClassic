@@ -166,7 +166,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!icon_exists(_icon, ember_state))
 		return null
 
-	return emissive_appearance(_icon, ember_state)
+	return get_emissive_overlay(_icon, ember_state)
 
 /obj/item/clothing/mask/cigarette/update_world_icon()
 	. = ..()

@@ -15,6 +15,13 @@
 	mask.color = mask_color
 	return mask
 
+/proc/get_emissive_overlay(icon, icon_state, dir = null, mask_only = FALSE)
+	var/static/list/cache = list()
+	var/key = "[icon]|[icon_state]|[dir]|[mask_only]"
+	. = cache[key]
+	if(!.)
+		. = cache[key] = mask_only ? emissive_mask_appearance(icon, icon_state, dir = dir) : emissive_appearance(icon, icon_state, dir = dir)
+
 var/global/mutable_appearance/emissive_visibility_mask = create_emissive_visibility_mask()
 
 /proc/create_emissive_visibility_mask()

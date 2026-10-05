@@ -40,19 +40,10 @@
 	. = ..()
 	update_world_icon()
 
-/obj/item/clothing/head/helmet/space/rig/Destroy()
-	emissive_overlay = null
-	return ..()
-
 /obj/item/clothing/head/helmet/space/rig/proc/build_light_overlay(_icon, _state)
 	var/emissive_state = "[_state]_emissive"
-	if(!icon_exists(_icon, emissive_state))
-		return null
-	var/static/list/light_overlays = list()
-	var/cache_key = "[_icon]_[emissive_state]"
-	if(!light_overlays[cache_key])
-		light_overlays[cache_key] = emissive_appearance(_icon, emissive_state)
-	return light_overlays[cache_key]
+	if(icon_exists(_icon, emissive_state))
+		return get_emissive_overlay(_icon, emissive_state)
 
 /obj/item/clothing/head/helmet/space/rig/update_world_icon()
 	. = ..()

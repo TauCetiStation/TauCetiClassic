@@ -34,6 +34,8 @@
 		source.vis_contents += source.emissive_blocker; \
 	}
 
+#define EMISSIVE_LIGHTING_ENABLED(C) (!C.prefs || C.prefs.emissive_lighting)
+
 #define LIGHTING_PLANE_ALPHA_VISIBLE 255
 #define LIGHTING_PLANE_ALPHA_NV_TRAIT 245
 #define LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE 192

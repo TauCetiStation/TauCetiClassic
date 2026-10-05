@@ -137,7 +137,7 @@
 /atom/movable/screen/plane_master/emissive_mask/update_effects(client/client)
 	if(!..())
 		return
-	var/enabled = !client.prefs || client.prefs.emissive_lighting
+	var/enabled = EMISSIVE_LIGHTING_ENABLED(client)
 	if(enabled)
 		// Setting alpha would overwrite the mask's red-to-alpha conversion.
 		color = initial(color)
@@ -155,7 +155,7 @@
 /atom/movable/screen/plane_master/emissive/update_effects(client/client)
 	if(!..())
 		return
-	var/enabled = !client.prefs || client.prefs.emissive_lighting
+	var/enabled = EMISSIVE_LIGHTING_ENABLED(client)
 	alpha = enabled ? 255 : 0
 	if(!enabled)
 		return
@@ -172,7 +172,7 @@
 /atom/movable/screen/plane_master/emissive_visibility/update_effects(client/client)
 	if(!..())
 		return
-	var/enabled = !client.prefs || client.prefs.emissive_lighting
+	var/enabled = EMISSIVE_LIGHTING_ENABLED(client)
 	alpha = enabled ? 255 : 0
 	render_target = enabled ? PM_RENDER_NAME(type) : null
 

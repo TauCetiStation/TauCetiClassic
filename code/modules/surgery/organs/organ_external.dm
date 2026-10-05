@@ -1238,12 +1238,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 					hair_appearance.add_overlay(list(main_color, gradient))
 
 			if(is_hair_emissive())
-				var/static/list/emissive_hair_masks = list()
-				var/cache_key = "[hair_style.icon]_[hair_style.icon_state]"
-				if(!emissive_hair_masks[cache_key])
-					emissive_hair_masks[cache_key] = emissive_mask_appearance(hair_style.icon, "[hair_style.icon_state]_s")
 				hair_appearance.appearance_flags |= KEEP_APART
-				hair_appearance.add_overlay(emissive_hair_masks[cache_key])
+				hair_appearance.add_overlay(get_emissive_overlay(hair_style.icon, "[hair_style.icon_state]_s", mask_only = TRUE))
 
 			hair_appearance.pixel_x = species.offset_features[OFFSET_HAIR][1]
 			hair_appearance.pixel_y = species.offset_features[OFFSET_HAIR][2]

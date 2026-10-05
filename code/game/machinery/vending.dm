@@ -105,7 +105,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	QDEL_NULL(wires)
 	QDEL_NULL(coin)
 	QDEL_NULL(camera)
-	emissive_overlay = null
 	return ..()
 
 /obj/machinery/vending/set_dir(new_dir)
@@ -123,12 +122,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	var/mask_state = initial(icon_state)
 	if((stat & (NOPOWER|BROKEN)) || icon != 'icons/obj/vending.dmi' || !icon_exists('icons/obj/vending_emissive.dmi', mask_state))
 		return
-	var/static/list/emissive_overlays = list()
-	var/cache_key = "[mask_state]_[dir]"
-	emissive_overlay = emissive_overlays[cache_key]
-	if(!emissive_overlay)
-		emissive_overlay = emissive_mask_appearance('icons/obj/vending_emissive.dmi', mask_state, dir = dir)
-		emissive_overlays[cache_key] = emissive_overlay
+	emissive_overlay = get_emissive_overlay('icons/obj/vending_emissive.dmi', mask_state, dir, mask_only = TRUE)
 	add_overlay(emissive_overlay)
 
 /obj/machinery/vending/RefreshParts()

@@ -130,7 +130,6 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 
 /obj/machinery/alarm/Destroy()
 	alarm_list -= src
-	emissive_overlay = null
 	if(wires)
 		QDEL_NULL(wires)
 	if(alarm_area && alarm_area.master_air_alarm == src)
@@ -321,15 +320,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 	if (alarm_area.atmosalm)
 		icon_level = max(icon_level, 1)	//if there's an atmos alarm but everything is okay locally, no need to go past yellow
 	icon_state = "alarm[icon_level]"
-	emissive_overlay = get_alarm_emissive_overlay(icon_state)
+	emissive_overlay = get_emissive_overlay('icons/obj/monitors_emissive.dmi', icon_state)
 	add_overlay(emissive_overlay)
-
-/proc/get_alarm_emissive_overlay(icon_state, mask_only = FALSE)
-	var/static/list/masks = list()
-	var/cache_key = "[icon_state]_[mask_only]"
-	if(!masks[cache_key])
-		masks[cache_key] = mask_only ? emissive_mask_appearance('icons/obj/monitors_emissive.dmi', icon_state) : emissive_appearance('icons/obj/monitors_emissive.dmi', icon_state)
-	return masks[cache_key]
 
 /obj/machinery/alarm/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
@@ -1028,7 +1020,7 @@ FIRE ALARM
 		icon_state = "fire_unpowered"
 		return
 	icon_state = detecting ? "fire0" : "fire1"
-	emissive_overlay = get_alarm_emissive_overlay(icon_state, mask_only = TRUE)
+	emissive_overlay = get_emissive_overlay('icons/obj/monitors_emissive.dmi', icon_state, mask_only = TRUE)
 	add_overlay(emissive_overlay)
 	if(is_station_level(z) || is_mining_level(z))
 		var/security_state = "overlay_green"
@@ -1291,8 +1283,6 @@ FIRE ALARM
 
 /obj/machinery/firealarm/Destroy()
 	firealarm_list -= src
-	emissive_overlay = null
-	security_overlay = null
 	return ..()
 
 /*
