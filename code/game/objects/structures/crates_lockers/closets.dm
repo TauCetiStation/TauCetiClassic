@@ -81,19 +81,25 @@
 	for(var/obj/I in src)
 		I.forceMove(src.loc)
 
-/obj/structure/closet/proc/collect_contents(min_x = -5, min_y = -13, max_x = 5, max_y = 7)
-	var/itemcount = 0
-
+/obj/structure/closet/proc/collect_objects(min_x = -5, min_y = -13, max_x = 5, max_y = 7)
 	//Cham Projector Exception
 	for(var/obj/effect/dummy/chameleon/AD in src.loc)
-		if(itemcount >= storage_capacity)
+		if(contents.len >= storage_capacity)
 			break
 		AD.forceMove(src)
-		itemcount++
 
-	for(var/obj/item/I in src.loc)
-		if(itemcount >= storage_capacity)
+	for(var/obj/I in src.loc)
+		if(contents.len >= storage_capacity)
 			break
+
+		if(I.density || I.anchored || istype(I, /obj/structure/closet))
+			continue
+
+		if(istype(I, /obj/structure/stool/bed)) //This is only necessary because of rollerbeds and swivel chairs.
+			var/obj/structure/stool/bed/B = I
+			if(B.buckled_mob)
+				continue
+
 		if(!I.anchored && !istype(I, /obj/item/weapon/paper/sticker))
 			if((I.pixel_x > max_x) || (I.pixel_x < min_x) || (I.pixel_y > max_y) || (I.pixel_y < min_y))
 				var/list/new_coords = get_box_and_section_intercection_coordinates_list_or_null(0, I.pixel_x, 0, I.pixel_y, min_x, max_x, min_y, max_y)
@@ -102,17 +108,20 @@
 					I.pixel_y = ROUNDSTRICT(new_coords[2])
 
 			I.forceMove(src)
-			itemcount++
 
+/obj/structure/closet/proc/collect_mobs()
 	for(var/mob/living/M in loc)
-		if(itemcount >= storage_capacity)
+		if(contents.len >= storage_capacity)
 			break
 		if(M.buckled)
 			continue
 
 		M.forceMove(src)
 		M.instant_vision_update(1,src)
-		itemcount++
+
+/obj/structure/closet/proc/collect_contents()
+	collect_objects()
+	collect_mobs()
 
 /obj/structure/closet/proc/open()
 	if(src.opened)

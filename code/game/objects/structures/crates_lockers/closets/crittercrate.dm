@@ -50,7 +50,7 @@
 /obj/structure/closet/critter/spawn_infill_particle(min_x = -10, min_y = -13, max_x = 10, max_y = 0)
 	. = ..()
 
-/obj/structure/closet/critter/collect_contents(min_x = -10, min_y = -13, max_x = 10, max_y = 0)
+/obj/structure/closet/critter/collect_objects(min_x = -10, min_y = -13, max_x = 10, max_y = 0)
 	. = ..()
 
 /obj/structure/closet/critter/corgi

@@ -475,7 +475,7 @@
 /obj/structure/closet/crate/large/spawn_infill_particle(min_x = -10, min_y = -13, max_x = 10, max_y = -1)
 	. = ..()
 
-/obj/structure/closet/crate/large/collect_contents(min_x = -10, min_y = -13, max_x = 10, max_y = -1)
+/obj/structure/closet/crate/large/collect_objects(min_x = -10, min_y = -13, max_x = 10, max_y = -1)
 	. = ..()
 
 /obj/structure/closet/crate/secure/large
@@ -509,7 +509,7 @@
 /obj/structure/closet/crate/secure/large/spawn_infill_particle(min_x = -10, min_y = -13, max_x = 10, max_y = -1)
 	. = ..()
 
-/obj/structure/closet/crate/secure/large/collect_contents(min_x = -10, min_y = -13, max_x = 10, max_y = -1)
+/obj/structure/closet/crate/secure/large/collect_objects(min_x = -10, min_y = -13, max_x = 10, max_y = -1)
 	. = ..()
 
 //fluff variant
@@ -617,14 +617,13 @@
 /obj/structure/closet/crate/spawn_infill_particle(min_x = -12, min_y = -9, max_x = 12, max_y = 0)
 	. = ..()
 
-/obj/structure/closet/crate/collect_contents(min_x = -12, min_y = -9, max_x = 12, max_y = 0)
-	var/itemcount = 0
+/obj/structure/closet/crate/collect_objects(min_x = -12, min_y = -9, max_x = 12, max_y = 0)
+	. = ..()
 
-	for(var/mob/M in src.loc)
-		if(itemcount >= storage_capacity)
+/obj/structure/closet/crate/collect_mobs()
+	for(var/mob/living/M in loc)
+		if(contents.len >= storage_capacity)
 			break
-		if(istype (M, /mob/dead/observer))
-			continue
 		if(M.buckled)
 			continue
 		if(M.w_class > SIZE_SMALL && !(M.lying || M.crawling))
@@ -632,23 +631,3 @@
 
 		M.forceMove(src)
 		M.instant_vision_update(1,src)
-		itemcount++
-
-	for(var/obj/O in get_turf(src))
-		if(itemcount >= storage_capacity)
-			break
-		if(O.density || O.anchored || istype(O,/obj/structure/closet))
-			continue
-		if(istype(O, /obj/structure/stool/bed)) //This is only necessary because of rollerbeds and swivel chairs.
-			var/obj/structure/stool/bed/B = O
-			if(B.buckled_mob)
-				continue
-
-		if(isitem(O) && (O.pixel_x > max_x) || (O.pixel_x < min_x) || (O.pixel_y > max_y) || (O.pixel_y < min_y))
-			var/list/new_coords = get_box_and_section_intercection_coordinates_list_or_null(0, O.pixel_x, 0, O.pixel_y, min_x, max_x, min_y, max_y)
-			if(!isnull(new_coords))
-				O.pixel_x = ROUNDSTRICT(new_coords[1])
-				O.pixel_y = ROUNDSTRICT(new_coords[2])
-
-		O.forceMove(src)
-		itemcount++
