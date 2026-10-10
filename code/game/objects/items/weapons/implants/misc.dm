@@ -199,9 +199,12 @@
 	. = ..()
 
 /obj/item/weapon/implant/blueshield/proc/on_examine(mob/user, mob/M)
-	if(M.mind && (M.mind.assigned_role in protected_jobs))
+	if(is_protected_mob(M))
 		penalty_stack = 0
 		COOLDOWN_RESET(src, penalty_cooldown)
+
+/obj/item/weapon/implant/blueshield/proc/is_protected_mob(mob/M)
+	return M.mind && ((M.mind.assigned_role in protected_jobs) || M.mind.is_ert_leader)
 
 /obj/item/weapon/implant/blueshield/process()
 	if(!implanted_mob)
@@ -217,7 +220,7 @@
 	// todo: store crew in jobs/departments datums
 	var/list/to_protect = list()
 	for(var/mob/living/carbon/human/player as anything in human_list)
-		if(player.mind && (player.mind.assigned_role in protected_jobs))
+		if(is_protected_mob(player))
 			to_protect += player.mind
 
 	if(!length(to_protect))

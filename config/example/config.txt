@@ -203,8 +203,10 @@ REQ_CULT_GHOSTWRITER 6
 ## place address for chat bridge
 # CHAT_BRIDGE http://localhost:3000
 
-## Media base URL - determines where to pull the jukebox playlist from.
-# MEDIA_BASE_URL http://game2.tauceti.ru/media
+## Determines where to pull the jukebox playlist and music from. List of options for players, use space as divider. First option is default and will be used by server.
+#MEDIA_BASE_URLS https://jukebox.taucetistation.org/ https://jukebox-cf.taucetistation.org/
+
+#MEDIA_SECRET mediasecretkey
 
 ## guard (geoip and stuff)
 #GUARD_EMAIL contact@taucetistation.org

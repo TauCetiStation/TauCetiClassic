@@ -4,7 +4,7 @@
 	glasses = /obj/item/clothing/glasses/night
 	shoes = /obj/item/clothing/shoes/boots/combat
 	belt = /obj/item/weapon/storage/belt/security/cops
-	mask = /obj/item/clothing/mask/gas/sechailer
+	mask = /obj/item/clothing/mask/breath/gas/sechailer
 	gloves = /obj/item/clothing/gloves/combat
 	id = /obj/item/weapon/card/id/centcom/ert
 	l_ear = /obj/item/device/radio/headset/ert
@@ -35,7 +35,6 @@
 /datum/outfit/responders/nanotrasen_ert/security
 	name = "Responders: NT ERT Security"
 	suit = /obj/item/clothing/suit/space/rig/ert/security
-	head = /obj/item/clothing/head/helmet/space/rig/ert/security
 	back = /obj/item/weapon/storage/backpack/ert/security
 
 	assignment = "Emergency Response Team Security"
@@ -58,7 +57,6 @@
 /datum/outfit/responders/nanotrasen_ert/leader
 	name = "Responders: NT ERT Leader"
 	suit = /obj/item/clothing/suit/space/rig/ert/commander
-	head = /obj/item/clothing/head/helmet/space/rig/ert/commander
 	back = /obj/item/weapon/storage/backpack/ert/commander
 	id = /obj/item/weapon/card/id/centcom/ert/leader
 
@@ -97,7 +95,6 @@
 /datum/outfit/responders/nanotrasen_ert/engineer
 	name = "Responders: NT ERT Engineer"
 	suit = /obj/item/clothing/suit/space/rig/ert/engineer
-	head = /obj/item/clothing/head/helmet/space/rig/ert/engineer
 	back = /obj/item/weapon/storage/backpack/ert/engineer
 
 	belt = /obj/item/weapon/storage/belt/utility/cool
@@ -113,7 +110,6 @@
 /datum/outfit/responders/nanotrasen_ert/engineer/ect
 	name = "Responders: NT ERT Engineer (ECT)"
 	suit = /obj/item/clothing/suit/space/rig/ert/engineer
-	head = /obj/item/clothing/head/helmet/space/rig/ert/engineer
 	back = /obj/item/weapon/storage/backpack/ert/engineer
 
 	belt = /obj/item/weapon/storage/belt/utility/cool
@@ -128,7 +124,6 @@
 	name = "Responders: NT ERT Medic"
 	glasses = /obj/item/clothing/glasses/hud/health/night
 	suit = /obj/item/clothing/suit/space/rig/ert/medical
-	head = /obj/item/clothing/head/helmet/space/rig/ert/medical
 	back = /obj/item/weapon/storage/backpack/ert/medical
 
 	belt = /obj/item/weapon/storage/belt/medical/full
@@ -155,13 +150,12 @@
 
 /datum/outfit/responders/gorlex_marauders
 	name = "Responders: Gorlex Marauder"
-	head = /obj/item/clothing/head/helmet/space/rig/syndi
 	uniform = /obj/item/clothing/under/syndicate
 	suit = /obj/item/clothing/suit/space/rig/syndi
 	glasses = /obj/item/clothing/glasses/night
 	shoes = /obj/item/clothing/shoes/boots/combat
 	belt = /obj/item/weapon/storage/belt/military
-	mask = /obj/item/clothing/mask/gas/syndicate
+	mask = /obj/item/clothing/mask/breath/gas/syndicate
 	gloves = /obj/item/clothing/gloves/combat
 	id = /obj/item/weapon/card/id/syndicate/nuker
 	back = PREFERENCE_BACKPACK
@@ -188,7 +182,6 @@
 	H.equip_to_slot(new N(H), SLOT_L_HAND)
 
 /datum/outfit/responders/gorlex_marauders/leader
-	head = /obj/item/clothing/head/helmet/space/rig/syndi/heavy
 	suit = /obj/item/clothing/suit/space/rig/syndi/heavy
 	id = /obj/item/weapon/card/id/syndicate/commander
 	r_hand = /obj/item/device/radio/uplink
@@ -202,7 +195,7 @@
 	suit = /obj/item/clothing/suit/armor/swat
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/helmet/space/deathsquad
-	mask = /obj/item/clothing/mask/gas/swat
+	mask = /obj/item/clothing/mask/breath/gas/swat
 	glasses = /obj/item/clothing/glasses/thermal
 	back = /obj/item/weapon/storage/backpack/security
 
@@ -286,7 +279,7 @@
 	suit = /obj/item/clothing/suit/space/globose/black/pirate
 	gloves = /obj/item/clothing/gloves/combat
 	head = /obj/item/clothing/head/helmet/space/globose/black/pirate
-	mask = /obj/item/clothing/mask/gas/coloured
+	mask = /obj/item/clothing/mask/breath/gas/coloured
 	glasses = /obj/item/clothing/glasses/eyepatch
 	back = /obj/item/weapon/storage/backpack/santabag
 	suit_store = /obj/item/weapon/gun/projectile/automatic/a28/nonlethal
@@ -397,7 +390,7 @@
 	uniform = /obj/item/clothing/under/rank/security
 	suit = /obj/item/clothing/suit/storage/flak
 	head = /obj/item/clothing/head/helmet
-	mask = /obj/item/clothing/mask/gas/sechailer
+	mask = /obj/item/clothing/mask/breath/gas/sechailer
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
 	gloves = /obj/item/clothing/gloves/security
 	belt = /obj/item/weapon/storage/belt/security/ert
@@ -570,7 +563,7 @@
 /datum/outfit/responders/clown
 	name = "Responders: Clown"
 	uniform = /obj/item/clothing/under/rank/clown
-	mask = /obj/item/clothing/mask/gas/clown_hat
+	mask = /obj/item/clothing/mask/breath/gas/clown_hat
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	l_ear = /obj/item/device/radio/headset
 	back = /obj/item/weapon/storage/backpack/clown
@@ -685,14 +678,12 @@
 
 /obj/item/weapon/storage/box/space_suit/security/atom_init()
 	. = ..()
-	new /obj/item/clothing/head/helmet/space/rig/security(src)
 	new /obj/item/clothing/suit/space/rig/security(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 
 /obj/item/weapon/storage/box/space_suit/hos/atom_init()
 	. = ..()
-	new /obj/item/clothing/head/helmet/space/rig/security/hos(src)
 	new /obj/item/clothing/suit/space/rig/security/hos(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/emergency_oxygen/engi(src)

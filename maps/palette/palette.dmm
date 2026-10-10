@@ -332,10 +332,71 @@
 	icon_state = "darkgreen"
 	},
 /area/space)
+"bF" = (
+/obj/machinery/suit_storage_unit/captain{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	dir = 1;
+	icon_state = "darkbluefull"
+	},
+/area/space)
+"bG" = (
+/obj/machinery/suit_storage_unit/nasa{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	dir = 1;
+	icon_state = "darkbluefull"
+	},
+/area/space)
+"bH" = (
+/obj/machinery/suit_storage_unit/unathi/breacher{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	dir = 1;
+	icon_state = "darkbluefull"
+	},
+/area/space)
 "bI" = (
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "darkbluecorners"
+	},
+/area/space)
+"bJ" = (
+/obj/machinery/suit_storage_unit/security{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	dir = 1;
+	icon_state = "whiteredfull"
+	},
+/area/space)
+"bK" = (
+/obj/machinery/suit_storage_unit/security/hos{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	dir = 1;
+	icon_state = "whiteredfull"
+	},
+/area/space)
+"bL" = (
+/obj/machinery/suit_storage_unit/medical{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "whitebluefull"
+	},
+/area/space)
+"bM" = (
+/obj/machinery/suit_storage_unit/medical/paramedic{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "whitebluefull"
 	},
 /area/space)
 "bN" = (
@@ -352,16 +413,65 @@
 	icon_state = "wood2_stairs"
 	},
 /area/space)
+"bP" = (
+/obj/machinery/suit_storage_unit/medical/cmo{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "whitebluefull"
+	},
+/area/space)
+"bQ" = (
+/obj/machinery/suit_storage_unit/globose/science{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "whitepurplefull"
+	},
+/area/space)
 "bR" = (
 /turf/simulated/floor/airless{
 	dir = 5;
 	icon_state = "greenyellow"
 	},
 /area/space)
+"bS" = (
+/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "whitepurplefull"
+	},
+/area/space)
+"bT" = (
+/obj/machinery/suit_storage_unit/science{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "whitepurplefull"
+	},
+/area/space)
+"bU" = (
+/obj/machinery/suit_storage_unit/science/rd{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "whitepurplefull"
+	},
+/area/space)
 "bV" = (
 /turf/simulated/floor/airless{
 	dir = 8;
 	icon_state = "darkyellowcorners"
+	},
+/area/space)
+"bW" = (
+/obj/machinery/suit_storage_unit/engine{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	dir = 1;
+	icon_state = "orangefull"
 	},
 /area/space)
 "bX" = (
@@ -375,6 +485,15 @@
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "orange"
+	},
+/area/space)
+"bZ" = (
+/obj/machinery/suit_storage_unit/engine/atmos{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	dir = 1;
+	icon_state = "orangefull"
 	},
 /area/space)
 "ca" = (
@@ -415,6 +534,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"cg" = (
+/obj/machinery/suit_storage_unit/engine/chief{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	dir = 1;
+	icon_state = "orangefull"
+	},
+/area/space)
+"ch" = (
+/obj/machinery/suit_storage_unit/globose{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "neutralfull"
+	},
+/area/space)
 "ci" = (
 /obj/structure/cable/cyan{
 	d2 = 4;
@@ -426,6 +562,30 @@
 /turf/simulated/floor/airless{
 	dir = 5;
 	icon_state = "arrival"
+	},
+/area/space)
+"ck" = (
+/obj/machinery/suit_storage_unit/globose/mining{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "brownfull"
+	},
+/area/space)
+"cl" = (
+/obj/machinery/suit_storage_unit/globose/skrell/white{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "bluechecker"
+	},
+/area/space)
+"cm" = (
+/obj/machinery/suit_storage_unit/globose/skrell/black{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "bluechecker"
 	},
 /area/space)
 "cn" = (
@@ -470,10 +630,59 @@
 	icon_state = "whitepurple"
 	},
 /area/space)
+"cq" = (
+/obj/machinery/suit_storage_unit/unathi{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "redbluefull"
+	},
+/area/space)
+"cr" = (
+/obj/machinery/suit_storage_unit/vox/carapace{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "dark"
+	},
+/area/space)
 "cs" = (
 /turf/simulated/floor/airless{
 	dir = 1;
 	icon_state = "whitehall"
+	},
+/area/space)
+"ct" = (
+/obj/machinery/suit_storage_unit/vox/engine{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "dark"
+	},
+/area/space)
+"cu" = (
+/obj/machinery/suit_storage_unit/vox/medic{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "dark"
+	},
+/area/space)
+"cv" = (
+/obj/machinery/suit_storage_unit/vox/stealth{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "dark"
+	},
+/area/space)
+"cw" = (
+/obj/machinery/suit_storage_unit/wizard{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	dir = 1;
+	icon_state = "darkpurplefull"
 	},
 /area/space)
 "cx" = (
@@ -482,6 +691,30 @@
 	icon_state = "siding_line"
 	},
 /turf/simulated/floor,
+/area/space)
+"cy" = (
+/obj/machinery/suit_storage_unit/syndicate_unit{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "darkredfull"
+	},
+/area/space)
+"cz" = (
+/obj/machinery/suit_storage_unit/syndicate_unit/elite{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "darkredfull"
+	},
+/area/space)
+"cA" = (
+/obj/machinery/suit_storage_unit/syndicate_unit/elite/comander{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "darkredfull"
+	},
 /area/space)
 "cB" = (
 /turf/simulated/floor{
@@ -500,6 +733,14 @@
 	icon_state = "darkyellow"
 	},
 /area/space)
+"cE" = (
+/obj/machinery/suit_storage_unit/syndicate_unit/light{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "darkredfull"
+	},
+/area/space)
 "cF" = (
 /turf/simulated/floor/airless{
 	dir = 6;
@@ -510,6 +751,14 @@
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "freezerfloor5"
+	},
+/area/space)
+"cH" = (
+/obj/machinery/suit_storage_unit/syndicate_unit/light/chem{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "darkredfull"
 	},
 /area/space)
 "cI" = (
@@ -539,6 +788,22 @@
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "darkblue"
+	},
+/area/space)
+"cN" = (
+/obj/machinery/suit_storage_unit/syndicate_unit/light/heavy{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "darkredfull"
+	},
+/area/space)
+"cO" = (
+/obj/machinery/suit_storage_unit/syndicate_unit/striker{
+	filled = 1
+	},
+/turf/simulated/floor/airless{
+	icon_state = "darkredfull"
 	},
 /area/space)
 "cR" = (
@@ -8978,6 +9243,10 @@
 /area/space)
 
 (1,1,1) = {"
+uA
+uA
+Hy
+bF
 Hy
 Hy
 Hy
@@ -9054,6 +9323,10 @@ jb
 Pg
 "}
 (2,1,1) = {"
+uA
+uA
+Hy
+bG
 Hy
 Hy
 Hy
@@ -9130,6 +9403,10 @@ LZ
 Pq
 "}
 (3,1,1) = {"
+uA
+uA
+Hy
+bH
 Hy
 Hy
 lh
@@ -9206,6 +9483,10 @@ og
 dw
 "}
 (4,1,1) = {"
+uA
+uA
+Hy
+bJ
 Hy
 Hy
 Hy
@@ -9282,6 +9563,10 @@ tR
 Sk
 "}
 (5,1,1) = {"
+uA
+uA
+Hy
+bK
 Hy
 Hy
 Hy
@@ -9358,6 +9643,10 @@ CJ
 AB
 "}
 (6,1,1) = {"
+uA
+uA
+Hy
+bL
 Hy
 Hy
 nX
@@ -9434,6 +9723,10 @@ Cg
 fa
 "}
 (7,1,1) = {"
+uA
+uA
+Hy
+bM
 Hy
 Hy
 Hy
@@ -9510,6 +9803,10 @@ nw
 Fv
 "}
 (8,1,1) = {"
+uA
+uA
+Hy
+bP
 Hy
 Hy
 Hy
@@ -9586,6 +9883,10 @@ Pr
 Ap
 "}
 (9,1,1) = {"
+uA
+uA
+Hy
+bQ
 Hy
 Hy
 Sv
@@ -9662,6 +9963,10 @@ rH
 CQ
 "}
 (10,1,1) = {"
+uA
+uA
+Hy
+bS
 Hy
 Hy
 Hy
@@ -9738,6 +10043,10 @@ nC
 oa
 "}
 (11,1,1) = {"
+uA
+uA
+Hy
+bT
 Hy
 Hy
 Hy
@@ -9814,6 +10123,10 @@ Cw
 zR
 "}
 (12,1,1) = {"
+uA
+uA
+Hy
+bU
 Hy
 Hy
 uK
@@ -9890,6 +10203,10 @@ xH
 zW
 "}
 (13,1,1) = {"
+uA
+uA
+Hy
+bW
 Hy
 Hy
 Hy
@@ -9966,6 +10283,10 @@ sP
 GF
 "}
 (14,1,1) = {"
+uA
+uA
+Hy
+bZ
 Hy
 Hy
 Hy
@@ -10042,6 +10363,10 @@ Aa
 Bn
 "}
 (15,1,1) = {"
+uA
+uA
+Hy
+cg
 Hy
 Hy
 gv
@@ -10118,6 +10443,10 @@ Rl
 yq
 "}
 (16,1,1) = {"
+uA
+uA
+Hy
+ch
 Hy
 Hy
 Hy
@@ -10194,6 +10523,10 @@ Dx
 PL
 "}
 (17,1,1) = {"
+uA
+uA
+Hy
+ck
 Hy
 Hy
 Hy
@@ -10270,6 +10603,10 @@ tu
 bh
 "}
 (18,1,1) = {"
+uA
+uA
+Hy
+cl
 Hy
 Hy
 uQ
@@ -10346,6 +10683,10 @@ bw
 ik
 "}
 (19,1,1) = {"
+uA
+uA
+Hy
+cm
 Hy
 Hy
 Hy
@@ -10422,6 +10763,10 @@ iB
 ld
 "}
 (20,1,1) = {"
+uA
+uA
+Hy
+cq
 Hy
 Hy
 Lr
@@ -10498,6 +10843,10 @@ Gg
 Ti
 "}
 (21,1,1) = {"
+uA
+uA
+Hy
+cr
 Hy
 Lr
 wR
@@ -10574,6 +10923,10 @@ Bp
 df
 "}
 (22,1,1) = {"
+uA
+uA
+Hy
+ct
 Hy
 Hy
 Lr
@@ -10650,6 +11003,10 @@ uA
 uA
 "}
 (23,1,1) = {"
+uA
+uA
+Hy
+cu
 Hy
 Hy
 OD
@@ -10726,6 +11083,10 @@ uA
 uA
 "}
 (24,1,1) = {"
+uA
+uA
+Hy
+cv
 Hy
 OD
 UM
@@ -10802,6 +11163,10 @@ uA
 uA
 "}
 (25,1,1) = {"
+uA
+uA
+Hy
+cw
 Hy
 Hy
 OD
@@ -10878,6 +11243,10 @@ uA
 uA
 "}
 (26,1,1) = {"
+uA
+uA
+Hy
+cy
 Hy
 Hy
 yO
@@ -10954,6 +11323,10 @@ uA
 uA
 "}
 (27,1,1) = {"
+uA
+uA
+Hy
+cz
 Hy
 yO
 Oa
@@ -11030,6 +11403,10 @@ uA
 uA
 "}
 (28,1,1) = {"
+uA
+uA
+Hy
+cA
 Hy
 Hy
 yO
@@ -11106,6 +11483,10 @@ uA
 uA
 "}
 (29,1,1) = {"
+uA
+uA
+Hy
+cE
 Hy
 Hy
 In
@@ -11182,6 +11563,10 @@ uA
 uA
 "}
 (30,1,1) = {"
+uA
+uA
+Hy
+cH
 Hy
 In
 DB
@@ -11258,6 +11643,10 @@ uA
 uA
 "}
 (31,1,1) = {"
+uA
+uA
+Hy
+cN
 Hy
 Hy
 In
@@ -11334,6 +11723,10 @@ uA
 uA
 "}
 (32,1,1) = {"
+uA
+uA
+Hy
+cO
 Hy
 Hy
 ew
@@ -11410,6 +11803,10 @@ uA
 uA
 "}
 (33,1,1) = {"
+uA
+uA
+uA
+uA
 Hy
 ew
 EO
@@ -11486,6 +11883,10 @@ uA
 uA
 "}
 (34,1,1) = {"
+uA
+uA
+uA
+uA
 Hy
 Hy
 ew
@@ -11562,6 +11963,10 @@ uA
 uA
 "}
 (35,1,1) = {"
+uA
+uA
+uA
+uA
 Hy
 Hy
 HB
@@ -11638,6 +12043,10 @@ uA
 uA
 "}
 (36,1,1) = {"
+uA
+uA
+uA
+uA
 Hy
 HB
 JJ
@@ -11714,6 +12123,10 @@ uA
 uA
 "}
 (37,1,1) = {"
+uA
+uA
+uA
+uA
 Hy
 Hy
 HB
@@ -11790,6 +12203,10 @@ uA
 uA
 "}
 (38,1,1) = {"
+uA
+uA
+uA
+uA
 Hy
 Hy
 Hy
@@ -11875,6 +12292,10 @@ uA
 uA
 uA
 uA
+uA
+uA
+uA
+Hy
 Hy
 Hy
 yc
@@ -11951,6 +12372,10 @@ uA
 uA
 uA
 uA
+uA
+uA
+uA
+Hy
 Hy
 yc
 ai
@@ -12027,6 +12452,10 @@ uA
 uA
 uA
 uA
+uA
+uA
+uA
+Hy
 Hy
 Hy
 yc
@@ -12103,6 +12532,10 @@ uA
 uA
 uA
 uA
+uA
+uA
+uA
+Hy
 Hy
 Hy
 Hy
@@ -12189,6 +12622,10 @@ uA
 uA
 uA
 uA
+uA
+uA
+uA
+uA
 jU
 am
 am
@@ -12246,6 +12683,10 @@ uA
 uA
 "}
 (44,1,1) = {"
+uA
+uA
+uA
+uA
 uA
 uA
 uA
@@ -12396,8 +12837,16 @@ uA
 uA
 uA
 uA
+uA
+uA
+uA
+uA
 "}
 (46,1,1) = {"
+uA
+uA
+uA
+uA
 uA
 uA
 uA
@@ -12548,8 +12997,16 @@ uA
 uA
 uA
 uA
+uA
+uA
+uA
+uA
 "}
 (48,1,1) = {"
+uA
+uA
+uA
+uA
 uA
 uA
 uA
@@ -12700,8 +13157,16 @@ uA
 uA
 uA
 uA
+uA
+uA
+uA
+uA
 "}
 (50,1,1) = {"
+uA
+uA
+uA
+uA
 uA
 uA
 uA

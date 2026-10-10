@@ -108,15 +108,6 @@
 	construction_time = 1350
 	category = list("Spacesuit")
 
-/datum/design/space_suit_helmet_engineering
-	name = "engineering hardsuit helmet"
-	id = "space_suit_helmet_engineering"
-	build_type = MINEFAB
-	build_path = /obj/item/clothing/head/helmet/space/rig/engineering
-	materials = list(MAT_METAL=7500,MAT_GLASS=3000,MAT_SILVER=4000)
-	construction_time = 450
-	category = list("Spacesuit")
-
 //Atmospherics rig (bs12)
 /datum/design/space_suit_atmospherics
 	name = "atmospherics hardsuit"
@@ -125,15 +116,6 @@
 	build_path = /obj/item/clothing/suit/space/rig/atmos
 	materials = list(MAT_METAL=35000,MAT_GLASS=2000,MAT_PLASTIC=5000,MAT_SILVER=6000)
 	construction_time = 1050
-	category = list("Spacesuit")
-
-/datum/design/space_suit_helmet_atmospherics
-	name = "atmospherics hardsuit helmet"
-	id = "space_suit_helmet_atmospherics"
-	build_type = MINEFAB
-	build_path = /obj/item/clothing/head/helmet/space/rig/atmos
-	materials = list(MAT_METAL=5000,MAT_GLASS=3000,MAT_SILVER=4000)
-	construction_time = 300
 	category = list("Spacesuit")
 
 //Medical rig
@@ -146,15 +128,6 @@
 	construction_time = 1050
 	category = list("Spacesuit")
 
-/datum/design/space_suit_helmet_medical
-	name = "medical hardsuit helmet"
-	id = "space_suit_helmet_medical"
-	build_type = MINEFAB
-	build_path = /obj/item/clothing/head/helmet/space/rig/medical
-	materials = list(MAT_METAL=5000,MAT_GLASS=3000,MAT_SILVER=1500)
-	construction_time =300
-	category = list("Spacesuit")
-
 //Mining rig
 /datum/design/space_suit_mining_rig
 	name = "mining hardsuit"
@@ -163,15 +136,6 @@
 	build_path = /obj/item/clothing/suit/space/rig/mining
 	materials = list(MAT_METAL=40000,MAT_GLASS=6000,MAT_PLASTIC=8000,MAT_GOLD=3000,MAT_DIAMOND=2000,MAT_URANIUM=4000)
 	construction_time = 1350
-	category = list("Spacesuit")
-
-/datum/design/space_suit_helmet_mining_rig
-	name = "mining hardsuit helmet"
-	id = "space_suit_helmet_mining_rig"
-	build_type = MINEFAB
-	build_path = /obj/item/clothing/head/helmet/space/rig/mining
-	materials = list(MAT_METAL=6000,MAT_GLASS=3000,MAT_PLASTIC=2000,MAT_GOLD=1000,MAT_DIAMOND=500,MAT_URANIUM=1000)
-	construction_time = 450
 	category = list("Spacesuit")
 
 //Security rig
@@ -184,15 +148,6 @@
 	construction_time = 1500
 	category = list("Spacesuit")
 
-/datum/design/space_suit_helmet_security
-	name = "security hardsuit helmet"
-	id = "space_suit_helmet_security"
-	build_type = MINEFAB
-	build_path = /obj/item/clothing/head/helmet/space/rig/security
-	materials = list(MAT_METAL=8000,MAT_GLASS=4000,MAT_PLASTIC=2000,MAT_GOLD=4000,MAT_DIAMOND=2000,MAT_URANIUM=4000)
-	construction_time = 800
-	category = list("Spacesuit")
-
 //Science rig
 /datum/design/space_suit_science_rig
 	name = "science hardsuit"
@@ -201,15 +156,6 @@
 	build_path = /obj/item/clothing/suit/space/rig/science
 	materials = list(MAT_METAL=35000, MAT_GLASS=5000, MAT_PLASTIC=10000, MAT_SILVER=6000, MAT_PHORON=8000, MAT_DIAMOND=2000, MAT_GOLD=3000)
 	construction_time = 1750
-	category = list("Spacesuit")
-
-/datum/design/space_suit_helmet_science_rig
-	name = "science hardsuit helmet"
-	id = "space_suit_helmet_science_rig"
-	build_type = MINEFAB
-	build_path = /obj/item/clothing/head/helmet/space/rig/science
-	materials = list(MAT_METAL=8000, MAT_GLASS=4000, MAT_PLASTIC=5000, MAT_SILVER=6000, MAT_PHORON=2000, MAT_DIAMOND=500, MAT_GOLD=1000)
-	construction_time = 1000
 	category = list("Spacesuit")
 
 //------------TOOLS------------

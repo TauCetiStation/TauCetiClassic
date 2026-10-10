@@ -229,7 +229,7 @@
 	new /obj/item/clothing/suit/storage/flak(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/storage/belt/security(src)
-	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/clothing/mask/breath/gas/sechailer(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/device/flash(src)
@@ -444,6 +444,19 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	else
 		for (var/i in 1 to 3)
 			new /obj/item/weapon/gun/projectile/automatic/pistol/glock(src)
+
+/obj/structure/closet/secure_closet/tactical_armor
+	name = "Tactical Armor Secure Closet"
+	req_access = list(access_security)
+	icon_state = "syndicatealtsecure"
+	icon_closed = "syndicatealtsecure"
+	icon_opened = "syndicatealtsecure_open"
+
+/obj/structure/closet/secure_closet/tactical_armor/PopulateContents()
+	new /obj/item/clothing/suit/armor/tactical(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical(src)
+	new /obj/item/clothing/under/pants/milipants_army/ranger(src)
+	new /obj/item/clothing/head/helmet/tactical(src)
 
 /obj/structure/closet/secure_closet/usp_cartridges
 	name = "USP cartridges Secure Closet"

@@ -101,7 +101,6 @@
 		return FALSE
 
 	see_in_dark = 8
-	set_EyesVision(null)
 
 	if(nightvision)
 		set_lighting_alpha(LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE)

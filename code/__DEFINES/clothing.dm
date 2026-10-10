@@ -178,3 +178,10 @@
 #define MODULE_NO_DAMAGE 0
 #define MODULE_DAMAGED 1
 #define MODULE_DESTROYED 2
+
+// Polychromic jumpsuit style/pattern keys (see poly_constants.dm for display names and lists)
+#define POLY_STYLE_JOB    "job"
+#define POLY_STYLE_STD    "std_w"
+#define POLY_STYLE_BELT   "belt_w"
+#define POLY_STYLE_TURT   "turt_w"
+#define POLY_PATTERN_TURT "turt"

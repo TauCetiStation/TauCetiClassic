@@ -157,8 +157,6 @@
 		belt = null
 	else if (W == wear_mask)
 		wear_mask = null
-		if(internal)
-			internal = null
 		sec_hud_set_security_status()
 	else if (W == neck)
 		neck = null

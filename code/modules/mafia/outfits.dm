@@ -118,7 +118,7 @@
 
 	uniform = /obj/item/clothing/under/rank/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
-	mask = /obj/item/clothing/mask/gas/clown_hat
+	mask = /obj/item/clothing/mask/breath/gas/clown_hat
 
 /datum/outfit/mafia/traitor
 	name = "Mafia Traitor"

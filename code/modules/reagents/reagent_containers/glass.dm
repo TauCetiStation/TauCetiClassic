@@ -194,6 +194,9 @@
 	else if(istype(target, /obj/machinery/radiocarbon_spectrometer))
 		return
 
+	else if(istype(target, /obj/machinery/kitchen_machine))
+		return
+
 	else if(istype(target, /obj/machinery/color_mixer))
 		var/obj/machinery/color_mixer/CM = target
 		if(CM.filling_tank_id)

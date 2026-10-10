@@ -148,18 +148,26 @@
 		return
 	toggle_breaker(user)
 
-/atom/proc/AIAltClick()
+/atom/proc/AIAltClick(mob/M)
 	return
 
-/obj/machinery/door/airlock/AIAltClick() // Eletrifies doors.
-	if(!secondsElectrified)
-		// permenant shock
-		Topic("aiEnable=6", list("aiEnable"="6"), 1) // 1 meaning no window (consistency!)
+/obj/machinery/door/airlock/AIAltClick(mob/M) // Emergency access override OR electrify
+	if(!can_still_interact_with(M))
+		return
+	if(!issilicon(M))
+		return
+	var/mob/living/silicon/S = M
+	if(S.is_antag())
+		if(!secondsElectrified) //Needs rework. See more in PR #14556
+			electrify(M)
+		else
+			unelectrify(M)
+		return
+
+	if(emergency)
+		enable_emergency_access(M)
 	else
-		// disable/6 is not in Topic; disable/5 disables both temporary and permenant shock
-		Topic("aiDisable=5", list("aiDisable"="5"), 1)
-	diag_hud_set_electrified()
-	return
+		disable_emergency_access(M)
 
 //
 // Override AdjacentQuick for AltClicking

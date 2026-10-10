@@ -212,7 +212,7 @@
 			to_chat(N, text("<span class='notice'>You are unable to nibble away at \the [src] while being hidden.</span>"))
 
 /obj/item/weapon/reagent_containers/food/snacks/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature >= 400)
+	if(exposed_temperature >= T0C+100)
 		cookingProgress++
 
 	if(cookingProgress >= cookingThreshold)
@@ -277,6 +277,15 @@
 	food_type = VERY_TASTY_FOOD
 	food_moodlet = /datum/mood_event/very_tasty_food
 
+/obj/item/weapon/reagent_containers/food/snacks/khel_tiraza
+	name = "Khel`Tiraza"
+	desc = "Не знаю, съедобно ли это, но выглядит дорого."
+	icon_state = "khel-tiraza"
+	item_state_world = "khel-tiraza_world"
+	bitesize = 2
+	list_reagents = list("nutriment" = 2, "sugar" = 2, "poisonberryjuice" = 10)
+	food_type = VERY_TASTY_FOOD
+	food_moodlet = /datum/mood_event/very_tasty_food
 
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
@@ -2580,12 +2589,12 @@
 		return
 	return ..()
 
-/obj/item/pizzabox/try_wrap_up(texture_name = "cardboard", details_name = null)
+/obj/item/pizzabox/try_wrap_up(wrap_type)
 	var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(loc))	//Aaannd wrap it up!
 	P.w_class = w_class
 	P.icon_state = "deliverypizza[length(boxes)]"
 
-	P.add_texture(texture_name, details_name)
+	P.add_texture(wrap_type)
 
 	forceMove(P)
 
