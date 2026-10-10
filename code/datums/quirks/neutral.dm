@@ -1,6 +1,6 @@
 /datum/quirk/high_pain_threshold
 	name = QUIRK_HIGH_PAIN_THRESHOLD
-	desc = "Ваш болевой порог повышен. Влияет только на издаваемые вами звуки."
+	desc = "Ваш болевой порог повышен."
 	value = 0
 	mob_trait = TRAIT_HIGH_PAIN_THRESHOLD
 	gain_text = "<span class='danger'>Вы хотите показать свою силу. Вы попытаетесь игнорировать любую боль.</span>"
@@ -14,7 +14,7 @@
 
 /datum/quirk/low_pain_threshold
 	name = QUIRK_LOW_PAIN_THRESHOLD
-	desc = "Ваш болевой порог понижен. Влияет только на издаваемые вами звуки. "
+	desc = "Ваш болевой порог понижен."
 	value = 0
 	mob_trait = TRAIT_LOW_PAIN_THRESHOLD
 	gain_text = "<span class='danger'>Вам страшно от одной лишь мысли о боли.</span>"
