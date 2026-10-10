@@ -10,6 +10,8 @@
 		TRAIT_NO_PAIN,
 	)
 
+
+
 /datum/quirk/low_pain_threshold
 	name = QUIRK_LOW_PAIN_THRESHOLD
 	desc = "Ваш болевой порог понижен."
@@ -21,6 +23,8 @@
 	blacklisted_species_traits = list(
 		TRAIT_NO_PAIN,
 	)
+
+
 
 /datum/quirk/no_taste
 	name = QUIRK_AGEUSIA
