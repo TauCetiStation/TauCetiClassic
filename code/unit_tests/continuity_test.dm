@@ -93,27 +93,27 @@
 
 	try
 		Object.sanitize_data(list("notfield" = testlist))
-	catch(var/exception/e)
-		if(e.name != "Missing field field")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e1)
+		if(e1.name != "Missing field field")
+			throw EXCEPTION("[e1.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = testlist, "notfield" = testlist))
-	catch(e)
-		if(e.name != "Invalid notfield")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e2)
+		if(e2.name != "Invalid notfield")
+			throw EXCEPTION("[e2.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = testlist + "FF"))
-	catch(e)
-		if(e.name != "Not a number")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e3)
+		if(e3.name != "Not a number")
+			throw EXCEPTION("[e3.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = null))
-	catch(e)
-		if(e.name != "Is null")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e4)
+		if(e4.name != "Is null")
+			throw EXCEPTION("[e4.name] was thrown instead.")
 
 	Object.sanitize_data(list("field" = testlist))
 
@@ -133,33 +133,33 @@
 
 	try
 		Object.sanitize_data(list("notfield" = testlist))
-	catch(var/exception/e)
-		if(e.name != "Missing field field")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e1)
+		if(e1.name != "Missing field field")
+			throw EXCEPTION("[e1.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = testlist, "notfield" = testlist))
-	catch(e)
-		if(e.name != "Invalid notfield")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e2)
+		if(e2.name != "Invalid notfield")
+			throw EXCEPTION("[e2.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = list(/atom = 15)))
-	catch(e)
-		if(e.name != "Not a text")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e3)
+		if(e3.name != "Not a text")
+			throw EXCEPTION("[e3.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = list("/atom" = "15")))
-	catch(e)
-		if(e.name != "Not a number")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e4)
+		if(e4.name != "Not a number")
+			throw EXCEPTION("[e4.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = null))
-	catch(e)
-		if(e.name != "Is null")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e5)
+		if(e5.name != "Is null")
+			throw EXCEPTION("[e5.name] was thrown instead.")
 
 	Object.sanitize_data(list("field" = testlist))
 
@@ -180,39 +180,39 @@
 
 	try
 		Object.sanitize_data(list("notfield" = randstring))
-	catch(var/exception/e)
-		if(e.name != "Missing field field")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e1)
+		if(e1.name != "Missing field field")
+			throw EXCEPTION("[e1.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = randstring, "notfield" = randstring))
-	catch(e)
-		if(e.name != "Invalid notfield")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e2)
+		if(e2.name != "Invalid notfield")
+			throw EXCEPTION("[e2.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = null))
-	catch(e)
-		if(e.name != "Is null")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e3)
+		if(e3.name != "Is null")
+			throw EXCEPTION("[e3.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = randstring + "FF"))
-	catch(e)
-		if(e.name != "Text is longer than it should be")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e4)
+		if(e4.name != "Text is longer than it should be")
+			throw EXCEPTION("[e4.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = 1))
-	catch(e)
-		if(e.name != "Not a text")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e5)
+		if(e5.name != "Not a text")
+			throw EXCEPTION("[e5.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = randstring + "$"))
-	catch(e)
-		if(e.name != "Text contains bad characters")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e6)
+		if(e6.name != "Text contains bad characters")
+			throw EXCEPTION("[e6.name] was thrown instead.")
 
 	Object.sanitize_data(list("field" = randstring))
 
@@ -232,39 +232,39 @@
 
 	try
 		Object.sanitize_data(list("notfield" = randnum))
-	catch(var/exception/e)
-		if(e.name != "Missing field field")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e1)
+		if(e1.name != "Missing field field")
+			throw EXCEPTION("[e1.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = randnum, "notfield" = randnum))
-	catch(e)
-		if(e.name != "Invalid notfield")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e2)
+		if(e2.name != "Invalid notfield")
+			throw EXCEPTION("[e2.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = null))
-	catch(e)
-		if(e.name != "Is null")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e3)
+		if(e3.name != "Is null")
+			throw EXCEPTION("[e3.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = "[randnum]"))
-	catch(e)
-		if(e.name != "Not a number")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e4)
+		if(e4.name != "Not a number")
+			throw EXCEPTION("[e4.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = randnum + 1))
-	catch(e)
-		if(e.name != "Number is bigger than it should be")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e5)
+		if(e5.name != "Number is bigger than it should be")
+			throw EXCEPTION("[e5.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = randnum - 1))
-	catch(e)
-		if(e.name != "Number is smaller than it should be")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e6)
+		if(e6.name != "Number is smaller than it should be")
+			throw EXCEPTION("[e6.name] was thrown instead.")
 
 	Object.sanitize_data(list("field" = randnum))
 
@@ -280,27 +280,27 @@
 
 	try
 		Object.sanitize_data(list("notfield" = /atom/movable))
-	catch(var/exception/e)
-		if(e.name != "Missing field field")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e1)
+		if(e1.name != "Missing field field")
+			throw EXCEPTION("[e1.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = /atom/movable, "notfield" = /atom/movable))
-	catch(e)
-		if(e.name != "Invalid notfield")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e2)
+		if(e2.name != "Invalid notfield")
+			throw EXCEPTION("[e2.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = null))
-	catch(e)
-		if(e.name != "Is null")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e3)
+		if(e3.name != "Is null")
+			throw EXCEPTION("[e3.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = "/atom/movable"))
-	catch(e)
-		if(e.name != "Not a path")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e4)
+		if(e4.name != "Not a path")
+			throw EXCEPTION("[e4.name] was thrown instead.")
 
 	Object.sanitize_data(list("field" = /atom/movable))
 
@@ -321,15 +321,15 @@
 
 	try
 		Object.sanitize_data(list("field1" = "C", "field2" = /atom))
-	catch(var/exception/e)
-		if(e.name != "Not an allowed string")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e1)
+		if(e1.name != "Not an allowed string")
+			throw EXCEPTION("[e1.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field1" = "A", "field2" = /atom/movable/abyrvalg))
-	catch(e)
-		if(e.name != "Not an allowed type")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e2)
+		if(e2.name != "Not an allowed type")
+			throw EXCEPTION("[e2.name] was thrown instead.")
 
 	Object.sanitize_data(list("field1" = "A", "field2" = /atom))
 
@@ -344,9 +344,9 @@
 
 	try
 		Object.sanitize_data(list("field" = "text"))
-	catch(e)
-		if(e.name != "Regex failed")
-			throw EXCEPTION("[e.name] was thrown instead.")
+	catch(var/exception/e3)
+		if(e3.name != "Regex failed")
+			throw EXCEPTION("[e3.name] was thrown instead.")
 
 	Object.sanitize_data(list("field" = "123"))
 
