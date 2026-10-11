@@ -14,14 +14,13 @@
 	var/mutable_appearance/insides
 	var/mutable_appearance/picture
 	var/mutable_appearance/picture_icon
-	var/list/insides_boundaries = list(list(-7, 0), list(7, 6))
 
 	var/open = TRUE
 
 	var/starttype
 	var/startamount
 
-	var/max_items = 15
+	var/max_items = 18
 
 /obj/item/weapon/woodencrate/atom_init()
 	. = ..()
@@ -67,8 +66,18 @@
 	if(open)
 		icon_state = "woodencrate_open"
 
+		var/row = 0
+		var/col = 0
+
 		for(var/obj/item/I in contents)
+			I.pixel_x = -7 + (col * 3)
+			I.pixel_y = -(row * 2)
 			insides.add_overlay(I)
+
+			col++
+			if(col > 5)
+				col = 0
+				row++
 
 		add_overlay(insides)
 	else
@@ -127,24 +136,28 @@
 
 /obj/item/weapon/woodencrate/attackby(obj/item/weapon/W, mob/user)
 	if(!open && isprying(W))
-		if(user.is_busy()) return
-		if(W.use_tool(src, user, 15, volume = 50, quality = QUALITY_PRYING, particle_type = /particles/tool/digging/wood))
-			open = TRUE
-			update_icon()
-			new /obj/item/stack/sheet/wood(get_turf(src), 1)
+		if(!W.use_tool(src, user, 15, volume = 50, quality = QUALITY_PRYING, particle_type = /particles/tool/digging/wood))
 			return
+
+		open = TRUE
+		update_icon()
+		new /obj/item/stack/sheet/wood(get_turf(src), 1)
+		return
 
 	if(open && istype(W, /obj/item/stack/sheet/wood))
 		if(user.is_busy()) return
 		var/obj/item/stack/sheet/wood/plank = W
-		if(plank.use_tool(src, user, 15, volume = 100, particle_type = /particles/tool/digging/wood))
-			if(!plank.use(1))
-				return
-
-			open = FALSE
-			update_icon()
+		if(!plank.use_tool(src, user, 15, volume = 100, particle_type = /particles/tool/digging/wood))
 			return
 
+		if(!plank.use(1))
+			return
+
+		open = FALSE
+		update_icon()
+		return
+
+	//plant bag can transfer things directly into woodencrate, any other storage can't
 	if(istype(W, /obj/item/weapon/storage) && !istype(W, /obj/item/weapon/storage/bag/plants))
 		return ..()
 
@@ -168,8 +181,6 @@
 
 		desc = "[initial(desc)] Содержит: [CASE(W, ACCUSATIVE_CASE)]"
 		user.drop_from_inventory(W, src)
-		W.pixel_x = rand(insides_boundaries[1][1], insides_boundaries[2][1])
-		W.pixel_y = rand(insides_boundaries[1][2], insides_boundaries[2][2])
 		update_icon()
 		return
 
@@ -212,7 +223,7 @@
 	icon_state = "woodencrate_closed"
 	open = FALSE
 	starttype = /obj/item/weapon/reagent_containers/food/drinks/bottle/beer
-	startamount = 10
+	startamount = 12
 
 /obj/item/weapon/woodencrate/banana
 	icon_state = "woodencrate_closed"
