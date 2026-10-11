@@ -134,7 +134,7 @@
 	icon = 'icons/obj/gun.dmi' //Actual on-sprite is handled by icon_override.
 	icon_state = "noisecannon"
 	item_state = "noisecannon"
-	recoil = 1
+	recoil = LOW_RECOIL
 
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/sonic)

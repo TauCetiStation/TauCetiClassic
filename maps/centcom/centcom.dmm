@@ -2569,7 +2569,7 @@
 /obj/item/weapon/scalpel{
 	pixel_y = 2
 	},
-/obj/item/brain,
+/obj/item/organ/internal/brain,
 /obj/item/weapon/circular_saw{
 	pixel_y = -5
 	},
@@ -5331,12 +5331,9 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "ang" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/vox/stealth,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/mask/gas/vox,
-/obj/item/clothing/head/helmet/space/vox/stealth,
+/obj/machinery/suit_storage_unit/vox/stealth{
+	filled = 1
+	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -5539,12 +5536,9 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "anB" = (
-/obj/item/clothing/suit/space/vox/pressure,
-/obj/structure/rack,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/mask/gas/vox,
-/obj/item/clothing/head/helmet/space/vox/pressure,
+/obj/machinery/suit_storage_unit/vox/engine{
+	filled = 1
+	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -6226,14 +6220,11 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "apf" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/vox/carapace,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/mask/gas/vox,
-/obj/item/clothing/head/helmet/space/vox/carapace,
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/machinery/suit_storage_unit/vox/carapace{
+	filled = 1
 	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
@@ -6963,7 +6954,6 @@
 /area/space)
 "aqL" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/box/cups,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -7592,12 +7582,9 @@
 	},
 /area/shuttle/vox/arkship)
 "arW" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/vox/medic,
-/obj/item/weapon/tank/nitrogen,
-/obj/item/clothing/accessory/storage/black_vest,
-/obj/item/clothing/mask/gas/vox,
-/obj/item/clothing/head/helmet/space/vox/medic,
+/obj/machinery/suit_storage_unit/vox/medic{
+	filled = 1
+	},
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -8438,6 +8425,16 @@
 /obj/structure/rack,
 /obj/item/device/debugger,
 /obj/item/device/debugger,
+/obj/item/clothing/accessory/storage/black_vest{
+	pixel_x = -4
+	},
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/clothing/accessory/storage/black_vest{
+	pixel_x = 6
+	},
+/obj/item/clothing/accessory/storage/black_vest{
+	pixel_x = 10
+	},
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "atR" = (
@@ -12221,30 +12218,30 @@
 /area/centcom/specops)
 "aCb" = (
 /obj/structure/rack,
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = 6
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = 6
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = 3
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = 3
 	},
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer,
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer,
+/obj/item/clothing/mask/breath/gas/sechailer,
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = -3
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = -3
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = -6
 	},
-/obj/item/clothing/mask/gas/sechailer{
+/obj/item/clothing/mask/breath/gas/sechailer{
 	pixel_x = -6
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -13339,15 +13336,19 @@
 	},
 /area/centcom/specops)
 "aEJ" = (
-/obj/structure/table/reinforced,
-/obj/item/weapon/storage/box{
-	pixel_y = 8
-	},
-/obj/item/weapon/storage/box{
-	pixel_y = -8
-	},
+/obj/structure/rack,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
+/obj/item/weapon/crowbar/red,
 /turf/unsimulated/floor{
-	icon_state = "vaultfull"
+	icon_state = "dark"
 	},
 /area/centcom/specops)
 "aEK" = (
@@ -15014,7 +15015,6 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aIK" = (
-/obj/effect/spawner/aspect/mech/dark_gygax,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "red"
@@ -21513,7 +21513,7 @@
 /obj/structure/rack,
 /obj/item/weapon/storage/backpack/security,
 /obj/item/weapon/reagent_containers/watertank_backpack/janitor,
-/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/breath/gas,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
@@ -25123,7 +25123,7 @@
 /area/velocity/locker)
 "geb" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/breath/gas,
 /obj/item/weapon/storage/backpack/security,
 /obj/item/weapon/storage/belt/utility/full,
 /obj/item/device/multitool,
@@ -25133,7 +25133,7 @@
 /area/centcom/specops)
 "ggb" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/breath/gas,
 /obj/item/weapon/storage/backpack/security,
 /obj/item/weapon/storage/belt/medical,
 /obj/item/weapon/storage/box,
@@ -25581,7 +25581,7 @@
 /area/centcom/specops)
 "gUb" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/breath/gas,
 /obj/item/weapon/storage/backpack/security,
 /obj/item/weapon/storage/belt/security,
 /obj/item/weapon/storage/box,
@@ -31596,13 +31596,6 @@
 	icon_state = "white"
 	},
 /area/centcom/living)
-"vAl" = (
-/obj/effect/spawner/aspect/mech/dark_gygax,
-/turf/unsimulated/floor{
-	dir = 8;
-	icon_state = "red"
-	},
-/area/custom/syndicate_mothership)
 "vDJ" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/unsimulated/floor/cult/lava,
@@ -91130,7 +91123,7 @@ aJv
 alD
 alD
 alD
-vAl
+alD
 aie
 axb
 aHI

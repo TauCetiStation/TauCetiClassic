@@ -39,6 +39,9 @@
 /client/proc/is_blocked_by_regisration_panic_bunker()
 	var/regex/bunker_date_regex = regex("(\\d+)-(\\d+)-(\\d+)")
 
+	if(supporter)
+		return
+
 	var/list/byond_date = get_byond_registration()
 
 	if (!length(byond_date))
@@ -73,6 +76,9 @@
 
 	if(!key)
 		return TRUE
+
+	if(config.allow_donators && (key in global.donators))
+		return FALSE
 
 	var/DBQuery/query = dbcon.NewQuery("SELECT ingameage FROM erro_player WHERE ckey = '[key]'")
 

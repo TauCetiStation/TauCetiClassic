@@ -33,6 +33,8 @@
 	var/mentorhelped = FALSE
 	var/supporter = 0
 	var/prefs_ready = FALSE
+	var/datum/modval/default_pixel_x = new (base_value = 0)
+	var/datum/modval/default_pixel_y = new (base_value = 0)
 
 		///////////////
 		//SOUND STUFF//

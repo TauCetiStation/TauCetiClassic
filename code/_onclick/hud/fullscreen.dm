@@ -144,6 +144,9 @@
 /atom/movable/screen/fullscreen/impaired
 	icon_state = "impairedoverlay"
 
+/atom/movable/screen/fullscreen/cybereyes_impaired
+	icon_state = "cybereyes_impairment"
+
 /atom/movable/screen/fullscreen/blurry
 	icon = 'icons/hud/screen1.dmi'
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
@@ -212,7 +215,7 @@
 
 	// should be possible to do it with just animation and without callback, but it's already too complicated
 	// ...
-	// also this looks bad when there is already animation on the holder (aurora), 
+	// also this looks bad when there is already animation on the holder (aurora),
 	// maybe i should just remove it completely or do some opacity transaction between two holders
 	animate(src, time = 0, color = old_holder.color)
 	animate(time = 1 SECONDS, color = new_holder.color)

@@ -14,7 +14,9 @@
 			var/obj/item/device/radio/beacon/chosen
 			var/list/possible = list()
 			for(var/obj/item/device/radio/beacon/W in radio_beacon_list)
-				possible += W
+				var/turf/R = get_turf(W)
+				if(!is_centcom_level(R.z))
+					possible += W
 
 			if(possible.len > 0)
 				chosen = pick(possible)

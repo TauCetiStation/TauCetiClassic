@@ -2178,8 +2178,8 @@
 "fS" = (
 /obj/effect/decal/cleanable/blood,
 /obj/structure/table,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/structure/sign/poster/official/random{
 	pixel_x = 32
 	},
@@ -2727,7 +2727,7 @@
 "hl" = (
 /obj/structure/table/reinforced,
 /obj/structure/table/reinforced,
-/obj/item/clothing/mask/gas/sechailer,
+/obj/item/clothing/mask/breath/gas/sechailer,
 /turf/simulated/floor,
 /area/awaymission/spacebattle/cruiser)
 "hm" = (

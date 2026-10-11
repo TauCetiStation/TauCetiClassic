@@ -470,7 +470,6 @@
 
 /obj/item/mining_rig_pack/atom_init()
 	..()
-	new /obj/item/clothing/head/helmet/space/rig/mining(src.loc)
 	new	/obj/item/clothing/suit/space/rig/mining(src.loc)
 	return INITIALIZE_HINT_QDEL
 
@@ -753,7 +752,7 @@
 				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
 			else
 				to_chat(user, "<span class='info'>You begin to weld some cracks on the [src].</span>")
-				if(W.use_tool(src, user, 20, volume = 50))
+				if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
 					health += 15
 					to_chat(user, "<span class='info'>You have repaired [src]'s armor.</span>")
 			return

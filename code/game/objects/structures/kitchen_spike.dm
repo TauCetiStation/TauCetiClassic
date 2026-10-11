@@ -50,7 +50,7 @@
 		if(buckled_mob)
 			to_chat(user, "<span class='notice'>You can't do that while something's on the spike!</span>")
 			return
-		if(user.is_busy() || !I.use_tool(src, user, 2 SECONDS, volume = 100))
+		if(user.is_busy() || !I.use_tool(src, user, 2 SECONDS, volume = 100, quality = QUALITY_PRYING))
 			return
 		to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
 		deconstruct(TRUE)

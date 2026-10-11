@@ -66,6 +66,10 @@
 
 	var/list/restricted_inventory_slots = list() // Slots that the race does not have due to biological differences.
 
+	var/blood_oxy = TRUE                         // Oxygen in blood species?
+	var/breathing_organ = O_LUNGS  			  // If set, this organ is required for breathing. Defaults to "lungs" if the species has them.
+	var/blood_volume = SPECIES_BLOOD_DEFAULT  // Initial blood volume.
+
 	var/inhale_type = "oxygen"           // Non-oxygen gas breathed, if any.
 	var/exhale_type = "carbon_dioxide"   // Exhaled gas type.
 	var/poison_type = "phoron"           // Poisonous air.
@@ -78,9 +82,9 @@
 	var/heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 40	// Heat damage level 2 above this point.
 	var/heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 640	// Heat damage level 3 above this point.
 
-	var/breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 15
-	var/breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 30
-	var/breath_cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 45
+	var/breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
+	var/breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
+	var/breath_cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 85
 
 	var/body_temperature = BODYTEMP_NORMAL	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
 	var/synth_temp_gain = 0					//IS_SYNTHETIC species will gain this much temperature every second
@@ -90,7 +94,7 @@
 	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
 	var/dietflags = 0	// Make sure you set this, otherwise it won't be able to digest a lot of foods
 
-	var/darksight = 2
+
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE   // Dangerously high pressure.
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.
@@ -105,6 +109,7 @@
 	var/flesh_color = "#ffc896" //Pink.
 	var/default_skin_color // default skin color (r_skin, g_skin, b_skin)
 	var/default_eyes_color
+	var/females_standard_bodytype = AVERAGE_BODYTYPE
 
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
@@ -208,6 +213,9 @@
 	if(!has_organ[O_HEART])
 		race_traits += list(TRAIT_NO_BLOOD) // this status also uncaps vital body parts damage, since such species otherwise will be very hard to kill.
 
+	if(!breathing_organ && has_organ[O_LUNGS])
+		breathing_organ = O_LUNGS
+
 /datum/species/proc/can_be_role(role)
 	if(!prohibit_roles)
 		return TRUE
@@ -215,21 +223,16 @@
 
 /datum/species/proc/create_organs(mob/living/carbon/human/H, deleteOld = FALSE) //Handles creation of mob organs.
 	if(deleteOld)
-		for(var/obj/item/organ/external/BP in H.bodyparts)
-			qdel(BP)
 		for(var/obj/item/organ/internal/IO in H.organs)
 			qdel(IO)
-
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			qdel(BP)
 	create_bodyparts(H)
 
 	for(var/type in has_organ)
 		var/path = has_organ[type]
 		var/obj/item/organ/internal/O = new path(null)
 		O.insert_organ(H)
-
-	if(flags[IS_SYNTHETIC])
-		for(var/obj/item/organ/internal/IO in H.organs)
-			IO.mechanize()
 
 /datum/species/proc/create_bodyparts(mob/living/carbon/human/H)
 	for(var/type in has_bodypart)
@@ -388,6 +391,7 @@
 	eyes_static_layer = "human"
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
+	females_standard_bodytype = SLIM_BODYTYPE
 
 	language = LANGUAGE_SOLCOMMON
 	primitive = /mob/living/carbon/monkey
@@ -403,6 +407,7 @@
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SOCIAL = TRUE
+	,HAS_BODYTYPE_SELECTION = TRUE
 	)
 
 	min_age = 25
@@ -435,6 +440,17 @@
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SOCIAL = TRUE
+	)
+
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head
+		,BP_L_ARM  = /obj/item/organ/external/l_arm
+		,BP_R_ARM  = /obj/item/organ/external/r_arm
+		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		,BP_EARS   = /obj/item/organ/external/ears
 	)
 
 	min_age = 25
@@ -489,8 +505,6 @@
 	)
 	flags = list(
 	,NO_DNA = TRUE
-	,HAS_SKIN_COLOR = TRUE
-	,HAS_HAIR_COLOR = TRUE
 	,HAS_UNDERWEAR = TRUE
 	)
 	min_age = 25
@@ -507,6 +521,7 @@
 	eyes_colorable_layer = "unathi_colorable"
 	eyes_static_layer = "unathi"
 	second_color_mask = TRUE
+	females_standard_bodytype = SLIM_BODYTYPE
 	gender_tail_icons = TRUE
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
@@ -516,7 +531,7 @@
 	race_verbs = list(/mob/living/carbon/human/proc/air_sample)
 	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
-	darksight = 3
+
 
 	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT + 20
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT + 15
@@ -545,6 +560,15 @@
 	,FACEHUGGABLE = TRUE
 	,IS_SOCIAL = TRUE
 	)
+
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart/unathi,
+		O_BRAIN   = /obj/item/organ/internal/brain/unathi,
+		O_EYES    = /obj/item/organ/internal/eyes/unathi,
+		O_LUNGS   = /obj/item/organ/internal/lungs/unathi,
+		O_LIVER   = /obj/item/organ/internal/liver/unathi,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/unathi
+		)
 
 	flesh_color = "#34af10"
 	default_skin_color = "#06aa00"
@@ -589,6 +613,7 @@
 	eyes_colorable_layer = "tajaran_colorable"
 	eyes_static_layer = "tajaran"
 	gender_limb_icons = TRUE
+	females_standard_bodytype = SLIM_BODYTYPE
 	fat_limb_icons = TRUE
 	gender_tail_icons = TRUE
 
@@ -597,11 +622,6 @@
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
-	darksight = 8
-
-	breath_cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
-	breath_cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 50
-	breath_cold_level_3 = BODYTEMP_COLD_DAMAGE_LIMIT - 60
 
 	cold_level_1 = BODYTEMP_COLD_DAMAGE_LIMIT - 20
 	cold_level_2 = BODYTEMP_COLD_DAMAGE_LIMIT - 40
@@ -636,6 +656,15 @@
 	,FUR = TRUE
 	)
 
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart/tajaran,
+		O_BRAIN   = /obj/item/organ/internal/brain/tajaran,
+		O_EYES    = /obj/item/organ/internal/eyes/tajaran,
+		O_LUNGS   = /obj/item/organ/internal/lungs/tajaran,
+		O_LIVER   = /obj/item/organ/internal/liver/tajaran,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/tajaran
+		)
+
 	flesh_color = "#afa59e"
 	default_skin_color = "#bbbbbb"
 	default_eyes_color = "#1ec81e"
@@ -666,6 +695,7 @@
 	eyes_colorable_layer = null
 	eyes_static_layer = "skrell"
 	gender_body_icons = FALSE
+	fat_limb_icons = TRUE
 
 	language = LANGUAGE_SKRELLIAN
 	primitive = /mob/living/carbon/monkey/skrell
@@ -694,12 +724,12 @@
 	)
 
 	has_organ = list(
-		O_HEART   = /obj/item/organ/internal/heart,
-		O_BRAIN   = /obj/item/organ/internal/brain,
-		O_EYES    = /obj/item/organ/internal/eyes,
+		O_HEART   = /obj/item/organ/internal/heart/skrell,
+		O_BRAIN   = /obj/item/organ/internal/brain/skrell,
+		O_EYES    = /obj/item/organ/internal/eyes/skrell,
 		O_LUNGS   = /obj/item/organ/internal/lungs/skrell,
-		O_LIVER   = /obj/item/organ/internal/liver,
-		O_KIDNEYS = /obj/item/organ/internal/kidneys
+		O_LIVER   = /obj/item/organ/internal/liver/skrell,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/skrell
 		)
 
 	blood_datum_path = /datum/dirt_cover/purple_blood
@@ -763,8 +793,8 @@
 	)
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart/vox,
-		O_BRAIN   = /obj/item/organ/internal/brain,
-		O_EYES    = /obj/item/organ/internal/eyes,
+		O_BRAIN   = /obj/item/organ/internal/brain/vox,
+		O_EYES    = /obj/item/organ/internal/eyes/vox,
 		O_LUNGS   = /obj/item/organ/internal/lungs/vox,
 		O_LIVER   = /obj/item/organ/internal/liver/vox,
 		O_KIDNEYS = /obj/item/organ/internal/kidneys/vox
@@ -801,7 +831,7 @@
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
 	replace_outfit = list(
-			/obj/item/clothing/mask/gas/syndicate = /obj/item/clothing/mask/gas/vox,
+			/obj/item/clothing/mask/breath/gas/syndicate = /obj/item/clothing/mask/breath/gas/vox,
 			)
 
 	prothesis_icobase = 'icons/mob/human/robotic_vox.dmi'
@@ -815,7 +845,7 @@
 
 	if(H.wear_mask)
 		qdel(H.wear_mask)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/gas/vox(src), SLOT_WEAR_MASK)
 
 /datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.vox_equip(H)
@@ -879,6 +909,7 @@
 		TRAIT_NO_PAIN,
 		TRAIT_NO_BLOOD,
 		TRAIT_NEVER_FAT,
+		TRAIT_VIRUS_IMMUNE,
 	)
 
 	flags = list(
@@ -972,9 +1003,9 @@
 		)
 
 	has_organ = list(
-		O_HEART   = /obj/item/organ/internal/heart,
+		O_HEART   = /obj/item/organ/internal/heart/diona,
 		O_BRAIN   = /obj/item/organ/internal/brain/diona,
-		O_EYES    = /obj/item/organ/internal/eyes,
+		O_EYES    = /obj/item/organ/internal/eyes/diona,
 		O_LUNGS   = /obj/item/organ/internal/lungs/diona,
 		O_LIVER   = /obj/item/organ/internal/liver/diona,
 		O_KIDNEYS = /obj/item/organ/internal/kidneys/diona
@@ -1142,9 +1173,9 @@
 		)
 
 	has_organ = list(
-		O_HEART   = /obj/item/organ/internal/heart,
-		O_BRAIN   = /obj/item/organ/internal/brain,
-		O_EYES    = /obj/item/organ/internal/eyes,
+		O_HEART   = /obj/item/organ/internal/heart/diona,
+		O_BRAIN   = /obj/item/organ/internal/brain/diona,
+		O_EYES    = /obj/item/organ/internal/eyes/diona,
 		O_LUNGS   = /obj/item/organ/internal/lungs/diona,
 		O_LIVER   = /obj/item/organ/internal/liver/diona,
 		O_KIDNEYS = /obj/item/organ/internal/kidneys/diona
@@ -1280,6 +1311,13 @@
 		/datum/emote/robot/beep,
 		/datum/emote/robot/ping,
 		/datum/emote/robot/buzz,
+		/datum/emote/robot/confirm,
+		/datum/emote/robot/deny,
+		/datum/emote/robot/scary,
+		/datum/emote/robot/woop,
+		/datum/emote/robot/boop,
+		/datum/emote/robot/robochirp,
+		/datum/emote/robot/calling
 	)
 
 	default_mood_event = /datum/mood_event/machine
@@ -1312,6 +1350,9 @@
 	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/xenomorphs, "IPC_xeno", I, null, null, NONE)
 	H.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/zombies, "IPC_zombie", I, null, null, NONE)
 
+/datum/species/machine/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
+	return O.ipc_equip(H)
+
 /datum/species/machine/on_loose(mob/living/carbon/human/H, new_species)
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
@@ -1341,7 +1382,6 @@
 	eyes_static_layer = null
 	gender_body_icons = FALSE
 
-	darksight = 3
 	dietflags = DIET_OMNI
 	flesh_color = "#808080"
 
@@ -1394,14 +1434,16 @@
 	heat_level_3 = 4000
 
 	blood_datum_path = /datum/dirt_cover/black_blood
-	darksight = 8
 
 	butcher_drops = list() // They are just shadows. Why should they drop anything?
 	bodypart_butcher_results = list()
 
 	restricted_inventory_slots = list(SLOT_BELT, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE)
 
-	has_organ = list(O_HEART = /obj/item/organ/internal/heart) // A huge buff to be honest.
+	has_organ = list(
+		O_BRAIN   = /obj/item/organ/internal/brain
+		,O_HEART = /obj/item/organ/internal/heart
+		,O_EYES    = /obj/item/organ/internal/eyes/dark_vision) // A huge buff to be honest.
 
 	race_traits = list(
 		TRAIT_NO_BREATHE,
@@ -1530,7 +1572,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem, SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem, SLOT_WEAR_SUIT)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem, SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, SLOT_WEAR_MASK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/gas/golem, SLOT_WEAR_MASK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
 
 	for(var/x in items_to_remove)
@@ -1548,7 +1590,7 @@
 				/obj/item/clothing/head/helmet/space/golem,
 				/obj/item/clothing/suit/space/golem,
 				/obj/item/clothing/shoes/golem,
-				/obj/item/clothing/mask/gas/golem,
+				/obj/item/clothing/mask/breath/gas/golem,
 				/obj/item/clothing/gloves/golem
 				)
 
@@ -1588,8 +1630,6 @@
 	heat_level_2 = BODYTEMP_HEAT_DAMAGE_LIMIT + 10
 	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 20
 
-	darksight = 8
-
 	restricted_inventory_slots = list(SLOT_BELT, SLOT_NECK, SLOT_WEAR_ID, SLOT_L_EAR, SLOT_R_EAR, SLOT_BACK, SLOT_L_STORE, SLOT_R_STORE, SLOT_WEAR_SUIT, SLOT_W_UNIFORM, SLOT_SHOES, SLOT_GLOVES, SLOT_HEAD, SLOT_WEAR_MASK, SLOT_GLASSES)
 
 	race_traits = list(
@@ -1620,6 +1660,7 @@
 
 	has_organ = list(
 		O_BRAIN  = /obj/item/organ/internal/brain/abomination
+		,O_EYES    = /obj/item/organ/internal/eyes/dark_vision
 		)
 	burn_mod = 0.2
 	brute_mod = 0.2
@@ -1667,6 +1708,7 @@
 		TRAIT_NO_PAIN,
 		TRAIT_VIRUS_IMMUNE,
 		TRAIT_EMOTIONLESS,
+		TRAIT_CURSED_TALK,
 	)
 
 	flags = list(
@@ -1771,6 +1813,7 @@
 		TRAIT_INCOMPATIBLE_DNA,
 		TRAIT_NO_MINORCUTS,
 		TRAIT_NEVER_FAT,
+		TRAIT_VIRUS_IMMUNE,
 	)
 
 	flags = list(
@@ -1784,7 +1827,7 @@
 	has_organ = list(
 		 O_HEART   = /obj/item/organ/internal/heart
 		,O_BRAIN   = /obj/item/organ/internal/brain
-		,O_EYES    = /obj/item/organ/internal/eyes
+		,O_EYES    = /obj/item/organ/internal/eyes/dark_vision
 		,O_LUNGS   = /obj/item/organ/internal/lungs
 		,O_LIVER   = /obj/item/organ/internal/liver/serpentid
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys
@@ -1795,7 +1838,6 @@
 	heat_level_3 = BODYTEMP_HEAT_DAMAGE_LIMIT + 440
 	unarmed_type = /datum/unarmed_attack/claws/serpentid
 	blood_trail_type = /obj/effect/decal/cleanable/blood/tracks/snake
-	darksight = 8
 	offset_features = list(
 		OFFSET_UNIFORM = list(0,0),
 		OFFSET_ID = list(0,0),
@@ -1821,7 +1863,7 @@
 		if(!isbodypart(I))
 			return
 		var/obj/item/organ/external/BP = I
-		if(BP.is_robotic())
+		if(BP.is_robotic_part())
 			return
 	source.nutrition += max(0, NUTRITION_LEVEL_FULL - source.nutrition)
 	qdel(I)
@@ -1833,13 +1875,12 @@
 	..()
 	H.real_name = pick(global.serpentid_names)
 	H.name = H.real_name
-	var/list/color_variables = list("#003300",
-									"#333300",
-									"#663300",
-									"#800000",
-									"#000066",
-									"#660033",
-									"#003366")
+	H.r_eyes = 90
+	var/list/color_variables = list(
+									"#59cf93",
+									"#42bfe8",
+									"#f8f644",
+									"#fca570",)
 	var/color_gain = pick(color_variables)
 	H.r_skin = hex2num(copytext(color_gain, 2, 4))
 	H.g_skin = hex2num(copytext(color_gain, 4, 6))
@@ -1886,7 +1927,7 @@
 	if(!L || (L.is_stump))
 		return FALSE
 
-	if(L.is_robotic())
+	if(L.is_robotic_part())
 		L.take_damage(rand(30,40), 0, 0)
 		assailant.visible_message("<span class='shadowling'>You hear [H]'s [L.name] being pulled beyond its load limits!</span>", \
 						"<span class='shadowling'>[H]'s [L.name] begins to tear apart!</span>")
@@ -1942,6 +1983,15 @@
 		TRAIT_NIGHT_EYES,
 	)
 
+	has_organ = list(
+		 O_HEART   = /obj/item/organ/internal/heart
+		,O_BRAIN   = /obj/item/organ/internal/brain
+		,O_EYES    = /obj/item/organ/internal/eyes/night_vision
+		,O_LUNGS   = /obj/item/organ/internal/lungs
+		,O_LIVER   = /obj/item/organ/internal/liver
+		,O_KIDNEYS = /obj/item/organ/internal/kidneys
+		)
+
 	flags = list(
 				NO_MED_HEALTH_SCAN = TRUE,
 				NO_DNA = TRUE,
@@ -1955,7 +2005,6 @@
 	damage_mask = FALSE
 	min_age = 1
 	max_age = 5
-	darksight = 8
 
 	metabolism_mod = 0
 

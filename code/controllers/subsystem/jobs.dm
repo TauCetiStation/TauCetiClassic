@@ -433,7 +433,7 @@ SUBSYSTEM_DEF(job)
 						// This is a miserable way to fix the loadout overwrite bug, but the alternative requires
 						// adding an arg to a bunch of different procs. Will look into it after this merge. ~ Z
 						metadata = H.client.prefs.gear[G.display_name]
-						if(G.slot == SLOT_WEAR_MASK || G.slot == SLOT_WEAR_SUIT || G.slot == SLOT_HEAD)
+						if(G.slot == SLOT_WEAR_MASK || G.slot == SLOT_WEAR_SUIT || G.slot == SLOT_HEAD || G.slot == SLOT_W_UNIFORM)
 							custom_equip_leftovers += thing
 						else if(H.equip_to_slot_or_del(G.spawn_item(H, metadata), G.slot))
 							to_chat(H, "<span class='notice'>Equipping you with \the [thing]!</span>")
@@ -447,10 +447,15 @@ SUBSYSTEM_DEF(job)
 			H.species.before_job_equip(H, job)
 
 		job.equip(H)
+		var/obj/item/clothing/under/color/polychromic/custom_jumpsuit
+		if(ishuman(H) && H.client?.prefs && job.give_loadout_items)
+			custom_jumpsuit = H.client.prefs.spawn_custom_jumpsuit()
 
 		for(var/thing in custom_equip_leftovers)
 			var/datum/gear/G = gear_datums[thing]
 			if(G.slot in custom_equip_slots)
+				spawn_in_storage += thing
+			else if(custom_jumpsuit && G.slot == SLOT_W_UNIFORM)
 				spawn_in_storage += thing
 			else
 				metadata = H.client.prefs.gear[G.display_name]
@@ -459,6 +464,9 @@ SUBSYSTEM_DEF(job)
 					custom_equip_slots.Add(G.slot)
 				else
 					spawn_in_storage += thing
+
+		if(custom_jumpsuit)
+			H.replace_in_slot(SLOT_W_UNIFORM, custom_jumpsuit)
 
 	else
 		to_chat(H, "Ваша профессия - [rank], и игра почему-то не может её обработать! Пожалуйста, сообщите об этой ошибке администратору.")
@@ -558,6 +566,9 @@ SUBSYSTEM_DEF(job)
 	if(Cl && Cl.player_ingame_age && isnum(Cl.player_ingame_age) && Cl.player_ingame_age < 3000)
 		var/obj/item/clothing/accessory/newbiebadge/badge = new(H)
 		H.equip_or_collect(badge, SLOT_NECK)
+		var/stationmap_type = SSmapping.get_stationmap_type()
+		if(stationmap_type)
+			H.equip_or_collect(new stationmap_type(H), SLOT_R_STORE)
 
 //		H.update_icons()
 
@@ -655,13 +666,14 @@ SUBSYSTEM_DEF(job)
 		tmp_str += "HIGH=[high]|MEDIUM=[medium]|LOW=[low]|NEVER=[never]|BANNED=[banned]|YOUNG=[young]|-"
 		feedback_add_details("job_preferences",tmp_str)
 
-/datum/controller/subsystem/job/proc/IsJobAvailable(client/C, rank)
+/datum/controller/subsystem/job/proc/IsJobAvailable(mob/M, rank)
 	var/datum/job/job = SSjob.GetJob(rank)
-	if(!job)
+	if(!job || !M.client)
 		return FALSE
+	var/client/C = M.client
 	if(!job.is_position_available())
 		return FALSE
-	if(jobban_isbanned(src, rank))
+	if(jobban_isbanned(M, rank))
 		return FALSE
 	if(!job.player_old_enough(C))
 		return FALSE
@@ -679,7 +691,7 @@ SUBSYSTEM_DEF(job)
 	var/count = 0
 	// Only players with the job assigned and AFK for less than 10 minutes count as active
 	// todo: store players in job datums for quick and easy loop
-	for(var/mob/M in player_list) 
+	for(var/mob/M in player_list)
 		if(M.mind?.assigned_role == rank && M.client?.inactivity <= 10 MINUTES)
 			count++
 	return count

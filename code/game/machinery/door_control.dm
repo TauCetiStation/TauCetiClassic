@@ -107,9 +107,7 @@
 	switch(buildstage)
 		if(DOOR_CONTROL_COMPLETE)
 			if(!wiresexposed)
-				if(istype(W, /obj/item/device/detective_scanner))
-					return
-				else if(isscrewing(W))
+				if(isscrewing(W))
 					if(panel_locked && !issilicon(user) && !(stat & NOPOWER) && !emagged)
 						to_chat(user, "<span class='warning'>The panel is locked</span>")
 						return
@@ -337,11 +335,22 @@
 		return
 	. = ..()
 	if(.)
+		return TRUE
+	activate(user)
+	return FALSE
+
+/obj/machinery/door_control/attack_ghost(mob/user)
+	if(user.client && user.client.AI_Interact)
+		activate(user)
 		return
+	return ..()
+
+/obj/machinery/door_control/proc/activate(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 20)
 	use_power(5)
 	icon_state = "doorctrl1"
+
 	for(var/door in connected_doors)
 		INVOKE_ASYNC(src, PROC_REF(toggle_door), door)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 15)
@@ -481,9 +490,6 @@
 
 
 /obj/machinery/driver_button/attackby(obj/item/weapon/W, mob/user)
-
-	if(istype(W, /obj/item/device/detective_scanner))
-		return
 	return attack_hand(user)
 
 /obj/machinery/driver_button/attack_hand(mob/user)
@@ -492,6 +498,7 @@
 
 	use_power(5)
 	user.SetNextMove(CLICK_CD_INTERACT)
+	add_fingerprint(user)
 
 	active = 1
 	icon_state = "launcheract"

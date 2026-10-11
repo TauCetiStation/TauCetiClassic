@@ -29,6 +29,16 @@
 /// Get a pool index of the provided window id
 #define TGUI_WINDOW_INDEX(window_id) text2num(copytext(window_id, 13))
 
+// Though not the maximum renderable ByondUis within tgui, this is the maximum that the server will manage per-UI
+#define TGUI_MANAGED_BYONDUI_LIMIT 10
+
+// These are defines instead of being inline, as they're being sent over
+// from tgui-core, so can't be easily played with
+#define TGUI_MANAGED_BYONDUI_TYPE_RENDER "renderByondUi"
+#define TGUI_MANAGED_BYONDUI_TYPE_UNMOUNT "unmountByondUi"
+
+#define TGUI_MANAGED_BYONDUI_PAYLOAD_ID "renderByondUi"
+
 /// Creates a message packet for sending via output()
 // This is {"type":type,"payload":payload}, but pre-encoded. This is much faster
 // than doing it the normal way.

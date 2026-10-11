@@ -48,6 +48,17 @@
 	desc = "Current disposal unit leads straight to the morgue. Bring out your dead!"
 	icon_state = "morgue_disposal"
 
+/obj/structure/sign/warning/shop_disposal
+	name = "cargo shop"
+	desc = "cargo shop disposal sign"
+	icon_state = "shop_disposal"
+
+/obj/structure/sign/warning/shop_disposal/atom_init()
+	. = ..()
+
+	name += "'[CARGOSHOPNAME]'s entrypoint"
+	desc += "Этот вход пневмопочты ведет в магазин '[CARGOSHOPNAME]'."
+
 /obj/structure/sign/warning/pods
 	name = "ESCAPE PODS"
 	desc = "A warning sign which reads 'ESCAPE PODS'."

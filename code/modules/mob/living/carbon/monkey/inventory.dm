@@ -15,6 +15,9 @@
 		if(SLOT_BACK)
 			src.back = W
 			W.equipped(src, slot)
+		if(SLOT_NECK)
+			src.neck = W
+			W.equipped(src, slot)
 		if(SLOT_WEAR_MASK)
 			src.wear_mask = W
 			W.equipped(src, slot)
@@ -47,3 +50,14 @@
 	W.plane = ABOVE_HUD_PLANE
 	W.slot_equipped = slot
 	W.update_inv_mob()
+
+/mob/living/carbon/monkey/get_equipped_items()
+	. = ..()
+	if(.)
+		. += neck
+
+/mob/living/carbon/monkey/get_equipped_item(slot)
+	if(slot == SLOT_NECK)
+		return neck
+	return ..()
+

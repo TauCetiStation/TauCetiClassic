@@ -17,6 +17,8 @@
 		. += 					"<br><b>Gender:</b> <a href='byond://?_src_=prefs;preference=gender'><b>[gender == MALE ? "Male" : "Female"]</b></a>"
 	if(species == IPC)  // only ipc can change their voice at this moment
 		. += 					"<br><b>Voice:</b> <a href='byond://?_src_=prefs;preference=gendervoice'><b>[neuter_gender_voice == MALE ? "Male" : "Female"]</b></a>"
+	if(specie_obj.flags[HAS_BODYTYPE_SELECTION] && (gender == FEMALE))
+		. += 					"<br><b>Bodytype:</b> <a href='byond://?_src_=prefs;preference=bodytype'><b>[bodytype_name == AVERAGE_BODYTYPE ? "Average" : "Slim"]</b></a>"
 	. += 						"<br><b>Height:</b> <a href='byond://?_src_=prefs;preference=height;task=input'>[height]</a>"
 	. += 						"<br><b>Randomized Character Slot:</b> <a href='byond://?_src_=prefs;preference=randomslot'><b>[randomslot ? "Yes" : "No"]</b></a>"
 	. += 						"<hr>"
@@ -80,18 +82,9 @@
 				else if(status == "amputated")
 					++ind
 					. += "<li>Amputated [organ_name]</li>"
-				else if(status == "mechanical")
+				else if(status == "cybernetic")
 					++ind
-					. += "<li>Mechanical [organ_name]</li>"
-				else if(status == "assisted")
-					++ind
-					switch(organ_name)
-						if("heart")
-							. += "<li>Pacemaker-assisted [organ_name]</li>"
-						if("eyes")
-							. += "<li>Retinal overlayed [organ_name]</li>"
-						else
-							. += "<li>Mechanically assisted [organ_name]</li>"
+					. += "<li>Cybernetical [organ_name]</li>"
 			if(species == IPC)
 				. += "<br>Head: <a href='byond://?src=\ref[user];preference=ipc_head;task=input'>[ipc_head]</a>"
 
@@ -129,14 +122,25 @@
 		if("gear")
 			. += "<b>Gear:</b><br>"
 			if(specie_obj.flags[HAS_UNDERWEAR])
-				if(gender == MALE)
-					. += "Underwear: <a href ='byond://?_src_=prefs;preference=underwear;task=input'>[underwear_m[underwear]]</a><br>"
-				else
-					. += "Underwear: <a href ='byond://?_src_=prefs;preference=underwear;task=input'>[underwear_f[underwear]]</a><br>"
-				. += "Undershirt: <a href='byond://?_src_=prefs;preference=undershirt;task=input'>[undershirt_t[undershirt]]</a><br>"
-				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks_t[socks]]</a><br>"
+				. += "Underwear: <a href ='byond://?_src_=prefs;preference=underwear;task=input'>[underwear ? underwear_t[underwear] : "None"]</a><br>"
+				. += "Undershirt: <a href='byond://?_src_=prefs;preference=undershirt;task=input'>[undershirt ? undershirt_t[undershirt] : "None"]</a><br>"
+				if(undershirt)
+					. += "Undershirt print: <a href='byond://?_src_=prefs;preference=undershirt_print;task=input'>[undershirt_print ? undershirt_print : "None"]</a><br>"
+				. += "Socks: <a href='byond://?_src_=prefs;preference=socks;task=input'>[socks ? socks_t[socks] : "None"]</a><br>"
 			. += "Backpack Type: <a href ='byond://?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a><br>"
 			. += "Using skirt uniform: <a href ='byond://?_src_=prefs;preference=use_skirt;task=input'>[use_skirt ? "Yes" : "No"]</a><br>"
+			. += "Jumpsuit Style: <a href='byond://?_src_=prefs;preference=jumpsuit_style;task=input'>[poly_style_name(jumpsuit_style)]</a><br>"
+			if(jumpsuit_style != POLY_STYLE_JOB)
+				. += "<table style='margin-left:8px;border-spacing:0 2px'>"
+				if(species != VOX)
+					if(is_poly_white_base(jumpsuit_style))
+						. += "<tr><td>Base:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_base_color;task=input'><font color='[jumpsuit_base_color]'>&#9608;&#9608;</font></a></td></tr>"
+					if(jumpsuit_style != POLY_STYLE_TURT)
+						. += "<tr><td>Pattern:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_pattern;task=input'>[jumpsuit_pattern ? (poly_pattern_display[jumpsuit_pattern] || jumpsuit_pattern) : "None"]</a></td></tr>"
+				else
+					. += "<tr><td>Base:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_base_color;task=input'><font color='[jumpsuit_base_color]'>&#9608;&#9608;</font></a></td></tr>"
+				. += "<tr><td>Accent:&nbsp;</td><td><a href='byond://?_src_=prefs;preference=jumpsuit_color;task=input'><font color='[jumpsuit_color]'>&#9608;&#9608;</font></a></td></tr>"
+				. += "</table>"
 			. += "PDA Ringtone: <a href ='byond://?_src_=prefs;preference=ringtone;task=input'>[chosen_ringtone]</a>"
 
 	. += 								"</td>"
@@ -236,14 +240,13 @@
 				if("f_style")
 					f_style = random_facial_hair_style(gender, species)
 				if("underwear")
-					if(gender == MALE)
-						underwear = rand(1, underwear_m.len)
-					else
-						underwear = rand(1, underwear_f.len)
+					underwear = rand(0, underwear_t.len)
 				if("undershirt")
-					undershirt = rand(1,undershirt_t.len)
+					undershirt = rand(0, undershirt_t.len)
+				if("undershirt_print")
+					undershirt_print = prob(50) ? pick(undershirt_prints_t) : null
 				if("socks")
-					socks = rand(1,socks_t.len)
+					socks = rand(0, socks_t.len)
 				if("eyes")
 					r_eyes = rand(0,255)
 					g_eyes = rand(0,255)
@@ -314,6 +317,10 @@
 							var/datum/language/lang = all_languages[language]
 							if(!(species in lang.allowed_speak))
 								language = "None"
+						if(gender == FEMALE)
+							bodytype_name = specie_obj.females_standard_bodytype
+						else
+							bodytype_name = AVERAGE_BODYTYPE
 
 				if("language")
 					var/list/new_languages = list("None")
@@ -413,26 +420,36 @@
 				if("underwear")
 					if(!specie_obj.flags[HAS_UNDERWEAR])
 						return
-					var/list/underwear_options
-					if(gender == MALE)
-						underwear_options = underwear_m
-					else
-						underwear_options = underwear_f
-					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference", underwear_options[underwear]) as null|anything in underwear_options
+					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference", underwear ? underwear_t[underwear] : "None") as null|anything in list("None") + underwear_t
 					if(new_underwear)
-						underwear = underwear_options.Find(new_underwear)
+						if(new_underwear == "None")
+							underwear = 0
+						else
+							underwear = underwear_t.Find(new_underwear)
+
 				if("undershirt")
-					var/list/undershirt_options
-					undershirt_options = undershirt_t
-					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", undershirt_options[undershirt]) as null|anything in undershirt_options
+					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference", undershirt ? undershirt_t[undershirt] : "None") as null|anything in list("None") + undershirt_t
 					if (new_undershirt)
-						undershirt = undershirt_options.Find(new_undershirt)
+						if(new_undershirt == "None")
+							undershirt = 0
+						else
+							undershirt = undershirt_t.Find(new_undershirt)
+
+				if("undershirt_print")
+					var/new_undershirt_print = input(user, "Choose your undershirt print:", "Character Preference", undershirt_print ? undershirt_print : "None") as null|anything in list("None") + undershirt_prints_t
+					if (new_undershirt_print)
+						if(new_undershirt_print == "None")
+							undershirt_print = null
+						else
+							undershirt_print = new_undershirt_print
+
 				if("socks")
-					var/list/socks_options
-					socks_options = socks_t
-					var/new_socks = input(user, "Choose your character's socks:", "Character Preference", socks_options[socks]) as null|anything in socks_options
+					var/new_socks = input(user, "Choose your character's socks:", "Character Preference", socks ? socks_t[socks] : "None") as null|anything in list("None") + socks_t
 					if(new_socks)
-						socks = socks_options.Find(new_socks)
+						if(new_socks == "None")
+							socks = 0
+						else
+							socks = socks_t.Find(new_socks)
 
 				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference", rgb(r_eyes, g_eyes, b_eyes)) as color|null
@@ -484,6 +501,40 @@
 
 				if("use_skirt")
 					use_skirt = !use_skirt
+
+				if("jumpsuit_style")
+					// Vox has no belt/turt sprites, so offer them only the white-base styles.
+					var/list/style_choices = list("Job Default" = POLY_STYLE_JOB)
+					for(var/key in global.poly_styles_by_key)
+						if(species == VOX && (key == POLY_STYLE_BELT || key == POLY_STYLE_TURT))
+							continue
+						var/datum/poly_style/S = global.poly_styles_by_key[key]
+						style_choices[S.display_name] = key
+					var/choice = input(user, "Choose jumpsuit style:", "Character Preference") as null|anything in style_choices
+					if(choice)
+						jumpsuit_style = style_choices[choice]
+
+				if("jumpsuit_pattern")
+					// turt is applied automatically by the turt_w style, so it isn't user-selectable here.
+					var/list/patterns = list("None" = null)
+					for(var/key in poly_pattern_display)
+						if(key != POLY_PATTERN_TURT)
+							patterns[poly_pattern_display[key]] = key
+					var/choice = input(user, "Choose jumpsuit pattern:", "Character Preference") as null|anything in patterns
+					if(!isnull(choice))
+						jumpsuit_pattern = patterns[choice]
+
+				if("jumpsuit_color")
+					var/list/choices = global.poly_color_palette
+					var/choice = input(user, "Choose accent color:", "Character Preference") as null|anything in choices
+					if(choice)
+						jumpsuit_color = global.poly_color_palette[choice]
+
+				if("jumpsuit_base_color")
+					var/list/base_choices = global.poly_color_palette
+					var/base_choice = input(user, "Choose base color:", "Character Preference") as null|anything in base_choices
+					if(base_choice)
+						jumpsuit_base_color = global.poly_color_palette[base_choice]
 
 				if("nt_relation")
 					var/new_relation = input(user, "Choose your relation to NT. Note that this represents what others can find out about your character by researching your background, not what your character actually thinks.", "Nanotrasen Relation", nanotrasen_relation) as null|anything in list("Loyal", "Supportive", "Neutral", "Skeptical", "Opposed")
@@ -586,7 +637,7 @@
 									organ_data[limb] = "cyborg"
 
 						if("Organs")
-							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
+							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes", "Lungs", "Liver", "Kidneys")
 							if(!organ_name) return
 
 							var/organ = null
@@ -595,17 +646,22 @@
 									organ = O_HEART
 								if("Eyes")
 									organ = O_EYES
+								if("Lungs")
+									organ = O_LUNGS
+								if("Liver")
+									organ = O_LIVER
+								if("Kidneys")
+									organ = O_KIDNEYS
 
-							var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
+							var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Cybernetic")
+
 							if(!new_state) return
 
 							switch(new_state)
 								if("Normal")
 									organ_data[organ] = null
-								if("Assisted")
-									organ_data[organ] = "assisted"
-								if("Mechanical")
-									organ_data[organ] = "mechanical"
+								if("Cybernetic")
+									organ_data[organ] = "cybernetic"
 				// Choosing a head for an IPC
 				if("ipc_head")
 					var/list/ipc_heads = list("Default", "Cobalt", "Cathod", "Thorax", "Axon")
@@ -620,14 +676,22 @@
 						return
 					if(gender == MALE)
 						gender = FEMALE
+						bodytype_name = specie_obj.females_standard_bodytype
 					else
 						gender = MALE
+						bodytype_name = AVERAGE_BODYTYPE
 
 					f_style = random_facial_hair_style(gender, species)
 					h_style = random_hair_style(gender, species, ipc_head)
 
 				if("gendervoice")
 					neuter_gender_voice = neuter_gender_voice == MALE ? FEMALE : MALE
+
+				if("bodytype")
+					if(bodytype_name == AVERAGE_BODYTYPE)
+						bodytype_name = SLIM_BODYTYPE
+					else
+						bodytype_name = AVERAGE_BODYTYPE
 
 				if("randomslot")
 					randomslot = !randomslot

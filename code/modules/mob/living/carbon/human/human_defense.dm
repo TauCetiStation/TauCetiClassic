@@ -44,6 +44,16 @@
 	P.def_zone = def_zone // a bit junky, but it will either bump this one, or bump object
 	return FALSE
 
+/mob/living/carbon/human/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(..())
+		return
+	if(hit_atom.density)
+		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smashes into [hit_atom]!</span>")
+		SetCrawling(TRUE)
+		update_canmove()
+		drop_from_inventory(l_hand)
+		drop_from_inventory(r_hand)
+
 /mob/living/carbon/human/mob_bullet_act(obj/item/projectile/P, def_zone)
 	. = PROJECTILE_ALL_OK
 
@@ -258,7 +268,7 @@
 			continue
 		BP.emplode(severity)
 		for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-			if(IO.robotic == 0)
+			if(!IO.is_robotic())
 				continue
 			IO.emplode(severity)
 	..()
@@ -275,7 +285,7 @@
 	var/hit_area = BP.name
 
 	if(istype(I,/obj/item/weapon/card/emag))
-		if(!BP.is_robotic())
+		if(!BP.is_robotic_part())
 			to_chat(user, "<span class='userdanger'>That limb isn't robotic.</span>")
 			return
 		if(BP.sabotaged)
@@ -318,7 +328,8 @@
 	if(prob(armor))
 		damage_flags &= ~(DAM_SHARP | DAM_EDGE)
 
-	var/datum/wound/created_wound = apply_damage(force_with_melee_skill, I.damtype, BP, armor, damage_flags, I)
+	var/impact_direction = get_impact_direction_from(user)
+	var/datum/wound/created_wound = apply_damage(force_with_melee_skill, I.damtype, BP, armor, damage_flags, I, impact_direction = impact_direction)
 
 	//Melee weapon embedded object code.
 	if(I.damtype == BRUTE && !I.anchored && I.can_embed && !I.is_robot_module())
@@ -464,8 +475,8 @@
 /mob/living/carbon/human/is_usable_head(targetzone = null)
 	if(isnull(targetzone))
 		var/obj/item/organ/external/head = get_bodypart(BP_HEAD)
-		if(head && head.is_usable())
-			return TRUE
+		return head && head.is_usable()
+
 	var/obj/item/organ/external/BP = get_bodypart(targetzone)
 	if(BP)
 		return BP.is_usable()
@@ -479,6 +490,8 @@
 		for(var/obj/item/organ/external/arm in pos_arms)
 			if(arm && arm.is_usable())
 				return TRUE
+		return FALSE
+
 	var/obj/item/organ/external/BP = get_bodypart(targetzone)
 	if(BP)
 		return BP.is_usable()
@@ -492,6 +505,8 @@
 		for(var/obj/item/organ/external/leg in pos_legs)
 			if(leg && leg.is_usable())
 				return TRUE
+		return FALSE
+
 	var/obj/item/organ/external/BP = get_bodypart(targetzone)
 	if(BP)
 		return BP.is_usable()

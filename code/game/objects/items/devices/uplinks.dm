@@ -11,7 +11,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/uses = 20 						// Numbers of crystals
 	// List of items not to shove in their hands.
 	var/active = 0
-	var/uplink_type = "traitor" //0 - traitor uplink, 1 - nuke
+	var/uplink_type = UPLINK_TYPE_TRAITOR
 	var/list/uplink_items = list()
 	var/list/extra_purchasable = list()
 

@@ -84,15 +84,18 @@
 			'text': '',
 			'theme': '',
 			'padding': 2,
+			'closed': false,
 			init: function(tileSize, control) {
 				tooltip.tileSize = parseInt(tileSize);
 				tooltip.control = control;
 			},
 			hide: function() {
+				tooltip.closed = true;
 				window.location = 'byond://winset?id='+tooltip.control+';is-visible=false';
 			},
 			updateCallback: function(map) {
 				if (typeof map === 'undefined' || !map) {return false;}
+				if (tooltip.closed) {return false;} //hidden after this update was requested, don't re-show
 
 				//alert(tooltip.params+' | '+tooltip.clientView+' | '+tooltip.text+' | '+tooltip.theme); //DEBUG
 
@@ -212,6 +215,7 @@
 				});
 			},
 			update: function(params, clientView, text, theme, special, pixelRatio) {
+				tooltip.closed = false;
 				//Assign our global object
 				tooltip.params = $.parseJSON(params);
 				tooltip.clientView = parseInt(clientView);

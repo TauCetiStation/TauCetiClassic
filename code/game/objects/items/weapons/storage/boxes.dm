@@ -471,6 +471,13 @@
 	for(var/i in 1 to storage_slots)
 		new /obj/item/weapon/match(src)
 
+/obj/item/weapon/storage/box/matches/can_be_inserted(obj/item/I, stop_messages = FALSE)
+	if(istype(I, /obj/item/weapon/match))
+		var/obj/item/weapon/match/match = I
+		if(match.lit || match.burnt)
+			return FALSE
+	return ..()
+
 /obj/item/weapon/storage/box/matches/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/match))
 		var/obj/item/weapon/match/M = I
@@ -646,6 +653,17 @@
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
 	make_exact_fit()
 
+/obj/item/weapon/storage/box/a774clip
+	name = "box of Mosin-Nagant clips"
+	desc = "A small cardboard box. It holds several 5-round stripper clips of 7.74x54mm ammunition, ready to be loaded into a Mosin-Nagant."
+	icon_state = "box"
+
+/obj/item/weapon/storage/box/a774clip/atom_init()
+	. = ..()
+	for(var/i in 1 to 5)
+		new /obj/item/ammo_box/magazine/a774clip(src)
+	make_exact_fit()
+
 //Hair sprays
 /obj/item/weapon/storage/box/hairdyes
 	name = "hair spray dye box"
@@ -745,3 +763,13 @@
 	name = "NT box"
 	desc = "It's a blue box with an 'N' on it. Glory to NanoTrasen!"
 	icon_state = "nanotrasen_box"
+
+/obj/item/weapon/storage/box/swabs
+	name = "Swab kit box"
+	desc = "Sterile equipment inside. Do not allow contamination."
+	icon_state = "dnabox"
+
+/obj/item/weapon/storage/box/swabs/atom_init()
+	. = ..()
+	for(var/i in 1 to 10)
+		new /obj/item/weapon/swab(src)

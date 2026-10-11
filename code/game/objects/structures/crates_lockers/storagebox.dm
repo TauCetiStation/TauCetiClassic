@@ -8,6 +8,8 @@
 	resistance_flags = CAN_BE_HIT
 	max_integrity = 100
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/storage_box/attack_hand(mob/user)
 	if(length(contents))
 		if(do_after(user, 5, target = src))

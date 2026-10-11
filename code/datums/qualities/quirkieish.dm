@@ -436,3 +436,11 @@
 
 	to_chat(H, "<span class='notice'>В твоей сумке лежат особые перчатки, они позволят тебе незаметно красть вещи у людей.</span>")
 	H.equip_or_collect(new /obj/item/clothing/gloves/black/strip(H), SLOT_IN_BACKPACK)
+
+/datum/quality/quirkieish/melodious_voice
+	name = "Melodious Voice"
+	desc = "У тебя крайне мелодичный голос."
+	requirement = "Нет."
+
+/datum/quality/quirkieish/melodious_voice/add_effect(mob/living/carbon/human/H, latespawn)
+	ADD_TRAIT(H, TRAIT_MELODIUS_VOICE, QUALITY_TRAIT)

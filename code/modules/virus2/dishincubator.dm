@@ -1,6 +1,6 @@
 #define DRAIN_RATE 5
 #define SUPPLY_CAP 100
-#define OPERATION_TIME 4
+#define OPERATION_TIME 1
 
 /obj/machinery/disease2/incubator
 	name = "Pathogenic incubator"

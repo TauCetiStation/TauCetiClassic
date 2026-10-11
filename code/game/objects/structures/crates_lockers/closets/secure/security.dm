@@ -229,7 +229,7 @@
 	new /obj/item/clothing/suit/storage/flak(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/storage/belt/security(src)
-	new /obj/item/clothing/mask/gas/sechailer(src)
+	new /obj/item/clothing/mask/breath/gas/sechailer(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/device/flash(src)
@@ -339,11 +339,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	overlay_unlocked = "cabinetsecure_unlocked"
 	overlay_welded = "cabinetsecure_welded"
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	new /obj/item/clothing/under/det(src)
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/device/detective_scanner(src)
+	new /obj/item/weapon/storage/briefcase/crimekit(src)
+	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/clothing/suit/armor/det_suit(src)
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_REARM_ENERGY))
 		new /obj/item/weapon/gun/energy/taser(src)
@@ -402,6 +405,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	overlay_unlocked = "cabinetsecure_unlocked"
 	overlay_welded = "cabinetsecure_welded"
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/closet/secure_closet/forensics/PopulateContents()
 	new /obj/item/clothing/under/rank/forensic_technician(src)
 	new /obj/item/clothing/under/rank/forensic_technician/black(src)
@@ -412,7 +417,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	new /obj/item/clothing/shoes/laceup(src)
 	new /obj/item/weapon/storage/box/evidence(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
-	new /obj/item/device/detective_scanner(src)
+	new /obj/item/weapon/storage/briefcase/crimekit(src)
+	new /obj/item/clothing/gloves/black(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/toy/crayon/chalk(src)
 
@@ -438,6 +444,19 @@ ADD_TO_GLOBAL_LIST(/obj/structure/closet/secure_closet/security, sec_closets_lis
 	else
 		for (var/i in 1 to 3)
 			new /obj/item/weapon/gun/projectile/automatic/pistol/glock(src)
+
+/obj/structure/closet/secure_closet/tactical_armor
+	name = "Tactical Armor Secure Closet"
+	req_access = list(access_security)
+	icon_state = "syndicatealtsecure"
+	icon_closed = "syndicatealtsecure"
+	icon_opened = "syndicatealtsecure_open"
+
+/obj/structure/closet/secure_closet/tactical_armor/PopulateContents()
+	new /obj/item/clothing/suit/armor/tactical(src)
+	new /obj/item/clothing/glasses/sunglasses/hud/sechud/tactical(src)
+	new /obj/item/clothing/under/pants/milipants_army/ranger(src)
+	new /obj/item/clothing/head/helmet/tactical(src)
 
 /obj/structure/closet/secure_closet/usp_cartridges
 	name = "USP cartridges Secure Closet"

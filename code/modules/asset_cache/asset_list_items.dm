@@ -61,6 +61,31 @@
 		"bluentlogo.png" = 'icons/paper_icons/bluentlogo.png'
 	)
 
+/datum/asset/simple/station_map
+
+/datum/asset/simple/station_map/New()
+	var/list/cache = list(
+		"box" = 'nano/images/nanomap_exodus_1_areas.png',
+		"gamma" = 'nano/images/nanomap_gamma_1_areas.png',
+		"falcon" = 'nano/images/nanomap_falcon_1_areas.png',
+		"prometheus" = 'nano/images/nanomap_prometheus_1_areas.png',
+		"delta" = 'nano/images/nanomap_delta_1_areas.png'
+	)
+
+	var/list/cachekey = list(
+		"box" = "nanomap_exodus_1_areas.png",
+		"gamma" = "nanomap_gamma_1_areas.png",
+		"falcon" = "nanomap_falcon_1_areas.png",
+		"prometheus" = "nanomap_prometheus_1_areas.png",
+		"delta" = "nanomap_delta_1_areas.png"
+	)
+	var/cached_map_file = cache[SSmapping.config.map_path]
+	if(cached_map_file)
+		assets[cachekey[SSmapping.config.map_path]] = cache[SSmapping.config.map_path]
+	assets["nanomap_maplegend.png"] =  'nano/images/nanomap_maplegend.png'
+
+	..()
+
 /datum/asset/simple/newscaster
 	assets = list(
 		"like.png" = 'icons/newscaster_icons/like.png',

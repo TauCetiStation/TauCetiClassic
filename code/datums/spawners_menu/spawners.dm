@@ -39,6 +39,14 @@
 
 		to_chat(ghost, "<span class='ghostalert'>Доступны новые роли в меню возрождения!</span>")
 
+	if(spawner.alert_message)
+		var/atom/source = spawner.pick_alert_source()
+		if(source)
+			var/mutable_appearance/overlay = null
+			if(spawner.alert_overlay_icon && spawner.alert_overlay_state)
+				overlay = mutable_appearance(spawner.alert_overlay_icon, spawner.alert_overlay_state)
+			notify_ghosts(spawner.alert_message, source = source, alert_overlay = overlay, action = spawner.alert_action, header = spawner.alert_header)
+
 	return spawner
 
 /datum/spawner
@@ -100,6 +108,14 @@
 	// id of timers
 	var/registration_timer_id
 	var/availability_timer_id
+
+	// If set — _create_spawners will send a ghost-alert when the spawner appears
+	var/alert_message
+	var/alert_header
+	var/alert_action = NOTIFY_JUMP
+	// Icon for alert_overlay; if unset — alert is sent without an overlay
+	var/alert_overlay_icon
+	var/alert_overlay_state
 
 /datum/spawner/New()
 	SHOULD_CALL_PARENT(TRUE)
@@ -272,6 +288,13 @@
 
 	return pick_landmarked_location(spawn_landmark_name)
 
+// Atom used as source for notify_ghosts. Defaults to a random landmark from spawn_landmark_name.
+// Returns null if nothing was found — notify_ghosts will be skipped in that case.
+/datum/spawner/proc/pick_alert_source()
+	if(spawn_landmark_name && length(landmarks_list[spawn_landmark_name]))
+		return pick(landmarks_list[spawn_landmark_name])
+	return null
+
 /datum/spawner/proc/spawn_body(mob/dead/spectator)
 	return
 
@@ -385,6 +408,11 @@
 
 	spawn_landmark_name = "blobstart"
 
+	alert_message = "Blob event! Доступна роль в спавнер-меню, чтобы стать блобом."
+	alert_header = "Blob"
+	alert_overlay_icon = 'icons/mob/blob.dmi'
+	alert_overlay_state = "blob_core"
+
 /datum/spawner/blob_event/spawn_body(mob/dead/spectator)
 	var/turf/spawn_turf = pick_spawn_location()
 	new /obj/structure/blob/core(spawn_turf, spectator.client, 120)
@@ -454,11 +482,22 @@
 
 	time_while_available = 3 MINUTES
 
+	alert_message = "Alien infestation! Доступна роль в спавнер-меню."
+	alert_header = "Alien Infestation"
+	alert_overlay_icon = 'icons/obj/cardboard_cutout.dmi'
+	alert_overlay_state = "cutout_fukken_xeno"
+
 /datum/spawner/alien_event/spawn_body(mob/dead/spectator)
 	var/list/vents = get_vents()
 	var/obj/vent = pick(vents)
 	var/mob/living/carbon/xenomorph/facehugger/new_xeno = new(vent.loc)
 	new_xeno.key = spectator.key
+
+/datum/spawner/alien_event/pick_alert_source()
+	var/list/vents = get_vents()
+	if(length(vents))
+		return pick(vents)
+	return null
 
 /*
  * Other
@@ -587,6 +626,11 @@
 
 	spawn_landmark_name = "Heist"
 
+	alert_message = "Heist event! Доступна роль в спавнер-меню, чтобы стать вокс-налётчиком."
+	alert_header = "Heist"
+	alert_overlay_icon = 'icons/obj/cardboard_cutout.dmi'
+	alert_overlay_state = "cutout_voxraider"
+
 /datum/spawner/vox/spawn_body(mob/dead/spectator)
 	var/spawnloc = pick_spawn_location()
 
@@ -631,6 +675,16 @@
 	time_for_registration = 0.5 MINUTES
 
 	time_while_available = 5 MINUTES
+
+	alert_message = "Abduction event! Доступна роль в спавнер-меню, чтобы стать похитителем."
+	alert_header = "Abductors"
+	alert_overlay_icon = 'icons/effects/landmarks_static.dmi'
+	alert_overlay_state = "abductor_agent"
+
+/datum/spawner/abductor/pick_alert_source()
+	if(length(scientist_landmarks))
+		return scientist_landmarks[1]
+	return null
 
 /datum/spawner/abductor/spawn_body(mob/dead/spectator)
 	// One team. Working together
@@ -707,6 +761,11 @@
 
 	spawn_landmark_name = "Solo operative"
 
+	alert_message = "Lone operative event! Доступна роль в спавнер-меню, чтобы стать одиночным агентом Синдиката."
+	alert_header = "Lone Operative"
+	alert_overlay_icon = 'icons/obj/cardboard_cutout.dmi'
+	alert_overlay_state = "cutout_flukecombat"
+
 /datum/spawner/lone_op_event/spawn_body(mob/dead/spectator)
 	var/spawnloc = pick_spawn_location()
 
@@ -734,6 +793,11 @@
 	time_for_registration = 0.5 MINUTES
 
 	spawn_landmark_name = "Wizard"
+
+	alert_message = "Wizard event! Доступна роль в спавнер-меню, чтобы стать магом."
+	alert_header = "Wizard"
+	alert_overlay_icon = 'icons/obj/cardboard_cutout.dmi'
+	alert_overlay_state = "cutout_wizard"
 
 /datum/spawner/wizard_event/New()
 	. = ..()

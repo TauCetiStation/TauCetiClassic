@@ -22,6 +22,8 @@
 	max_integrity = 200
 	resistance_flags = CAN_BE_HIT
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/bookcase/atom_init()
 	. = ..()
 	for(var/obj/item/I in loc)
@@ -215,7 +217,7 @@
 		new /obj/item/weapon/book/manual/wiki/security_space_law(src)
 	for (var/i in 1 to 2)
 		new /obj/item/weapon/book/manual/wiki/sop(src)
-	new /obj/item/weapon/book/manual/detective(src)
+	new /obj/item/weapon/book/manual/wiki/forensics(src)
 	update_icon()
 
 /obj/structure/bookcase/skills

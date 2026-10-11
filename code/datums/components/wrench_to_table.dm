@@ -42,7 +42,7 @@
 		return
 	wrenched_to = table
 
-	if(tool.use_tool(parent, user, SKILL_TASK_VERY_EASY, volume = 50))
+	if(tool.use_tool(parent, user, SKILL_TASK_VERY_EASY, volume = 50, quality = QUALITY_WRENCHING))
 		if(!parent_item.anchored)
 			to_chat(user, "<span class='warning'>[parent_item.name] прикручен.</span>")
 			wrench()

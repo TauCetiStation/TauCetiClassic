@@ -67,7 +67,7 @@
 				var/obj/item/weapon/weldingtool/WT = W
 				if (WT.use(0,user))
 					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")
-					if(WT.use_tool(src, user, 40, volume = 50))
+					if(WT.use_tool(src, user, 40, volume = 50, quality = QUALITY_WELDING))
 						to_chat(user, "<span class='notice'>You dissasembled the windoor assembly!</span>")
 						new /obj/item/stack/sheet/rglass(loc, 5)
 						if(secure)
@@ -80,7 +80,7 @@
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
 			if(iswrenching(W) && !anchored)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "You start to secure the windoor assembly to the floor.")
-				if(W.use_tool(src, user, 40, volume = 100))
+				if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
 					if(anchored)
 						return
 					to_chat(user, "<span class='notice'>You've secured the windoor assembly!</span>")
@@ -93,7 +93,7 @@
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
 			else if(iswrenching(W) && anchored)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "You start to unsecure the windoor assembly to the floor.")
-				if(W.use_tool(src, user, 40, volume = 100))
+				if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
 					if(!anchored)
 						return
 					to_chat(user, "<span class='notice'>You've unsecured the windoor assembly!</span>")
@@ -142,7 +142,7 @@
 			//Removing wire from the assembly. Step 5 undone.
 			if(iscutter(W) && !electronics)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
-				if(W.use_tool(src, user, 40, volume = 100))
+				if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_CUTTING))
 					if(state != "02")
 						return
 
@@ -175,7 +175,7 @@
 				if(!electronics)
 					return
 				user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to uninstall electronics from the airlock assembly.")
-				if(W.use_tool(src, user, 40, volume = 100))
+				if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_SCREWING))
 					if(!electronics)
 						return
 					to_chat(user, "<span class='notice'>You've removed the airlock electronics!</span>")
@@ -200,7 +200,7 @@
 					to_chat(usr, "<span class='warning'>The assembly is missing electronics.</span>")
 					return
 				user.visible_message("[user] pries the windoor into the frame.", "You start prying the windoor into the frame.")
-				if(W.use_tool(src, user, 40, volume = 100))
+				if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_PRYING))
 					if(!electronics)
 						return
 

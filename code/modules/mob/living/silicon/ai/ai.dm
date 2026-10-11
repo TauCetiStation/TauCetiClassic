@@ -37,7 +37,7 @@ var/global/list/ai_verbs_default = list(
 	density = TRUE
 	canmove = FALSE
 	status_flags = CANSTUN|CANPARALYSE
-	shouldnt_see = list(/obj/effect/rune)
+	shouldnt_see = list(/obj/effect/rune, /obj/item/mine/replicator)
 	w_class = SIZE_HUMAN
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/camera = null
@@ -834,7 +834,7 @@ var/global/list/ai_verbs_default = list(
 		if(user.is_busy()) return
 		if(anchored)
 			user.visible_message("<span class='notice'>\The [user] starts to unbolt \the [src] from the plating...</span>")
-			if(!W.use_tool(src, user, 40, volume = 50))
+			if(!W.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 				user.visible_message("<span class='notice'>\The [user] decides not to unbolt \the [src].</span>")
 				return
 			user.visible_message("<span class='notice'>\The [user] finishes unfastening \the [src]!</span>")
@@ -842,7 +842,7 @@ var/global/list/ai_verbs_default = list(
 			return
 		else
 			user.visible_message("<span class='notice'>\The [user] starts to bolt \the [src] to the plating...</span>")
-			if(!W.use_tool(src, user, 40, volume = 50))
+			if(!W.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 				user.visible_message("<span class='notice'>\The [user] decides not to bolt \the [src].</span>")
 				return
 			user.visible_message("<span class='notice'>\The [user] finishes fastening down \the [src]!</span>")
@@ -948,3 +948,6 @@ var/global/list/ai_verbs_default = list(
 		pixel_y = 8
 	else
 		pixel_y = 0
+
+/mob/living/silicon/ai/is_antag()
+	return laws?.zeroth

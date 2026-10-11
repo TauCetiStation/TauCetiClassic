@@ -48,6 +48,7 @@
 								"Cyborg Components",
 								"Misc",
 								"Stock Parts",
+								"Organs"
 								)
 	required_skills = list(/datum/skill/research = SKILL_LEVEL_PRO)
 

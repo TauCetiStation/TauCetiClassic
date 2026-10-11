@@ -93,9 +93,10 @@
 		if (ishuman(O))
 			var/mob/living/carbon/human/H = O
 			var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
-			if (IO.damage > IO.min_bruised_damage && prob(IO.damage + 50))
-				H.flash_eyes()
-				IO.damage += rand(1, 5)
+			if(IO)
+				if (IO.damage > IO.min_bruised_damage && prob(IO.damage + 50))
+					H.flash_eyes()
+					IO.damage += rand(1, 5)
 		else
 			if(!O.blinded && isliving(O))
 				var/mob/living/L = O

@@ -3,6 +3,11 @@
 	var/is_invis_anim = FALSE
 	//For handling persistent filters
 
+// A small squish to telegraph that something opened or shuffled its contents.
+/atom/movable/proc/do_squish_animation()
+	animate(src, time = 1.5, transform = matrix(transform).Scale(1.07, 0.9))
+	animate(time = 2, transform = matrix(transform).Scale(1/1.07, 1/0.9))
+
 /atom/proc/before_shake_animation(intensity, time, intensity_dropoff, list/viewers)
 	return
 
@@ -21,8 +26,6 @@
 	if(is_invis_anim)
 		return
 	is_invis_anim = TRUE
-	var/prev_pixel_x = pixel_x
-	var/prev_pixel_y = pixel_y
 	var/matrix/prev_transform = transform
 
 	var/image/I = image(icon, icon_state)
@@ -31,6 +34,8 @@
 	I.layer = layer
 	I.loc = src
 	I.appearance_flags |= KEEP_APART
+	I.pixel_x = 0
+	I.pixel_y = 0
 
 	before_shake_animation(intensity, time, intensity_dropoff, clients)
 
@@ -50,8 +55,8 @@
 		intensity *= intensity_dropoff
 
 		invisibility = 101
-		animate(I, pixel_x = prev_pixel_x + shiftx, pixel_y = prev_pixel_y + shifty, transform = M, time = 0.5)
-		animate(pixel_x = prev_pixel_x, pixel_y = prev_pixel_y, transform = prev_transform, time = 0.5)
+		animate(I, pixel_x = shiftx, pixel_y = shifty, transform = M, time = 0.5)
+		animate(pixel_x = 0, pixel_y = 0, transform = prev_transform, time = 0.5)
 		sleep(1)
 
 		if(QDELING(src))

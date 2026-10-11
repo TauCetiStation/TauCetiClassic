@@ -8,25 +8,23 @@
 		severity_range = rand(15,23)
 
 	for(var/obj/machinery/power/apc/apc in range(severity_range,A))
-		if(severity == EVENT_LEVEL_MUNDANE)
-			apc.aidisabled = TRUE
-			if(prob(50))
-				apc.disable_random_categories()
-
-			if(prob(50))
-				apc.disable_autocharge()
-			else if(prob(50))
-				apc.toggle_power_use()
-			else
-				apc.make_short_circuit()
-
-			apc.update()
-			apc.update_icon()
+		apc.aidisabled = TRUE
+		if(!is_valid_apc(apc))
 			continue
-		if(is_valid_apc(apc))
-			apc.emagged = 1
-			apc.locked = FALSE
-			apc.update_icon()
+		if(prob(50))
+			apc.disable_random_categories()
+
+		if(prob(50))
+			apc.disable_autocharge()
+		else if(prob(50))
+			apc.toggle_power_use()
+		else
+			apc.make_short_circuit()
+
+		apc.needs_reboot = TRUE
+		apc.operating = 0
+		apc.update()
+		apc.update_icon()
 
 /datum/event/apc_damage/proc/acquire_random_apc()
 	var/list/possibleEpicentres = landmarks_list["lightsout"]
@@ -57,4 +55,4 @@
 		return 0
 
 	var/turf/T = get_turf(apc)
-	return !apc.emagged && T && (T.z in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING)))
+	return !apc.emagged && !apc.needs_reboot && T && (T.z in SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING)))

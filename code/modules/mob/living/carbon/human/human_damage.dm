@@ -4,7 +4,7 @@
 	var/total_burn = 0
 	var/total_brute = 0
 	for(var/obj/item/organ/external/BP in bodyparts) // hardcoded to streamline things a bit
-		if(BP.is_robotic() && !BP.vital)
+		if(BP.is_robotic_part() && !BP.vital)
 			continue // *non-vital* robot limbs don't count towards shock and crit
 		total_brute += BP.brute_dam
 		total_burn += BP.burn_dam
@@ -57,7 +57,7 @@
 /mob/living/carbon/human/getBruteLoss()
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_robotic() && !BP.vital)
+		if(BP.is_robotic_part() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.brute_dam
 	return amount
@@ -76,7 +76,7 @@
 /mob/living/carbon/human/getFireLoss()
 	var/amount = 0
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_robotic() && !BP.vital)
+		if(BP.is_robotic_part() && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
 		amount += BP.burn_dam
 	return amount
@@ -308,7 +308,7 @@ This function restores all bodyparts.
 
 	return bodyparts_by_name[zone]
 
-/mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
+/mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null, impact_direction = null)
 	if(damagetype == HALLOSS && HAS_TRAIT(src, TRAIT_NO_PAIN))
 		return FALSE
 
@@ -336,13 +336,16 @@ This function restores all bodyparts.
 	if(blocked)
 		damage *= blocked_mult(blocked)
 
+	if(!impact_direction && istype(used_weapon, /obj/item/projectile))
+		impact_direction = get_projectile_hit_direction(used_weapon)
+
 	var/datum/wound/created_wound
 	damageoverlaytemp = 20
 	switch(damagetype)
 		if(BRUTE)
-			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon)
+			created_wound = BP.take_damage(damage, 0, damage_flags, used_weapon, impact_direction = impact_direction, protection = blocked)
 		if(BURN)
-			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon)
+			created_wound = BP.take_damage(0, damage, damage_flags, used_weapon, impact_direction = impact_direction,  protection = blocked)
 	if(damage > 8 && (BP.status & ORGAN_SPLINTED))
 		BP.status &= ~ORGAN_SPLINTED
 		playsound(src, 'sound/effects/splint_broke.ogg', VOL_EFFECTS_MASTER)

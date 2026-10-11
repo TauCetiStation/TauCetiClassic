@@ -48,7 +48,7 @@
 	if(health < (config.health_threshold_crit) && target_zone == O_MOUTH)
 		INVOKE_ASYNC(src, PROC_REF(perform_av), attacker)
 		return TRUE
-	if(Heart && Heart.parent_bodypart == target_zone && Heart.heart_status != HEART_NORMAL)
+	if(attacker != src && lying && Heart && Heart.parent_bodypart == target_zone && Heart.heart_status != HEART_NORMAL)
 		INVOKE_ASYNC(src, PROC_REF(perform_cpr), attacker)
 		return TRUE
 	if(attacker != src || !apply_pressure(attacker, target_zone))
@@ -73,7 +73,7 @@
 */
 /mob/living/carbon/human/proc/apply_pressure(mob/living/user, target_zone)
 	var/obj/item/organ/external/BP = get_bodypart(target_zone)
-	if(!BP || !(BP.status & ORGAN_BLEEDING) || BP.is_robotic())
+	if(!BP || !(BP.status & ORGAN_BLEEDING) || BP.is_robotic_part())
 		return FALSE
 
 	if(user.is_busy())

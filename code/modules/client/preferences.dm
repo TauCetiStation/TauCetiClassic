@@ -79,6 +79,8 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/snd_admin_vol = 100
 	var/snd_jukebox_vol = 100
 
+	var/snd_jukebox_mediaserver
+
 	//antag preferences
 	var/list/be_role = list()
 	var/uplinklocation = "PDA"
@@ -92,9 +94,14 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/height = HUMANHEIGHT_MEDIUM		//height of character
 	var/underwear = 1					//underwear type
 	var/undershirt = 1					//undershirt type
+	var/undershirt_print = null
 	var/socks = 1						//socks type
 	var/backbag = 2						//backpack type
 	var/use_skirt = FALSE				//using skirt uniform version
+	var/jumpsuit_style = POLY_STYLE_JOB	//polychromic jumpsuit style (POLY_STYLE_JOB = use job default)
+	var/jumpsuit_pattern = null			//polychromic jumpsuit pattern
+	var/jumpsuit_color = "#ffffff"		//polychromic jumpsuit accent color
+	var/jumpsuit_base_color = "#ffffff"	//polychromic jumpsuit base color (for white-base styles)
 	var/h_style = "Bald"				//Hair type
 	var/r_hair = 0						//Hair color
 	var/g_hair = 0						//Hair color
@@ -120,6 +127,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/species = HUMAN
 	var/language = "None"				//Secondary language
 	var/insurance = INSURANCE_NONE
+	var/bodytype_name = AVERAGE_BODYTYPE
 
 	//Some faction information.
 	var/home_system = "None"            //System of birth.
@@ -464,6 +472,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	character.h_style = h_style
 	character.grad_style = grad_style
 	character.f_style = f_style
+	character.bodytype_object = global.bodytypes_list[bodytype_name]
 
 	character.home_system = home_system
 	character.citizenship = citizenship
@@ -504,11 +513,8 @@ var/global/list/datum/preferences/preferences_datums = list()
 			var/obj/item/organ/external/new_BP = new type(null)
 			new_BP.insert_organ(character)
 
-		else if(status == "assisted" && IO)
-			IO.mechassist()
-		else if(status == "mechanical" && IO)
+		else if(status == "cybernetic" && IO)
 			IO.mechanize()
-
 		else
 			continue
 
@@ -520,20 +526,10 @@ var/global/list/datum/preferences/preferences_datums = list()
 		W.set_dir(character.dir)
 		W.buckle_mob(character)
 
-	if(underwear > underwear_m.len || underwear < 1)
-		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES
 	character.underwear = underwear
-
-	if(undershirt > undershirt_t.len || undershirt < 1)
-		undershirt = 0
 	character.undershirt = undershirt
-
-	if(socks > socks_t.len || socks < 1)
-		socks = 0
 	character.socks = socks
-
-	if(backbag > 5 || backbag < 1)
-		backbag = 1 //Same as above
+	character.undershirt_print = undershirt_print
 	character.backbag = backbag
 	character.use_skirt = use_skirt
 
@@ -565,3 +561,15 @@ var/global/list/datum/preferences/preferences_datums = list()
 		var/datum/browser/popup = new(user, "jobban_info", "Информация о джоббане", ntheme = CSS_THEME_LIGHT)
 		popup.set_content(dat)
 		popup.open()
+
+/datum/preferences/proc/spawn_custom_jumpsuit()
+	var/datum/poly_style/style = global.poly_styles_by_key[jumpsuit_style]
+	if(!style)                                  // "job" or unset = no polychromic jumpsuit
+		return null
+	var/obj/item/clothing/under/color/polychromic/J = new()
+	J.poly_style = style
+	J.poly_pattern = style.forced_pattern || (jumpsuit_pattern == POLY_PATTERN_TURT ? null : jumpsuit_pattern)
+	var/base_col = style.white_base ? jumpsuit_base_color : "#ffffff"
+	J.poly_colors = list(base_col, jumpsuit_color)
+	J.update_icon()
+	return J

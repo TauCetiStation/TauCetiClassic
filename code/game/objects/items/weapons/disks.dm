@@ -209,17 +209,17 @@
 /obj/item/weapon/disk/smartlight_programm/hard
 	light_mode = /datum/light_mode/hard
 
-/obj/item/weapon/disk/smartlight_programm/k3000
-	light_mode = /datum/light_mode/k3000
-
 /obj/item/weapon/disk/smartlight_programm/k4000
 	light_mode = /datum/light_mode/k4000
+
+/obj/item/weapon/disk/smartlight_programm/k4500
+	light_mode = /datum/light_mode/k4500
 
 /obj/item/weapon/disk/smartlight_programm/k5000
 	light_mode = /datum/light_mode/k5000
 
-/obj/item/weapon/disk/smartlight_programm/k6000
-	light_mode = /datum/light_mode/k6000
+/obj/item/weapon/disk/smartlight_programm/k5500
+	light_mode = /datum/light_mode/k5500
 
 /obj/item/weapon/disk/smartlight_programm/shadows_soft
 	light_mode = /datum/light_mode/shadows_soft
@@ -241,3 +241,59 @@
 
 /obj/item/weapon/disk/smartlight_programm/neon_dark
 	light_mode = /datum/light_mode/neon_dark
+
+/* Language disks and box */
+
+/obj/item/weapon/disk/language
+	name = "language disk"
+	w_class = SIZE_TINY
+	var/language // the language we are adding using the language collar
+
+/obj/item/weapon/disk/language/atom_init()
+	var/diskcolor = pick(0,1,2,3,4,5,6,7,8)
+	icon_state = "datadisk[diskcolor]"
+	item_state_world = "datadisk[diskcolor]_world"
+	item_state_inventory = "datadisk[diskcolor]"
+	. = ..()
+
+/obj/item/weapon/disk/language/solcommon
+	name = "Sol Common Language Disk"
+	desc = "Contains Sol Common language. Mostly usseles."
+	language = LANGUAGE_SOLCOMMON
+
+/obj/item/weapon/disk/language/vox
+	name = "Vox Language Disk"
+	desc = "Contains Vox Pidgin language. A crude, but functional, language used by the Vox."
+	language = LANGUAGE_VOXPIDGIN
+
+/obj/item/weapon/disk/language/skrell
+	name = "Skrellian Language Disk"
+	desc = "Contains Skrellian language. A complex language used by some frogs."
+	language = LANGUAGE_SKRELLIAN
+
+/obj/item/weapon/disk/language/tajaran
+	name = "Tajaran Language Disk"
+	desc = "Contains Siikmaas language. Meow?"
+	language = LANGUAGE_SIIKMAAS
+
+/obj/item/weapon/disk/language/unathi
+	name = "Unathi Language Disk"
+	desc = "Contains SintaUnathi language. A language used by the Unathi."
+	language = LANGUAGE_SINTAUNATHI
+
+/obj/item/weapon/disk/language/xenomorph
+	name = "Xenomorph Language Disk"
+	desc = "Experemental cartridge. Contains Xenomorph language. You've always dreamed of talking to your killer, haven't you?"
+	language = LANGUAGE_XENOMORPH
+
+/obj/item/weapon/storage/box/language_disks
+	name = "Language Disks Box"
+	desc = "A box containing various language disks. Useful for language collars."
+
+/obj/item/weapon/storage/box/language_disks/atom_init()
+	. = ..()
+	new /obj/item/weapon/disk/language/solcommon(src)
+	new /obj/item/weapon/disk/language/skrell(src)
+	new /obj/item/weapon/disk/language/tajaran(src)
+	new /obj/item/weapon/disk/language/unathi(src)
+	new /obj/item/weapon/disk/language/vox(src)

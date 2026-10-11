@@ -5,6 +5,8 @@
 	icon_state = "densecrate"
 	density = TRUE
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/largecrate/attack_hand(mob/user)
 	to_chat(user, "<span class='notice'>You need a crowbar to pry this open!</span>")
 	return
@@ -21,6 +23,11 @@
 		qdel(src)
 	else
 		return attack_hand(user)
+
+/obj/structure/largecrate/Destroy()
+	if(isturf(loc))
+		new /obj/effect/abstract/particle_holder(loc, /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	return ..()
 
 /obj/structure/largecrate/mule
 	icon_state = "mulecrate"

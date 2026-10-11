@@ -29,6 +29,8 @@
 	appearance_flags = TILE_BOUND|PIXEL_SCALE|KEEP_TOGETHER
 
 /mob/living/carbon/human/atom_init(mapload, new_species)
+	bodytype_object = global.bodytypes_list[/datum/preferences::bodytype_name]
+
 	AddComponent(/datum/component/mood)
 
 	dna = new
@@ -80,6 +82,7 @@
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(organs)
 	QDEL_NULL(vessel)
+	QDEL_NULL(interaction_panel)
 	return ..()
 
 
@@ -226,61 +229,65 @@
 		rig_setup_stat(rig)
 
 /mob/living/carbon/human/ex_act(severity)
-	if(!blinded)
+	if(eyecheck() < FLASHES_FULL_PROTECTION)
 		flash_eyes()
 
-	var/shielded = 0
-	var/b_loss = null
-	var/f_loss = null
+	var/weapon_message = "Explosive Blast"
+	var/bomb_protection = run_armor_check(null, BOMB)
+	var/brute_damge
+	var/fire_damge
 	switch (severity)
 		if(EXPLODE_DEVASTATE)
-			b_loss += 500
-			if (!prob(getarmor(null, BOMB)))
+			brute_damge = 150
+			fire_damge = 200
+			if(!prob(bomb_protection))
 				gib()
 				return
 			else
 				var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(target, 200, 4)
-			//return
-//				var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
-				//user.throw_at(target, 200, 4)
 
 		if(EXPLODE_HEAVY)
-			if (!shielded)
-				b_loss += 60
-
-			f_loss += 60
-
-			if (prob(getarmor(null, BOMB)))
-				b_loss = b_loss/1.5
-				f_loss = f_loss/1.5
+			brute_damge = 15
+			fire_damge = 30
 
 			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 30
 				ear_deaf += 120
-			if (prob(70) && !shielded)
+			if (prob(70) && !prob(bomb_protection))
 				Paralyse(10)
 
 		if(EXPLODE_LIGHT)
-			b_loss += 30
-			if (prob(getarmor(null, BOMB)))
-				b_loss = b_loss/2
+			brute_damge = 5
+			fire_damge = 10
 			if (!istype(l_ear, /obj/item/clothing/ears/earmuffs) && !istype(r_ear, /obj/item/clothing/ears/earmuffs))
 				ear_damage += 15
 				ear_deaf += 60
-			if (prob(50) && !shielded)
+			if(prob(50) && !prob(bomb_protection))
 				Paralyse(10)
 
-	// focus most of the blast on one organ
-	var/obj/item/organ/external/BP = pick(bodyparts)
-	BP.take_damage(b_loss * 0.9, f_loss * 0.9, used_weapon = "Explosive blast")
+	var/list/selecteble_bodyparts = bodyparts.Copy()
+	for(var/i = 0; i < 3; i++)
+		var/obj/item/organ/external/BP = pick(selecteble_bodyparts)
 
-	// distribute the remaining 10% on all limbs equally
-	b_loss *= 0.1
-	f_loss *= 0.1
+		apply_damage(fire_damge * rand(50, 100) * 0.01, BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
+		apply_damage(brute_damge * rand(50, 100) * 0.01, BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
+		var/BP_bomb_protection = run_armor_check(BP, BOMB)
+		if(!prob(BP_bomb_protection) && EXPLODE_DEVASTATE)
+			if(BP)
+				if(prob(50) && !BP.is_broken())
+					BP.fracture()
+					BP.sever_artery()
+				else if(prob(50))
+					BP.droplimb()
 
-	var/weapon_message = "Explosive Blast"
-	take_overall_damage(b_loss * 0.2, f_loss * 0.2, used_weapon = weapon_message)
+		selecteble_bodyparts -= BP
+
+	// minor "behind the armor" damage from the blast wave across the entire body
+	brute_damge *= 0.25
+	fire_damge *= 0.25
+
+	take_overall_damage(brute_damge, fire_damge, used_weapon = weapon_message)
 
 /mob/living/carbon/human/airlock_crush_act()
 	..()
@@ -401,8 +408,9 @@
 			regenerating_bodypart = null
 
 /mob/living/carbon/human/restrained(check_type = ARMS)
-	if ((check_type & ARMS) && handcuffed)
-		return TRUE
+	if (check_type & ARMS)
+		if(handcuffed || istype(buckled, /obj/structure/stool/bed/nest))
+			return TRUE
 	if ((check_type & LEGS) && legcuffed)
 		return TRUE
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
@@ -1129,60 +1137,11 @@
 			gender = MALE
 		else
 			gender = FEMALE
+		set_bodytype_for_gender()
 	regenerate_icons(update_body_preferences = TRUE)
 	check_dna()
 
 	visible_message("<span class='notice'>\The [src] morphs and changes [get_visible_gender() == MALE ? "his" : get_visible_gender() == FEMALE ? "her" : "their"] appearance!</span>", "<span class='notice'>You change your appearance!</span>", "<span class='warning'>Oh, god!  What the hell was that?  It sounded like flesh getting squished and bone ground into a different shape!</span>")
-
-/mob/living/carbon/human/proc/remotesay() //#Z2
-	set name = "Project mind"
-	set category = "Superpower"
-
-	if(stat!=CONSCIOUS)
-		reset_view(0)
-		remoteview_target = null
-		return
-
-	if(!(REMOTE_TALK in src.mutations))
-		src.verbs -= /mob/living/carbon/human/proc/remotesay
-		return
-
-	var/list/names = list()
-	var/list/creatures = list()
-	var/list/namecounts = list()
-
-	var/turf/src_turf = get_turf(src)
-	if(!src_turf)
-		return
-
-	for(var/mob/living/carbon/M as anything in carbon_list)
-		var/name = M.real_name
-		if(name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		var/turf/temp_turf = get_turf(M)
-		if(!temp_turf || temp_turf.z != src_turf.z)
-			continue
-		creatures[name] += M
-
-	var/mob/target = input ("Who do you want to project your mind to ?") as null|anything in creatures
-	if(isnull(target))
-		return
-
-	var/say = sanitize(input("What do you wish to say"))
-	if(!say)
-		return
-	var/mob/T = creatures[target]
-	if(REMOTE_TALK in T.mutations)
-		to_chat(T, "<span class='notice'>You hear [src.real_name]'s voice: [say]</span>")
-	else
-		to_chat(T, "<span class='notice'>You hear a voice that seems to echo around the room: [say]</span>")
-	to_chat(usr, "<span class='notice'>You project your mind into [T.real_name]: [say]</span>")
-	to_chat(observer_list, "<i>Telepathic message from <b>[src]</b> to <b>[T]</b>: [say]</i>")
-	log_say("Telepathic message from [key_name(src)] to [key_name(T)]: [say]")
 
 /mob/living/carbon/human/proc/remoteobserve()
 	set name = "Remote View"
@@ -1262,14 +1221,29 @@
 
 /mob/living/carbon/human/proc/is_lung_ruptured()
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
+
+	if(!IO)
+		return
+
 	return IO.is_bruised()
 
 /mob/living/carbon/human/proc/rupture_lung()
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
 
+	if(!IO || IO.is_robotic()) //robotics lungs are durable and don't tear.
+		return
+
 	if(!IO.is_bruised())
 		custom_pain("You feel a stabbing pain in your chest!", 1)
 		IO.damage = IO.min_bruised_damage
+
+/mob/living/carbon/human/proc/rupture_heart()
+	var/obj/item/organ/internal/heart/IO = organs_by_name[O_HEART]
+
+	if(!IO || IO.is_robotic())
+		return
+
+	IO.damage = max(IO.damage, IO.min_broken_damage)
 
 /*
 /mob/living/carbon/human/verb/simulate()
@@ -1353,7 +1327,7 @@
 				to_chat(src, msg)
 
 				BP.take_damage(rand(1,3), 0, 0)
-				if(!BP.is_robotic()) //There is no blood in protheses.
+				if(!BP.is_robotic_part()) //There is no blood in protheses.
 					if(!reagents.has_reagent("metatrombine")) // metatrombine just prevents bleeding, not toxication
 						BP.status |= ORGAN_BLEEDING
 					adjustToxLoss(rand(1,3))
@@ -1377,7 +1351,7 @@
 		usr.visible_message("<span class='notice'>[usr] begins counting their pulse.</span>",\
 		"You begin counting your pulse.")
 
-	if(src.pulse)
+	if(get_pulse())
 		to_chat(usr, "<span class='notice'>[self ? "You have a" : "[src] has a"] pulse! Counting...</span>")
 	else
 		to_chat(usr, "<span class='warning'>[src] has no pulse!</span>")//it is REALLY UNLIKELY that a dead person would check his own pulse
@@ -1389,7 +1363,7 @@
 	if(usr.l_move_time >= time)	//checks if our mob has moved during the sleep()
 		to_chat(usr, "You moved while counting. Try again.")
 	else
-		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [get_pulse(GETPULSE_HAND)].</span>")
+		to_chat(usr, "<span class='notice'>[self ? "Your" : "[src]'s"] pulse is [get_pulse_number(GETPULSE_HAND)].</span>")
 
 /mob/living/carbon/human/proc/set_species(new_species, force_organs = TRUE, default_colour = FALSE)
 	var/datum/species/old_species = species
@@ -1776,7 +1750,7 @@
 	var/mutable_appearance/MA = new()
 	MA.appearance_flags = KEEP_TOGETHER
 	for(var/obj/item/organ/external/BP in bodyparts)
-		if(BP.is_stump || BP.is_robotic() || !BP.species.skeleton)
+		if(BP.is_stump || BP.is_robotic_part() || !BP.species.skeleton)
 			continue
 		var/skeleton_state = BP.get_icon_state(gender_state = FALSE, fat_state = FALSE, pump_state = FALSE) // there is no fat or pumped skeletons
 		MA.add_overlay(mutable_appearance(species.skeleton, skeleton_state))
@@ -1796,6 +1770,9 @@
 	MA = update_height(MA)
 	return MA
 
+/mob/living/carbon/human/proc/need_breathe()
+	return !species.breathing_organ && should_have_organ(species.breathing_organ)
+
 /mob/living/carbon/human/proc/should_have_organ(organ_check)
 
 	if(HAS_TRAIT(src, ELEMENT_TRAIT_SKELETON))
@@ -1807,7 +1784,7 @@
 	else if(organ_check in list(O_LIVER, O_KIDNEYS))
 		BP = bodyparts_by_name[BP_GROIN]
 
-	if(BP && BP.is_robotic())
+	if(BP && BP.is_robotic_part())
 		return FALSE
 	return species.has_organ[organ_check]
 
@@ -1895,7 +1872,7 @@
 	if(HAS_TRAIT(src, TRAIT_NO_BLOOD)) // this checks for ipc/dionea/etc., but probably we should check for can_breathe and lungs
 		return
 
-	if(world.time - timeofdeath >= DEFIB_TIME_LIMIT)
+	if(stat == DEAD && world.time - timeofdeath >= DEFIB_TIME_LIMIT)
 		to_chat(user, "<span class='notice'>It seems [src] is far too gone to be reanimated... Your efforts are futile.</span>")
 		return
 
@@ -2041,11 +2018,14 @@
 
 	var/new_w_class = initial(w_class)
 
-	if(SMALLSIZE in mutations)
-		new_w_class -= 1
+	if(HAS_TRAIT(src, ELEMENT_TRAIT_SMOLL))
+		new_w_class = SIZE_MINUSCULE
+	else
+		if(SMALLSIZE in mutations)
+			new_w_class -= 1
 
-	if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
-		new_w_class += 1
+		if(HAS_TRAIT_FROM(src, TRAIT_FAT, OBESITY_TRAIT))
+			new_w_class += 1
 
 	w_class = new_w_class
 
@@ -2241,16 +2221,6 @@
 		update_inv_slot(SLOT_GLOVES)
 		germ_level = 0
 
-/mob/living/carbon/human/pickup_ore()
-	var/turf/simulated/floor/F = get_turf(src)
-	var/obj/item/weapon/storage/bag/ore/B
-	for(var/obj/item/weapon/storage/bag/ore/bag in list(l_store , r_store, l_hand, r_hand, belt, s_store))
-		B = bag
-		if(B.max_storage_space < B.storage_space_used() + SIZE_TINY)
-			continue
-		F.attackby(B, src)
-		break
-
 /mob/living/carbon/human/proc/randomize_appearance()
 	gender = pick(MALE, FEMALE)
 
@@ -2282,9 +2252,10 @@
 	g_eyes = eye_color[2]
 	b_eyes = eye_color[3]
 
-	underwear = rand(1,underwear_m.len)
-	undershirt = rand(1,undershirt_t.len)
-	socks = rand(1, socks_t.len)
+	underwear = rand(0,underwear_t.len)
+	undershirt = rand(0,undershirt_t.len)
+	undershirt_print = prob(50) ? pick(undershirt_prints_t) : null
+	socks = rand(0, socks_t.len)
 	backbag = rand(2, backbaglist.len)
 
 	use_skirt = pick(TRUE, FALSE)
@@ -2318,3 +2289,65 @@
 /mob/living/carbon/human/get_trail_state()
 	if(blood_amount() > 0)
 		return ..()
+
+//generates realistic-ish pulse output based on preset levels
+/mob/living/carbon/human/get_pulse_number(method)	//method 0 is for hands, 1 is for machines, more accurate
+	var/temp = 0								//see setup.dm:694
+	switch(get_pulse())
+		if(PULSE_NONE)
+			return "0"
+		if(PULSE_SLOW)
+			temp = rand(40, 60)
+			return num2text(method ? temp : temp + rand(-10, 10))
+		if(PULSE_NORM)
+			temp = rand(60, 90)
+			return num2text(method ? temp : temp + rand(-10, 10))
+		if(PULSE_FAST)
+			temp = rand(90, 120)
+			return num2text(method ? temp : temp + rand(-10, 10))
+		if(PULSE_2FAST)
+			temp = rand(120, 160)
+			return num2text(method ? temp : temp + rand(-10, 10))
+		if(PULSE_THREADY)
+			return method ? ">250" : "extremely weak and fast, patient's artery feels like a thread"
+//			output for machines^	^^^^^^^output for people^^^^^^^^^
+
+/mob/living/carbon/human/proc/get_full_print()
+	if(!dna || !dna.uni_identity)
+		return
+	return md5(dna.uni_identity)
+
+/mob/living/carbon/human/try_wrap_up(wrap_type)
+	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
+	P.icon_state = "deliveryhuman"
+
+	P.add_texture(wrap_type)
+
+	if(client)
+		client.perspective = EYE_PERSPECTIVE
+		client.eye = P
+
+	forceMove(P)
+
+	return P
+
+// keeps bodytype in sync with the current gender/species (males have no slim sprites)
+/mob/living/carbon/human/proc/set_bodytype_for_gender()
+	if(gender == FEMALE && species)
+		bodytype_object = global.bodytypes_list[species.females_standard_bodytype]
+	else
+		bodytype_object = global.bodytypes_list[AVERAGE_BODYTYPE]
+
+// switch to fat, remembering the previous bodytype so we can restore it later
+/mob/living/carbon/human/proc/set_bodytype_fat()
+	if(bodytype_object.name != FAT_BODYTYPE)
+		prefat_bodytype_name = bodytype_object.name
+	bodytype_object = global.bodytypes_list[FAT_BODYTYPE]
+
+// restore the bodytype we had before getting fat (fallback to gender default)
+/mob/living/carbon/human/proc/restore_bodytype_after_fat()
+	if(prefat_bodytype_name && prefat_bodytype_name != FAT_BODYTYPE)
+		bodytype_object = global.bodytypes_list[prefat_bodytype_name]
+		prefat_bodytype_name = null
+	else
+		set_bodytype_for_gender()

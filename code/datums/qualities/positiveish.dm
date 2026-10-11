@@ -111,9 +111,9 @@
 	H.equip_to_slot(new /obj/item/clothing/under/cowboy/brown(H), SLOT_W_UNIFORM)
 	H.equip_to_slot(new /obj/item/clothing/head/western/cowboy(H), SLOT_HEAD)
 	H.equip_to_slot(new /obj/item/clothing/shoes/western(H), SLOT_SHOES)
-	H.equip_to_slot(new /obj/item/weapon/gun/projectile/revolver/peacemaker/detective(H), SLOT_L_HAND)
-	H.equip_to_slot(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_L_STORE)
-	H.equip_to_slot(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_R_STORE)
+	H.equip_or_collect(new /obj/item/weapon/gun/projectile/revolver/peacemaker/detective(H), SLOT_L_HAND)
+	H.equip_or_collect(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_L_STORE)
+	H.equip_or_collect(new /obj/item/ammo_box/speedloader/c45rubber(H), SLOT_R_STORE)
 
 
 /datum/quality/positiveish/all_affairs
@@ -447,3 +447,46 @@
 /datum/quality/positiveish/allchannels/add_effect(mob/living/carbon/human/H)
 	H.equip_or_collect(new /obj/item/device/encryptionkey/allchannels(H), SLOT_R_STORE)
 	to_chat(H, "<span class='notice'>Возможно, чтобы установить ключ шифрования, придётся расковырять наушник отверткой. Только не попадись охране!</span>")
+
+/datum/quality/positiveish/bribe
+	name = "Bribe"
+	desc = "Вы подкупили одного из сотрудника отдела кадров. Теперь у вас расширенный доступ."
+	requirement = "Все, кроме СБ"
+
+/datum/quality/positiveish/bribe/satisfies_requirements(mob/living/carbon/human/H, latespawn)
+	var/datum/job/J = SSjob.GetJob(H.mind.assigned_role)
+	return !(length(J.departments & list(DEP_SECURITY)))
+
+/datum/quality/positiveish/bribe/add_effect(mob/living/carbon/human/H, latespawn)
+	to_chat(H, "<span class='notice'>Ваш ID-доступ слегка расширен. Не привлекайте к этому внимания.</span>")
+	var/obj/item/weapon/card/id/id = H.get_idcard()
+	if(id)
+		id.access |= list(access_engineering_lobby, access_medical, access_research, access_mailsorting)
+
+/datum/quality/positiveish/prodavan
+	name = "Greetings, I'm from the NanoFlame company"
+	desc = "Послушав советы тренера по личностному росту, ты потратил все свои сбережения на товары компании НаноФлейм, теперь придётся кому-то их сбагрить..."
+	requirement = "Нет."
+
+/datum/quality/positiveish/prodavan/add_effect(mob/living/carbon/human/H)
+	var/obj/item/weapon/storage/briefcase/brief = new
+
+	new /obj/item/weapon/paper/mlm(brief)
+
+	var/thing_path = random2path(/obj/random/trader_product_safer)
+	var/itemsamount = rand(7, 10)
+	var/itemname
+	for(var/i in 1 to itemsamount)
+		if(i == 1)
+			var/obj/item/I = new thing_path(brief)
+			itemname = I.name
+			continue
+		new thing_path(brief)
+
+	brief.make_exact_fit()
+
+	H.equip_or_collect(brief, SLOT_L_HAND)
+
+	var/datum/money_account/MA = get_account(H.mind.get_key_memory(MEM_ACCOUNT_NUMBER))
+	if(MA)
+		charge_to_account(MA.account_number, "ООО Horns&Hooves ltd", "Покупка [itemsamount]шт. [itemname]", "НаноФлейм.su", -1000)

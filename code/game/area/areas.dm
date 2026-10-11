@@ -94,6 +94,9 @@
 
 	var/list/obj/effect/spawner/mob_spawners
 
+	// see /datum/component/serial_number and /obj/item/weapon/paper/inventory
+	var/list/obj/item/weapon/paper/inventory/inventory_papers
+
 /*Adding a wizard area teleport list because motherfucking lag -- Urist*/
 /*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
 var/global/list/teleportlocs = list()
@@ -488,9 +491,7 @@ var/global/list/ghostteleportlocs = list()
 
 	if(ishuman(mob))  // Only humans can wear magboots, so we give them a chance to.
 		var/mob/living/carbon/human/H = mob
-		if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
-			return
-		if((istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))) //Humans in rig with turn on magboots
+		if(H.mob_negates_gravity())
 			return
 
 		if(H.m_intent == "run")

@@ -24,3 +24,7 @@
 #define LIGHT_DAMAGE_TAKEN 10
 
 #define HUMAN_DEFAULT_SKIN_TONE /datum/skin_tone/albino::name
+
+#define AVERAGE_BODYTYPE "average_bodytype"
+#define SLIM_BODYTYPE    "slim_bodytype"
+#define FAT_BODYTYPE     "fat_bodytype"

@@ -1,180 +1,232 @@
-//CONTAINS: Detective's Scanner
-
-
 /obj/item/device/detective_scanner
-	name = "Scanner"
-	desc = "Used to scan objects for DNA and fingerprints."
-	icon_state = "forensic1"
-	var/amount = 20.0
-	var/list/stored = list()
+	name = "forensic scanner"
+	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
+	icon = 'icons/obj/detective_work.dmi'
+	icon_state = "detective_scanner"
+	item_state_world = "detective_scanner_world"
+	item_state = "detective_scanner"
 	w_class = SIZE_SMALL
-	item_state = "electronic"
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_FLAGS_BELT
+	origin_tech = "engineering=4;biotech=2;programming=5"
+	item_action_types = list(/datum/action/item_action/print_forensic_report, /datum/action/item_action/clear_records)
 
-/obj/item/device/detective_scanner/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/f_card))
-		var/obj/item/weapon/f_card/F = I
-		if(F.fingerprints)
-			return
-		if(amount == 20)
-			return
-		if(F.amount + amount > 20)
-			amount = 20
-			F.amount = F.amount + amount - 20
-			F.add_fingerprint(user)
-		else
-			amount += F.amount
-			qdel(F)
-		add_fingerprint(user)
+	var/scanning = FALSE
+	var/list/log = list()
+
+/obj/item/device/detective_scanner/attack_self(mob/user)
+	var/search = sanitize(input("Enter name, fingerprint or blood DNA.", "Find record") as text)
+
+	if(!search || user.stat || user.incapacitated())
 		return
-	return ..()
+	search = lowertext(search) //This is here so that it doesn't run 'lowertext()' until the checks have passed.
 
-/obj/item/device/detective_scanner/attack(mob/living/carbon/human/M, mob/user)
-	if (!ishuman(M))
-		to_chat(user, "<span class='warning'>[M] is not human and cannot have the fingerprints.</span>")
-		flick("forensic0",src)
-		return 0
-	if (( !( istype(M.dna, /datum/dna) ) || M.gloves) )
-		to_chat(user, "<span class='notice'>No fingerprints found on [M]</span>")
-		flick("forensic0",src)
-		return 0
-	else
-		if (src.amount < 1)
-			to_chat(user, text("<span class='notice'>Fingerprints scanned on [M]. Need more cards to print.</span>"))
-		else
-			src.amount--
-			var/obj/item/weapon/f_card/F = new /obj/item/weapon/f_card( user.loc )
-			F.amount = 1
-			F.add_fingerprint(M)
-			F.icon_state = "fingerprint1"
-			F.item_state_world = "fingerprint1_world"
-			F.name = text("FPrintC- '[M.name]'")
+	var/name
+	var/fingerprint = "FINGERPRINT NOT FOUND"
+	var/dna = "BLOOD DNA NOT FOUND"
 
-			to_chat(user, "<span class='notice'>Done printing.</span>")
-		to_chat(user, "<span class='notice'>[M]'s Fingerprints: [md5(M.dna.uni_identity)]</span>")
-	if ( !M.blood_DNA || !M.blood_DNA.len )
-		to_chat(user, "<span class='notice'>No blood found on [M]</span>")
-		if(M.blood_DNA)
-			M.blood_DNA = null
+	// I really, really wish I didn't have to split this into two seperate loops. But the datacore is awful.
+
+	for(var/record in data_core.general) // Search in the 'general' datacore
+		var/datum/data/record/S = record
+		if(S && (search == lowertext(S.fields["fingerprint"]) || search == lowertext(S.fields["name"]))) // Get Fingerprint and Name
+			name = S.fields["name"]
+			fingerprint = S.fields["fingerprint"]
+			break
+
+	for(var/record in data_core.medical) // Then search in the 'medical' datacore
+		var/datum/data/record/M = record
+		if(M && (search == lowertext(M.fields["b_dna"]) || name == M.fields["name"])) // Get Blood DNA
+			dna = M.fields["b_dna"]
+
+			if(fingerprint == "FINGERPRINT NOT FOUND") // We have searched for DNA, and so do not have the relevant information from the fingerprint records.
+				name = M.fields["name"]
+				for(var/gen_record in data_core.general)
+					var/datum/data/record/S = gen_record
+					if(S && (name == S.fields["name"]))
+						fingerprint = S.fields["fingerprint"]
+						break
+			else //Eveything's been set, break the loop
+				break
+
+	if(name)
+		to_chat(user, "<span class='notice'>Match found in station records: <b>[name]</b></span><br>\
+		<i>Fingerprint:</i><span class='notice'> [fingerprint]</span><br>\
+		<i>Blood DNA:</i><span class='notice'> [dna]</span>")
 	else
-		to_chat(user, "<span class='notice'>Blood found on [M]. Analysing...</span>")
-		spawn(15)
-			for(var/blood in M.blood_DNA)
-				to_chat(user, "<span class='notice'>Blood type: [M.blood_DNA[blood]]\nDNA: [blood]</span>")
+		to_chat(user, "<span class='warning'>No match found in station records.</span>")
+
+
+/datum/action/item_action/print_forensic_report
+	name = "Print Report"
+
+/datum/action/item_action/print_forensic_report/Activate()
+	var/obj/item/device/detective_scanner/D = target
+	D.print_scanner_report()
+
+/obj/item/device/detective_scanner/proc/print_scanner_report()
+	if(length(log) && !scanning)
+		scanning = TRUE
+		to_chat(usr, "<span class='notice'>Printing report, please wait...</span>")
+		playsound(src, 'sound/items/polaroid1.ogg', VOL_EFFECTS_MASTER)
+
+		addtimer(CALLBACK(src, PROC_REF(make_paper), log), 2 SECONDS) // Create our paper
+		log = list() // Clear the logs
+		scanning = FALSE
+	else
+		to_chat(usr, "<span class='warning'>The scanner has no logs or is in use.</span>")
+
+
+/obj/item/device/detective_scanner/proc/make_paper(log) // Moved to a proc because 'spawn()' is evil
+	var/obj/item/weapon/paper/P = new(get_turf(src))
+	P.name = "paper- 'Scanner Report'"
+	P.info = "<center><font size='6'><B>Scanner Report</B></font></center><HR><BR>"
+	P.info += jointext(log, "<BR>")
+	P.info += "<HR><B>Notes:</B><BR>"
+	P.info_links = P.info
+	P.update_icon()
+
+	if(ismob(loc))
+		var/mob/M = loc
+		M.put_in_hands(P)
+		to_chat(M, "<span class='notice'>Report printed. Log cleared.</span>")
+
+/datum/action/item_action/clear_records
+	name = "Clear Scanner Records"
+
+/datum/action/item_action/clear_records/Activate()
+	var/obj/item/device/detective_scanner/D = target
+	D.clear_scanner()
 	return
 
-/obj/item/device/detective_scanner/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/device/detective_scanner/proc/clear_scanner()
+	if(length(log) && !scanning)
+		log = list()
+		playsound(loc, 'sound/machines/ding.ogg', VOL_EFFECTS_MASTER)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), usr, "<span class='notice'>Scanner logs cleared.</span>"), 1.5 SECONDS) //Timer so that it clears on the 'ding'
+	else
+		to_chat(usr, "<span class='warning'>The scanner has no logs or is in use.</span>")
+
+/obj/item/device/detective_scanner/afterattack(atom/A, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(istype(target, /obj/machinery/computer/forensic_scanning)) //breaks shit.
-		return
+	scan(A, user)
 
-	if(istype(target, /obj/item/weapon/f_card))
-		to_chat(user, "The scanner displays on the screen: \"ERROR 43: Object on Excluded Object List.\"")
-		flick("forensic0",src)
-		return
+/obj/item/device/detective_scanner/attack(mob/living/carbon/human/M, mob/user)
+	scan(M, user)
+	return
 
-	add_fingerprint(user)
+/obj/item/device/detective_scanner/proc/scan(atom/A, mob/user)
+	if(!scanning)
+		if(loc != user)
+			return
 
-	//Special case for blood splatters, runes and gibs.
-	if (istype(target, /obj/effect/decal/cleanable/blood) || istype(target, /obj/effect/rune) || istype(target, /obj/effect/decal/cleanable/blood/gibs))
-		var/obj/effect/OE = target
-		if(!isnull(target.blood_DNA))
-			for(var/blood in OE.blood_DNA)
-				to_chat(user, "<span class='notice'>Blood type: [OE.blood_DNA[blood]]\nDNA: [blood]</span>")
-				flick("forensic2",src)
-		return
+		user.visible_message("[user] starts scanning [A] with [src].",
+		"<span class='notice'>You start scanning [A]. The scanner is buzzing...</span>")
+		scanning = TRUE
+		if(do_after(user, 1 SECONDS, target = user))
+			if(!A || !user.Adjacent(A))
+				to_chat(user, "<span class='warning'>Failed to scan [A].</span>")
+				scanning = FALSE
+				return
+			// GATHER INFORMATION
 
-	//General
-	if ((!target.fingerprints || !target.fingerprints.len) && !target.suit_fibers && !target.blood_DNA)
-		user.visible_message("\The [user] scans \the [target] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
-		"<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [target]!</span>",\
-		"You hear a faint hum of electrical equipment.")
-		flick("forensic0",src)
-		return 0
+			//Make our lists
+			var/list/fingerprints = list()
+			var/list/blood = list()
+			var/list/fibers = list()
+			var/list/reagents = list()
 
-	if(add_data(target))
-		to_chat(user, "<span class='notice'>Object already in internal memory. Consolidating data...</span>")
-		flick("forensic2",src)
-		return
+			var/target_name = A.name
+
+			// Start gathering
+
+			if(length(A.blood_DNA))
+				blood = A.blood_DNA.Copy()
+
+			if(length(A.suit_fibers))
+				fibers = A.suit_fibers.Copy()
+
+			if(ishuman(A))
+				var/mob/living/carbon/human/H = A
+				if(istype(H.dna, /datum/dna) && !H.gloves)
+					fingerprints += md5(H.dna.uni_identity)
+
+			else if(!ismob(A))
+
+				if(length(A.fingerprints))
+					fingerprints = A.fingerprints.Copy()
+
+				// Only get reagents from non-mobs.
+				if(A.reagents && length(A.reagents.reagent_list))
+
+					for(var/datum/reagent/R in A.reagents.reagent_list)
+						reagents[R.name] = R.volume
+
+						// Get blood data from the blood reagent.
+						if(istype(R, /datum/reagent/blood))
+
+							if(R.data["blood_DNA"] && R.data["blood_type"])
+								var/blood_DNA = R.data["blood_DNA"]
+								var/blood_type = R.data["blood_type"]
+								blood[blood_DNA] = blood_type
 
 
-	//PRINTS
-	if(!target.fingerprints || !target.fingerprints.len)
-		if(target.fingerprints)
-			target.fingerprints = null
-	else
-		to_chat(user, "<span class='notice'>Isolated [target.fingerprints.len] fingerprints: Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.</span>")
-		var/list/complete_prints = list()
-		for(var/i in target.fingerprints)
-			var/print = target.fingerprints[i]
-			if(stringpercent_ascii(print) <= FINGERPRINT_COMPLETE)
-				complete_prints += print
-		if(complete_prints.len < 1)
-			to_chat(user, "<span class='notice'>&nbsp;&nbsp;No intact prints found</span>")
-		else
-			to_chat(user, "<span class='notice'>&nbsp;&nbsp;Found [complete_prints.len] intact prints</span>")
-			for(var/i in complete_prints)
-				to_chat(user, "<span class='notice'>&nbsp;&nbsp;&nbsp;&nbsp;[i]</span>")
+			// We gathered everything. Display the results to the holder of the scanner.
+			var/found_something = FALSE
+			add_log("<B>[worldtime2text()] - [target_name]</B>", FALSE)
 
-	//FIBERS
-	if(target.suit_fibers)
-		to_chat(user, "<span class='notice'>Fibers/Materials Data Stored: Scan with Hi-Res Forensic Scanner to retrieve.</span>")
-		flick("forensic2",src)
+			// Fingerprints
+			if(length(fingerprints))
+				add_log("<span class='notice'><B>Prints:</B></span>")
+				for(var/finger in fingerprints)
+					add_log("[finger]")
+				found_something = TRUE
 
-	//Blood
-	if (target.blood_DNA)
-		to_chat(user, "<span class='notice'>Blood found on [target]. Analysing...</span>")
-		spawn(15)
-			for(var/blood in target.blood_DNA)
-				to_chat(user, "Blood type: <span class='warning'>[target.blood_DNA[blood]]</span> &emsp; DNA: <span class='warning'>[blood]</span>")
-	if(prob(80) || !target.fingerprints)
-		user.visible_message("\The [user] scans \the [target] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]" ,\
-		"You finish scanning \the [target].",\
-		"You hear a faint hum of electrical equipment.")
-		flick("forensic2",src)
-		return 0
-	else
-		user.visible_message("\The [user] scans \the [target] with \a [src], the air around [user.gender == MALE ? "him" : "her"] humming[prob(70) ? " gently." : "."]\n[user.gender == MALE ? "He" : "She"] seems to perk up slightly at the readout." ,\
-		"The results of the scan pique your interest.",\
-		"You hear a faint hum of electrical equipment, and someone making a thoughtful noise.")
-		flick("forensic2",src)
-		return 0
+			// Blood
+			if(length(blood))
+				add_log("<span class='notice'><B>Blood:</B></span>")
+				found_something = TRUE
+				for(var/B in blood)
+					add_log("Type: <font color='red'>[blood[B]]</font> DNA: <font color='red'>[B]</font>")
 
-/obj/item/device/detective_scanner/proc/add_data(atom/A)
-	//I love associative lists.
-	var/list/data_entry = stored["\ref [A]"]
-	if(islist(data_entry)) //Yay, it was already stored!
-		//Merge the fingerprints.
-		var/list/data_prints = data_entry[1]
-		for(var/print in A.fingerprints)
-			var/merged_print = data_prints[print]
-			if(!merged_print)
-				data_prints[print] = A.fingerprints[print]
+			//Fibers
+			if(length(fibers))
+				add_log("<span class='notice'><B>Fibers:</B></span>")
+				for(var/fiber in fibers)
+					add_log("[fiber]")
+				found_something = TRUE
+
+			//Reagents
+			if(length(reagents))
+				add_log("<span class='notice'><B>Reagents:</B></span>")
+				for(var/R in reagents)
+					add_log("Reagent: <font color='red'>[R]</font> Volume: <font color='red'>[reagents[R]]</font>")
+				found_something = TRUE
+
+			// Get a new user
+			var/mob/holder = null
+			if(ismob(loc))
+				holder = loc
+
+			if(!found_something)
+				add_log("<I># No forensic traces found #</I>", FALSE) // Don't display this to the holder user
+				if(holder)
+					to_chat(holder, "<span class='notice'>Unable to locate any fingerprints, materials, fibers, or blood on [A]!</span>")
 			else
-				data_prints[print] = stringmerge_ascii(data_prints[print],A.fingerprints[print])
+				if(holder)
+					to_chat(holder, "<span class='notice'>You finish scanning [A].</span>")
 
-		//Now the fibers
-		var/list/fibers = data_entry[2]
-		if(!fibers)
-			fibers = list()
-		if(A.suit_fibers && A.suit_fibers.len)
-			for(var/j = 1, j <= A.suit_fibers.len, j++)	//Fibers~~~
-				if(!fibers.Find(A.suit_fibers[j]))	//It isn't!  Add!
-					fibers += A.suit_fibers[j]
-		var/list/blood = data_entry[3]
-		if(!blood)
-			blood = list()
-		if(A.blood_DNA && A.blood_DNA.len)
-			for(var/main_blood in A.blood_DNA)
-				if(!blood[main_blood])
-					blood[main_blood] = A.blood_DNA[blood]
-		return 1
-	var/list/sum_list[4]	//Pack it back up!
-	sum_list[1] = A.fingerprints ? A.fingerprints.Copy() : null
-	sum_list[2] = A.suit_fibers ? A.suit_fibers.Copy() : null
-	sum_list[3] = A.blood_DNA ? A.blood_DNA.Copy() : null
-	sum_list[4] = "\The [A] in \the [get_area(A)]"
-	stored["\ref [A]"] = sum_list
-	return 0
+			add_log("---------------------------------------------------------", FALSE)
+			scanning = FALSE
+		else
+			scanning = FALSE
+
+/obj/item/device/detective_scanner/proc/add_log(msg, broadcast = TRUE)
+	if(scanning)
+		if(broadcast && ismob(loc))
+			var/mob/M = loc
+			to_chat(M, msg)
+		log += "&nbsp;&nbsp;[msg]"
+	else
+		CRASH("[src] \ref[src] is adding a log when it was never put in scanning mode!")

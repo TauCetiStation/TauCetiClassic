@@ -29,6 +29,7 @@
 		BP_L_LEG  = /obj/item/organ/external/l_leg/skeleton,
 		BP_R_LEG  = /obj/item/organ/external/r_leg/skeleton,
 		BP_TAIL   = /obj/item/organ/external/tail/skeleton,
+		BP_EARS   = /obj/item/organ/external/ears/skeleton,
 	)
 
 #define SKELETON_MOOD_EVENT "skeleton"
@@ -56,6 +57,9 @@
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
+
+		// fat trait was just removed above, keep bodytype in sync
+		H.restore_bodytype_after_fat()
 
 		if(H.f_style)
 			H.f_style = "Shaved"

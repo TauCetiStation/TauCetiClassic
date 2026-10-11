@@ -157,6 +157,17 @@
 
 	beauty = -100
 
+/obj/effect/decal/cleanable/bluespacetomato_smudge
+	name = "bluespacetomato smudge"
+	desc = "It's blue."
+	density = FALSE
+	anchored = TRUE
+	layer = 2
+	icon = 'icons/effects/tomatodecal.dmi'
+	random_icon_states = list("bluespacetomato_floor1", "bluespacetomato_floor2", "bluespacetomato_floor3")
+
+	beauty = -100
+
 /obj/effect/decal/cleanable/egg_smudge
 	name = "smashed egg"
 	desc = "Seems like this one won't hatch."

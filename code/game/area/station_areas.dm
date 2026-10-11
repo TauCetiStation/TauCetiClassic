@@ -761,6 +761,12 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 	icon_state = "quartoffice"
 	sound_environment = SOUND_AREA_STATION_HALLWAY
 
+/area/station/cargo/mail
+	name = "Mail Office"
+	cases = list("почта", "почты", "почте", "почту", "почтой", "почте")
+	icon_state = "quartoffice"
+	sound_environment = SOUND_AREA_STATION_HALLWAY
+
 /area/station/cargo/storage
 	name = "Cargo Bay"
 	cases = list("склад ОС", "склада ОС", "складу ОС", "склад ОС", "складом ОС", "складе ОС")

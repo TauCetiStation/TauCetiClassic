@@ -321,7 +321,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	var/datum/faction/replicators/FR = get_or_create_replicators_faction()
 
 	if(!mind.GetRole(REPLICATOR))
-		add_faction_member(FR, src, TRUE)
+		add_faction_member(FR, src, recruit=TRUE, post_setup=TRUE)
 
 	var/datum/replicator_array_info/RAI = FR.ckey2info[ckey]
 	if(RAI)
@@ -592,11 +592,6 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	if(damage > 0)
 		last_brute_hit = world.time
 
-/mob/living/simple_animal/hostile/replicator/get_projectile_impact_force(obj/item/projectile/P, def_zone)
-	. = ..() * 0.1
-	if(P.damage_type == BRUTE)
-		. += P.damage * 0.1
-
 /mob/living/simple_animal/hostile/replicator/emp_act(severity)
 	. = ..()
 
@@ -749,3 +744,17 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 /mob/living/simple_animal/hostile/replicator/FireBurn(firelevel, last_temperature, air_multiplier)
 	var/mx = 50.0 * firelevel / vsc.fire_firelevel_multiplier * air_multiplier
 	apply_damage(maxHealth * 3.0 * mx, BURN)
+
+/obj/item/weapon/reagent_containers/food/snacks/bluespacewaffle
+	name = "bluespace waffles"
+	desc = "You shouldn't try it. Probably..."
+	eat_sound = 'sound/machines/cyclotron.ogg'
+	icon_state = "rofflewaffles"
+	bitesize = 5.3
+	food_moodlet = /datum/mood_event/very_tasty_food
+	food_type = VERY_TASTY_FOOD
+	list_reagents = list("space_drugs" = 5, "nutriment" = 20, "prismaline" = 1.5)
+
+/obj/item/weapon/reagent_containers/food/snacks/bluespacewaffle/attack(mob/living/M, mob/user, def_zone, silent)
+	. = ..()
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(do_teleport), M, get_turf(M), 4, 1, null, null, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_error.ogg'), 0.5 SECONDS)

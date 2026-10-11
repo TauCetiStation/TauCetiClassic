@@ -7,7 +7,7 @@
 	suit = /obj/item/clothing/suit/space/space_ninja
 	gloves = /obj/item/clothing/gloves/space_ninja
 	head = /obj/item/clothing/head/helmet/space/space_ninja
-	mask = /obj/item/clothing/mask/gas/voice/space_ninja
+	mask = /obj/item/clothing/mask/breath/gas/voice/space_ninja
 	belt = /obj/item/device/flashlight
 
 	r_pocket = /obj/item/weapon/plastique

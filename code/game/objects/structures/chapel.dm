@@ -293,7 +293,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	return ..()
 
 /obj/structure/big_bell/attackby(obj/item/I, mob/user)
-	if(iswrenching(I) && !user.is_busy(src) && I.use_tool(src, user, 40, volume = 50))
+	if(iswrenching(I) && !user.is_busy(src) && I.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 		anchored = !anchored
 		visible_message("<span class='warning'>[src] has been [anchored ? "secured to the floor" : "unsecured from the floor"] by [user].</span>")
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)

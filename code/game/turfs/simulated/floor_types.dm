@@ -50,6 +50,9 @@
 	icon_state = "center_8"
 	smooth = SMOOTH_TRUE
 
+/turf/simulated/floor/smoothtile/make_plating()
+	ChangeTurf(/turf/simulated/floor/plating)
+
 /turf/simulated/floor/smoothtile/airless
 	icon = 'icons/turf/floors/smooth/floortile.dmi'
 	airless = TRUE
@@ -119,7 +122,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Вы начинаете удалять стержни.</span>")
-		if(C.use_tool(src, user, 30, volume = 80))
+		if(C.use_tool(src, user, 30, volume = 80, quality = QUALITY_WRENCHING))
 			new /obj/item/stack/rods(src, 2)
 			ChangeTurf(/turf/simulated/floor)
 			var/turf/simulated/floor/F = src

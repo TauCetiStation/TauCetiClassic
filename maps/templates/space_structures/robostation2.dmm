@@ -335,7 +335,7 @@
 /turf/simulated/floor/plating,
 /area/space_structures/robostation2)
 "nj" = (
-/obj/item/clothing/mask/gas/sexyclown,
+/obj/item/clothing/mask/breath/gas/sexyclown,
 /obj/structure/table/woodentable,
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/wood,

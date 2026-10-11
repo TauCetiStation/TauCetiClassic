@@ -52,6 +52,7 @@
 	data["dish_inserted"] = !!dish
 	data["affected_species"] = null
 	data["can_splice"] = FALSE
+	data["busy"] = null
 
 	if (memorybank)
 		data["buffer"] = list("name" = (analysed ? memorybank.effect.name : "Unknown Symptom"))
@@ -94,7 +95,7 @@
 				species_buffer = null
 				analysed = dish.analysed
 				dish = null
-				scanning = 10
+				scanning = 5
 			return TRUE
 
 		if ("affected_species")
@@ -103,7 +104,7 @@
 				species_buffer = dish.virus2.affected_species
 				analysed = dish.analysed
 				dish = null
-				scanning = 10
+				scanning = 5
 			return TRUE
 
 		if ("eject")
@@ -126,12 +127,12 @@
 					dish.virus2.affected_species = species_buffer
 					species_buffer = null
 
-				splicing = 10
+				splicing = 5
 				dish.virus2.uniqueID = rand(0,10000)
 			return TRUE
 
 		if ("disk")
-			burning = 10
+			burning = 5
 			return TRUE
 
 	return FALSE

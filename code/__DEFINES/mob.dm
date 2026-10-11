@@ -4,9 +4,10 @@
 #define ORGAN_BLEEDING   4
 #define ORGAN_BROKEN     8
 #define ORGAN_SPLINTED   16
-#define ORGAN_DEAD       32
-#define ORGAN_MUTATED    64
-#define ORGAN_ARTERY_CUT 128
+#define ORGAN_ROBOT      32
+#define ORGAN_DEAD       64
+#define ORGAN_MUTATED    128
+#define ORGAN_ARTERY_CUT 256
 
 #define DROPLIMB_EDGE  0
 #define DROPLIMB_BLUNT 1
@@ -33,6 +34,7 @@
 #define BP_INACTIVE_ARM "inactive_arm"
 #define BP_TAIL "tail"
 #define BP_WINGS "wings"
+#define BP_EARS "ears"
 
 // Organ defines.
 #define O_MOUTH    "mouth"
@@ -73,7 +75,7 @@
 #define INTENT_HOTKEY_LEFT  "left"
 #define INTENT_HOTKEY_RIGHT "right"
 
-//proc/get_pulse methods
+//proc/get_pulse_number methods
 #define GETPULSE_HAND	0	//less accurate (hand)
 #define GETPULSE_TOOL	1	//more accurate (med scanner, sleeper, etc)
 
@@ -264,3 +266,15 @@
 #define TRAUMATIC_SHOCK_MIND_SHATTERING 80
 #define TRAUMATIC_SHOCK_CRITICAL        100
 
+// Initial blood volume.
+#define SPECIES_BLOOD_DEFAULT 560
+
+//Blood levels. These are percentages based on the species blood_volume var.
+#define BLOOD_VOLUME_FULL_P    100
+#define BLOOD_VOLUME_SAFE_P    85
+#define BLOOD_VOLUME_OKAY_P    70
+#define BLOOD_VOLUME_BAD_P     60
+#define BLOOD_VOLUME_SURVIVE_P 30
+
+//The percentage of protection required to prevent organ damage
+#define PROTECTION_REQUIRED_FOR_ORGANS 25

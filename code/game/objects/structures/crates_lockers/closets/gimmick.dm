@@ -5,6 +5,8 @@
 	icon_closed = "cabinet_closed"
 	icon_opened = "cabinet_open"
 
+	hit_particle_type = /particles/tool/digging/wood
+
 /obj/structure/closet/cabinet/update_icon()
 	if(!opened)
 		icon_state = icon_closed
@@ -51,7 +53,7 @@
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/gloves/swat(src)
 		new /obj/item/clothing/head/helmet/swat(src)
-		new /obj/item/clothing/mask/gas/coloured(src)
+		new /obj/item/clothing/mask/breath/gas/coloured(src)
 		new /obj/item/clothing/shoes/boots/swat(src)
 		new /obj/item/clothing/suit/armor/swat(src)
 		new /obj/item/clothing/under/syndicate/tacticool(src)

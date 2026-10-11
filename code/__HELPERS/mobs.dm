@@ -204,7 +204,7 @@
 //helper for inverting armor blocked values into a multiplier
 #define blocked_mult(blocked) max(1 - (blocked / 100), 0)
 
-/proc/do_mob(mob/user , mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE, datum/callback/extra_checks = null)
+/proc/do_mob(mob/user , mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE, datum/callback/extra_checks = null, particle_type = null)
 	if(!user || !target)
 		return FALSE
 
@@ -227,6 +227,15 @@
 			progbar = new(user, time, target)
 		else
 			progress = FALSE
+
+	var/obj/effect/abstract/particle_holder/Particle
+	if(particle_type)
+		var/is_in_user = (get_turf(target) == get_turf(user))
+
+		Particle = new(is_in_user ? user : target, particle_type, PARTICLE_FADEOUT | PARTICLE_NO_TRANSFORM)
+
+		var/particles/particle_datum = Particle.get_particle()
+		particle_datum.change_dir(is_in_user ? user.dir : get_dir(get_turf(target), get_turf(user)))
 
 	var/endtime = world.time+time
 	var/starttime = world.time
@@ -264,6 +273,10 @@
 		if(check_target_zone && user.get_targetzone() != check_target_zone)
 			. = FALSE
 			break
+
+	if(Particle)
+		Particle.delete_particle()
+
 	if(progress)
 		qdel(progbar)
 	if(user)
@@ -271,7 +284,7 @@
 	if(target)
 		target.in_use_action = FALSE
 
-/proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks)
+/proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks, particle_type = null)
 	if(!user || target && QDELING(target))
 		return FALSE
 
@@ -302,6 +315,15 @@
 			progbar = new(user, delay, target)
 		else
 			progress = FALSE
+
+	var/obj/effect/abstract/particle_holder/Particle
+	if(particle_type)
+		var/is_in_user = (get_turf(target) == get_turf(user))
+
+		Particle = new(is_in_user ? user : target, particle_type, PARTICLE_FADEOUT | PARTICLE_NO_TRANSFORM)
+
+		var/particles/particle_datum = Particle.get_particle()
+		particle_datum.change_dir(is_in_user ? user.dir : get_dir(get_turf(target), get_turf(user)))
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
@@ -349,6 +371,9 @@
 				if(user.get_active_hand() != holding)
 					. = FALSE
 					break
+
+	if(Particle)
+		Particle.delete_particle()
 
 	if(progress)
 		qdel(progbar)
@@ -505,7 +530,7 @@
 					message += "<span class='notice'><font color='red'>Внимание! Остановка сердца!</font></span><br>"
 				if(HEART_FIBR)
 					message += "<span class='notice'>Состояние сердца пациента: <font color='blue'>Внимание! Сердце подвержено фибрилляции.</font></span><br>"
-			message += "<span class='notice'>Пульс пациента: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] уд/мин.</font></span><br>"
+			message += "<span class='notice'>Пульс пациента: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse_number(GETPULSE_TOOL)] уд/мин.</font></span><br>"
 	var/list/reflist = list(message, scan_hallucination)
 	SEND_SIGNAL(M, COMSIG_LIVING_HEALTHSCAN, reflist)
 	message = reflist[1]

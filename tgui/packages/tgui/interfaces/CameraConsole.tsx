@@ -3,24 +3,32 @@ import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import {
-  Button,
-  ByondUi,
-  Input,
-  Section,
-  Box,
-  NanoMap,
-  Stack,
-} from '../components';
+import { Button, ByondUi, Input, Section, Box, Stack } from '../components';
 import { Window } from '../layouts';
+
+import {
+  NanoMap,
+  NanoMapMarkerIcon,
+  NanoMapStaticPayload,
+} from '../components/NanoMap';
+
+const pauseEvent = (e: MouseEvent) => {
+  if (e.stopPropagation) {
+    e.stopPropagation();
+  }
+  if (e.preventDefault) {
+    e.preventDefault();
+  }
+  e.cancelBubble = true;
+  e.returnValue = false;
+  return false;
+};
 
 type Data = {
   mapRef: string;
   activeCamera: CameraObject;
   cameras: CameraObject[];
-  stationMapName: string;
-  mineMapName?: string;
-  mineZLevels: number[];
+  nanomapPayload: NanoMapStaticPayload;
 };
 
 type CameraObject = {
@@ -94,7 +102,7 @@ export const CameraConsole = (_, context: any) => {
   );
 
   return (
-    <Window width={800} height={600} maxHeight={600}>
+    <Window width={800} height={600}>
       <Window.Content>
         <Stack fill>
           <Stack.Item>
@@ -154,9 +162,8 @@ export const CameraConsole = (_, context: any) => {
   );
 };
 
-export const CameraConsoleContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
-  const { stationMapName, mineMapName, mineZLevels } = data;
+export const CameraConsoleContent = (_: any, context: any) => {
+  const { data } = useBackend<Data>(context);
 
   const availableZLevels = flow([
     map((camera: CameraObject) => camera.z),
@@ -193,9 +200,17 @@ export const CameraConsoleContent = (props, context) => {
   );
 };
 
-export const CameraMinimapContent = (props, context) => {
+export const CameraMinimapContent = (
+  props: {
+    zLevel: number;
+    setZLevel: (_: number) => void;
+    availableZLevels: number[];
+    cameras: CameraObject[];
+  },
+  context: any
+) => {
   const { act, data } = useBackend<Data>(context);
-  const { activeCamera, stationMapName, mineMapName, mineZLevels } = data;
+  const { activeCamera, nanomapPayload } = data;
   const { zLevel, setZLevel, availableZLevels, cameras } = props;
 
   return (
@@ -203,12 +218,10 @@ export const CameraMinimapContent = (props, context) => {
       <NanoMap
         zLevel={zLevel}
         setZLevel={setZLevel}
-        stationMapName={stationMapName}
-        mineMapName={mineMapName}
-        mineLevels={mineZLevels}
+        nanomapPayload={nanomapPayload}
         availableZLevels={availableZLevels}>
-        {cameras.map((camera) => (
-          <NanoMap.MarkerIcon
+        {cameras.map((camera: CameraObject) => (
+          <NanoMapMarkerIcon
             key={camera.name}
             x={camera.x}
             y={camera.y}
@@ -221,8 +234,9 @@ export const CameraMinimapContent = (props, context) => {
                   ? 'blue'
                   : 'red'
             }
-            onClick={() => {
+            onClick={(e: MouseEvent) => {
               act('switch_camera', { name: camera.name });
+              pauseEvent(e);
             }}
           />
         ))}
@@ -243,12 +257,12 @@ export const CameraConsoleListContent = (props, context) => {
           fluid
           mt={1}
           placeholder="Search for a camera"
-          onInput={(e, value) => setSearchText(value)}
+          onInput={(_: Event, value: string) => setSearchText(value)}
         />
       </Stack.Item>
       <Stack.Item grow>
         <Section fill scrollable>
-          {cameras.map((camera) => (
+          {cameras.map((camera: CameraObject) => (
             // We're not using the component here because performance
             // would be absolutely abysmal (50+ ms for each re-render).
             <div

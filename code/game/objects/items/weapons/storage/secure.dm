@@ -44,14 +44,15 @@
 	if(!try_open(user))
 		tgui_interact(user)
 
-/obj/item/weapon/storage/secure/try_open(mob/user)
-	. = ..()
+/obj/item/weapon/storage/secure/try_open(mob/user, check_only = FALSE)
+	. = ..(user, TRUE)
 	if(!.)
 		return FALSE
 	if(locked)
 		return FALSE
 
-	open(user)
+	if(!check_only)
+		open(user)
 	return TRUE
 
 
@@ -74,14 +75,14 @@
 			return
 
 		if (isscrewing(I))
-			if(!user.is_busy(src) && I.use_tool(src, user, 20, volume = 50))
+			if(!user.is_busy(src) && I.use_tool(src, user, 20, volume = 50, quality = QUALITY_SCREWING))
 				open = !open
 				to_chat(user, "<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
 			return
 		if ((ispulsing(I)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message("<span class='warning'>Now attempting to reset internal memory, please hold.</span>", SHOWMSG_ALWAYS)
 			src.l_hacking = 1
-			if (!user.is_busy(src) && I.use_tool(src, usr, 100, volume = 50))
+			if (!user.is_busy(src) && I.use_tool(src, usr, 100, volume = 50, quality = QUALITY_PULSING))
 				if (prob(40))
 					src.l_setshort = 1
 					src.l_set = 0
@@ -199,13 +200,13 @@
 	new /obj/item/weapon/paper(src)
 	new /obj/item/weapon/pen(src)
 
-/obj/item/weapon/storage/secure/briefcase/try_open(mob/user)
+/obj/item/weapon/storage/secure/briefcase/try_open(mob/user, check_only = FALSE)
 	if(locked)
-		if(user.in_interaction_vicinity(src))
+		if(!check_only && user.in_interaction_vicinity(src))
 			to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
 		return FALSE
 	else
-		return ..()
+		return ..(user, check_only)
 
 /obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
 	if ((src.loc == user) && (src.locked == 1))
@@ -256,13 +257,13 @@
 	density = FALSE
 	cant_hold = list(/obj/item/weapon/storage/secure/briefcase)
 
-/obj/item/weapon/storage/secure/safe/try_open(mob/user)
+/obj/item/weapon/storage/secure/safe/try_open(mob/user, check_only = FALSE)
 	if(locked)
-		if(user.in_interaction_vicinity(src))
+		if(!check_only && user.in_interaction_vicinity(src))
 			to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
 		return FALSE
 	else
-		return ..()
+		return ..(user, check_only)
 
 
 /obj/item/weapon/storage/secure/safe/atom_init()

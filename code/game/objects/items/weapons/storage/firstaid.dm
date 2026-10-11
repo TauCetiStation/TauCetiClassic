@@ -12,6 +12,7 @@
 	desc = "It's an emergency medical kit for those serious boo-boos."
 	icon_state = "firstaid"
 	item_state = "firstaid"
+	item_state_world = "firstaid_w"
 	throw_speed = 2
 	throw_range = 8
 	max_storage_space = DEFAULT_BOX_STORAGE
@@ -23,6 +24,7 @@
 	desc = "It's an emergency medical kit for when the toxins lab <i>-spontaneously-</i> burns down."
 	icon_state = "ointment"
 	item_state = "firstaid-ointment"
+	item_state_world = "ointment_w"
 
 /obj/item/weapon/storage/firstaid/fire/atom_init()
 	. = ..()
@@ -39,6 +41,7 @@
 
 /obj/item/weapon/storage/firstaid/regular
 	icon_state = "firstaid"
+	item_state_world = "firstaid_w"
 
 /obj/item/weapon/storage/firstaid/regular/atom_init()
 	. = ..()
@@ -57,6 +60,7 @@
 	desc = "Used to treat when you have a high amoutn of toxins in your body."
 	icon_state = "antitoxin"
 	item_state = "firstaid-toxin"
+	item_state_world = "antitoxin_w"
 
 /obj/item/weapon/storage/firstaid/toxin/atom_init()
 	. = ..()
@@ -75,6 +79,7 @@
 	desc = "A box full of oxygen goodies."
 	icon_state = "o2"
 	item_state = "firstaid-o2"
+	item_state_world = "o2_w"
 
 /obj/item/weapon/storage/firstaid/o2/atom_init()
 	. = ..()
@@ -92,6 +97,7 @@
 	desc = "Contains advanced medical treatments."
 	icon_state = "advfirstaid"
 	item_state = "firstaid-advanced"
+	item_state_world = "advfirstaid_w"
 
 /obj/item/weapon/storage/firstaid/adv/atom_init()
 	. = ..()

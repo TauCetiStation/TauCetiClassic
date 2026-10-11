@@ -126,7 +126,7 @@
 /datum/recipe/microwave/brainburger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun,
-		/obj/item/brain
+		/obj/item/organ/internal/brain
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/brainburger
 
@@ -168,7 +168,7 @@
 /datum/recipe/microwave/clownburger
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/bun,
-		/obj/item/clothing/mask/gas/clown_hat,
+		/obj/item/clothing/mask/breath/gas/clown_hat,
 		/obj/item/weapon/bikehorn,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/clownburger
@@ -784,10 +784,10 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/adjurahma
 
 /datum/recipe/microwave/fushstvessina
-	reagents = list("water" = 10)
+	reagents = list("water" = 10, "capsaicin" = 5)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meatball,
-		/obj/item/weapon/reagent_containers/food/snacks/meatball,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/soup/fushstvessina

@@ -12,6 +12,9 @@
 	projectile_type = /obj/item/projectile/beam
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/laser/egun //eguns are smaller in size but more energy intensive
+	e_cost = 200
+
 /obj/item/ammo_casing/energy/laser/cyborg
 	e_cost = 250
 

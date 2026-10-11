@@ -217,3 +217,10 @@
 	wiki_ref = "Abductor"
 	time_for_registration = null
 	register_only = FALSE
+
+/datum/spawner/living/zombie
+	name = "Зомби"
+	desc = "Тебя ведет голод. Распространяй смерть, хаос и болезнь. Убивай живых и помогай своим не-живым собратьям."
+	cooldown = 10 SECONDS
+	ranks = list(ROLE_GHOSTLY)
+	time_for_registration = 10 SECONDS

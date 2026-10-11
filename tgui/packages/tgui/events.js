@@ -57,6 +57,7 @@ const stealFocus = (node) => {
   releaseStolenFocus();
   focusStolenBy = node;
   focusStolenBy.addEventListener('blur', releaseStolenFocus);
+  globalEvents.emit('input-focus');
 };
 
 const releaseStolenFocus = () => {
@@ -114,9 +115,37 @@ window.addEventListener('mousemove', (e) => {
 // Focus event hooks
 // --------------------------------------------------------
 
-window.addEventListener('focusin', (e) => {
-  lastVisitedNode = null;
-  focusedNode = e.target;
+// Handle stealing focus for textbox elements
+document.addEventListener(
+  'focus',
+  (e) => {
+    // Window
+    if (!(e.target instanceof Element)) {
+      lastVisitedNode = null;
+      focusedNode = null;
+      return;
+    }
+    lastVisitedNode = null;
+    focusedNode = e.target;
+    if (canStealFocus(e.target)) {
+      stealFocus(e.target);
+    }
+  },
+  true
+);
+
+// When we click on any element on the page, untrack the last
+// visited node.
+document.addEventListener(
+  'blur',
+  (e) => {
+    lastVisitedNode = null;
+  },
+  true
+);
+
+// Handle setting the window focus
+window.addEventListener('focus', (e) => {
   setWindowFocus(true);
   if (canStealFocus(e.target)) {
     stealFocus(e.target);
@@ -129,12 +158,13 @@ window.addEventListener('focusout', (e) => {
   setWindowFocus(false, true);
 });
 
+// If we blur any element, the window may have unfocused if we didn't
+// click on the background
 window.addEventListener('blur', (e) => {
-  lastVisitedNode = null;
   setWindowFocus(false, true);
 });
 
-window.addEventListener('beforeunload', (e) => {
+window.addEventListener('close', (e) => {
   setWindowFocus(false);
 });
 

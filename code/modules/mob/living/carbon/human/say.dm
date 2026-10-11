@@ -137,7 +137,7 @@
 
 	message = accent_sounds(message, speaking)
 
-	if(HAS_TRAIT(src, TRAIT_DYSLALIA))
+	if(HAS_TRAIT(src, TRAIT_DYSLALIA) && !(speaking && (speaking.flags & SIGNLANG)))
 		message = message_with_dyslalia(message)
 
 	if(!speaking)
@@ -163,7 +163,7 @@
 				log_say("Abductor: [key_name(src)] : [sm]")
 				return ""
 
-	if(get_species() == HOMUNCULUS)
+	if(HAS_TRAIT(src, TRAIT_CURSED_TALK))
 		message = cursed_talk(message)
 
 	message = capitalize(trim(message))
@@ -331,8 +331,8 @@
 	return ..()
 
 /mob/living/carbon/human/GetVoice()
-	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-		var/obj/item/clothing/mask/gas/voice/V = src.wear_mask
+	if(istype(src.wear_mask, /obj/item/clothing/mask/breath/gas/voice))
+		var/obj/item/clothing/mask/breath/gas/voice/V = src.wear_mask
 		if(V.vchange)
 			return V.voice
 		else

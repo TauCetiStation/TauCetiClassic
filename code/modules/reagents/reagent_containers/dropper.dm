@@ -29,6 +29,16 @@
 
 		if(ismob(target))
 
+			var/mob/living/carbon/human/H = target
+			var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+			if(BP.open)
+				// Checks if mob is lying down on table for surgery
+				if(can_operate(H, user))
+					do_surgery(H, user, src)
+				else
+					to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than \a [src]!</span>")
+				return
+
 			var/time = 20 //2/3rds the time of a syringe
 			user.visible_message("<span class='warning'><B>[user] is trying to squirt something into [target]'s eyes!</B></span>")
 

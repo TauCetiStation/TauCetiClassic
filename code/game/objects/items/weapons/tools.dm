@@ -321,11 +321,11 @@
 /obj/item/weapon/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount("fuel") + reagents.get_reagent_amount("phoron")
 
-/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills_override, skills_speed_bonus = -0.4, can_move = FALSE)
+/obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills_override, skills_speed_bonus = -0.4, can_move = FALSE, particle_type = null)
 	target.add_overlay(welding_sparks)
 	INVOKE_ASYNC(src, PROC_REF(start_welding), target)
 	var/datum/callback/checks  = CALLBACK(src, PROC_REF(check_active_and_extra), extra_checks)
-	. = ..(target, user, delay, amount, volume, extra_checks = checks, required_skills_override = required_skills_override, skills_speed_bonus = skills_speed_bonus)
+	. = ..(target, user, delay, amount, volume, quality, checks, required_skills_override, skills_speed_bonus, can_move, particle_type)
 	stop_welding()
 	target.cut_overlay(welding_sparks)
 
@@ -438,6 +438,8 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+		if(!IO)
+			return
 		if(H.species.flags[IS_SYNTHETIC])
 			return
 		switch(safety)
@@ -566,7 +568,7 @@
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 		if(!BP)
 			return
-		if(!(BP.is_robotic()) || user.a_intent != INTENT_HELP)
+		if(!(BP.is_robotic_part()) || user.a_intent != INTENT_HELP)
 			return ..()
 
 		if(H.species.flags[IS_SYNTHETIC])

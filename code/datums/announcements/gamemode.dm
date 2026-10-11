@@ -34,6 +34,12 @@
 	sound = "blob_dead"
 	message = "Вспышка биологической угрозы успешно локализована. Карантин снят. Удалите биологически опасные материалы и возвращайтесь к исполнению своих обязанностей."
 
+/datum/announcement/centcomm/blob/biohazard_station_unlock_alt
+	name = "Biohazard Level Updated - Lock Down Lifted (alt)"
+	subtitle = "Тревога. Биоугроза"
+	sound = "commandreport"
+	message = "Вспышка биологической угрозы успешно локализована. Карантин снят. Шаттл вызван, экипажу приказано покинуть станцию, по окончанию смены прибудет персонал для удаления остатков опасных материалов."
+
 /* Nuclear */
 /datum/announcement/centcomm/nuclear/war
 	name = "Nuclear: Declaration of War"

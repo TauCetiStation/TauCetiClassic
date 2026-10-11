@@ -56,7 +56,7 @@
 	if(iswelding(I))
 		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(WT.use_tool(src, user, 20, volume = 50))
+		if(WT.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
 			if(WT.isOn())
 				if(WT.get_fuel() >= 4)
 					if(inside)
@@ -477,9 +477,9 @@
 		if(35)
 			//gas mask
 			if(prob(25))
-				new_item = new /obj/item/clothing/mask/gas/poltergeist(loc)
+				new_item = new /obj/item/clothing/mask/breath/gas/poltergeist(loc)
 			else
-				new_item = new /obj/item/clothing/mask/gas(loc)
+				new_item = new /obj/item/clothing/mask/breath/gas(loc)
 		if(36)
 			apply_prefix = 0
 			item_type = "strange device"

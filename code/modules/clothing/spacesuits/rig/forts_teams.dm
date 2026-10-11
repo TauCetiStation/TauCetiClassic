@@ -36,6 +36,7 @@
 /obj/item/clothing/suit/space/rig/forts/team_red
 	icon_state = "ert_security"
 	item_state = "ert_security"
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/forts/team_red
 
 // team blue
 /obj/item/clothing/head/helmet/space/rig/forts/team_blue
@@ -51,3 +52,4 @@
 /obj/item/clothing/suit/space/rig/forts/team_blue
 	icon_state = "ert_commander"
 	item_state = "ert_commander"
+	helmet_type = /obj/item/clothing/head/helmet/space/rig/forts/team_blue

@@ -1,7 +1,3 @@
-
-//moved these here from code/defines/obj/weapon.dm
-//please preference put stuff where it's easy to find - C
-
 /obj/item/weapon/autopsy_scanner
 	name = "autopsy scanner"
 	desc = "Extracts information on wounds."
@@ -27,6 +23,8 @@
 	var/hits = 0
 	var/time_inflicted = ""
 
+	var/impact_direction = "Не определено"
+
 /datum/autopsy_data/proc/copy()
 	var/datum/autopsy_data/W = new()
 	W.weapon = weapon
@@ -35,6 +33,7 @@
 	W.type_damage = type_damage
 	W.hits = hits
 	W.time_inflicted = time_inflicted
+	W.impact_direction = impact_direction
 	return W
 
 /datum/autopsy_body_part
@@ -58,13 +57,15 @@
 				W.pretend_weapon = W.weapon
 			else
 				if(W.type_damage == BRUTE || W.type_damage == null || W.type_damage == "")
-					W.pretend_weapon = pick("The mechanical toolbox", "The wirecutters", "The revolver", "The crowbar", "The fire extinguisher", "The tomato soup", "The oxygen tank", "The emergency oxygen tank", "The bullet", "The table", "The chair", "The ERROR")
+					W.pretend_weapon = pick("The mechanical toolbox", "The wirecutters", "The revolver", "The crowbar", "The fire extinguisher", "The tomato soup", "The oxygen tank", "The emergency oxygen tank", "The table", "The chair", "The ERROR")
 				if(W.type_damage == BURN)
 					W.pretend_weapon = pick("The laser", "The cigarette", "The lighter", "The ERROR", "The fire", "The hydrogen peroxide", "The steam", "The water", "The lava")
 				if(W.type_damage == "mixed")
 					W.pretend_weapon = pick("The nuclear explosion", "The explosion")
 				if(W.type_damage == BRUISE)
 					W.pretend_weapon = pick("The paper", "The nail", "The pen", "The shard", "The PDA", "The cat", "The dog", "The door", "The monkey", "The air", "The coin")
+				if(W.type_damage == BULLET)
+					W.pretend_weapon = pick("The bullet", "The shrapnel", "The projectile")
 
 		if(!D.trauma[tdata])
 			D.trauma[tdata] = W.copy()
@@ -116,6 +117,8 @@
 				type_damage = " scorched wound"
 			if(W.type_damage == BRUISE)
 				type_damage = " bruise"
+			if(W.type_damage == BULLET)
+				type_damage = " bullet wound"
 
 			switch(W.damage)
 				if(0) //strangled comes in here
@@ -149,7 +152,7 @@
 			scan_data += "[W.pretend_weapon]"
 			scan_data += "</td>"
 			scan_data += "<td style=\"text-align:left;\">"
-			scan_data += "-<font size = \"2\"><span class=\"paper_field\"></span></font>"
+			scan_data += "Направление удара: [W.impact_direction]; <font size = \"2\"><span class=\"paper_field\"></span></font>"
 			scan_data += "</td>"
 			scan_data += "</tr>"
 

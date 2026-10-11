@@ -4,7 +4,7 @@
 	icon_state = "brown"
 	item_state = "brown"
 	permeability_coefficient = 0.05
-	flags = NOSLIP
+	clothing_traits = list(TRAIT_NOSLIP)
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 	siemens_coefficient = 0.8
@@ -18,7 +18,8 @@
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
 	icon_state = "s-ninja"
 	permeability_coefficient = 0.01
-	flags = NOSLIP | AIR_FLOW_PROTECT
+	flags = AIR_FLOW_PROTECT
+	clothing_traits = list(TRAIT_NOSLIP)
 	siemens_coefficient = 0.2
 
 	cold_protection = LEGS
@@ -64,7 +65,6 @@
 	name = "clown shoes"
 	icon_state = "clown"
 	item_state = "clown_shoes"
-	slowdown = SHOES_SLOWDOWN + 1.0
 
 /obj/item/clothing/shoes/clown_shoes/Destroy()
 	if(slot_equipped == SLOT_SHOES)
@@ -74,12 +74,9 @@
 	return ..()
 
 /obj/item/clothing/shoes/clown_shoes/proc/start_waddling(mob/user)
-	if(user.IsClumsy())
-		slowdown = SHOES_SLOWDOWN
 	user.AddComponent(/datum/component/waddle, 4, list(-14, 0, 14), list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_PIXELMOVE))
 
 /obj/item/clothing/shoes/clown_shoes/proc/stop_waddling(mob/user)
-	slowdown = SHOES_SLOWDOWN + 1.0
 	qdel(user.GetComponent(/datum/component/waddle))
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
@@ -172,7 +169,7 @@
 	desc = "Help you swim good."
 	name = "swimming fins"
 	icon_state = "flippers"
-	flags = NOSLIP
+	clothing_traits = list(TRAIT_NOSLIP)
 	slowdown = SHOES_SLOWDOWN+0.5
 
 /obj/item/clothing/shoes/centcom
@@ -222,14 +219,14 @@
 /obj/item/clothing/shoes/boots/nt_pmc_boots
 	name = "NT PMC Boots"
 	desc = "Private security boots. Now with extra grip."
-	flags = NOSLIP
+	clothing_traits = list(TRAIT_NOSLIP)
 	icon_state = "nt_pmc_boots"
 	item_state = "r_feet"
 
 /obj/item/clothing/shoes/boots/lizard_boots
 	name = "Lizard Boots"
 	desc = "Private security boots for Unathi."
-	flags = NOSLIP
+	clothing_traits = list(TRAIT_NOSLIP)
 	icon_state = "Lizard_Boots"
 	item_state = "r_feet"
 	species_restricted = list(UNATHI)

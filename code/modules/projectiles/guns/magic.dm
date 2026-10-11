@@ -33,9 +33,10 @@
 	if(istype(A, /area/custom/wizard_station))
 		to_chat(M, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].</span>")
 		return FALSE
-	if(M.mind.special_role != "Wizard" && !global_access)
-		to_chat(M, "<span class='warning'>You have no idea how to use [src].</span>")
-		return FALSE
+	if(!global_access)
+		if(!iswizard(M) && !iswizardapprentice(M))
+			to_chat(M, "<span class='warning'>You have no idea how to use [src].</span>")
+			return FALSE
 	return TRUE
 
 /obj/item/weapon/gun/magic/examine(mob/user)

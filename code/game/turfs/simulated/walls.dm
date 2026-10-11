@@ -380,13 +380,13 @@
 			if(!damage)
 				return
 			to_chat(user, "<span class='warning'>Вы ремонтируете стену.</span>")
-			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
+			if(WT.use_tool(src, user, max(5, damage / 5), volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "<span class='notice'>Вы отремонтировали стену.</span>")
 				take_damage(-damage)
 
 		else
 			to_chat(user, "<span class='notice'>Вы разрезаете обшивку.</span>")
-			if(WT.use_tool(src, user, SKILL_TASK_DIFFICULT, 3, 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
+			if(WT.use_tool(src, user, SKILL_TASK_DIFFICULT, 3, 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)))
 				if(!iswallturf(src))
 					return
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
@@ -494,8 +494,8 @@
 		var/obj/item/noticeboard_frame/NF = W
 		NF.try_build(user, src)
 
-	else if(istype(W,/obj/item/painting_frame))
-		var/obj/item/painting_frame/AH = W
+	else if(istype(W,/obj/item/weapon/picture_frame))
+		var/obj/item/weapon/picture_frame/AH = W
 		AH.try_build(src)
 		return
 

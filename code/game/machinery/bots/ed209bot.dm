@@ -463,7 +463,7 @@
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")
-				if(I.use_tool(src, user, 40, volume = 100))
+				if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_SCREWING))
 					if(build_step == 8)
 						build_step++
 						name = "armed [name]"

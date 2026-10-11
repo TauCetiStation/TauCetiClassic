@@ -369,6 +369,8 @@
 			return
 	if(!A.z) //no message if we examine something in a backpack
 		return
+	if(!A.name)
+		return
 
 	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
@@ -637,8 +639,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	//endwhile - reset the pixel offsets to zero
 	is_dizzy = FALSE
 	if(client)
-		client.pixel_x = 0
-		client.pixel_y = 0
+		client.restore_default_pixel_values()
 
 // jitteriness - copy+paste of dizziness
 
@@ -852,6 +853,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 // ========== CRAWLING ==========
 /mob/proc/SetCrawling(value)
 	crawling = value
+	if(hud_used)
+		crawl_hud_icon?.update_icon(src)
 	if(value)
 		pass_flags |= PASSCRAWL
 	else

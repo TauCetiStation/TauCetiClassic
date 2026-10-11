@@ -15,6 +15,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 	can_wedge_items = FALSE
 
+	hit_particle_type = /particles/tool/digging/glass
+
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/base_state = "left"
 	max_integrity = 150
@@ -71,25 +73,23 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 		new /obj/item/weapon/shard(loc)
 		new /obj/item/stack/rods(loc, 2)
 		new /obj/item/stack/cable_coil/red(loc, 2)
-		var/obj/item/weapon/airlock_electronics/ae
+		var/obj/item/weapon/airlock_electronics/AE
 		if(!electronics)
-			ae = new (src.loc)
+			AE = new (src.loc)
 			if(!src.req_access)
 				check_access()
 			if(src.req_access.len)
-				ae.conf_access = src.req_access
+				AE.conf_access = src.req_access
 			else if (src.req_one_access.len)
-				ae.conf_access = src.req_one_access
-				ae.one_access = 1
+				AE.conf_access = src.req_one_access
+				AE.one_access = TRUE
 		else
-			ae = electronics
+			AE = electronics
 			electronics = null
-			ae.loc = src.loc
-		ae.unres_sides = unres_sides
+			AE.forceMove(loc)
+		AE.unres_sides = unres_sides
 		if(operating == -1)
-			ae.icon_state = "door_electronics_smoked"
-			ae.item_state_world = "door_electronics_smoked_w"
-			ae.broken = TRUE
+			AE.make_broken()
 			operating = 0
 	playsound(src, pick(SOUNDIN_SHATTER), VOL_EFFECTS_MASTER)
 	visible_message("[src] shatters!")
@@ -276,7 +276,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 				if(user.is_busy(src)) return
 				user.visible_message("<span class='warning'>[user] removes the electronics from the [src.name].</span>", \
 									 "You start to remove electronics from the [src.name].")
-				if(I.use_tool(src, user, 40, volume = 100))
+				if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_PRYING))
 					if(src.p_open && !src.density && src.loc)
 						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
 						switch(base_state)
@@ -317,6 +317,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/door/window, windowdoor_list)
 
 						if(operating == -1)
 							ae.icon_state = "door_electronics_smoked"
+							ae.item_state_inventory = "door_electronics_smoked"
 							ae.item_state_world = "door_electronics_smoked_w"
 							ae.broken = TRUE
 							operating = 0

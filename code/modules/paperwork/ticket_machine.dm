@@ -55,7 +55,7 @@ var/global/ticket_machine_number = 0
 		folder = O
 		update_forms()
 	else if(isscrewing(O))
-		if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50))
+		if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, quality = QUALITY_SCREWING))
 			hatch_open = !hatch_open
 			update_icon()
 			update_forms()

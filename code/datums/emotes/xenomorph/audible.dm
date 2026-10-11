@@ -1,10 +1,10 @@
 /datum/emote/xenomorph/whimper
 	key = "whimper"
 
-	message_1p = "You whimper."
-	message_3p = "sadly whines."
+	message_1p = "Вы скулите."
+	message_3p = "жалобно скулит."
 
-	message_muzzled = "shakes violently and makes a loud noise."
+	message_muzzled = "сильно трясётся, издавая громкий звук."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -20,10 +20,10 @@
 /datum/emote/xenomorph/roar
 	key = "roar"
 
-	message_1p = "You roar."
-	message_3p = "triumphantly roars."
+	message_1p = "Вы ревёте."
+	message_3p = "победоносно ревёт."
 
-	message_muzzled = "shakes violently and makes a loud noise."
+	message_muzzled = "сильно трясётся, издавая громкий звук."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -40,10 +40,10 @@
 /datum/emote/xenomorph/hiss
 	key = "hiss"
 
-	message_1p = "You hiss."
-	message_3p = "predatory hiss."
+	message_1p = "Вы шипите."
+	message_3p = "хищно шипит."
 
-	message_muzzled = "shakes violently and makes a loud noise."
+	message_muzzled = "сильно трясётся, издавая громкий звук."
 
 	message_type = SHOWMSG_AUDIO
 
@@ -60,10 +60,10 @@
 /datum/emote/xenomorph/growl
 	key = "growl"
 
-	message_1p = "You growl."
-	message_3p = "menacingly growls."
+	message_1p = "Вы угрожающе рычите."
+	message_3p = "угрожающе рычит."
 
-	message_muzzled = "shakes violently and makes a loud noise."
+	message_muzzled = "сильно трясётся, издавая громкий звук."
 
 	message_type = SHOWMSG_AUDIO
 

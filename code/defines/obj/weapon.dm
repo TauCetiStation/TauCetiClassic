@@ -109,6 +109,17 @@
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
 
+/obj/item/weapon/mangal_parts
+	name = "mangal parts"
+	desc = "Складной мангал."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "mangal_parts"
+	flags = CONDUCT
+	m_amt = 5000
+
+	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
+
 // base shard object
 /obj/item/weapon/shard
 	name = "shard"
@@ -198,7 +209,7 @@
 
 			if(!H.shoes)
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
-				if(BP.is_robotic())
+				if(BP.is_robotic_part())
 					return
 				BP.take_damage(5, 0)
 				if(!HAS_TRAIT(H, TRAIT_NO_PAIN))

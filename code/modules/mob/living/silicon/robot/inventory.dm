@@ -91,6 +91,7 @@
 		inv3.icon_state = "inv3"
 		. = TRUE
 	if(.)
+		SEND_SIGNAL(O, COMSIG_HAND_UNEQUIP_MODULE, src)
 		hud_used.update_robot_modules_display()
 		updateicon()
 
@@ -101,6 +102,7 @@
 
 /mob/living/silicon/robot/proc/uneq_all()
 	module_active = null
+	var/obj/item/O
 
 	if(module_state_1)
 		if(istype(module_state_1,/obj/item/borg/sight))
@@ -109,6 +111,7 @@
 			client.screen -= module_state_1
 		contents -= module_state_1
 		module_state_1:loc = module
+		O = module_state_1
 		module_state_1 = null
 		inv1.icon_state = "inv1"
 	if(module_state_2)
@@ -118,6 +121,7 @@
 			client.screen -= module_state_2
 		contents -= module_state_2
 		module_state_2:loc = module
+		O = module_state_2
 		module_state_2 = null
 		inv2.icon_state = "inv2"
 	if(module_state_3)
@@ -127,8 +131,11 @@
 			client.screen -= module_state_3
 		contents -= module_state_3
 		module_state_3:loc = module
+		O = module_state_3
 		module_state_3 = null
 		inv3.icon_state = "inv3"
+	if (O)
+		SEND_SIGNAL(O, COMSIG_HAND_UNEQUIP_MODULE, src)
 	updateicon()
 
 /mob/living/silicon/robot/proc/activated(obj/item/O)
@@ -274,6 +281,7 @@
 		contents += O
 		if(istype(module_state_1,/obj/item/borg/sight))
 			sight_mode |= module_state_1:sight_mode
+		SEND_SIGNAL(O, COMSIG_HAND_ACTIVATE_MODULE, src)
 	else if(!module_state_2)
 		module_state_2 = O
 		O.plane = ABOVE_HUD_PLANE
@@ -281,6 +289,7 @@
 		contents += O
 		if(istype(module_state_2,/obj/item/borg/sight))
 			sight_mode |= module_state_2:sight_mode
+		SEND_SIGNAL(O, COMSIG_HAND_ACTIVATE_MODULE, src)
 	else if(!module_state_3)
 		module_state_3 = O
 		O.plane = ABOVE_HUD_PLANE
@@ -288,5 +297,6 @@
 		contents += O
 		if(istype(module_state_3,/obj/item/borg/sight))
 			sight_mode |= module_state_3:sight_mode
+		SEND_SIGNAL(O, COMSIG_HAND_ACTIVATE_MODULE, src)
 	else
 		to_chat(src, "<span class='notice'>You need to disable a module first!</span>")

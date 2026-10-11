@@ -8,7 +8,6 @@
 	var/magboot_state = "magboots"
 	var/slowdown_off = 2
 	origin_tech = "materials=3;magnets=4;engineering=4"
-//	flags = NOSLIP //disabled by default
 	item_action_types = list(/datum/action/item_action/hands_free/toggle_magboots)
 
 /datum/action/item_action/hands_free/toggle_magboots
@@ -18,7 +17,8 @@
 	if(user.is_busy() || !do_after(user, 0.8 SECONDS, target = src))
 		return
 	if(magpulse)
-		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
+		detach_clothing_traits(TRAIT_NOSLIP)
+		flags &= ~AIR_FLOW_PROTECT
 		slowdown = SHOES_SLOWDOWN
 		magpulse = 0
 		playsound(src, 'sound/effects/magb4.ogg', VOL_EFFECTS_MASTER, 100)
@@ -27,7 +27,8 @@
 		item_state_inventory = "[magboot_state]0"
 		to_chat(user, "You disable the mag-pulse traction system.")
 	else
-		flags |= NOSLIP | AIR_FLOW_PROTECT
+		attach_clothing_traits(TRAIT_NOSLIP)
+		flags |= AIR_FLOW_PROTECT
 		slowdown = slowdown_off
 		magpulse = 1
 		playsound(src, pick(SOUNDIN_MAGBOOTS_TOGGLE), VOL_EFFECTS_MASTER, 100)
@@ -42,10 +43,8 @@
 
 /obj/item/clothing/shoes/magboots/examine(mob/user)
 	..()
-	var/state = "disabled"
-	if(src.flags & (NOSLIP | AIR_FLOW_PROTECT))
-		state = "enabled"
+	var/state = magpulse ? "enabled" : "disabled"
 	to_chat(user, "Its mag-pulse traction system appears to be [state].")
 
 /obj/item/clothing/shoes/magboots/negates_gravity()
-	return flags & NOSLIP
+	return magpulse

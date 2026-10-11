@@ -103,8 +103,8 @@
 	return null
 
 /mob/living/carbon/proc/handle_external_pre_breathing(datum/gas_mixture/breath)
-	if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
-		var/obj/item/clothing/mask/gas/G = wear_mask
+	if(istype(wear_mask, /obj/item/clothing/mask/breath/gas) && breath)
+		var/obj/item/clothing/mask/breath/gas/G = wear_mask
 		for(var/g in  G.filter)
 			if(breath.gas[g])
 				breath.gas[g] -= breath.gas[g] * G.gas_filter_strength
@@ -244,12 +244,12 @@
 
 	breath.update_values()
 
-/mob/living/carbon/proc/breathe()
+/mob/living/carbon/proc/breathe(active_breathe = TRUE)
 	if(is_skip_breathe())
 		return null
 
 	//First, check if we can breathe at all
-	if(suiciding || is_cant_breathe())
+	if(suiciding || is_cant_breathe() || !active_breathe)
 		losebreath = max(2, losebreath + 1)
 
 	if(losebreath > 0) //Suffocating so do not take a breath
@@ -290,10 +290,13 @@
 
 		handle_external_pre_breathing(breath)
 
-	if(!breath || (breath.total_moles <= 0))
-		handle_suffocating()
-		inhale_alert = TRUE
-		return
+	if(!breath)
+		var/static/datum/gas_mixture/vacuum //avoid having to create a new gas mixture for each breath in space
+		if(!vacuum)
+			vacuum = new
+
+		breath = vacuum //still nothing? must be vacuum
+
 
 	breath.volume = BREATH_VOLUME
 
@@ -302,6 +305,10 @@
 	loc.assume_air(breath)
 
 	return breath
+
+
+/mob/living/carbon/proc/get_breath_volume()
+	return BREATH_VOLUME
 
 /mob/living/carbon/calculate_affecting_pressure(pressure)
 	return pressure
@@ -636,7 +643,7 @@
 						if(HAS_TRAIT(M, TRAIT_WET_HANDS) && ishuman(src))
 							var/mob/living/carbon/human/H = src
 							var/obj/item/organ/external/BP = H.get_bodypart(M.get_targetzone())
-							if(BP && BP.is_robotic())
+							if(BP && BP.is_robotic_part())
 								var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 								sparks.set_up(3, 0, get_turf(H))
 								sparks.start()
@@ -770,8 +777,16 @@
 
 /mob/living/carbon/restrained()
 	if (handcuffed)
-		return 1
+		return TRUE
+	if (istype(buckled, /obj/structure/stool/bed/nest))
+		return TRUE
 	return
+
+/mob/living/carbon/is_mouth_covered()
+	if(head && (head.flags & HEADCOVERSMOUTH))
+		return TRUE
+
+	return ..()
 
 /mob/living/carbon/u_equip(obj/item/W)
 	if(!W)
@@ -781,6 +796,9 @@
 		handcuffed = null
 		if(buckled && buckled.buckle_require_restraints)
 			buckled.unbuckle_mob()
+
+	else if(W == neck)
+		neck = null
 
 	else if (W == legcuffed)
 		legcuffed = null
@@ -803,6 +821,8 @@
 
 	dat += "<tr><td><B>Mask:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_WEAR_MASK]'>[(wear_mask && !(wear_mask.flags & ABSTRACT)) ? wear_mask : "<font color=grey>Empty</font>"]</A></td></tr>"
 
+	dat += "<tr><td><B>Neck:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_NECK]'>[(neck && !(neck.flags & ABSTRACT)) ? neck : "<font color=grey>Empty</font>"]</A></td></tr>"
+
 	if(handcuffed)
 		dat += "<tr><td><B>Handcuffed:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_HANDCUFFED]'>Remove</A></td></tr>"
 	if(legcuffed)
@@ -815,7 +835,7 @@
 	popup.open()
 
 //generates realistic-ish pulse output based on preset levels
-/mob/living/carbon/proc/get_pulse(method)	//method 0 is for hands, 1 is for machines, more accurate
+/mob/living/carbon/proc/get_pulse_number(method)	//method 0 is for hands, 1 is for machines, more accurate
 	var/temp = 0								//see setup.dm:694
 	switch(src.pulse)
 		if(PULSE_NONE)
@@ -1180,12 +1200,10 @@
 		set_EyesVision("greyscale")
 		return FALSE
 
+	set_EyesVision(null)
+
 	sight = initial(sight)
 	var/new_lighting_alpha = initial(lighting_alpha)
-
-	var/datum/species/S = all_species[get_species()]
-	if(S)
-		see_in_dark = S.darksight
 
 	see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 
@@ -1200,8 +1218,8 @@
 		if(!druggy)
 			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
-		var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
+	if(istype(wear_mask, /obj/item/clothing/mask/breath/gas/voice/space_ninja))
+		var/obj/item/clothing/mask/breath/gas/voice/space_ninja/O = wear_mask
 		switch(O.mode)
 			if(0)
 				O.togge_huds()

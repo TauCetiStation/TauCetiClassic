@@ -13,7 +13,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
 	l_ear = /obj/item/device/radio/headset/headset_sec/alt
 	head = /obj/item/clothing/head/spacepolice
-	mask = /obj/item/clothing/mask/gas/sechailer/police
+	mask = /obj/item/clothing/mask/breath/gas/sechailer/police
 	belt = /obj/item/weapon/storage/belt/security/cops
 	r_pocket = /obj/item/device/flashlight/seclite
 	l_pocket = /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian
@@ -24,13 +24,21 @@
 
 	backpack_contents = list(
 		/obj/item/ammo_box/magazine/colt/rubber = 3,
-		/obj/item/ammo_box/c45 = 2,
+		/obj/item/ammo_box/magazine/colt = 2,
 		/obj/item/weapon/gun/projectile/automatic/pistol/colt1911 = 1,
 	)
 
 	implants = list(
 		/obj/item/weapon/implant/mind_protect/loyalty,
 	)
+
+/datum/outfit/families_police/beatcop/post_equip(mob/living/carbon/human/H)
+	. = ..()
+	var/obj/item/clothing/under/U = H.w_uniform
+	if(istype(U))
+		var/obj/item/clothing/accessory/holster/armpit/holster = new (U)
+		LAZYADD(U.accessories, holster)
+		holster.on_attached(U, H, TRUE)
 
 /datum/outfit/families_police/beatcop/armored
 	name = "Families: Вооруженный Офицер"
@@ -39,8 +47,9 @@
 	suit_store = /obj/item/weapon/gun/projectile/shotgun/dungeon
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/teargas = 1,
-		/obj/item/weapon/storage/box/shotgun/buckshot = 1,
-		/obj/item/ammo_box/magazine/colt/rubber = 3,
+		/obj/item/ammo_box/eight_shells/buckshot = 2,
+		/obj/item/ammo_box/magazine/colt/rubber = 1,
+		/obj/item/ammo_box/magazine/colt = 2,
 		/obj/item/weapon/gun/projectile/automatic/pistol/colt1911 = 1,
 	)
 
@@ -48,15 +57,16 @@
 	name = "Families: Боец Тактической Группы"
 	suit = /obj/item/clothing/suit/storage/flak/police/fullbody
 	head = /obj/item/clothing/head/helmet/police/heavy
-	mask = /obj/item/clothing/mask/gas/sechailer/police
+	mask = /obj/item/clothing/mask/breath/gas/sechailer/police
 	gloves = /obj/item/clothing/gloves/combat/police
 	suit_store = /obj/item/weapon/gun/projectile/shotgun/combat
 	backpack_contents = list(
 		/obj/item/weapon/storage/box/handcuffs = 1,
 		/obj/item/weapon/storage/box/teargas = 1,
-		/obj/item/weapon/storage/box/shotgun/buckshot = 1,
+		/obj/item/ammo_box/eight_shells/buckshot = 2,
 		/obj/item/weapon/gun/projectile/automatic/pistol/colt1911 = 1,
-		/obj/item/ammo_box/magazine/colt/rubber = 3,
+		/obj/item/ammo_box/magazine/colt/rubber = 1,
+		/obj/item/ammo_box/magazine/colt = 2,
 	)
 
 /datum/outfit/families_police/beatcop/fbi
@@ -94,7 +104,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	head = /obj/item/clothing/head/helmet/space/syndicate
 	suit = /obj/item/clothing/suit/space/syndicate
-	mask = /obj/item/clothing/mask/gas/voice
+	mask = /obj/item/clothing/mask/breath/gas/voice
 	shoes = /obj/item/clothing/shoes/boots/combat
 	l_hand = /obj/item/weapon/tank/jetpack/oxygen/harness
 	suit_store = /obj/item/weapon/tank/emergency_oxygen/engi

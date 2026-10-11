@@ -11,7 +11,7 @@
 	antag_hud_type = ANTAG_HUD_REPLICATOR
 	antag_hud_name = "replicator"
 
-/datum/role/replicator/OnPreSetup()
+/datum/role/replicator/OnPostSetup(laterole)
 	. = ..()
 	var/mob/living/simple_animal/hostile/replicator/H = antag.current
 
@@ -25,7 +25,10 @@
 	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/transfer_to_area)
 	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/toggle_light)
 	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/set_mail_tag)
-	H.AddSpell(new /obj/effect/proc_holder/spell/no_target/replicator_construct/catapult)
+
+	var/datum/faction/replicators/R = faction
+	if(!faction || istype(R) && R.has_catapult_spell)
+		H.AddSpell(new /obj/effect/proc_holder/spell/no_target/replicator_construct/catapult)
 
 /datum/role/replicator/Greet(greeting, custom)
 	. = ..()

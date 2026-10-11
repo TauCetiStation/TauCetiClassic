@@ -22,6 +22,11 @@
 	unit_name = "laser gun"
 	export_types = list(/obj/item/weapon/gun/energy/laser)
 
+/datum/export/weapon/laser_big
+	cost = 300
+	unit_name = "laser gun"
+	export_types = list(/obj/item/weapon/gun/energy/laser/big)
+
 /datum/export/weapon/energy_gun
 	cost = 250
 	unit_name = "energy gun"
@@ -67,6 +72,11 @@
 	cost = 150
 	unit_name = "M79"
 	export_types = list(/obj/item/weapon/gun/projectile/grenade_launcher/m79)
+
+/datum/export/weapon/automatic_l13
+	cost = 300
+	unit_name = "security submachine gun"
+	export_types = list(/obj/item/weapon/gun/projectile/automatic/l13)
 
 //--------------------------------------------
 //----------------MISC------------------------

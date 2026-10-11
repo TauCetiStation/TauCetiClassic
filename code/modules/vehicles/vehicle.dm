@@ -202,7 +202,6 @@
 
 	C.forceMove(loc)
 	C.set_dir(dir)
-	C.anchored = TRUE
 
 	load = C
 
@@ -216,6 +215,8 @@
 
 	if(ismob(C))
 		buckle_mob(C)
+
+	C.anchored = TRUE
 
 	return 1
 

@@ -85,13 +85,13 @@ menu "menu"
 		can-check = true
 		saved-params = "is-checked"
 	elem
-		name = "&Scaling Mode"
+		name = "Scaling Mode"
 		command = ""
 		saved-params = "is-checked"
 	elem "ps"
 		name = "&Point Sampling"
 		command = ".winset \"mapwindow.map.zoom-mode=normal\""
-		category = "&Scaling Mode"
+		category = "Scaling Mode"
 		is-checked = true
 		can-check = true
 		group = "scaling"
@@ -99,14 +99,14 @@ menu "menu"
 	elem "bl"
 		name = "&Bilinear"
 		command = ".winset \"mapwindow.map.zoom-mode=blur\""
-		category = "&Scaling Mode"
+		category = "Scaling Mode"
 		can-check = true
 		group = "scaling"
 		saved-params = "is-checked"
 	elem "nn"
 		name = "&Nearest Neighbor"
 		command = ".winset \"mapwindow.map.zoom-mode=distort\""
-		category = "&Scaling Mode"
+		category = "Scaling Mode"
 		can-check = true
 		group = "scaling"
 		saved-params = "is-checked"

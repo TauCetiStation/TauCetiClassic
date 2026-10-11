@@ -101,11 +101,6 @@
 	var/mob/living/carbon/human/scientist = antag.current
 	var/obj/item/device/abductor/gizmo/G = new /obj/item/device/abductor/gizmo(scientist)
 	scientist.equip_to_slot_or_del(G, SLOT_IN_BACKPACK)
-
-	var/datum/faction/abductors/A = faction
-	if(!istype(A))
-		return
-
 	var/obj/item/weapon/implant/abductor/beamplant = new /obj/item/weapon/implant/abductor(scientist)
 	for(var/obj/machinery/abductor/console/console in range(2, scientist))
 		console.gizmo = G

@@ -96,15 +96,19 @@
 
 /datum/dna/gene/basic/remotetalk/activate(mob/M, connected, flags)
 	..(M,connected,flags)
-	M.verbs += /mob/living/carbon/human/proc/remotesay
 	M.verbs += /mob/proc/toggle_telepathy_hear
 	M.verbs += /mob/proc/telepathy_say
+	var/datum/action/telepathy/toggle_telepathy_hear/TTH = new(M)
+	var/datum/action/telepathy/project_mind/PM = new(M)
+	TTH.Grant(M)
+	PM.Grant(M)
 
 /datum/dna/gene/basic/remotetalk/deactivate(mob/M, connected, flags)
 	..(M,connected,flags)
-	M.verbs -= /mob/living/carbon/human/proc/remotesay
 	M.verbs -= /mob/proc/toggle_telepathy_hear
 	M.verbs -= /mob/proc/telepathy_say
+	for(var/datum/action/telepathy/A in M.actions)
+		A.Remove(M)
 
 /datum/dna/gene/basic/morph
 	name="Morph"

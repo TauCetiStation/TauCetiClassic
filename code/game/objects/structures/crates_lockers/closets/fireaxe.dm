@@ -35,7 +35,7 @@
 		if(ispulsing(O))
 			to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 			playsound(user, 'sound/machines/lockreset.ogg', VOL_EFFECTS_MASTER)
-			if (do_after(user, 50, target = src))
+			if(O.use_tool(src, user, 50, volume = 50, quality = QUALITY_PULSING))
 				locked = FALSE
 				to_chat(user, "<span class='notice'>You disable the locking modules.</span>")
 				update_icon()
@@ -76,7 +76,7 @@
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 10)
 			else
 				to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
-				if(O.use_tool(src, user, 50, volume = 50))
+				if(O.use_tool(src, user, 50, volume = 50, quality = QUALITY_PULSING))
 					locked = TRUE
 					to_chat(user, "<span class='notice'>You re-enable the locking modules.</span>")
 					playsound(user, 'sound/machines/lockenable.ogg', VOL_EFFECTS_MASTER)

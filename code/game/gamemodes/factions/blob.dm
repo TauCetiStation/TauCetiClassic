@@ -18,6 +18,7 @@
 	var/list/spawn_locs = list()
 	var/list/pre_escapees = list()
 	var/blobwincount = 0
+	var/blobwincount_base = 500
 
 /datum/faction/blob_conglomerate/New()
 	..()
@@ -81,7 +82,7 @@
 		M.add_ventcrawl(V)
 
 /datum/faction/blob_conglomerate/proc/CountFloors()
-	blobwincount = 500 * max_roles
+	blobwincount = blobwincount_base * max_roles
 
 /datum/faction/blob_conglomerate/forgeObjectives()
 	if(!..())
@@ -142,12 +143,17 @@
 				aiPlayer.set_zeroth_law(law)
 
 		if(FS_DEFEATED) //Cleanup time
-			var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
-			announcement.play()
 			for(var/mob/living/silicon/ai/aiPlayer as anything in ai_list)
 				aiPlayer.set_zeroth_law("")
 			send_intercept(FS_DEFEATED)
 			SSshuttle.fake_recall = FALSE
+			if(istype(SSticker.mode, /datum/game_mode/blob))
+				var/datum/announcement/centcomm/blob/biohazard_station_unlock_alt/announcement = new
+				announcement.play()
+				SSshuttle.incall(0.5)
+			else
+				var/datum/announcement/centcomm/blob/biohazard_station_unlock/announcement = new
+				announcement.play()
 
 /datum/faction/blob_conglomerate/proc/send_intercept(report = FS_ACTIVE)
 	var/intercepttext = ""
@@ -258,6 +264,11 @@ Message ends."}
 				else
 					result["numAlive"]++
 	return result
+
+/datum/faction/blob_conglomerate/more_tiles
+	name = F_BLOBCONGLOMERATE_HARD
+	ID = F_BLOBCONGLOMERATE_HARD
+	blobwincount_base = 750
 
 /datum/station_state
 	var/floor = 0

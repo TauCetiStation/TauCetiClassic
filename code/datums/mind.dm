@@ -37,6 +37,7 @@
 
 	var/assigned_role
 	var/special_role
+	var/is_ert_leader = FALSE
 
 	var/holy_role = NONE
 
@@ -272,6 +273,7 @@
 			tgui_alert(usr, "This mob already has every available roles! Geez, calm down!", "Assigned role")
 			return
 
+		sortTim(available_roles, GLOBAL_PROC_REF(cmp_text_asc))
 		var/new_role = input("Select new role", "Assigned role", null) as null|anything in available_roles
 		if (!new_role)
 			return
@@ -626,6 +628,7 @@
 	candidates = shuffle(candidates)
 
 	if(fac_type)
+		var/is_new = !find_faction_by_type(fac_type)
 		var/datum/faction/FF = create_uniq_faction(fac_type)
 		while(count > 0 && candidates.len)
 			var/mob/M = pick(candidates)
@@ -636,11 +639,12 @@
 			if(isobserver(M))
 				M = makeBody(M)
 
-			if(add_faction_member(FF, M, FALSE, FALSE))
+			if(add_faction_member(FF, M, FALSE, !is_new))
 				recruit_count++
 				count--
 
-		FF.OnPostSetup()
+		if(is_new)
+			FF.OnPostSetup()
 
 	if(role_type)
 		while(count > 0 && candidates.len)
@@ -695,10 +699,15 @@
 	for(var/datum/faction/F in SSticker.mode.factions)
 		all_factions[F.name] = F
 	all_factions += "-----"
+
+	var/list/factionNameByType = list()
 	for(var/factiontype in subtypesof(/datum/faction))
 		var/datum/faction/F = factiontype
-		if (!(initial(F.name) in all_factions))
-			all_factions[initial(F.name)] = F
+		if (!(initial(F.name) in factionNameByType))
+			factionNameByType[initial(F.name)] = F
+	sortTim(factionNameByType, GLOBAL_PROC_REF(cmp_text_asc))
+	all_factions |= factionNameByType
+
 	all_factions += "-----"
 	return all_factions
 
