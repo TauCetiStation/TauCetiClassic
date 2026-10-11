@@ -211,22 +211,22 @@ fields = alist(...)
 	src.can_be_null = can_be_null
 
 /datum/primitive_field/type/sanitize_field(field)
-	if(istext(field)) //JSON saves paths as strings, sadly.
-		field = text2path(field)
-
-	if(in_list)
-		if(field in in_list)
-			return field
-
-		throw EXCEPTION("Not an allowed type")
-
 	if(isnull(field))
 		if(can_be_null)
 			return field
 
 		throw EXCEPTION("Is null")
 
-	if(!ispath(field))
-		throw EXCEPTION("Not a path")
+	if(istext(field)) //JSON saves paths as strings, sadly.
+		field = text2path(field)
+
+		if(isnull(field)) //If text2path returns null, that means that it was not a path
+			throw EXCEPTION("Not a path")
+
+	if(in_list)
+		if(field in in_list)
+			return field
+
+		throw EXCEPTION("Not an allowed type")
 
 	return field

@@ -1,5 +1,5 @@
 /datum/unit_test/continuity
-	name = "CONTINUITY: Continuity objects should return data they saved and throw an erorr when they should."
+	name = "CONTINUITY: Continuity objects should return data they saved and throw an error when they should."
 
 	disabled = FALSE
 	why_disabled = "Runtimes while checking"
