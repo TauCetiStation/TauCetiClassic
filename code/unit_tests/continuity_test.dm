@@ -1,11 +1,7 @@
-#define RUNTIME_SENTINEL "THE PROC HAS RUNTIMED WHAT ARE YOU GOING ON ABOUT"
-#define RUNTIMED(proc_output) proc_output == RUNTIME_SENTINEL
-
-
 /datum/unit_test/continuity
 	name = "CONTINUITY: Continuity objects should return data they saved and throw an erorr when they should."
 
-	disabled = TRUE
+	disabled = FALSE
 	why_disabled = "Runtimes while checking"
 
 	var/list/good_entries = list(
@@ -29,74 +25,58 @@
 /datum/unit_test/continuity/start_test()
 	var/atom/movable/A = new
 	var/list/continuity_fields = list(
-		"field1" = new /datum/continuity_field/listfield(
-			entry_config = new /datum/continuity_field/int(
+		"field1" = new /datum/primitive_field/listfield(
+			entry_config = new /datum/primitive_field/int(
 				max_num = 999,
 				min_num = -999,
 				can_be_null = TRUE
 			)
 		),
-		"field2" = new /datum/continuity_field/alistfield(
-			key_config = new /datum/continuity_field/string(
+		"field2" = new /datum/primitive_field/alistfield(
+			key_config = new /datum/primitive_field/string(
 				max_length = 999,
 				allowed_characters = list("A", "B", "C")
 			),
-			entry_config = new /datum/continuity_field/string(
+			entry_config = new /datum/primitive_field/string(
 				max_length = 999,
 				allowed_characters = list("1", "3", "7")
 			)
 		),
-		"field3" = new /datum/continuity_field/string(
+		"field3" = new /datum/primitive_field/string(
 			max_length = 999,
 			in_list = list("абырвалг", "главрыба")
 		),
-		"field4" = new /datum/continuity_field/int(
+		"field4" = new /datum/primitive_field/int(
 			max_num = 40,
 			min_num = 0
 		),
-		"field5" = new /datum/continuity_field/type(
+		"field5" = new /datum/primitive_field/type(
 			in_list = list(/atom, /atom/movable)
 		),
 	)
 
 	var/datum/component/continuity_object/Object = A.AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(testproc)), CALLBACK(src, PROC_REF(testproc)), "atom", continuity_fields)
 
-	var/list/check_entries = Object.sanitize_data(good_entries)
-	var/list/check_entries2 = Object.sanitize_data(bad_entries)
+	try
+		var/list/check_entries = Object.sanitize_data(good_entries)
+		try
+			Object.sanitize_data(bad_entries)
+			throw EXCEPTION("Continuity: bad entries did not throw an error!")
+		catch
 
-	if(!(check_entries ~= good_entries))
-		fail("Continuity: initial and saved entries doesn't match!")
-		return TRUE
+		if(!(check_entries ~= good_entries))
+			throw EXCEPTION("Continuity: initial and saved entries doesn't match!")
 
-	if(!RUNTIMED(check_entries2))
-		fail("Continuity: doesn't throw an error when should!")
-		return TRUE
+		test_list()
+		test_alist()
+		test_string()
+		test_int()
+		test_type()
+		test_inlists()
 
-	if(!test_list())
-		fail("Continuity: List test failed!")
-		return TRUE
-
-	if(!test_alist())
-		fail("Continuity: Alist test failed!")
-		return TRUE
-
-	if(!test_string())
-		fail("Continuity: String test failed!")
-		return TRUE
-
-	if(!test_int())
-		fail("Continuity: Int test failed!")
-		return TRUE
-
-	if(!test_type())
-		fail("Continuity: Type test failed!")
-		return TRUE
-
-	if(!test_inlists())
-		fail("Coninuity: Inlist test failed!")
-		return TRUE
-
-	pass("Continuity works just fine.")
+		pass("Continuity works just fine.")
+	catch(var/exception/e)
+		fail("[e] on [e.file]:[e.line]")
 
 	return TRUE
 
@@ -104,21 +84,38 @@
 	var/list/testlist = list(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 	var/atom/movable/A = new
 	var/list/paramslist = list(
-		"field" = new /datum/continuity_field/listfield(
-			entry_config = new /datum/continuity_field/int
+		"field" = new /datum/primitive_field/listfield(
+			entry_config = new /datum/primitive_field/int
 		)
 	)
 
 	var/datum/component/continuity_object/Object = A.AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(testproc)), CALLBACK(src, PROC_REF(testproc)), "atom", paramslist)
 
-	if(!RUNTIMED(Object.sanitize_data(list("notfield" = testlist))))
-		return FALSE
+	try
+		Object.sanitize_data(list("notfield" = testlist))
+	catch(var/exception/e)
+		if(e.name != "Missing field field")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = testlist + "FF"))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = testlist, "notfield" = testlist))
+	catch(e)
+		if(e.name != "Invalid notfield")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = null))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = testlist + "FF"))
+	catch(e)
+		if(e.name != "Not a number")
+			throw EXCEPTION("[e.name] was thrown instead.")
+
+	try
+		Object.sanitize_data(list("field" = null))
+	catch(e)
+		if(e.name != "Is null")
+			throw EXCEPTION("[e.name] was thrown instead.")
+
+	Object.sanitize_data(list("field" = testlist))
 
 	return TRUE
 
@@ -126,25 +123,45 @@
 	var/list/testlist = list("A" = 1, "B" = 2, "C" = 3, "D" = 4, "E" = 5, "F" = 6, "G" = 7, "H" = 8, "I" = 9, "J" = 10)
 	var/atom/movable/A = new
 	var/list/paramslist = list(
-		"field" = new /datum/continuity_field/alistfield(
-			key_config = new /datum/continuity_field/string(max_length = 10),
-			entry_config = new /datum/continuity_field/int
+		"field" = new /datum/primitive_field/alistfield(
+			key_config = new /datum/primitive_field/string(max_length = 10),
+			entry_config = new /datum/primitive_field/int
 		)
 	)
 
 	var/datum/component/continuity_object/Object = A.AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(testproc)), CALLBACK(src, PROC_REF(testproc)), "atom", paramslist)
 
-	if(!RUNTIMED(Object.sanitize_data(list("notfield" = testlist))))
-		return FALSE
+	try
+		Object.sanitize_data(list("notfield" = testlist))
+	catch(var/exception/e)
+		if(e.name != "Missing field field")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = testlist + list(/atom = 15)))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = testlist, "notfield" = testlist))
+	catch(e)
+		if(e.name != "Invalid notfield")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = testlist + list("/atom" = "15")))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = list(/atom = 15)))
+	catch(e)
+		if(e.name != "Not a text")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = null))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = list("/atom" = "15")))
+	catch(e)
+		if(e.name != "Not a number")
+			throw EXCEPTION("[e.name] was thrown instead.")
+
+	try
+		Object.sanitize_data(list("field" = null))
+	catch(e)
+		if(e.name != "Is null")
+			throw EXCEPTION("[e.name] was thrown instead.")
+
+	Object.sanitize_data(list("field" = testlist))
 
 	return TRUE
 
@@ -153,7 +170,7 @@
 	var/randstring = random_string(randlength, global.alphabet_uppercase)
 	var/atom/movable/A = new
 	var/list/paramslist = list(
-		"field" = new /datum/continuity_field/string(
+		"field" = new /datum/primitive_field/string(
 			max_length = randlength + 1,
 			allowed_characters = global.alphabet_uppercase
 		)
@@ -161,20 +178,43 @@
 
 	var/datum/component/continuity_object/Object = A.AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(testproc)), CALLBACK(src, PROC_REF(testproc)), "atom", paramslist)
 
-	if(!RUNTIMED(Object.sanitize_data(list("notfield" = randstring))))
-		return FALSE
+	try
+		Object.sanitize_data(list("notfield" = randstring))
+	catch(var/exception/e)
+		if(e.name != "Missing field field")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = randstring + "FF"))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = randstring, "notfield" = randstring))
+	catch(e)
+		if(e.name != "Invalid notfield")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = 1))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = null))
+	catch(e)
+		if(e.name != "Is null")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = randstring + "$"))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = randstring + "FF"))
+	catch(e)
+		if(e.name != "Text is longer than it should be")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = null))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = 1))
+	catch(e)
+		if(e.name != "Not a text")
+			throw EXCEPTION("[e.name] was thrown instead.")
+
+	try
+		Object.sanitize_data(list("field" = randstring + "$"))
+	catch(e)
+		if(e.name != "Text contains bad characters")
+			throw EXCEPTION("[e.name] was thrown instead.")
+
+	Object.sanitize_data(list("field" = randstring))
 
 	return TRUE
 
@@ -182,7 +222,7 @@
 	var/randnum = rand(-10, 10)
 	var/atom/movable/A = new
 	var/list/paramslist = list(
-		"field" = new /datum/continuity_field/int(
+		"field" = new /datum/primitive_field/int(
 			max_num = randnum,
 			min_num = randnum
 		)
@@ -190,76 +230,126 @@
 
 	var/datum/component/continuity_object/Object = A.AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(testproc)), CALLBACK(src, PROC_REF(testproc)), "atom", paramslist)
 
-	if(!RUNTIMED(Object.sanitize_data(list("notfield" = randnum))))
-		return FALSE
+	try
+		Object.sanitize_data(list("notfield" = randnum))
+	catch(var/exception/e)
+		if(e.name != "Missing field field")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = "[randnum]"))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = randnum, "notfield" = randnum))
+	catch(e)
+		if(e.name != "Invalid notfield")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = randnum + 1))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = null))
+	catch(e)
+		if(e.name != "Is null")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = randnum - 1))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = "[randnum]"))
+	catch(e)
+		if(e.name != "Not a number")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = null))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = randnum + 1))
+	catch(e)
+		if(e.name != "Number is bigger than it should be")
+			throw EXCEPTION("[e.name] was thrown instead.")
+
+	try
+		Object.sanitize_data(list("field" = randnum - 1))
+	catch(e)
+		if(e.name != "Number is smaller than it should be")
+			throw EXCEPTION("[e.name] was thrown instead.")
+
+	Object.sanitize_data(list("field" = randnum))
 
 	return TRUE
 
 /datum/unit_test/continuity/proc/test_type()
 	var/atom/movable/A = new
 	var/list/paramslist = list(
-		"field" = new /datum/continuity_field/type
+		"field" = new /datum/primitive_field/type
 	)
 
 	var/datum/component/continuity_object/Object = A.AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(testproc)), CALLBACK(src, PROC_REF(testproc)), "atom", paramslist)
 
-	if(!RUNTIMED(Object.sanitize_data(list("notfield" = /atom/movable))))
-		return FALSE
+	try
+		Object.sanitize_data(list("notfield" = /atom/movable))
+	catch(var/exception/e)
+		if(e.name != "Missing field field")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = "atom/movable"))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = /atom/movable, "notfield" = /atom/movable))
+	catch(e)
+		if(e.name != "Invalid notfield")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = null))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = null))
+	catch(e)
+		if(e.name != "Is null")
+			throw EXCEPTION("[e.name] was thrown instead.")
+
+	try
+		Object.sanitize_data(list("field" = "/atom/movable"))
+	catch(e)
+		if(e.name != "Not a path")
+			throw EXCEPTION("[e.name] was thrown instead.")
+
+	Object.sanitize_data(list("field" = /atom/movable))
 
 	return TRUE
 
 /datum/unit_test/continuity/proc/test_inlists()
 	var/atom/movable/A = new
 	var/list/paramslist = list(
-		"field1" = new /datum/continuity_field/string(
+		"field1" = new /datum/primitive_field/string(
 			in_list = list("A", "B")
 		),
-		"field2" = new /datum/continuity_field/type(
+		"field2" = new /datum/primitive_field/type(
 			in_list = list(/atom, /atom/movable)
 		)
 	)
 
 	var/datum/component/continuity_object/Object = A.AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(testproc)), CALLBACK(src, PROC_REF(testproc)), "atom", paramslist)
 
-	if(!RUNTIMED(Object.sanitize_data(list("field1" = "C", "field2" = /atom))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field1" = "C", "field2" = /atom))
+	catch(var/exception/e)
+		if(e.name != "Not an allowed string")
+			throw EXCEPTION("[e.name] was thrown instead.")
 
-	if(!RUNTIMED(Object.sanitize_data(list("field1" = "A", "field2" = /atom/movable/abyrvalg))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field1" = "A", "field2" = /atom/movable/abyrvalg))
+	catch(e)
+		if(e.name != "Not an allowed type")
+			throw EXCEPTION("[e.name] was thrown instead.")
+
+	Object.sanitize_data(list("field1" = "A", "field2" = /atom))
 
 	A = new
 	paramslist = list(
-		"field" = new /datum/continuity_field/string(
+		"field" = new /datum/primitive_field/string(
 			regex = @"^\d+$"
 		)
 	)
 
 	Object = A.AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(testproc)), CALLBACK(src, PROC_REF(testproc)), "atom", paramslist)
 
-	if(!RUNTIMED(Object.sanitize_data(list("field" = "text"))))
-		return FALSE
+	try
+		Object.sanitize_data(list("field" = "text"))
+	catch(e)
+		if(e.name != "Regex failed")
+			throw EXCEPTION("[e.name] was thrown instead.")
+
+	Object.sanitize_data(list("field" = "123"))
 
 	return TRUE
 
 /atom/movable/abyrvalg
-
-#undef RUNTIMED
-#undef RUNTIME_SENTINEL

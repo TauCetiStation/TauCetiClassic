@@ -11,14 +11,14 @@
 
 /mob/living/carbon/monkey/punpun/atom_init()
 	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/punpun", list(
-		"ancestor_name" = new /datum/continuity_field/string(
+		"ancestor_name" = new /datum/primitive_field/string(
 			max_length = 150,
 			can_be_null = TRUE
 		),
-		"ancestor_chain" = new /datum/continuity_field/int(
+		"ancestor_chain" = new /datum/primitive_field/int(
 			min_num = 1
 		),
-		"relic_mask" = new /datum/continuity_field/type(
+		"relic_mask" = new /datum/primitive_field/type(
 			in_list = subtypesof(/obj/item/clothing/mask) + null
 		),
 	))
