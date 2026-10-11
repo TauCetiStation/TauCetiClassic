@@ -76,10 +76,7 @@
 		if(!object_field)
 			throw EXCEPTION("Missing primitive_field of: [field_name]")
 
-		try
-			var/newdata = object_field.sanitize_field(field_data)
-			data[field_name] = newdata
-		catch(var/exception/e)
-			throw e
+		var/newdata = object_field.sanitize_field(field_data)
+		data[field_name] = newdata
 
 	return data
