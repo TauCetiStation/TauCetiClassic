@@ -54,3 +54,8 @@
 
 /obj/item/weapon/storage/hidden_cache/vending
 	use_sound = 'sound/items/surgery_tray_use.ogg'
+
+/obj/item/weapon/storage/hidden_cache/mirror
+	use_sound = 'sound/items/Crowbar.ogg'
+
+	max_w_class = SIZE_MINUSCULE

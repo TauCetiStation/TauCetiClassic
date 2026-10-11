@@ -133,7 +133,7 @@
 	count = 25
 	spawning = 25
 
-	gradient = list("#336699ff", "#ffffff55")
+	gradient = list("#336699", "#ffffff")
 	color_change = 0.1
 
 	icon = null
@@ -144,7 +144,6 @@
 	spawning = 25
 
 	color = generator("color", "#2a1e23", "#7d6756", "NORMAL_RAND")
-	color_change = 0.1
 
 	icon = null
 	icon_state = null
