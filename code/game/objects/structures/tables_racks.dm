@@ -602,10 +602,12 @@
 	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), PROC_REF(destroy_lot_holder))
 	RegisterSignal(held_item, list(COMSIG_PARENT_QDELETING), PROC_REF(destroy_lot_holder))
 
+	var/old_invisibility = invisibility
+
 	held_item = Item
+	appearance = Item.appearance
 	Item.forceMove(src)
 
-	add_overlay(Item)
 	name = Item.name
 	var/list/pricetag = Item.price_tag
 	if(pricetag)
@@ -616,9 +618,10 @@
 				name = selling_item.name
 		name = "[name] ([pricetag["price"]]$)"
 
-	var/old_invisibility = invisibility
 	invisibility = INVISIBILITY_ABSTRACT
 	VARSET_IN(src, invisibility, old_invisibility, PUTDOWN_ANIMATION_DURATION)
+
+	layer = BELOW_OBJ_LAYER
 
 /obj/lot_holder/examine(mob/user)
 	held_item.examine(user)
@@ -712,20 +715,16 @@
 			return
 
 		if(held_item != selling_item)
+			selling_item.pixel_x += held_item.pixel_x
+			selling_item.pixel_y += held_item.pixel_y
 			selling_item.forceMove(get_turf(src))
-			update_icon()
+			held_item.update_icon()
+			appearance = held_item.appearance
+			layer = BELOW_OBJ_LAYER
 			return
 
 	held_item.remove_price_tag()
 	qdel(src)
-
-/obj/lot_holder/update_icon()
-	cut_overlay(held_item)
-	if(istype(held_item, /obj/item/weapon/woodencrate))
-		var/obj/item/weapon/woodencrate/crate = held_item
-		crate.update_icon()
-
-	add_overlay(held_item)
 
 /obj/lot_holder/proc/scan_card(obj/item/weapon/card/id/Card, mob/user)
 	var/datum/money_account/Buyer = attempt_account_access_with_user_input(Card.associated_account_number, ACCOUNT_SECURITY_LEVEL_MAXIMUM, user)
