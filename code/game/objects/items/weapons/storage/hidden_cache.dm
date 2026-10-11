@@ -5,6 +5,9 @@
 	var/particles/interaction_particle
 	var/interaction_time = 1 SECONDS
 
+/obj/item/weapon/storage/hidden_cache/spill(dist = 1, turf/T = null)
+	. = ..()
+
 /obj/item/weapon/storage/hidden_cache/try_open(mob/user)
 	if(!user)
 		return FALSE
@@ -22,7 +25,7 @@
 
 	var/obj/effect/abstract/particle_holder/Holder
 	if(interaction_particle)
-		Holder = new /obj/effect/abstract/particle_holder(src, interaction_particle, PARTICLE_FADEOUT)
+		Holder = new /obj/effect/abstract/particle_holder(loc, interaction_particle, PARTICLE_FADEOUT)
 
 	if(!do_after(user, interaction_time, target = loc))
 		QDEL_NULL(Holder)

@@ -133,7 +133,7 @@
 	count = 25
 	spawning = 25
 
-	gradient = list("#336699", "#ffffff")
+	gradient = list("#336699ff", "#ffffff55")
 	color_change = 0.1
 
 	icon = null
