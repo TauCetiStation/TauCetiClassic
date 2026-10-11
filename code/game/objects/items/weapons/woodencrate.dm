@@ -88,6 +88,8 @@
 
 		picture.cut_overlays()
 
+		picture_icon.transform = initial(picture_icon.transform)
+
 		var/obj/item/I = contents[1]
 		if(I.item_state_world)
 			picture_icon.icon = I.icon
