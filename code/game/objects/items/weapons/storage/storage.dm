@@ -34,7 +34,8 @@
 
 /obj/item/weapon/storage/atom_init()
 	. = ..()
-	use_sound = SOUNDIN_RUSTLE
+	if(!use_sound)
+		use_sound = SOUNDIN_RUSTLE
 
 	if(allow_quick_empty)
 		verbs += /obj/item/weapon/storage/proc/quick_empty

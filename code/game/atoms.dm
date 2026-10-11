@@ -173,6 +173,10 @@
 	var/area/A = get_area(src)
 	A?.Exited(src, null)
 
+	if(hidden_cache && !ispath(hidden_cache))
+		hidden_cache.spill()
+		qdel(hidden_cache)
+
 	return ..()
 
 ///This atom has been hit by hulk (TODO a hulkified mob in hulk mode (user))

@@ -128,3 +128,25 @@
 
 /particles/tool/digging/glass/phoron
 	icon_state = list("phoronglass1", "phoronglass2", "phoronglass3")
+
+/particles/tool/digging/watersplash
+	count = 25
+	spawning = 25
+
+	gradient = list("#336699ff", "#ffffff55")
+	color_change = 0.1
+
+	icon = null
+	icon_state = null
+
+/particles/tool/digging/flowerpot
+	count = 25
+	spawning = 25
+
+	color = generator("color", "#2a1e23", "#7d6756", "NORMAL_RAND")
+	color_change = 0.1
+
+	icon = null
+	icon_state = null
+
+	position = generator("box", list(-2, -12, 0), list(2, -8, 0))
