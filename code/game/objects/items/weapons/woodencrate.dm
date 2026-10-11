@@ -71,7 +71,7 @@
 
 		for(var/obj/item/I in contents)
 			I.pixel_x = -7 + (col * 3)
-			I.pixel_y = -(row * 2)
+			I.pixel_y = 3 - (row * 2)
 			insides.add_overlay(I)
 
 			col++
