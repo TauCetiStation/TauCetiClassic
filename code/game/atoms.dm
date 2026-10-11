@@ -77,6 +77,8 @@
 	var/can_block_air = FALSE // shared flag between /turf/s and /movable/s, you should use it only for movables
 	                          // if you want to set it true for object then remember to create CanPass or c_airblock methods or it will do nothing (pls refactor it)
 
+	var/obj/item/weapon/storage/hidden_cache/hidden_cache
+
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
@@ -333,6 +335,9 @@
 				msg += "<br><span class='info'>[reagents.total_volume] units of liquid.</span>"
 		else
 			msg += "<br>Nothing."
+
+	if(hidden_cache && Adjacent(user))
+		msg += "<br>Вы можете проверить тайник кликнув CTRL+SHIFT+LMB на [src]."
 
 	to_chat(user, msg)
 
@@ -812,3 +817,12 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 	return TRUE
+
+/atom/CtrlShiftClick(mob/user)
+	if(hidden_cache)
+		if(ispath(hidden_cache))
+			hidden_cache = new hidden_cache(src)
+
+		hidden_cache.try_open(user)
+
+	..()

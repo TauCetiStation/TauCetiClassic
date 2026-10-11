@@ -14,8 +14,6 @@
 	TCB.force_unwielded = 2
 	AddComponent(/datum/component/twohanded, TCB)
 
-	AddComponent(/datum/component/hiding_cache, SIZE_TINY, null, SOUNDIN_RAKE)
-
 /obj/item/weapon/flora/random/atom_init()
 	. = ..()
 	var/newtype = pick(subtypesof(/obj/item/weapon/flora/pottedplant))
@@ -27,6 +25,8 @@
 	desc = "Really brings the room together."
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-1"
+
+	hidden_cache = /obj/item/weapon/storage/hidden_cache/flowerpot
 
 /obj/item/weapon/flora/pottedplant/fern
 	name = "potted fern"

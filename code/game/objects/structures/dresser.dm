@@ -8,11 +8,6 @@
 
 	resistance_flags = CAN_BE_HIT
 
-/obj/structure/dresser/atom_init()
-	. = ..()
-
-	AddComponent(/datum/component/hiding_cache, SIZE_SMALL)
-
 /obj/structure/dresser/deconstruct(disassembled = TRUE)
 	if(flags & NODECONSTRUCT)
 		return ..()

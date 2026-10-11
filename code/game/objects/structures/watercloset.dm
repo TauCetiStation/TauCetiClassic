@@ -13,13 +13,13 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	var/broken = FALSE
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 
+	hidden_cache = /obj/item/weapon/storage/hidden_cache/toilet
+
 /obj/structure/toilet/atom_init()
 	. = ..()
 	lid_open = round(rand(0, 1))
 	update_icon()
 	AddComponent(/datum/component/fishing, list(/obj/item/weapon/reagent_containers/food/snacks/badrecipe = 10, /mob/living/simple_animal/mouse = 3, /mob/living/simple_animal/mouse/rat = 2, /mob/living/simple_animal/hostile/giant_spider = 1), 10 SECONDS, rand(1, 3) , 20)
-
-	AddComponent(/datum/component/hiding_cache, SIZE_SMALL, null, null, CALLBACK(src, PROC_REF(can_open_cache)))
 
 /obj/structure/toilet/attack_hand(mob/living/user)
 	user.SetNextMove(CLICK_CD_MELEE * 1.5)
@@ -135,9 +135,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		return ..()
 	new /obj/item/stack/sheet/metal(loc, 1)
 	..()
-
-/obj/structure/toilet/proc/can_open_cache()
-	return cistern_open
 
 /obj/structure/urinal
 	name = "urinal"

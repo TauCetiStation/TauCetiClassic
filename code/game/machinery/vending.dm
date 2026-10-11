@@ -62,6 +62,8 @@
 
 	var/private = TRUE // Whether the vending machine is privately operated, and thus must not start with a deficit of goods.
 
+	hidden_cache = /obj/item/weapon/storage/hidden_cache/vending
+
 
 /obj/machinery/vending/atom_init()
 	. = ..()
@@ -85,8 +87,6 @@
 	power_change()
 	update_wires_check()
 	update_unstable_product()
-
-	AddComponent(/datum/component/hiding_cache, SIZE_TINY, null, 'sound/items/surgery_tray_use.ogg')
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -624,9 +624,8 @@
 	updateUsrDialog()
 	update_unstable_product()
 
-	var/datum/component/hiding_cache/HC = GetComponent(/datum/component/hiding_cache)
-	if(HC)
-		HC.cache_storage.spill()
+	if(hidden_cache)
+		hidden_cache.spill()
 	return new VP.product_path(src.loc)
 
 /obj/machinery/vending/proc/update_unstable_product()
