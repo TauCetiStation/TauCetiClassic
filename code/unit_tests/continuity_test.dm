@@ -1,9 +1,6 @@
 /datum/unit_test/continuity
 	name = "CONTINUITY: Continuity objects should return data they saved and throw an error when they should."
 
-	disabled = FALSE
-	why_disabled = "Runtimes while checking"
-
 	var/list/good_entries = list(
 		"field1" = list(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
 		"field2" = list("A" = "1", "B" = "3", "C" = "7"),
