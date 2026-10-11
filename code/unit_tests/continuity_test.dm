@@ -297,7 +297,7 @@
 			throw EXCEPTION("[e3.name] was thrown instead.")
 
 	try
-		Object.sanitize_data(list("field" = "/atom/movable"))
+		Object.sanitize_data(list("field" = "atom/movable"))
 	catch(var/exception/e4)
 		if(e4.name != "Not a path")
 			throw EXCEPTION("[e4.name] was thrown instead.")
