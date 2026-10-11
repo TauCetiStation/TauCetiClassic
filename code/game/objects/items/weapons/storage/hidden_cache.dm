@@ -5,9 +5,6 @@
 	var/particles/interaction_particle
 	var/interaction_time = 1 SECONDS
 
-/obj/item/weapon/storage/hidden_cache/spill(dist = 1, turf/T = null)
-	. = ..()
-
 /obj/item/weapon/storage/hidden_cache/try_open(mob/user)
 	if(!user)
 		return FALSE
@@ -52,13 +49,18 @@
 	interaction_particle = /particles/tool/digging/flowerpot
 	use_sound = 'sound/effects/shovel_digging.ogg'
 	interaction_time = 3 SECONDS
-
 	max_w_class = SIZE_TINY
 
 /obj/item/weapon/storage/hidden_cache/vending
 	use_sound = 'sound/items/surgery_tray_use.ogg'
+	max_w_class = SIZE_SMALL
 
 /obj/item/weapon/storage/hidden_cache/mirror
 	use_sound = 'sound/items/Crowbar.ogg'
-
 	max_w_class = SIZE_MINUSCULE
+
+/obj/item/weapon/storage/hidden_cache/pillow
+	max_w_class = SIZE_TINY
+
+/obj/item/weapon/storage/hidden_cache/fancytable
+	max_w_class = SIZE_SMALL
