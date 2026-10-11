@@ -27334,6 +27334,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -27825,6 +27826,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -27867,6 +27869,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -30405,6 +30408,7 @@
 	dir = 4;
 	pixel_x = -25
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -30413,6 +30417,7 @@
 /obj/machinery/porta_turret/station_default{
 	dir = 8
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -31217,6 +31222,7 @@
 /obj/machinery/porta_turret/station_default{
 	dir = 1
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -34198,6 +34204,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -34776,6 +34783,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -35045,6 +35053,7 @@
 /obj/machinery/telescience_jammer{
 	radius = 2
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "vault"
 	},
@@ -37077,6 +37086,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -37269,6 +37279,7 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/weapon/carved_pumpkin,
 /turf/simulated/floor/plating,
 /area/station/bridge/nuke_storage)
 "bnN" = (
@@ -37327,6 +37338,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -37344,9 +37356,7 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
-/obj/machinery/light/small/emergency{
-	dir = 1
-	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "vault"
 	},
@@ -37853,6 +37863,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -38290,6 +38301,7 @@
 /turf/simulated/floor,
 /area/station/bridge/teleporter)
 "bpF" = (
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "vault"
@@ -38303,6 +38315,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/effect/rune,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -39827,6 +39840,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -40443,6 +40457,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -41233,6 +41248,7 @@
 	name = "Telecoms Server Access";
 	req_access = list(61)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -42364,6 +42380,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/effect/decal/cleanable/cobweb2,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -43400,6 +43417,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "vault"
@@ -46713,6 +46731,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -29
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "darkblue"
 	},
@@ -60433,6 +60452,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -60487,6 +60509,9 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -60960,6 +60985,9 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor/grid_floor,
 /area/station/aisat)
 "cnp" = (
@@ -61133,6 +61161,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -61213,6 +61242,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -61483,6 +61513,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -61643,6 +61674,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -61900,6 +61932,7 @@
 /obj/machinery/ai_status_display{
 	pixel_y = -32
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cpA" = (
@@ -61919,6 +61952,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -62472,6 +62506,7 @@
 	name = "apc down";
 	pixel_y = -28
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -62506,6 +62541,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -62564,6 +62600,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -62676,6 +62713,7 @@
 	name = "AI SMES Door";
 	req_access = list(16)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor/whitegreed,
 /area/station/aisat/ai_chamber)
 "cqU" = (
@@ -62923,6 +62961,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -63060,6 +63099,9 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -63279,6 +63321,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -63419,6 +63462,9 @@
 	dir = 4;
 	name = "MiniSat Antechamber";
 	req_one_access = list(66)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -63963,6 +64009,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -65472,6 +65519,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -67257,6 +67305,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -67477,6 +67526,9 @@
 "cEs" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -67846,6 +67898,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -68018,6 +68071,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "cGx" = (
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -68262,6 +68318,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -69552,6 +69609,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -71329,6 +71387,9 @@
 	name = "Satellite External Access";
 	req_access = list(13);
 	req_one_access = list(11,24)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/aisat)
@@ -74606,6 +74667,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -80000,6 +80062,17 @@
 	},
 /turf/simulated/floor,
 /area/station/civilian/locker)
+"mzW" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/weapon/carved_pumpkin,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/aisat)
 "mzY" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -84437,6 +84510,25 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
+"rlw" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/structure/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/tcommsat/computer)
 "rlQ" = (
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -85169,6 +85261,23 @@
 	icon_state = "vaultfull"
 	},
 /area/station/medical/virology)
+"rUU" = (
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/structure/cable/yellow{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/floor/glass/reinforced,
+/area/station/aisat)
 "rVb" = (
 /obj/structure/stool/bed/chair/office/light,
 /obj/machinery/light/smart{
@@ -86414,6 +86523,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -88372,6 +88482,11 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"wlM" = (
+/obj/item/decoration/garland/halloween,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/wall/r_wall,
+/area/station/aisat/ai_chamber)
 "wmJ" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -89183,6 +89298,10 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
+"xKG" = (
+/obj/item/decoration/garland/halloween,
+/turf/simulated/wall/r_wall,
+/area/station/aisat/ai_chamber)
 "xLk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -128002,7 +128121,7 @@ aaa
 aaa
 aaa
 aaa
-cnR
+mzW
 cGx
 cEs
 cGx
@@ -128268,7 +128387,7 @@ cow
 cpD
 cot
 cpl
-cqM
+rUU
 cqM
 cqe
 cqs
@@ -129807,7 +129926,7 @@ cCW
 cFP
 cFP
 cFP
-cFP
+xKG
 cFP
 cFP
 cFP
@@ -130061,13 +130180,13 @@ aaa
 aaa
 cCW
 cFP
-cFP
+xKG
 cGa
 cnM
 cpC
 jTz
 cpr
-cFP
+xKG
 cFP
 cui
 fNk
@@ -130573,7 +130692,7 @@ clK
 cFJ
 cFJ
 cFP
-cFP
+xKG
 cmi
 cGa
 cGa
@@ -130582,7 +130701,7 @@ cpG
 cFP
 cGa
 cGa
-cFP
+xKG
 pst
 csG
 ctf
@@ -130592,7 +130711,7 @@ aYr
 aYu
 cDN
 cEt
-cLX
+rlw
 cru
 cqN
 cqN
@@ -130849,7 +130968,7 @@ aYT
 dHv
 pSU
 cEz
-cLX
+rlw
 crI
 cqN
 cqN
@@ -131877,7 +131996,7 @@ aZR
 cHp
 cHC
 cHC
-cLX
+rlw
 crI
 cqN
 cqN
@@ -132115,7 +132234,7 @@ clN
 cFJ
 cFJ
 cFP
-cFP
+xKG
 cDU
 cGa
 cGa
@@ -132124,7 +132243,7 @@ coq
 cFP
 cGa
 cGa
-cFP
+xKG
 cFP
 csH
 cte
@@ -132134,7 +132253,7 @@ cEX
 aZl
 cEF
 cGX
-cLX
+rlw
 crM
 cqN
 cqN
@@ -132631,13 +132750,13 @@ aaa
 aaa
 cFJ
 cFP
-cFP
+wlM
 cGa
 cnM
 cpQ
 jTz
 cqI
-cFP
+xKG
 cFP
 crG
 csN
@@ -132891,7 +133010,7 @@ cFJ
 cFP
 cFP
 cFP
-cFP
+xKG
 cFP
 cFP
 cFP
