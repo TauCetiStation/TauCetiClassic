@@ -85,7 +85,7 @@
 
 				A.charge = 0
 				A.corrupt()
-				A.updateicon()
+				A.update_icon()
 			else
 				to_chat(U, "<span class='warning'>Procedure interrupted. Protocol terminated.</span>")
 		else

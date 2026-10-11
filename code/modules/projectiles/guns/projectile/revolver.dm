@@ -5,6 +5,7 @@
 	item_state = "revolver"
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/weapons/guns/gunshot_heavy.ogg'
+	var/has_cylinder = TRUE
 
 /obj/item/weapon/gun/projectile/revolver/chamber_round()
 	if (chambered || !magazine)
@@ -50,6 +51,27 @@
 /obj/item/weapon/gun/projectile/revolver/examine(mob/user)
 	..()
 	to_chat(user, "[get_ammo(0,0)] of those are live rounds.")
+
+/obj/item/weapon/gun/projectile/revolver/proc/spin_cylinder(mob/user)
+	if(!magazine || !get_ammo(FALSE, FALSE))
+		if(user)
+			to_chat(user, "<span class='notice'>[src] is empty.</span>")
+		return
+	chambered = null
+	if(rand(1, magazine.max_ammo) <= get_ammo(FALSE, FALSE))
+		chamber_round()
+	if(user)
+		user.visible_message( "<span class='warning'>[user] spins the cylinder of [src].</span>", "<span class='warning'>You spin the cylinder of [src].</span>")
+		playsound(src, 'sound/weapons/guns/reload_pistol.ogg', VOL_EFFECTS_MASTER)
+
+/obj/item/weapon/gun/projectile/revolver/verb/spin_cylinder_verb()
+	set name = "Spin Cylinder"
+	set category = "Object"
+	set desc = "Spin the cylinder to randomize the chamber."
+	set src in usr.contents
+	if(!has_cylinder)
+		return
+	spin_cylinder(usr)
 
 /obj/item/weapon/gun/projectile/revolver/traitor
 	name = "cap gun"
@@ -126,89 +148,14 @@
 	item_state = "mateba"
 	origin_tech = "combat=2;materials=2"
 
-// A gun to play Russian Roulette!
-// You can spin the chamber to randomize the position of the bullet.
+// A gun for Russian Roulette.
+// Use "Spin Cylinder" to randomize the chamber before firing.
 
 /obj/item/weapon/gun/projectile/revolver/russian
 	name = "Russian Revolver"
-	desc = "A Russian made revolver. Uses .357 ammo. It has a single slot in its chamber for a bullet."
+	desc = "A Russian made revolver. Uses .357 ammo. Comes loaded with a single round."
 	origin_tech = "combat=2;materials=2"
 	initial_mag = /obj/item/ammo_box/magazine/internal/cylinder/rus357
-	var/spun = 0
-
-/obj/item/weapon/gun/projectile/revolver/russian/atom_init()
-	. = ..()
-	Spin()
-	update_icon()
-
-/obj/item/weapon/gun/projectile/revolver/russian/proc/Spin()
-	chambered = null
-	var/random = rand(1, magazine.max_ammo)
-	if(random <= get_ammo(0,0))
-		chamber_round()
-	spun = 1
-
-/obj/item/weapon/gun/projectile/revolver/russian/attackby(obj/item/I, mob/user, params)
-	var/num_loaded = ..()
-	user.SetNextMove(CLICK_CD_INTERACT)
-	if(num_loaded)
-		user.visible_message("<span class='warning'>[user] loads a single bullet into the revolver and spins the chamber.</span>", "<span class='warning'>You load a single bullet into the chamber and spin it.</span>")
-	else
-		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
-	if(get_ammo() > 0)
-		Spin()
-	update_icon()
-	I.update_icon()
-
-/obj/item/weapon/gun/projectile/revolver/russian/attack_self(mob/user)
-	if(!spun && get_ammo(0,0))
-		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
-		Spin()
-	else
-		var/num_unloaded = 0
-		while (get_ammo() > 0)
-			var/obj/item/ammo_casing/CB
-			CB = magazine.get_round()
-			chambered = null
-			CB.loc = get_turf(src.loc)
-			CB.update_icon()
-			num_unloaded++
-		if (num_unloaded)
-			to_chat(user, "<span class = 'notice'>You unload [num_unloaded] shell\s from [src]!</span>")
-		else
-			to_chat(user, "<span class='notice'>[src] is empty.</span>")
-
-/obj/item/weapon/gun/projectile/revolver/russian/afterattack(atom/target, mob/user, proximity, params)
-	if(!spun && get_ammo(0,0))
-		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
-		Spin()
-	..()
-	spun = 0
-
-/obj/item/weapon/gun/projectile/revolver/russian/attack(atom/target, mob/living/user, def_zone)
-	if(!spun && get_ammo(0,0))
-		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
-		Spin()
-		return
-
-
-	if(target == user)
-		if(!chambered)
-			user.visible_message("<span class='warning'>*click*</span>", "<span class='warning'>*click*</span>")
-			return
-
-		if(isliving(target) && isliving(user))
-			if(def_zone == BP_HEAD)
-				var/obj/item/ammo_casing/AC = chambered
-				if(AC.fire(src, user, user))
-					user.apply_damage(300, BRUTE, def_zone, null, DAM_SHARP)
-					playsound(user, fire_sound, VOL_EFFECTS_MASTER)
-					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
-					return
-				else
-					user.visible_message("<span class='warning'>*click*</span>", "<span class='warning'>*click*</span>")
-					return
-	..()
 
 /obj/item/weapon/gun/projectile/revolver/peacemaker
 	name = "Colt SAA"

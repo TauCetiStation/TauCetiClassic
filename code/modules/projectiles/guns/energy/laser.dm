@@ -18,6 +18,13 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/practice)
 	clumsy_check = FALSE
 
+/obj/item/weapon/gun/energy/laser/big //the bigger version of lasrifle with bigger powercell
+	name = "extended-capacity laser rifle"
+	desc = "Стандартное оружие, предназначенное для убийства с помощью концентрированных энергетических зарядов. Этот экземпляр имеет батарейку повышенной емкости и обладает большим размером."
+	m_amt = 4000
+	cell_type = /obj/item/weapon/stock_parts/cell/energy_weapon/extended
+	flags_2 = CANT_BE_INSERTED
+
 /obj/item/weapon/gun/energy/laser/selfcharging
 	name = "selfcharging laser gun"
 	var/charge_rate = 30
@@ -83,6 +90,8 @@
 	item_state = null
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
+	cell_type = /obj/item/weapon/stock_parts/cell/energy_weapon/extended
+	flags_2 = CANT_BE_INSERTED
 
 	fire_delay = 20
 

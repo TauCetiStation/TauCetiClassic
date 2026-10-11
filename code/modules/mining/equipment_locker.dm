@@ -470,7 +470,6 @@
 
 /obj/item/mining_rig_pack/atom_init()
 	..()
-	new /obj/item/clothing/head/helmet/space/rig/mining(src.loc)
 	new	/obj/item/clothing/suit/space/rig/mining(src.loc)
 	return INITIALIZE_HINT_QDEL
 

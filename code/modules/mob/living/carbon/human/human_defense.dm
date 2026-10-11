@@ -44,6 +44,16 @@
 	P.def_zone = def_zone // a bit junky, but it will either bump this one, or bump object
 	return FALSE
 
+/mob/living/carbon/human/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(..())
+		return
+	if(hit_atom.density)
+		visible_message("<span class='danger'>[src] smashes into [hit_atom]!</span>", "<span class='danger'>You smashes into [hit_atom]!</span>")
+		SetCrawling(TRUE)
+		update_canmove()
+		drop_from_inventory(l_hand)
+		drop_from_inventory(r_hand)
+
 /mob/living/carbon/human/mob_bullet_act(obj/item/projectile/P, def_zone)
 	. = PROJECTILE_ALL_OK
 
@@ -465,8 +475,8 @@
 /mob/living/carbon/human/is_usable_head(targetzone = null)
 	if(isnull(targetzone))
 		var/obj/item/organ/external/head = get_bodypart(BP_HEAD)
-		if(head && head.is_usable())
-			return TRUE
+		return head && head.is_usable()
+
 	var/obj/item/organ/external/BP = get_bodypart(targetzone)
 	if(BP)
 		return BP.is_usable()
@@ -480,6 +490,8 @@
 		for(var/obj/item/organ/external/arm in pos_arms)
 			if(arm && arm.is_usable())
 				return TRUE
+		return FALSE
+
 	var/obj/item/organ/external/BP = get_bodypart(targetzone)
 	if(BP)
 		return BP.is_usable()
@@ -493,6 +505,8 @@
 		for(var/obj/item/organ/external/leg in pos_legs)
 			if(leg && leg.is_usable())
 				return TRUE
+		return FALSE
+
 	var/obj/item/organ/external/BP = get_bodypart(targetzone)
 	if(BP)
 		return BP.is_usable()

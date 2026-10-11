@@ -28,6 +28,10 @@
 		else
 			spawn_fish(rand(1, 3), 1, 2)  // 1 to 6 carp, alone or in pairs
 
+	if(length(spawned_carp))
+		var/mob/living/simple_animal/hostile/carp/C = pick(spawned_carp)
+		notify_ghosts("Carp migration!", source = C, action = NOTIFY_ORBIT, header = "Carp Migration")
+
 /datum/event/carp_migration/end()
 	for(var/mob/living/simple_animal/hostile/carp/C in spawned_carp)
 		if(C.stat == CONSCIOUS)

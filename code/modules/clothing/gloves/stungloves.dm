@@ -37,10 +37,10 @@
 			to_chat(user, "<span class='notice'>A [cell] is already attached to the [src].</span>")
 		return
 
-	else if(iscutter(I) || istype(I, /obj/item/weapon/scalpel))
+	else if(iscutter(I))
 		//stunglove stuff
 		if(cell)
-			cell.updateicon()
+			cell.update_icon()
 			to_chat(user, "<span class='notice'>You cut the [cell] away from the [src].</span>")
 			cell.forceMove(get_turf(loc))
 			cell = null

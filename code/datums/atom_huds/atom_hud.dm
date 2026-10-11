@@ -148,6 +148,10 @@ var/global/list/huds = list(
 			M.client.images |= A.hud_list[i]
 
 //MOB PROCS
+/mob/proc/has_atom_hud(atom_hud_name)
+	var/datum/atom_hud/hud = global.huds[atom_hud_name]
+	return hud && hud.hudusers[src]
+
 /mob/proc/reload_huds()
 	for(var/datum/atom_hud/hud in global.all_huds)
 		if(hud && hud.hudusers[src])

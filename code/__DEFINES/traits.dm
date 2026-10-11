@@ -172,10 +172,12 @@
 #define TRAIT_AGEUSIA             "ageusia"
 #define TRAIT_DALTONISM           "daltonism"
 #define TRAIT_NO_RUN              "no_run"
+#define TRAIT_NOSLIP              "noslip"
 #define TRAIT_FAST_EQUIP          "fast_equip"
 #define TRAIT_FRIENDLY            "friendly"
 #define TRAIT_VACCINATED          "vaccinated"
 #define TRAIT_DWARF               "dwarf"
+#define TRAIT_MELODIUS_VOICE      "melodious_voice"
 #define TRAIT_NO_SOUL             "no_soul"
 #define TRAIT_SEE_GHOSTS          "see_ghosts"
 #define TRAIT_SYRINGE_FEAR        "syringe_fear"
@@ -302,6 +304,7 @@
 
 // trait sources
 #define TRAIT_FROM_ELEMENT(source) "element_trait_[source]"
+#define TRAIT_FROM_CLOTHING(source) "clothing_[REF(source)]"
 #define INNATE_TRAIT "innate"
 #define ADMIN_TRAIT "admin"
 #define EYE_DAMAGE_TRAIT "eye_damage"

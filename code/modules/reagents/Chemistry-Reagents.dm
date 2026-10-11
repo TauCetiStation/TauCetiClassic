@@ -113,25 +113,19 @@
 	SEND_SIGNAL(src, COMSIG_REAGENT_REACTION_TURF, T, volume)
 	return
 
-/datum/reagent/proc/on_mob_life(mob/living/M)
+/datum/reagent/proc/on_mob_life(mob/living/M, remove_amount)
 	if(!M || !holder)
 		return
-	//Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
-	// hey, so, how is your ghost runtime doing? ~Luduk
-	if(!isliving(M))
-		return
+
 	if(!on_general_digest(M)) // You can't overdose on what you can't digest
-		return FALSE
+		return
 
 	if((overdose > 0) && (volume >= overdose))//Overdosing, wooo
 		M.adjustToxLoss(overdose_dam)
 
 	if(allergen && allergen[ALLERGY_INGESTION] && ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.trigger_allergy(id, custom_metabolism * H.mob_metabolism_mod.Get())
-		return FALSE
-
-	return TRUE
+		H.trigger_allergy(id, remove_amount)
 
 /datum/reagent/proc/on_move(mob/M)
 	return

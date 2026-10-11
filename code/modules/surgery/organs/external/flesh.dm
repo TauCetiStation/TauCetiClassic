@@ -57,8 +57,6 @@
 /datum/bodypart_controller/proc/emp_act(severity)
 	return // meatbags do not care about EMP
 
-#define PROTECTION_REQUERED_FOR_ORGANS 25  //The percentage of protection required to prevent organ damage
-
 /mob/living/carbon/human
 	var/next_autoheal_allowed = 0 // turns off autoheal on damage for period of time
 
@@ -98,12 +96,14 @@
 		cur_damage += BP.burn_dam
 
 	var/is_parent_damaged_enough = cur_damage + damage_amt >= BP.max_damage + cutoff_internal_organ_damage_threshold
-	var/are_organs_unprotected = protection <= PROTECTION_REQUERED_FOR_ORGANS
+	var/are_organs_protected = protection >= PROTECTION_REQUIRED_FOR_ORGANS
 
-	if(BP.bodypart_organs.len && is_parent_damaged_enough && are_organs_unprotected)
+	if(BP.bodypart_organs.len && is_parent_damaged_enough)
 	// Damage an internal organ
 		var/obj/item/organ/internal/IO = pick(BP.bodypart_organs)
-		IO.take_damage(damage_amt / 10)
+		var/obj/item/clothing/covered_by = get_clothing_by_covered_bodypart(BP.owner, IO.parent_bodypart)
+		if(!covered_by || !(IO.organ_tag in covered_by.potentially_protected_organs) || !are_organs_protected)
+			IO.take_damage(damage_amt / 10)
 
 	if(used_weapon)
 		if(brute > 0 && burn == 0)
@@ -232,8 +232,6 @@
 		BP.owner.UpdateDamageIcon(BP)
 
 	return created_wound
-
-#undef PROTECTION_REQUERED_FOR_ORGANS
 
 /datum/bodypart_controller/proc/heal_damage(brute, burn, internal = 0, robo_repair = 0)
 	if(bodypart_type == BODYPART_ROBOTIC && !robo_repair)

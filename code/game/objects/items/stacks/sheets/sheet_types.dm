@@ -86,7 +86,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 	new/datum/stack_recipe("air alarm frame", /obj/item/alarm_frame, 2, required_skills = list(/datum/skill/construction = SKILL_LEVEL_PRO)),
 	new/datum/stack_recipe("fire alarm frame", /obj/item/firealarm_frame, 2, required_skills = list(/datum/skill/construction = SKILL_LEVEL_PRO)),
 	new/datum/stack_recipe("door control frame", /obj/item/door_control_frame, 1, required_skills = list(/datum/skill/construction = SKILL_LEVEL_PRO)),
-	new/datum/stack_recipe("metal picture frame", /obj/item/weapon/picture_frame/metal, 1, time = 15),
+	new/datum/stack_recipe("picture frame", /obj/item/weapon/picture_frame/metal, 1, time = 15),
 	null,
 	new/datum/stack_recipe("metal door", /obj/structure/mineral_door/metal, 20, max_per_place = 1, build_outline = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED)),
 	new/datum/stack_recipe("windowsill", /obj/structure/windowsill, 2, max_per_place = 1, build_outline = TRUE, required_skills = list(/datum/skill/construction = SKILL_LEVEL_TRAINED), time = 20),
@@ -157,13 +157,14 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 	new/datum/stack_recipe("bonfire", /obj/structure/bonfire/dynamic, 10, time = 20, max_per_place = 1, build_outline = TRUE, floor_path = list(/turf/simulated/floor, /turf/environment/snow)),
 	new/datum/stack_recipe("wooden noticeboard", /obj/item/noticeboard_frame/wood, 10, time = 20, build_outline = TRUE),
 	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, max_per_place = 1, build_outline = TRUE),
-	new/datum/stack_recipe("wooden picture frame", /obj/item/weapon/picture_frame/wooden, 1, time = 15),
-	new/datum/stack_recipe("painting frame", /obj/item/painting_frame, 2, time = 15),
+	new/datum/stack_recipe("picture frame", /obj/item/weapon/picture_frame/wooden, 1, time = 15),
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, time = 2 SECONDS, max_per_place = 1, build_outline = TRUE), \
 	new/datum/stack_recipe("painting easel", /obj/structure/easel, 4, time = 15, max_per_place = 1, build_outline = TRUE),
 	new/datum/stack_recipe("grave marker", /obj/structure/gravemarker/cross, 2, time = 5, max_per_place = 1, build_outline = TRUE),
 	new/datum/stack_recipe("fence", /obj/structure/fence/wood, 2, time = 25, max_per_place = 1, build_outline = TRUE),
 	new/datum/stack_recipe("ballot box", /obj/structure/ballot_box, 4, time = 50, max_per_place = 1, build_outline = TRUE),
+	new/datum/stack_recipe("park chair", /obj/structure/stool/bed/chair/park, 2, time = 50, max_per_place = 1, build_outline = TRUE),
+	new/datum/stack_recipe("park table", /obj/structure/table/park_table, 4, time = 50, max_per_place = 1, build_outline = TRUE),
 //	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, max_per_place = FALSE, build_outline = FALSE)
 	)
 
@@ -190,6 +191,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list (
 var/global/list/datum/stack_recipe/cloth_recipes = list (
 	new/datum/stack_recipe("rags", /obj/item/stack/medical/bruise_pack/rags/not_old, 1, 5, 25, 15),
 	null,
+	new/datum/stack_recipe("11x11 canvas", /obj/item/canvas, 2, time = 30),
 	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteen_nineteen, 3, time = 30),
 	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythree_nineteen, 4, time = 30),
 	new/datum/stack_recipe("23x23 canvas", /obj/item/canvas/twentythree_twentythree, 5, time = 30),
@@ -198,6 +200,7 @@ var/global/list/datum/stack_recipe/cloth_recipes = list (
 var/global/list/datum/stack_recipe/old_cloth_recipes = list (
 	new/datum/stack_recipe("rags", /obj/item/stack/medical/bruise_pack/rags/old, 1, 5, 25, 15),
 	null,
+	new/datum/stack_recipe("11x11 canvas", /obj/item/canvas, 2, time = 30),
 	new/datum/stack_recipe("19x19 canvas", /obj/item/canvas/nineteen_nineteen, 3, time = 30),
 	new/datum/stack_recipe("23x19 canvas", /obj/item/canvas/twentythree_nineteen, 4, time = 30),
 	new/datum/stack_recipe("23x23 canvas", /obj/item/canvas/twentythree_twentythree, 5, time = 30),

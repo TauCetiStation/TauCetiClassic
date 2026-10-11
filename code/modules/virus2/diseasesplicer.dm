@@ -52,6 +52,7 @@
 	data["dish_inserted"] = !!dish
 	data["affected_species"] = null
 	data["can_splice"] = FALSE
+	data["busy"] = null
 
 	if (memorybank)
 		data["buffer"] = list("name" = (analysed ? memorybank.effect.name : "Unknown Symptom"))

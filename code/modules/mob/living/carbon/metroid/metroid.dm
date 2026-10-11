@@ -596,11 +596,12 @@
 	icon_state = "golem"
 	item_state = null
 	canremove = 0
-	flags = ABSTRACT | DROPDEL | NOSLIP | AIR_FLOW_PROTECT
+	flags = ABSTRACT | DROPDEL | AIR_FLOW_PROTECT
+	clothing_traits = list(TRAIT_NOSLIP)
 	unacidable = 1
 
 
-/obj/item/clothing/mask/gas/golem
+/obj/item/clothing/mask/breath/gas/golem
 	name = "golem's face"
 	desc = "The imposing face of an adamantine golem."
 	icon_state = "golem"

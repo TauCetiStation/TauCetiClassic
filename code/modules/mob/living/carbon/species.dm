@@ -109,6 +109,7 @@
 	var/flesh_color = "#ffc896" //Pink.
 	var/default_skin_color // default skin color (r_skin, g_skin, b_skin)
 	var/default_eyes_color
+	var/females_standard_bodytype = AVERAGE_BODYTYPE
 
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
@@ -390,6 +391,7 @@
 	eyes_static_layer = "human"
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
+	females_standard_bodytype = SLIM_BODYTYPE
 
 	language = LANGUAGE_SOLCOMMON
 	primitive = /mob/living/carbon/monkey
@@ -405,6 +407,7 @@
 	,FACEHUGGABLE = TRUE
 	,HAS_HAIR_COLOR = TRUE
 	,IS_SOCIAL = TRUE
+	,HAS_BODYTYPE_SELECTION = TRUE
 	)
 
 	min_age = 25
@@ -518,6 +521,7 @@
 	eyes_colorable_layer = "unathi_colorable"
 	eyes_static_layer = "unathi"
 	second_color_mask = TRUE
+	females_standard_bodytype = SLIM_BODYTYPE
 	gender_tail_icons = TRUE
 	gender_limb_icons = TRUE
 	fat_limb_icons = TRUE
@@ -609,6 +613,7 @@
 	eyes_colorable_layer = "tajaran_colorable"
 	eyes_static_layer = "tajaran"
 	gender_limb_icons = TRUE
+	females_standard_bodytype = SLIM_BODYTYPE
 	fat_limb_icons = TRUE
 	gender_tail_icons = TRUE
 
@@ -826,7 +831,7 @@
 	prohibit_roles = list(ROLE_CHANGELING, ROLE_WIZARD)
 
 	replace_outfit = list(
-			/obj/item/clothing/mask/gas/syndicate = /obj/item/clothing/mask/gas/vox,
+			/obj/item/clothing/mask/breath/gas/syndicate = /obj/item/clothing/mask/breath/gas/vox,
 			)
 
 	prothesis_icobase = 'icons/mob/human/robotic_vox.dmi'
@@ -840,7 +845,7 @@
 
 	if(H.wear_mask)
 		qdel(H.wear_mask)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/vox(src), SLOT_WEAR_MASK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/gas/vox(src), SLOT_WEAR_MASK)
 
 /datum/species/vox/call_species_equip_proc(mob/living/carbon/human/H, datum/outfit/O)
 	return O.vox_equip(H)
@@ -1567,7 +1572,7 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem, SLOT_HEAD)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem, SLOT_WEAR_SUIT)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem, SLOT_SHOES)
-	H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem, SLOT_WEAR_MASK)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/gas/golem, SLOT_WEAR_MASK)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem, SLOT_GLOVES)
 
 	for(var/x in items_to_remove)
@@ -1585,7 +1590,7 @@
 				/obj/item/clothing/head/helmet/space/golem,
 				/obj/item/clothing/suit/space/golem,
 				/obj/item/clothing/shoes/golem,
-				/obj/item/clothing/mask/gas/golem,
+				/obj/item/clothing/mask/breath/gas/golem,
 				/obj/item/clothing/gloves/golem
 				)
 
