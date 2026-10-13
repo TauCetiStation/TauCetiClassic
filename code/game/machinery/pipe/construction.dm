@@ -301,6 +301,11 @@ Buildable meters
 		return ..()
 
 // rotate the pipe item clockwise
+/obj/item/pipe/AltClick(mob/user)
+	if(!user || (loc != user && !Adjacent(user)))
+		return
+	rotate()
+
 /obj/item/pipe/verb/rotate()
 	set category = "Object"
 	set name = "Rotate Pipe"
