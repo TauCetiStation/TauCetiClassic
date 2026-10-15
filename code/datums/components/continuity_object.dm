@@ -53,7 +53,6 @@
 		QDEL_NULL(field)
 
 	SScontinuity.remove_object(src, save_path)
-	UnregisterSignal(parent, list(COMSIG_PARENT_QDELETING, COMSIG_CONTINUITY_SAVE))
 	QDEL_NULL(saveproc)
 	QDEL_NULL(loadproc)
 	qdel(src)
@@ -61,11 +60,11 @@
 /datum/component/continuity_object/proc/sanitize_data(list/data)
 	for(var/field_name in src.fields)
 		if(!(field_name in data))
-			throw EXCEPTION("Missing field [field_name]")
+			throw EXCEPTION("Missing field")
 
 	for(var/field_name in data)
 		if(!(field_name in src.fields))
-			throw EXCEPTION("Invalid [field_name]")
+			throw EXCEPTION("Invalid field")
 
 		if(length(field_name) > 100)
 			throw EXCEPTION("Field name is too long")
@@ -74,7 +73,7 @@
 
 		var/datum/primitive_field/object_field = src.fields[field_name]
 		if(!object_field)
-			throw EXCEPTION("Missing primitive_field of: [field_name]")
+			throw EXCEPTION("Missing primitive_field")
 
 		var/newdata = object_field.sanitize_field(field_data)
 		data[field_name] = newdata

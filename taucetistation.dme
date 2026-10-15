@@ -110,6 +110,7 @@
 #include "code\__DEFINES\xenoarchaeology.dm"
 #include "code\__DEFINES\xenomorph.dm"
 #include "code\__DEFINES\zas.dm"
+#include "code\__DEFINES\~unit_testing.dm"
 #include "code\__DEFINES\dcs\flags.dm"
 #include "code\__DEFINES\dcs\helpers.dm"
 #include "code\__DEFINES\dcs\signals.dm"

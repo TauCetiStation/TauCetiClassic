@@ -23,7 +23,7 @@ fields = alist(...)
 	var/name = "blank field"
 
 /datum/primitive_field/proc/sanitize_field()
-	throw EXCEPTION("Tried creating and sanitizing basic continuity field")
+	throw EXCEPTION("Tried sanitizing blank continuity field")
 
 /datum/primitive_field/listfield
 	name = "list"
