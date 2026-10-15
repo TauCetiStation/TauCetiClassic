@@ -15,7 +15,7 @@
 	if(user.is_busy())
 		return FALSE
 
-	user.visible_message("<span class='danger'>[user] возится с [CASE(loc, ABLATIVE_CASE)]...</span>")
+	user.visible_message("<span class='danger'>[user] РІРѕР·РёС‚СЃСЏ СЃ [CASE(loc, ABLATIVE_CASE)]...</span>")
 
 	if(length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
@@ -34,8 +34,8 @@
 	return TRUE
 
 /obj/item/weapon/storage/hidden_cache/toilet
-	name = "бачок унитаза"
-	cases = list("бачок унитаза", "бачка унитаза", "бачку унитаза", "бачок унитаза", "бачком унитаза", "бачке унитаза")
+	name = "Р±Р°С‡РѕРє СѓРЅРёС‚Р°Р·Р°"
+	cases = list("Р±Р°С‡РѕРє СѓРЅРёС‚Р°Р·Р°", "Р±Р°С‡РєР° СѓРЅРёС‚Р°Р·Р°", "Р±Р°С‡РєСѓ СѓРЅРёС‚Р°Р·Р°", "Р±Р°С‡РѕРє СѓРЅРёС‚Р°Р·Р°", "Р±Р°С‡РєРѕРј СѓРЅРёС‚Р°Р·Р°", "Р±Р°С‡РєРµ СѓРЅРёС‚Р°Р·Р°")
 	interaction_particle = /particles/tool/digging/watersplash
 	interaction_time = 0.5 SECOND
 
@@ -52,8 +52,8 @@
 	return ..()
 
 /obj/item/weapon/storage/hidden_cache/flowerpot
-	name = "горшок"
-	cases = list("горшок", "горшка", "горшку", "горшок", "горшком", "горшке")
+	name = "РіРѕСЂС€РѕРє"
+	cases = list("РіРѕСЂС€РѕРє", "РіРѕСЂС€РєР°", "РіРѕСЂС€РєСѓ", "РіРѕСЂС€РѕРє", "РіРѕСЂС€РєРѕРј", "РіРѕСЂС€РєРµ")
 	interaction_particle = /particles/tool/digging/flowerpot
 	interaction_time = 3 SECONDS
 	max_w_class = SIZE_TINY
@@ -64,23 +64,23 @@
 	use_sound = SOUNDIN_RAKE
 
 /obj/item/weapon/storage/hidden_cache/vending
-	name = "отсек выдачи"
-	cases = list("отсек выдачи", "отсека выдачи", "отсеку выдачи", "отсек выдачи", "отсеком выдачи", "отсеке выдачи")
+	name = "РѕС‚СЃРµРє РІС‹РґР°С‡Рё"
+	cases = list("РѕС‚СЃРµРє РІС‹РґР°С‡Рё", "РѕС‚СЃРµРєР° РІС‹РґР°С‡Рё", "РѕС‚СЃРµРєСѓ РІС‹РґР°С‡Рё", "РѕС‚СЃРµРє РІС‹РґР°С‡Рё", "РѕС‚СЃРµРєРѕРј РІС‹РґР°С‡Рё", "РѕС‚СЃРµРєРµ РІС‹РґР°С‡Рё")
 	use_sound = list('sound/items/surgery_tray_use.ogg')
 	max_w_class = SIZE_SMALL
 
 /obj/item/weapon/storage/hidden_cache/mirror
-	name = "место за зеркалом"
-	cases = list("место за зеркалом", "места за зеркалом", "месту за зеркалом", "место за зеркалом", "местом за зеркалом", "месте за зеркалом")
+	name = "РјРµСЃС‚Рѕ Р·Р° Р·РµСЂРєР°Р»РѕРј"
+	cases = list("РјРµСЃС‚Рѕ Р·Р° Р·РµСЂРєР°Р»РѕРј", "РјРµСЃС‚Р° Р·Р° Р·РµСЂРєР°Р»РѕРј", "РјРµСЃС‚Сѓ Р·Р° Р·РµСЂРєР°Р»РѕРј", "РјРµСЃС‚Рѕ Р·Р° Р·РµСЂРєР°Р»РѕРј", "РјРµСЃС‚РѕРј Р·Р° Р·РµСЂРєР°Р»РѕРј", "РјРµСЃС‚Рµ Р·Р° Р·РµСЂРєР°Р»РѕРј")
 	use_sound = list('sound/items/Crowbar.ogg')
 	max_w_class = SIZE_MINUSCULE
 
 /obj/item/weapon/storage/hidden_cache/pillow
-	name = "подушка"
-	cases = list("подушка", "подушки", "подушке", "подушку", "подушкой", "подушке")
+	name = "РїРѕРґСѓС€РєР°"
+	cases = list("РїРѕРґСѓС€РєР°", "РїРѕРґСѓС€РєРё", "РїРѕРґСѓС€РєРµ", "РїРѕРґСѓС€РєСѓ", "РїРѕРґСѓС€РєРѕР№", "РїРѕРґСѓС€РєРµ")
 	max_w_class = SIZE_TINY
 
 /obj/item/weapon/storage/hidden_cache/fancytable
-	name = "место под скатертью"
-	cases = list("место под скатертью", "места под скатертью", "месту под скатертью", "место под скатертью", "местом под скатертью", "месте под скатертью")
+	name = "РјРµСЃС‚Рѕ РїРѕРґ СЃРєР°С‚РµСЂС‚СЊСЋ"
+	cases = list("РјРµСЃС‚Рѕ РїРѕРґ СЃРєР°С‚РµСЂС‚СЊСЋ", "РјРµСЃС‚Р° РїРѕРґ СЃРєР°С‚РµСЂС‚СЊСЋ", "РјРµСЃС‚Сѓ РїРѕРґ СЃРєР°С‚РµСЂС‚СЊСЋ", "РјРµСЃС‚Рѕ РїРѕРґ СЃРєР°С‚РµСЂС‚СЊСЋ", "РјРµСЃС‚РѕРј РїРѕРґ СЃРєР°С‚РµСЂС‚СЊСЋ", "РјРµСЃС‚Рµ РїРѕРґ СЃРєР°С‚РµСЂС‚СЊСЋ")
 	max_w_class = SIZE_SMALL
