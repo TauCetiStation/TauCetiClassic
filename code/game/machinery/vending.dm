@@ -732,7 +732,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	updateUsrDialog()
 	update_unstable_product()
 
-	if(hidden_cache)
+	if(hidden_cache && !ispath(hidden_cache))
 		hidden_cache.spill()
 	return new VP.product_path(src.loc)
 

@@ -938,7 +938,6 @@
 	if (href_list["lookmob"])
 		var/mob/M = locate(href_list["lookmob"])
 		usr.examinate(M)
-
 	..()
 	return
 

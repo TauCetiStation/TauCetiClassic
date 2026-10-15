@@ -5,7 +5,7 @@
 	var/particles/interaction_particle
 	var/interaction_time = 1 SECONDS
 
-/obj/item/weapon/storage/hidden_cache/try_open(mob/user)
+/obj/item/weapon/storage/hidden_cache/try_open(mob/user, check_only = FALSE)
 	if(!user)
 		return FALSE
 
@@ -25,7 +25,7 @@
 		Holder = new /obj/effect/abstract/particle_holder(loc, interaction_particle, PARTICLE_FADEOUT)
 
 	if(!do_after(user, interaction_time, target = loc))
-		QDEL_NULL(Holder)
+		Holder.delete_particle()
 		return
 
 	QDEL_NULL(Holder)
@@ -34,11 +34,17 @@
 	return TRUE
 
 /obj/item/weapon/storage/hidden_cache/toilet
+	name = "бачок унитаза"
+	cases = list("бачок унитаза", "бачка унитаза", "бачку унитаза", "бачок унитаза", "бачком унитаза", "бачке унитаза")
 	interaction_particle = /particles/tool/digging/watersplash
-	use_sound = 'sound/effects/water_turf_entered_obj.ogg'
 	interaction_time = 0.5 SECOND
 
-/obj/item/weapon/storage/hidden_cache/toilet/try_open(mob/user)
+/obj/item/weapon/storage/hidden_cache/toilet/atom_init()
+	. = ..()
+
+	use_sound = SOUNDIN_WATER_DEEP
+
+/obj/item/weapon/storage/hidden_cache/toilet/try_open(mob/user, check_only = FALSE)
 	var/obj/structure/toilet/toilet = loc
 	if(!toilet.cistern_open)
 		return FALSE
@@ -46,21 +52,35 @@
 	return ..()
 
 /obj/item/weapon/storage/hidden_cache/flowerpot
+	name = "горшок"
+	cases = list("горшок", "горшка", "горшку", "горшок", "горшком", "горшке")
 	interaction_particle = /particles/tool/digging/flowerpot
-	use_sound = 'sound/effects/shovel_digging.ogg'
 	interaction_time = 3 SECONDS
 	max_w_class = SIZE_TINY
 
+/obj/item/weapon/storage/hidden_cache/flowerpot/atom_init()
+	. = ..()
+
+	use_sound = SOUNDIN_RAKE
+
 /obj/item/weapon/storage/hidden_cache/vending
-	use_sound = 'sound/items/surgery_tray_use.ogg'
+	name = "отсек выдачи"
+	cases = list("отсек выдачи", "отсека выдачи", "отсеку выдачи", "отсек выдачи", "отсеком выдачи", "отсеке выдачи")
+	use_sound = list('sound/items/surgery_tray_use.ogg')
 	max_w_class = SIZE_SMALL
 
 /obj/item/weapon/storage/hidden_cache/mirror
-	use_sound = 'sound/items/Crowbar.ogg'
+	name = "место за зеркалом"
+	cases = list("место за зеркалом", "места за зеркалом", "месту за зеркалом", "место за зеркалом", "местом за зеркалом", "месте за зеркалом")
+	use_sound = list('sound/items/Crowbar.ogg')
 	max_w_class = SIZE_MINUSCULE
 
 /obj/item/weapon/storage/hidden_cache/pillow
+	name = "подушка"
+	cases = list("подушка", "подушки", "подушке", "подушку", "подушкой", "подушке")
 	max_w_class = SIZE_TINY
 
 /obj/item/weapon/storage/hidden_cache/fancytable
+	name = "место под скатертью"
+	cases = list("место под скатертью", "места под скатертью", "месту под скатертью", "место под скатертью", "местом под скатертью", "месте под скатертью")
 	max_w_class = SIZE_SMALL

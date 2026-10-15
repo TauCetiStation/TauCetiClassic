@@ -113,7 +113,7 @@
 		return
 
 	if(!contents.len)
-		to_chat(M, "<span class='notice'>[src] is empty.</span>")
+		to_chat(M, "<span class='notice'>[src] [ANYMORPH(src, "пуст", "пуста", "пусто", "пусты")].</span>")
 		return
 	if(M.is_busy(target))
 		return
@@ -127,10 +127,10 @@
 			to_dump += I
 
 	if(!to_dump.len)
-		to_chat(M, "<span class='notice'>You fail to dump anything from [src] into [target].</span>")
+		to_chat(M, "<span class='notice'>У вас не выходит вытряхнуть что-либо из [CASE(src, GENITIVE_CASE)] в [CASE(target, ACCUSATIVE_CASE)].</span>")
 		return
 
-	to_chat(M, "<span class='notice'>You start dumping the contents of [src] into [target]...</span>")
+	to_chat(M, "<span class='notice'>Вы начинаете вытряхивать содержимое [CASE(src, GENITIVE_CASE)] в [CASE(target, ACCUSATIVE_CASE)]...</span>")
 	if(!do_after(M, 0.5 SECONDS, target = target))
 		return
 	if(!can_dump_into(target, M))
@@ -151,7 +151,7 @@
 		finish_bulk_removal()
 
 	if(!inserted)
-		to_chat(M, "<span class='notice'>You fail to dump anything from [src] into [target].</span>")
+		to_chat(M, "<span class='notice'>У вас не выходит вытряхнуть что-либо из [CASE(src, GENITIVE_CASE)] в [CASE(target, ACCUSATIVE_CASE)].</span>")
 		return
 
 	target.update_ui_after_item_insertion()
@@ -159,8 +159,8 @@
 	if(length(use_sound))
 		playsound(src, pick(use_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	M.visible_message(
-		"<span class='notice'>[M] dumps the contents of [src] into [target].</span>",
-		"<span class='notice'>You dump the contents of [src] into [target].</span>")
+		"<span class='notice'>[M] вытряхивает содержимое [CASE(src, GENITIVE_CASE)] в [CASE(target, ACCUSATIVE_CASE)].</span>",
+		"<span class='notice'>Вы вытряхиваете содержимое [CASE(src, GENITIVE_CASE)] в [CASE(target, ACCUSATIVE_CASE)].</span>")
 
 /obj/item/weapon/storage/proc/can_dump_into(obj/item/weapon/storage/target, mob/M)
 	if(!M || QDELETED(src) || QDELETED(target) || target == src)
@@ -248,7 +248,7 @@
 
 	if(storage_slots != null && contents.len >= storage_slots)
 		if(!stop_messages)
-			to_chat(usr, "<span class='notice'>[src] is full, make some space.</span>")
+			to_chat(usr, "<span class='notice'>[src] [ANYMORPH(src, "полон", "полна", "полно", "полны")], освободите место.</span>")
 		return FALSE //Storage item is full
 
 	if(can_hold.len)
@@ -261,43 +261,43 @@
 			if(!stop_messages)
 				if(istagger(W))
 					return FALSE
-				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
+				to_chat(usr, "<span class='notice'>[W] кладётся в [CASE(src, ACCUSATIVE_CASE)].</span>")
 			return FALSE
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
 		if(istype(W, A))
 			if(!stop_messages)
-				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
+				to_chat(usr, "<span class='notice'>[W] не кладётся в [CASE(src, ACCUSATIVE_CASE)].</span>")
 			return FALSE
 
 	if (W.flags_2 & CANT_BE_INSERTED)
 		if(!stop_messages)
-			to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
+			to_chat(usr, "<span class='notice'>[W] не кладётся в [CASE(src, ACCUSATIVE_CASE)].</span>")
 		return FALSE
 
 	if (max_w_class != null && W.w_class > max_w_class)
 		if(!stop_messages)
-			to_chat(usr, "<span class='notice'>[W] is too big for this [src].</span>")
+			to_chat(usr, "<span class='notice'>[W] не помещается в [CASE(src, ACCUSATIVE_CASE)].</span>")
 		return FALSE
 
 	if(W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
 		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
 			if(!stop_messages)
-				to_chat(usr, "<span class='notice'>[src] cannot hold [W] as it's a storage item of the same size.</span>")
+				to_chat(usr, "<span class='notice'>[W] не помещается в [CASE(src, ACCUSATIVE_CASE)].</span>")
 			return FALSE //To prevent the stacking of same sized storage items.
 
 	// by design SIZE_LARGE can't be placed in storages
 	// and now this check works correctly
 	if(W.w_class >= SIZE_LARGE)
 		if(!stop_messages)
-			to_chat(usr, "<span class='notice'>\The [W] cannot be placed in [src].</span>")
+			to_chat(usr, "<span class='notice'>[W] не помещается в [CASE(src, ACCUSATIVE_CASE)].</span>")
 		return FALSE
 
 	var/total_storage_space = W.get_storage_cost()
 	total_storage_space += storage_space_used() //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 	if(total_storage_space > max_storage_space)
 		if(!stop_messages)
-			to_chat(usr, "<span class='notice'>\The [src] is too full, make some space.</span>")
+			to_chat(usr, "<span class='notice'>[src] [ANYMORPH(src, "полон", "полна", "полно", "полны")], освободите место.</span>")
 		return FALSE
 
 	return TRUE
@@ -357,8 +357,8 @@
 		if(!(prevent_warning || istype(W, /obj/item/weapon/gun/energy/crossbow)))
 			//If someone is standing close enough or item is larger than TINY, they can tell what it is...
 			usr.visible_message(
-				"<span class='notice'>[usr] puts [W] into [src].</span>",
-				"<span class='notice'>You put \the [W] into [src].</span>",
+				"<span class='notice'>[usr] кладёт [CASE(W, ACCUSATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].</span>",
+				"<span class='notice'>Вы кладёте [CASE(W, ACCUSATIVE_CASE)] в [CASE(src, ACCUSATIVE_CASE)].</span>",
 				viewing_distance = (W.w_class > SIZE_TINY ? world.view : 1)
 				)
 		if(crit_fail && prob(25))
@@ -429,7 +429,7 @@
 //This proc is called when you want to place an item into the storage item.
 /obj/item/weapon/storage/attackby(obj/item/I, mob/user, params)
 	if(isrobot(user))
-		to_chat(user, "<span class='notice'>You're a robot. No.</span>")
+		to_chat(user, "<span class='notice'>Ваши грубые манипуляторы не позволяют вам взаимодействовать с [CASE(src, ABLATIVE_CASE)].</span>")
 		return //Robots can't interact with storage items. FALSE
 
 	return try_insert(I, user)
@@ -468,13 +468,13 @@
 		success = 1
 		handle_item_insertion(I, TRUE, TRUE) // First 1 is no messages, second 1 is no ui updates
 	if(success && !failure)
-		to_chat(user, "<span class='notice'>You put everything into \the [src].</span>")
+		to_chat(user, "<span class='notice'>Вы складываете всё в [CASE(src, ACCUSATIVE_CASE)].</span>")
 		update_ui_after_item_insertion()
 	else if(success)
-		to_chat(user, "<span class='notice'>You put some things into \the [src].</span>")
+		to_chat(user, "<span class='notice'>Вы складываете часть вещей в [CASE(src, ACCUSATIVE_CASE)].</span>")
 		update_ui_after_item_insertion()
 	else
-		to_chat(user, "<span class='notice'>You fail to pick anything up with \the [src].</span>")
+		to_chat(user, "<span class='notice'>У вас не получилось сложить что-нибудь в [CASE(src, ACCUSATIVE_CASE)].</span>")
 
 /obj/item/weapon/storage/proc/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
@@ -483,9 +483,9 @@
 	collection_mode = !collection_mode
 	switch (collection_mode)
 		if(1)
-			to_chat(usr, "[src] now picks up all items in a tile at once.")
+			to_chat(usr, "[src] складывает все предметы за раз.")
 		if(0)
-			to_chat(usr, "[src] now picks up one item at a time.")
+			to_chat(usr, "[src] складывает один предмет за раз.")
 
 
 /obj/item/weapon/storage/proc/quick_empty()
@@ -537,7 +537,7 @@
 	if ( !found )	// User is too far away
 		return
 	// Now make the cardboard
-	to_chat(user, "<span class='notice'>You fold [src] flat.</span>")
+	to_chat(user, "<span class='notice'>Вы складываете [CASE(src, ACCUSATIVE_CASE)] пополам.</span>")
 	new foldable(get_turf(src))
 	qdel(src)
 //BubbleWrap END
