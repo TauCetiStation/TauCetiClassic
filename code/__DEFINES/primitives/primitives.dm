@@ -37,8 +37,9 @@ fields = alist(...)
 
 	src.entry_config = entry_config
 
-	if(!ispath(entry_config, /datum/primitive_field))
+	if(!istype(entry_config, /datum/primitive_field))
 		stack_trace("Tried creating continuity field. Invalid entry config type")
+		return
 
 	src.can_be_null = can_be_null
 
@@ -86,8 +87,9 @@ fields = alist(...)
 
 	src.entry_config = entry_config
 
-	if(!ispath(entry_config, /datum/primitive_field))
+	if(!istype(entry_config, /datum/primitive_field))
 		stack_trace("Tried creating continuity field. Invalid entry config type")
+		return
 
 	src.can_be_null = can_be_null
 
