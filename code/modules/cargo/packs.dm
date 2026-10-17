@@ -1893,6 +1893,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	name = "Stall Cart"
 	contains = list(/obj/structure/table/reinforced/stall/movable)
 	additional_costs = 750
+	crate_type = /obj/structure/largecrate
 	group = "Miscellaneous"
 
 //----------------------------------------------
