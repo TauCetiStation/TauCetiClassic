@@ -185,7 +185,7 @@ fields = alist(...)
 	var/min_num
 
 /datum/primitive_field/num/New(can_be_null = FALSE, max_num = null, min_num = null)
-	if(!isnull(min_num) && !isnull(max_num) && (min_num > max_num))
+	if(!(isnull(min_num) || isnull(max_num)) && (min_num > max_num))
 		stack_trace("Tried creating continuity field. Min_num greater than max_num")
 		return
 
