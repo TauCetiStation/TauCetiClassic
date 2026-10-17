@@ -19,7 +19,8 @@
 			min_num = 1
 		),
 		"relic_mask" = new /datum/primitive_field/type(
-			in_list = subtypesof(/obj/item/clothing/mask) + null
+			in_list = subtypesof(/obj/item/clothing/mask),
+			can_be_null = TRUE
 		),
 	))
 
