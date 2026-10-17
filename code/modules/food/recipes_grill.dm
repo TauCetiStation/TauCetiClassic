@@ -6,7 +6,7 @@
 
 /datum/recipe/grill/telebacon
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/raw_bacon,
 		/obj/item/device/assembly/signaler
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/telebacon
@@ -30,6 +30,55 @@
 	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/meat
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
+
+/datum/recipe/grill/humanmeatsteak
+	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat/human
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
+
+/datum/recipe/grill/monkeymeatsteak
+	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
+
+/datum/recipe/grill/corgimeatsteak
+	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
+
+/datum/recipe/grill/ianmeatsteak
+	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
+
+/datum/recipe/grill/pugmeatsteak
+	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat/pug
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
+
+/datum/recipe/grill/hammeatsteak
+	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat/ham
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
+
+/datum/recipe/grill/wheatmeatsteak
+	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatsteak
 
@@ -124,6 +173,54 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/kabob
 
+/datum/recipe/grill/monkeykabob
+	items = list(
+		/obj/item/stack/rods,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/kabob
+
+/datum/recipe/grill/corgikabob
+	items = list(
+		/obj/item/stack/rods,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/kabob
+
+/datum/recipe/grill/iankabob
+	items = list(
+		/obj/item/stack/rods,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/kabob
+
+/datum/recipe/grill/pugkabob
+	items = list(
+		/obj/item/stack/rods,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/pug,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/pug,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/kabob
+
+/datum/recipe/grill/hamkabob
+	items = list(
+		/obj/item/stack/rods,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/ham,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/ham,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/kabob
+
+/datum/recipe/grill/wheatkabob
+	items = list(
+		/obj/item/stack/rods,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/kabob
+
 /datum/recipe/grill/tofukabob
 	items = list(
 		/obj/item/stack/rods,
@@ -143,9 +240,9 @@
 /datum/recipe/grill/fasqhtongue
 	reagents = list("enzyme" = 5)
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meat,
-		/obj/item/weapon/reagent_containers/food/snacks/meat,
-		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/cutlet,
+		/obj/item/weapon/reagent_containers/food/snacks/cutlet,
+		/obj/item/weapon/reagent_containers/food/snacks/cutlet,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/blackpepper,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/fasqhtongue
