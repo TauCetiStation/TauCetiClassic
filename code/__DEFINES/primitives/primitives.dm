@@ -8,11 +8,11 @@ fields = alist(...)
 //alist
 "varname" = list("field_type" = "alist", "can_be_null" = TRUE, "key_config" = list(...), "entry_config" = list(...))
 
-//string
-"varname" = list("field_type" = "string", "max_length" = 999, "can_be_null" = TRUE, "in_list" = list(), "allowed_characters" = list(), "regex" = @"text")
+//text
+"varname" = list("field_type" = "text", "max_length" = 999, "can_be_null" = TRUE, "in_list" = list(), "regex" = @"text")
 
-//int
-"varname" = list("field_type" = "int", "max_num" = 999, "min_num" = -999, "can_be_null" = TRUE)
+//num
+"varname" = list("field_type" = "num", "max_num" = 999, "min_num" = -999, "can_be_null" = TRUE)
 
 //type
 "varname" = list("field_type" = "type", "in_list" = list(), "can_be_null" = TRUE)
@@ -36,6 +36,9 @@ fields = alist(...)
 		return
 
 	src.entry_config = entry_config
+
+	if(!ispath(entry_config, /datum/primitive_field))
+		stack_trace("Tried creating continuity field. Invalid entry config type")
 
 	src.can_be_null = can_be_null
 
@@ -64,7 +67,7 @@ fields = alist(...)
 	var/datum/primitive_field/key_config
 	var/datum/primitive_field/entry_config
 
-	var/list/key_types = list("string", "int", "type")
+	var/static/list/key_types = list(/datum/primitive_field/text, /datum/primitive_field/num, /datum/primitive_field/type)
 
 /datum/primitive_field/alistfield/New(key_config = null, entry_config = null, can_be_null = FALSE)
 	if(!key_config)
@@ -73,7 +76,7 @@ fields = alist(...)
 
 	src.key_config = key_config
 
-	if(!(src.key_config.name in key_types))
+	if(!(src.key_config.type in key_types))
 		stack_trace("Tried creating continuity field. Invalid key type")
 		return
 
@@ -82,6 +85,9 @@ fields = alist(...)
 		return
 
 	src.entry_config = entry_config
+
+	if(!ispath(entry_config, /datum/primitive_field))
+		stack_trace("Tried creating continuity field. Invalid entry config type")
 
 	src.can_be_null = can_be_null
 
@@ -108,41 +114,45 @@ fields = alist(...)
 	return sanitized_list
 
 
-/datum/primitive_field/string
-	name = "string"
+/datum/primitive_field/text
+	name = "text"
 
 	var/regex/reg
 	var/list/in_list
 	var/can_be_null = FALSE
 	var/max_length
-	var/list/allowed_characters
 
-/datum/primitive_field/string/New(regex = null, in_list = null, can_be_null = FALSE, max_length = null, allowed_characters = null)
+/datum/primitive_field/text/New(regex = null, in_list = null, can_be_null = FALSE, max_length = null)
 	if(!max_length && !(regex || in_list))
 		stack_trace("Tried creating continuity field. No max_length specified, but is required")
 		return
 
 	if(regex)
-		src.reg = regex(regex)
+		try
+			src.reg = regex(regex)
+		catch(var/exception/e)
+			stack_trace("Tried creating continuity field. [e.name]")
+			return
+
+	if(islist(in_list))
+		var/list/L = in_list
+		for(var/entry in L)
+			if(!istext(entry))
+				stack_trace("Tried creating continuity field. Text list contains not a text entry")
+				return
+
 	src.in_list = in_list
 
 	src.can_be_null = can_be_null
 
 	src.max_length = max_length
-	src.allowed_characters = allowed_characters
 
-/datum/primitive_field/string/sanitize_field(field)
-	if(reg)
-		if(reg.Find(field))
-			return field
-
-		throw EXCEPTION("Regex failed")
-
+/datum/primitive_field/text/sanitize_field(field)
 	if(in_list)
 		if(field in in_list)
 			return field
 
-		throw EXCEPTION("Not an allowed string")
+		throw EXCEPTION("Not an allowed text")
 
 	if(isnull(field))
 		if(can_be_null)
@@ -153,34 +163,36 @@ fields = alist(...)
 	if(!istext(field))
 		throw EXCEPTION("Not a text")
 
-	if(length(field) > max_length)
+	if(max_length && (length(field) > max_length))
 		throw EXCEPTION("Text is longer than it should be")
 
-	if(allowed_characters)
-		var/char = ""
-		for(var/i = 1, i <= length(field), i += length(char))
-			char = field[i]
+	if(reg)
+		if(reg.Find(field))
+			return field
 
-			if(!(char in allowed_characters))
-				throw EXCEPTION("Text contains bad characters")
+		throw EXCEPTION("Regex failed")
 
 	return field
 
 
-/datum/primitive_field/int
-	name = "int"
+/datum/primitive_field/num
+	name = "num"
 
 	var/can_be_null = FALSE
 	var/max_num
 	var/min_num
 
-/datum/primitive_field/int/New(can_be_null = FALSE, max_num = null, min_num = null)
+/datum/primitive_field/num/New(can_be_null = FALSE, max_num = null, min_num = null)
+	if(!isnull(min_num) && !isnull(max_num) && (min_num > max_num))
+		stack_trace("Tried creating continuity field. Min_num greater than max_num")
+		return
+
 	src.max_num = max_num
 	src.min_num = min_num
 
 	src.can_be_null = can_be_null
 
-/datum/primitive_field/int/sanitize_field(field)
+/datum/primitive_field/num/sanitize_field(field)
 	if(isnull(field))
 		if(can_be_null)
 			return field
@@ -206,6 +218,13 @@ fields = alist(...)
 	var/can_be_null = FALSE
 
 /datum/primitive_field/type/New(in_list = null, can_be_null = FALSE)
+	if(islist(in_list))
+		var/list/L = in_list
+		for(var/entry in L)
+			if(!ispath(entry))
+				stack_trace("Tried creating continuity field. Type list contains not a path entry")
+				return
+
 	src.in_list = in_list
 
 	src.can_be_null = can_be_null

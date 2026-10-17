@@ -11,11 +11,11 @@
 
 /mob/living/carbon/monkey/punpun/atom_init()
 	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/mobs/punpun", list(
-		"ancestor_name" = new /datum/primitive_field/string(
+		"ancestor_name" = new /datum/primitive_field/text(
 			max_length = 150,
 			can_be_null = TRUE
 		),
-		"ancestor_chain" = new /datum/primitive_field/int(
+		"ancestor_chain" = new /datum/primitive_field/num(
 			min_num = 1
 		),
 		"relic_mask" = new /datum/primitive_field/type(

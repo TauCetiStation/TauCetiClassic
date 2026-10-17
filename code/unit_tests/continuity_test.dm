@@ -23,27 +23,27 @@
 	var/atom/movable/A = new
 	var/list/continuity_fields = list(
 		"field1" = new /datum/primitive_field/listfield(
-			entry_config = new /datum/primitive_field/int(
+			entry_config = new /datum/primitive_field/num(
 				max_num = 999,
 				min_num = -999,
 				can_be_null = TRUE
 			)
 		),
 		"field2" = new /datum/primitive_field/alistfield(
-			key_config = new /datum/primitive_field/string(
+			key_config = new /datum/primitive_field/text(
 				max_length = 999,
-				allowed_characters = list("A", "B", "C")
+				regex = @"^[ABC]$"
 			),
-			entry_config = new /datum/primitive_field/string(
+			entry_config = new /datum/primitive_field/text(
 				max_length = 999,
-				allowed_characters = list("1", "3", "7")
+				regex = @"^[137]$"
 			)
 		),
-		"field3" = new /datum/primitive_field/string(
+		"field3" = new /datum/primitive_field/text(
 			max_length = 999,
 			in_list = list("абырвалг", "главрыба")
 		),
-		"field4" = new /datum/primitive_field/int(
+		"field4" = new /datum/primitive_field/num(
 			max_num = 40,
 			min_num = 0
 		),
@@ -66,8 +66,8 @@
 
 		test_list()
 		test_alist()
-		test_string()
-		test_int()
+		test_text()
+		test_num()
 		test_type()
 		test_inlists()
 
@@ -82,7 +82,7 @@
 	var/atom/movable/A = new
 	var/list/paramslist = list(
 		"field" = new /datum/primitive_field/listfield(
-			entry_config = new /datum/primitive_field/int
+			entry_config = new /datum/primitive_field/num
 		)
 	)
 
@@ -125,8 +125,8 @@
 	var/atom/movable/A = new
 	var/list/paramslist = list(
 		"field" = new /datum/primitive_field/alistfield(
-			key_config = new /datum/primitive_field/string(max_length = 10),
-			entry_config = new /datum/primitive_field/int
+			key_config = new /datum/primitive_field/text(max_length = 10),
+			entry_config = new /datum/primitive_field/num
 		)
 	)
 
@@ -171,14 +171,14 @@
 
 	return TRUE
 
-/datum/unit_test/continuity/proc/test_string()
+/datum/unit_test/continuity/proc/test_text()
 	var/randlength = rand(1, 10)
 	var/randstring = random_string(randlength, global.alphabet_uppercase)
 	var/atom/movable/A = new
 	var/list/paramslist = list(
-		"field" = new /datum/primitive_field/string(
+		"field" = new /datum/primitive_field/text(
 			max_length = randlength + 1,
-			allowed_characters = global.alphabet_uppercase
+			regex = "^\[A-Z\]{[randlength]}$"
 		)
 	)
 
@@ -223,18 +223,18 @@
 		Object.sanitize_data(list("field" = randstring + "$"))
 		throw EXCEPTION("No exception")
 	catch(var/exception/e6)
-		if(e6.name != "Text contains bad characters")
-			throw EXCEPTION("Text contains bad characters expected : [e6.name] was thrown instead.")
+		if(e6.name != "Regex failed")
+			throw EXCEPTION("Regex failed expected : [e6.name] was thrown instead.")
 
 	Object.sanitize_data(list("field" = randstring))
 
 	return TRUE
 
-/datum/unit_test/continuity/proc/test_int()
+/datum/unit_test/continuity/proc/test_num()
 	var/randnum = rand(-10, 10)
 	var/atom/movable/A = new
 	var/list/paramslist = list(
-		"field" = new /datum/primitive_field/int(
+		"field" = new /datum/primitive_field/num(
 			max_num = randnum,
 			min_num = randnum
 		)
@@ -331,7 +331,7 @@
 /datum/unit_test/continuity/proc/test_inlists()
 	var/atom/movable/A = new
 	var/list/paramslist = list(
-		"field1" = new /datum/primitive_field/string(
+		"field1" = new /datum/primitive_field/text(
 			in_list = list("A", "B")
 		),
 		"field2" = new /datum/primitive_field/type(
@@ -345,8 +345,8 @@
 		Object.sanitize_data(list("field1" = "C", "field2" = /atom))
 		throw EXCEPTION("No exception")
 	catch(var/exception/e1)
-		if(e1.name != "Not an allowed string")
-			throw EXCEPTION("Not an allowed string expected : [e1.name] was thrown instead.")
+		if(e1.name != "Not an allowed text")
+			throw EXCEPTION("Not an allowed text expected : [e1.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field1" = "A", "field2" = /atom/movable/abyrvalg))
@@ -359,7 +359,7 @@
 
 	A = new
 	paramslist = list(
-		"field" = new /datum/primitive_field/string(
+		"field" = new /datum/primitive_field/text(
 			regex = @"^\d+$"
 		)
 	)
