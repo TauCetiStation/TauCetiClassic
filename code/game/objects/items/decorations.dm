@@ -168,6 +168,11 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "newtons_pendulum"
 
+/obj/item/newtons_pendulum/atom_init()
+	. = ..()
+
+	AddComponent(/datum/component/wrench_to_table)
+
 /obj/item/tableclock
 	name = "table clock"
 	desc = "Точное время в любое время."
