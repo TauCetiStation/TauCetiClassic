@@ -132,6 +132,8 @@
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
+	if(istype(mover, /obj/structure/table))
+		return 0
 	// todo: we should not change mover properties here, this method is only for attempt to pass
 	// part of future mob layer / crawl refactoring
 	if(buckled_mob != mover && iscarbon(mover) && mover.checkpass(PASSCRAWL))
@@ -530,6 +532,8 @@
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
+	if(istype(mover, /obj/structure/table))
+		return 0
 	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
