@@ -47,7 +47,7 @@
 
 	cut_overlays()
 	icon_state = "podium_broken"
-	name = statue_part.name
+	name = "broken statue"
 
 /obj/structure/fallen_statue
 	name = "fallen statue"
