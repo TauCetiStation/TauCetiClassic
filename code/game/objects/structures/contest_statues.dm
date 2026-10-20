@@ -108,7 +108,7 @@ var/global/contest_statues_distributed = FALSE
 /obj/structure/fallen_statue
 	name = "fallen statue"
 	cases = list("упавшая статуя", "упавшей статуи", "упавшей статуе", "упавшую статую", "упавшей статуей", "упавшей статуе")
-	desc = "Потрескавшаяся каменная статуя лежит на полу. Тяжелая, но её всё ещё можно тащить."
+	desc = "Потрескавшаяся каменная статуя лежит на полу. Тяжёлая, но её всё ещё можно тащить."
 	icon = 'icons/obj/contest_statues.dmi'
 	anchored = FALSE
 	density = FALSE
