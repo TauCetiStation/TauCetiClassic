@@ -1,7 +1,7 @@
 /obj/structure/statue_pedestal
 	name = "statue"
-	cases = list("стату¤", "статуи", "статуе", "статую", "статуей", "статуе")
-	desc = " аменна¤ стату¤ на пьедестале."
+	cases = list("статуя", "статуи", "статуе", "статую", "статуей", "статуе")
+	desc = "Каменная статуя на пьедестале."
 	icon = 'icons/obj/statues.dmi'
 	icon_state = "podium"
 	anchored = TRUE
@@ -28,7 +28,7 @@
 		return
 
 	playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)
-	visible_message("<span class='danger'>[C_CASE(src, NOMINATIVE_CASE)] отламываетс¤ от пьедестала и падает навзничь!</span>")
+	visible_message("<span class='danger'>[C_CASE(src, NOMINATIVE_CASE)] отламывается от пьедестала и падает навзничь!</span>")
 
 	var/turf/fall_turf = get_turf(src)
 	for(var/check_dir in shuffle(cardinal.Copy()))
@@ -51,8 +51,8 @@
 
 /obj/structure/fallen_statue
 	name = "fallen statue"
-	cases = list("упавша¤ стату¤", "упавшей статуи", "упавшей статуе", "упавшую статую", "упавшей статуей", "упавшей статуе")
-	desc = " аменна¤ стату¤ лежит на полу. “¤жела¤, но еЄ всЄ ещЄ можно тащить."
+	cases = list("упавша¤ статуя", "упавшей статуи", "упавшей статуе", "упавшую статую", "упавшей статуей", "упавшей статуе")
+	desc = "Каменная статуя лежит на полу. “тяжелая, но её всё ещё можно тащить."
 	icon = 'icons/obj/statues.dmi'
 	anchored = FALSE
 	density = FALSE
@@ -70,5 +70,5 @@
 /obj/structure/fallen_statue/deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)
-		visible_message("<span class='danger'>[C_CASE(src, NOMINATIVE_CASE)] рассыпаетс¤ в пыль!</span>")
+		visible_message("<span class='danger'>[C_CASE(src, NOMINATIVE_CASE)] рассыпается в пыль!</span>")
 	return ..()
