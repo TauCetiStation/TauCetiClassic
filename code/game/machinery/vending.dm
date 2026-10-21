@@ -126,7 +126,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		global.vending_products[typepath] = 1
 		R.product_path = typepath
 		R.amount = amount
-		R.max_amount = amount * 2
+		R.max_amount = amount
 		R.price = price
 
 		if(hidden)
