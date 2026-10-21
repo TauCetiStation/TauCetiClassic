@@ -197,7 +197,7 @@
 			if(usr.get_active_hand())
 				to_chat(usr, "<span class='warning'>You need an empty hand to remove \the [cell]!</span>")
 				return
-			cell.updateicon()
+			cell.update_icon()
 			usr.put_in_hands(cell)
 			cell.add_fingerprint(usr)
 			usr.visible_message("\The [usr] removes \the [cell] from \the [src].", "<span class='notice'>You remove \the [cell] from \the [src].</span>")

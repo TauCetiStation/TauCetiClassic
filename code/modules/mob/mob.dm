@@ -853,6 +853,8 @@ note dizziness decrements automatically in the mob's Life() proc.
 // ========== CRAWLING ==========
 /mob/proc/SetCrawling(value)
 	crawling = value
+	if(hud_used)
+		crawl_hud_icon?.update_icon(src)
 	if(value)
 		pass_flags |= PASSCRAWL
 	else

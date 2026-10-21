@@ -39,7 +39,7 @@
 	name = "skrellian hardsuit"
 	desc = "Seems like a wetsuit with reinforced plating seamlessly attached to it. Very chic."
 	armor = list(melee = 20, bullet = 20, laser = 25,energy = 50, bomb = 50, bio = 100, rad = 100)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/holding,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(SKRELL , HUMAN, PODMAN)
@@ -89,7 +89,7 @@
 
 /obj/item/clothing/suit/space/unathi
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 50)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/holding,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(UNATHI)
@@ -415,7 +415,8 @@
 
 /obj/item/clothing/shoes/magboots/vox/attack_self(mob/user)
 	if(src.magpulse)
-		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
+		detach_clothing_traits(TRAIT_NOSLIP)
+		flags &= ~AIR_FLOW_PROTECT
 		magpulse = 0
 		canremove = 1
 		to_chat(user, "You relax your deathgrip on the flooring.")
@@ -429,7 +430,8 @@
 			return
 
 
-		flags |= NOSLIP | AIR_FLOW_PROTECT
+		attach_clothing_traits(TRAIT_NOSLIP)
+		flags |= AIR_FLOW_PROTECT
 		magpulse = 1
 		canremove = 0	//kinda hard to take off magclaws when you are gripping them tightly.
 		to_chat(user, "You dig your claws deeply into the flooring, bracing yourself.")
@@ -440,7 +442,8 @@
 	..()
 	if(src.magpulse)
 		user.visible_message("The [src] go limp as they are removed from [usr]'s feet.", "The [src] go limp as they are removed from your feet.")
-		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
+		detach_clothing_traits(TRAIT_NOSLIP)
+		flags &= ~AIR_FLOW_PROTECT
 		magpulse = 0
 		canremove = 1
 

@@ -260,6 +260,8 @@ var/global/online_shop_referrer_revenue = 0.50
 		return "Еда"
 	else if(istype(target, /obj/item/weapon/storage/food))
 		return "Еда"
+	else if(istype(target, /obj/item/pizzabox))
+		return "Еда"
 	else if(istype(target, /obj/item/weapon/storage))
 		return "Наборы"
 	else if(istype(target, /obj/item/weapon))
@@ -277,7 +279,7 @@ var/global/online_shop_referrer_revenue = 0.50
 	var/itemPixelX = Item.pixel_x
 	var/itemPixelY = Item.pixel_y
 
-	var/obj/Package = Item.try_wrap_up(texture_name = "blank")
+	var/obj/Package = Item.try_wrap_up(/datum/package_wrap)
 	if(!Package)
 		return
 

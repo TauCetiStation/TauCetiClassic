@@ -40,7 +40,6 @@
 
 /obj/item/organ/internal/heart/process()
 	if(owner)
-		handle_pulse()
 		pulse = handle_pulse()
 		if(pulse)
 			handle_heart_beat()
@@ -68,17 +67,19 @@
 	if(owner.stat == DEAD)
 		return PULSE_NONE	//that's it, you're dead, nothing can influence your pulse
 
-	if(owner.life_tick % 10)
-		switch(heart_status)
-			if(HEART_FAILURE)
-				to_chat(src, "<span class='userdanger'>Your feel a prick in your heart!</span>")
+	switch(heart_status)
+		if(HEART_FAILURE)
+			if(owner.life_tick % 10)
+				to_chat(owner, "<span class='userdanger'>Your feel a prick in your heart!</span>")
 				owner.apply_effect(5,AGONY,0)
-				return PULSE_NONE
-			if(HEART_FIBR)
-				to_chat(src, "<span class='danger'>Your heart hurts a little.</span>")
+			return PULSE_NONE
+
+		if(HEART_FIBR)
+			if(owner.life_tick % 10)
+				to_chat(owner, "<span class='danger'>Your heart hurts a little.</span>")
 				owner.playsound_local(null, 'sound/machines/cardio/pulse_fibrillation.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
 				owner.apply_effect(1,AGONY,0)
-				return PULSE_SLOW
+			return PULSE_SLOW
 
 	var/temp = PULSE_NORM
 
@@ -254,8 +255,8 @@
 /obj/item/organ/internal/heart/cybernetic
 	name = "cybernetic heart"
 	desc = "An electronic device designed to mimic the functions of an organic human heart. It has a built-in coagulator that slows bleeding."
-	icon_state = "heart-prosthetic"
-	item_state_world = "heart-prosthetic_world"
+	icon_state = "heart-prosthetic-on"
+	item_state_world = "heart-prosthetic-on_world"
 	base_icon_state = "heart-prosthetic"
 	status = ORGAN_ROBOT
 	durability = 0.8

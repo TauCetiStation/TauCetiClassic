@@ -24,6 +24,8 @@
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
+	var/spawn_filling = FALSE
+
 /obj/structure/closet/atom_init(mapload)
 	. = ..()
 	closet_list += src
@@ -39,6 +41,9 @@
 
 /obj/structure/closet/Destroy()
 	closet_list -= src
+
+	if(spawn_filling)
+		spawn_infill_particle()
 	return ..()
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
@@ -121,6 +126,10 @@
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER, 15, FALSE, null, -3)
 	density = FALSE
 	SSdemo.mark_dirty(src)
+
+	if(spawn_filling)
+		spawn_infill_particle()
+
 	return 1
 
 /obj/structure/closet/proc/close()
@@ -302,13 +311,21 @@
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open()
 
-/obj/structure/closet/try_wrap_up(texture_name = "cardboard", details_name = null)
+/obj/structure/closet/try_wrap_up(wrap_type)
 	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
 	P.icon_state = "deliverycloset"
-	P.add_texture(texture_name, details_name)
+	P.add_texture(wrap_type)
 
 	welded = TRUE
 
 	forceMove(P)
 
 	return P
+
+/obj/structure/closet/proc/spawn_infill_particle(min_x = -5, min_y = -13, max_x = 5, max_y = 7)
+	if(!isturf(loc))
+		return
+
+	var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(get_turf(src), /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	Holder.modify_particles_value("position", generator("box", list(min_x, min_y, 0), list(max_x, max_y, 0)))
+	spawn_filling = FALSE

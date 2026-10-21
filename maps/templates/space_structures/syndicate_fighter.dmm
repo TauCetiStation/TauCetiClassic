@@ -59,9 +59,9 @@
 /area/space_structures/syndicate_fighter)
 "h" = (
 /obj/machinery/door/airlock/hatch{
+	dir = 4;
 	id_tag = "syndishiv";
-	locked = 1;
-	dir = 4
+	locked = 1
 	},
 /obj/structure/fans/tiny,
 /turf/simulated/shuttle/floor4{
@@ -105,7 +105,7 @@
 	pixel_x = -32
 	},
 /obj/item/weapon/tank/emergency_oxygen/engi,
-/obj/item/clothing/mask/gas/syndicate,
+/obj/item/clothing/mask/breath/gas/syndicate,
 /obj/item/clothing/head/helmet/space/syndicate/infiltrator,
 /turf/simulated/floor{
 	icon_state = "darkredfull"

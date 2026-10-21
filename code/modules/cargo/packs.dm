@@ -71,6 +71,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 	fill(C)
 
+	if(ispath(crate_type, /obj/structure/closet))
+		C.spawn_filling = TRUE
+
 	return C
 
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
@@ -179,7 +182,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/item/weapon/gun/projectile/automatic/l13,
 					/obj/item/weapon/gun/projectile/automatic/l13,
 					/obj/item/weapon/gun/projectile/automatic/l13)
-	additional_costs = 2300
+	additional_costs = 1400
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = ".38 SMG crate"
 	access = access_brig
@@ -690,6 +693,20 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_name = "Party equipment"
 	group = "Hospitality"
 
+/datum/supply_pack/shashlik
+	name = "BBQ equipment"
+	contains = list(/obj/item/weapon/mangal_parts,
+					/obj/item/weapon/storage/bag/plasticbag/coal,
+					/obj/item/weapon/storage/bag/plasticbag/coal,
+					/obj/item/clothing/suit/chef_classic,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/beer)
+	additional_costs = 500
+	crate_type = /obj/structure/closet/crate
+	crate_name = "BBQ equipment"
+	group = "Hospitality"
+
 /datum/supply_pack/ramens
 	name = "Ramens supply crate"
 	contains = list(/obj/random/foods/ramens,
@@ -746,9 +763,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/internals
 	name = "Internals crate"
-	contains = list(/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured,
+	contains = list(/obj/item/clothing/mask/breath/gas/coloured,
+					/obj/item/clothing/mask/breath/gas/coloured,
+					/obj/item/clothing/mask/breath/gas/coloured,
 					/obj/item/weapon/tank/air,
 					/obj/item/weapon/tank/air,
 					/obj/item/weapon/tank/air)
@@ -799,11 +816,11 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/tank/emergency_oxygen,
 					/obj/item/weapon/tank/emergency_oxygen,
 					/obj/item/weapon/tank/emergency_oxygen,
-					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured)
+					/obj/item/clothing/mask/breath/gas/coloured,
+					/obj/item/clothing/mask/breath/gas/coloured,
+					/obj/item/clothing/mask/breath/gas/coloured,
+					/obj/item/clothing/mask/breath/gas/coloured,
+					/obj/item/clothing/mask/breath/gas/coloured)
 	crate_type = /obj/structure/closet/crate/internals
 	crate_name = "Emergency crate"
 	group = "Engineering"
@@ -1507,7 +1524,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/weedcontrol
 	name = "Weed control crate"
 	contains = list(/obj/item/weapon/scythe,
-					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/clothing/mask/breath/gas/coloured,
 					/obj/item/weapon/grenade/chem_grenade/antiweed,
 					/obj/item/weapon/grenade/chem_grenade/antiweed)
 	crate_type = /obj/structure/closet/crate/secure/hydrosec

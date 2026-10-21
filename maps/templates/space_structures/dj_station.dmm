@@ -112,10 +112,9 @@
 /turf/simulated/floor/plating,
 /area/space_structures/djstation)
 "av" = (
-/obj/structure/rack,
-/obj/item/clothing/suit/space/syndicate,
-/obj/item/clothing/head/helmet/space/syndicate,
-/obj/item/clothing/mask/breath,
+/obj/machinery/suit_storage_unit/syndicate_unit{
+	filled = 1
+	},
 /turf/simulated/floor/plating,
 /area/space_structures/djstation)
 "aw" = (
@@ -224,8 +223,8 @@
 /area/space_structures/djstation)
 "aO" = (
 /obj/machinery/door/airlock/glass{
-	name = "Kitchen";
-	dir = 4
+	dir = 4;
+	name = "Kitchen"
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -261,8 +260,8 @@
 /area/space_structures/djstation)
 "aR" = (
 /obj/machinery/door/airlock/glass{
-	name = "Cabin";
-	dir = 4
+	dir = 4;
+	name = "Cabin"
 	},
 /turf/simulated/floor{
 	dir = 5;

@@ -98,7 +98,7 @@
 /obj/machinery/power/smes/proc/update_cells()
 	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)
 		cell.charge = cell.maxcharge * charge / capacity
-		cell.updateicon()
+		cell.update_icon()
 
 /obj/machinery/power/smes/exchange_parts()
 	update_cells()

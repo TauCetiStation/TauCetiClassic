@@ -34,7 +34,7 @@
 	actions += scan_action
 	actions += hotkey_help
 
-	for(var/obj/machinery/monkey_recycler/recycler in oview(7,src))
+	for(var/obj/machinery/monkey_recycler/recycler in orange(7,src))
 		if(get_area(recycler) == get_area(loc))
 			connected_recycler = recycler
 			connected_recycler.connected_consoles += src

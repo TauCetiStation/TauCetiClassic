@@ -175,3 +175,17 @@
 	desc = "Can be attached to Drop Pod to reach exemplary accuracy and allow to return to the base."
 	item = /obj/item/device/camera_bug
 	cost = 2
+
+/datum/intruder_tools/romerol
+	name = "Romerol"
+	desc = "A highly experimental bioterror agent which creates dormant nodules to be etched into the grey matter of the brain. \
+			On death, these nodules take control of the dead body, causing limited revivification, \
+			along with slurred speech, aggression, and the ability to infect others with this agent."
+	item = /obj/item/weapon/storage/box/syndie_kit/romerol
+	cost = 80
+
+/datum/intruder_tools/romerol/buy(obj/machinery/computer/intruder_station/console, mob/living/user)
+	if(!war_device_activated)
+		to_chat(user, "<span class='notice'>Эта опция доступна только при объявлении войны!</span>")
+		return
+	. = ..()

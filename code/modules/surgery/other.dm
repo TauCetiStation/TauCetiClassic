@@ -5,6 +5,7 @@
 
 
 /datum/surgery_step/fix_vein
+	name = "Repair veins"
 	priority = 2
 	allowed_tools = list(
 	/obj/item/weapon/FixOVein = 100, \
@@ -50,6 +51,7 @@
 //					GROIN ORGAN PATCHING						//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/groin_organs
+	name = "Repair groin organs"
 	priority = 3
 	can_infect = 0
 	blood_level = 1
@@ -70,6 +72,7 @@
 	return FALSE
 
 /datum/surgery_step/groin_organs/fixing
+	name = "Apply bandage to groin"
 	allowed_tools = list(
 	/obj/item/stack/medical/advanced/bruise_pack= 100,
 	/obj/item/stack/medical/bruise_pack = 20,
@@ -79,7 +82,7 @@
 	min_duration = 70
 	max_duration = 90
 
-/datum/surgery_step/groin_organs/fixing/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/groin_organs/fixing/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, silent = FALSE)
 	if(!..())
 		return FALSE
 	var/obj/item/organ/external/groin/BP = target.get_bodypart(BP_GROIN)
@@ -93,7 +96,8 @@
 				has_treatable = TRUE
 	if(has_treatable)
 		return TRUE
-	necrotic_organs_warning(user, target, dead_organs)
+	if(!silent)
+		necrotic_organs_warning(user, target, dead_organs)
 	return FALSE
 
 /datum/surgery_step/groin_organs/fixing/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -170,6 +174,7 @@
 			IO.take_damage(dam_amt,0)
 
 /datum/surgery_step/groin_organs/fixing_robot //For artificial organs
+	name = "Fix robotic groin organ"
 	allowed_tools = list(
 	/obj/item/stack/nanopaste = 100,
 	/obj/item/weapon/bonegel = 30,

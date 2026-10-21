@@ -109,6 +109,17 @@
 	max_integrity = 100
 	resistance_flags = CAN_BE_HIT
 
+/obj/item/weapon/mangal_parts
+	name = "mangal parts"
+	desc = "Складной мангал."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "mangal_parts"
+	flags = CONDUCT
+	m_amt = 5000
+
+	max_integrity = 50
+	resistance_flags = CAN_BE_HIT
+
 // base shard object
 /obj/item/weapon/shard
 	name = "shard"

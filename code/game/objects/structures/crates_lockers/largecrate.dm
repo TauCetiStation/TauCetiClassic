@@ -24,5 +24,10 @@
 	else
 		return attack_hand(user)
 
+/obj/structure/largecrate/Destroy()
+	if(isturf(loc))
+		new /obj/effect/abstract/particle_holder(loc, /particles/cargo_infill, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	return ..()
+
 /obj/structure/largecrate/mule
 	icon_state = "mulecrate"
