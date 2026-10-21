@@ -1962,6 +1962,21 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/hell_ramen)
 	crate_name = "Hell Ramens supply crate"
 
+/datum/supply_pack/vending_refill/candy
+	name = "Vending refill supply crate: Candies"
+	contains = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar,
+					/obj/item/weapon/reagent_containers/food/snacks/candy/candybar,
+					/obj/item/weapon/reagent_containers/food/snacks/candy/candybar,
+					/obj/item/weapon/reagent_containers/food/snacks/candy/candybar,
+					/obj/item/weapon/reagent_containers/food/snacks/candy/candybar,
+					/obj/item/weapon/reagent_containers/food/snacks/candy/candybar,
+					/obj/item/weapon/reagent_containers/food/snacks/candy/candybar,
+					/obj/item/weapon/reagent_containers/food/snacks/candy/candybar,
+					/obj/item/weapon/reagent_containers/food/snacks/candy/candybar,
+					/obj/item/weapon/reagent_containers/food/snacks/candy/candybar)
+	additional_costs = 20
+	crate_name = "Candies supply crate"
+
 /datum/supply_pack/vending_refill/simple_waffles
 	name = "Vending refill supply crate: Simple Waffles"
 	contains = list(/obj/item/weapon/storage/food/normal/simple_waffles,
@@ -1988,6 +2003,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/storage/food/small/chips,
 					/obj/item/weapon/storage/food/small/chips,
 					/obj/item/weapon/storage/food/small/chips)
+	additional_costs = 50
 	crate_name = "Small Chips supply crate"
 
 /datum/supply_pack/vending_refill/chips
@@ -2016,6 +2032,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/storage/food/normal/sosjerky,
 					/obj/item/weapon/storage/food/normal/sosjerky,
 					/obj/item/weapon/storage/food/normal/sosjerky)
+	additional_costs = 50
 	crate_name = "Jerky supply crate"
 
 /datum/supply_pack/vending_refill/no_raisin
@@ -2030,10 +2047,11 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/storage/food/normal/no_raisin,
 					/obj/item/weapon/storage/food/normal/no_raisin,
 					/obj/item/weapon/storage/food/normal/no_raisin)
+	additional_costs = 50
 	crate_name = "Raisins supply crate"
 
 /datum/supply_pack/vending_refill/twinkie
-	name = "Vending refill supply crate: Twinkie"
+	name = "Vending refill supply crate: Twinkies"
 	contains = list(/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie,
 					/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie,
 					/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie,
@@ -2058,6 +2076,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/storage/food/normal/honkers,
 					/obj/item/weapon/storage/food/normal/honkers,
 					/obj/item/weapon/storage/food/normal/honkers)
+	additional_costs = 50
 	crate_name = "Honkers supply crate"
 
 /datum/supply_pack/vending_refill/coffee
@@ -2072,6 +2091,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/food/drinks/coffee,
 					/obj/item/weapon/reagent_containers/food/drinks/coffee,
 					/obj/item/weapon/reagent_containers/food/drinks/coffee)
+	additional_costs = 50
 	crate_name = "Coffee supply crate"
 
 /datum/supply_pack/vending_refill/tea
@@ -2086,6 +2106,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/food/drinks/tea,
 					/obj/item/weapon/reagent_containers/food/drinks/tea,
 					/obj/item/weapon/reagent_containers/food/drinks/tea)
+	additional_costs = 50
 	crate_name = "Tea supply crate"
 
 /datum/supply_pack/vending_refill/chocolate
@@ -2100,6 +2121,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/food/drinks/h_chocolate,
 					/obj/item/weapon/reagent_containers/food/drinks/h_chocolate,
 					/obj/item/weapon/reagent_containers/food/drinks/h_chocolate)
+	additional_costs = 50
 	crate_name = "Hot Chocolate supply crate"
 
 /datum/supply_pack/vending_refill/cola
@@ -2114,6 +2136,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/food/drinks/cans/cola,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/cola,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/cola)
+	additional_costs = 20
 	crate_name = "Cola supply crate"
 
 /datum/supply_pack/vending_refill/brepsi
@@ -2128,6 +2151,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/food/drinks/cans/brepsi,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/brepsi,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/brepsi)
+	additional_costs = 20
 	crate_name = "Brepsi supply crate"
 
 /datum/supply_pack/vending_refill/mountainwind
@@ -2142,6 +2166,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind)
+	additional_costs = 20
 	crate_name = "Space Mountain Wind supply crate"
 
 /datum/supply_pack/vending_refill/drgibb
@@ -2156,6 +2181,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb)
+	additional_costs = 20
 	crate_name = "Dr Gibb supply crate"
 
 /datum/supply_pack/vending_refill/starkist
@@ -2170,6 +2196,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/food/drinks/cans/starkist,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/starkist,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/starkist)
+	additional_costs = 20
 	crate_name = "Starkist supply crate"
 
 /datum/supply_pack/vending_refill/water
@@ -2184,6 +2211,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle)
+	additional_costs = 20
 	crate_name = "Water Bottle supply crate"
 
 /datum/supply_pack/vending_refill/spaceup
@@ -2198,6 +2226,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/food/drinks/cans/space_up,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/space_up,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/space_up)
+	additional_costs = 20
 	crate_name = "Space Up supply crate"
 
 /datum/supply_pack/vending_refill/icedtea
@@ -2212,6 +2241,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea)
+	additional_costs = 20
 	crate_name = "Iced Tea supply crate"
 
 /datum/supply_pack/vending_refill/grapejuice
@@ -2226,6 +2256,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice)
+	additional_costs = 20
 	crate_name = "Grape Juice supply crate"
 
 /datum/supply_pack/vending_bar
