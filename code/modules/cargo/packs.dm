@@ -1944,7 +1944,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/vending_refill/fill(obj/structure/closet/crate/C)
 	var/contains_amount = 0
 	for(var/item_type in contains)
-		countains_amount++
+		contains_amount++
 
 	new /obj/item/weapon/vending_refill(C, contains[1], contains_amount)
 
