@@ -126,7 +126,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		global.vending_products[typepath] = 1
 		R.product_path = typepath
 		R.amount = amount
-		R.max_amount = amount
+		R.max_amount = amount * 2
 		R.price = price
 
 		if(hidden)
@@ -150,7 +150,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 			return
 
 		if(istype(W, /obj/item/weapon/vending_refill))
-			var/obj/item/weapon/vending_refill/refill
+			var/obj/item/weapon/vending_refill/refill = W
 			for(var/datum/data/vending_product/record in product_records)
 				if(record.product_path != refill.refill_type)
 					continue
@@ -167,6 +167,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 				refill.refill_left -= to_refill
 
 				if(refill.refill_left <= 0)
+					user.drop_from_inventory(refill)
 					qdel(refill)
 				else
 					refill.update_icon()
@@ -711,6 +712,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 	w_class = SIZE_NORMAL
 
+	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
+
 	var/refill_type
 	var/refill_left
 
@@ -730,8 +733,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	update_icon()
 
 /obj/item/weapon/vending_refill/update_icon()
+	cut_overlays()
 	var/obj/item/weapon/Item = refill_type
-	var/mutable_appearance/refill_item = mutable_appearance(Item::icon, Item::icon_state)
+	var/mutable_appearance/refill_item = mutable_appearance(Item::icon, Item::item_state_world ? Item::item_state_world : Item::icon_state)
 
 	for(var/i in 1 to refill_left)
 		refill_item.pixel_x = -10 + (refill_offset * i)
@@ -754,13 +758,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 	if(refill_left)
 		for(var/i in 1 to refill_left)
-			new refill_type(T)
+			var/obj/item/I = new refill_type(T)
+			I.pixel_x = rand(-5, 5)
+			I.pixel_y = rand(-5, 5)
 
 	var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(T, /particles/package_wrap, PARTICLE_FADEOUT|PARTICLE_FLICK)
 	Holder.modify_particles_value("color", color)
 
 	return ..()
-
-/obj/item/weapon/vending_refill/ramen
-	refill_type = /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
-	refill_left = 10
