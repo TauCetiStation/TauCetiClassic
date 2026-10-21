@@ -196,6 +196,12 @@
                                     0,    0,    0,      1, \
                                     -0.05,-0.05,-0.05,  0)
 
+#define PACKAGEFILM_FILTER    list(0.9,  0.05, 0.1,   0, \
+                       			   0,    0.9,  0.1,   0, \
+                         	      -0.1,  0.1,  1.25,  0, \
+                         		   0,    0,    0,     1, \
+                          		   0,    0,    0,     0)
+
 /// Adds/subtracts overall lightness
 /// 0 is identity, 1 makes everything white, -1 makes everything black
 #define COLOR_MATRIX_LIGHTNESS(power) list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, power,power,power,0)

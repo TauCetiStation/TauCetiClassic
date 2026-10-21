@@ -149,6 +149,29 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		if(default_unfasten_wrench(user, W, time = 60))
 			return
 
+		if(istype(W, /obj/item/weapon/vending_refill))
+			var/obj/item/weapon/vending_refill/refill
+			for(var/datum/data/vending_product/record in product_records)
+				if(record.product_path != refill.refill_type)
+					continue
+
+				if(record.amount >= record.max_amount)
+					return
+
+				var/to_refill = record.max_amount - record.amount
+
+				if(to_refill > refill.refill_left)
+					to_refill = refill.refill_left
+
+				record.amount += to_refill
+				refill.refill_left -= to_refill
+
+				if(refill.refill_left <= 0)
+					qdel(refill)
+				else
+					refill.update_icon()
+				return
+
 		if(istype(W, /obj/item/device/lens) && W.type != camera.lens)
 			var/obj/item/device/lens/CameraLens = camera.lens
 			CameraLens.forceMove(get_turf(src))
@@ -673,3 +696,66 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	premium = list()
 
 */
+
+/obj/item/weapon/vending_refill
+	name = "Resupply pack"
+	cases = list("набор пополнения", "набора пополнения", "набору пополнения", "набор пополнения", "набором пополнения", "наборе пополнения")
+	desc = "Vending machine resupply pack. Contains: "
+	icon = 'icons/obj/package_wrap.dmi'
+	icon_state = "wrap_end"
+
+	w_class = SIZE_NORMAL
+
+	var/refill_type
+	var/refill_left
+
+	var/refill_offset
+
+/obj/item/weapon/vending_refill/atom_init(mapload, refill_type, refill_amount)
+	. = ..()
+
+	if(refill_type)
+		src.refill_type = refill_type
+
+	if(refill_amount)
+		refill_left = refill_amount
+
+	refill_offset = round(20 / refill_left)
+
+	update_icon()
+
+/obj/item/weapon/vending_refill/update_icon()
+	var/obj/item/weapon/Item = refill_type
+	var/mutable_appearance/refill_item = mutable_appearance(Item::icon, Item::icon_state)
+
+	for(var/i in 1 to refill_left)
+		refill_item.pixel_x = -10 + (refill_offset * i)
+		refill_item.pixel_y = 10 - (refill_offset * i)
+
+		add_overlay(refill_item)
+
+	color = PACKAGEFILM_FILTER
+
+
+/obj/item/weapon/vending_refill/attack_self(mob/user)
+	user.drop_from_inventory(src)
+	playsound(src, 'sound/items/poster_ripped.ogg', VOL_EFFECTS_MASTER)
+	qdel(src)
+
+/obj/item/weapon/vending_refill/Destroy()
+	var/turf/T = get_turf(src)
+	if(!T)
+		return ..()
+
+	if(refill_left)
+		for(var/i in 1 to refill_left)
+			new refill_type(T)
+
+	var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(T, /particles/package_wrap, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	Holder.modify_particles_value("color", color)
+
+	return ..()
+
+/obj/item/weapon/vending_refill/ramen
+	refill_type = /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
+	refill_left = 10
