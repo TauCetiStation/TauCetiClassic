@@ -133,7 +133,7 @@ What is the naming convention for planes or layers?
 #define ABOVE_GAME_PLANE  -1
 #define SEETHROUGH_PLANE -3
 
-//#define BLACKNESS_PLANE   0 // also default byond plane. We don't render it, don't use it
+#define BLACKNESS_PLANE   0 // also default byond plane. We don't render it, don't use it
 
 #define SINGULARITY_PLANE 10
   #define SINGULARITY_LAYER 1
