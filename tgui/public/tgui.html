@@ -261,9 +261,10 @@
       // Asset loaders
       // ------------------------------------------------------
 
-      var RETRY_ATTEMPTS = 5;
+      var RETRY_ATTEMPTS = 30;
       var RETRY_WAIT_INITIAL = 500;
       var RETRY_WAIT_INCREMENT = 500;
+      var RETRY_WAIT_MAX = 5000;
 
       var loadedAssetByUrl = {};
 
@@ -302,7 +303,7 @@
             var errorMessage = "Error: Failed to load the asset "
               + "'" + url + "' after several attempts.";
             if (type === 'css') {
-              errorMessage += + "\nStylesheet was either not found, "
+              errorMessage += "\nStylesheet was either not found, "
                 + "or you're trying to load an empty stylesheet "
                 + "that has no CSS rules in it.";
             }
@@ -312,7 +313,7 @@
             loadedAssetByUrl[url] = null;
             options.attempt += 1;
             loadAsset(options);
-          }, RETRY_WAIT_INITIAL + attempt * RETRY_WAIT_INCREMENT);
+          }, Math.min(RETRY_WAIT_INITIAL + attempt * RETRY_WAIT_INCREMENT, RETRY_WAIT_MAX));
         };
         // JS specific code
         if (type === 'js') {

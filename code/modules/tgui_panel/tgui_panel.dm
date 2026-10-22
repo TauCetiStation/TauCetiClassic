@@ -12,6 +12,7 @@
 	var/datum/tgui_window/window
 	var/broken = FALSE
 	var/initialized_at
+	var/auto_reloads = 0
 
 /datum/tgui_panel/New(client/client)
 	src.client = client
@@ -41,14 +42,19 @@
 	// Minimal sleep to defer initialization to after client constructor
 	sleep(1)
 	initialized_at = world.time
+	if(force)
+		auto_reloads = 0
 	// Perform a clean initialization
-	window.initialize(inline_assets = list(
-		get_asset_datum(/datum/asset/simple/tgui_panel),
-	))
+	window.initialize(
+		strict_mode = TRUE,
+		inline_assets = list(
+			get_asset_datum(/datum/asset/simple/tgui_panel),
+		),
+	)
 	window.send_asset(get_asset_datum(/datum/asset/simple/fontawesome))
 	// Other setup
 	request_telemetry()
-	addtimer(CALLBACK(src, PROC_REF(on_initialize_timed_out)), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(on_initialize_timed_out)), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /**
  * private
@@ -56,7 +62,13 @@
  * Called when initialization has timed out.
  */
 /datum/tgui_panel/proc/on_initialize_timed_out()
-	// Currently does nothing but sending a message to old chat.
+	if(!client || telemetry_analyzed_at)
+		return
+	if(auto_reloads < 3)
+		auto_reloads++
+		log_tgui(client, "tgui_panel timed out, reloading (attempt [auto_reloads]).", context = "tgui_panel/on_initialize_timed_out")
+		initialize()
+		return
 	SEND_TEXT(client, "<span class=\"userdanger\">Failed to load fancy chat, click <a href='byond://?src=[REF(src)];reload_tguipanel=1'>HERE</a> to attempt to reload it.</span>")
 
 /**
@@ -82,6 +94,7 @@
 		))
 		return TRUE
 	if(type == "telemetry")
+		auto_reloads = 0
 		analyze_telemetry(payload)
 		return TRUE
 
