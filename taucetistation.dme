@@ -2642,6 +2642,7 @@
 #include "code\unit_tests\subsystem_tests.dm"
 #include "code\unit_tests\suit_storage_tests.dm"
 #include "code\unit_tests\surgery_radial_tests.dm"
+#include "code\unit_tests\tgui_chat_tests.dm"
 #include "code\unit_tests\unit_test.dm"
 #include "interface\fonts.dm"
 #include "interface\interface.dm"
