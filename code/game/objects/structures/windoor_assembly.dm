@@ -263,6 +263,11 @@
 
 
 //Rotates the windoor assembly clockwise
+/obj/structure/windoor_assembly/AltClick(mob/user)
+	if(!user || !Adjacent(user))
+		return
+	revrotate()
+
 /obj/structure/windoor_assembly/verb/revrotate()
 	set name = "Rotate Windoor Assembly"
 	set category = "Object"
