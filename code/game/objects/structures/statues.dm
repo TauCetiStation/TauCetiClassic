@@ -8,7 +8,7 @@
 	density = TRUE
 	max_integrity = 200
 	integrity_failure = 0.5
-	resistance_flags = CAN_BE_HIT
+	resistance_flags = CAN_BE_HIT | FIRE_PROOF
 
 	var/obj/structure/fallen_statue/statue_part
 
@@ -57,7 +57,7 @@
 	anchored = FALSE
 	density = FALSE
 	max_integrity = 100
-	resistance_flags = CAN_BE_HIT
+	resistance_flags = CAN_BE_HIT | FIRE_PROOF
 
 /obj/structure/fallen_statue/atom_init()
 	. = ..()
