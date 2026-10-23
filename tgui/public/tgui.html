@@ -341,23 +341,35 @@
           var node = document.createElement('link');
           node.type = 'text/css';
           node.rel = 'stylesheet';
+          node.crossOrigin = 'anonymous';
           node.href = url;
           // Temporarily set media to something inapplicable
           // to ensure it'll fetch without blocking render
           if (!sync) {
             node.media = 'only x';
           }
+          var removeNodeAndRetry = function () {
+            node.onload = null;
+            node.onerror = null;
+            if (node.parentNode) {
+              node.parentNode.removeChild(node);
+            }
+            node = null;
+            retry();
+          };
           node.onload = function () {
             node.onload = null;
+            node.onerror = null;
             if (isStyleSheetLoaded(node, url)) {
               // Render the stylesheet
               node.media = 'all';
               return;
             }
             // Try again
-            node.parentNode.removeChild(node);
-            node = null;
-            retry();
+            removeNodeAndRetry();
+          };
+          node.onerror = function () {
+            removeNodeAndRetry();
           };
           injectNode(node);
           return;

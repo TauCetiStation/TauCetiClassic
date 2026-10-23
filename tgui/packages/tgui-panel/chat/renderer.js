@@ -36,12 +36,16 @@ const findNearestScrollableParent = (startingNode) => {
     // This definitely has a vertical scrollbar, because it reduces
     // scrollWidth of the element. Might not work if element uses
     // overflow: hidden.
-    if (node.scrollWidth < node.offsetWidth) {
+    if (
+      node.scrollWidth < node.offsetWidth ||
+      node.classList?.contains('Layout__content--scrollable') ||
+      node.style?.overflowY === 'scroll'
+    ) {
       return node;
     }
     node = node.parentNode;
   }
-  return window;
+  return document.scrollingElement || document.documentElement || body;
 };
 
 const createHighlightNode = (text, color) => {

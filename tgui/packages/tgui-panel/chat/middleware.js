@@ -28,60 +28,66 @@ import { selectChat, selectCurrentChatPage } from './selectors';
 const FORBID_TAGS = ['a', 'iframe', 'link', 'video'];
 
 const saveChatToStorage = async (store) => {
-  // Early return if chat saving is disabled
-  const chatSavingEnabled = await storage.get('chat-saving-enabled');
-  if (chatSavingEnabled === false) {
-    return;
-  }
+  try {
+    // Early return if chat saving is disabled
+    const chatSavingEnabled = await storage.get('chat-saving-enabled');
+    if (chatSavingEnabled === false) {
+      return;
+    }
 
-  const state = selectChat(store.getState());
-  const fromIndex = Math.max(
-    0,
-    chatRenderer.messages.length - MAX_PERSISTED_MESSAGES
-  );
-  const messages = chatRenderer.messages
-    .slice(fromIndex)
-    .map((message) => serializeMessage(message));
-  storage.set('chat-state', state);
-  storage.set('chat-messages', messages);
+    const state = selectChat(store.getState());
+    const fromIndex = Math.max(
+      0,
+      chatRenderer.messages.length - MAX_PERSISTED_MESSAGES
+    );
+    const messages = chatRenderer.messages
+      .slice(fromIndex)
+      .map((message) => serializeMessage(message));
+    storage.set('chat-state', state);
+    storage.set('chat-messages', messages);
+  } catch {}
 };
 
 const loadChatFromStorage = async (store) => {
-  // Early return if chat saving is disabled
-  const chatSavingEnabled = await storage.get('chat-saving-enabled');
-  if (chatSavingEnabled === false) {
-    store.dispatch(loadChat());
-    return;
-  }
-
-  const [state, messages] = await Promise.all([
-    storage.get('chat-state'),
-    storage.get('chat-messages'),
-  ]);
-  // Discard incompatible versions
-  if (state && state.version <= 4) {
-    store.dispatch(loadChat());
-    return;
-  }
-  if (messages) {
-    for (let message of messages) {
-      if (message.html) {
-        message.html = DOMPurify.sanitize(message.html, {
-          FORBID_TAGS,
-        });
-      }
+  try {
+    // Early return if chat saving is disabled
+    const chatSavingEnabled = await storage.get('chat-saving-enabled');
+    if (chatSavingEnabled === false) {
+      store.dispatch(loadChat());
+      return;
     }
-    const batch = [
-      ...messages,
-      createMessage({
-        type: 'internal/reconnected',
-      }),
-    ];
-    chatRenderer.processBatch(batch, {
-      prepend: true,
-    });
+
+    const [state, messages] = await Promise.all([
+      storage.get('chat-state'),
+      storage.get('chat-messages'),
+    ]);
+    // Discard incompatible versions
+    if (state && state.version <= 4) {
+      store.dispatch(loadChat());
+      return;
+    }
+    if (Array.isArray(messages)) {
+      for (let message of messages) {
+        if (message.html) {
+          message.html = DOMPurify.sanitize(message.html, {
+            FORBID_TAGS,
+          });
+        }
+      }
+      const batch = [
+        ...messages,
+        createMessage({
+          type: 'internal/reconnected',
+        }),
+      ];
+      chatRenderer.processBatch(batch, {
+        prepend: true,
+      });
+    }
+    store.dispatch(loadChat(state));
+  } catch {
+    store.dispatch(loadChat());
   }
-  store.dispatch(loadChat(state));
 };
 
 export const chatMiddleware = (store) => {
