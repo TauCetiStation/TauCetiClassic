@@ -22,6 +22,10 @@
 
 	name = statue_part.name
 
+/obj/structure/statue_pedestal/Destroy()
+	statue_part = null
+	return ..()
+
 /obj/structure/statue_pedestal/atom_break(damage_flag)
 	. = ..()
 	if(!statue_part)
@@ -54,6 +58,7 @@
 	cases = list("упавшая статуя", "упавшей статуи", "упавшей статуе", "упавшую статую", "упавшей статуей", "упавшей статуе")
 	desc = "Каменная статуя лежит на полу. Тяжелая, но её всё ещё можно тащить."
 	icon = 'icons/obj/statues.dmi'
+	icon_state = "javeliin the pale man"
 	anchored = FALSE
 	density = FALSE
 	max_integrity = 100
