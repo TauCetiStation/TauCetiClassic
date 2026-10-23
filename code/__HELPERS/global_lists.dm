@@ -313,6 +313,10 @@
 
 	init_washing_items_list()
 
+	init_food_recipes()
+
+	init_recipes_menu()
+
 /proc/init_washing_items_list()
 	var/list/path_list = list(/obj/item/clothing/mask,
 							/obj/item/clothing/head,
@@ -336,6 +340,113 @@
 	global.washing_items_list -= /obj/item/clothing/head/syndicatefake
 	global.washing_items_list -= /obj/item/clothing/head/helmet
 	global.washing_items_list -= /obj/item/clothing/gloves/pipboy
+
+/proc/init_food_recipes()
+	for(var/recipe_type as anything in subtypesof(/datum/recipe/candy))
+		var/datum/recipe/recipe = new recipe_type
+		if(!recipe.result)
+			qdel(recipe)
+			continue
+		global.candy_recipes += new recipe_type
+
+	for(var/recipe_type as anything in subtypesof(/datum/recipe/grill))
+		var/datum/recipe/recipe = new recipe_type
+		if(!recipe.result)
+			qdel(recipe)
+			continue
+		global.grill_recipes += new recipe_type
+
+	for(var/recipe_type as anything in subtypesof(/datum/recipe/oven))
+		var/datum/recipe/recipe = new recipe_type
+		if(!recipe.result)
+			qdel(recipe)
+			continue
+		global.oven_recipes += new recipe_type
+
+	for(var/recipe_type as anything in subtypesof(/datum/recipe/microwave))
+		var/datum/recipe/recipe = new recipe_type
+		if(!recipe.result)
+			qdel(recipe)
+			continue
+		global.microwave_recipes += new recipe_type
+
+/proc/init_recipes_menu()
+	var/list/candy_recipes = list()
+	for(var/datum/recipe/recipe in global.candy_recipes)
+		var/obj/item/result = recipe.result
+		var/list/ingredients = list()
+		for(var/ingredient_type in recipe.items)
+			var/obj/item/ingredient = ingredient_type
+			var/ingredient_name = ingredient::name
+			if(!ingredients[ingredient_name])
+				ingredients[ingredient_name] = 1
+			else
+				ingredients[ingredient_name]++
+
+		for(var/reagent in recipe.reagents)
+			var/datum/reagent/R = chemical_reagents_list[reagent]
+			ingredients[R.name] = recipe.reagents[reagent]
+
+		candy_recipes += list("result" = result::name, "ingredients" = ingredients)
+
+	var/list/grill_recipes = list()
+	for(var/datum/recipe/recipe in global.grill_recipes)
+		var/obj/item/result = recipe.result
+		var/list/ingredients = list()
+		for(var/ingredient_type in recipe.items)
+			var/obj/item/ingredient = ingredient_type
+			var/ingredient_name = ingredient::name
+			if(!ingredients[ingredient_name])
+				ingredients[ingredient_name] = 1
+			else
+				ingredients[ingredient_name]++
+
+		for(var/reagent in recipe.reagents)
+			var/datum/reagent/R = chemical_reagents_list[reagent]
+			ingredients[R.name] = recipe.reagents[reagent]
+
+		grill_recipes += list("result" = result::name, "ingredients" = ingredients)
+
+	var/list/microwave_recipes = list()
+	for(var/datum/recipe/recipe in global.microwave_recipes)
+		var/obj/item/result = recipe.result
+		var/list/ingredients = list()
+		for(var/ingredient_type in recipe.items)
+			var/obj/item/ingredient = ingredient_type
+			var/ingredient_name = ingredient::name
+			if(!ingredients[ingredient_name])
+				ingredients[ingredient_name] = 1
+			else
+				ingredients[ingredient_name]++
+
+		for(var/reagent in recipe.reagents)
+			var/datum/reagent/R = chemical_reagents_list[reagent]
+			ingredients[R.name] = recipe.reagents[reagent]
+
+		microwave_recipes += list("result" = result::name, "ingredients" = ingredients)
+
+	var/list/oven_recipes = list()
+	for(var/datum/recipe/recipe in global.oven_recipes)
+		var/obj/item/result = recipe.result
+		var/list/ingredients = list()
+		for(var/ingredient_type in recipe.items)
+			var/obj/item/ingredient = ingredient_type
+			var/ingredient_name = ingredient::name
+			if(!ingredients[ingredient_name])
+				ingredients[ingredient_name] = 1
+			else
+				ingredients[ingredient_name]++
+
+		for(var/reagent in recipe.reagents)
+			var/datum/reagent/R = chemical_reagents_list[reagent]
+			ingredients[R.name] = recipe.reagents[reagent]
+
+		oven_recipes += list("result" = result::name, "ingredients" = ingredients)
+
+	recipes_for_menu["candy_recipes"] = candy_recipes
+	recipes_for_menu["grill_recipes"] = grill_recipes
+	recipes_for_menu["microwave_recipes"] = microwave_recipes
+	recipes_for_menu["oven_recipes"] = oven_recipes
 
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()

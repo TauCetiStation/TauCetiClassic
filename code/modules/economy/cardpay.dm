@@ -7,7 +7,7 @@
 /obj/item/device/cardpay
 	name = "Card pay device"
 	desc = "Совершайте покупки простым движением карты."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/cardpay_devices.dmi'
 	icon_state = "card-pay-idle"
 
 	slot_flags = SLOT_FLAGS_BELT
@@ -391,16 +391,18 @@
 	else
 		changemode(CARDPAY_REFUNDMODE)
 
-/obj/item/device/cardpay/proc/update_holoprice(clear)
+/obj/item/device/cardpay/proc/update_holoprice(clear, custom_text = null)
 	cut_overlay(holoprice)
+
+	var/show_text = custom_text ? custom_text : "[pay_amount]$"
 	if(clear)
 		holoprice.maptext = ""
 		holoprice.icon = 'icons/effects/32x32.dmi'
 		holoprice.icon_state = "blank"
 	else
-		holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Small Fonts';text-align:center;-dm-text-outline: 1px black;" valign="top">[pay_amount]$</div>"}
+		holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Small Fonts';text-align:center;-dm-text-outline: 1px black;" valign="top">[show_text]</div>"}
 		holoprice.icon = 'icons/obj/device.dmi'
-		holoprice.icon_state = "holo_overlay_[length(num2text(pay_amount))]"
+		holoprice.icon_state = "holo_overlay_[length(num2text(show_text))]"
 	add_overlay(holoprice)
 
 
@@ -411,7 +413,6 @@
 	name = "caps dealer"
 	desc = "Обменник денег на фишки и наоборот."
 
-	icon = 'icons/obj/casino.dmi'
 	icon_state = "caps_dealer-idle"
 
 	density = TRUE
@@ -453,7 +454,7 @@
 	if(amount > Acc.money)
 		visible_message("[bicon(src)] [name] <span class='warning'>Недостаточно средств!</span>")
 		flick("[basic_icon_state]-error", src)
-		return
+		return FALSE
 
 	icon_state = "[basic_icon_state]-idle"
 	visible_message("[bicon(src)] [name] <span class='notice'>Оплата прошла успешно.</span>")
@@ -469,6 +470,337 @@
 	pay_amount = 0
 	update_holoprice(clear = TRUE)
 	changemode(CARDPAY_IDLEMODE)
+
+	return TRUE
+
+
+
+/obj/item/device/cardpay/menu_customer
+	name = "menu"
+	desc = "Электронное меню."
+
+	icon_state = "menu_customer-idle"
+
+	density = TRUE
+
+	basic_icon_state = "menu_customer"
+
+	w_class = SIZE_LARGE
+
+	reset = TRUE
+	noResetChange = TRUE
+
+	var/obj/item/device/menu_chef/chef
+	var/list/items_to_order = list()
+
+	var/payment_timer
+
+/obj/item/device/cardpay/menu_customer/atom_init(mapload)
+	. = ..()
+
+	holoprice.pixel_y = 3
+
+/obj/item/device/cardpay/menu_customer/set_account()
+	return
+
+/obj/item/device/cardpay/menu_customer/enter_account()
+	return
+
+/obj/item/device/cardpay/menu_customer/make_refund(datum/money_account/Acc, amount)
+	return
+
+/obj/item/device/cardpay/menu_customer/make_transaction(datum/money_account/Acc, amount)
+	. = ..()
+
+	if(.)
+		chef.add_order(items_to_order, chef.customer_menus.Find(src))
+
+	deltimer(payment_timer)
+
+/obj/item/device/cardpay/menu_customer/proc/cancel_order()
+	mode = CARDPAY_IDLEMODE
+	pay_amount = 0
+	if(chef)
+		update_holoprice(custom_text = "№[chef.customer_menus.Find(src)]")
+	else
+		update_holoprice(clear = TRUE)
+
+/obj/item/device/cardpay/menu_customer/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Menu_Chef", "Терминал")
+		ui.open()
+
+/obj/item/device/cardpay/menu_customer/tgui_data(mob/user)
+	var/list/data = list()
+
+	data["mode"] = mode
+	data["menu"] = chef?.menu_items
+	data["items_to_order"] = items_to_order
+
+	data["payment_timer"] = timeleft(payment_timer)
+
+	return data
+
+/obj/item/device/cardpay/menu_customer/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	flick("[basic_icon_state]-scroll", src)
+
+	if(!chef)
+		return
+
+	switch(action)
+		if("add_to_orders")
+			var/item_name = params["item_name"]
+			if(!item_name || !istext(item_name))
+				return
+
+			if(!items_to_order[item_name])
+				items_to_order[item_name] = 1
+			else
+				items_to_order[item_name]++
+
+			return TRUE
+
+		if("remove_from_oders")
+			var/item_name = params["item_name"]
+			if(!item_name || !istext(item_name))
+				return
+
+			if(!items_to_order[item_name])
+				return
+
+			items_to_order[item_name]--
+
+			if(items_to_order[item_name] == 0)
+				items_to_order -= item_name
+
+			return TRUE
+
+		if("order")
+			pay_amount = 0
+			for(var/item in items_to_order)
+				pay_amount += (chef.menu_items[item] * items_to_order[pay_amount])
+
+			mode = CARDPAY_PAYMODE
+			update_holoprice()
+
+			payment_timer = addtimer(CALLBACK(src, PROC_REF(cancel_order)), 5 SECONDS, TIMER_STOPPABLE)
+
+			return TRUE
+
+		if("enterpin")
+			var/pin = params["pin"]
+			if(!pin || !isnum(pin))
+				return
+
+			display_numbers = pin
+			approve()
+			return TRUE
+
+
+/obj/item/device/cardpay/menu_customer/proc/connect_to_terminal(obj/item/device/menu_chef/terminal)
+	if(chef)
+		chef.customer_menus -= src
+
+	chef = terminal
+	linked_account = chef.linked_account
+	chef.customer_menus += src
+
+	update_holoprice(custom_text = "№[chef.customer_menus.Find(src)]")
+
+/obj/item/device/cardpay/menu_customer/proc/disconnect_from_terminal(obj/item/device/menu_chef/terminal)
+	chef.customer_menus -= src
+	chef = null
+	linked_account = 0
+	update_holoprice(clear = TRUE)
+
+
+#define CARDPAY_ORDERSMODE "Mode_Orders"
+
+/obj/item/device/menu_chef
+	name = "Menu management device"
+	desc = "Терминал для изменения электронного меню и просмотра рецептов."
+	icon = 'icons/obj/cardpay_devices.dmi'
+	icon_state = "menu_chef-idle"
+
+	w_class = SIZE_LARGE
+	m_amt = 25000
+	g_amt = 5000
+
+	layer = DEFAULT_MACHINERY_LAYER //Хотим чтобы предметы на столе были всегда выше терминала.
+
+	var/linked_account = 0
+	var/mode = CARDPAY_IDLEMODE
+
+	var/list/customer_menus = list()
+	var/list/menu_items = list()
+
+	var/list/orders = list()
+	var/neworders = 0
+
+/obj/item/device/menu_chef/atom_init(mapload)
+	. = ..()
+	AddComponent(/datum/component/wrench_to_table, null, CALLBACK(src, PROC_REF(on_unwrenched)))
+
+/obj/item/device/menu_chef/proc/on_unwrenched()
+	SStgui.close_uis(src)
+
+	for(var/obj/item/device/cardpay/menu_customer/menu)
+		menu.disconnect_from_terminal(src)
+
+/obj/item/device/menu_chef/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/device/cardpay/menu_customer) && !(I in customer_menus))
+		var/obj/item/device/cardpay/menu_customer/menu = I
+
+		menu.connect_to_terminal(src)
+
+		visible_message("<span class='info'>Меню подключено к терминалу.</span>")
+		return
+
+	if(mode != CARDPAY_ACCOUNTMODE)
+		return ..()
+
+	if(istype(I, /obj/item/weapon/card/id))
+		visible_message("<span class='info'>[usr] прикладывает карту к терминалу.</span>")
+		user.SetNextMove(CLICK_CD_INTERACT)
+		var/obj/item/weapon/card/id/Card = I
+		linked_account = Card.associated_account_number
+		return
+
+	else if(istype(I, /obj/item/device/pda) && I.GetID())
+		visible_message("<span class='info'>[usr] прикладывает кпк к терминалу.</span>")
+		user.SetNextMove(CLICK_CD_INTERACT)
+		var/obj/item/weapon/card/id/Card = I.GetID()
+		linked_account = Card.associated_account_number
+		return
+
+	else if(istype(I, /obj/item/weapon/ewallet))
+		visible_message("<span class='info'>[usr] прикладывает чип к терминалу.</span>")
+		user.SetNextMove(CLICK_CD_INTERACT)
+		var/obj/item/weapon/ewallet/Wallet = I
+		linked_account = Wallet.account_number
+		return
+
+	return ..()
+
+/obj/item/device/menu_chef/attack_hand(mob/user)
+	. = ..()
+	if(!isturf(loc))
+		return
+
+	tgui_interact(user)
+
+/obj/item/device/menu_chef/examine(mob/user)
+	. = ..()
+	if(linked_account)
+		var/datum/money_account/Acc = get_account(linked_account)
+		if(Acc)
+			to_chat(user, "Принадлежит [Acc.owner_name] ([Acc.account_number])")
+
+/obj/item/device/menu_chef/tgui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Menu_Chef", "Терминал")
+		ui.open()
+
+/obj/item/device/menu_chef/tgui_static_data(mob/user)
+	return recipes_for_menu
+
+/obj/item/device/menu_chef/tgui_data(mob/user)
+	var/list/data = list()
+
+	data["mode"] = mode
+	data["linked_account"] = linked_account
+	data["customer_menus"] = customer_menus.len
+	data["menu_items"] = menu_items
+	data["orders"] = orders
+	data["neworders"] = neworders
+
+	return data
+
+/obj/item/device/menu_chef/tgui_act(action, params)
+	. = ..()
+	if(.)
+		return
+
+	flick("menu_chef-scroll", src)
+
+	switch(action)
+		if("switch_to_orders")
+			mode = CARDPAY_ORDERSMODE
+			neworders = 0
+
+			return TRUE
+
+		if("switch_to_recipes")
+			mode = CARDPAY_IDLEMODE
+
+			return TRUE
+
+		if("add_to_menu")
+			var/name = params["item_name"]
+			var/price = params["item_price"]
+
+			if(!name || !istext(name) || !price || !isnum(price))
+				return
+
+			menu_items[name] = price
+
+			return TRUE
+
+		if("remove_from_menu")
+			var/name = params["item_name"]
+
+			if(!name || !istext(name))
+				return
+
+			menu_items -= name
+
+			return TRUE
+
+		if("change_account")
+			mode = CARDPAY_ACCOUNTMODE
+
+			return TRUE
+
+		if("new_account_number")
+			var/account_number = params["number"]
+			if(!account_number || !isnum(account_number))
+				return
+
+			linked_account = account_number
+			mode = CARDPAY_IDLEMODE
+			update_customer_menus()
+
+			return TRUE
+
+		if("delete_order")
+			var/order_id = params["order_id"]
+			if(!order_id || !isnum(order_id))
+				return
+
+			orders.Cut(order_id, order_id + 1)
+			return TRUE
+
+/obj/item/device/menu_chef/proc/update_customer_menus()
+	for(var/obj/item/device/cardpay/menu_customer/menu in customer_menus)
+		menu.linked_account = linked_account
+
+/obj/item/device/menu_chef/proc/add_order(list/order, number)
+	orders += list("table" = number, "order" = order)
+
+	flick("menu_chef-order", src)
+
+	new /obj/item/weapon/card/ticket(loc, number)
+
+	if(mode != CARDPAY_ORDERSMODE)
+		neworders++
+
+#undef CARDPAY_ORDERSMODE
 
 #undef CARDPAY_IDLEMODE
 #undef CARDPAY_PAYMODE

@@ -1889,6 +1889,16 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/cane)
 	group = "Miscellaneous"
 
+/datum/supply_pack/restaurant_menu
+	name = "Restaurant Starter Pack"
+	contains = list(/obj/item/device/menu_chef,
+					/obj/item/device/cardpay/menu_customer,
+					/obj/item/device/cardpay/menu_customer,
+					/obj/item/device/cardpay/menu_customer,
+					/obj/item/device/cardpay/menu_customer,
+					/obj/item/device/cardpay/menu_customer)
+	group = "Miscellaneous"
+
 //----------------------------------------------
 //-----------------RANDOMISED-------------------
 //----------------------------------------------
