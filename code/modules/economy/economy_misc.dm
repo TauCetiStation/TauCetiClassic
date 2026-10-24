@@ -113,7 +113,8 @@ var/global/initial_station_money = 7500
 		if(D.station_account)
 			create_department_account(D.title)
 
-	vendor_account = create_account("Vendor", 1000, age = 135)
+	vendor_account = create_account("Cargo Industries ltd", 1000, age = 135)
+	vendor_account.hidden = TRUE
 
 	// todo: cargo department exists only in accounts, wold be better to separate them already
 	create_department_account("Cargo")
@@ -213,6 +214,36 @@ var/global/initial_station_money = 7500
 	department_accounts[department] = department_account
 
 /proc/setup_shop()
+	var/turf/location = pick_landmarked_location("Brand Item Location", least_used = FALSE)
+	for(var/i in 1 to rand(2, 4))
+		var/brand_item = pick(list(
+			/obj/item/pizzabox/waffledonk,
+			/obj/item/pizzabox/waffledonk/pineapple,
+			/obj/item/weapon/storage/box/waffle_meal,
+			/obj/item/clothing/under/sukeban_pants,
+			/obj/item/clothing/under/sukeban_dress,
+			/obj/item/clothing/suit/sukeban_coat,
+		))
+
+		for(var/j in 1 to rand(3, 5))
+			var/obj/item/Item = new brand_item(location)
+
+			var/market_price = export_item_and_contents(Item, FALSE, FALSE, dry_run=TRUE)
+			var/new_price = market_price ? round(market_price * pick(1.1, 1.2, 1.3)) : 250
+			var/desc = Item.desc
+			var/categ = get_item_shop_category(Item)
+			var/name = Item.name
+			Item.add_price_tag(desc, new_price, categ, global.vendor_account.account_number)
+
+			var/item_icon = bicon(Item)
+			Item = shop_object2package(Item)
+
+			Item.pixel_x = rand(-10, 10)
+			Item.pixel_y = rand(-10, 10)
+
+			var/datum/shop_lot/Lot = create_onlineshop_item(Item, name, desc, new_price, categ, global.vendor_account.account_number, item_icon)
+			Lot.brand_item = TRUE
+
 	for(var/obj/random_shop_item/Item in global.random_onlineshop_items)
 		Item.generate_shop_item()
 

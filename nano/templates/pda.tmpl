@@ -1128,7 +1128,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 		<tr><th colspan="4" class="cargo" style="padding: 5px; font-size: medium;">Новинки</th></tr>
 		{{for data.latest_lots}}
 			{{if value}}
-				<tr><th colspan="4" class="cargo">{{:value.name}}</th></tr>
+				<tr><th colspan="4" class={{:value.brand ? "cargobrand" : "cargo"}}>{{:value.name}}</th></tr>
 				<tr><td rowspan="2">{{:value.icon}}<br></td>
 				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
 				<td><B>Продавец: </B><SMALL><I>{{:value.seller}}</I></SMALL></td>
@@ -1178,7 +1178,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 			<span class="floatRight">Показывать по:   </span></span>
 		</th></tr>
 		{{for data.shop_lots}}
-				<tr><th colspan="4" class="cargo">{{:value.name}}</th></tr>
+				<tr><th colspan="4" class={{:value.brand ? "cargobrand" : "cargo"}}>{{:value.name}}</th></tr>
 				<tr><td rowspan="2">{{:value.icon}}<br></td>
 				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
 				<td><B>Продавец: </B><SMALL><I>{{:value.seller}}</I></SMALL></td>
@@ -1203,7 +1203,7 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 		<tr><th colspan="5" class="cargo" style="padding: 5px; font-size: medium;">Корзина заказов:</th></tr>
 		{{for data.shopping_cart}}
 			{{if !value.delivered}}
-				<tr><th colspan="5" class="cargo">{{:value.name}}  №{{:value.number}}</th></tr>
+				<tr><th colspan="5" class={{:value.brand ? "cargobrand" : "cargo"}}>{{:value.name}}  №{{:value.number}}</th></tr>
 				<tr><td rowspan="2">{{:value.icon}}<br></td>
 				<td><B>Цена: </B><span class="good"><SMALL><I>{{:value.price}}$</I></SMALL></span></td>
 				<td><B>Продавец: </B><SMALL><I>{{:value.seller}}</I></SMALL></td>

@@ -31825,6 +31825,13 @@
 	icon_state = "floorplating"
 	},
 /area/custom/syndicate_mothership/droppod_garage)
+"xzG" = (
+/obj/effect/landmark/brand_items,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/velocity)
 "xzM" = (
 /obj/machinery/vending/cigarette,
 /turf/unsimulated/floor,
@@ -79846,7 +79853,7 @@ aaM
 aoo
 aay
 aaI
-asa
+xzG
 pld
 doq
 afO
