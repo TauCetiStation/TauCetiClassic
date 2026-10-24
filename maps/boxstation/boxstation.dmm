@@ -13323,7 +13323,7 @@
 /obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/structure/contest_statue/pedestal,
+/obj/structure/statue_pedestal,
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "avN" = (
