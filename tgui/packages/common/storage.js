@@ -65,22 +65,30 @@ class HubStorageBackend {
   }
 
   async get(key) {
-    const value = await window.hubStorage.getItem('tauceti-' + key);
-    if (typeof value === 'string') {
-      return JSON.parse(value);
-    }
+    try {
+      const value = await window.hubStorage.getItem('tauceti-' + key);
+      if (typeof value === 'string') {
+        return JSON.parse(value);
+      }
+    } catch {}
   }
 
   set(key, value) {
-    window.hubStorage.setItem('tauceti-' + key, JSON.stringify(value));
+    try {
+      window.hubStorage.setItem('tauceti-' + key, JSON.stringify(value));
+    } catch {}
   }
 
   remove(key) {
-    window.hubStorage.removeItem('tauceti-' + key);
+    try {
+      window.hubStorage.removeItem('tauceti-' + key);
+    } catch {}
   }
 
   clear() {
-    window.hubStorage.clear();
+    try {
+      window.hubStorage.clear();
+    } catch {}
   }
 }
 

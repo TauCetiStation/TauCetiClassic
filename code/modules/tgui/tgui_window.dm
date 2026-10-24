@@ -29,11 +29,12 @@
  * required client /client
  * required id string A unique window identifier.
  */
-/datum/tgui_window/New(client/client, id, pooled = FALSE)
+/datum/tgui_window/New(client/client, id, pooled = FALSE, is_browser = FALSE)
 	src.id = id
 	src.client = client
 	src.client.tgui_windows[id] = src
 	src.pooled = pooled
+	src.is_browser = is_browser
 	if(pooled)
 		src.pool_index = TGUI_WINDOW_INDEX(id)
 
@@ -93,7 +94,8 @@
 	// Open the window
 	client << browse(html, "window=[id];[options]")
 	// Detect whether the control is a browser
-	is_browser = winexists(client, id) == "BROWSER"
+	if(!is_browser && !pooled)
+		is_browser = winexists(client, id) == "BROWSER"
 	// Instruct the client to signal UI when the window is closed.
 	if(!is_browser)
 		winset(client, id, "on-close=\"tguiclose [id]\"")

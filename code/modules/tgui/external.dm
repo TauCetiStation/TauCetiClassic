@@ -198,6 +198,9 @@
 	var/datum/tgui_window/window
 	if(window_id)
 		window = usr.client.tgui_windows[window_id]
+		if(!window && window_id == "browseroutput" && usr.client.tgui_panel?.window)
+			window = usr.client.tgui_panel.window
+			usr.client.tgui_windows[window_id] = window
 		if(!window)
 			log_tgui(usr,
 				"Error: Couldn't find the window datum, force closing.",

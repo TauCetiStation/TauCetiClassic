@@ -32,7 +32,13 @@ export const chatReducer = (state = initialState, action) => {
   const { type, payload } = action;
   if (type === loadChat.type) {
     // Validate version and/or migrate state
-    if (payload?.version !== state.version) {
+    if (
+      payload?.version !== state.version ||
+      !payload?.pageById ||
+      !Array.isArray(payload?.pages) ||
+      payload.pages.length === 0 ||
+      !payload.pageById[payload.currentPageId]
+    ) {
       return state;
     }
     // Reset page message counts

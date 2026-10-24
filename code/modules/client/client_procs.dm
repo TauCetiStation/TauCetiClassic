@@ -39,6 +39,25 @@ var/global/list/blacklisted_builds
 		if(!asset_cache_job)
 			return
 
+	//search the href for script injection
+	if( findtext(href,"<script",1,0) )
+		world.log << "Attempted use of scripts within a topic call, by [src]"
+		message_admins("Attempted use of scripts within a topic call, by [src]")
+		return
+
+	if (href_list["action"] && href_list["action"] == "jsErrorCatcher" && href_list["file"] && href_list["message"])
+		var/file = href_list["file"]
+		var/message = href_list["message"]
+		js_error_manager.log_error(file, message, src)
+		return
+
+	// Tgui Topic middleware
+	if(tgui_Topic(href_list))
+		return
+	if(href_list["reload_tguipanel"])
+		nuke_chat()
+		return
+
 	//Reduces spamming of links by dropping calls that happen during the delay period
 	if (!holder && config.minutetopiclimit)
 		var/minute = round(world.time, 600)
@@ -69,24 +88,6 @@ var/global/list/blacklisted_builds
 		if (topiclimiter[SECOND_COUNT] > config.secondtopiclimit)
 			to_chat(src, "<span class='danger'>Your previous action was ignored because you've done too many in a second.</span>")
 			return
-
-	//search the href for script injection
-	if( findtext(href,"<script",1,0) )
-		world.log << "Attempted use of scripts within a topic call, by [src]"
-		message_admins("Attempted use of scripts within a topic call, by [src]")
-		return
-
-	if (href_list["action"] && href_list["action"] == "jsErrorCatcher" && href_list["file"] && href_list["message"])
-		var/file = href_list["file"]
-		var/message = href_list["message"]
-		js_error_manager.log_error(file, message, src)
-		return
-
-	// Tgui Topic middleware
-	if(tgui_Topic(href_list))
-		return
-	if(href_list["reload_tguipanel"])
-		nuke_chat()
 
 	//Logs all hrefs
 	log_href("[src] (usr:[usr]\[[COORD(usr)]\]) || [hsrc ? "[hsrc] " : ""][href]")

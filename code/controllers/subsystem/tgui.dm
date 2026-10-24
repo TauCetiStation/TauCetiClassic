@@ -102,6 +102,8 @@ SUBSYSTEM_DEF(tgui)
 	log_tgui(user, context = "SStgui/force_close_all_windows")
 	if(user.client)
 		user.client.tgui_windows = list()
+		if(user.client.tgui_panel?.window)
+			user.client.tgui_windows[user.client.tgui_panel.window.id] = user.client.tgui_panel.window
 		for(var/i in 1 to TGUI_WINDOW_HARD_LIMIT)
 			var/window_id = TGUI_WINDOW_ID(i)
 			user << browse(null, "window=[window_id]")
@@ -123,7 +125,8 @@ SUBSYSTEM_DEF(tgui)
 	// Unset machine just to be sure.
 	user.unset_machine()
 	// Close window directly just to be sure.
-	user << browse(null, "window=[window_id]")
+	if(window_id != "browseroutput")
+		user << browse(null, "window=[window_id]")
 
 /**
  * public
