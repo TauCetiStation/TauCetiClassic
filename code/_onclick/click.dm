@@ -464,7 +464,7 @@
 	if(modifiers[MIDDLE_CLICK] && iscarbon(usr))
 		var/mob/living/carbon/C = usr
 		C.swap_hand()
-	else
+	else if(!modifiers[SHIFT_CLICK] && !modifiers[ALT_CLICK])
 		var/turf/T = params2turf(modifiers[SCREEN_LOC], get_turf(usr))
 		if(T)
 			T.Click(location, control, params)

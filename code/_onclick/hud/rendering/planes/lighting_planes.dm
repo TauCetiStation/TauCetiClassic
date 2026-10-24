@@ -1,16 +1,14 @@
 // Plane master handling byond internal blackness
-// 
-// currently we don't use it, we need SEE_BLACKNESS to make it work
-// without SEE_BLACKNESS byond just don't render anything on unseen tiles
-// but SEE_BLACKNESS don't work with SIDE_MAP, so we need to make a choice
-// also having it requires some hacks so i just commented it out
-/*/atom/movable/screen/plane_master/blackness
+// Without SEE_BLACKNESS byond still places internal FOV blackness tiles on plane 0,
+// so we keep this plane mouse-transparent to let clicks fall through to click_catcher.
+/atom/movable/screen/plane_master/blackness
 	name = "darkness plane master"
-	//plane = BLACKNESS_PLANE
-	plane = 0
+	plane = BLACKNESS_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_MULTIPLY
-	appearance_flags = parent_type::appearance_flags | PIXEL_SCALE*/
+	appearance_flags = parent_type::appearance_flags | PIXEL_SCALE
+	render_relay_planes = null
+	no_render_target = TRUE
 
 /atom/movable/screen/plane_master/lighting
 	name = "lighting plane master"
