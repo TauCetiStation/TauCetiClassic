@@ -11,6 +11,8 @@
 	var/list/blood_DNA      //forensic reasons
 	var/datum/dirt_cover/dirt_overlay  //style reasons
 
+	var/laugh_desc
+
 	var/uncleanable = 0
 
 	var/last_bumped = 0
@@ -325,6 +327,10 @@
 	var/msg = get_examine_string(user, TRUE, alt_obj)
 
 	var/visible_desc = alt_obj?.desc || desc
+	if(laugh_desc && isliving(user))
+		var/mob/living/L = user
+		if(L.has_status_effect(STATUS_EFFECT_LAUGHWEED))
+			visible_desc = "<span class='rainbow'>[laugh_desc]</span>"
 	if(visible_desc)
 		msg += "<br>[visible_desc]"
 

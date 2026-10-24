@@ -325,6 +325,11 @@ em {
   font-weight: bold;
 }
 
+.rainbow {
+  font-weight: bold;
+  animation: rainbow_cycle 6000ms linear infinite;
+}
+
 /* SIZES */
 .large {
   font-size: 1.5em;

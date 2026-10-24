@@ -408,7 +408,7 @@
 	yield = 4
 	plant_type = 1
 	growthstages = 1
-	mutatelist = list(/obj/item/seeds/megaweedseed,/obj/item/seeds/blackweedseed)
+	mutatelist = list(/obj/item/seeds/megaweedseed,/obj/item/seeds/deathweedseed)
 
 /obj/item/seeds/megaweedseed
 	name = "pack of megaweed seeds"
@@ -427,15 +427,15 @@
 	plant_type = 1
 	growthstages = 1
 
-/obj/item/seeds/blackweedseed
+/obj/item/seeds/deathweedseed
 	name = "pack of deathweed seeds"
 	cases = list("семена смертьтравы", "семян смертьтравы", "семенам смертьтравы", "семена смертьтравы", "семенами смертьтравы", "семенах смертьтравы")
 	desc = "Из этих семян вырастает смертьтрава. ХА-ХА-КХ-Х-ХА..."
-	icon_state = "seed-blackweed"
+	icon_state = "seed-deathweed"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
-	species = "blackweed"
+	species = "deathweed"
 	plantname = "Deathweed"
-	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/blackweed
+	product_type = /obj/item/weapon/reagent_containers/food/snacks/grown/deathweed
 	lifespan = 30
 	endurance = 25
 	maturation = 6
