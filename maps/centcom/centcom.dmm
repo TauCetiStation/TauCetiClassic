@@ -188,6 +188,7 @@
 	id = "CKLoaddoor2";
 	name = "Supply Dock Loading Door"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -201,10 +202,24 @@
 	id = "CKLoaddoor1";
 	name = "Supply Dock Loading Door"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
 /area/velocity)
+"aaC" = (
+/obj/structure/table,
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/centcom/tdome)
 "aaD" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -243,6 +258,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "brown"
@@ -304,6 +320,7 @@
 /area/centcom/specops)
 "aaS" = (
 /obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor,
 /area/centcom/control)
 "aaT" = (
@@ -312,6 +329,7 @@
 /area/centcom/living)
 "aaU" = (
 /obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor,
 /area/centcom/bar)
 "aaV" = (
@@ -326,6 +344,7 @@
 "aaW" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland/halloween/short,
 /turf/unsimulated/floor,
 /area/centcom/tdome)
 "aaX" = (
@@ -670,6 +689,8 @@
 /area/shuttle/escape/centcom)
 "abQ" = (
 /obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/garland/halloween/short,
 /turf/unsimulated/floor,
 /area/centcom/tdome)
 "abR" = (
@@ -709,6 +730,7 @@
 	name = "Command Airlock";
 	req_access = list(19)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "abY" = (
@@ -789,6 +811,7 @@
 	name = "Security Doors";
 	opacity = 0
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "acj" = (
@@ -800,6 +823,7 @@
 	name = "Security Doors";
 	opacity = 0
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "ack" = (
@@ -870,6 +894,7 @@
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/emergency,
 /obj/item/weapon/crowbar,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/shuttle/floor/evac/place2,
 /area/shuttle/escape/centcom)
 "acx" = (
@@ -910,6 +935,7 @@
 	name = "Supply Dock Airlock";
 	req_access = list(101)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -988,6 +1014,15 @@
 	icon_state = "sign_1"
 	},
 /area/shuttle/arrival/velocity)
+"acU" = (
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/living)
 "acV" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "7,4";
@@ -1049,6 +1084,7 @@
 /obj/machinery/door/airlock/erokez/med{
 	name = "Medbay Airlock"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
 "adg" = (
@@ -1070,6 +1106,7 @@
 	name = "Security Airlock";
 	req_access = list(1)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
 "adi" = (
@@ -1091,6 +1128,9 @@
 /turf/environment/space,
 /area/shuttle/arrival/velocity)
 "adl" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "darkred"
@@ -1145,6 +1185,7 @@
 /obj/machinery/door/unpowered/shuttle/wagon{
 	dock_tag = "arrival_shuttle"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/velocity)
 "adu" = (
@@ -1264,6 +1305,9 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "adK" = (
@@ -1323,6 +1367,7 @@
 /obj/structure/closet/emergency_wall{
 	pixel_x = -32
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "adU" = (
@@ -1330,6 +1375,7 @@
 	pixel_x = 32;
 	pixel_y = 2
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "adV" = (
@@ -1339,7 +1385,7 @@
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "adW" = (
-/obj/item/weapon/flora/pottedplant/orientaltree,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "adX" = (
@@ -1446,6 +1492,7 @@
 	icon_state = "8,1";
 	opacity = 0
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/environment/space,
 /area/shuttle/escape/centcom)
 "ael" = (
@@ -1459,6 +1506,9 @@
 	dir = 4;
 	dock_tag = "escape_shuttle";
 	name = "Arrival Airlock"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
@@ -1480,6 +1530,7 @@
 /obj/machinery/door/airlock/erokez/eng{
 	name = "Engineering Airlock"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
 "aeq" = (
@@ -1500,8 +1551,8 @@
 	},
 /area/custom/ninjaspawn)
 "aet" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
@@ -1559,6 +1610,7 @@
 /obj/machinery/door/airlock/command{
 	name = "Thunderdome"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -1588,6 +1640,9 @@
 "aeF" = (
 /obj/machinery/door/unpowered/shuttle/pod{
 	dock_tag = "escape_shuttle"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
@@ -1805,7 +1860,11 @@
 /turf/simulated/shuttle/floor/evac/sec1,
 /area/shuttle/escape/centcom)
 "afl" = (
-/obj/effect/spawner/mob_spawn/carp/polkan,
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "afm" = (
@@ -1934,6 +1993,9 @@
 	dir = 6;
 	icon_state = "warn"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "podhatchfull"
 	},
@@ -1974,6 +2036,7 @@
 	locked = 1;
 	name = "Space Traders Shuttle"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -2015,6 +2078,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "afM" = (
@@ -2122,6 +2186,9 @@
 /obj/item/toy/plushie/white_cat{
 	name = "Plushie Scinia"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "sign_2"
 	},
@@ -2131,6 +2198,7 @@
 	name = "Gateway room";
 	req_access = list(150)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -2310,12 +2378,12 @@
 /turf/environment/space,
 /area/shuttle/transport1/centcom)
 "agB" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/effect/decal/turf_decal{
 	dir = 6;
 	icon_state = "warn"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/unsimulated/floor,
 /area/centcom/holding)
@@ -2555,6 +2623,9 @@
 "aho" = (
 /obj/machinery/light/small{
 	dir = 8
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
@@ -2936,6 +3007,9 @@
 	dir = 10;
 	icon_state = "warn"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "podhatchfull"
 	},
@@ -3012,9 +3086,6 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
@@ -3049,6 +3120,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -3089,6 +3161,9 @@
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 6;
 	icon_state = "siding_wood_line"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -3240,6 +3315,9 @@
 	dir = 9;
 	icon_state = "siding_wood_line"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -3334,7 +3412,7 @@
 	},
 /area/custom/syndicate_mothership)
 "aje" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "black"
@@ -3537,6 +3615,7 @@
 	name = "Barracks";
 	req_access = list(150)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -3828,18 +3907,14 @@
 	},
 /area/custom/syndicate_mothership)
 "akd" = (
-/obj/structure/sign/mark{
-	icon_state = "yrt"
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
-/obj/machinery/light/small{
-	dir = 1
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
 	},
-/obj/effect/decal/turf_decal{
-	dir = 9;
-	icon_state = "warn"
-	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
+/area/centcom/living)
 "ake" = (
 /obj/structure/object_wall/standart{
 	dir = 1;
@@ -4034,6 +4109,9 @@
 	name = "Hall";
 	req_access = list(150)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -4176,6 +4254,9 @@
 	dir = 5;
 	icon_state = "siding_thinplating_line"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -4245,6 +4326,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -4254,6 +4336,9 @@
 	dir = 4;
 	name = "Restroom";
 	req_access = list(150)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
@@ -4298,14 +4383,14 @@
 /turf/environment/space,
 /area/shuttle/transport1/centcom)
 "alj" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "black"
 	},
 /area/custom/syndicate_mothership)
 "alk" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "black"
 	},
@@ -4531,6 +4616,9 @@
 	dir = 4;
 	req_access = list(150)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -4591,7 +4679,6 @@
 /obj/structure/sign/poster/contraband/random{
 	pixel_y = -32
 	},
-/obj/machinery/light/small,
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line"
 	},
@@ -4715,6 +4802,7 @@
 	name = "Kitchen";
 	req_access = list(150)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -4736,6 +4824,7 @@
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "amd" = (
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "whiteblue"
@@ -4897,12 +4986,14 @@
 	},
 /area/custom/syndicate_mothership/droppod_garage)
 "amo" = (
+/obj/structure/statue_pedestal,
 /turf/unsimulated/floor{
 	dir = 9;
 	icon_state = "darkred"
 	},
 /area/custom/syndicate_mothership/droppod_garage)
 "amp" = (
+/obj/structure/statue_pedestal,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "darkred"
@@ -4923,6 +5014,9 @@
 /obj/effect/decal/turf_decal/alpha/blue{
 	icon_state = "box_white"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -4940,6 +5034,7 @@
 	dir = 9;
 	icon_state = "siding_wood_line"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -5066,6 +5161,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -5078,6 +5176,9 @@
 /obj/effect/decal/turf_decal/metal{
 	dir = 6;
 	icon_state = "siding_thinplating_line"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -5253,6 +5354,7 @@
 	name = "Drop Pods room";
 	req_access = list(150)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -6080,6 +6182,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -6163,6 +6266,7 @@
 	name = "Doors";
 	opacity = 0
 	},
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -6481,16 +6585,13 @@
 	},
 /area/shuttle/vox/arkship_hold)
 "apL" = (
-/obj/structure/sign/mark{
-	icon_state = "yrt"
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
-/obj/machinery/light/small,
-/obj/effect/decal/turf_decal{
-	dir = 10;
-	icon_state = "warn"
+/turf/unsimulated/floor{
+	icon_state = "engine"
 	},
-/turf/unsimulated/floor,
-/area/centcom/evac)
+/area/centcom/control)
 "apM" = (
 /obj/structure/sign/mark{
 	icon_state = "yup"
@@ -6524,7 +6625,7 @@
 	},
 /area/custom/ninjaspawn)
 "apP" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/machinery/door_control{
 	id = "ERTBase";
 	name = "ERT Shutters";
@@ -6544,6 +6645,9 @@
 	dir = 4;
 	id = "ERTBase";
 	name = "ERT"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor,
 /area/centcom/specops)
@@ -6618,6 +6722,7 @@
 	name = "Warehouse Shutters"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity)
 "apX" = (
@@ -6639,7 +6744,7 @@
 /turf/unsimulated/floor,
 /area/velocity)
 "aqa" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -6682,6 +6787,9 @@
 /obj/machinery/door/airlock/centcom{
 	dir = 4;
 	name = "Special Operations"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -6753,6 +6861,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/landmark/trololo,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -6940,6 +7049,9 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -6954,6 +7066,9 @@
 /area/space)
 "aqL" = (
 /obj/structure/table/reinforced,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -6973,6 +7088,9 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/unsimulated/floor,
@@ -7183,6 +7301,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor/carpet,
 /area/velocity)
 "ark" = (
@@ -7196,6 +7315,7 @@
 	name = "Doors";
 	opacity = 0
 	},
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -7212,6 +7332,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -7235,6 +7356,9 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -7246,6 +7370,7 @@
 	name = "Warehouse Shutters"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity)
 "arp" = (
@@ -7334,6 +7459,9 @@
 /obj/machinery/door/unpowered/shuttle/pod{
 	dock_tag = "escape_shuttle";
 	req_access = list(1)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
@@ -7566,6 +7694,9 @@
 	dir = 4
 	},
 /obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -7824,6 +7955,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -8110,12 +8242,15 @@
 	dir = 4;
 	icon_state = "loadingarea"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/custom/syndicate_mothership)
 "atc" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
@@ -8361,6 +8496,9 @@
 /area/shuttle/vox/arkship)
 "atE" = (
 /obj/machinery/washing_machine,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -8499,7 +8637,7 @@
 	pixel_x = 24;
 	req_access = list(101)
 	},
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -8670,6 +8808,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -8684,6 +8823,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -8694,6 +8834,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "purplechecker"
 	},
@@ -8768,6 +8909,9 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor/carpet,
 /area/velocity)
 "auL" = (
@@ -8790,6 +8934,10 @@
 	name = "Doors";
 	opacity = 0
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -8822,6 +8970,7 @@
 	icon_state = "delivery"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity/checkpoint)
 "auR" = (
@@ -8846,6 +8995,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity/checkpoint)
 "auT" = (
@@ -8968,6 +9118,9 @@
 	name = "Doors";
 	opacity = 0
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -8989,6 +9142,10 @@
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/unsimulated/floor,
 /area/velocity)
@@ -9056,6 +9213,9 @@
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
@@ -9174,6 +9334,10 @@
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/unsimulated/floor,
 /area/velocity)
@@ -9363,6 +9527,7 @@
 	dir = 5;
 	icon_state = "warn"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor,
 /area/centcom/prison)
 "awd" = (
@@ -9543,6 +9708,9 @@
 	layer = 3.5;
 	pixel_x = -20
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
 "awy" = (
@@ -9650,6 +9818,9 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -9837,6 +10008,9 @@
 "axf" = (
 /obj/machinery/door/firedoor{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
@@ -10059,6 +10233,9 @@
 	layer = 3.5;
 	pixel_x = -20
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
 "axC" = (
@@ -10259,6 +10436,9 @@
 	icon_state = "9";
 	layer = 3.5
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
 "axU" = (
@@ -10276,6 +10456,9 @@
 	icon_state = "0";
 	layer = 3.5;
 	pixel_x = -20
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
@@ -10323,6 +10506,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity/checkpoint)
 "axZ" = (
@@ -10374,6 +10558,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -10407,6 +10592,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
@@ -10437,6 +10623,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "bcircuitoff"
 	},
@@ -10474,6 +10661,9 @@
 	icon_state = "7";
 	layer = 3.5
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
 "ayp" = (
@@ -10487,6 +10677,9 @@
 	layer = 3.5;
 	pixel_x = -26
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
 "ayq" = (
@@ -10494,6 +10687,7 @@
 	name = "Cryogenic Storage"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -10503,6 +10697,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -10646,6 +10841,9 @@
 	icon_state = "6";
 	layer = 3.5;
 	pixel_x = -26
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
@@ -10868,6 +11066,9 @@
 /area/shuttle/vox/arkship_hold)
 "azg" = (
 /obj/random/vending/cola,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -10922,6 +11123,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -10935,6 +11139,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/specops)
 "azp" = (
@@ -10955,6 +11160,9 @@
 	icon_state = "4";
 	layer = 3.5;
 	pixel_x = -26
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
@@ -11089,6 +11297,9 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -11131,6 +11342,9 @@
 	c_tag = "Spec. Ops. Medical";
 	dir = 8;
 	network = list("ERT")
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/unsimulated/floor{
 	dir = 4;
@@ -11263,6 +11477,9 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -11465,6 +11682,9 @@
 	layer = 3.5;
 	pixel_x = -26
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
 "aAs" = (
@@ -11598,6 +11818,9 @@
 	name = "\improper DROP PODS";
 	pixel_w = 33;
 	pixel_y = 32
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -11796,6 +12019,7 @@
 	name = "Brig";
 	req_access = list(109)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/prison)
 "aBg" = (
@@ -11845,6 +12069,9 @@
 	},
 /obj/item/stack/rods{
 	amount = 50
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
 	},
 /turf/unsimulated/floor{
 	dir = 6;
@@ -11903,7 +12130,7 @@
 /turf/unsimulated/floor,
 /area/velocity)
 "aBv" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
@@ -11946,7 +12173,7 @@
 	},
 /area/custom/wizard_station)
 "aBA" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -11972,9 +12199,6 @@
 	listening = 0;
 	name = "Spec Ops Intercom";
 	pixel_y = 22
-	},
-/obj/machinery/light{
-	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -12007,6 +12231,9 @@
 /obj/item/weapon/storage/box/flashbangs,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -12058,6 +12285,9 @@
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "DropPodGarage"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -12071,6 +12301,9 @@
 /obj/item/weapon/rcd_ammo/huge,
 /obj/item/weapon/rcd_ammo/huge,
 /obj/item/weapon/rcd,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "yellow"
@@ -12204,6 +12437,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -12247,6 +12483,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -12289,6 +12528,7 @@
 	id = "ERTBase";
 	name = "ERT"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -12413,6 +12653,7 @@
 	name = "Brig";
 	req_access = list(109)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/specops)
 "aCt" = (
@@ -12420,12 +12661,16 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor,
 /area/centcom/specops)
 "aCu" = (
 /obj/machinery/vending/syndi,
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -12464,6 +12709,7 @@
 	name = "Janitorial Inventory"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -12550,6 +12796,9 @@
 	dir = 5;
 	icon_state = "siding_wood_line"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -12586,6 +12835,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -12599,6 +12849,9 @@
 /obj/item/device/flashlight/lamp{
 	pixel_x = -5;
 	pixel_y = 15
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/unsimulated/floor/carpet/red,
 /area/custom/syndicate_mothership)
@@ -12617,12 +12870,15 @@
 /area/custom/syndicate_mothership)
 "aCQ" = (
 /obj/machinery/recharge_station,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
 /area/centcom/specops)
 "aCR" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -12901,6 +13157,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -12953,6 +13212,9 @@
 	name = "Special Operations";
 	req_access = list(103)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -12960,6 +13222,7 @@
 "aDJ" = (
 /obj/structure/sign/departments/engineering,
 /obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/wall/like_a_normal/green,
 /area/centcom/specops)
 "aDK" = (
@@ -13116,7 +13379,7 @@
 	},
 /area/custom/wizard_station)
 "aEi" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "darkgreencorners"
 	},
@@ -13215,6 +13478,7 @@
 	id = "ERTBase";
 	name = "ERT"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -13222,6 +13486,7 @@
 "aEu" = (
 /obj/structure/sign/departments/medbay/alt,
 /obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/wall/like_a_normal/green,
 /area/centcom/specops)
 "aEv" = (
@@ -13232,6 +13497,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/transport1/centcom)
 "aEz" = (
@@ -13246,6 +13512,9 @@
 	},
 /obj/machinery/atm{
 	pixel_y = 28
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
@@ -13354,6 +13623,9 @@
 "aEK" = (
 /obj/machinery/door/poddoor/shutters/syndi{
 	id = "Mecha"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -13488,6 +13760,9 @@
 	pixel_x = -5;
 	pixel_y = 6
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -13513,6 +13788,9 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -13526,6 +13804,7 @@
 	id = "ERTBase";
 	name = "ERT"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -13572,6 +13851,9 @@
 /area/shuttle/trader/space)
 "aFk" = (
 /obj/structure/table/reinforced/stall,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -13585,6 +13867,7 @@
 	dir = 4;
 	network = list("ERT")
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -13717,6 +14000,7 @@
 	name = "Security Doors";
 	opacity = 0
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "aFA" = (
@@ -13773,6 +14057,9 @@
 /obj/item/weapon/folder/brown{
 	pixel_y = 4
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "aFH" = (
@@ -13788,10 +14075,16 @@
 /obj/structure/displaycase/noalert{
 	req_access = list(74)
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "aFK" = (
 /obj/machinery/photocopier,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -13862,6 +14155,9 @@
 	id = "CREED";
 	name = "Ready Room"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -13912,6 +14208,9 @@
 /area/space)
 "aFV" = (
 /obj/machinery/light,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -13927,6 +14226,7 @@
 	name = "Space Traders Shuttle";
 	req_access = list(74)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "aFZ" = (
@@ -14151,6 +14451,9 @@
 /obj/structure/rack,
 /obj/item/weapon/mop,
 /obj/item/weapon/reagent_containers/glass/bucket,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -14194,6 +14497,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -14350,6 +14654,9 @@
 "aGV" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/gar,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "aHb" = (
@@ -14481,6 +14788,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -14502,12 +14812,12 @@
 "aHq" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/syndie,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 4;
 	icon_state = "siding_wood_line"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
@@ -14613,6 +14923,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity)
 "aHE" = (
@@ -14624,6 +14935,9 @@
 	},
 /obj/effect/decal/turf_decal/alpha/red{
 	icon_state = "bot"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -14665,6 +14979,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aHK" = (
@@ -14791,7 +15106,7 @@
 	},
 /area/shuttle/syndicate/start)
 "aIa" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 4;
 	icon_state = "siding_wood_line"
@@ -15001,6 +15316,7 @@
 	name = "Special Operations";
 	req_access = list(103)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -15021,7 +15337,7 @@
 	},
 /area/custom/syndicate_mothership)
 "aIM" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "black"
@@ -15046,12 +15362,12 @@
 "aIQ" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/syndie,
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 8;
 	icon_state = "siding_wood_line"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
@@ -15068,11 +15384,10 @@
 	},
 /area/shuttle/syndicate/start)
 "aIS" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland/halloween/short,
 /turf/unsimulated/floor,
-/area/centcom/evac)
+/area/centcom/tdome)
 "aIT" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor{
@@ -15083,6 +15398,7 @@
 /obj/machinery/door/airlock{
 	name = "Unisex Showers"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -15211,6 +15527,7 @@
 	name = "Living Quarters";
 	req_access = list(105)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -15232,13 +15549,16 @@
 "aJt" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/ce,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aJu" = (
 /turf/unsimulated/wall/like_a_normal/green,
 /area/centcom/control)
 "aJv" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "red"
@@ -15254,6 +15574,7 @@
 	name = "Special Operations";
 	req_access = list(103)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/control)
 "aJy" = (
@@ -15313,6 +15634,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aJG" = (
@@ -15322,6 +15644,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aJI" = (
@@ -15385,6 +15708,9 @@
 	dir = 8;
 	icon_state = "siding_thinplating_line"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -15444,6 +15770,9 @@
 	name = "Commander Quarters";
 	req_access = list(109)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -15485,6 +15814,9 @@
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 8;
 	icon_state = "siding_wood_line"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -15547,6 +15879,9 @@
 "aKn" = (
 /obj/structure/table,
 /obj/item/weapon/card/id/centcom,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aKo" = (
@@ -15592,6 +15927,9 @@
 	dir = 4;
 	icon_state = "siding_wood_line"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
 	},
@@ -15625,14 +15963,20 @@
 	dir = 6;
 	icon_state = "siding_thinplating_line"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
 /area/shuttle/syndicate/start)
 "aKw" = (
-/obj/machinery/light/small,
-/turf/unsimulated/floor,
-/area/centcom/evac)
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "red"
+	},
+/area/centcom/tdome)
 "aKx" = (
 /obj/machinery/newscaster/security_unit{
 	pixel_x = 32
@@ -15643,6 +15987,7 @@
 	},
 /area/centcom/living)
 "aKy" = (
+/obj/structure/statue_pedestal,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "darkred"
@@ -15729,6 +16074,9 @@
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 8
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "green"
@@ -15745,6 +16093,7 @@
 /turf/unsimulated/floor,
 /area/centcom/living)
 "aKM" = (
+/obj/structure/statue_pedestal,
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "darkred"
@@ -15769,6 +16118,9 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor,
 /area/velocity/checkpoint)
@@ -15896,6 +16248,9 @@
 	name = "Living Quarters";
 	req_access = list(105)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/living)
 "aLe" = (
@@ -15903,6 +16258,9 @@
 	dir = 4;
 	name = "Living Quarters";
 	req_access = list(105)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -15920,6 +16278,9 @@
 	name = "Bridge";
 	req_access = list(109)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -15935,6 +16296,7 @@
 	name = "General Access";
 	req_access = list(101)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/control)
 "aLk" = (
@@ -15946,7 +16308,7 @@
 /turf/simulated/shuttle/floor,
 /area/centcom/evac)
 "aLm" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "black"
@@ -15954,11 +16316,11 @@
 /area/centcom/specops)
 "aLn" = (
 /obj/structure/reagent_dispensers/watertank,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -15971,7 +16333,7 @@
 	},
 /area/custom/syndicate_mothership)
 "aLp" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -16004,6 +16366,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -16026,6 +16391,9 @@
 /obj/item/clothing/mask/breath/medical,
 /obj/item/weapon/storage/belt/medical/surg/full,
 /obj/item/weapon/storage/belt/medical/surg/full,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -16084,6 +16452,9 @@
 	},
 /area/centcom/control)
 "aLC" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "whiteblue"
@@ -16114,6 +16485,7 @@
 	name = "Teleport Room";
 	req_access = list(101)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -16155,6 +16527,9 @@
 	},
 /obj/structure/plasticflaps{
 	opacity = 1
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor,
 /area/centcom/holding)
@@ -16205,7 +16580,9 @@
 	pixel_y = 4
 	},
 /obj/item/weapon/storage/box/bodybags,
-/obj/machinery/light/small,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -16294,6 +16671,9 @@
 	},
 /area/custom/syndicate_mothership)
 "aMa" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "darkred"
@@ -16312,6 +16692,9 @@
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor{
 	dir = 1;
@@ -16375,7 +16758,7 @@
 /area/centcom/specops)
 "aMk" = (
 /obj/structure/centcom_barrier,
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -16466,9 +16849,9 @@
 	},
 /area/centcom/specops)
 "aMs" = (
-/obj/structure/sign/warning/securearea{
-	name = "За этой стеной ничего нету";
-	pixel_y = -32
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32;
+	name = "За этой герляндой ничего нету"
 	},
 /turf/unsimulated/floor{
 	icon_state = "black"
@@ -16497,6 +16880,9 @@
 /obj/item/weapon/grenade/chem_grenade/cleaner,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -16566,6 +16952,8 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/living)
 "aMA" = (
@@ -16582,6 +16970,7 @@
 /area/shuttle/syndicate/start)
 "aMB" = (
 /obj/machinery/door/airlock/external,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -16687,6 +17076,9 @@
 /area/custom/syndicate_mothership/elite_squad)
 "aMR" = (
 /obj/machinery/computer/teleporter,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -16846,6 +17238,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "aNm" = (
@@ -16876,6 +17271,7 @@
 	name = "Security Doors";
 	opacity = 0
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "aNp" = (
@@ -16932,6 +17328,7 @@
 	name = "Security Doors";
 	opacity = 0
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "aNx" = (
@@ -16963,6 +17360,9 @@
 "aNA" = (
 /obj/machinery/light{
 	dir = 1
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -17034,6 +17434,7 @@
 	name = "Doors";
 	opacity = 0
 	},
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -17053,6 +17454,7 @@
 /obj/structure/plasticflaps{
 	opacity = 1
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "aNI" = (
@@ -17076,6 +17478,10 @@
 	icon_state = "7";
 	layer = 3.5
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/obj/structure/centcom_barrier,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "aNL" = (
@@ -17087,6 +17493,7 @@
 	icon_state = "*";
 	layer = 3.5
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/bar)
 "aNM" = (
@@ -17099,6 +17506,7 @@
 	name = "Security Doors";
 	opacity = 0
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "green"
@@ -17317,6 +17725,9 @@
 /area/custom/syndicate_mothership/armory)
 "aOh" = (
 /obj/machinery/power/smes,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -17404,6 +17815,9 @@
 /obj/item/weapon/crowbar,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -18009,6 +18423,7 @@
 	name = "Living Quarters";
 	req_access = list(105)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -18125,6 +18540,9 @@
 	dir = 4;
 	name = "Courthouse"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -18203,6 +18621,9 @@
 	dir = 4;
 	name = "Waiting Room"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "green"
 	},
@@ -18217,6 +18638,9 @@
 	dir = 4;
 	name = "Holding Facility"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor,
 /area/centcom/bar)
 "aPX" = (
@@ -18224,6 +18648,9 @@
 	dir = 4;
 	name = "Living Quarters";
 	req_access = list(105)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor,
 /area/centcom/bar)
@@ -18341,7 +18768,6 @@
 	},
 /area/centcom/waitingroom)
 "aQE" = (
-/obj/machinery/light,
 /turf/unsimulated/floor{
 	icon_state = "green"
 	},
@@ -18349,6 +18775,10 @@
 "aQH" = (
 /obj/machinery/newscaster{
 	pixel_y = 32
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/unsimulated/floor{
 	dir = 4;
@@ -18360,6 +18790,7 @@
 	name = "Conference Room";
 	req_access = list(108)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "wood"
@@ -18377,6 +18808,8 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/tinsel/halloween,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor,
 /area/centcom/living)
 "aQQ" = (
@@ -18385,6 +18818,7 @@
 /area/centcom/living)
 "aQR" = (
 /obj/machinery/door/airlock/glass,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -18488,6 +18922,9 @@
 /area/centcom/bar)
 "aRF" = (
 /obj/machinery/light,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "green"
@@ -18549,6 +18986,7 @@
 /obj/machinery/door/airlock/centcom{
 	name = "Courthouse"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor/carpet,
 /area/centcom/living)
 "aSb" = (
@@ -18576,10 +19014,11 @@
 	icon_state = "8";
 	layer = 3.5
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/bar)
 "aSj" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -18595,6 +19034,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -18611,6 +19051,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -18620,6 +19061,7 @@
 	name = "Creed's Office";
 	req_access = list(108)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -18735,6 +19177,9 @@
 /obj/structure/table,
 /obj/item/device/radio/headset/ert,
 /obj/item/clothing/glasses/hud/health,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -18822,12 +19267,18 @@
 	dir = 4;
 	icon_state = "reinf_tabledir"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
 "aTp" = (
 /obj/structure/table/reinforced{
 	dir = 8;
 	icon_state = "reinf_tabledir"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
@@ -18991,12 +19442,14 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/tdome)
 "aTN" = (
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/tdome)
 "aTO" = (
@@ -19151,6 +19604,9 @@
 "aUu" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/brown,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -19158,6 +19614,9 @@
 "aUv" = (
 /obj/structure/stool/bed,
 /obj/item/weapon/bedsheet/blue,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "grimy"
 	},
@@ -19183,6 +19642,7 @@
 	name = "General Access";
 	req_access = list(101)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/tdome)
 "aUI" = (
@@ -19418,6 +19878,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -19430,6 +19891,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -19551,6 +20013,9 @@
 /area/centcom/tdome)
 "aWl" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -19594,6 +20059,9 @@
 	dir = 4;
 	icon_state = "reinf_tabledir"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -19605,6 +20073,9 @@
 "aWF" = (
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
@@ -19695,8 +20166,8 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "aWU" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -19842,6 +20313,7 @@
 	dir = 6;
 	icon_state = "siding_line"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor,
 /area/centcom/tdome)
 "aXv" = (
@@ -19862,9 +20334,10 @@
 /turf/unsimulated/floor,
 /area/centcom/tdome)
 "aXy" = (
-/obj/machinery/light/small{
-	dir = 4
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "green"
@@ -19982,6 +20455,9 @@
 	id = "thunderdome";
 	name = "Thunderdome Blast Door"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -20054,6 +20530,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -20203,7 +20680,7 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "aYx" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/effect/decal/turf_decal/wood/dark{
 	icon_state = "siding_wood_line"
 	},
@@ -20273,6 +20750,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "aYP" = (
@@ -20338,8 +20818,8 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship)
 "aZd" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/unsimulated/floor{
 	dir = 10;
@@ -20366,6 +20846,7 @@
 	name = "Thunderdome Administration";
 	req_access = list(102)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/tdome)
 "aZi" = (
@@ -20384,8 +20865,8 @@
 	},
 /area/centcom/tdome)
 "aZj" = (
-/obj/machinery/light/small{
-	dir = 8
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
@@ -20434,9 +20915,10 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "aZs" = (
-/obj/machinery/light/small{
-	dir = 4
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/tdome)
 "aZy" = (
@@ -21517,12 +21999,15 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/centcom/specops)
 "beC" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "black"
@@ -21595,6 +22080,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -21617,6 +22105,9 @@
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -21652,6 +22143,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -21667,9 +22161,6 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang{
 	pixel_y = -4
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/machinery/camera{
 	c_tag = "Spec. Ops. Mecha Modules";
 	dir = 4;
@@ -21678,13 +22169,15 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/centcom/specops)
 "bfn" = (
 /obj/structure/rack,
-/obj/machinery/light/small,
 /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
 /obj/item/mecha_parts/mecha_equipment/anticcw_armor_booster,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -21766,6 +22259,9 @@
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -21851,9 +22347,6 @@
 /obj/structure/table/reinforced,
 /obj/item/weapon/storage/box/lights/mixed{
 	pixel_y = 4
-	},
-/obj/machinery/light/small{
-	dir = 4
 	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -21948,6 +22441,17 @@
 	icon_state = "whiteblue"
 	},
 /area/centcom/specops)
+"bkP" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "hydrofloor"
+	},
+/area/velocity)
 "blb" = (
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
@@ -21970,6 +22474,10 @@
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor,
 /area/velocity)
+"bmG" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/tdome)
 "bnb" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -22000,6 +22508,10 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"boc" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/holding)
 "bpb" = (
 /obj/structure/table/reinforced,
 /obj/item/weapon/paper_bin{
@@ -22024,6 +22536,14 @@
 	icon_state = "grimy"
 	},
 /area/centcom/specops)
+"bqB" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/holding)
 "bqK" = (
 /obj/effect/decal/cleanable/blood/gibs/robot/up,
 /turf/unsimulated/floor/cult/lava,
@@ -22058,15 +22578,15 @@
 /obj/machinery/chem_dispenser/soda{
 	pixel_y = 6
 	},
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/effect/decal/turf_decal/set_damaged{
 	icon_state = "wood_damaged_1"
 	},
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 8;
 	icon_state = "siding_wood_line"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -22154,6 +22674,14 @@
 	icon_state = "grimy"
 	},
 /area/centcom/specops)
+"bvc" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "hydrofloor"
+	},
+/area/velocity)
 "bwb" = (
 /obj/structure/rack,
 /obj/item/mecha_parts/mecha_equipment/Drop_system,
@@ -22167,6 +22695,14 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"bxD" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/velocity)
 "byb" = (
 /obj/structure/rack,
 /obj/item/mecha_parts/mecha_equipment/cable_layer{
@@ -22180,6 +22716,16 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"byX" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/obj/effect/decal/turf_decal/wood{
+	icon_state = "spline_fancy"
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	icon_state = "grass2"
+	},
+/area/centcom/evac)
 "bzb" = (
 /obj/structure/rack,
 /obj/item/mecha_parts/mecha_equipment/antiproj_armor_booster,
@@ -22218,12 +22764,19 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"bCz" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor,
+/area/centcom/tdome)
 "bDb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Creed's Office";
 	req_access = list(108)
 	},
 /obj/effect/landmark/trololo,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -22233,6 +22786,7 @@
 	dir = 4;
 	id = "MechaModule"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -22317,6 +22871,10 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"bKi" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/transport1/centcom)
 "bKC" = (
 /obj/structure/cult/forge,
 /turf/unsimulated/floor/cult/lava,
@@ -22351,6 +22909,9 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "bNO" = (
@@ -22359,6 +22920,9 @@
 	dock_tag = "pod3";
 	locked = 1;
 	name = "Arrival Airlock"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
@@ -22395,6 +22959,9 @@
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
@@ -22433,6 +23000,9 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor6"
 	},
@@ -22469,6 +23039,9 @@
 /area/velocity)
 "bVw" = (
 /obj/effect/decal/cleanable/cobweb,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -22487,12 +23060,29 @@
 	icon_state = "plating"
 	},
 /area/velocity)
+"bWc" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor,
+/area/centcom/control)
 "bXb" = (
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "brown"
 	},
 /area/velocity)
+"bXc" = (
+/obj/effect/landmark/space_traders/product,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/space)
 "bXH" = (
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
@@ -22510,10 +23100,28 @@
 	icon_state = "heavenfull2"
 	},
 /area/pluvian_heaven)
+"bYo" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "redyellowfull"
+	},
+/area/centcom/tdome/tdomeadmin)
 "bZH" = (
 /obj/structure/pedestal/cult,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
+"bZI" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "cab" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	locked = 1;
@@ -22668,8 +23276,25 @@
 	icon_state = "vaultfull"
 	},
 /area/velocity)
+"ckv" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
+"ckB" = (
+/obj/machinery/door/airlock/wagon,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/simulated/shuttle/floor/wagon,
+/area/shuttle/arrival/velocity)
 "clb" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /obj/machinery/door_control{
 	id = "velocity_main2";
 	name = "Disposal Door Control";
@@ -22730,6 +23355,11 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
+"com" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland/halloween,
+/turf/unsimulated/floor,
+/area/centcom/specops)
 "coE" = (
 /obj/structure/stool/bed/chair/schair/wagon/blue{
 	dir = 4
@@ -22770,6 +23400,16 @@
 	icon_state = "dark"
 	},
 /area/velocity/locker)
+"cqL" = (
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	name = "Arrival Airlock"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "crb" = (
 /obj/structure/closet/l3closet/security,
 /obj/structure/sign/warning/biohazard{
@@ -22874,6 +23514,9 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor/carpet,
 /area/velocity)
 "cvs" = (
@@ -22906,6 +23549,15 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/human,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"cvP" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership/droppod_garage)
 "cxb" = (
 /obj/structure/urinal{
 	pixel_x = -25
@@ -22917,6 +23569,13 @@
 	icon_state = "freezerfloor"
 	},
 /area/velocity)
+"cxD" = (
+/obj/item/weapon/carved_pumpkin,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "redbluefull"
+	},
+/area/centcom/tdome/tdomeobserve)
 "cyb" = (
 /obj/structure/sink{
 	dir = 4;
@@ -22939,6 +23598,12 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
+"czD" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "cAb" = (
 /obj/structure/stool/bed/chair/comfy/black,
 /turf/unsimulated/floor/carpet,
@@ -22948,6 +23613,7 @@
 	dir = 4
 	},
 /obj/structure/flora/ausbushes/pointybush,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "grass2"
 	},
@@ -22999,6 +23665,7 @@
 	name = "Doors";
 	opacity = 0
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -23056,6 +23723,7 @@
 	name = "Doors";
 	opacity = 0
 	},
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -23071,6 +23739,7 @@
 	name = "Unisex Restrooms"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -23081,6 +23750,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/landmark/trololo,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity/checkpoint)
 "cKX" = (
@@ -23112,6 +23782,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/landmark/trololo,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity)
 "cNo" = (
@@ -23137,6 +23808,7 @@
 	name = "Doors";
 	opacity = 0
 	},
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -23190,6 +23862,7 @@
 /area/velocity)
 "cTb" = (
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
@@ -23223,6 +23896,9 @@
 	id = "velocity_hall";
 	name = "Doors";
 	opacity = 0
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "plating"
@@ -23260,8 +23936,15 @@
 /obj/machinery/life_assist/artificial_ventilation,
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
+"cYY" = (
+/obj/structure/stool/bed/chair/schair/wagon/green,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/shuttle/floor/evac/place,
+/area/shuttle/escape/centcom)
 "cZb" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor,
 /area/velocity)
 "cZu" = (
@@ -23329,6 +24012,7 @@
 	dir = 5;
 	icon_state = "siding_line"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor,
 /area/centcom/tdome)
 "ddb" = (
@@ -23350,6 +24034,9 @@
 "dfb" = (
 /obj/structure/sign/velocity_overlay/reklama/pda_x{
 	pixel_y = 32
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/unsimulated/floor,
 /area/velocity/waitingroom)
@@ -23498,6 +24185,7 @@
 	name = "Doors";
 	opacity = 0
 	},
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -23518,6 +24206,16 @@
 	icon_state = "brown"
 	},
 /area/velocity)
+"dow" = (
+/obj/structure/table,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "redyellowfull"
+	},
+/area/centcom/tdome/tdomeadmin)
 "doD" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -23556,6 +24254,13 @@
 	},
 /turf/unsimulated/wall/like_a_normal/beige,
 /area/velocity/checkpoint)
+"dsB" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/centcom/living)
 "dtb" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for port-side blast doors.";
@@ -23589,6 +24294,19 @@
 	icon_state = "dark"
 	},
 /area/velocity)
+"dtD" = (
+/obj/machinery/door/poddoor{
+	dir = 4;
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/centcom/tdome)
 "dtX" = (
 /obj/structure/sign/tablo{
 	icon_state = "parking"
@@ -23601,6 +24319,24 @@
 	},
 /turf/unsimulated/wall/like_a_normal/beige,
 /area/velocity)
+"duP" = (
+/obj/structure/rack,
+/obj/item/clothing/under/color/red,
+/obj/item/clothing/shoes/brown,
+/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/head/helmet/swat,
+/obj/item/weapon/gun/energy/laser,
+/obj/effect/decal/turf_decal/alpha/dark_red{
+	dir = 1;
+	icon_state = "siding_line"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/tdome)
 "dvb" = (
 /obj/structure/rail_centcomm{
 	icon_state = "rail_01"
@@ -23641,6 +24377,16 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity/waitingroom)
+"dBY" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "green"
+	},
+/area/centcom/tdome)
 "dCb" = (
 /obj/structure/stool/bed/chair/office/light,
 /obj/effect/decal/turf_decal/blue{
@@ -23657,6 +24403,14 @@
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
+"dCD" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/syndicate_mothership)
 "dEb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -23673,11 +24427,26 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "rampbottom"
 	},
 /area/velocity)
+"dEv" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "dFb" = (
 /obj/structure/closet/emcloset{
 	pixel_x = 7
@@ -23692,6 +24461,14 @@
 	icon_state = "rampbottom"
 	},
 /area/velocity)
+"dGB" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/centcom/living)
 "dHb" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -23699,6 +24476,10 @@
 	id = "monorail_01";
 	name = "Doors";
 	opacity = 0
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
@@ -23752,6 +24533,34 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
+"dIW" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/ert/security,
+/obj/item/clothing/head/helmet/space/rig/ert/security,
+/obj/item/weapon/kitchenknife/combat,
+/obj/item/weapon/melee/baton,
+/obj/item/device/flash,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/grenade/flashbang,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/handcuffs,
+/obj/item/weapon/plastique,
+/obj/item/clothing/accessory/storage/black_vest,
+/obj/item/weapon/storage/belt/security,
+/obj/item/clothing/glasses/night,
+/obj/item/clothing/glasses/sunglasses/hud/sechud,
+/obj/item/weapon/storage/backpack/ert/security,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "dJb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall12"
@@ -23770,6 +24579,7 @@
 	},
 /obj/structure/window/thin/reinforced,
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity/checkpoint)
 "dLD" = (
@@ -23820,6 +24630,15 @@
 	},
 /turf/environment/space,
 /area/shuttle/arrival/velocity)
+"dRn" = (
+/obj/effect/landmark/space_traders/product,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/space)
 "dRQ" = (
 /obj/structure/table/glass{
 	pixel_x = -6;
@@ -23877,16 +24696,25 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "rampbottom"
 	},
 /area/velocity)
+"dVh" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/space)
 "dWb" = (
 /obj/structure/shuttle/window{
 	icon_state = "2"
 	},
 /obj/structure/grille,
+/obj/item/decoration/garland/halloween,
 /turf/simulated/shuttle/plating,
 /area/velocity/monorailwagon)
 "dXA" = (
@@ -23911,6 +24739,7 @@
 	dir = 4
 	},
 /obj/structure/flora/ausbushes/brflowers,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "grass2"
 	},
@@ -23950,12 +24779,22 @@
 	icon_state = "floor"
 	},
 /area/shuttle/trader/space)
+"efT" = (
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/control)
 "egb" = (
 /obj/machinery/porta_turret/crescent,
 /obj/effect/decal/turf_decal{
 	dir = 9;
 	icon_state = "warn"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor,
 /area/centcom/prison)
 "egl" = (
@@ -24024,6 +24863,9 @@
 	icon_state = "3";
 	layer = 3.5
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
 "elb" = (
@@ -24038,6 +24880,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -24082,6 +24925,7 @@
 	name = "Doors";
 	opacity = 0
 	},
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -24127,6 +24971,14 @@
 	icon_state = "green"
 	},
 /area/velocity)
+"exz" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/control)
 "eyb" = (
 /obj/machinery/status_display{
 	layer = 4
@@ -24145,6 +24997,7 @@
 	dir = 8;
 	icon_state = "spline_fancy"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "grass2"
 	},
@@ -24169,6 +25022,9 @@
 /obj/structure/sign/mark{
 	icon_state = "1";
 	layer = 3.5
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
@@ -24217,6 +25073,16 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
+"eGR" = (
+/obj/machinery/door/airlock/centcom{
+	dir = 4;
+	name = "Waiting Room"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "eHb" = (
 /obj/machinery/computer/arrival_shuttle/dock{
 	dir = 4
@@ -24226,6 +25092,19 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity/waitingroom)
+"eHT" = (
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/structure/sign/mark{
+	icon_state = "3";
+	layer = 3.5
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/living)
 "eIb" = (
 /obj/structure/sign/mark{
 	icon_state = "ylf"
@@ -24237,6 +25116,9 @@
 	dir = 4;
 	name = "Living Quarters";
 	req_access = list(105)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -24254,6 +25136,7 @@
 	dir = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity/checkpoint)
 "eKb" = (
@@ -24306,8 +25189,20 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"eNj" = (
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "bluefull"
+	},
+/area/centcom/specops)
 "eNH" = (
 /turf/simulated/floor{
 	icon_state = "Heaven_stairs_middle"
@@ -24323,6 +25218,9 @@
 	icon_state = "5";
 	layer = 3.5
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
 "eQb" = (
@@ -24332,6 +25230,13 @@
 /obj/machinery/door/poddoor,
 /turf/unsimulated/floor{
 	icon_state = "plating"
+	},
+/area/velocity)
+"eQp" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	icon_state = "green"
 	},
 /area/velocity)
 "eRb" = (
@@ -24376,6 +25281,14 @@
 	},
 /turf/environment/space,
 /area/shuttle/officer/velocity)
+"eUd" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "orange"
+	},
+/area/centcom/control)
 "eVb" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -24413,6 +25326,7 @@
 	grilled = 1;
 	icon_state = "gr_window_reinforced"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "eYz" = (
@@ -24437,6 +25351,9 @@
 /obj/structure/sign/mark{
 	icon_state = "3";
 	layer = 3.5
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
@@ -24538,10 +25455,31 @@
 	icon_state = "vel_f01"
 	},
 /area/shuttle/officer/velocity)
+"fgF" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "fhb" = (
 /obj/machinery/door/airlock/wagon,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/simulated/shuttle/floor/wagon,
 /area/shuttle/arrival/velocity)
+"fhR" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/garland/halloween,
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/centcom/tdome)
 "fib" = (
 /turf/simulated/shuttle/floor/shuttle_new{
 	dir = 8;
@@ -24556,6 +25494,9 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -24631,6 +25572,20 @@
 	icon_state = "floor"
 	},
 /area/shuttle/trader/space)
+"fnQ" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "darkblue"
+	},
+/area/centcom/control)
 "fob" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 8;
@@ -24698,6 +25653,9 @@
 	icon_state = "1";
 	layer = 3.5
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/prison)
 "fsr" = (
@@ -24720,6 +25678,17 @@
 	icon_state = "engine"
 	},
 /area/velocity)
+"fsv" = (
+/obj/machinery/door/airlock/centcom{
+	dir = 4;
+	name = "General Access";
+	req_access = list(101)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/centcom/tdome)
 "ftb" = (
 /obj/structure/object_wall/velocity{
 	dir = 4;
@@ -24765,6 +25734,13 @@
 	icon_state = "yellow"
 	},
 /area/centcom/specops)
+"fAI" = (
+/obj/structure/stool/bed/chair/schair/wagon/green,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/shuttle/floor/evac,
+/area/shuttle/escape/centcom)
 "fBb" = (
 /obj/structure/shuttle/engine/heater{
 	dir = 8;
@@ -24773,6 +25749,7 @@
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/shuttle/floor/vox{
 	icon_state = "floorplace"
 	},
@@ -24807,6 +25784,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity)
 "fFb" = (
@@ -24855,6 +25833,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "fKb" = (
@@ -24866,6 +25845,15 @@
 	icon_state = "floor"
 	},
 /area/shuttle/trader/space)
+"fKK" = (
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor{
+	icon_state = "brown"
+	},
+/area/centcom/bar)
 "fLb" = (
 /obj/machinery/computer/specops_shuttle,
 /obj/machinery/light/small{
@@ -24958,6 +25946,12 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/specops)
+"fTq" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/shuttle/floor/wagon{
+	icon_state = "sign_1"
+	},
+/area/shuttle/arrival/velocity)
 "fTS" = (
 /obj/machinery/conveyor{
 	id = "QMLoad"
@@ -25029,6 +26023,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -25042,6 +26039,9 @@
 	opacity = 1
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/wall/like_a_normal/beige,
 /area/velocity)
 "fZb" = (
@@ -25050,9 +26050,6 @@
 	pixel_y = 6
 	},
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/anti_singulo,
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
@@ -25131,6 +26128,14 @@
 /obj/item/weapon/tank/emergency_oxygen/double,
 /turf/unsimulated/floor,
 /area/centcom/specops)
+"geV" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/velocity)
 "ggb" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/mask/breath/gas,
@@ -25188,6 +26193,15 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
+"glt" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "darkblue"
+	},
+/area/centcom/specops)
 "gmb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -25226,6 +26240,9 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "gnL" = (
@@ -25234,6 +26251,7 @@
 	dir = 9;
 	icon_state = "siding_line"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor,
 /area/centcom/tdome)
 "gob" = (
@@ -25280,9 +26298,7 @@
 	},
 /area/velocity)
 "gsY" = (
-/obj/item/weapon/flora/pottedplant/tropicalfern{
-	pixel_y = 5
-	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "hydrofloor"
 	},
@@ -25302,6 +26318,7 @@
 /area/velocity/waitingroom)
 "guD" = (
 /obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -25366,6 +26383,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -25375,6 +26395,9 @@
 	dir = 4;
 	name = "General Access";
 	req_access = list(101)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
@@ -25395,6 +26418,17 @@
 	icon_state = "white"
 	},
 /area/centcom/living)
+"gCd" = (
+/obj/machinery/door/airlock/centcom{
+	dir = 4;
+	name = "General Access";
+	req_access = list(101)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/centcom/control)
 "gDb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -25434,17 +26468,32 @@
 	},
 /turf/unsimulated/wall/like_a_normal/beige,
 /area/velocity)
+"gFG" = (
+/obj/item/weapon/carved_pumpkin,
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/centcom/tdome)
 "gGb" = (
 /turf/simulated/shuttle/floor/vox{
 	oxygen = 21.8366
 	},
 /area/shuttle/specops/centcom)
+"gGY" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership/droppod_garage)
 "gHb" = (
 /obj/machinery/door/airlock/external{
 	dock_tag = "arrival_shuttle";
 	name = "Arrival Airlock"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity/exit)
 "gIb" = (
@@ -25464,10 +26513,19 @@
 	icon_state = "green"
 	},
 /area/velocity/waitingroom)
+"gJh" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/centcom/tdome)
 "gKb" = (
 /obj/machinery/portable_atmospherics/powered/scrubber,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
@@ -25478,6 +26536,7 @@
 	name = "Warehouse";
 	req_access = list(74)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "gKI" = (
@@ -25621,8 +26680,26 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/velocity/exit)
+"gYg" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/control)
+"gYy" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/centcom/tdome)
 "gZb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -25633,18 +26710,35 @@
 /obj/structure/closet/secure_closet/velocity_security/full,
 /turf/unsimulated/floor,
 /area/velocity)
+"gZu" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "hab" = (
 /obj/machinery/vending/engivend,
-/obj/machinery/light/small{
-	dir = 4
-	},
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"han" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	icon_state = "brown"
+	},
+/area/velocity)
 "hbb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -25739,6 +26833,12 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"hjL" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor,
+/area/centcom/holding)
 "hkb" = (
 /turf/unsimulated/floor{
 	dir = 9;
@@ -25777,6 +26877,17 @@
 	},
 /turf/simulated/shuttle/floor/vox,
 /area/custom/syndicate_mothership/elite_squad)
+"hlN" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/garland/halloween,
+/obj/item/decoration/garland/halloween,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/syndicate_mothership)
 "hmb" = (
 /obj/structure/sign/mark{
 	icon_state = "b2"
@@ -25792,6 +26903,10 @@
 	id = "monorail_02";
 	name = "Doors";
 	opacity = 0
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/shuttle/floor{
 	icon_state = "floor2"
@@ -25831,6 +26946,21 @@
 	icon_state = "engine"
 	},
 /area/velocity)
+"hov" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "green"
+	},
+/area/centcom/tdome)
+"hoL" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/space)
 "hpb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -25859,6 +26989,8 @@
 /area/velocity/exit)
 "hrb" = (
 /obj/machinery/door/airlock/glass,
+/obj/item/decoration/tinsel/halloween,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
@@ -25971,6 +27103,23 @@
 	icon_state = "bluefull"
 	},
 /area/centcom/specops)
+"hBP" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/prison)
+"hCa" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "blue"
+	},
+/area/centcom/evac)
 "hCb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall3"
@@ -25989,6 +27138,14 @@
 	},
 /turf/environment/space,
 /area/centcom/evac)
+"hDV" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/stool/bed/chair/schair/wagon/green,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/shuttle/floor/evac/place,
+/area/shuttle/escape/centcom)
 "hEb" = (
 /obj/structure/object_wall/standart{
 	icon_state = "swall12"
@@ -26001,6 +27158,12 @@
 	},
 /turf/environment/space,
 /area/centcom/evac)
+"hFT" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/tinsel/halloween,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor,
+/area/centcom/tdome)
 "hGb" = (
 /obj/effect/decal/turf_decal{
 	dir = 8;
@@ -26079,6 +27242,9 @@
 /obj/machinery/door/unpowered/shuttle/officer{
 	dock_tag = "velocity_officer_shuttle"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/simulated/shuttle/floor/shuttle_new{
 	dir = 8;
 	icon_state = "vel_f01"
@@ -26095,6 +27261,7 @@
 /obj/item/portrait{
 	pixel_y = 32
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -26144,7 +27311,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor,
 /area/centcom/specops)
 "hTF" = (
@@ -26156,10 +27323,21 @@
 	icon_state = "dark"
 	},
 /area/centcom/control)
+"hTH" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "black"
+	},
+/area/centcom/specops)
 "hUb" = (
 /obj/machinery/door/airlock/glass{
 	locked = 1
 	},
+/obj/item/decoration/tinsel/halloween,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
@@ -26212,6 +27390,7 @@
 	id = "ERTBase";
 	name = "ERT"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -26221,6 +27400,7 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -26239,6 +27419,9 @@
 /obj/machinery/door/airlock/centcom{
 	dir = 4;
 	name = "Courthouse"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor,
 /area/centcom/living)
@@ -26277,6 +27460,7 @@
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity)
 "ibb" = (
@@ -26320,6 +27504,10 @@
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/unsimulated/floor,
 /area/velocity)
@@ -26369,6 +27557,9 @@
 "imk" = (
 /obj/effect/decal/cleanable/cobweb2,
 /obj/effect/landmark/space_traders/product,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
@@ -26378,6 +27569,12 @@
 	icon_state = "vaultfull"
 	},
 /area/centcom/control)
+"inZ" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/centcom/bar)
 "iob" = (
 /obj/machinery/light{
 	dir = 1
@@ -26386,6 +27583,15 @@
 	icon_state = "dark"
 	},
 /area/centcom/control)
+"ioC" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "brown"
+	},
+/area/velocity)
 "ipb" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/effect/decal/turf_decal/wood{
@@ -26410,6 +27616,15 @@
 	icon_state = "darkbluecorners"
 	},
 /area/centcom/control)
+"iqP" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	dir = 9;
+	icon_state = "blue"
+	},
+/area/centcom/evac)
 "irb" = (
 /obj/machinery/door/airlock/hatch{
 	dir = 4;
@@ -26434,12 +27649,15 @@
 /area/pluvian_heaven)
 "iub" = (
 /obj/machinery/light,
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor,
 /area/centcom/specops)
 "ivb" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
 	},
 /turf/unsimulated/floor{
 	dir = 8;
@@ -26459,7 +27677,17 @@
 	icon_state = "darkgreen"
 	},
 /area/centcom/control)
+"iwc" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland/halloween,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/velocity)
 "ixb" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "brown"
@@ -26522,6 +27750,15 @@
 	icon_state = "darkblue"
 	},
 /area/centcom/control)
+"iCo" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/tinsel/halloween,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor,
+/area/centcom/control)
 "iEb" = (
 /obj/machinery/light{
 	dir = 8
@@ -26553,6 +27790,15 @@
 	icon_state = "purple"
 	},
 /area/centcom/control)
+"iHD" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/velocity)
 "iIb" = (
 /turf/unsimulated/wall/like_a_normal/green,
 /area/space)
@@ -26564,17 +27810,34 @@
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"iJd" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "red"
+	},
+/area/centcom/tdome)
 "iKb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Server Room";
 	req_access = list(101)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
 /area/centcom/control)
+"iKz" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/space)
 "iLb" = (
 /obj/effect/decal/turf_decal/alpha/yellow{
 	dir = 8;
@@ -26592,11 +27855,28 @@
 	icon_state = "cafeteria"
 	},
 /area/centcom/living)
+"iMA" = (
+/obj/item/weapon/carved_pumpkin/candled{
+	pixel_x = 17;
+	resize = 2
+	},
+/turf/environment/space,
+/area/space)
 "iNb" = (
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
 	},
 /area/centcom/living)
+"iNj" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor,
+/area/centcom/control)
 "iOb" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/unsimulated/floor{
@@ -26693,6 +27973,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
@@ -26751,10 +28034,18 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/centcom/control)
+"iYd" = (
+/obj/structure/stool/bed/chair/schair/wagon/green,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/shuttle/floor/evac/place,
+/area/shuttle/escape/centcom)
 "jab" = (
 /obj/structure/window/thin/reinforced{
 	dir = 1;
@@ -26788,12 +28079,18 @@
 /area/velocity/locker)
 "jbb" = (
 /obj/random/vending/cola,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
 	},
 /area/centcom/living)
 "jcb" = (
 /obj/structure/table,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -26810,10 +28107,21 @@
 /area/centcom/living)
 "jeb" = (
 /obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "cafeteria"
 	},
 /area/centcom/living)
+"jeS" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "brown"
+	},
+/area/velocity)
 "jeW" = (
 /obj/structure/closet,
 /obj/random/misc/all,
@@ -26839,6 +28147,16 @@
 	icon_state = "darkbluecorners"
 	},
 /area/centcom/control)
+"jfd" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor,
+/area/centcom/living)
 "jgb" = (
 /obj/effect/decal/turf_decal{
 	dir = 1;
@@ -26892,6 +28210,16 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/holding)
+"jlg" = (
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "neutral"
+	},
+/area/centcom/bar)
 "jmb" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/eastleft{
@@ -26902,6 +28230,9 @@
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "white"
@@ -26918,6 +28249,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -26932,6 +28266,9 @@
 /obj/machinery/door/airlock/centcom{
 	dir = 4;
 	name = "Waiting Room"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
@@ -26952,6 +28289,10 @@
 	},
 /obj/machinery/door/firedoor{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/unsimulated/floor{
 	dir = 4;
@@ -26989,6 +28330,9 @@
 /obj/machinery/computer/rdservercontrol{
 	badmin = 1;
 	name = "Master R&amp;D Server Controller"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
@@ -27032,6 +28376,9 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "jyb" = (
@@ -27059,6 +28406,9 @@
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -27079,6 +28429,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -27092,6 +28445,17 @@
 	icon_state = "dark"
 	},
 /area/centcom/control)
+"jBe" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "bcircuit"
+	},
+/area/centcom/specops)
 "jCb" = (
 /obj/machinery/computer/telecomms/monitor,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -27112,6 +28476,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -27127,6 +28492,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -27138,6 +28504,9 @@
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "warn"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -27169,6 +28538,13 @@
 	icon_state = "dark"
 	},
 /area/centcom/control)
+"jJi" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland/halloween,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/velocity/waitingroom)
 "jLb" = (
 /turf/unsimulated/floor{
 	dir = 10;
@@ -27189,6 +28565,7 @@
 	dir = 8
 	},
 /obj/structure/flora/ausbushes/palebush,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "grass2"
 	},
@@ -27209,11 +28586,19 @@
 	name = "Security Doors";
 	opacity = 0
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "green"
 	},
 /area/centcom/holding)
+"jOg" = (
+/obj/structure/stool/bed/chair/schair/wagon/green,
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/simulated/shuttle/floor/evac/place,
+/area/shuttle/escape/centcom)
 "jPb" = (
 /turf/unsimulated/floor{
 	dir = 5;
@@ -27225,6 +28610,9 @@
 	dir = 4;
 	icon_state = "warn"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "green"
 	},
@@ -27232,6 +28620,9 @@
 "jQb" = (
 /obj/structure/mineral_door/wood{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon_state = "wood"
@@ -27303,6 +28694,13 @@
 	icon_state = "wood"
 	},
 /area/centcom/bar)
+"jVg" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/centcom/tdome)
 "jWb" = (
 /turf/unsimulated/floor{
 	dir = 9;
@@ -27365,6 +28763,14 @@
 	icon_state = "brownold"
 	},
 /area/centcom/bar)
+"kaC" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/velocity)
 "kbb" = (
 /obj/machinery/atm{
 	pixel_y = 32
@@ -27424,6 +28830,18 @@
 "keT" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/unsimulated/floor,
+/area/velocity)
+"keV" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "incerator_velocity"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
 /area/velocity)
 "keZ" = (
 /obj/effect/decal/turf_decal{
@@ -27488,6 +28906,7 @@
 /obj/effect/decal/turf_decal/wood{
 	icon_state = "spline_fancy"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "grass2"
 	},
@@ -27541,6 +28960,12 @@
 	icon_state = "wood"
 	},
 /area/centcom/bar)
+"knK" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/centcom/living)
 "kob" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/unsimulated/floor{
@@ -27569,6 +28994,7 @@
 	locked = 1;
 	name = "Arrival Airlock"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "ksb" = (
@@ -27580,6 +29006,25 @@
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
+	},
+/area/centcom/living)
+"ksA" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership)
+"ktY" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
 	},
 /area/centcom/living)
 "kuZ" = (
@@ -27665,6 +29110,11 @@
 	icon_state = "engine"
 	},
 /area/velocity)
+"kyX" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland/halloween,
+/turf/unsimulated/floor,
+/area/centcom/living)
 "kzb" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
@@ -27674,6 +29124,10 @@
 	icon_state = "neutralcorner"
 	},
 /area/centcom/bar)
+"kzA" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "kAb" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
@@ -27807,6 +29261,7 @@
 /area/centcom/bar)
 "kMb" = (
 /obj/structure/table,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -27825,6 +29280,7 @@
 "kNb" = (
 /obj/structure/table,
 /obj/item/weapon/reagent_containers/food/drinks/shaker,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -27832,6 +29288,7 @@
 "kOb" = (
 /obj/structure/table,
 /obj/item/weapon/lighter/zippo,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -27839,6 +29296,7 @@
 "kPb" = (
 /obj/structure/table,
 /obj/item/weapon/dice/d20,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -27849,6 +29307,7 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 32
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -27875,17 +29334,27 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "darkredcorners"
 	},
 /area/centcom/control)
 "kRb" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	dir = 9;
 	icon_state = "green"
 	},
 /area/centcom/living)
+"kRj" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/prison)
 "kSb" = (
 /obj/structure/table/woodentable{
 	dir = 10
@@ -27911,6 +29380,7 @@
 	icon_state = "delivery"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity/checkpoint)
 "kUb" = (
@@ -27981,6 +29451,9 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/velocity/locker)
 "lab" = (
@@ -28005,6 +29478,18 @@
 	icon_state = "neutralcorner"
 	},
 /area/centcom/bar)
+"lbM" = (
+/obj/effect/decal/turf_decal{
+	dir = 6;
+	icon_state = "warn"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "lcb" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -28067,6 +29552,7 @@
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "green"
@@ -28126,11 +29612,21 @@
 	icon_state = "yellow"
 	},
 /area/centcom/waitingroom)
+"loU" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor,
+/area/centcom/holding)
 "lpb" = (
 /turf/unsimulated/floor{
 	icon_state = "browncorner"
 	},
 /area/centcom/bar)
+"lpk" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/shuttle/floor/evac,
+/area/shuttle/escape/centcom)
 "lpG" = (
 /obj/structure/object_wall/standart{
 	icon_state = "wall3"
@@ -28166,6 +29662,13 @@
 	icon_state = "bcircuit"
 	},
 /area/custom/syndicate_mothership/control)
+"lrU" = (
+/obj/structure/object_wall/standart{
+	icon_state = "wall3"
+	},
+/obj/item/decoration/garland/halloween,
+/turf/simulated/shuttle/floor/vox,
+/area/shuttle/specops/centcom)
 "lsb" = (
 /obj/machinery/door/airlock/glass,
 /obj/machinery/door/poddoor{
@@ -28176,6 +29679,7 @@
 	name = "Security Doors";
 	opacity = 0
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	dir = 9;
 	icon_state = "green"
@@ -28191,6 +29695,7 @@
 	name = "Security Doors";
 	opacity = 0
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "green"
@@ -28237,6 +29742,10 @@
 /area/velocity/checkpoint)
 "lvb" = (
 /obj/random/vending/snack,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/unsimulated/floor{
 	icon_state = "brown"
 	},
@@ -28249,12 +29758,33 @@
 	icon_state = "brown"
 	},
 /area/centcom/bar)
+"lwt" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/velocity)
 "lxt" = (
 /obj/effect/decal/cleanable/generic,
 /turf/simulated/shuttle/floor/erokez{
 	icon_state = "floor"
 	},
 /area/shuttle/trader/space)
+"lxC" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/simulated/floor{
+	icon_state = "freezerfloor"
+	},
+/area/velocity)
+"lxG" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "lyb" = (
 /obj/machinery/gateway{
 	dir = 4
@@ -28277,6 +29807,9 @@
 "lAb" = (
 /obj/machinery/computer/arcade,
 /obj/machinery/light,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	dir = 10;
 	icon_state = "brown"
@@ -28284,6 +29817,13 @@
 /area/centcom/bar)
 "lBb" = (
 /obj/random/vending/cola,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "brown"
 	},
@@ -28310,6 +29850,21 @@
 	icon_state = "brown"
 	},
 /area/centcom/bar)
+"lDo" = (
+/obj/effect/step_trigger/teleporter/random{
+	name = "tradershuttle_leave";
+	teleport_x = 25;
+	teleport_x_offset = 245;
+	teleport_y = 25;
+	teleport_y_offset = 245;
+	teleport_z = 6;
+	teleport_z_offset = 6
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/environment/space,
+/area/space)
 "lEb" = (
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_y = -32
@@ -28322,6 +29877,9 @@
 /obj/structure/table/reinforced/stall,
 /obj/item/weapon/bell{
 	pixel_y = 5
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
@@ -28366,6 +29924,7 @@
 	dir = 8
 	},
 /obj/structure/flora/ausbushes/fullgrass,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "grass2"
 	},
@@ -28426,6 +29985,7 @@
 /obj/structure/sign/mark{
 	icon_state = "x3"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "greencorner"
@@ -28444,6 +30004,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -28461,6 +30022,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},
@@ -28476,11 +30038,21 @@
 /obj/structure/sign/mark{
 	icon_state = "x3"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "greencorner"
 	},
 /area/centcom/holding)
+"lRK" = (
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor{
+	icon_state = "neutralcorner"
+	},
+/area/centcom/bar)
 "lSb" = (
 /obj/structure/sign/mark/symbol_b,
 /turf/unsimulated/floor{
@@ -28504,6 +30076,15 @@
 	icon_state = "rampbottom"
 	},
 /area/velocity)
+"lVQ" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/velocity)
 "lWr" = (
 /obj/structure/object_wall/standart{
 	dir = 8;
@@ -28525,6 +30106,9 @@
 	},
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
@@ -28604,6 +30188,17 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"mfd" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkblue"
+	},
+/area/centcom/control)
 "mgb" = (
 /obj/structure/window/thin/reinforced,
 /obj/structure/window/thin/reinforced{
@@ -28620,9 +30215,23 @@
 	icon_state = "white"
 	},
 /area/centcom/holding)
+"mgf" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor,
+/area/centcom/living)
 "mhb" = (
 /obj/machinery/door/airlock/multi_tile/glass{
 	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	dir = 1;
@@ -28696,6 +30305,16 @@
 	opacity = 0
 	},
 /area/custom/abductor_ship)
+"moJ" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "red"
+	},
+/area/centcom/tdome)
 "mpb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "11,19"
@@ -28709,9 +30328,20 @@
 	icon_state = "floor"
 	},
 /area/shuttle/trader/space)
+"mpC" = (
+/obj/structure/mineral_door/wood{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood"
+	},
+/area/centcom/bar)
 "mqb" = (
-/obj/machinery/light/small{
-	dir = 1
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
@@ -28722,6 +30352,7 @@
 	name = "General Access";
 	req_access = list(101)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -28734,15 +30365,22 @@
 /turf/environment/space,
 /area/shuttle/trader/space)
 "msb" = (
-/obj/machinery/light/small,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
 /area/centcom/tdome)
+"msE" = (
+/obj/item/decoration/garland/halloween,
+/turf/unsimulated/wall/like_a_normal/green,
+/area/centcom/specops)
 "mtb" = (
-/obj/machinery/light/small{
-	dir = 4
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -28836,6 +30474,7 @@
 	dir = 10;
 	icon_state = "warn"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor,
 /area/centcom/prison)
 "mFb" = (
@@ -28851,6 +30490,7 @@
 /obj/effect/decal/turf_decal/wood{
 	icon_state = "spline_fancy"
 	},
+/obj/structure/statue_pedestal,
 /turf/unsimulated/floor{
 	icon_state = "grass2"
 	},
@@ -28892,6 +30532,7 @@
 	dir = 8;
 	icon_state = "spline_fancy"
 	},
+/obj/structure/statue_pedestal,
 /turf/unsimulated/floor{
 	icon_state = "grass2"
 	},
@@ -28919,6 +30560,7 @@
 	dir = 8;
 	icon_state = "spline_fancy"
 	},
+/obj/structure/statue_pedestal,
 /turf/unsimulated/floor{
 	icon_state = "grass2"
 	},
@@ -28929,6 +30571,7 @@
 	dir = 8;
 	icon_state = "spline_fancy"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "grass2"
 	},
@@ -28950,6 +30593,20 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"mOw" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor,
+/area/centcom/specops)
+"mOP" = (
+/obj/structure/cryofeed/right,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/centcom/specops)
 "mPb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "6,22";
@@ -28978,6 +30635,16 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"mRq" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "mSb" = (
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -29034,6 +30701,7 @@
 /obj/effect/decal/turf_decal/wood{
 	icon_state = "spline_fancy"
 	},
+/obj/structure/statue_pedestal,
 /turf/unsimulated/floor{
 	icon_state = "grass2"
 	},
@@ -29098,6 +30766,15 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"ndE" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	dir = 10;
+	icon_state = "green"
+	},
+/area/centcom/living)
 "neb" = (
 /turf/unsimulated/wall/like_a_normal/green,
 /area/centcom/tdome)
@@ -29106,6 +30783,7 @@
 	dock_tag = "ferry_shuttle";
 	name = "Arrival Airlock"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	icon_state = "greenfull"
 	},
@@ -29131,10 +30809,17 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"nhv" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/garland/halloween,
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "nhJ" = (
 /obj/structure/stool/bed/chair/metal/white{
 	dir = 8
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "green"
@@ -29143,12 +30828,33 @@
 "nib" = (
 /turf/unsimulated/wall/like_a_normal/red,
 /area/space)
+"niM" = (
+/obj/machinery/door/airlock/centcom{
+	dir = 4;
+	name = "Hall";
+	req_access = list(150)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/custom/syndicate_mothership)
 "njb" = (
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "redcorner"
 	},
 /area/centcom/tdome)
+"njo" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "brown"
+	},
+/area/centcom/bar)
 "nkb" = (
 /obj/effect/decal/turf_decal/green{
 	dir = 1;
@@ -29156,11 +30862,24 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"nkS" = (
+/obj/machinery/door/airlock/external{
+	dir = 4;
+	name = "Arrival Airlock"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "nkX" = (
 /obj/machinery/door/airlock/centcom{
 	dir = 4;
 	name = "General Access";
 	req_access = list(101)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor,
 /area/centcom/control)
@@ -29191,6 +30910,18 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
+"nmo" = (
+/obj/structure/table/reinforced,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "nmr" = (
 /obj/machinery/light,
 /obj/effect/decal/cleanable/dirt,
@@ -29245,10 +30976,19 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"nqO" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	icon_state = "neutralfull"
+	},
+/area/velocity)
 "nrb" = (
 /obj/item/weapon/wrench,
 /turf/unsimulated/floor{
@@ -29326,6 +31066,9 @@
 	id = "thunderdomegen";
 	name = "Thunderdome General Supply"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "redyellowfull"
@@ -29379,11 +31122,20 @@
 /obj/item/stack/medical/ointment,
 /obj/item/stack/medical/ointment,
 /obj/item/stack/medical/ointment,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
+"nCQ" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor,
+/area/centcom/control)
 "nDb" = (
 /obj/structure/table,
 /obj/item/stack/medical/bruise_pack,
@@ -29405,6 +31157,9 @@
 "nFb" = (
 /obj/structure/table,
 /obj/item/weapon/storage/toolbox/electrical,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "redyellowfull"
@@ -29446,6 +31201,21 @@
 	icon_state = "wood"
 	},
 /area/custom/tophat)
+"nHS" = (
+/obj/structure/rack,
+/obj/item/clothing/under/color/red,
+/obj/item/clothing/shoes/brown,
+/obj/item/weapon/melee/energy/axe,
+/obj/effect/decal/turf_decal/alpha/dark_red{
+	icon_state = "siding_line"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/tdome)
 "nIb" = (
 /turf/unsimulated/wall/log,
 /area/custom/tophat)
@@ -29458,6 +31228,22 @@
 	},
 /turf/unsimulated/beach/sand,
 /area/custom/beach)
+"nJo" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/centcom/control)
+"nJP" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/prison)
 "nKb" = (
 /obj/structure/table/woodentable,
 /obj/machinery/chem_dispenser/soda{
@@ -29487,6 +31273,7 @@
 	name = "Space Traders Shuttle";
 	req_access = list(74)
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "nLb" = (
@@ -29521,6 +31308,15 @@
 "nNb" = (
 /turf/unsimulated/floor/carpet/black,
 /area/custom/tophat)
+"nNR" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/centcom/living)
 "nPT" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -29563,6 +31359,9 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "nSb" = (
@@ -29588,8 +31387,22 @@
 /obj/machinery/door/firedoor{
 	dir = 4
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor,
 /area/velocity/checkpoint)
+"nTs" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/garland/halloween,
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/custom/syndicate_mothership)
 "nUb" = (
 /obj/structure/table/woodentable,
 /obj/item/ashtray/bronze{
@@ -29657,6 +31470,7 @@
 	opacity = 0
 	},
 /obj/structure/plasticflaps/explosion_proof,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/waitingroom)
 "nZj" = (
@@ -29686,6 +31500,9 @@
 	layer = 3.5
 	},
 /obj/structure/centcom_barrier,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "obb" = (
@@ -29703,6 +31520,9 @@
 	opacity = 0
 	},
 /obj/structure/plasticflaps/explosion_proof,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "obR" = (
@@ -29761,6 +31581,16 @@
 	},
 /turf/environment/space,
 /area/space)
+"odz" = (
+/obj/structure/window/fulltile/reinforced/polarized{
+	id = "traders"
+	},
+/obj/structure/window/shuttle{
+	icon_state = "window_gray"
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/space)
 "oeb" = (
 /obj/effect/step_trigger/thrower{
 	affect_ghosts = 1;
@@ -29840,6 +31670,17 @@
 	icon_state = "heaven"
 	},
 /area/pluvian_heaven)
+"opP" = (
+/obj/machinery/computer/mech_bay_power_console{
+	dir = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "bcircuit"
+	},
+/area/centcom/specops)
 "oqb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "11,8"
@@ -29855,6 +31696,13 @@
 	},
 /turf/simulated/shuttle/floor/evac/sec2,
 /area/shuttle/escape/centcom)
+"orH" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland/halloween,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/velocity/locker)
 "osb" = (
 /obj/structure/object_wall/evac{
 	density = 0;
@@ -29951,14 +31799,28 @@
 /area/shuttle/escape/centcom)
 "oCb" = (
 /obj/structure/curtain/open,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/shuttle/floor/evac,
 /area/shuttle/escape/centcom)
+"oCV" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "green"
+	},
+/area/centcom/tdome)
 "oCX" = (
 /obj/structure/flora/ausbushes/pointybush,
 /obj/effect/decal/turf_decal/wood{
 	dir = 1;
 	icon_state = "spline_fancy"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "grass2"
 	},
@@ -29993,6 +31855,7 @@
 	dock_tag = "specops_shuttle";
 	name = "Specops Shuttle"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/specops)
 "oHb" = (
@@ -30015,6 +31878,16 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"oJr" = (
+/obj/structure/stool/bed/chair/comfy/black{
+	dir = 8
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor,
+/area/centcom/bar)
 "oKb" = (
 /obj/structure/stool/bed/roller,
 /obj/machinery/iv_drip,
@@ -30046,6 +31919,11 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"oMC" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor,
+/area/custom/syndicate_mothership)
 "oNb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "5,12"
@@ -30080,12 +31958,44 @@
 	icon_state = "dark"
 	},
 /area/centcom/evac)
+"oQx" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "brown"
+	},
+/area/centcom/bar)
 "oRb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "15,12"
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"oRN" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor,
+/area/centcom/specops)
+"oRV" = (
+/obj/machinery/door/airlock/centcom{
+	dir = 4;
+	name = "Living Quarters";
+	req_access = list(105)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/unsimulated/floor,
+/area/centcom/living)
 "oSb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "1,11"
@@ -30106,6 +32016,16 @@
 	icon_state = "dark"
 	},
 /area/centcom/control)
+"oSN" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/hos,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/living)
 "oTb" = (
 /obj/item/weapon/storage/firstaid/fire{
 	pixel_x = 2;
@@ -30118,6 +32038,30 @@
 /obj/item/weapon/storage/firstaid/adv,
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
+"oTW" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
+"oUa" = (
+/obj/structure/rack,
+/obj/item/clothing/under/color/green,
+/obj/item/clothing/shoes/brown,
+/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/head/helmet/swat,
+/obj/item/weapon/gun/energy/laser,
+/obj/effect/decal/turf_decal/alpha/green{
+	dir = 1;
+	icon_state = "siding_wideplating_line"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/tdome)
 "oUb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "5,11"
@@ -30156,6 +32100,15 @@
 "oXd" = (
 /turf/simulated/shuttle/floor/vox,
 /area/custom/syndicate_mothership/droppod_garage)
+"oXG" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor,
+/area/centcom/control)
 "oZb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "5,10"
@@ -30196,6 +32149,9 @@
 /area/centcom/waitingroom)
 "pdD" = (
 /obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -30228,6 +32184,7 @@
 	name = "Security Doors";
 	opacity = 0
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "pgb" = (
@@ -30238,6 +32195,9 @@
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
@@ -30291,6 +32251,7 @@
 /area/shuttle/escape/centcom)
 "pmN" = (
 /obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor,
 /area/centcom/waitingroom)
 "pnb" = (
@@ -30391,6 +32352,12 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"pvN" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/weapon/carved_pumpkin/candled,
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/custom/syndicate_mothership)
 "pwb" = (
 /obj/structure/object_wall/evac{
 	icon_state = "5,22";
@@ -30424,6 +32391,7 @@
 	icon_state = "bot"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity)
 "pyb" = (
@@ -30452,12 +32420,31 @@
 	icon_state = "barber"
 	},
 /area/velocity/locker)
+"pAC" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/centcom/control)
 "pCb" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
 	dock_tag = "escape_shuttle";
 	name = "Arrival Airlock";
 	req_access = list(1)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
+"pCn" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
@@ -30506,6 +32493,7 @@
 /area/shuttle/escape/centcom)
 "pIJ" = (
 /obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland/halloween,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
@@ -30555,6 +32543,22 @@
 	},
 /turf/simulated/shuttle/floor/evac/medbay,
 /area/shuttle/escape/centcom)
+"pNo" = (
+/obj/machinery/door/airlock/centcom{
+	dir = 4;
+	name = "Interrogation";
+	req_access = list(101)
+	},
+/obj/machinery/door/firedoor{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "bcircuitoff"
+	},
+/area/velocity)
 "pNz" = (
 /turf/unsimulated/floor{
 	dir = 1;
@@ -30568,6 +32572,12 @@
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
+/area/centcom/control)
+"pOY" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor,
 /area/centcom/control)
 "pQb" = (
 /obj/machinery/computer/med_data{
@@ -30601,6 +32611,14 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"pVf" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/living)
 "pWb" = (
 /obj/structure/object_wall/evac{
 	density = 0;
@@ -30648,6 +32666,9 @@
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "green"
@@ -30659,6 +32680,13 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"pZa" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/space)
 "qab" = (
 /obj/machinery/computer/aifixer,
 /turf/simulated/shuttle/floor/evac,
@@ -30685,12 +32713,31 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"qcT" = (
+/obj/machinery/door/airlock/centcom{
+	dir = 4;
+	name = "Bridge";
+	req_access = list(109)
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/control)
 "qeb" = (
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "brown"
 	},
 /area/velocity)
+"qem" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/tinsel/halloween,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "qeL" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /obj/effect/decal/turf_decal/wood{
@@ -30726,6 +32773,14 @@
 	icon_state = "heaven"
 	},
 /area/pluvian_heaven)
+"qmN" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/structure/stool/bed/chair/schair/wagon/green,
+/obj/item/decoration/tinsel/halloween,
+/turf/simulated/shuttle/floor/evac/place,
+/area/shuttle/escape/centcom)
 "qnn" = (
 /obj/structure/table,
 /obj/random/tools/tool,
@@ -30752,6 +32807,21 @@
 	},
 /turf/unsimulated/floor/carpet/blue2,
 /area/pluvian_heaven)
+"qqL" = (
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "ck_comf_blast";
+	name = "Conference Room Blast Doors";
+	opacity = 0
+	},
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/living)
 "qsd" = (
 /obj/machinery/recharge_station,
 /obj/structure/sign/poster/contraband/borg_fancy_2{
@@ -30797,6 +32867,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/effect/spawner/mob_spawn/carp/polkan,
 /turf/unsimulated/floor,
 /area/centcom/holding)
 "qzw" = (
@@ -30808,6 +32879,23 @@
 /obj/structure/cult/pylon,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
+"qEp" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/carpet,
+/area/centcom/living)
+"qFa" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "qFs" = (
 /obj/machinery/door/airlock/centcom{
 	dir = 4;
@@ -30819,8 +32907,18 @@
 	id = "ERTBase";
 	name = "ERT"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
+	},
+/area/centcom/specops)
+"qKd" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "darkblue"
 	},
 /area/centcom/specops)
 "qOG" = (
@@ -30848,6 +32946,25 @@
 	icon_state = "floorplating"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"qUq" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	name = "plating"
+	},
+/area/velocity)
+"qWn" = (
+/obj/structure/displaycase/noalert{
+	req_access = list(74)
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/space)
 "qXA" = (
 /obj/effect/decal/turf_decal/blue{
 	dir = 8;
@@ -30868,16 +32985,62 @@
 	name = "Monorail Tunnel"
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity)
+"rdM" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
+"rht" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
+/turf/unsimulated/floor,
+/area/centcom/specops)
+"riU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/space_traders/product,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/simulated/shuttle/floor/erokez{
+	icon_state = "floor"
+	},
+/area/shuttle/trader/space)
 "rkK" = (
 /obj/structure/mirror{
 	pixel_x = 28
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor{
 	icon_state = "dark"
 	},
 /area/velocity/locker)
+"rkT" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/centcom/living)
+"rnb" = (
+/obj/structure/stool/bed/chair/schair/wagon/green,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/simulated/shuttle/floor/evac/place,
+/area/shuttle/escape/centcom)
 "rrH" = (
 /obj/structure/sign/directions/security{
 	dir = 1
@@ -30895,6 +33058,25 @@
 /obj/item/weapon/reagent_containers/food/snacks/meatsteak,
 /turf/unsimulated/floor/carpet/blue2,
 /area/pluvian_heaven)
+"rAO" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/centcom/tdome)
+"rCv" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "rEu" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/effect/decal/turf_decal/wood{
@@ -30904,6 +33086,14 @@
 	icon_state = "grass2"
 	},
 /area/centcom/evac)
+"rGW" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/centcom/control)
 "rIG" = (
 /turf/unsimulated/floor{
 	icon_state = "heavenfull2"
@@ -30918,12 +33108,40 @@
 	icon_state = "bluefull"
 	},
 /area/velocity/dormitories)
+"rUj" = (
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "neutralcorner"
+	},
+/area/centcom/bar)
 "rUn" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
 /area/centcom/control)
+"rVn" = (
+/obj/structure/rack,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
 "rXM" = (
 /obj/item/weapon/flora/random,
 /turf/simulated/shuttle/floor/vox,
@@ -30964,6 +33182,20 @@
 	},
 /turf/environment/space,
 /area/space)
+"skk" = (
+/obj/structure/window/thin/reinforced{
+	dir = 8
+	},
+/obj/structure/sign/mark{
+	icon_state = "4";
+	layer = 3.5;
+	pixel_x = -26
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/living)
 "skC" = (
 /obj/item/weapon/reagent_containers/blood/AMinus{
 	pixel_x = -7;
@@ -31083,6 +33315,21 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
+"sDn" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/centcom/living)
+"sDz" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "brown"
+	},
+/area/centcom/control)
 "sEb" = (
 /obj/structure/stool/bed/chair/office/light{
 	dir = 8
@@ -31104,6 +33351,9 @@
 /turf/simulated/shuttle/floor/erokez,
 /area/shuttle/trader/space)
 "sLn" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "darkgreencorners"
@@ -31115,15 +33365,45 @@
 	dir = 1;
 	icon_state = "spline_fancy"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor{
 	icon_state = "grass2"
 	},
 /area/centcom/evac)
+"sMG" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership)
 "sPb" = (
 /obj/structure/closet/wardrobe/red,
 /obj/structure/centcom_barrier,
 /turf/unsimulated/floor,
 /area/velocity)
+"sQg" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "vaultfull"
+	},
+/area/centcom/tdome)
+"sQV" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/evac)
+"sTZ" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/control)
 "sVJ" = (
 /obj/item/weapon/flora/pottedplant/orientaltree,
 /turf/unsimulated/floor{
@@ -31136,6 +33416,7 @@
 	dir = 6;
 	icon_state = "warn"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor,
 /area/centcom/prison)
 "sYp" = (
@@ -31159,6 +33440,16 @@
 	icon_state = "purplechecker"
 	},
 /area/velocity/locker)
+"sYH" = (
+/obj/structure/sign/warning/securearea{
+	name = "За этой стеной ничего нету";
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	dir = 6;
+	icon_state = "black"
+	},
+/area/centcom/specops)
 "tbW" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	locked = 1;
@@ -31168,8 +33459,21 @@
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity)
+"tiK" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor{
+	icon_state = "darkblue"
+	},
+/area/centcom/control)
 "tjK" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/paper_bin{
@@ -31193,6 +33497,50 @@
 /obj/structure/cult/statue/camera/gargoyle,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"tqY" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
+"trd" = (
+/obj/structure/stool/bed/chair/metal/white{
+	dir = 4
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"tre" = (
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "neutral"
+	},
+/area/centcom/bar)
+"tsC" = (
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor,
+/area/centcom/bar)
+"twK" = (
+/obj/structure/window/thin/reinforced{
+	dir = 4
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/living)
 "tyc" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -31214,8 +33562,16 @@
 	name = "General Access";
 	req_access = list(101)
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
+	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"tBY" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland/halloween,
+/turf/unsimulated/floor,
+/area/custom/syndicate_mothership)
 "tCc" = (
 /obj/structure/mineral_door/cult{
 	dir = 4
@@ -31232,10 +33588,29 @@
 /obj/machinery/door/airlock/hatch{
 	locked = 1
 	},
+/obj/item/decoration/tinsel/halloween,
 /turf/simulated/shuttle/floor{
 	icon_state = "vwall12"
 	},
 /area/velocity/monorailwagon)
+"tEf" = (
+/obj/effect/decal/turf_decal{
+	dir = 4;
+	icon_state = "warn"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor,
+/area/centcom/control)
+"tFo" = (
+/obj/structure/table/reinforced,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "green"
+	},
+/area/velocity)
 "tFF" = (
 /obj/structure/sign/nanotrasen{
 	pixel_y = 32
@@ -31302,6 +33677,11 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"tZQ" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/bar)
 "uaE" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -31336,6 +33716,9 @@
 	dir = 1;
 	icon_state = "warn"
 	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
 "ueu" = (
@@ -31345,6 +33728,16 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity/exit)
+"uhX" = (
+/obj/effect/decal/turf_decal{
+	dir = 1;
+	icon_state = "warn"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "uiW" = (
 /obj/structure/sign/departments/security{
 	pixel_x = -32
@@ -31354,6 +33747,20 @@
 	icon_state = "redcorner"
 	},
 /area/centcom/specops)
+"uoZ" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/specops)
+"usA" = (
+/obj/effect/decal/turf_decal/wood/dark{
+	icon_state = "siding_wood_line"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor/carpet/black,
+/area/custom/syndicate_mothership)
 "usD" = (
 /obj/structure/reagent_dispensers/peppertank{
 	pixel_x = -30
@@ -31379,6 +33786,21 @@
 	icon_state = "bcircuit"
 	},
 /area/custom/syndicate_mothership/control)
+"uyY" = (
+/obj/structure/stool/bed/chair/metal/white{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"uAQ" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "uBr" = (
 /obj/structure/rack,
 /obj/item/device/flashlight,
@@ -31414,6 +33836,37 @@
 	},
 /turf/unsimulated/floor,
 /area/velocity)
+"uGJ" = (
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 1
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "black"
+	},
+/area/custom/syndicate_mothership)
+"uIe" = (
+/obj/structure/stool/bed,
+/obj/item/weapon/bedsheet/hos,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/living)
+"uKf" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "CentComConv01"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor,
+/area/centcom/holding)
 "uPk" = (
 /obj/effect/decal/turf_decal{
 	dir = 5;
@@ -31425,7 +33878,6 @@
 /obj/structure/sign/mark{
 	icon_state = "yrt"
 	},
-/obj/machinery/light/small,
 /obj/effect/decal/turf_decal{
 	dir = 9;
 	icon_state = "warn"
@@ -31444,6 +33896,36 @@
 	icon_state = "wood"
 	},
 /area/centcom/bar)
+"uVi" = (
+/obj/structure/rack,
+/obj/item/clothing/suit/space/rig/ert/engineer,
+/obj/item/clothing/head/helmet/space/rig/ert/engineer,
+/obj/item/device/flash,
+/obj/item/device/multitool,
+/obj/item/clothing/accessory/storage/brown_vest,
+/obj/item/weapon/storage/belt/utility/full,
+/obj/item/clothing/glasses/meson,
+/obj/item/weapon/storage/backpack/ert/engineer,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/specops)
+"uVX" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "CentComConv01"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor,
+/area/centcom/holding)
 "uXb" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -31463,12 +33945,27 @@
 /obj/structure/closet/firecloset,
 /turf/unsimulated/floor,
 /area/velocity)
+"uXK" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	dir = 5;
+	icon_state = "darkblue"
+	},
+/area/centcom/specops)
+"uXO" = (
+/obj/structure/lattice,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/environment/space,
+/area/space)
 "vak" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
 	dock_tag = "pod2";
 	locked = 1;
 	name = "Arrival Airlock"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 8
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
@@ -31501,6 +33998,22 @@
 	icon_state = "dark"
 	},
 /area/velocity/locker)
+"vco" = (
+/obj/structure/stool/bed/chair/metal/white{
+	dir = 8
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/evac)
+"vcE" = (
+/obj/effect/landmark/space_traders/product,
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/simulated/shuttle/floor/erokez,
+/area/shuttle/trader/space)
 "vdY" = (
 /obj/structure/window/thin/reinforced{
 	dir = 8
@@ -31514,6 +34027,13 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"vhL" = (
+/obj/effect/decal/turf_decal{
+	icon_state = "warn"
+	},
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor,
+/area/centcom/control)
 "vir" = (
 /obj/structure/closet/wardrobe/black,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -31549,6 +34069,14 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"vnw" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "engine"
+	},
+/area/centcom/control)
 "voA" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -31582,8 +34110,14 @@
 	icon_state = "warn"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor,
 /area/velocity)
+"vsL" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/decoration/garland/halloween,
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "vyy" = (
 /obj/structure/stool/bed/chair/wood/normal{
 	dir = 1
@@ -31596,10 +34130,38 @@
 	icon_state = "white"
 	},
 /area/centcom/living)
+"vzM" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor,
+/area/centcom/evac)
+"vBE" = (
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership)
 "vDJ" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/unsimulated/floor/cult/lava,
 /area/custom/cult)
+"vFi" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "brownold"
+	},
+/area/centcom/bar)
+"vGo" = (
+/obj/machinery/computer/card/centcom,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor/carpet,
+/area/centcom/living)
 "vHt" = (
 /obj/machinery/light,
 /turf/unsimulated/floor,
@@ -31630,6 +34192,17 @@
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/unsimulated/floor/cult,
 /area/custom/cult)
+"vLt" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "darkblue"
+	},
+/area/centcom/control)
 "vNL" = (
 /turf/unsimulated/wall/like_a_normal/beige,
 /area/velocity/dormitories)
@@ -31677,12 +34250,27 @@
 	},
 /area/custom/syndicate_mothership/elite_squad)
 "vXS" = (
-/obj/item/weapon/flora/random,
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor,
 /area/centcom/specops)
 "vYm" = (
 /turf/environment/space,
 /area/shuttle/escape_pod6/centcom)
+"vYG" = (
+/obj/structure/stool/bed/chair/schair/wagon/green,
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/simulated/shuttle/floor/evac,
+/area/shuttle/escape/centcom)
+"wdg" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/garland/halloween,
+/turf/unsimulated/floor,
+/area/centcom/control)
 "weI" = (
 /turf/unsimulated/floor,
 /area/velocity)
@@ -31703,6 +34291,18 @@
 "wtx" = (
 /turf/simulated/wall/cult/runed/anim,
 /area/custom/cult)
+"wwS" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/centcom/living)
 "wBQ" = (
 /obj/effect/decal/turf_decal/blue{
 	dir = 1;
@@ -31715,16 +34315,49 @@
 "wDJ" = (
 /turf/unsimulated/wall/like_a_normal/beige,
 /area/velocity/exit)
+"wEt" = (
+/obj/structure/rack,
+/obj/item/clothing/under/color/green,
+/obj/item/clothing/shoes/brown,
+/obj/item/weapon/melee/energy/axe,
+/obj/effect/decal/turf_decal/alpha/green{
+	icon_state = "siding_wideplating_line"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/tdome)
+"wHU" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership)
 "wKA" = (
 /obj/machinery/door/airlock/centcom{
 	dir = 4;
 	name = "Waiting Room"
+	},
+/obj/item/decoration/tinsel/halloween{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "green"
 	},
 /area/centcom/waitingroom)
+"wKQ" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/simulated/shuttle/floor/evac,
+/area/shuttle/escape/centcom)
 "wMF" = (
 /turf/unsimulated/floor{
 	dir = 4;
@@ -31740,6 +34373,9 @@
 	},
 /obj/structure/stool{
 	pixel_y = 3
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "purplechecker"
@@ -31763,22 +34399,45 @@
 	icon_state = "floorcatwalk"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"wSI" = (
+/obj/structure/window/fulltile/reinforced/indestructible,
+/obj/item/weapon/carved_pumpkin/candled,
+/turf/unsimulated/floor{
+	icon_state = "plating"
+	},
+/area/velocity/exit)
 "wXB" = (
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "heaven"
 	},
 /area/pluvian_heaven)
+"wYb" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "dark"
+	},
+/area/centcom/living)
 "xdd" = (
 /obj/machinery/door/airlock/centcom{
 	req_access = list(101)
 	},
 /obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel/halloween,
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "bluefull"
 	},
 /area/velocity)
+"xfA" = (
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "wood"
+	},
+/area/centcom/living)
 "xiC" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Parking mark";
@@ -31796,6 +34455,25 @@
 	icon_state = "engine"
 	},
 /area/velocity)
+"xiU" = (
+/obj/structure/stool/bed/chair/metal/white{
+	dir = 4
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	dir = 8;
+	icon_state = "green"
+	},
+/area/centcom/evac)
+"xpb" = (
+/obj/item/decoration/garland/halloween{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "darkred"
+	},
+/area/custom/syndicate_mothership/droppod_garage)
 "xpj" = (
 /obj/structure/sign/velocity_overlay{
 	desc = "Engine looks like broken";
@@ -31817,6 +34495,41 @@
 	icon_state = "floorcatwalk"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"xtK" = (
+/obj/structure/table,
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	icon_state = "cafeteria"
+	},
+/area/centcom/living)
+"xuG" = (
+/obj/structure/stool/bed/chair/metal/white{
+	dir = 8
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor{
+	dir = 4;
+	icon_state = "green"
+	},
+/area/centcom/evac)
+"xxj" = (
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "neutralcorner"
+	},
+/area/centcom/bar)
+"xyv" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/obj/item/decoration/garland/halloween,
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "xzy" = (
 /obj/structure/object_wall/standart{
 	icon_state = "wall3"
@@ -31855,10 +34568,21 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"xHF" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/item/decoration/tinsel/halloween,
+/turf/unsimulated/floor,
+/area/centcom/evac)
 "xJb" = (
 /obj/effect/decal/turf_decal{
 	dir = 8;
 	icon_state = "warn"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_y = -32
 	},
 /turf/unsimulated/floor{
 	icon_state = "green"
@@ -31884,14 +34608,28 @@
 	dir = 10;
 	icon_state = "siding_line"
 	},
+/obj/item/weapon/carved_pumpkin/candled,
 /turf/unsimulated/floor,
 /area/centcom/tdome)
+"xMt" = (
+/obj/item/decoration/garland/halloween{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor,
+/area/centcom/holding)
 "xTK" = (
 /obj/structure/window/fulltile/reinforced/indestructible,
 /turf/unsimulated/floor{
 	icon_state = "plating"
 	},
 /area/velocity)
+"xUr" = (
+/obj/item/decoration/tinsel/halloween{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor,
+/area/centcom/living)
 "xWI" = (
 /turf/unsimulated/floor{
 	dir = 9;
@@ -31914,6 +34652,17 @@
 	icon_state = "engine"
 	},
 /area/velocity)
+"ybc" = (
+/obj/structure/table,
+/obj/item/device/radio/headset/ert,
+/obj/item/clothing/glasses/hud/health,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "grimy"
+	},
+/area/centcom/living)
 "ycG" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Restroom";
@@ -31923,6 +34672,15 @@
 	icon_state = "floorcatwalk"
 	},
 /area/custom/syndicate_mothership/elite_squad)
+"ycQ" = (
+/obj/structure/closet/secure_closet/freezer/meat,
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/centcom/tdome)
 "ydy" = (
 /obj/structure/stool/bed/chair/schair/monorail_chair{
 	dir = 8;
@@ -31965,6 +34723,16 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/waitingroom)
+"ykr" = (
+/obj/effect/decal/turf_decal{
+	dir = 8;
+	icon_state = "warn"
+	},
+/obj/item/decoration/garland/halloween{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor,
+/area/centcom/evac)
 
 (1,1,1) = {"
 ahG
@@ -49593,9 +52361,9 @@ aaM
 aaM
 aaM
 aHv
-abn
+tqY
 bNb
-abn
+tqY
 aHv
 aaM
 aaM
@@ -49852,7 +52620,7 @@ aHv
 aHv
 hwb
 hGb
-hGb
+qFa
 aHv
 aHv
 aaM
@@ -50105,13 +52873,13 @@ aaM
 aaM
 aaM
 aaM
-abn
+lxG
 hgb
 hxb
 ifb
 hNb
-hRb
-abn
+bZI
+lxG
 aaM
 aaM
 aKu
@@ -50147,13 +52915,13 @@ akG
 alf
 aaM
 aaM
-abn
+vzM
 pbb
 hyb
 aII
 hOb
 afQ
-abn
+vzM
 aaM
 aaM
 aaM
@@ -50398,7 +53166,7 @@ agu
 agC
 agR
 ahj
-agT
+bKi
 awj
 awA
 akZ
@@ -50619,13 +53387,13 @@ aKl
 aKl
 aKl
 aaM
-abn
+lxG
 hhb
 hzb
 hIb
 hPb
-hRb
-abn
+rdM
+lxG
 aaM
 aaM
 aKu
@@ -51136,7 +53904,7 @@ aaM
 aaM
 aHv
 aHv
-aIO
+rCv
 aHv
 aHv
 aaM
@@ -51177,9 +53945,9 @@ omb
 aaM
 aaM
 aaM
-abn
+vzM
 keZ
-abn
+vsL
 aaM
 aaM
 aaM
@@ -51187,7 +53955,7 @@ aaM
 aaM
 aaM
 aRs
-aac
+fAI
 aeB
 aac
 afz
@@ -51392,9 +54160,9 @@ aKl
 aaM
 aaM
 aaM
-abn
+vzM
 aII
-abn
+vzM
 aaM
 aaM
 aaM
@@ -51434,9 +54202,9 @@ aaM
 aaM
 aaM
 aaM
-abn
+vsL
 gPl
-abn
+vsL
 aaM
 aaM
 aaM
@@ -51643,14 +54411,14 @@ cOr
 cOr
 cOr
 aHv
-abn
+tqY
 eNc
-abn
+tqY
 aHv
 aaM
 aHv
 aHv
-hGb
+dEv
 aHv
 aHv
 aaM
@@ -51691,9 +54459,9 @@ aaM
 aaM
 aaM
 aaM
-abn
+vsL
 keZ
-abn
+vsL
 aaM
 aaM
 aaM
@@ -51701,7 +54469,7 @@ aaM
 aaM
 aaM
 aVM
-aac
+vYG
 aeU
 aac
 aga
@@ -51947,10 +54715,10 @@ aHv
 aHv
 aHv
 aHv
-abn
-abn
+vsL
+vsL
 nRR
-abn
+vsL
 aaM
 aaM
 aaM
@@ -52157,17 +54925,17 @@ cOr
 cOr
 cOr
 aHv
-hxb
+iqP
 hHb
 hNb
 hRb
-abn
+qem
 hgb
 hxb
 ifb
 hNb
-hRb
-abn
+bZI
+lxG
 aaM
 aaM
 aKu
@@ -52202,12 +54970,12 @@ ahr
 agY
 nfb
 cvs
-hGb
+ykr
 hGb
 hGb
 hGb
 cvu
-abn
+vzM
 aaM
 phb
 plb
@@ -52218,14 +54986,14 @@ iPu
 abE
 aad
 aff
-oOb
+hDV
 aRG
 aRG
-aWR
+iYd
 oOb
 bJl
 adT
-aWR
+cYY
 oOb
 aWR
 aad
@@ -52418,7 +55186,7 @@ hyb
 aII
 hOb
 hSb
-aII
+kzA
 hZb
 hyb
 aII
@@ -52459,7 +55227,7 @@ ahr
 agT
 nfb
 uPk
-aIO
+ckv
 pMb
 aIO
 pfb
@@ -52475,10 +55243,10 @@ aRG
 adO
 afF
 aWR
-aWR
+iYd
 aRG
 aRG
-aWR
+iYd
 aWR
 aWR
 aRG
@@ -52671,17 +55439,17 @@ vYm
 vYm
 vYm
 aHv
-hzb
+hCa
 hIb
 hPb
 hRb
-abn
+qem
 hhb
 hzb
 ihb
 hPb
-hRb
-abn
+rdM
+lxG
 aaM
 aaM
 aKu
@@ -52732,10 +55500,10 @@ aRG
 aRG
 abX
 aRG
+lpk
 aRG
 aRG
-aRG
-aRG
+lpk
 aRG
 aRG
 aRG
@@ -52976,7 +55744,7 @@ aaM
 aaM
 aaM
 aHv
-hgb
+uhX
 hRb
 mWb
 aaM
@@ -52989,10 +55757,10 @@ aRG
 abH
 ozb
 aWR
-aWR
+iYd
 aRG
 aRG
-aWR
+iYd
 aWR
 aWR
 aRG
@@ -53245,15 +56013,15 @@ qab
 iPu
 abI
 aeT
-aWR
-afp
+jOg
+qmN
 aRG
 aRG
-aWR
+iYd
 afp
 ehN
 adU
-aWR
+rnb
 afp
 aWR
 abq
@@ -53442,21 +56210,21 @@ aaM
 aaM
 aaM
 aaM
-abn
+pCn
 bNO
-abn
+pCn
 aaM
 aaM
 aaM
-abn
-aFf
-abn
+vsL
+nkS
+vsL
 aaM
 aaM
 aaM
-abn
+vsL
 bNb
-abn
+vsL
 aaM
 aaM
 aaM
@@ -53705,15 +56473,15 @@ aID
 aaM
 aaM
 aaM
-abn
-aIS
-abn
+vsL
+aII
+vsL
 aaM
 aaM
 aaM
-abn
-aIS
-abn
+vsL
+aII
+vsL
 aaM
 aaM
 aNs
@@ -53747,7 +56515,7 @@ aaM
 aaM
 aaM
 aHv
-hgb
+uhX
 adD
 mZb
 aaM
@@ -53760,7 +56528,7 @@ abV
 aYJ
 abF
 aRG
-aRG
+wKQ
 aRG
 aRG
 anc
@@ -53962,25 +56730,25 @@ aID
 aaM
 aaM
 aaM
-abn
+vsL
 aII
-abn
+vsL
 aaM
 aaM
 aaM
-abn
+vsL
 aII
-abn
+vsL
 aaM
 aaM
 aNs
+loU
 aOF
 aOF
-aOF
-aOF
+loU
 aOF
 kIb
-aOF
+loU
 qym
 aNH
 aOA
@@ -54004,7 +56772,7 @@ auw
 aaM
 aaM
 aHv
-hgb
+uhX
 hRb
 mWb
 aaM
@@ -54219,15 +56987,15 @@ aID
 aHv
 aHv
 aHv
-abn
-aFf
-abn
+vsL
+nkS
+vsL
 aHv
 aHv
 aHv
-abn
+vsL
 bNb
-abn
+vsL
 aHv
 aHv
 aNs
@@ -54475,7 +57243,7 @@ aID
 aID
 aHv
 ccp
-aIc
+xyv
 aII
 aII
 aII
@@ -54485,13 +57253,13 @@ hgb
 aII
 aII
 aII
-aIc
+gZu
 sLW
 aNs
 aLL
 aNs
 aOF
-aOF
+hjL
 aOF
 aOF
 aNl
@@ -54732,17 +57500,17 @@ aaM
 aaM
 aHv
 rEu
-aIc
+xyv
 aIB
 aII
 aII
 hRb
-aII
+oTW
 hgb
 aII
 aII
 aIB
-aIc
+gZu
 qbV
 aNs
 iLb
@@ -54775,7 +57543,7 @@ aaM
 aaM
 aaM
 aHv
-hgb
+uhX
 hRb
 aHv
 aaM
@@ -54785,17 +57553,17 @@ aaM
 aaM
 aaM
 aaM
-abn
+vsL
 aem
 aem
-abn
+vsL
 aem
 aem
-abn
+vsL
 aaM
-abn
+vsL
 pCb
-abn
+vsL
 osb
 pWb
 aaM
@@ -55002,7 +57770,7 @@ aHv
 aHv
 aHv
 aNs
-aOF
+xMt
 aMb
 aNo
 jlb
@@ -55042,17 +57810,17 @@ aaM
 aaM
 aaM
 aaM
-abn
-akd
-amc
-abn
+nhv
 gyP
-apL
-abn
+amc
+nhv
+gyP
+amc
+nhv
 aaM
-abn
+nhv
 uQt
-abn
+nhv
 aaM
 aaM
 aaM
@@ -55255,7 +58023,7 @@ aJF
 hGb
 hGb
 hGb
-ivb
+xiU
 iBb
 ivb
 lhU
@@ -55284,30 +58052,30 @@ eYp
 mlb
 aOF
 aVu
-aVK
+trd
 aWb
 aVK
-aVK
+trd
 aVK
 hgb
 hRb
-aVK
-aVK
+uyY
+trd
 aRt
 aHv
-abn
-abn
-abn
-abn
+vsL
+vsL
+vsL
+vsL
 aaX
 udL
 lXo
 aaX
 udL
 lXo
-abn
+vsL
 aaX
-abn
+vsL
 jxq
 aaX
 aaM
@@ -55488,7 +58256,7 @@ baZ
 aDG
 bav
 aDG
-aBp
+msE
 aDG
 bbc
 aDG
@@ -55502,20 +58270,20 @@ aBp
 aaM
 aaM
 aHv
-mHb
+byX
 aIc
 aII
 aII
 aII
 aII
+kzA
 aII
 aII
 aII
+kzA
 aII
 aII
-aII
-aII
-aOF
+boc
 aOF
 aOF
 jab
@@ -55540,7 +58308,7 @@ aMC
 mgb
 aMD
 aOF
-lXb
+bqB
 mub
 hGb
 hGb
@@ -55548,7 +58316,7 @@ hGb
 mub
 aVR
 adI
-hGb
+xHF
 mub
 ajc
 iJb
@@ -55566,7 +58334,7 @@ hGb
 hGb
 hGb
 xEl
-abn
+vzM
 aaM
 aaM
 aaM
@@ -55741,7 +58509,7 @@ aaM
 aaM
 aaM
 aBp
-aCD
+jBe
 aCi
 aCD
 aCi
@@ -55749,7 +58517,7 @@ aBp
 aCi
 aCD
 aCi
-aCD
+opP
 aBp
 ayY
 bfm
@@ -55765,14 +58533,14 @@ aII
 aII
 aII
 aII
+kzA
 aII
 aII
 aII
+kzA
 aII
 aII
-aII
-aII
-aOF
+boc
 aOF
 aOF
 jab
@@ -55797,7 +58565,7 @@ aTZ
 mob
 aMD
 aOF
-aPn
+afl
 ndb
 aIO
 aIO
@@ -55805,7 +58573,7 @@ aIO
 ndb
 aIO
 aIO
-aIO
+sQV
 ndb
 aIO
 afL
@@ -55823,7 +58591,7 @@ aIO
 aIO
 aIO
 hHp
-abn
+vsL
 aaM
 aaM
 aaM
@@ -56026,7 +58794,7 @@ aJG
 aIO
 aIO
 aIO
-aKK
+xuG
 aLc
 aKK
 nhJ
@@ -56062,7 +58830,7 @@ aSc
 aSc
 aSc
 aSc
-aSc
+vco
 aSC
 aRt
 aHv
@@ -56080,7 +58848,7 @@ oQb
 oXb
 aSc
 aSc
-abn
+vsL
 aaM
 aaM
 aaM
@@ -56277,17 +59045,17 @@ aHv
 aHv
 aHv
 iib
-joI
+eGR
 iib
 aHv
 iib
-joI
+eGR
 iib
 aHv
 aHv
 aHv
 aNs
-aOF
+xMt
 aSE
 aNw
 jlb
@@ -56315,29 +59083,29 @@ aNs
 aHv
 aHv
 aHv
-abn
-abn
-abn
-abn
+vsL
+vsL
+vsL
+vsL
 aHv
 aHv
 aHv
 aHv
-abn
-abn
-abn
+vsL
+vsL
+nhv
 aHv
-aIc
-aIc
-aIc
-aIc
-aIc
-aIc
+mRq
+mRq
+mRq
+mRq
+mRq
+mRq
 aHv
-abn
-abn
-abn
-abn
+vzM
+vsL
+vsL
+vzM
 aaM
 aaM
 aaM
@@ -56512,7 +59280,7 @@ aaM
 aaM
 aaM
 aBp
-hcb
+uXK
 aAP
 aAP
 aAP
@@ -56520,7 +59288,7 @@ aAP
 aAP
 aAP
 aAP
-aBa
+qKd
 aBp
 ayX
 bfl
@@ -56531,17 +59299,17 @@ aBp
 aaM
 aHv
 mHb
-aIc
+xyv
 aIC
 aII
 aII
 hRb
-aII
+uAQ
 hgb
 aII
 aII
 aIC
-aIc
+gZu
 qeL
 aNs
 aNs
@@ -56788,7 +59556,7 @@ aBp
 aaM
 aHv
 ipb
-aIc
+xyv
 aII
 aII
 aII
@@ -56798,7 +59566,7 @@ hgb
 aII
 aII
 aII
-aIc
+gZu
 oCX
 aHv
 aaM
@@ -56819,8 +59587,8 @@ aRz
 aMX
 aOF
 adK
+loU
 aOF
-afl
 aOF
 aOF
 aNs
@@ -57034,7 +59802,7 @@ aEK
 aEK
 aBp
 aBp
-frb
+rVn
 aFr
 aFr
 aFr
@@ -57046,15 +59814,15 @@ aBp
 aHv
 aHv
 aHv
-abn
-aFf
-abn
+vsL
+cqL
+vsL
 aHv
 aHv
 aHv
-abn
-aFf
-abn
+vsL
+cqL
+vsL
 aHv
 aHv
 aHv
@@ -57086,7 +59854,7 @@ aNs
 aaM
 aaM
 ahJ
-ahJ
+uXO
 lSb
 lTb
 aqK
@@ -57094,7 +59862,7 @@ apy
 lSb
 app
 aTi
-ahJ
+uXO
 ahJ
 aaM
 aaM
@@ -57144,8 +59912,8 @@ aGC
 aFH
 nUu
 ayS
-gLU
-iSq
+dRn
+pZa
 mpy
 ayS
 gKI
@@ -57303,15 +60071,15 @@ aBp
 aaM
 aaM
 aaM
-abn
-aIS
-abn
+vsL
+aII
+vsL
 aaM
 aaM
 aaM
-abn
-aKw
-abn
+vsL
+aII
+vsL
 aaM
 aaM
 aaM
@@ -57333,12 +60101,12 @@ aea
 nZb
 kIb
 aOF
-aOF
+hjL
 aTF
 aTF
 aTF
-aTF
-aTF
+uKf
+uVX
 aNs
 aaM
 aaM
@@ -57403,7 +60171,7 @@ eue
 ayS
 gVc
 aFH
-mpy
+riU
 ayS
 afu
 cuc
@@ -57560,15 +60328,15 @@ aBp
 aaM
 aaM
 aaM
-abn
+vsL
 gnG
-abn
+vsL
 aaM
 aaM
 aaM
-abn
+vsL
 vak
-abn
+vsL
 aaM
 aaM
 aaM
@@ -57804,7 +60572,7 @@ aAE
 aCV
 aBQ
 aEj
-aaR
+uoZ
 aFv
 bGb
 azF
@@ -58049,14 +60817,14 @@ aaM
 aBp
 aBp
 gbb
-gbb
+uVi
 aBH
 gbb
-gbb
+uVi
 gbb
 frb
 aBp
-bib
+aLp
 aAE
 aCV
 aBQ
@@ -58161,13 +60929,13 @@ aaM
 aaM
 aaM
 abu
-cuc
+lDo
 afu
-aFH
+dVh
 nUu
 aFH
 nUu
-aFZ
+odz
 aGE
 aFH
 nUu
@@ -58324,7 +61092,7 @@ aLt
 aMl
 azE
 azE
-azE
+dIW
 aMl
 aFu
 aBp
@@ -58572,7 +61340,7 @@ aBl
 aCh
 aCo
 aAE
-aCV
+vXS
 aBQ
 aEo
 aEv
@@ -59189,7 +61957,7 @@ aaM
 aaM
 aaM
 abu
-cuc
+lDo
 afu
 ayS
 enM
@@ -59200,9 +61968,9 @@ aGR
 dHO
 aGR
 ayS
-gLU
+dRn
 iSq
-gLU
+bXc
 ayS
 afu
 cuc
@@ -59596,7 +62364,7 @@ aBp
 aBD
 aBP
 aBI
-aCO
+glt
 aBp
 aEN
 aAE
@@ -59606,11 +62374,11 @@ aEp
 aBp
 aHl
 bLb
-bib
+aLp
 azR
 bfq
 aBp
-anv
+nmo
 bLb
 azR
 aMw
@@ -59708,7 +62476,7 @@ cuc
 ayS
 aFD
 aFH
-nUu
+iKz
 ayS
 cuc
 abu
@@ -59852,7 +62620,7 @@ aaM
 aBp
 aBC
 hbb
-bib
+aLp
 aBb
 hXb
 hbb
@@ -59869,7 +62637,7 @@ bfp
 aBp
 anv
 bMb
-azl
+lbM
 aMm
 aBp
 aaM
@@ -59965,14 +62733,14 @@ cuc
 ayS
 afu
 aFJ
-aFD
+qWn
 ayS
 cuc
 abu
 cuc
 ayS
 imk
-sJs
+vcE
 afu
 ayS
 cuc
@@ -60614,11 +63382,11 @@ aaM
 aaM
 aaM
 iIb
-lpG
+lrU
 fBb
 fBb
 fBb
-lpG
+lrU
 iIb
 aaM
 aBp
@@ -60892,10 +63660,10 @@ aBR
 aLE
 aBp
 azm
+mOP
 azm
 azm
-azm
-azm
+mOP
 azm
 aBp
 aaM
@@ -60926,8 +63694,8 @@ knb
 adP
 adP
 aQH
-leb
-aSD
+rUj
+tsC
 lvb
 adP
 aSF
@@ -61170,7 +63938,7 @@ aAm
 aJp
 aJJ
 aAm
-iNb
+dGB
 iNb
 iNb
 aAm
@@ -61180,7 +63948,7 @@ aaM
 adP
 jSb
 jRb
-jRb
+inZ
 kMb
 kWb
 lcb
@@ -61200,14 +63968,14 @@ neb
 neb
 neb
 aWU
-aUb
-aUb
+aKw
+iJd
 aWU
 aUb
-aUb
+iJd
 aWU
 aUb
-aUb
+moJ
 aZd
 neb
 aaM
@@ -61385,16 +64153,16 @@ aaM
 aaM
 aaM
 iIb
-lpG
+lrU
 fDb
 gGb
 ayL
-lpG
-aaR
+lrU
+mOw
 hkb
 aBW
 aBR
-aaR
+com
 aCR
 aAE
 aCV
@@ -61443,19 +64211,19 @@ kWb
 lcb
 lqb
 lzb
-aaU
+tZQ
 aaM
-eYb
+hoL
 aKu
 aaM
 neb
 lKb
+gJh
+sQg
 lKb
-mtb
 lKb
-lKb
-mtb
-lKb
+aet
+gJh
 lKb
 neb
 neb
@@ -61672,7 +64440,7 @@ aMs
 avI
 bbk
 aAm
-aIh
+knK
 aAm
 aAm
 eIp
@@ -61700,7 +64468,7 @@ kWb
 ldb
 lqb
 nBb
-aaU
+tZQ
 aaM
 lSb
 aKu
@@ -61931,16 +64699,16 @@ bbo
 aAm
 aIh
 aAm
+dsB
+aJf
+wwS
 aJf
 aJf
-aJL
+wwS
 aJf
 aJf
-aJL
-aJf
-aJf
-aJf
-aJL
+akd
+ktY
 iNb
 iTb
 jcb
@@ -61957,17 +64725,17 @@ kWb
 leb
 lqb
 nBb
-aaU
+tZQ
 aaM
 lTb
 aKu
 aaM
 neb
-mqb
+msb
 neb
 aVC
 aVC
-aWk
+ycQ
 aWk
 neb
 neb
@@ -62156,16 +64924,16 @@ aaM
 aaM
 aaM
 iIb
-lpG
+lrU
 fUb
 gGb
 ayL
-lpG
-aaR
+lrU
+mOw
 aAD
 aBG
 aBS
-aaR
+com
 aCc
 aAE
 aCV
@@ -62181,8 +64949,8 @@ aBG
 aBG
 ayU
 aEF
-aBG
-aBS
+hTH
+sYH
 aBp
 aIh
 iab
@@ -62197,7 +64965,7 @@ aJq
 aJq
 aJq
 aJq
-aJf
+xfA
 iNb
 iTb
 jcb
@@ -62214,7 +64982,7 @@ kWb
 lcb
 lqb
 mnb
-aaU
+tZQ
 aaM
 aqK
 aKu
@@ -62227,7 +64995,7 @@ aVD
 aVD
 aWw
 neb
-aWV
+nHS
 aXt
 aXO
 aXO
@@ -62236,7 +65004,7 @@ aXO
 aXO
 aXO
 aYX
-aZf
+duP
 neb
 lKb
 neb
@@ -62445,7 +65213,7 @@ aHQ
 aIh
 aIh
 aAm
-aJf
+rkT
 aJf
 aJf
 aJf
@@ -62453,11 +65221,11 @@ aJf
 aKx
 aJf
 aJf
-aJf
-aJf
+nNR
+xfA
 iNb
 iNb
-iNb
+sDn
 aAm
 aAm
 aKu
@@ -62465,7 +65233,7 @@ aaM
 adP
 jSb
 jRb
-jRb
+inZ
 kQb
 kWb
 lcb
@@ -62482,7 +65250,7 @@ neb
 aVE
 aVD
 aVD
-aVQ
+aaC
 neb
 aWV
 aXt
@@ -62495,7 +65263,7 @@ aXO
 aYX
 aZf
 neb
-mqb
+msb
 neb
 aaM
 aaM
@@ -62724,9 +65492,9 @@ jRb
 kob
 adP
 adP
-aPy
-ldb
-aSD
+tre
+xxj
+tsC
 lBb
 adP
 aaM
@@ -62965,7 +65733,7 @@ aJN
 aJq
 aKm
 aAm
-gpb
+jfd
 gpb
 gpb
 aAm
@@ -62977,14 +65745,14 @@ aAm
 aKu
 aaM
 adP
-jQb
+mpC
 adP
 adP
 aQg
 aPz
 leb
 aSD
-lqb
+njo
 adP
 aaM
 app
@@ -62996,7 +65764,7 @@ neb
 aVD
 aVD
 aVD
-aVD
+rAO
 neb
 aWV
 aXt
@@ -63195,13 +65963,13 @@ bib
 bib
 aEl
 aBp
-aaR
+oRN
 aqf
-aaR
+rht
 aBp
-aaR
+rht
 aFQ
-aaR
+oRN
 aBp
 aBp
 aBp
@@ -63224,7 +65992,7 @@ aKn
 aAm
 aKL
 aBE
-aBE
+mgf
 aAm
 iOb
 iVb
@@ -63241,7 +66009,7 @@ kKb
 kUb
 lcb
 aSD
-lqb
+njo
 adP
 aaM
 aTi
@@ -63255,7 +66023,7 @@ aVF
 aWl
 aVD
 neb
-aWV
+nHS
 aXt
 aXO
 aXO
@@ -63264,10 +66032,10 @@ aXO
 aXO
 aXO
 aYX
-aZf
+duP
 neb
-mqb
 lKb
+msb
 neb
 aaM
 aaM
@@ -63499,9 +66267,9 @@ kVb
 lcb
 aON
 lqb
-aaU
+tZQ
 aaM
-eYb
+hoL
 aKu
 aaM
 neb
@@ -63524,7 +66292,7 @@ neb
 neb
 neb
 neb
-tAz
+fsv
 neb
 neb
 aaM
@@ -63734,13 +66502,13 @@ aaM
 aJu
 aSj
 iEb
-jjb
+sTZ
 jjb
 sLn
 iwb
 eSC
 jjb
-jjb
+sTZ
 jjb
 iEb
 aSj
@@ -63756,7 +66524,7 @@ aPy
 lfb
 aOO
 lCb
-aaU
+tZQ
 aaM
 eYb
 aKu
@@ -63769,7 +66537,7 @@ mvb
 mzb
 mzb
 mzb
-abQ
+aIS
 gnL
 ngb
 ngb
@@ -63778,7 +66546,7 @@ ngb
 ngb
 ngb
 xMp
-abQ
+aIS
 nlb
 nlb
 nlb
@@ -63991,13 +66759,13 @@ aaM
 aaS
 jjb
 jjb
+sTZ
 jjb
 jjb
 jjb
 jjb
 jjb
-jjb
-jjb
+sTZ
 jjb
 jjb
 jjb
@@ -64005,14 +66773,14 @@ aaS
 aKu
 ahJ
 adP
-jZb
-aOP
-kpb
-aPz
-aPz
-leb
-aOP
-lqb
+oQx
+oJr
+lRK
+jlg
+jlg
+rUj
+oJr
+fKK
 adP
 aaM
 eYb
@@ -64026,7 +66794,7 @@ mwb
 mEb
 mzb
 mEb
-abQ
+aIS
 aDQ
 aXv
 aXv
@@ -64035,11 +66803,11 @@ aXv
 aXv
 aXv
 ijb
-abQ
+aIS
 nmb
 nlb
 nlb
-nub
+dow
 neb
 aaM
 aaM
@@ -64230,7 +66998,7 @@ aCM
 aAE
 aCV
 aBQ
-aaR
+com
 bfk
 bfk
 bfk
@@ -64248,13 +67016,13 @@ aaM
 aaS
 jjb
 aKe
-aKo
+mfd
 aKo
 aKo
 iWs
 aKo
 aKo
-aKo
+mfd
 aKo
 jfb
 jjb
@@ -64277,13 +67045,13 @@ neb
 neb
 neb
 neb
-mqb
+msb
 neb
 mxb
 mEb
 mMb
 mEb
-abQ
+aIS
 aDQ
 aXv
 aXv
@@ -64292,7 +67060,7 @@ aXv
 aXv
 aXv
 ijb
-abQ
+aIS
 nmb
 nqb
 nlb
@@ -64487,7 +67255,7 @@ aCM
 aAE
 aCV
 aBQ
-aaR
+com
 bfk
 bfk
 bfv
@@ -64503,14 +67271,14 @@ aaM
 aaM
 aaM
 aJu
-jjb
-aKf
-aKp
-aKp
-aKp
-aLg
-aKp
-aKp
+efT
+tiK
+bWc
+wdg
+wdg
+qcT
+wdg
+wdg
 aJu
 aSj
 jgb
@@ -64540,7 +67308,7 @@ mwb
 mEb
 aAS
 mEb
-abQ
+aIS
 aDQ
 aXv
 aXv
@@ -64549,7 +67317,7 @@ aXv
 aXv
 aXv
 ijb
-abQ
+aIS
 nmb
 nlb
 ntb
@@ -64762,7 +67530,7 @@ aBp
 aJu
 jjb
 aKf
-aKp
+wdg
 gEz
 aLs
 jjb
@@ -64770,8 +67538,8 @@ pOb
 aLA
 aJu
 aJu
-jgb
-jjb
+fnQ
+efT
 aJu
 aKu
 aaM
@@ -64797,7 +67565,7 @@ myb
 mEb
 mMb
 mEb
-abQ
+aIS
 aDQ
 aXv
 aXv
@@ -64806,7 +67574,7 @@ aXv
 aXv
 aXv
 ijb
-abQ
+aIS
 nmb
 nqb
 ntb
@@ -65019,14 +67787,14 @@ fTb
 aJu
 jjb
 aKf
-aKp
+wdg
 hTF
 sEb
 tVC
 aKP
 jjb
 aLQ
-aKp
+wdg
 jgb
 jjb
 aJu
@@ -65041,16 +67809,16 @@ aPz
 leb
 aSD
 aRU
-aRH
+fhR
 aRH
 aTo
 aRH
 aXv
 aUo
 neb
-lKb
+gFG
 neb
-mzb
+cxD
 mEb
 mzb
 mEb
@@ -65235,19 +68003,19 @@ esb
 esb
 aww
 esb
-esb
+hBP
 aww
 eKb
 esb
 aww
 esb
-esb
+hBP
 aww
 eKb
 esb
 aww
 esb
-esb
+hBP
 aww
 eKb
 mEw
@@ -65276,19 +68044,19 @@ lNr
 aJx
 jjb
 aKf
-aKp
+wdg
 aKB
 aKQ
 dCb
 aLq
 aLh
 aLR
-aKp
+wdg
 jgb
 jJb
 aJu
 jGb
-iPb
+oXG
 adP
 kab
 kpb
@@ -65298,10 +68066,10 @@ aPy
 aPy
 leb
 aRV
-aRH
+fhR
 aSJ
 aSJ
-aSJ
+jVg
 aSJ
 aSJ
 neb
@@ -65311,7 +68079,7 @@ mzb
 mzb
 mzb
 mzb
-abQ
+aIS
 aDQ
 aXv
 aXv
@@ -65492,19 +68260,19 @@ awt
 awt
 awt
 awt
+kRj
 awt
 awt
 awt
 awt
 awt
+kRj
 awt
 awt
 awt
 awt
 awt
-awt
-awt
-awt
+kRj
 awt
 awt
 awt
@@ -65558,10 +68326,10 @@ aRU
 aUH
 lKb
 lKb
+gJh
 lKb
 lKb
-lKb
-lKb
+gJh
 lKb
 aeA
 mzb
@@ -65577,11 +68345,11 @@ aYF
 aXv
 aXv
 jNM
-abQ
+hFT
 nob
 nlb
 nlb
-nlb
+bYo
 neb
 aaM
 aaM
@@ -65749,19 +68517,19 @@ awV
 awV
 aww
 awV
-awV
+nJP
 aww
 awV
 awV
 aww
 awV
-awV
+nJP
 aww
 awV
 awV
 aww
 awV
-awV
+nJP
 aww
 awV
 sXV
@@ -65790,21 +68558,21 @@ lNz
 aJx
 jjb
 aKf
-aKp
+wdg
 aKD
 aKS
 dCb
 aLr
 aLh
 aLS
-aKp
+wdg
 jgb
-jjb
+gYg
 aJu
 jHb
 iPb
 adP
-kab
+vFi
 krb
 aPz
 aPz
@@ -65812,10 +68580,10 @@ aPz
 aPz
 ldb
 aRV
-aRH
+fhR
 aSL
 aSL
-aSL
+gYy
 aSL
 aSL
 neb
@@ -65825,7 +68593,7 @@ mzb
 mzb
 mzb
 mzb
-abQ
+aIS
 nkb
 aXv
 aXv
@@ -66036,7 +68804,7 @@ aBp
 aBp
 aBp
 aBp
-hBb
+eNj
 mhb
 aBp
 aBp
@@ -66047,14 +68815,14 @@ fTb
 aJu
 jjb
 aKf
-aKp
+wdg
 qXA
 ucy
 idb
 iXb
 jjb
 aLT
-aKp
+wdg
 jgb
 jjb
 aJu
@@ -66069,16 +68837,16 @@ aPy
 ldb
 aSD
 aRU
-aRH
+fhR
 aRH
 aTp
 aRH
 aXv
 aUp
 neb
-lKb
+gFG
 neb
-mzb
+cxD
 mEb
 mzb
 mEb
@@ -66304,7 +69072,7 @@ aBp
 aJu
 jjb
 aKf
-aKp
+wdg
 aKA
 oIb
 jjb
@@ -66312,8 +69080,8 @@ pQb
 aLB
 aJu
 aJu
-jgb
-jjb
+fnQ
+efT
 aJu
 aaM
 aaM
@@ -66339,7 +69107,7 @@ myb
 mEb
 mMb
 mEb
-abQ
+aIS
 nkb
 aXv
 aXv
@@ -66348,7 +69116,7 @@ aXv
 aXv
 aXv
 hQw
-abQ
+aIS
 nmb
 nqb
 ntb
@@ -66539,7 +69307,7 @@ xzP
 aaM
 aaM
 aaM
-aaR
+com
 geb
 fTb
 gtb
@@ -66555,18 +69323,18 @@ hBb
 hBb
 hBb
 aHx
-aaR
+com
 aaM
 aaM
 aJu
-jjb
-aKf
-aKp
-aKp
-aKp
+efT
+tiK
+bWc
+wdg
+wdg
 aLg
-aKp
-aKp
+wdg
+wdg
 aJu
 aSj
 jgb
@@ -66596,7 +69364,7 @@ mzb
 mEb
 aAS
 mEb
-abQ
+aIS
 nkb
 aXv
 aXv
@@ -66605,7 +69373,7 @@ aXv
 aXv
 aXv
 hQw
-abQ
+aIS
 nmb
 nlb
 ntb
@@ -66796,7 +69564,7 @@ xzP
 aaM
 aaM
 aaM
-aaR
+com
 hSf
 fTb
 gtb
@@ -66812,19 +69580,19 @@ hBb
 hBb
 hBb
 aHy
-aaR
+com
 aaM
 aaM
 aaS
 jjb
 iqb
-isb
+vLt
 isb
 isb
 iCb
 isb
 isb
-isb
+vLt
 isb
 jhb
 jjb
@@ -66853,7 +69621,7 @@ myb
 mEb
 mMb
 mEb
-abQ
+aIS
 nkb
 aXv
 aXv
@@ -66862,7 +69630,7 @@ aXv
 aXv
 aXv
 hQw
-abQ
+aIS
 nmb
 nqb
 ntb
@@ -67053,7 +69821,7 @@ aaM
 aaM
 aaM
 aaM
-aaR
+com
 ggb
 fTb
 gtb
@@ -67069,19 +69837,19 @@ hBb
 hBb
 hBb
 aHz
-aaR
+com
 aaM
 aaM
 aaS
 jjb
 jjb
+sTZ
 jjb
 jjb
 jjb
 jjb
 jjb
-jjb
-jjb
+sTZ
 jjb
 jjb
 jjb
@@ -67332,13 +70100,13 @@ aaM
 aJu
 aSj
 iFb
-jjb
+sTZ
 jjb
 pUc
 voA
 kQL
 jjb
-jjb
+sTZ
 jjb
 iFb
 aSj
@@ -67361,13 +70129,13 @@ aaM
 aaM
 aaM
 neb
-msb
+mqb
 neb
 mDb
 mGb
 mzb
 mzb
-abQ
+aIS
 dcP
 aMx
 aMx
@@ -67376,7 +70144,7 @@ aMx
 aMx
 aMx
 aXu
-abQ
+aIS
 nlb
 nlb
 nlb
@@ -67592,7 +70360,7 @@ aJu
 aJu
 aJu
 aJu
-nkX
+gCd
 aJu
 aJu
 aJu
@@ -67626,12 +70394,12 @@ neb
 neb
 neb
 neb
-aXQ
-aXQ
-aXQ
-aXQ
-aXQ
-aXQ
+dtD
+dtD
+dtD
+dtD
+dtD
+dtD
 neb
 neb
 neb
@@ -67848,7 +70616,7 @@ aaM
 aaM
 aaM
 aJu
-iyb
+iNj
 iyb
 iyb
 aJu
@@ -67892,8 +70660,8 @@ aXR
 aYX
 aZi
 neb
-mqb
 lKb
+msb
 neb
 aaM
 aaM
@@ -68105,7 +70873,7 @@ aaM
 aaM
 aaM
 aJu
-aKX
+tEf
 aKX
 aLu
 aJu
@@ -68138,7 +70906,7 @@ neb
 neb
 lKb
 neb
-aWY
+wEt
 aXt
 aXR
 aXR
@@ -68147,7 +70915,7 @@ aXR
 aXR
 aXR
 aYX
-aZi
+oUa
 neb
 lKb
 neb
@@ -68377,8 +71145,8 @@ aNx
 aOa
 aOU
 aAm
-aLd
-aLd
+oRV
+oRV
 aAm
 aAm
 aaM
@@ -68619,10 +71387,10 @@ aaM
 aaM
 aaM
 aJu
+nCQ
 aSd
-aSd
-iGb
-aKp
+eUd
+exz
 bVw
 inb
 inb
@@ -68650,9 +71418,9 @@ aaM
 aaM
 aaM
 neb
-msb
+mqb
 neb
-aWY
+wEt
 aXt
 aXR
 aXR
@@ -68661,9 +71429,9 @@ aXR
 aXR
 aXR
 aYX
-aZi
+oUa
 neb
-mqb
+msb
 neb
 aaM
 aaM
@@ -68894,7 +71662,7 @@ aPB
 kGb
 kYb
 ljb
-lib
+ndE
 aAm
 aAm
 aaM
@@ -69136,10 +71904,10 @@ aJu
 aSd
 aSd
 iGb
-aKp
+iCo
 inb
 inb
-inb
+nJo
 jwb
 aJu
 aaM
@@ -69390,9 +72158,9 @@ aaM
 aaM
 aaM
 aJu
+nCQ
 aSd
-aSd
-aSd
+pOY
 aJu
 aJu
 aJu
@@ -69415,14 +72183,14 @@ aSN
 aTr
 aTO
 aAm
-aTO
+oSN
 aTr
 aSN
 aAm
 aaM
 neb
-lKb
-lKb
+sQg
+gJh
 aet
 neb
 aXT
@@ -69433,8 +72201,8 @@ aXT
 imb
 aZg
 aZj
-aXv
-aXv
+bmG
+bCz
 neb
 aaM
 aaM
@@ -69650,8 +72418,8 @@ aJu
 aSd
 aSd
 iHb
-aKp
-aLU
+exz
+vnw
 aLU
 aLU
 aMR
@@ -69672,7 +72440,7 @@ lLb
 aTs
 aTP
 aUd
-mib
+eHT
 aTs
 aVe
 aAm
@@ -69928,7 +72696,7 @@ aPB
 aJf
 aJf
 aJf
-aJf
+xfA
 aJf
 aJf
 aVf
@@ -69939,13 +72707,13 @@ aaM
 neb
 aUc
 aXy
+oCV
 aUc
+hov
+oCV
 aUc
-aXy
-aUc
-aUc
-aXy
-aUc
+hov
+dBY
 aUq
 neb
 aaM
@@ -70164,10 +72932,10 @@ aJu
 aSd
 aSd
 iHb
-aKp
+iCo
 aLU
 aLU
-aLU
+apL
 aMT
 aJu
 aaM
@@ -70184,7 +72952,7 @@ aRW
 aSp
 aSP
 aTs
-aTQ
+acU
 aUd
 aUs
 aTs
@@ -70418,9 +73186,9 @@ aaM
 aaM
 aaM
 aJu
+nCQ
 aSd
-aSd
-aSd
+pOY
 aJu
 aJu
 aJu
@@ -70434,7 +73202,7 @@ aOe
 tTa
 kSb
 aJq
-aQN
+qqL
 lkb
 aBK
 aRW
@@ -70443,7 +73211,7 @@ aSN
 aTt
 aTO
 aAm
-aTO
+uIe
 aTt
 aSN
 aAm
@@ -70679,7 +73447,7 @@ aSd
 aSd
 aSd
 aJu
-iPb
+vhL
 iWb
 jib
 jxb
@@ -70941,23 +73709,23 @@ inb
 inb
 inb
 inb
-inb
+rGW
 aJu
 aND
 aOe
 buU
 aPE
 aJq
-aQN
+qqL
 lkb
 aBK
 aRW
 aSt
 aSQ
 aTu
-aKm
+vGo
 aAm
-aJf
+dsB
 aJL
 aVh
 aAm
@@ -71217,7 +73985,7 @@ aUd
 aJf
 aJf
 aVi
-aaT
+kyX
 aaM
 aaM
 aaM
@@ -71447,10 +74215,10 @@ aaM
 aaM
 aJu
 ixb
-ixb
-ixb
+sDz
+pAC
 aJu
-iPb
+vhL
 iYb
 jkb
 jyb
@@ -71474,7 +74242,7 @@ aJr
 aJf
 aUI
 aVj
-aaT
+kyX
 aaM
 aaM
 aaM
@@ -71731,7 +74499,7 @@ aAm
 aJf
 aJf
 aVk
-aaT
+kyX
 aaM
 aaM
 aaM
@@ -71983,7 +74751,7 @@ aRW
 aSt
 aST
 aTw
-aJq
+qEp
 aAm
 aUt
 aUJ
@@ -72495,7 +75263,7 @@ lkb
 aBK
 aRW
 aSp
-aSU
+ybc
 aTx
 aTR
 aAm
@@ -72754,7 +75522,7 @@ aRW
 aSp
 lLb
 aTs
-aTP
+twK
 aUd
 mib
 aTs
@@ -72999,11 +75767,11 @@ aaM
 aaM
 aaM
 aAm
+fgF
 aAM
 aAM
 aAM
-aAM
-aAM
+wYb
 aAm
 lkb
 aBK
@@ -73012,7 +75780,7 @@ aPB
 aJf
 aJf
 aJf
-aJf
+xfA
 aJf
 aJf
 aVm
@@ -73270,7 +76038,7 @@ aSP
 aTs
 aTQ
 aUd
-aUs
+skk
 aTs
 aVg
 aAm
@@ -73775,7 +76543,7 @@ aAM
 kDb
 nhb
 aAM
-aMz
+pVf
 lkb
 aBK
 aRX
@@ -74482,7 +77250,7 @@ aaM
 acf
 acs
 acT
-acT
+fTq
 adj
 guD
 guD
@@ -74541,11 +77309,11 @@ aaM
 aaM
 aaM
 aAm
+fgF
 aAM
 aAM
 aAM
-aAM
-aAM
+wYb
 aAm
 lkb
 aBK
@@ -74995,10 +77763,10 @@ aaM
 aaM
 ach
 acu
-fhb
+ckB
 acK
 adm
-guD
+wSI
 ueu
 mba
 wDJ
@@ -75325,7 +78093,7 @@ aAm
 aAm
 aAm
 aAm
-aBK
+xUr
 aAm
 aAm
 aAm
@@ -76030,9 +78798,9 @@ guD
 ueu
 htR
 srT
-pdD
-pdD
-pdD
+orH
+orH
+orH
 srT
 aaM
 aaM
@@ -76243,9 +79011,9 @@ aaM
 aaM
 aaM
 aoo
+iHD
 aqC
-aqC
-aqC
+lwt
 aas
 aaA
 aaL
@@ -76351,7 +79119,7 @@ aQS
 aRY
 aAm
 aSZ
-iNb
+sDn
 aAm
 aBK
 aAm
@@ -76540,7 +79308,7 @@ agH
 fhb
 ako
 aeZ
-guD
+wSI
 ueu
 mba
 srT
@@ -76606,11 +79374,11 @@ aQS
 aJq
 aQS
 aQS
-jcb
+xtK
 iNb
 iNb
 aAm
-aBK
+xUr
 aAm
 aaM
 aaM
@@ -76763,7 +79531,7 @@ asw
 kxa
 xTK
 hJA
-xTK
+iwc
 aTk
 aTk
 aTk
@@ -76863,7 +79631,7 @@ aJq
 aJq
 aQS
 aQS
-jcb
+xtK
 iNb
 iNb
 aLj
@@ -77052,7 +79820,7 @@ aaM
 acp
 ezJ
 acT
-acT
+fTq
 gvb
 guD
 ueu
@@ -77120,7 +79888,7 @@ aQS
 aJq
 aQS
 aQS
-jcb
+xtK
 iNb
 iNb
 aAm
@@ -77528,13 +80296,13 @@ aaM
 aaM
 aaM
 aoo
-aqC
+qUq
 asw
 asw
 aqC
-xTK
-xTK
-xTK
+iwc
+iwc
+iwc
 aTk
 aTk
 aTk
@@ -77563,9 +80331,9 @@ aaM
 aoo
 adu
 adu
-adu
-adu
-adu
+jJi
+jJi
+jJi
 adu
 adu
 wRg
@@ -77640,7 +80408,7 @@ aAm
 aAm
 hYD
 aAm
-aaT
+kyX
 aAm
 aAm
 aaM
@@ -78042,7 +80810,7 @@ aaM
 aaM
 aaM
 aoo
-aqC
+qUq
 aar
 aar
 aqC
@@ -78306,12 +81074,12 @@ aqC
 asw
 asw
 aoo
-xTK
-xTK
-xTK
-xTK
-xTK
-xTK
+iwc
+iwc
+iwc
+iwc
+iwc
+iwc
 aoo
 arp
 aoo
@@ -78926,7 +81694,7 @@ aTD
 aTD
 aTD
 hyU
-aAM
+czD
 aAm
 aaM
 aaM
@@ -79327,9 +82095,9 @@ aaM
 aaM
 aaM
 aoo
+iHD
 aqC
-aqC
-aqC
+kaC
 bTb
 aqC
 weI
@@ -79338,9 +82106,9 @@ aeQ
 afq
 bUb
 apF
+nqO
 bUb
-bUb
-bUb
+nqO
 aoo
 apU
 aqo
@@ -79353,7 +82121,7 @@ asq
 asB
 aoo
 atf
-atH
+lxC
 aWH
 chb
 cyb
@@ -79434,12 +82202,12 @@ aaM
 aaM
 aAm
 aAm
-aaT
-aaT
-aaT
-aaT
-aaT
-aaT
+kyX
+kyX
+kyX
+kyX
+kyX
+kyX
 aAm
 aAm
 aaM
@@ -79605,7 +82373,7 @@ atJ
 aoo
 avd
 cLb
-cGb
+bvc
 aoo
 aoo
 aoo
@@ -79846,7 +82614,7 @@ aaM
 aoo
 aay
 aaI
-asa
+ioC
 pld
 doq
 afO
@@ -79881,7 +82649,7 @@ edb
 awm
 aaJ
 gzb
-exb
+tFo
 eEb
 weI
 axS
@@ -80111,7 +82879,7 @@ cgb
 apW
 cib
 weI
-cgb
+han
 aoo
 asy
 asQ
@@ -80208,7 +82976,7 @@ aaM
 aaM
 aaM
 aaM
-aaM
+iMA
 aaM
 aaM
 aaM
@@ -80368,7 +83136,7 @@ cgb
 aro
 cib
 weI
-cgb
+jeS
 aoo
 apX
 aqq
@@ -80617,7 +83385,7 @@ aaM
 aoo
 jeW
 cbb
-bXb
+lVQ
 aeM
 bXb
 aou
@@ -80649,7 +83417,7 @@ auT
 dTb
 weI
 ecb
-awo
+eQp
 awK
 axi
 gMb
@@ -81388,7 +84156,7 @@ aaM
 aaM
 aaM
 aoo
-aov
+keV
 aoA
 aoI
 anp
@@ -81655,7 +84423,7 @@ clb
 cnb
 cnb
 ase
-cnb
+geV
 cnb
 auc
 cDb
@@ -82159,7 +84927,7 @@ aaM
 aaM
 aaM
 aoo
-aov
+keV
 aoD
 aoo
 aoR
@@ -82432,7 +85200,7 @@ aqx
 aoo
 cLb
 cGb
-cGb
+bvc
 aoo
 dcb
 aAf
@@ -82944,7 +85712,7 @@ aoo
 aqx
 aqx
 aoo
-cLb
+bkP
 cGb
 cGb
 aoo
@@ -83463,7 +86231,7 @@ cGb
 cGb
 aoo
 aoo
-azP
+pNo
 aoo
 aoo
 aoo
@@ -83722,16 +86490,16 @@ asv
 asE
 asE
 asE
-asE
+bxD
 cbM
 asE
-asE
+bxD
 cSb
 asE
 asE
 cbM
 asE
-asE
+bxD
 aoo
 aaM
 aaM
@@ -86995,7 +89763,7 @@ aii
 aii
 aii
 aJY
-aaN
+pvN
 aaM
 aaM
 abu
@@ -87252,7 +90020,7 @@ aii
 aCv
 aId
 aKq
-aaN
+pvN
 aaM
 aaM
 abu
@@ -87509,7 +90277,7 @@ amv
 akv
 amv
 aKr
-aaN
+pvN
 aaM
 aaM
 abu
@@ -89061,16 +91829,16 @@ ahJ
 ahF
 ahF
 aie
-aaN
+oMC
 aie
-aaN
-aaN
-aaN
-aaN
-aaN
-aaN
+tBY
+oMC
+tBY
+oMC
+tBY
+tBY
 atb
-aaN
+tBY
 ahJ
 aaM
 ahJ
@@ -89325,9 +92093,9 @@ aki
 aki
 aki
 alz
-aaN
+tBY
 aii
-aaN
+tBY
 ahJ
 ahJ
 ahF
@@ -89584,7 +92352,7 @@ aIK
 aIK
 aaN
 alI
-aaN
+tBY
 aie
 ahF
 ahF
@@ -90089,7 +92857,7 @@ ahF
 ahF
 aie
 aiv
-aii
+dCD
 ajZ
 akQ
 akv
@@ -90098,7 +92866,7 @@ akv
 akQ
 amm
 aIb
-aHF
+uGJ
 aie
 ahF
 ahF
@@ -90612,7 +93380,7 @@ akj
 akQ
 amm
 aIb
-aHF
+uGJ
 aie
 ahF
 ahF
@@ -91640,10 +94408,10 @@ adH
 aly
 amo
 bab
+cvP
 bab
 bab
-bab
-bab
+cvP
 aKy
 aly
 ahF
@@ -91890,7 +94658,7 @@ aie
 aie
 aie
 aie
-aix
+hlN
 aix
 akz
 aix
@@ -92158,7 +94926,7 @@ bbb
 bbb
 bbb
 bbb
-aKJ
+gGY
 aly
 ahF
 ahF
@@ -92672,7 +95440,7 @@ bbb
 bbb
 bbb
 bbb
-aKJ
+gGY
 aly
 ahF
 ahF
@@ -93182,10 +95950,10 @@ amM
 aly
 amp
 bnb
+xpb
 bnb
 bnb
-bnb
-bnb
+xpb
 aKM
 aly
 ahF
@@ -93434,7 +96202,7 @@ aie
 aie
 aie
 aix
-akz
+niM
 aix
 aly
 aly
@@ -93684,10 +96452,10 @@ ahF
 ahF
 aie
 aie
-aSb
-aSb
+vBE
+ksA
 ajJ
-aSb
+ksA
 akL
 aie
 alO
@@ -93940,7 +96708,7 @@ ahF
 ahF
 ahF
 aie
-adc
+wHU
 bAb
 ain
 aih
@@ -93950,7 +96718,7 @@ aie
 alR
 aIb
 amJ
-aix
+nTs
 aHd
 aJw
 aJw
@@ -94212,7 +96980,7 @@ amy
 ayM
 aIg
 aIg
-agg
+usA
 aie
 ahF
 ahF
@@ -94454,7 +97222,7 @@ ahF
 ahF
 ahF
 aie
-adc
+wHU
 abc
 aiD
 ajI
@@ -94712,7 +97480,7 @@ ahF
 ahF
 aie
 aie
-adl
+sMG
 adl
 aik
 adl
