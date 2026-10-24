@@ -1,5 +1,6 @@
 /obj/item/weapon/storage/box/syndicate
 	icon_state = "doom_box"
+	silent = TRUE
 
 /obj/item/weapon/storage/box/syndicate/atom_init()
 	. = ..()
@@ -105,6 +106,7 @@
 	name = "box"
 	desc = "A sleek, sturdy box."
 	icon_state = "doom_box"
+	silent = TRUE
 
 /obj/item/weapon/storage/box/syndie_kit/bonepen
 	name = "Prototype Bone Repair Kit"
