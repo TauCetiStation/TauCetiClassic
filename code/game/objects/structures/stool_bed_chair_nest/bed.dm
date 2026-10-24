@@ -63,6 +63,9 @@
 	icon_state = "down"
 	anchored = FALSE
 	var/type_roller = /obj/item/roller
+	qualities = list(
+		QUALITY_OPERATE_TABLE = 75
+	)
 
 /obj/structure/stool/bed/roller/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,src) || istype(W, /obj/item/roller_holder))

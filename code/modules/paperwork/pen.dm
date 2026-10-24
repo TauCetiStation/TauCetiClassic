@@ -226,7 +226,8 @@
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 		qualities = list(
-			QUALITY_CUTTING = 1
+			QUALITY_CUTTING = 100,
+			QUALITY_SURG_CUTTING = 75
 			)
 		set_light(1)
 	update_icon()

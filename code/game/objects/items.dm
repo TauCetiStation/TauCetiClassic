@@ -61,7 +61,6 @@
 		/obj/machinery/autolathe
 	)
 	var/can_be_holstered = FALSE
-	var/toolspeed = 1
 	var/obj/item/device/uplink/hidden/hidden_uplink = null // All items can have an uplink hidden inside, just remember to add the triggers.
 
 	// optional world/inventory icon_state overrides
@@ -77,8 +76,6 @@
 	*/
 	var/list/sprite_sheets_obj = null
 
-    /// A list of all tool qualities that src exhibits. To-Do: Convert all our tools to such a system.
-	var/list/qualities
 	// This thing can be used to stab eyes out.
 	var/stab_eyes = FALSE
 
@@ -754,8 +751,6 @@
 	else if(required_skills) //default check for item
 		skill_bonus = apply_skill_bonus(user, 1, required_skills, skills_speed_bonus)
 
-
-	delay *= toolspeed
 	delay *= max(skill_bonus, 0.1)
 
 	if(!isnull(quality))
@@ -763,7 +758,7 @@
 		if(qual_mod <= 0)
 			return
 
-		delay *= 1 / qual_mod
+		delay /= qual_mod/100
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
@@ -1031,10 +1026,50 @@
 
 	return ..()
 
-/obj/item/proc/get_quality(quality)
+/obj/proc/get_quality(quality)
 	if(!qualities)
 		return 0
+	if(!(check_quality(quality)))
+		return 0
 	return qualities[quality]
+
+/obj/proc/check_quality(needed_quality)
+	if(needed_quality in qualities)
+		return TRUE
+	return FALSE
+
+/proc/get_technic_quality(quality)
+	var/technic_quality = list(
+		QUALITY_CUTTING,
+		QUALITY_PRYING,
+		QUALITY_WRENCHING,
+		QUALITY_SCREWING,
+		QUALITY_WELDING,
+		QUALITY_PULSING,
+		QUALITY_ROCK_DRILL
+	)
+	if(!(quality in technic_quality))
+		return FALSE
+	else
+		return quality
+
+/proc/get_surg_quality(quality)
+	var/surg_qualites = list(
+		QUALITY_SURG_CUTTING,
+		QUALITY_CLAMP,
+		QUALITY_RETRACT,
+		QUALITY_SAW_OPEN,
+		QUALITY_DRILL_OPEN,
+		QUALITY_BONE_SET,
+		QUALITY_MENDING_BONE,
+		QUALITY_FIX_VEIN,
+		QUALITY_CAUTER,
+		QUALITY_DROP_LIQUID
+	)
+	if(!(quality in surg_qualites))
+		return FALSE
+	else
+		return quality
 
 /obj/item/proc/get_dye_type(w_color)
 	if(!dyed_type)

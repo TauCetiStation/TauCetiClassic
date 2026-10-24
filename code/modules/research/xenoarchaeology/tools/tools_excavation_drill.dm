@@ -5,7 +5,6 @@
 	icon_state = "excavationdrill0"
 	item_state = "excavationdrill"
 	excavation_amount = 0.5
-	toolspeed = 0.6
 	desc = "Basic archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The tip is adjustable from 1 to 30 cms."
 	usesound = 'sound/weapons/thudswoosh.ogg'
 	drill_verb = "drilling"
@@ -13,6 +12,9 @@
 	w_class = SIZE_SMALL
 	attack_verb = list("drills")
 	hitsound = list('sound/weapons/circsawhit.ogg')
+	qualities = list(
+		QUALITY_ROCK_DRILL = 175
+	)
 
 /obj/item/weapon/pickaxe/excavationdrill/attack_self(mob/user)
 	var/depth = input("Put the desired depth (1-30 centimeters).", "Set Depth", excavation_amount * 2)
@@ -47,8 +49,10 @@
 	name = "diamond excavation drill"
 	icon_state = "Dexcavationdrill0"
 	item_state = "Dexcavationdrill"
-	toolspeed = 0.3
 	desc = "Advanced archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The diamond tip is adjustable from 1 to 100 cms."
+	qualities = list(
+		QUALITY_ROCK_DRILL = 300
+	)
 
 /obj/item/weapon/pickaxe/excavationdrill/adv/attack_self(mob/user)
 	var/depth = input("Put the desired depth (1-100 centimeters).", "Set Depth", excavation_amount * 2)

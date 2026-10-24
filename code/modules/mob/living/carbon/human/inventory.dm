@@ -62,7 +62,7 @@
 /mob/living/carbon/human/has_bodypart(name)
 	var/obj/item/organ/external/BP = bodyparts_by_name[name]
 
-	return (BP && !(BP.is_stump) )
+	return (BP && !isstump(BP))
 
 /mob/living/carbon/human/has_organ(name)
 	var/obj/item/organ/internal/IO = organs_by_name[name]
