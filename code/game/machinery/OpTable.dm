@@ -94,7 +94,7 @@
 	if (C.client)
 		C.client.perspective = EYE_PERSPECTIVE
 		C.client.eye = src
-	C.SetCrawling(TRUE)
+	C.lay_down()
 	C.loc = src.loc
 
 	add_fingerprint(user)

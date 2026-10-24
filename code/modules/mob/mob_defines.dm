@@ -90,7 +90,8 @@
 	var/lying_prev = 0
 	var/was_lying = FALSE //For user of clown pda slippery
 	var/lying_current = 0
-	var/crawling = 0 //For crawling
+	var/crawling_intent = CRAWL_INTENT_STANDING
+	var/crawling = FALSE //For crawling
 	var/canmove = 1
 	var/lastpuke = 0
 	var/unacidable = 0
