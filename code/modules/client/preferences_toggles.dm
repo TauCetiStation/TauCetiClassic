@@ -212,6 +212,19 @@
 	update_plane_masters(/atom/movable/screen/plane_master/game_world)
 	feedback_add_details("admin_verb","TAC")
 
+/client/verb/toggle_emissive_lighting()
+	set name = "Lighting: Emissive Lighting"
+	set category = "Preferences"
+	set desc = "Toggle glowing screens and indicators."
+
+	prefs.emissive_lighting = !prefs.emissive_lighting
+	to_chat(src, "Emissive lighting: [prefs.emissive_lighting ? "Enabled" : "Disabled"].")
+	prefs.save_preferences()
+	update_plane_masters(/atom/movable/screen/plane_master/emissive_mask)
+	update_plane_masters(/atom/movable/screen/plane_master/emissive_visibility)
+	update_plane_masters(/atom/movable/screen/plane_master/emissive)
+	feedback_add_details("admin_verb", "EMLI")
+
 /client/verb/set_glow_level()
 	set name = "Lighting: Glow Level"
 	set category = "Preferences"

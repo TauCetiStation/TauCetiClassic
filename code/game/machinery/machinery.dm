@@ -102,6 +102,7 @@ Class Procs:
 */
 
 /obj/machinery
+	blocks_emissive = TRUE
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
 	layer = DEFAULT_MACHINERY_LAYER

@@ -49,6 +49,7 @@
 		return FALSE
 	if(!isnull(src.linkedServer))
 		icon_state = hack_icon // An error screen I made in the computers.dmi
+		update_emissive()
 		emag = 1
 		screen = 2
 		spark_system.set_up(5, 0, src)
@@ -72,6 +73,7 @@
 		icon_state = hack_icon
 	else
 		icon_state = normal_icon
+	update_emissive()
 
 /obj/machinery/computer/message_monitor/atom_init()
 	. = ..()
@@ -249,10 +251,12 @@
 	src.hacking = 0
 	src.icon_state = normal_icon
 	src.screen = 0 // Return the screen back to normal
+	update_emissive()
 
 /obj/machinery/computer/message_monitor/proc/UnmagConsole()
 	src.icon_state = normal_icon
 	src.emag = 0
+	update_emissive()
 
 /obj/machinery/computer/message_monitor/proc/ResetMessage()
 	customsender 	= "System Administrator"
@@ -342,6 +346,7 @@
 			src.hacking = 1
 			src.screen = 2
 			src.icon_state = hack_icon
+			update_emissive()
 			//Time it takes to bruteforce is dependant on the password length.
 			spawn(100*length(src.linkedServer.decryptkey))
 				if(src && src.linkedServer && usr)
