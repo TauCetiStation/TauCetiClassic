@@ -195,6 +195,8 @@
 
 #define issuitstorage(A) istype(A, /obj/machinery/suit_storage_unit)
 
+#define ismecha(M)       istype(M, /obj/mecha)
+
 // ROLES / ANTAG
 
 #define isfaction(A) (istype(A, /datum/faction))
