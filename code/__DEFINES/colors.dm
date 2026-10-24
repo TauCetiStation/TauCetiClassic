@@ -196,11 +196,19 @@
                                     0,    0,    0,      1, \
                                     -0.05,-0.05,-0.05,  0)
 
+
 #define PACKAGEFILM_FILTER    list(0.75, 0.05,  0.15,  0, \
                        			   0,    0.75,  0.15,  0, \
                          	      -0.15, 0.15,  1.25,  0, \
                          		   0,    0,     0,     1, \
                           		   0,    0,     0,     0)
+
+#define STATUE_FILTER    list(0.42,   0.38, 0.35,  0, \
+	                            0.67, 0.64, 0.61,  0, \
+	                            0.19, 0.16, 0.13,  0, \
+	                            0,    0,    0,     1, \
+	                            0,    0,    0,     0)
+
 
 /// Adds/subtracts overall lightness
 /// 0 is identity, 1 makes everything white, -1 makes everything black
