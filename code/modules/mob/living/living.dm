@@ -772,6 +772,16 @@
 		for(var/mob/living/carbon/slime/M in view(1,src))
 			M.UpdateFeed(src)
 
+/mob/living/Moved(atom/old_loc, dir)
+	. = ..()
+	if(old_loc != loc)
+		update_crawl_layer(old_loc, crawl_layer_forced_move_depth > 0)
+
+/mob/living/forceMove(atom/destination, keep_pulling = FALSE, keep_buckled = FALSE, keep_moving_diagonally = FALSE, keep_grabs = TRUE)
+	crawl_layer_forced_move_depth++
+	. = ..()
+	crawl_layer_forced_move_depth--
+
 /mob/living/proc/pull_trail_damage(turf/new_loc, turf/old_loc, old_dir)
 	if(!isturf(old_loc) || old_loc == loc)
 		return FALSE
@@ -1015,14 +1025,29 @@
 
 /// What should the mob do when laying down. Return TRUE to prevent default behavior.
 /mob/living/proc/crawl_can_use()
-	var/turf/T = get_turf(src)
-	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) || (locate(/obj/structure/plasticflaps) in T))
-		var/obj/structure/S
-		for(S in T)
-			if(IS_ABOVE(src, S))
-				return TRUE
-			return FALSE
-	return TRUE
+	return !is_crawling_under_structure
+
+/mob/living/SetCrawling(value)
+	. = ..()
+	update_crawl_layer()
+
+/mob/living/proc/update_crawl_layer(atom/old_loc, forced_movement = FALSE)
+	var/was_crawling_under_structure = is_crawling_under_structure
+	var/turf/current_turf = isturf(loc) ? loc : null
+	var/turf/old_turf = isturf(old_loc) ? old_loc : null
+
+	if(!crawling || forced_movement)
+		is_crawling_under_structure = FALSE
+	else if(current_turf)
+		if(!current_turf.has_crawl_hiding_structure(src))
+			is_crawling_under_structure = FALSE
+		else if(old_turf && !old_turf.has_crawl_hiding_structure(src))
+			is_crawling_under_structure = TRUE
+
+	if(current_turf && is_crawling_under_structure)
+		layer = BELOW_CONTAINERS_LAYER
+	else if(was_crawling_under_structure)
+		layer = default_layer
 
 /mob/living/var/crawl_getup = FALSE
 
@@ -1071,7 +1096,6 @@
 				Stun(1)
 				to_chat(src, "<span class='danger'>Ouch!</span>")
 				return
-			layer = 4.0
 		else
 			crawl_getup = FALSE
 			return

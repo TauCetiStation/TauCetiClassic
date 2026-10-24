@@ -1,6 +1,7 @@
 /obj/structure
 	icon = 'icons/obj/structures.dmi'
 	var/climbable
+	var/hides_crawling_mobs = FALSE
 	var/list/climbers = list()
 	w_class = SIZE_MASSIVE
 
@@ -16,6 +17,11 @@
 	if(smooth)
 		queue_smooth_neighbors(src)
 	return ..()
+
+/obj/structure/post_buckle_mob(mob/living/M)
+	. = ..()
+	if(hides_crawling_mobs && M)
+		M.update_crawl_layer()
 
 /obj/structure/blob_act()
 	if(prob(50))

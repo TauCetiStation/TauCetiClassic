@@ -14,6 +14,7 @@
 	icon_state = "bed"
 	can_buckle = 1
 	buckle_lying = 1
+	hides_crawling_mobs = TRUE
 
 /obj/structure/stool/bed/psych
 	name = "psychiatrists couch"
@@ -31,15 +32,8 @@
 	return attack_hand(user)
 
 /obj/structure/stool/bed/CanPass(atom/movable/mover)
-	// todo: we should not change mover properties here, this method is only for attempt to pass
-	// part of future mob layer / crawl refactoring
 	if(buckled_mob != mover && iscarbon(mover) && mover.checkpass(PASSCRAWL))
-		mover.layer = 2.7
-	return ..()
-
-/obj/structure/stool/bed/CheckExit(atom/movable/O as mob|obj)
-	if(buckled_mob != O && iscarbon(O) && O.checkpass(PASSCRAWL))
-		O.layer = 4.0
+		return TRUE
 	return ..()
 
 /obj/structure/stool/bed/Process_Spacemove(movement_dir = 0)
@@ -142,7 +136,6 @@
 	if(M == buckled_mob)
 		if(M.crawling)
 			M.SetCrawling(FALSE)
-			M.layer = 4.0
 		density = TRUE
 		icon_state = "up"
 	else
