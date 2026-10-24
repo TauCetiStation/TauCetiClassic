@@ -385,9 +385,11 @@
 
 		for(var/reagent in recipe.reagents)
 			var/datum/reagent/R = chemical_reagents_list[reagent]
+			if(!R)
+				continue
 			ingredients[R.name] = recipe.reagents[reagent]
 
-		candy_recipes += list("result" = result::name, "ingredients" = ingredients)
+		candy_recipes += list(list("result" = result::name, "ingredients" = ingredients))
 
 	var/list/grill_recipes = list()
 	for(var/datum/recipe/recipe in global.grill_recipes)
@@ -403,9 +405,11 @@
 
 		for(var/reagent in recipe.reagents)
 			var/datum/reagent/R = chemical_reagents_list[reagent]
+			if(!R)
+				continue
 			ingredients[R.name] = recipe.reagents[reagent]
 
-		grill_recipes += list("result" = result::name, "ingredients" = ingredients)
+		grill_recipes += list(list("result" = result::name, "ingredients" = ingredients))
 
 	var/list/microwave_recipes = list()
 	for(var/datum/recipe/recipe in global.microwave_recipes)
@@ -421,9 +425,11 @@
 
 		for(var/reagent in recipe.reagents)
 			var/datum/reagent/R = chemical_reagents_list[reagent]
+			if(!R)
+				continue
 			ingredients[R.name] = recipe.reagents[reagent]
 
-		microwave_recipes += list("result" = result::name, "ingredients" = ingredients)
+		microwave_recipes += list(list("result" = result::name, "ingredients" = ingredients))
 
 	var/list/oven_recipes = list()
 	for(var/datum/recipe/recipe in global.oven_recipes)
@@ -439,9 +445,11 @@
 
 		for(var/reagent in recipe.reagents)
 			var/datum/reagent/R = chemical_reagents_list[reagent]
+			if(!R)
+				continue
 			ingredients[R.name] = recipe.reagents[reagent]
 
-		oven_recipes += list("result" = result::name, "ingredients" = ingredients)
+		oven_recipes += list(list("result" = result::name, "ingredients" = ingredients))
 
 	recipes_for_menu["candy_recipes"] = candy_recipes
 	recipes_for_menu["grill_recipes"] = grill_recipes

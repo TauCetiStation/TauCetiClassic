@@ -126,7 +126,7 @@
 
 	switch(action)
 		if("pressnumber")
-			var/num = params["number"]
+			var/num = text2num(params["number"])
 			if(isnum(num))
 				press_number(num)
 				playsound(src, 'sound/items/buttonclick.ogg', VOL_EFFECTS_MASTER)
@@ -401,7 +401,7 @@
 		holoprice.icon_state = "blank"
 	else
 		holoprice.maptext = {"<div style="font-size:9pt;color:#22DD22;font:'Small Fonts';text-align:center;-dm-text-outline: 1px black;" valign="top">[show_text]</div>"}
-		holoprice.icon = 'icons/obj/device.dmi'
+		holoprice.icon = 'icons/obj/cardpay_devices.dmi'
 		holoprice.icon_state = "holo_overlay_[length(num2text(show_text))]"
 	add_overlay(holoprice)
 
@@ -479,7 +479,7 @@
 	name = "menu"
 	desc = "Электронное меню."
 
-	icon_state = "menu_customer-idle"
+	icon_state = "menu_customer"
 
 	density = TRUE
 
@@ -490,6 +490,8 @@
 	reset = TRUE
 	noResetChange = TRUE
 
+	mode = CARDPAY_IDLEMODE
+
 	var/obj/item/device/menu_chef/chef
 	var/list/items_to_order = list()
 
@@ -498,6 +500,7 @@
 /obj/item/device/cardpay/menu_customer/atom_init(mapload)
 	. = ..()
 
+	holoprice.pixel_x = -2
 	holoprice.pixel_y = 3
 
 /obj/item/device/cardpay/menu_customer/set_account()
@@ -526,9 +529,12 @@
 		update_holoprice(clear = TRUE)
 
 /obj/item/device/cardpay/menu_customer/tgui_interact(mob/user, datum/tgui/ui)
+	if(!chef)
+		return
+
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Menu_Chef", "Терминал")
+		ui = new(user, src, "Menu_Customer", "Терминал")
 		ui.open()
 
 /obj/item/device/cardpay/menu_customer/tgui_data(mob/user)
@@ -593,7 +599,7 @@
 			return TRUE
 
 		if("enterpin")
-			var/pin = params["pin"]
+			var/pin = text2num(params["pin"])
 			if(!pin || !isnum(pin))
 				return
 
@@ -612,11 +618,16 @@
 
 	update_holoprice(custom_text = "№[chef.customer_menus.Find(src)]")
 
+	icon_state = "[basic_icon_state]-idle"
+
 /obj/item/device/cardpay/menu_customer/proc/disconnect_from_terminal(obj/item/device/menu_chef/terminal)
-	chef.customer_menus -= src
-	chef = null
+	if(chef)
+		chef.customer_menus -= src
+		chef = null
 	linked_account = 0
 	update_holoprice(clear = TRUE)
+
+	icon_state = basic_icon_state
 
 
 #define CARDPAY_ORDERSMODE "Mode_Orders"
@@ -638,6 +649,8 @@
 
 	var/list/customer_menus = list()
 	var/list/menu_items = list()
+
+	var/recipe_type = "microwave_recipes"
 
 	var/list/orders = list()
 	var/neworders = 0
@@ -708,7 +721,7 @@
 		ui.open()
 
 /obj/item/device/menu_chef/tgui_static_data(mob/user)
-	return recipes_for_menu
+	return list("recipes_list" = recipes_for_menu[recipe_type])
 
 /obj/item/device/menu_chef/tgui_data(mob/user)
 	var/list/data = list()
@@ -741,9 +754,18 @@
 
 			return TRUE
 
+		if("switch_recipe_type")
+			var/new_recipe_type = params["recipe_type"]
+			if(!new_recipe_type in list("candy_recipes", "grill_recipes", "microwave_recipes", "oven_recipes"))
+				return
+
+			recipe_type = new_recipe_type
+			SStgui.update_uis(src)
+			return TRUE
+
 		if("add_to_menu")
 			var/name = params["item_name"]
-			var/price = params["item_price"]
+			var/price = text2num(params["item_price"])
 
 			if(!name || !istext(name) || !price || !isnum(price))
 				return
@@ -768,7 +790,7 @@
 			return TRUE
 
 		if("new_account_number")
-			var/account_number = params["number"]
+			var/account_number = text2num(params["number"])
 			if(!account_number || !isnum(account_number))
 				return
 
@@ -779,7 +801,7 @@
 			return TRUE
 
 		if("delete_order")
-			var/order_id = params["order_id"]
+			var/order_id = text2num(params["order_id"])
 			if(!order_id || !isnum(order_id))
 				return
 
