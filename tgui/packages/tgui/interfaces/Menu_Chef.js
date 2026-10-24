@@ -173,7 +173,8 @@ export const Menu_Chef = (properties, context) => {
             {recipes_type === 'orders' ? (
               <Section fill scrollable height="100%" title="Список заказов">
                 {Object.keys(recipes).map((table, table_index) => (
-                  <Section textAlign="center"
+                  <Section
+                    textAlign="center"
                     key={`${table}:${table_index}`}
                     width="100%"
                     title={`Столик ${table}`}>
@@ -195,7 +196,10 @@ export const Menu_Chef = (properties, context) => {
                           </Flex.Item>
                         </Flex>
                         {Object.entries(order.order).map((item, index) => (
-                          <p textAlign="start" width="100%" key={`${item[0]}:${index}`}>
+                          <p
+                            textAlign="start"
+                            width="100%"
+                            key={`${item[0]}:${index}`}>
                             {item[0]} - {item[1]} шт.
                           </p>
                         ))}
