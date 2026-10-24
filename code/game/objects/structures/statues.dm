@@ -35,7 +35,7 @@
 	visible_message("<span class='danger'>[C_CASE(src, NOMINATIVE_CASE)] отламывается от пьедестала и падает навзничь!</span>")
 
 	var/turf/fall_turf = get_turf(src)
-	for(var/check_dir in shuffle(cardinal.Copy()))
+	for(var/check_dir in shuffle(global.cardinal))
 		var/turf/T = get_step(src, check_dir)
 		if(T && !T.density)
 			fall_turf = T
