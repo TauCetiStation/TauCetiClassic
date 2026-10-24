@@ -99,7 +99,7 @@ var/global/contest_statues_distributed = FALSE
 		return
 	contest_statues_distributed = TRUE
 	var/list/pool = list(/obj/structure/contest_statue/javelineer, /obj/structure/contest_statue/replika)
-	for(var/obj/effect/contest_statue_spawn/S as anything in shuffle(contest_statue_spawns.Copy()))
+	for(var/obj/effect/contest_statue_spawn/S as anything in shuffle(contest_statue_spawns))
 		if(pool.len)
 			var/statue_type = pick_n_take(pool)
 			new statue_type(S.loc)
