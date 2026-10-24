@@ -23,6 +23,7 @@
 	name = statue_part.name
 
 /obj/structure/statue_pedestal/Destroy()
+	qdel(statue_part)
 	statue_part = null
 	return ..()
 
