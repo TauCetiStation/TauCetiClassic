@@ -60,7 +60,7 @@ export const Menu_Chef = (properties, context) => {
         <Section height="10%">
           <Flex direction="row" width="100%">
             <Flex.Item width="100%">
-              <p>
+              <b>
                 Linked Account:
                 <NumberInput
                   width={'60px'}
@@ -76,12 +76,12 @@ export const Menu_Chef = (properties, context) => {
                     })
                   }
                 />
-              </p>
+              </b>
             </Flex.Item>
-            <Flex.Item>
-              <p>
+            <Flex.Item width="100%">
+              <b>
                 Подключенные терминалы: {customer_menus ? customer_menus : 0}
-              </p>
+              </b>
             </Flex.Item>
           </Flex>
         </Section>
@@ -173,29 +173,29 @@ export const Menu_Chef = (properties, context) => {
             {recipes_type === 'orders' ? (
               <Section fill scrollable height="100%" title="Список заказов">
                 {Object.keys(recipes).map((table, table_index) => (
-                  <Section
+                  <Section textAlign="center"
                     key={`${table}:${table_index}`}
                     width="100%"
                     title={`Столик ${table}`}>
-                    {recipes[table].map((order, order_index) => (
+                    {recipes[table].map((order) => (
                       <>
-                        <Flex direction="row">
+                        <Flex direction="row" textAlign="start">
                           <Flex.Item width="100%" bold>
-                            Заказ:
+                            Заказ №{order.id}
                           </Flex.Item>
                           <Flex.Item width="10%">
                             <Button
                               icon="trash"
                               onClick={() =>
                                 act('delete_order', {
-                                  order_id: order_index + 1,
+                                  order_id: order.id,
                                 })
                               }
                             />
                           </Flex.Item>
                         </Flex>
                         {Object.entries(order.order).map((item, index) => (
-                          <p key={`${item[0]}:${index}`}>
+                          <p textAlign="start" width="100%" key={`${item[0]}:${index}`}>
                             {item[0]} - {item[1]} шт.
                           </p>
                         ))}

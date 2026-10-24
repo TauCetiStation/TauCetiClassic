@@ -32,7 +32,7 @@
 
 /obj/item/device/cardpay/atom_init(mapload)
 	. = ..()
-	AddComponent(/datum/component/wrench_to_table, null, CALLBACK(src, PROC_REF(on_unwrenched)))
+	AddComponent(/datum/component/wrench_to_table, CALLBACK(src, PROC_REF(on_wrenched)), CALLBACK(src, PROC_REF(on_unwrenched)))
 
 	holoprice = image('icons/effects/32x32.dmi', "blank")
 	holoprice.layer = INDICATOR_LAYER
@@ -42,6 +42,9 @@
 	holoprice.maptext_x = -4
 
 	add_overlay(holoprice)
+
+/obj/item/device/cardpay/proc/on_wrenched()
+	return
 
 /obj/item/device/cardpay/proc/on_unwrenched()
 	SStgui.close_uis(src)
@@ -505,6 +508,21 @@
 	holoprice.pixel_x = -1
 	holoprice.pixel_y = 3
 
+/obj/item/device/cardpay/menu_customer/Destroy()
+	if(chef)
+		disconnect_from_terminal(chef)
+
+	return ..()
+
+/obj/item/device/cardpay/menu_customer/on_wrenched()
+	if(chef)
+		icon_state = "[basic_icon_state]-idle"
+		update_holoprice(custom_text = "№[chef.customer_menus.Find(src)]")
+
+/obj/item/device/cardpay/menu_customer/on_unwrenched()
+	..()
+	icon_state = basic_icon_state
+
 /obj/item/device/cardpay/menu_customer/set_account()
 	return
 
@@ -681,9 +699,17 @@
 	var/list/orders = list()
 	var/neworders = 0
 
+	var/ordernum = 1
+
 /obj/item/device/menu_chef/atom_init(mapload)
 	. = ..()
 	AddComponent(/datum/component/wrench_to_table, CALLBACK(src, PROC_REF(on_wrenched)), CALLBACK(src, PROC_REF(on_unwrenched)))
+
+/obj/item/device/menu_chef/Destroy()
+	for(var/obj/item/device/cardpay/menu_customer/menu)
+		menu.disconnect_from_terminal(src)
+
+	return ..()
 
 /obj/item/device/menu_chef/proc/on_wrenched()
 	icon_state = "menu_chef-idle"
@@ -798,7 +824,11 @@
 			if(!order_id || !isnum(order_id))
 				return
 
-			orders.Cut(order_id, order_id + 1)
+			for(var/list/order in orders)
+				if(order["id"] != order_id)
+					continue
+
+				orders -= list(order)
 			return TRUE
 
 		if("orders_opened")
@@ -810,7 +840,8 @@
 		menu.linked_account = linked_account
 
 /obj/item/device/menu_chef/proc/add_order(list/order, number)
-	orders += list(list("table" = number, "order" = order))
+	orders += list(list("table" = number, "order" = order, "id" = ordernum))
+	ordernum++
 
 	flick("menu_chef-order", src)
 	visible_message("[bicon(src)] [name] <span class='notice'>Новый заказ!</span>")
