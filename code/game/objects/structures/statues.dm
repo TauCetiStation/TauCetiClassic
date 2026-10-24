@@ -23,8 +23,7 @@
 	name = statue_part.name
 
 /obj/structure/statue_pedestal/Destroy()
-	qdel(statue_part)
-	statue_part = null
+	QDEL_NULL(statue_part)
 	return ..()
 
 /obj/structure/statue_pedestal/atom_break(damage_flag)
