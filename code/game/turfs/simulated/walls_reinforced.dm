@@ -375,6 +375,11 @@
 		AH.try_build(src)
 		return
 
+	else if(istype(W,/obj/item/status_display_frame))
+		var/obj/item/status_display_frame/AH = W
+		AH.try_build(src)
+		return
+
 	// why is all of this here help me
 	else if(istype(W, /obj/item/noticeboard_frame))
 		var/obj/item/noticeboard_frame/NF = W
