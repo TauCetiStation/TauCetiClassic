@@ -106,6 +106,9 @@
 	subtitle = "Система Предотвращения Аварий [station_name_ru()]"
 
 /* Shuttles */
+/datum/announcement/station/shuttle
+	chat_alert_color = "orange"
+
 /datum/announcement/station/shuttle/crew_called
 	name = "Shuttle: Crew Called"
 	message = "Процедура смены экипажа начата. Шаттл вызван. Он прибудет через несколько минут."

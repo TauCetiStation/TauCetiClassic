@@ -124,7 +124,7 @@
 		else		//recipient is an admin but sender is not
 			if(!current_ticket)
 				to_chat_admin_pm(src, "<span class='warning'>You can no longer reply to this ticket, please open another one by using the Adminhelp verb if need be.</span>")
-				
+
 				to_chat_admin_pm(src, "<span class='notice'>Message: [msg]</span>")
 				return
 			else
@@ -143,10 +143,7 @@
 			if(!recipient.current_ticket)
 				new /datum/admin_help(msg, recipient, TRUE)
 
-			var/recipmsg = "<span class='warning' size='4'><b>-- Administrator private message --</b></span><br>" + \
-				"<span class='warning'>Admin PM from-<b>[key_name(src, recipient, 0)]</b>: <span class='emojify linkify'>[msg]</span></span><br>" + \
-				"<span class='warning'><i>Нажмите на имя администратора для ответа.</i></span>"
-			to_chat_admin_pm(recipient, recipmsg)
+			recipient.receive_ahelp(key_name(src, recipient, 0), "<span class='emojify linkify'>[msg]</span>")
 			to_chat_admin_pm(src, "<span class='notice'>Admin PM to-<b>[key_name(recipient, src, 1)]</b>: <span class='emojify linkify'>[msg]</span></span>")
 
 			admin_ticket_log(recipient, "<font color='blue'>PM From [key_name_admin(src)]: [msg]</font>")
