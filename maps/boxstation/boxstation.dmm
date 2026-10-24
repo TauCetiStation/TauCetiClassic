@@ -6393,7 +6393,7 @@
 /obj/structure/fence/metal{
 	dir = 4
 	},
-/obj/effect/contest_statue_spawn,
+/obj/structure/statue_pedestal,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/exit)
 "akt" = (
@@ -21221,7 +21221,7 @@
 "aKD" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
-/obj/effect/contest_statue_spawn,
+/obj/structure/statue_pedestal,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aKE" = (
@@ -81378,7 +81378,7 @@
 	},
 /area/station/cargo/storage)
 "lLv" = (
-/obj/effect/contest_statue_spawn,
+/obj/structure/statue_pedestal,
 /turf/simulated/floor{
 	icon_state = "stairs_middle"
 	},
@@ -82418,7 +82418,7 @@
 /area/station/cargo/storage)
 "myJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/contest_statue_spawn,
+/obj/structure/statue_pedestal,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "green"
@@ -91001,7 +91001,7 @@
 /obj/structure/fence/metal{
 	dir = 8
 	},
-/obj/effect/contest_statue_spawn,
+/obj/structure/statue_pedestal,
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/exit)
 "uRy" = (
