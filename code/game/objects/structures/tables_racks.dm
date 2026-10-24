@@ -505,6 +505,8 @@
 	parts = /obj/item/weapon/table_parts/wood/fancy
 	flipable = FALSE
 
+	hidden_cache = /obj/item/weapon/storage/hidden_cache/fancytable
+
 /obj/structure/table/woodentable/fancy/black
 	icon = 'icons/obj/smooth_structures/fancy_black_table.dmi'
 	parts = /obj/item/weapon/table_parts/wood/fancy/black

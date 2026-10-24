@@ -13,6 +13,8 @@
 
 	var/roll_sound = null // Janicart and office chair use this when moving.
 
+	hidden_cache = null
+
 /obj/structure/stool/bed/chair/atom_init()
 	..()
 	if(is_station_level(z))
@@ -508,6 +510,8 @@
 	name = "comfy chair"
 	desc = "It looks comfy."
 	var/armrest = null
+
+	hidden_cache = /obj/item/weapon/storage/hidden_cache/pillow
 
 /obj/structure/stool/bed/chair/comfy/atom_init()
 	armrest = image("icons/obj/objects.dmi", "[icon_state]_armrest", layer = FLY_LAYER)
