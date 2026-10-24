@@ -1482,7 +1482,7 @@ Owl & Griffin toys
 	name = "caps"
 	desc = "Маленькие разноцветные фишки."
 
-	icon = 'icons/obj/casino.dmi'
+	icon = 'icons/obj/economy.dmi'
 	icon_state = "caps_2"
 
 	w_class = SIZE_MIDGET
