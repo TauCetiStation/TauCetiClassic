@@ -612,6 +612,8 @@ SUBSYSTEM_DEF(ticker)
 	if(SSjunkyard)
 		SSjunkyard.save_stats()
 
+	SScontinuity.continuity_save_things()
+
 	//Ask the event manager to print round end information
 	SSevents.RoundEnd()
 
