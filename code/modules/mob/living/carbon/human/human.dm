@@ -671,12 +671,41 @@
 		siemens_coeff *= species.siemens_coefficient
 
 	. = ..(shock_damage, source, siemens_coeff, def_zone, tesla_shock)
-	if(.)
-		if(species && species.flags[IS_SYNTHETIC])
-			nutrition += . // Electrocute act returns it's shock_damage value.
-		if(HAS_TRAIT(src, TRAIT_NO_PAIN)) // Because for all intents and purposes, if the mob feels no pain, he was not shocked.
-			. = 0
-		electrocution_animation(4 SECONDS)
+
+	if(!.)
+		return
+
+	if(species && species.flags[IS_SYNTHETIC])
+		nutrition += . // Electrocute act returns it's shock_damage value.
+	if(HAS_TRAIT(src, TRAIT_NO_PAIN)) // Because for all intents and purposes, if the mob feels no pain, he was not shocked.
+		. = 0
+	electrocution_animation(4 SECONDS)
+
+	if(!can_remember()) //electrocuting people makes them randomly tell things they know
+		return
+	if(get_painkiller_effect() <= PAINKILLERS_EFFECT_MEDIUM)
+		return
+
+	var/probability = .
+	if(HAS_TRAIT(src, TRAIT_LOW_PAIN_THRESHOLD))
+		probability += 25
+	if(HAS_TRAIT(src, TRAIT_HIGH_PAIN_THRESHOLD))
+		probability -= 25
+	probability = clamp(probability, 0, 100)
+
+	if(!prob(probability))
+		return
+
+	var/memory_key = pick(mind.key_memories)
+	var/memory = mind.get_key_memory(memory_key)
+
+	say(stutter("[memory]!"))
+
+	if(prob(25)) //sometimes they forget these things
+		if(getBrainLoss() < 50)
+			adjustBrainLoss(10)
+		else
+			mind.clear_key_memory(memory_key)
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(href_list["skill"])
