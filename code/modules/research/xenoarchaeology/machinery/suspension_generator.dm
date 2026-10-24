@@ -295,6 +295,11 @@
 	deactivate()
 	return ..()
 
+/obj/machinery/suspension_gen/AltClick(mob/user)
+	if(!user || !Adjacent(user))
+		return
+	rotate_ccw()
+
 /obj/machinery/suspension_gen/verb/rotate_ccw()
 	set src in view(1)
 	set name = "Rotate suspension gen (counter-clockwise)"
