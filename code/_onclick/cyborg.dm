@@ -22,7 +22,7 @@
 		return
 
 	if(modifiers[SHIFT_CLICK] && modifiers[MIDDLE_CLICK])
-		MiddleShiftClickOn(A)
+		MiddleShiftClickOn(A, params)
 		return
 	if(modifiers[SHIFT_CLICK] && modifiers[CTRL_CLICK])
 		CtrlShiftClickOn(A)
@@ -99,8 +99,8 @@
 		W.afterattack(A, src, 0, params)
 
 //Middle Shift click for point to
-/mob/living/silicon/robot/MiddleShiftClickOn(atom/A)
-	A.BorgMiddleShiftClick(src)
+/mob/living/silicon/robot/MiddleShiftClickOn(atom/A, params)
+	A.BorgMiddleShiftClick(src, params)
 
 //Middle click cycles through selected modules.
 /mob/living/silicon/robot/MiddleClickOn(atom/A)
@@ -121,8 +121,8 @@
 /mob/living/silicon/robot/AltClickOn(atom/A)
 	A.BorgAltClick(src)
 
-/atom/proc/BorgMiddleShiftClick(mob/living/silicon/robot/user)
-	user.pointed(src)
+/atom/proc/BorgMiddleShiftClick(mob/living/silicon/robot/user, params)
+	user.pointed(src, params)
 
 /atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overriden
 	CtrlShiftClick(user)
