@@ -1,6 +1,7 @@
 // How many structures will be spawned
 #define SPACE_STRUCTURES_AMOUNT 7
 #define MAX_MINING_SECRET_ROOM 5
+#define MAX_MINING_GEODES 20
 // Uncomment to enable debug output of structure coords
 //#define SPACE_STRUCTURES_DEBUG 1
 
@@ -50,6 +51,7 @@ SUBSYSTEM_DEF(mapping)
 
 	// Generate mining.
 	make_mining_asteroid_secrets()
+	make_mining_asteroid_geodes()
 	populate_distribution_map()
 	// Load templates
 	preloadTemplates()
@@ -74,6 +76,10 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
 	for(var/i in 1 to MAX_MINING_SECRET_ROOM)
 		make_mining_asteroid_secret(3)
+
+/datum/controller/subsystem/mapping/proc/make_mining_asteroid_geodes()
+	for(var/i in 1 to MAX_MINING_GEODES)
+		make_mining_asteroid_geode()
 
 /datum/controller/subsystem/mapping/proc/populate_distribution_map()
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_MINING))
@@ -345,3 +351,4 @@ SUBSYSTEM_DEF(mapping)
 
 #undef SPACE_STRUCTURES_AMOUNT
 #undef MAX_MINING_SECRET_ROOM
+#undef MAX_MINING_GEODES

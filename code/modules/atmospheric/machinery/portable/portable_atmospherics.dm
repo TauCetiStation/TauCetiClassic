@@ -139,6 +139,7 @@
 	var/power_losses
 	var/last_power_draw = 0
 	var/obj/item/weapon/stock_parts/cell/cell
+	var/cell_type = /obj/item/weapon/stock_parts/cell/apc
 
 /obj/machinery/portable_atmospherics/powered/powered()
 	if(use_power) //using area power
