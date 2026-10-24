@@ -1,4 +1,4 @@
-#define FLUFF_FILE_PATH "data/customItemsCache.sav"
+#define FLUFF_FILE_PATH "data/customItemsCache_halloween.sav"
 
 // we don't use existing bitfields for savefile in case if someone changes them
 #define FLUFF_HAIR_HIDE_NONE 0
@@ -104,6 +104,8 @@
 		slots = list()
 
 	var/amount = 0
+
+	amount += 3 // halloween
 
 	//all your donator checks go here
 	if(supporter)
