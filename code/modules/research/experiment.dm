@@ -313,9 +313,10 @@
 // Universal tool to get research points from autopsy reports, virus info reports, archeology reports, slime cores
 /obj/item/device/science_tool
 	name = "science tool"
+	cases = list("научное устройство","научного устройства","научному устройству","научное устройство","научным устройством","научном устройстве")
 	icon_state = "science"
 	item_state = "sciencetool"
-	desc = "A hand-held device capable of extracting usefull data from various sources, such as paper reports and slime cores."
+	desc = "Портативное устройство, способное оценивать полезные данные из различных источников, таких как бумажные отчеты, образцы слизистых оболочек и др."
 	flags = CONDUCT | NOBLUDGEON | NOATTACKANIMATION
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3

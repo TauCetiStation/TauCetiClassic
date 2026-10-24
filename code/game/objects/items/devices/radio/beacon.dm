@@ -57,7 +57,8 @@
 //Medical beacon stuff
 /obj/item/device/beacon/medical
 	name = "Medical Tracking Beacon"
-	desc = "A beacon used by a body teleporter."
+	cases = list("медицинский маяк-приёмник","медицинского маяка-приёмника","медицинскому маяку-приёмнику","медицинский маяк-приёмник","медицинским маяком-приёмником","медицинском маяке-приёмнике")
+	desc = "Маяк, используемый телепортером тел."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "beacon_med"
 	item_state = "signaler"
@@ -74,7 +75,8 @@
 
 /obj/item/weapon/medical/teleporter
 	name = "Body Teleporter"
-	desc = "A device used for teleporting injured(critical) or dead people."
+	cases = list("телепортер тела","телепортера тела","телепортеру тела","телепортер тела","телепортером тела","телепортере тела")
+	desc = "Устройство, используемое для телепортации тяжелораненых или погибших людей."
 	w_class = SIZE_TINY
 	gender = PLURAL
 	icon = 'icons/obj/device.dmi'

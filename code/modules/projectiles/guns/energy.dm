@@ -1,6 +1,7 @@
 /obj/item/weapon/gun/energy
 	icon_state = "energy"
 	name = "energy gun"
+	cases = list("энергооружие","энергооружия","энергооружию","энергооружие","энергооружием","энергооружии")
 	desc = "A basic energy-based gun."
 	can_be_holstered = FALSE
 

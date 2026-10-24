@@ -1,6 +1,7 @@
 /obj/item/weapon/holosign_creator
 	name = "holographic sign projector"
-	desc = "A handy-dandy hologaphic projector that displays a janitorial sign."
+	cases = list("голографический проектор","голографического проектора","голографическому проектору","голографический проектор","голографическим проектором","голографическом проекторе")
+	desc = "Удобный голографический проектор, проецирующий предупреждающую табличку."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "signmaker"
 	item_state = "electronic"

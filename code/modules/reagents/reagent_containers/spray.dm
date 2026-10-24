@@ -511,7 +511,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/weapon/reagent_containers/spray/cleaner, cleaners_l
 //chemsprayer
 /obj/item/weapon/reagent_containers/spray/chemsprayer
 	name = "chem sprayer"
-	desc = "A utility used to spray large amounts of reagent in a given area."
+	desc = "Устройство для распыления химикатов на большую площадь."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "chemsprayer"
 	item_state = "chemsprayer"

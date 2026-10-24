@@ -3,9 +3,10 @@
 //
 /obj/item/device/robotanalyzer
 	name = "cyborg analyzer"
+	cases = list("сканер состояния киборга","сканера состояния киборга","сканеру состояния киборга","сканер состояния киборга","сканером состояния киборга","сканере состояния киборга")
+	desc = "Ручной сканер, способный диагностировать повреждения у киборгов."
 	icon_state = "robotanalyzer"
 	item_state = "analyzer"
-	desc = "A hand-held scanner able to diagnose robotic injuries."
 	flags = CONDUCT
 	slot_flags = SLOT_FLAGS_BELT
 	throwforce = 3

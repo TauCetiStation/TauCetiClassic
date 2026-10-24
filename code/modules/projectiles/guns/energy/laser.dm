@@ -20,7 +20,7 @@
 
 /obj/item/weapon/gun/energy/laser/big //the bigger version of lasrifle with bigger powercell
 	name = "extended-capacity laser rifle"
-	desc = "Стандартное оружие, предназначенное для убийства с помощью концентрированных энергетических зарядов. Этот экземпляр имеет батарейку повышенной емкости и обладает большим размером."
+	desc = "Стандартное оружие, предназначенное для убийства с помощью концентрированных энергетических зарядов. Этот экземпляр имеет батарейку повышенной емкости  и выглядит крупнее обычной винтовки."
 	m_amt = 4000
 	cell_type = /obj/item/weapon/stock_parts/cell/energy_weapon/extended
 	flags_2 = CANT_BE_INSERTED

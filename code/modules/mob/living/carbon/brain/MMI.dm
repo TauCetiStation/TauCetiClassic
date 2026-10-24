@@ -1,6 +1,7 @@
 /obj/item/device/mmi
 	name = "Man-Machine Interface"
-	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
+	cases = list("человеко-машинный интерфейс","человеко-машинного интерфейса","человеко-машинному интерфейсу","человеко-машинный интерфейс","человеко-машинным интерфейсом","человеко-машинном интерфейсе")
+	desc = "Невзрачная аббревиатура ЧМИ скрывает подлинный ужас этого устройства."
 	icon = 'icons/obj/assemblies.dmi'
 	icon_state = "mmi_empty"
 	flags = HEAR_PASS_SAY
@@ -160,7 +161,7 @@
 
 /obj/item/device/mmi/radio_enabled
 	name = "Radio-enabled Man-Machine Interface"
-	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity. This one comes with a built-in radio."
+	desc = "Невзрачная аббревиатура ЧМИ скрывает подлинный ужас этого устройства. Эта версия оснащена встроенным радиоприемником."
 	origin_tech = "biotech=4"
 
 	var/obj/item/device/radio/radio = null//Let's give it a radio.

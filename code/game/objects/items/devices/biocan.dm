@@ -1,6 +1,7 @@
 /obj/item/device/biocan
 	name = "Biogel can"
-	desc = "Biogel jar for supporting life in head. Extremely fragile!"
+	cases = list("банка с биогелем","банки с биогелем","банке с биогелем","банку с биогелем","банкой с биогелем","банке с биогелем")
+	desc = "Банка с биогелем для поддержания жизнедеятельности головы. Крайне хрупкая!"
 	icon = 'icons/obj/biocan.dmi'
 	icon_state = "biocan"
 	origin_tech = "biotech=3;materials=3;magnets=3"

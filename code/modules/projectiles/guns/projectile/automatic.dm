@@ -1,5 +1,6 @@
 /obj/item/weapon/gun/projectile/automatic
 	name = "generic automatic gun"
+	cases = list("автоматическое оружие","автоматического оружия","автоматическому оружию","автоматическое оружие","автоматическим оружием","автоматическом оружии")
 	desc = "О боже, вы не должны были видеть это!"
 	icon_state = "saber"
 	item_state = null

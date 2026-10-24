@@ -382,7 +382,7 @@
 /obj/item/toy/crayon/spraycan
 	name = "spray can"
 	icon_state = "spraycan_cap"
-	desc = "A metallic container containing tasty paint."
+	desc = "Металлический контейнер с вкусной краской."
 	var/capped = 1
 	instant = 1
 	edible = 0

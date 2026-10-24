@@ -1,6 +1,7 @@
 /obj/item/weapon/implanter
 	name = "implanter"
 	cases = list("имплантер", "имплантера", "имплантеру", "имплантер", "имплантером", "имплантере")
+	desc = "Имплантер, используемый для введения имплантатов."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implanter0"
 	item_state = "syringe_0"

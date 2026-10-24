@@ -1,5 +1,6 @@
 /obj/item/weapon/stock_parts/cell
 	name = "power cell"
+	cases = list("батарейка","батарейки","батарейке","батарейку","батарейкой","батарейке")
 	desc = "A rechargable electrochemical power cell."
 	hitsound = list('sound/items/tools/device_big-hit.ogg')
 	icon = 'icons/obj/power.dmi'

@@ -29,7 +29,8 @@
 
 /obj/item/clothing/neck/airbag
 	name = "personal airbag"
-	desc = "One-use protection from high-speed collisions and low pressure."
+	cases = list("персональная подушка безопасности","персональной подушки безопасности","персональной подушке безопасности","персональную подушку безопасности","персональной подушкой безопасности","персональной подушке безопасности")
+	desc = "Одноразовая защита от сногсшибательных порывов ветра и низкого давления."
 	icon_state = "airbag"
 	item_state = "airbag"
 	slot_flags = SLOT_FLAGS_BELT | SLOT_FLAGS_NECK

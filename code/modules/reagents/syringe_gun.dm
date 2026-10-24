@@ -3,7 +3,8 @@
 
 /obj/item/weapon/gun/syringe
 	name = "syringe gun"
-	desc = "A spring loaded rifle designed to fit syringes, designed to incapacitate unruly patients from a distance."
+	cases = list("шприцемёт","шприцемёта","шприцемёту","шприцемёт","шприцемётом","шприцемёте")
+	desc = "Пружинная винтовка для стрельбы шприцами. Для дистанционного усмирения буйных пациентов."
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "syringegun"
 	item_state = "syringegun"
@@ -117,7 +118,7 @@
 
 /obj/item/weapon/gun/syringe/rapidsyringe
 	name = "rapid syringe gun"
-	desc = "A modification of the syringe gun design, using a rotating cylinder to store up to four syringes."
+	desc = "Усовершенствованная версия шприцемёта с барабанным магазином на [max_syringes] шприца."
 	icon_state = "rapidsyringegun"
 	max_syringes = 4
 
@@ -138,7 +139,7 @@
 
 /obj/item/weapon/gun/syringe/syndicate
 	name = "dart pistol"
-	desc = "A small spring-loaded sidearm that functions identically to a syringe gun."
+	desc = "Небольшой пружинный пистолет, действующий как шприцемёт."
 	icon_state = "syringe_pistol"
 	item_state = "gun"
 	w_class = SIZE_TINY

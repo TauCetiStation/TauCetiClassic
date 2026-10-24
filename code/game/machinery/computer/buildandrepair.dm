@@ -19,6 +19,7 @@
 	anchored = FALSE
 	w_class = SIZE_TINY
 	name = "Circuit board"
+	cases = list("плата","платы","плате","плату","платой","плате")
 	icon = 'icons/obj/module.dmi'
 	icon_state = "id_mod"
 	item_state_world = "id_mod_w"

@@ -89,6 +89,7 @@
  */
 /obj/item/weapon/scalpel
 	name = "scalpel"
+	cases = list("скальпель","скальпеля","скальпелю","скальпель","скальпелем","скальпеле")
 	desc = "Cut, cut, and once more cut."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
@@ -122,7 +123,7 @@
  */
 /obj/item/weapon/scalpel/laser1
 	name = "laser scalpel"
-	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks basic and could be improved."
+	desc = "Скальпель, дополненный направленным лазером для более точного разреза без разбрызгивания крови на операционном столе. Эта модель выглядит простой и может быть усовершенствована."
 	icon_state = "scalpel_laser1_on"
 	item_state_world = "scalpel_laser1_on_w"
 	damtype = BURN
@@ -131,7 +132,7 @@
 
 /obj/item/weapon/scalpel/laser2
 	name = "laser scalpel"
-	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks somewhat advanced."
+	desc = "Скальпель, дополненный направленным лазером для более точного разреза без разбрызгивания крови на операционном столе. Эта модель выглядит довольно продвинуто."
 	icon_state = "scalpel_laser2_on"
 	item_state_world = "scalpel_laser2_on_w"
 	damtype = BURN
@@ -140,7 +141,7 @@
 
 /obj/item/weapon/scalpel/laser3
 	name = "laser scalpel"
-	desc = "A scalpel augmented with a directed laser, for more precise cutting without blood entering the field.  This one looks to be the pinnacle of precision energy cutlery!"
+	desc = "Скальпель, дополненный направленным лазером для более точного разреза без разбрызгивания крови на операционном столе. Похоже, это вершина высокоточных энергетических хирургических скальпелей!"
 	icon_state = "scalpel_laser3_on"
 	item_state_world = "scalpel_laser3_on_w"
 	damtype = BURN
@@ -150,7 +151,7 @@
 
 /obj/item/weapon/scalpel/manager
 	name = "incision management system"
-	desc = "A true extension of the surgeon's body, this marvel instantly and completely prepares an incision allowing for the immediate commencement of therapeutic steps."
+	desc = "Будучи подлинным продолжением тела хирурга, это чудо техники мгновенно и безупречно подготавливает разрез, позволяя незамедлительно приступить к хирургическим манипуляциям."
 	icon_state = "scalpel_manager_on"
 	item_state_world = "scalpel_manager_on_w"
 	force = 7.5
