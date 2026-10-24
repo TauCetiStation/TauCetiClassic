@@ -79,11 +79,53 @@
 
 	binding_rites = list(
 		/datum/religion_rites/standing/consent/invite,
-		/datum/religion_rites/instant/communicate,
 	)
 
 	style_text = "piety"
 	symbol_icon_state = "nimbus"
+
+/datum/religion/chaplain/update_aspects()
+	. = ..()
+	update_communication_spells()
+
+/datum/religion/chaplain/on_entry(mob/M)
+	. = ..()
+	update_communication_spell(M)
+
+/datum/religion/chaplain/on_exit(mob/M)
+	remove_communication_spell(M)
+	. = ..()
+
+/datum/religion/chaplain/proc/has_communication_aspects()
+	var/obj/effect/proc_holder/spell/targeted/communicate/chaplain/S = new
+	var/result = is_sublist_assoc(S.needed_aspects, aspects, CALLBACK(src, PROC_REF(satisfy_requirements)))
+	QDEL_NULL(S)
+	return result
+
+/datum/religion/chaplain/proc/update_communication_spells()
+	for(var/mob/M as anything in members)
+		update_communication_spell(M)
+
+/datum/religion/chaplain/proc/update_communication_spell(mob/M)
+	if(!M?.mind)
+		return
+
+	var/obj/effect/proc_holder/spell/targeted/communicate/chaplain/spell
+	for(var/obj/effect/proc_holder/spell/targeted/communicate/chaplain/C in M.spell_list)
+		spell = C
+		break
+
+	if(M.mind.holy_role >= HOLY_ROLE_PRIEST)
+		if(!spell)
+			M.AddSpell(new /obj/effect/proc_holder/spell/targeted/communicate/chaplain(src))
+		return
+
+	if(spell)
+		M.RemoveSpell(spell)
+
+/datum/religion/chaplain/proc/remove_communication_spell(mob/M)
+	for(var/obj/effect/proc_holder/spell/targeted/communicate/chaplain/C in M.spell_list)
+		M.RemoveSpell(C)
 
 /datum/religion/chaplain/setup_religions()
 	global.chaplain_religion = src
