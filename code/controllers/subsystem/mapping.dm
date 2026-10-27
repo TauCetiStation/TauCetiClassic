@@ -1,7 +1,6 @@
 // How many structures will be spawned
 #define SPACE_STRUCTURES_AMOUNT 7
 #define MAX_MINING_SECRET_ROOM 5
-#define MAX_MINING_GEODES 20
 // Uncomment to enable debug output of structure coords
 //#define SPACE_STRUCTURES_DEBUG 1
 
@@ -50,8 +49,8 @@ SUBSYSTEM_DEF(mapping)
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 
 	// Generate mining.
-	make_mining_asteroid_secrets()
 	make_mining_asteroid_geodes()
+	make_mining_asteroid_secrets()
 	populate_distribution_map()
 	// Load templates
 	preloadTemplates()
@@ -76,10 +75,6 @@ SUBSYSTEM_DEF(mapping)
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_secrets()
 	for(var/i in 1 to MAX_MINING_SECRET_ROOM)
 		make_mining_asteroid_secret(3)
-
-/datum/controller/subsystem/mapping/proc/make_mining_asteroid_geodes()
-	for(var/i in 1 to MAX_MINING_GEODES)
-		make_mining_asteroid_geode()
 
 /datum/controller/subsystem/mapping/proc/populate_distribution_map()
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_MINING))
@@ -348,6 +343,66 @@ SUBSYSTEM_DEF(mapping)
 	cached_nanomap_payload = data
 
 	return data.Copy()
+
+/datum/controller/subsystem/mapping/proc/make_mining_asteroid_geodes()
+	for(var/geode_type in global.geode_by_type)
+		var/asteroid_z = pick(SSmapping.levels_by_trait(ZTRAIT_MINING))
+		var/datum/geode/geode_datum = global.geode_by_type[geode_type]
+		var/list/perlin_map = get_perlin_noise(rand(), world.maxx, world.maxy, 0.05, 0.005, 5)
+
+		for(var/width in 1 to perlin_map.len)
+			for(var/height in 1 to perlin_map[width].len)
+				var/turf/T = locate(width, height, asteroid_z)
+				if(!is_valid_for_geode(T))
+					continue
+
+				generate_geode_turf(T, perlin_map[width][height], geode_datum)
+
+/datum/controller/subsystem/mapping/proc/is_valid_for_geode(turf/T)
+	var/area/A = get_area(T)
+	if(!istype(A, /area/asteroid/mine/unexplored))
+		return FALSE
+
+	if(isenvironmentturf(T))
+		return FALSE
+
+	if(istype(/turf/simulated/floor/plating/airless/asteroid, T))
+		return FALSE
+
+	return TRUE
+
+/datum/controller/subsystem/mapping/proc/generate_geode_turf(turf/T, noise_level, datum/geode/geode_datum)
+	switch(noise_level)
+		if(210 to 235)
+			var/turf/simulated/floor/plating/airless/asteroid/Floor = new(T)
+			if(prob(25) && geode_datum.floor_crystal)
+				var/floor_crystal = geode_datum.floor_crystal
+				new floor_crystal(Floor)
+			else if(geode_datum.items_inside)
+				var/item_type = pickweight(geode_datum.items_inside)
+				new item_type(Floor)
+
+			if(!geode_datum.gas_inside)
+				return
+
+			var/datum/gas_mixture/environment = Floor.return_air()
+			environment.adjust_gas_temp(geode_datum.gas_inside, rand(50, 100), rand(T0C - 100, T0C + 100))
+
+			for(var/direction in global.cardinal)
+				var/turf/G = get_step(T, direction)
+				if(!isenvironmentturf(G))
+					continue
+				var/turf/simulated/mineral/Wall = new(G)
+				Wall.mineral = geode_datum.wall_mineral
+				Wall.UpdateMineral()
+				Wall.crystal_type = geode_datum.wall_crystal
+
+		if(200 to 209, 236 to 255)
+			var/turf/simulated/mineral/Wall = new(T)
+			Wall.mineral = geode_datum.wall_mineral
+			Wall.UpdateMineral()
+			Wall.crystal_type = geode_datum.wall_crystal
+
 
 #undef SPACE_STRUCTURES_AMOUNT
 #undef MAX_MINING_SECRET_ROOM

@@ -332,7 +332,7 @@
 /turf/simulated/mineral/proc/generate_crystals()
 	for(var/crystal_dir in global.cardinal)
 		var/turf/T = get_step(src, crystal_dir)
-		if(!istype(get_area(T), /area/asteroid/geode))
+		if(!istype(T, /turf/simulated/floor/plating/airless/asteroid))
 			continue
 
 		var/obj/structure/crystal/wall/crystal = new crystal_type(T)
