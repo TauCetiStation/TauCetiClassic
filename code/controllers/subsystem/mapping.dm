@@ -346,7 +346,11 @@ SUBSYSTEM_DEF(mapping)
 
 /datum/controller/subsystem/mapping/proc/make_mining_asteroid_geodes()
 	for(var/geode_type in global.geode_by_type)
-		var/asteroid_z = pick(SSmapping.levels_by_trait(ZTRAIT_MINING))
+		var/list/mining_layers = SSmapping.levels_by_trait(ZTRAIT_MINING)
+		if(!mining_layers.len)
+			return
+
+		var/asteroid_z = pick(mining_layers)
 		var/datum/geode/geode_datum = global.geode_by_type[geode_type]
 		var/list/perlin_map = get_perlin_noise(rand(), world.maxx, world.maxy, 0.05, 0.005, 5)
 
