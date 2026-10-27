@@ -350,8 +350,13 @@ SUBSYSTEM_DEF(mapping)
 		var/datum/geode/geode_datum = global.geode_by_type[geode_type]
 		var/list/perlin_map = get_perlin_noise(rand(), world.maxx, world.maxy, 0.05, 0.005, 5)
 
-		for(var/width in 1 to perlin_map.len)
-			for(var/height in 1 to perlin_map[width].len)
+		var/perlin_width = perlin_map.len
+		var/list/perlin_holder = perlin_map[1]
+		var/perlin_height = perlin_holder.len
+
+
+		for(var/width in 1 to perlin_width)
+			for(var/height in 1 to perlin_height)
 				var/turf/T = locate(width, height, asteroid_z)
 				if(!is_valid_for_geode(T))
 					continue
@@ -406,4 +411,3 @@ SUBSYSTEM_DEF(mapping)
 
 #undef SPACE_STRUCTURES_AMOUNT
 #undef MAX_MINING_SECRET_ROOM
-#undef MAX_MINING_GEODES
