@@ -120,10 +120,6 @@ var/global/list/spawned_surprises = list()
 			valid = FALSE
 			continue
 
-		if(locate(/area/asteroid/geode) in surroundings)
-			valid = FALSE
-			continue
-
 		if(locate(/turf/simulated/floor/plating/airless/asteroid) in surroundings)
 			valid = FALSE
 			continue
