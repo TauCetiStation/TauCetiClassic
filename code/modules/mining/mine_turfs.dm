@@ -474,6 +474,10 @@
 
 /turf/simulated/mineral/random/atom_init_late()
 	if(SSticker.current_state <= GAME_STATE_SETTING_UP)
+		var/list/geodes = SSmapping.geode_maps[z]
+		if(!geodes || !geodes.len)
+			return ..()
+
 		for(var/datum/geode/geode in SSmapping.geode_maps[z])
 			var/noise = SSmapping.geode_maps[z][geode]
 			if(geode.generate_geode_turf(src, noise[x][y]))
@@ -486,6 +490,9 @@
 
 /turf/simulated/mineral/random/caves/atom_init_late()
 	var/list/noise = SSmapping.cave_maps[z]
+	if(!noise || !noise.len)
+		return ..()
+
 	switch(noise[x][y])
 		if(210 to 255)
 			if(SSticker.current_state > GAME_STATE_SETTING_UP)

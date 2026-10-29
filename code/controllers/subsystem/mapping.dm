@@ -353,6 +353,9 @@ SUBSYSTEM_DEF(mapping)
 		cave_maps[mining_layer] = get_voronoi_noise(rand(), world.maxx, world.maxy, 12, 12, 17)
 
 /datum/controller/subsystem/mapping/proc/generate_geode_maps()
+	if(!SSmapping.levels_by_trait(ZTRAIT_MINING).len)
+		return
+
 	for(var/geode_type in global.geode_by_type)
 		var/datum/geode/geode_datum = global.geode_by_type[geode_type]
 		var/mining_layer = pick(SSmapping.levels_by_trait(ZTRAIT_MINING))
