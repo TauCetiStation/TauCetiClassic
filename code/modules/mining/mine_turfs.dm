@@ -63,10 +63,6 @@
 	MineralSpread()
 	update_overlays()
 
-	if(crystal_type)
-		generate_crystals()
-		crystal_type = null
-
 /turf/simulated/mineral/update_overlays()
 	cut_overlays()
 	if(!mineral || ore_amount < 8)
@@ -156,19 +152,6 @@
 		icon_state = "rock"
 
 	update_hud()
-
-/turf/simulated/mineral/proc/CaveSpread()	//Integration of cave system
-	if(mineral)
-		for(var/trydir in cardinal)
-			var/turf/simulated/mineral/random/target_turf = get_step(src, trydir)
-			if(istype(target_turf, /turf/simulated/mineral/random/caves))
-				if(prob(2))
-					if(SSticker.current_state > GAME_STATE_SETTING_UP)
-						ChangeTurf(/turf/simulated/floor/plating/airless/asteroid/cave)
-					else
-						new/turf/simulated/floor/plating/airless/asteroid/cave(src)
-
-					new /obj/structure/fans/tiny/asteroid_lians(src)
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
@@ -472,14 +455,11 @@
 	name = "Mineral deposit"
 	icon_state = "rock"
 
-	var/mineralSpawnChanceList = list("Phoron" = 25, "Iron" = 20, "Coal" = 15, "Silver" = 15, "Gold" = 15, "Uranium" = 10, "Platinum" = 10, "Diamond" = 5)
+	var/mineralSpawnChanceList = list("Phoron" = 25, "Iron" = 20, "Coal" = 15, "Silver" = 15, "Gold" = 15, "Uranium" = 10, "Platinum" = 10)
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
 /turf/simulated/mineral/random/atom_init()
 	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/turf/simulated/mineral/random/atom_init_late()
 	if (prob(mineralChance) && !mineral)
 		var/mineral_name = pickweight(mineralSpawnChanceList) //temp mineral name
 
@@ -489,25 +469,45 @@
 		if (mineral_name && (mineral_name in name_to_mineral))
 			mineral = name_to_mineral[mineral_name]
 			UpdateMineral()
-			CaveSpread()
+
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/simulated/mineral/random/atom_init_late()
+	if(SSticker.current_state <= GAME_STATE_SETTING_UP)
+		for(var/datum/geode/geode in SSmapping.geode_maps[z])
+			var/noise = SSmapping.geode_maps[z][geode]
+			if(geode.generate_geode_turf(src, noise[x][y]))
+				return ..()
+
 	. = ..()
 
 /turf/simulated/mineral/random/caves
 	mineralChance = 5
 
+/turf/simulated/mineral/random/caves/atom_init_late()
+	var/list/noise = SSmapping.cave_maps[z]
+	switch(noise[x][y])
+		if(210 to 255)
+			if(SSticker.current_state > GAME_STATE_SETTING_UP)
+				ChangeTurf(/turf/simulated/floor/plating/airless/asteroid/cave)
+			else
+				new/turf/simulated/floor/plating/airless/asteroid/cave(src)
+
+	. = ..()
+
 /turf/simulated/mineral/random/caves/high_chance
 	icon_state = "rock_cave_highchance"
 	mineralChance = 25
-	mineralSpawnChanceList = list("Silver" = 15, "Gold" = 15, "Uranium" = 10, "Platinum" = 5, "Diamond" = 10)
+	mineralSpawnChanceList = list("Silver" = 15, "Gold" = 15, "Uranium" = 10, "Platinum" = 5)
 
 /turf/simulated/mineral/random/caves/high_chance/atom_init()
 	icon_state = "rock"
-	return ..()
+	. = ..()
 
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 40
-	mineralSpawnChanceList = list("Silver" = 50, "Gold" = 45, "Uranium" = 35, "Platinum" = 45, "Diamond" = 30)
+	mineralSpawnChanceList = list("Silver" = 50, "Gold" = 45, "Uranium" = 35, "Platinum" = 45)
 
 /turf/simulated/mineral/random/high_chance/atom_init()
 	icon_state = "rock"
@@ -516,14 +516,14 @@
 /turf/simulated/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 5
-	mineralSpawnChanceList = list("Iron" = 33, "Coal" = 20, "Silver" = 1, "Gold" = 1, "Uranium" = 1,  "Platinum" = 1, "Diamond" = 1)
+	mineralSpawnChanceList = list("Iron" = 33, "Coal" = 20, "Silver" = 1, "Gold" = 1, "Uranium" = 1,  "Platinum" = 1)
 
 /turf/simulated/mineral/random/low_chance/atom_init()
 	icon_state = "rock"
 	. = ..()
 
 /turf/simulated/mineral/random/labormineral
-	mineralSpawnChanceList = list("Iron" = 28, "Coal" = 17, "Silver" = 1, "Gold" = 1, "Uranium" = 1, "Platinum" = 2, "Diamond" = 1)
+	mineralSpawnChanceList = list("Iron" = 28, "Coal" = 17, "Silver" = 1, "Gold" = 1, "Uranium" = 1, "Platinum" = 2)
 	icon_state = "rock_labor"
 
 /turf/simulated/mineral/random/labormineral/atom_init()
@@ -550,22 +550,7 @@
 	var/length = 20
 	var/sanity = TRUE
 
-/turf/simulated/floor/plating/airless/asteroid/cave/atom_init(mapload, length, go_backwards = 1, exclude_dir = -1)
-	if(!length)
-		src.length = rand(MIN_TUNNEL_LENGTH, MAX_TUNNEL_LENGTH)
-	else
-		src.length = length
-
-	// Get our directiosn
-	var/forward_cave_dir = pick(alldirs - exclude_dir)
-	// Get the opposite direction of our facing direction
-	var/backward_cave_dir = angle2dir(dir2angle(forward_cave_dir) + 180)
-
-	// Make our tunnels
-	make_tunnel(forward_cave_dir)
-	if(go_backwards)
-		make_tunnel(backward_cave_dir)
-
+/turf/simulated/floor/plating/airless/asteroid/cave/atom_init(mapload, length)
 	..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -573,55 +558,10 @@
 	// Kill ourselves by replacing ourselves with a normal floor.
 	SpawnFloor(src)
 
-/turf/simulated/floor/plating/airless/asteroid/cave/proc/make_tunnel(dir)
-
-	var/turf/simulated/mineral/tunnel = src
-	var/next_angle = pick(45, -45)
-
-	for(var/i = 0; i < length; i++)
-		if(!sanity)
-			break
-
-		var/list/L = list(45)
-		if(IS_ODD(dir2angle(dir))) // We're going at an angle and we want thick angled tunnels.
-			L += -45
-
-		// Expand the edges of our tunnel
-		for(var/edge_angle in L)
-			var/turf/simulated/mineral/edge = get_step(tunnel, angle2dir(dir2angle(dir) + edge_angle))
-			if(istype(edge))
-				SpawnFloor(edge)
-
-		// Move our tunnel forward
-		tunnel = get_step(tunnel, dir)
-
-		if(istype(tunnel))
-			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
-			if(i > 3 && prob(20))
-				if(SSticker.current_state > GAME_STATE_SETTING_UP)
-					var/list/arguments = list(tunnel, rand(10, 15), 0, dir)
-					ChangeTurf(src.type, arguments)
-				else
-					new type(tunnel, rand(10, 15), 0, dir)
-			else
-				SpawnFloor(tunnel)
-		else //if(!istype(tunnel, src.parent)) // We hit space/normal/wall, stop our tunnel.
-			break
-
-		// Chance to change our direction left or right.
-		if(i > 2 && prob(33))
-			// We can't go a full loop though
-			next_angle = -next_angle
-			dir = angle2dir(dir2angle(dir) + next_angle)
-
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnFloor(turf/T)
 	for(var/turf/S in range(2, T))
 		if(isenvironmentturf(S) || istype(S.loc, /area/asteroid/mine/explored))
-			sanity = FALSE
-			break
-
-	if(!sanity)
-		return
+			return
 
 	if(prob(6))
 		if(istype(loc, /area/asteroid/mine/explored))
@@ -629,6 +569,9 @@
 		for(var/obj/machinery/artifact/bluespace_crystal/BC in range(DISTANCE_BEETWEEN_MOSTERS, T)) //Lowers chance of crystal clumps
 			return
 		new /obj/machinery/artifact/bluespace_crystal(T)
+
+	else if(prob(12))
+		new /obj/structure/fans/tiny/asteroid_lians(T)
 
 	var/turf/t
 	if(SSticker.current_state > GAME_STATE_SETTING_UP)
