@@ -71,7 +71,7 @@
 			generate_floor(T)
 			return TRUE
 
-		if(205 to 219, 236 to 255)
+		if(209 to 219, 236 to 255)
 			generate_wall(T)
 			return TRUE
 
