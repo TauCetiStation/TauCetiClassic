@@ -478,7 +478,7 @@
 		if(!geodes || !geodes.len)
 			return ..()
 
-		for(var/datum/geode/geode in SSmapping.geode_maps[z])
+		for(var/datum/geode/geode in geodes)
 			var/noise = SSmapping.geode_maps[z][geode]
 			if(geode.generate_geode_turf(src, noise[x][y]))
 				return ..()
