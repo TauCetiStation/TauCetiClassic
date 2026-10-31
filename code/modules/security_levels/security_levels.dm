@@ -26,8 +26,7 @@ var/global/list/code_name_ru = list("зелёный", "синий", "красн�
 
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
-						FA.cut_overlays()
-						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_green"))
+						FA.update_icon()
 				deltimer(delta_timer_id)
 				delta_timer_id = 0
 
@@ -41,8 +40,7 @@ var/global/list/code_name_ru = list("зелёный", "синий", "красн�
 				security_level = SEC_LEVEL_BLUE
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
-						FA.cut_overlays()
-						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_blue"))
+						FA.update_icon()
 				deltimer(delta_timer_id)
 				delta_timer_id = 0
 
@@ -61,8 +59,7 @@ var/global/list/code_name_ru = list("зелёный", "синий", "красн�
 
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
-						FA.cut_overlays()
-						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_red"))
+						FA.update_icon()
 				deltimer(delta_timer_id)
 				delta_timer_id = 0
 
@@ -71,8 +68,7 @@ var/global/list/code_name_ru = list("зелёный", "синий", "красн�
 				code_announce = new /datum/announcement/station/code/delta
 				for(var/obj/machinery/firealarm/FA in firealarm_list)
 					if(is_station_level(FA.z) || is_mining_level(FA.z))
-						FA.cut_overlays()
-						FA.add_overlay(image('icons/obj/monitors.dmi', "overlay_delta"))
+						FA.update_icon()
 				if(!delta_timer_id)
 					delta_alarm()
 				SSsmartlight.update_mode(light_modes_by_name["Code Delta"], TRUE)

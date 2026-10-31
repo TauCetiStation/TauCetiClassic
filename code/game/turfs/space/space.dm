@@ -28,6 +28,7 @@
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
+	underlays += global.emissive_visibility_mask
 	icon_state = SPACE_ICON_STATE
 
 	if(level_light_source)

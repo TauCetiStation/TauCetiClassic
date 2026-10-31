@@ -20,6 +20,7 @@ log transactions
 	desc = "For all your monetary needs!"
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "atm"
+	light_color = LIGHT_COLOR_WHITE
 	anchored = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 10
@@ -45,6 +46,21 @@ log transactions
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
+
+/obj/machinery/atm/power_change()
+	. = ..()
+	update_icon()
+
+/obj/machinery/atm/update_icon()
+	. = ..()
+	var/mask = get_emissive_overlay('icons/obj/monitors_emissive.dmi', "atm", mask_only = TRUE)
+	cut_overlay(mask)
+	var/emissive_enabled = !(stat & (NOPOWER|BROKEN)) && icon == 'icons/obj/terminals.dmi' && icon_state == "atm"
+	if(emissive_enabled)
+		add_overlay(mask)
+	var/new_light_range = emissive_enabled ? MINIMUM_USEFUL_LIGHT_RANGE : 0
+	if(light_range != new_light_range)
+		set_light(new_light_range)
 
 /obj/machinery/atm/Destroy()
 	if(spark_system)

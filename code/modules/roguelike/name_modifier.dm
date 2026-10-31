@@ -2,7 +2,7 @@
  * A container to manage all the modifiers.
  */
 /datum/component/name_modifiers
-	dupe_type = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_UNIQUE
 
 	/// An amount of allowed modifiers to be displayed by group.
 	var/list/amount_by_group

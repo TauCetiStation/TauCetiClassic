@@ -98,6 +98,11 @@ var/global/list/airlock_overlays = list()
 				closeOther = A
 				break
 
+/obj/machinery/door/airlock/set_dir(new_dir)
+	. = ..()
+	if(.)
+		update_icon()
+
 /obj/machinery/door/airlock/Destroy()
 	airlock_list -= src
 	QDEL_NULL(wires)
@@ -280,7 +285,8 @@ var/global/list/airlock_overlays = list()
 	if(wedged_item)
 		generate_wedge_overlay()
 
-	SSdemo.mark_dirty(src)
+	// Replace old animation overlays before the icon_state change reaches the client.
+	COMPILE_OVERLAYS(src)
 
 /obj/machinery/door/airlock/proc/set_airlock_overlays(state)
 	. = list()
@@ -324,11 +330,11 @@ var/global/list/airlock_overlays = list()
 
 	var/has_power = hasPower()
 	if(light_state && lights && has_power)
-		. += get_airlock_overlay("lights_[light_state]", overlays_file, TRUE)
+		. += get_airlock_overlay("lights_[light_state]", overlays_file, TRUE, dir)
 
 		var/light_color
 		switch(state)
-			if(OPEN, CLOSED)
+			if(AIRLOCK_OPEN, AIRLOCK_CLOSED)
 				if(locked)
 					light_color = AIRLOCK_BOLTS_LIGHT_COLOR
 				else if(emergency)
@@ -349,18 +355,18 @@ var/global/list/airlock_overlays = list()
 		. += get_airlock_overlay("welded", overlays_file)
 
 	if(state == AIRLOCK_EMAG)
-		. += get_airlock_overlay("sparks", overlays_file, TRUE)
+		. += get_airlock_overlay("sparks", overlays_file, TRUE, dir)
 
 	if(has_power)
 		switch(frame_state) // TODO ADD SPARKS OVERLAYS to files // why the fuck it sould be in every file????
 			if(AIRLOCK_FRAME_CLOSED)
 				if(stat & BROKEN)
-					. += get_airlock_overlay("sparks_broken", overlays_file, TRUE)
+					. += get_airlock_overlay("sparks_broken", overlays_file, TRUE, dir)
 				else if(atom_integrity < (0.75 * max_integrity))
-					. += get_airlock_overlay("sparks_damaged", overlays_file, TRUE)
+					. += get_airlock_overlay("sparks_damaged", overlays_file, TRUE, dir)
 			if(AIRLOCK_FRAME_OPEN)
 				if(atom_integrity < (0.75 * max_integrity))
-					. += get_airlock_overlay("sparks_open", overlays_file, TRUE)
+					. += get_airlock_overlay("sparks_open", overlays_file, TRUE, dir)
 
 	if(hasPower() && unres_sides)
 		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
@@ -381,12 +387,14 @@ var/global/list/airlock_overlays = list()
 	cut_overlays()
 	add_overlay(.)
 
-/proc/get_airlock_overlay(icon_state, icon_file, light_source=FALSE)
-	var/iconkey = "[icon_state][icon_file]"
+/proc/get_airlock_overlay(icon_state, icon_file, light_source = FALSE, direction = SOUTH)
+	var/iconkey = "[icon_state][icon_file][light_source]"
+	if(light_source)
+		iconkey += "[direction]"
 	if(!(. = airlock_overlays[iconkey]))
 		var/mutable_appearance/MA
 		if(light_source)
-			MA = mutable_appearance(icon_file, icon_state, 1, LIGHTING_LAMPS_PLANE)
+			MA = emissive_appearance(icon_file, icon_state, dir = direction)
 		else
 			MA = mutable_appearance(icon_file, icon_state)
 		. = airlock_overlays[iconkey] = MA
