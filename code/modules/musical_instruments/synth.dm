@@ -49,7 +49,7 @@
 		if(R.module_active != src)
 			return FALSE
 
-	return ..() || loc != user
+	return user.incapacitated() || loc != user
 
 /obj/item/device/synth/attack_self(mob/living/user)
 	if(unable_to_play(user))

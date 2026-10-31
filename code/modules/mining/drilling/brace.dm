@@ -62,6 +62,11 @@
 
 	connected = null
 
+/obj/machinery/mining/brace/AltClick(mob/user)
+	if(!user || !Adjacent(user))
+		return
+	rotate()
+
 /obj/machinery/mining/brace/verb/rotate()
 	set name = "Rotate"
 	set category = "Object"

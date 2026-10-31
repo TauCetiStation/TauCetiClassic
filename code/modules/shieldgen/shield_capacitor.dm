@@ -154,6 +154,11 @@
 				update_power_use()
 	update_power_use()
 
+/obj/machinery/shield_capacitor/AltClick(mob/user)
+	if(!user || !Adjacent(user))
+		return
+	rotate()
+
 /obj/machinery/shield_capacitor/verb/rotate()
 	set name = "Rotate capacitor clockwise"
 	set category = "Object"

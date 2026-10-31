@@ -10,6 +10,11 @@
 	m_amt = 75
 	var/next_ring = 0
 
+/obj/item/weapon/bell/atom_init()
+	. = ..()
+
+	AddComponent(/datum/component/wrench_to_table)
+
 /obj/item/weapon/bell/attack_hand(mob/user)
 	if(user.a_intent == INTENT_GRAB)
 		return ..()

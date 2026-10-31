@@ -168,6 +168,11 @@
 	else
 		..()
 
+/obj/machinery/atmospherics/components/binary/circulator/AltClick(mob/user)
+	if(!user || !Adjacent(user))
+		return
+	rotate_clockwise()
+
 /obj/machinery/atmospherics/components/binary/circulator/verb/rotate_clockwise()
 	set category = "Object"
 	set name = "Rotate Circulator (Clockwise)"
