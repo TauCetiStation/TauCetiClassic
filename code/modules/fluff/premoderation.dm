@@ -46,7 +46,7 @@
 
 	customItemsCache["premoderation"] << moderation_items
 
-	custom_item_changestatus(player_ckey, itemname, "accepted")
+	custom_item_changestatus(player_ckey, itemname, "accepted")//
 
 /proc/custom_item_premoderation_reject(player_ckey, itemname, reason)
 	itemname = ckey(itemname)
@@ -76,7 +76,7 @@
 
 /datum/admins/proc/customitemsview_panel(player_ckey = null)
 	src = usr.client.holder
-	if(!check_rights(R_PERMISSIONS))
+	if(!check_rights(R_BAN))
 		return
 
 	var/output = {"<!DOCTYPE html>
