@@ -60,9 +60,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 				if(4.0)
 					dat += "<CENTER><B>Medical Record</B></CENTER><BR>"
 					if ((istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1)))
-						var/icon/front = active1.fields["photo_f"]
+						var/icon/front = new/icon(active1.fields["photo_f"])
 						front.Blend(mugshot,ICON_UNDERLAY,1,1)
-						var/icon/side = active1.fields["photo_s"]
+						var/icon/side = new/icon(active1.fields["photo_s"])
 						side.Blend(mugshot,ICON_UNDERLAY,1,1)
 						user << browse_rsc(front, "front.png")
 						user << browse_rsc(side, "side.png")
