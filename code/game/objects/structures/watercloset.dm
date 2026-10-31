@@ -10,9 +10,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	anchored = TRUE
 	var/lid_open = FALSE      //if the lid is up
 	var/cistern_open = FALSE  //if the cistern bit is open
-	var/w_items = 0           //the combined w_class of all the items in the cistern
 	var/broken = FALSE
 	var/mob/living/swirlie = null	//the mob being given a swirlie
+
+	hidden_cache = /obj/item/weapon/storage/hidden_cache/toilet
 
 /obj/structure/toilet/atom_init()
 	. = ..()
@@ -34,20 +35,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 		user.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
 		swirlie.adjustBruteLoss(8)
 		return
-
-	if(cistern_open && !lid_open)
-		if(!contents.len)
-			to_chat(user, "<span class='notice'>The cistern is empty.</span>")
-			return
-		else
-			var/obj/item/I = pick(contents)
-			if(ishuman(user))
-				user.put_in_hands(I)
-			else
-				I.loc = get_turf(src)
-			to_chat(user, "<span class='notice'>You find \an [I] in the cistern.</span>")
-			w_items -= I.w_class
-			return
 
 	if(lid_open && user.loc == loc)
 		if(!COOLDOWN_FINISHED(user, wc_use_cooldown))
@@ -151,20 +138,6 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 					GM.adjustBruteLoss(8)
 			else
 				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
-
-	if(cistern_open)
-		if(I.w_class > SIZE_SMALL)
-			to_chat(user, "<span class='notice'>\The [I] does not fit.</span>")
-			return
-		if(w_items + I.w_class > SIZE_BIG)
-			to_chat(user, "<span class='notice'>The cistern is full.</span>")
-			return
-		user.drop_from_inventory(I, src)
-		w_items += I.w_class
-		user.SetNextMove(CLICK_CD_INTERACT)
-		add_fingerprint(user)
-		to_chat(user, "You carefully place \the [I] into the cistern.")
-		return
 
 /obj/structure/toilet/deconstruct()
 	for(var/obj/toilet_item as anything in contents)

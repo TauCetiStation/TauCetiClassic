@@ -683,7 +683,7 @@
 		if(weedlevel > 0)
 			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
-			playsound(src, pick('sound/items/rake1.ogg', 'sound/items/rake2.ogg', 'sound/items/rake3.ogg'), VOL_EFFECTS_MASTER, 95)
+			playsound(src, pick(SOUNDIN_RAKE), VOL_EFFECTS_MASTER, 95)
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>")
