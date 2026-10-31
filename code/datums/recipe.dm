@@ -36,95 +36,61 @@
 /datum/recipe
 	var/list/reagents       // example:  = list("berryjuice" = 5) // do not list same reagent twice
 	var/list/items          // example: = list(/obj/item/weapon/crowbar, /obj/item/weapon/welder) // place /foo/bar before /foo
-	var/list/excluded_items  // example: = list(/obj/iteam/weapon/welder) when items have =list(/obj/item/weapon)
 	var/result              // example: = /obj/item/weapon/reagent_containers/food/snacks/donut/normal
 	var/time = 100          // 1/10 part of second
 	var/byproduct		    // example: = /obj/item/weapon/kitchen/mould		// byproduct to return, such as a mould or trash
 
-/datum/recipe/proc/check_reagents(datum/reagents/avail_reagents) //1=precisely, 0=insufficiently, -1=superfluous
-	. = 1
-	for (var/r_r in reagents)
-		var/aval_r_amnt = avail_reagents.get_reagent_amount(r_r)
-		if (!(abs(aval_r_amnt - reagents[r_r])<0.5)) //if NOT equals
-			if (aval_r_amnt>reagents[r_r])
-				. = -1
-			else
-				return 0
-	if ((reagents?(reagents.len):(0)) < avail_reagents.reagent_list.len)
-		return -1
-	return .
+	var/alist/recipe_ingredients_list = alist()
+	var/recipe_ingredients_count = 0
+	var/recipe_ingredients_length = 0
+	var/recipe_error_threshold = 0.05 // 5% recipe error threshold, can be changed for any recipe if needed
 
-/datum/recipe/proc/check_items(obj/container) //1=precisely, 0=insufficiently, -1=superfluous
-	if (!items)
-		if (locate(/obj) in container)
-			return -1
+/datum/recipe/New()
+	for(var/reagent_type in reagents)
+		recipe_ingredients_list[reagent_type] = reagents[reagent_type]
+
+	for(var/item_type in items)
+		if(!recipe_ingredients_list["[item_type]"])
+			recipe_ingredients_list["[item_type]"] = 1
 		else
-			return 1
-	. = 1
-	var/list/checklist = items.Copy()
-	for (var/obj/O in container)
-		var/found = 0
-		item_in_checklist:
-			for (var/type in checklist)
-				if (istype(O, type))
-					// checking if subtype in exlcude list
-					if (length(excluded_items))
-						for (var/excluded_type in excluded_items)
-							if (istype(O, excluded_type))
-								break item_in_checklist
-					checklist-=type
-					found = 1
-					break
-		if (!found)
-			. = -1
-	if (checklist.len)
-		return 0
-	return .
+			recipe_ingredients_list["[item_type]"] = recipe_ingredients_list["[item_type]"] + 1
 
-//general version
-/datum/recipe/proc/make(obj/container)
-	var/obj/result_obj = new result(container)
-	for (var/obj/O in (container.contents-result_obj))
-		O.reagents.trans_to(result_obj, O.reagents.total_volume)
-		qdel(O)
-	container.reagents.clear_reagents()
-	return result_obj
+	recipe_ingredients_count = values_sum(recipe_ingredients_list)
+	recipe_ingredients_length = values_dot(recipe_ingredients_list, recipe_ingredients_list)
 
-// food-related
-/datum/recipe/proc/make_food(obj/container)
-	var/obj/result_obj = new result(container)
-	for (var/obj/O in (container.contents-result_obj))
-		if (O.reagents)
-			O.reagents.del_reagent("nutriment")
-			O.reagents.update_total()
-			O.reagents.trans_to(result_obj, O.reagents.total_volume)
-		qdel(O)
-	container.reagents.clear_reagents()
-	return result_obj
+/proc/select_recipe(list/recipes_list, alist/ingredients)
+	var/min_recipe = null
+	var/min_error = 1
+	var/ingredients_length = values_dot(ingredients, ingredients)
+	for(var/datum/recipe/R in recipes_list)
+		var/recipe_error = R.get_recipe_error_or_null(ingredients, ingredients_length)
+		if(isnull(recipe_error))
+			continue
 
-/proc/select_recipe(list/datum/recipe/avaiable_recipes, obj/obj, exact = 1)
-	if (!exact)
-		exact = -1
-	var/list/datum/recipe/possible_recipes = new
-	for (var/datum/recipe/recipe in avaiable_recipes)
-		if (recipe.check_reagents(obj.reagents)==exact && recipe.check_items(obj)==exact)
-			possible_recipes+=recipe
-	if (possible_recipes.len==0)
+		if(recipe_error == 0)
+			return R
+
+		if(recipe_error < min_error)
+			min_error = recipe_error
+			min_recipe = R
+
+	return min_recipe
+
+/datum/recipe/proc/get_recipe_error_or_null(alist/ingredients, ingredients_length)
+	var/recipe_error = 1 - (values_dot(recipe_ingredients_list, ingredients) ** 2) / (recipe_ingredients_length * ingredients_length)
+
+	if(recipe_error > recipe_error_threshold)
 		return null
-	else if (possible_recipes.len==1)
-		return possible_recipes[1]
-	else //okay, let's select the most complicated recipe
-		var/r_count = 0
-		var/i_count = 0
-		. = possible_recipes[1]
-		for (var/datum/recipe/recipe in possible_recipes)
-			var/N_i = (recipe.items)?(recipe.items.len):0
-			var/N_r = (recipe.reagents)?(recipe.reagents.len):0
-			if (N_i > i_count || (N_i== i_count && N_r > r_count ))
-				r_count = N_r
-				i_count = N_i
-				. = recipe
-		return .
+
+	return recipe_error
+
+/datum/recipe/proc/get_product_amount(ingredients_count, multiplier = 1)
+	var/recipe_product_count = max(1, FLOOR(ingredients_count / recipe_ingredients_count, 1))
+
+	return recipe_product_count * multiplier
+
+/datum/recipe/proc/make_food(obj/container)
+	return new result(container)
 
 /datum/recipe/proc/get_byproduct()
 	if(byproduct)

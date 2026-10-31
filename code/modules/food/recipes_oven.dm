@@ -18,6 +18,90 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/meat
 
+/datum/recipe/oven/monkeymeatbread
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/meat
+
+/datum/recipe/oven/corgimeatbread
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/meat
+
+/datum/recipe/oven/ianmeatbread
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/meat
+
+/datum/recipe/oven/pugmeatbread
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/pug,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/pug,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/pug,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/meat
+
+/datum/recipe/oven/hammeatbread
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/ham,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/ham,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/ham,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/meat
+
+/datum/recipe/oven/wheatmeatbread
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/dough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/meat
+
 /datum/recipe/oven/syntibread
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/dough,
@@ -113,6 +197,48 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/meatpie
 
+/datum/recipe/oven/monkeymeatpie
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatpie
+
+/datum/recipe/oven/corgimeatpie
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatpie
+
+/datum/recipe/oven/ianmeatpie
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatpie
+
+/datum/recipe/oven/pugmeatpie
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/pug,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatpie
+
+/datum/recipe/oven/hammeatpie
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/ham,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatpie
+
+/datum/recipe/oven/wheatmeatpie
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatpie
+
 /datum/recipe/oven/tofupie
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
@@ -195,14 +321,6 @@
 	being_cooked.trash = paper //so the paper is left behind as trash without special-snowflake(TM Nodrak) code ~carn
 	return being_cooked
 
-/datum/recipe/oven/fortunecookie/check_items(obj/container)
-	. = ..()
-	if(.)
-		var/obj/item/weapon/paper/paper = locate() in container
-		if(!paper || !paper.info)
-			return -1
-	return .
-
 /datum/recipe/oven/pizzamargherita
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
@@ -220,6 +338,72 @@
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
 		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meat
+
+/datum/recipe/oven/monkaymeatpizza
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/monkey,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meat
+
+/datum/recipe/oven/corgimeatpizza
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meat
+
+/datum/recipe/oven/ianmeatpizza
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi/ian,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meat
+
+/datum/recipe/oven/pugmeatpizza
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/pug,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/pug,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/pug,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meat
+
+/datum/recipe/oven/hammeatpizza
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/ham,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/ham,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/ham,
+		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
+		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/meat
+
+/datum/recipe/oven/wheatmeatpizza
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat,
 		/obj/item/weapon/reagent_containers/food/snacks/cheesewedge,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/tomato
 	)
@@ -428,10 +612,10 @@
 
 /datum/recipe/oven/turkey  // Magic
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meat,
-		/obj/item/weapon/reagent_containers/food/snacks/meat,
-		/obj/item/weapon/reagent_containers/food/snacks/meat,
-		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat,
 		/obj/item/weapon/reagent_containers/food/snacks/stuffing,
 		/obj/item/weapon/reagent_containers/food/snacks/stuffing
 	)
