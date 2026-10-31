@@ -10,14 +10,14 @@
 	possible_transfer_amounts = list(1,2,3,4,5)
 	w_class = SIZE_MINUSCULE
 	volume = 5
-	var/filled = 0
+
+/obj/item/weapon/reagent_containers/dropper/update_icon()
+	icon_state = "[initial(icon_state)][reagents?.total_volume ? "_full" : "_empty"]"
 
 /obj/item/weapon/reagent_containers/dropper/afterattack(atom/target, mob/user, proximity, params)
-	if(!target.reagents || !proximity) return
+	if(reagents.total_volume > 0)
 
-	if(filled)
-
-		if(target.reagents.total_volume >= target.reagents.maximum_volume)
+		if(target.reagents?.total_volume >= target.reagents.maximum_volume)
 			to_chat(user, "<span class='warning'>[target] is full.</span>")
 			return
 
@@ -29,20 +29,11 @@
 
 		if(ismob(target))
 
-			var/mob/living/carbon/human/H = target
-			var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
-			if(BP.open)
-				// Checks if mob is lying down on table for surgery
-				if(can_operate(H, user))
-					do_surgery(H, user, src)
-				else
-					to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than \a [src]!</span>")
-				return
-
 			var/time = 20 //2/3rds the time of a syringe
 			user.visible_message("<span class='warning'><B>[user] is trying to squirt something into [target]'s eyes!</B></span>")
 
-			if(!do_mob(user, target, time)) return
+			if(!do_mob(user, target, time))
+				return
 
 			if(istype(target , /mob/living/carbon/human))
 				var/mob/living/carbon/human/victim = target
@@ -68,9 +59,7 @@
 						reagents.reaction(safe_thing, TOUCH)
 
 					to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
-					if (src.reagents.total_volume<=0)
-						filled = 0
-						icon_state = "[initial(icon_state)]"
+					update_icon()
 					return
 
 			user.visible_message("<span class='warning'><B>[user] squirts something into [target]'s eyes!</B></span>")
@@ -86,10 +75,7 @@
 
 		trans = reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution.</span>")
-		if (src.reagents.total_volume<=0)
-			filled = 0
-			icon_state = "[initial(icon_state)]"
-
+		update_icon()
 	else
 
 		if(!target.is_open_container() && !istype(target,/obj/structure/reagent_dispensers))
@@ -103,12 +89,7 @@
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this)
 
 		to_chat(user, "<span class='notice'>You fill the dropper with [trans] units of the solution.</span>")
-
-		filled = 1
-		icon_state = "[initial(icon_state)][filled]"
-
-	return
-
+		update_icon()
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Pipette

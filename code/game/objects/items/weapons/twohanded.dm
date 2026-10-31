@@ -13,8 +13,9 @@
 	attack_verb = list("attacked", "chopped", "cleaved", "torn", "cut")
 	sweep_step = 5
 	qualities = list(
-		QUALITY_PRYING = 1,
-		QUALITY_CUTTING = 1
+		QUALITY_PRYING = 100,
+		QUALITY_CUTTING = 100,
+		QUALITY_SURG_CUTTING = 50
 	)
 
 /obj/item/weapon/fireaxe/atom_init()

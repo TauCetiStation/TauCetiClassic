@@ -176,6 +176,7 @@
 	origin_tech = "combat=5;materials=5;powerstorage=5;magnets=5;engineering=5"
 	can_be_holstered = FALSE
 	var/charge = 0
+	var/charge_mod = 1
 	var/charging = FALSE
 	var/cooldown = FALSE
 
@@ -186,7 +187,7 @@
 
 /obj/item/weapon/gun/tesla/proc/charge(mob/living/user)
 	set waitfor = FALSE
-	if(do_after(user, 40 * toolspeed, target = src))
+	if(do_after(user, 40 * charge_mod, target = src))
 		if(charging && charge < 3)
 			charge++
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
@@ -277,7 +278,7 @@
 	item_state = "arctesla"
 	w_class = SIZE_SMALL
 	origin_tech = null
-	toolspeed = 0.5
+	charge_mod = 0.5
 
 /*
 	Pyrometers and stuff.
