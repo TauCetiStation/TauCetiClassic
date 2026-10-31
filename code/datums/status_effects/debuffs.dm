@@ -485,6 +485,34 @@
 	owner.healthdoll.add_overlay(fake_overlay)
 	return COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD
 
+//Thrall's mark
+/datum/status_effect/thrall_mark
+	id = "mark"
+	alert_type = /atom/movable/screen/alert/status_effect/thrall_mark
+	duration = 2 MINUTES
+	var/datum/weakref/role_weakref
+
+/datum/status_effect/thrall_mark/on_creation(mob/living/new_owner, datum/role/thrall/R)
+	. = ..()
+	if(istype(R))
+		role_weakref = WEAKREF(R)
+
+/datum/status_effect/thrall_mark/tick(seconds_per_tick)
+	if(owner && !owner.client)
+		duration = max(duration, world.time + 1 SECOND)
+
+	if(SPT_PROB(2, seconds_per_tick))
+		owner.Weaken(1)
+		to_chat(owner, "<span class='notice'>Ow...</span>")
+	else if(SPT_PROB(1, seconds_per_tick))
+		owner.Paralyse(1)
+		to_chat(owner, "<span class='notice'>I forgot...Something...</span>")
+
+/atom/movable/screen/alert/status_effect/thrall_mark
+	name = "Mark"
+	desc = "Your will, and with it your soul, have been weakened! Well, does it really matter? Maybe you should just accept your fate?"
+	icon_state = "asleep"
+
 //WEAKENED
 /datum/status_effect/cursed_talk
 	id = "cursed_talk"
