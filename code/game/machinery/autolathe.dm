@@ -131,6 +131,7 @@ var/global/list/datum/autolathe_recipe/autolathe_recipes = list(
 	R(/obj/item/toy/ammo/gun,                                 CATEGORY_GENERAL),
 	R(/obj/item/weapon/game_kit/random,                       CATEGORY_GENERAL),
 	R(/obj/item/newscaster_frame,                             CATEGORY_GENERAL),
+	R(/obj/item/status_display_frame,                         CATEGORY_ENGINEERING),
 	R(/obj/item/device/tabletop_assistant,                    CATEGORY_GENERAL),
 )
 
