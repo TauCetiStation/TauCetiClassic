@@ -32,6 +32,11 @@
 /obj/structure/filingcabinet/filingcabinet	//not changing the path to avoid unecessary map issues, but please don't name stuff like this in the future -Pete
 	icon_state = "tallcabinet"
 
+/obj/structure/filingcabinet/AltClick(mob/user)
+	if(!user || !Adjacent(user))
+		return
+	rotate()
+
 /obj/structure/filingcabinet/verb/rotate()
 	set name = "Rotate"
 	set category = "Object"

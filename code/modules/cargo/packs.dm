@@ -1899,6 +1899,13 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/device/cardpay/menu_customer)
 	group = "Miscellaneous"
 
+/datum/supply_pack/stallcart
+	name = "Stall Cart"
+	contains = list(/obj/structure/table/reinforced/stall/movable)
+	additional_costs = 350
+	crate_type = /obj/structure/largecrate
+	group = "Miscellaneous"
+
 //----------------------------------------------
 //-----------------RANDOMISED-------------------
 //----------------------------------------------

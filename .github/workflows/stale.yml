@@ -11,7 +11,7 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v10.3.0
+      - uses: actions/stale@v11.0.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           stale-pr-message: >
@@ -26,7 +26,6 @@ jobs:
           exempt-pr-labels: 'Pinned, Test Merge Candidate, dependencies'
           stale-pr-label: 'Stalled PR'
           days-before-pr-stale: 23
-          days-before-pr-close: 7
           close-issue-message:  >
             Данное предложение пробыло без активности открытым более полугода. Если вы найдёте того, кто его реализует,
             и вам нужно открыть данный ишью, пожалуйста, обратитесь к кому-либо из мейнтейнеров.

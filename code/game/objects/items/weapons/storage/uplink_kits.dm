@@ -33,6 +33,7 @@
 		if("guns")
 			new /obj/item/weapon/gun/projectile/revolver/syndie(src)
 			new /obj/item/ammo_box/speedloader/a357(src)
+			new /obj/item/weapon/grenade/frag(src)
 			new /obj/item/weapon/card/emag(src)
 			new /obj/item/weapon/card/id/syndicate(src)
 			new /obj/item/weapon/plastique(src)
@@ -360,6 +361,7 @@
 	/obj/item/weapon/gun/projectile/automatic/a74,
 	/obj/item/weapon/shield/energy,
 	/obj/item/weapon/grenade/flashbang = 4,
+	/obj/item/weapon/grenade/frag = 2,
 	/obj/item/weapon/storage/firstaid/small_firstaid_kit/space,
 	/obj/item/weapon/plastique = 2,
 	)
@@ -407,6 +409,7 @@
 	/obj/item/weapon/gun/projectile/automatic/drozd,
 	/obj/item/weapon/plastique = 4,
 	/obj/item/weapon/grenade/syndieminibomb = 2,
+	/obj/item/weapon/grenade/frag = 3,
 	/obj/item/device/radio/beacon/syndicate_bomb,
 	)
 
