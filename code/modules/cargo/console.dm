@@ -36,6 +36,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 	circuit = /obj/item/weapon/circuitboard/computer/cargo/request
 	requestonly = TRUE
 
+// Hook for subtypes to inject extra menu entries into the main console screen. Default: nothing.
+// The Cargo Guard edict overrides this on the QM console; see code/modules/edicts/cargo_guard/.
+/obj/machinery/computer/cargo/proc/extra_menu_html(mob/user)
+	return ""
+
 /obj/machinery/computer/cargo/atom_init()
 	. = ..()
 	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
@@ -73,6 +78,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/cargo, cargo_consoles)
 		if(!requestonly)
 			dat += "<A href='byond://?src=\ref[src];viewcentcom=1'>View Centcom message</A><BR><BR>"
 
+		dat += extra_menu_html(user)
 
 	var/datum/browser/popup = new(user, "computer", name, 500, 600)
 	popup.add_stylesheet(get_asset_datum(/datum/asset/spritesheet/cargo))

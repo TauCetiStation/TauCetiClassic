@@ -474,24 +474,28 @@ SUBSYSTEM_DEF(job)
 	H.job = rank
 
 	if(!joined_late)
-		var/obj/effect/landmark/start/spawn_mark
-		var/list/rank_landmarks = landmarks_list[H.mind.role_alt_title]
-		if(length(rank_landmarks))
-			for(var/obj/effect/landmark/start/landmark as anything in rank_landmarks)
-				if(!(locate(/mob/living) in landmark.loc))
-					spawn_mark = landmark
-					break
-		if(!spawn_mark)
-			spawn_mark = locate("start*[rank]") // use old stype
+		var/turf/job_spawn_turf = job.get_roundstart_spawn_turf(H)
+		if(job_spawn_turf)
+			H.forceMove(job_spawn_turf, keep_buckled = TRUE)
+		else
+			var/obj/effect/landmark/start/spawn_mark
+			var/list/rank_landmarks = landmarks_list[H.mind.role_alt_title]
+			if(length(rank_landmarks))
+				for(var/obj/effect/landmark/start/landmark as anything in rank_landmarks)
+					if(!(locate(/mob/living) in landmark.loc))
+						spawn_mark = landmark
+						break
+			if(!spawn_mark)
+				spawn_mark = locate("start*[rank]") // use old stype
 
-		if(!spawn_mark)
-			if(!fallback_landmark)
-				fallback_landmark = locate("start*Fallback-Start")
-			warning("Failed to find spawn position for [rank]. Using fallback spawn position!")
-			spawn_mark = fallback_landmark
+			if(!spawn_mark)
+				if(!fallback_landmark)
+					fallback_landmark = locate("start*Fallback-Start")
+				warning("Failed to find spawn position for [rank]. Using fallback spawn position!")
+				spawn_mark = fallback_landmark
 
-		if(istype(spawn_mark, /obj/effect/landmark/start) && istype(spawn_mark.loc, /turf))
-			H.forceMove(spawn_mark.loc, keep_buckled = TRUE)
+			if(istype(spawn_mark, /obj/effect/landmark/start) && istype(spawn_mark.loc, /turf))
+				H.forceMove(spawn_mark.loc, keep_buckled = TRUE)
 
 	//give them an account in the station database
 	var/startingMoney = max(round(job.salary * STARTING_MONEY_MULTIPLYER * (1 + rand(-STARTING_MONEY_VARIANCE, STARTING_MONEY_VARIANCE) / 100)) + job.starting_money, STARTING_MONEY_MINIMUM)
