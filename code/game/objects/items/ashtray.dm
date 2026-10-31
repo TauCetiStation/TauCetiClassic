@@ -13,6 +13,8 @@
 	pixel_y = rand(-5, 5)
 	pixel_x = rand(-6, 6)
 
+	AddComponent(/datum/component/wrench_to_table)
+
 /obj/item/ashtray/attackby(obj/item/I, mob/user, params)
 	if (get_integrity() < max_integrity * integrity_failure)
 		return

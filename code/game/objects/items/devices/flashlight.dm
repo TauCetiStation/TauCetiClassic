@@ -152,6 +152,11 @@
 	g_amt = 0
 	on = 1
 
+/obj/item/device/flashlight/lamp/atom_init()
+	. = ..()
+
+	AddComponent(/datum/component/wrench_to_table)
+
 /obj/item/device/flashlight/lamp/get_current_temperature()
 	if(on)
 		return 20
