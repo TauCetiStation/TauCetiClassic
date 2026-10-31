@@ -23,6 +23,8 @@
 	ventcrawler = 2
 	holder_type = /obj/item/weapon/holder/lizard
 	w_class = SIZE_MINUSCULE
+	edible_nutriment = 1
+	edible_protein = 1
 
 	has_head = TRUE
 	has_leg = TRUE
@@ -54,6 +56,4 @@
 		return ..()
 
 /mob/living/simple_animal/lizard/get_scooped(mob/living/carbon/grabber)
-	if(stat >= DEAD)
-		return
 	..()
