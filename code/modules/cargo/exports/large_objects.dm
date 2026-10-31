@@ -22,6 +22,49 @@
 	unit_name = "ore box"
 	export_types = list(/obj/structure/ore_box)
 
+/datum/export/large/vending
+	unit_name = "vendomat"
+	export_types = list(/obj/machinery/vending, /obj/random/vending/snack, /obj/random/vending/cola)
+	cost = 750
+
+	var/list/calculated_cost = list()
+
+/datum/export/large/vending/get_cost(obj/O)
+	var/obj/machinery/vending/Vend = O
+	var/my_total_price = ..()
+	if(Vend.product_records && Vend.product_records.len)
+		for(var/datum/data/vending_product/VP in Vend.product_records)
+			my_total_price += VP.amount * VP.price
+	if(Vend.stat & BROKEN)
+		if(my_total_price)
+			my_total_price /= 2
+	return my_total_price
+
+/datum/export/large/vending/get_type_cost(export_type, amount = 1, contr = 0, emag = 0)
+	if(calculated_cost.len && calculated_cost[export_type])
+		return amount * calculated_cost[export_type]
+
+	if(ispath(export_type, /obj/random))
+		export_type = random2path(export_type)
+	var/calc_cost = 0
+	var/obj/machinery/vending/V = new export_type
+	var/list/products = V.products
+	var/list/prices = V.prices
+	for(var/prod_type in products)
+		var/item_amount = products[prod_type]
+		if(prod_type in prices)
+			calc_cost += item_amount * prices[prod_type]
+			continue
+
+		for(var/datum/export/E in global.exports_list)
+			if(!E)
+				continue
+			if(E.applies_to_type(prod_type, contr, emag))
+				calc_cost += item_amount * E.get_type_cost(prod_type, amount, contr, emag)
+	qdel(V)
+	calculated_cost[export_type] = calc_cost
+	return ..() + amount * calc_cost
+
 
 // Reagent dispensers.
 /datum/export/large/reagent_dispenser
