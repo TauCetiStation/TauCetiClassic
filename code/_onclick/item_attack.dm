@@ -55,11 +55,11 @@
 	if(ishuman(target) && length(qualities))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
-		if(BP.open && can_operate(H, user)) // Checks if mob is lying down on table for surgery
+		if(BP && can_operate(H, user)) // Checks if mob is lying down on table for surgery and have mob needle bodypart
 			do_surgery(H, user, src)
 			return TRUE
 		else
-			to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than \a [src]!</span>")
+			to_chat(user, "<span class='notice'>[H] [BP] cannot be operated on in this condition!</span>")
 		return FALSE
 
 
@@ -68,9 +68,8 @@
 		return
 
 	var/mob/messagesource = M
-	if(can_operate(M, user))  //Checks if mob is lying down on table for surgery
-		if(do_surgery(M, user, src))
-			return FALSE
+	if(try_operate(M, user))
+		return FALSE
 
 	if(stab_eyes && user.a_intent != INTENT_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
 		if(user.ClumsyProbabilityCheck(50))

@@ -615,13 +615,13 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 		else
 			to_chat(user, "<span class='warning'>Это нельзя вскопать.</span>")
 
-	if(iswelding(I))
-		var/obj/item/weapon/weldingtool/W = I
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(!is_plating())
 			return
 		if(!can_deconstruct)
 			return
-		if(!W.use(0, user))
+		if(!WT.use(0, user))
 			to_chat(user, "<span class='notice'>Нужно больше топлива для сварки.</span>")
 			return
 		if(user.a_intent == INTENT_HELP)
@@ -638,7 +638,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 				"<span class='warning'>Вы начинаете разрезать обшивку! За ней открытый космос!</span>",
 				"<span class='warning'>Вы слышите звуки будто разрезают обшивку! По ту сторону должен быть открытый космос!</span>",
 				viewing_distance = 5)
-			if(W.use_tool(src, user, 100, 3, 100, quality = QUALITY_WELDING))
+			if(WT.use_tool(src, user, 100, 3, 100, quality = QUALITY_WELDING))
 				user.visible_message(
 					"<span class='warning'><B>[user]</B> завершает разборку обшивки!</span>",
 					"<span class='warning'>Вы разобрали обшивку!</span>",

@@ -63,7 +63,7 @@
 	if(user.is_busy()) return
 	switch(state)
 		if("01")
-			if(iswelding(I) && !anchored )
+			if(I.get_quality(QUALITY_WELDING) && !anchored )
 				var/obj/item/weapon/weldingtool/WT = I
 				if (WT.use(0,user))
 					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")

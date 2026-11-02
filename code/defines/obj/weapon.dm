@@ -178,7 +178,7 @@
 	..()
 
 /obj/item/weapon/shard/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
+	if(I.get_quality(QUALITY_WELDING))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			var/obj/item/stack/sheet/glass/NG = new (user.loc)
@@ -257,7 +257,7 @@
 	edge = 1
 
 /obj/item/weapon/shard/phoron/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
+	if(I.get_quality(QUALITY_WELDING))
 		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(WT.use(0, user))

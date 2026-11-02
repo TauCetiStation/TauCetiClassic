@@ -741,7 +741,7 @@
 	projectilesound = 'sound/weapons/guns/kenetic_accel.ogg'
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user)
-	if(iswelding(I))
+	if(I.get_quality(QUALITY_WELDING))
 		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(WT.use(0, user) && stat == CONSCIOUS)

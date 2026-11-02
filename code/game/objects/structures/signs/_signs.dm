@@ -128,7 +128,7 @@
 		return ..()
 
 /obj/item/sign_backing/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
+	if(I.get_quality(QUALITY_WELDING))
 		if(I.use(0, user))
 			if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
 				new /obj/item/stack/sheet/mineral/plastic(user.loc, 2)

@@ -328,15 +328,15 @@
 	add_fingerprint(user)
 	return
 
-/turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)
+/turf/simulated/wall/attackby(obj/item/I, mob/user)
 	//get the user's location
 	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
 	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(rotting)
-		if(iswelding(W))
-			var/obj/item/weapon/weldingtool/WT = W
+		if(I.get_quality(QUALITY_WELDING))
+			var/obj/item/weapon/weldingtool/WT = I
 			if(WT.use(0,user))
 				to_chat(user, "<span class='notice'>Вы сжигаете грибок сваркой.</span>")
 				playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER, 10)
@@ -344,21 +344,21 @@
 					qdel(E)
 				rotting = 0
 				return
-		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
-			to_chat(user, "<span class='notice'>Стена рассыпается от удара [W.name].</span>")
+		else if(!I.is_sharp() && I.force >= 10 || I.force >= 20)
+			to_chat(user, "<span class='notice'>Стена рассыпается от удара [I.name].</span>")
 			dismantle_wall(1)
 			return
 
 	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
-		if(iswelding(W))
-			var/obj/item/weapon/weldingtool/WT = W
+		if(I.get_quality(QUALITY_WELDING))
+			var/obj/item/weapon/weldingtool/WT = I
 			if(WT.use(0,user))
 				thermitemelt(user, seconds_to_melt)
 				return
 
-		else if(istype(W, /obj/item/weapon/melee/energy/blade))
-			var/obj/item/weapon/melee/energy/blade/EB = W
+		else if(istype(I, /obj/item/weapon/melee/energy/blade))
+			var/obj/item/weapon/melee/energy/blade/EB = I
 
 			EB.spark_system.start()
 			to_chat(user, "<span class='notice'>Вы бьете стену энергетическим мечом; термит вспыхивает!</span>")
@@ -371,8 +371,8 @@
 	var/turf/T = user.loc	//get user's location for delay checks
 
 	//DECONSTRUCTION
-	if(iswelding(W))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(!WT.use(0, user))
 			to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 			return
@@ -392,8 +392,8 @@
 				to_chat(user, "<span class='notice'>Вы сняли обшивку.</span>")
 				dismantle_wall()
 
-	if(istype(W, /obj/item/weapon/airlock_painter))
-		var/obj/item/weapon/airlock_painter/A = W
+	if(istype(I, /obj/item/weapon/airlock_painter))
+		var/obj/item/weapon/airlock_painter/A = I
 		if(!A.can_use(user, 1))
 			return
 		var/new_color = tgui_input_list(user, "Выберите цвет", "Цвет", WALLS_COLORS)
@@ -405,36 +405,36 @@
 		return
 
 	//DRILLING
-	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+	else if (istype(I, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Вы бурите сквозь стену.</span>")
-		if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
+		if(I.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
 			if(mineral == "diamond")
 				sleep(60)
-			if(!iswallturf(src) || !user || !W || !T)
+			if(!iswallturf(src) || !user || !I || !T)
 				return
 
-			if(user.loc == T && user.get_active_hand() == W)
+			if(user.loc == T && user.get_active_hand() == I)
 				to_chat(user, "<span class='notice'>Вы пробурили последний лист обшивки.</span>")
 				dismantle_wall()
 				visible_message("<span class='warning'>[user] пробурил стену!</span>", blind_message = "<span class='warning'>Вы слышите скрежет металла.</span>", viewing_distance = 5)
 		return
 
-	else if(istype(W, /obj/item/weapon/melee/energy/blade))
+	else if(istype(I, /obj/item/weapon/melee/energy/blade))
 		if(user.is_busy()) return
-		var/obj/item/weapon/melee/energy/blade/EB = W
+		var/obj/item/weapon/melee/energy/blade/EB = I
 
 		EB.spark_system.start()
 		to_chat(user, "<span class='notice'>Вы вонзаете энергетический меч в стену, начиная разрезать преграду.</span>")
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-		if(W.use_tool(src, user, 70))
+		if(I.use_tool(src, user, 70))
 			if(mineral == "diamond")
 				sleep(70)
 			if(!iswallturf(src) || !user || !EB || !T)
 				return
 
-			if(user.loc == T && user.get_active_hand() == W)
+			if(user.loc == T && user.get_active_hand() == I)
 				EB.spark_system.start()
 				playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
 				playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
@@ -442,8 +442,8 @@
 				visible_message("<span class='warning'>[user] прорезает стену!</span>", blind_message = "<span class='warning'>Вы слышите треск искр и скрежет металла.</span>", viewing_distance = 5)
 		return
 	//fulldestruct to walls when
-	else if(istype(W,/obj/item/weapon/melee/changeling_hammer) && !rotting)
-		var/obj/item/weapon/melee/changeling_hammer/hammer = W
+	else if(istype(I,/obj/item/weapon/melee/changeling_hammer) && !rotting)
+		var/obj/item/weapon/melee/changeling_hammer/hammer = I
 		//slowdown, user. No need destruct all walls without debuff
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -454,70 +454,70 @@
 		take_damage(hammer.get_object_damage())
 		return
 
-	else if(istype(W,/obj/item/apc_frame))
-		var/obj/item/apc_frame/AH = W
+	else if(istype(I,/obj/item/apc_frame))
+		var/obj/item/apc_frame/AH = I
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/newscaster_frame))
-		var/obj/item/newscaster_frame/AH = W
+	else if(istype(I,/obj/item/newscaster_frame))
+		var/obj/item/newscaster_frame/AH = I
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/alarm_frame))
-		var/obj/item/alarm_frame/AH = W
+	else if(istype(I,/obj/item/alarm_frame))
+		var/obj/item/alarm_frame/AH = I
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/firealarm_frame))
-		var/obj/item/firealarm_frame/AH = W
+	else if(istype(I,/obj/item/firealarm_frame))
+		var/obj/item/firealarm_frame/AH = I
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame))
-		var/obj/item/light_fixture_frame/AH = W
+	else if(istype(I,/obj/item/light_fixture_frame))
+		var/obj/item/light_fixture_frame/AH = I
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame/small))
-		var/obj/item/light_fixture_frame/small/AH = W
+	else if(istype(I,/obj/item/light_fixture_frame/small))
+		var/obj/item/light_fixture_frame/small/AH = I
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/door_control_frame))
-		var/obj/item/door_control_frame/AH = W
+	else if(istype(I,/obj/item/door_control_frame))
+		var/obj/item/door_control_frame/AH = I
 		AH.try_build(src)
 		return
 
 	// why is all of this here help me
-	else if(istype(W, /obj/item/noticeboard_frame))
-		var/obj/item/noticeboard_frame/NF = W
+	else if(istype(I, /obj/item/noticeboard_frame))
+		var/obj/item/noticeboard_frame/NF = I
 		NF.try_build(user, src)
 
-	else if(istype(W,/obj/item/weapon/picture_frame))
-		var/obj/item/weapon/picture_frame/AH = W
+	else if(istype(I,/obj/item/weapon/picture_frame))
+		var/obj/item/weapon/picture_frame/AH = I
 		AH.try_build(src)
 		return
 
 	//Poster stuff
-	else if(istype(W,/obj/item/weapon/poster))
-		place_poster(W,user)
+	else if(istype(I,/obj/item/weapon/poster))
+		place_poster(I,user)
 		return
 
-	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/paper_bundle) || istype(W, /obj/item/weapon/photo)) && (get_dir(user,src) in global.cardinal))
-		user.drop_from_inventory(W)
-		W.pixel_x = X_OFFSET(24, get_dir(user, src))
-		W.pixel_y = Y_OFFSET(24, get_dir(user, src))
-		RegisterSignal(W, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W))
-		RegisterSignal(W, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W))
+	else if((istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/paper_bundle) || istype(I, /obj/item/weapon/photo)) && (get_dir(user,src) in global.cardinal))
+		user.drop_from_inventory(I)
+		I.pixel_x = X_OFFSET(24, get_dir(user, src))
+		I.pixel_y = Y_OFFSET(24, get_dir(user, src))
+		RegisterSignal(I, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), I))
+		RegisterSignal(I, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), I))
 		return
-	else if((istype(W, /obj/item/wallclock) || istype(W, /obj/item/portrait)) && (get_dir(user,src) in global.cardinal))
-		user.drop_from_inventory(W)
-		W.pixel_x = X_OFFSET(32, get_dir(user, src))
-		W.pixel_y = Y_OFFSET(32, get_dir(user, src))
-		W.anchored = TRUE
-		RegisterSignal(W, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W, TRUE))
-		RegisterSignal(W, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W, TRUE))
+	else if((istype(I, /obj/item/wallclock) || istype(I, /obj/item/portrait)) && (get_dir(user,src) in global.cardinal))
+		user.drop_from_inventory(I)
+		I.pixel_x = X_OFFSET(32, get_dir(user, src))
+		I.pixel_y = Y_OFFSET(32, get_dir(user, src))
+		I.anchored = TRUE
+		RegisterSignal(I, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), I, TRUE))
+		RegisterSignal(I, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), I, TRUE))
 	else
 		return attack_hand(user)
 

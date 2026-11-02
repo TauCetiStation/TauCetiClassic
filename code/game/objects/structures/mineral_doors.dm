@@ -222,11 +222,11 @@
 	sheetType = /obj/item/stack/sheet/metal
 	can_unwrench = FALSE
 
-/obj/structure/mineral_door/metal/attackby(obj/item/weapon/W, mob/user)
-	if(iswelding(W))
+/obj/structure/mineral_door/metal/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WELDING))
 		if(user.is_busy())
 			return
-		var/obj/item/weapon/weldingtool/WT = W
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			to_chat(user, "<span class='notice'>You start dissassembling the [name] to the metal sheets.</span>")
 			if(WT.use_tool(src, user, 60, volume = 100, quality = QUALITY_WELDING))
@@ -273,9 +273,9 @@
 	icon_state = "phoron"
 	sheetType = /obj/item/stack/sheet/mineral/phoron
 
-/obj/structure/mineral_door/transparent/phoron/attackby(obj/item/weapon/W, mob/user)
-	if(iswelding(W))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/structure/mineral_door/transparent/phoron/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			TemperatureAct(100)
 	..()

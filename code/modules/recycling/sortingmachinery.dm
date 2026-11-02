@@ -654,11 +654,11 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
-	else if(iswelding(I) && c_mode==1 && !user.is_busy())
-		var/obj/item/weapon/weldingtool/W = I
-		if(W.use(0,user))
+	else if(I.get_quality(QUALITY_WELDING) && c_mode==1 && !user.is_busy())
+		var/obj/item/weapon/weldingtool/WT = I
+		if(WT.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the delivery chute.")
-			if(W.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
+			if(WT.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "You sliced the floorweld off the delivery chute.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				C.ptype = 8 // 8 =  Delivery chute

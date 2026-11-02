@@ -2,8 +2,8 @@
 ///// Construction datums //////
 ////////////////////////////////
 
-/datum/construction/reversible/mecha/custom_action(index, diff, obj/item/weapon/I, mob/user)
-	if(iswelding(I))
+/datum/construction/reversible/mecha/custom_action(index, diff, obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WELDING))
 		if (I.use(3, user))
 			playsound(holder, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 			return 1

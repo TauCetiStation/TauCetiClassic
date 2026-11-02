@@ -28,9 +28,9 @@ var/global/list/gurgles = list(
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/structure/drain/attackby(obj/item/thing, mob/user)
-	if(iswelding(thing))
-		var/obj/item/weapon/weldingtool/WT = thing
+/obj/structure/drain/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.isOn())
 			welded = !welded
 			to_chat(user, "<span class='notice'>You weld \the [src] [welded ? "closed" : "open"].</span>")

@@ -630,7 +630,7 @@
 //Secbot Construction
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I) && !build_step)
+	if(I.get_quality(QUALITY_WELDING) && !build_step)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			build_step++

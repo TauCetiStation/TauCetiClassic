@@ -396,7 +396,7 @@
 				did_something = TRUE
 
 		if(3)
-			if(iswelding(I))
+			if(I.get_quality(QUALITY_WELDING))
 				var/obj/item/weapon/weldingtool/WT = I
 				if(WT.use(0,user))
 					build_step++

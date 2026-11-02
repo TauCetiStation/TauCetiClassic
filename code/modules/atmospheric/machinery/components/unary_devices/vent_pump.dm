@@ -17,7 +17,7 @@
 	can_unwrench = TRUE
 	use_power = NO_POWER_USE
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
-	power_rating = 7500			//7500 W ~ 10 HP
+	power_rating = 7500			//7500 I ~ 10 HP
 
 	undertile = FALSE
 	layer = GAS_SCRUBBER_LAYER
@@ -361,12 +361,12 @@
 	broadcast_status()
 	update_icon()
 
-/obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user)
-	if(iswelding(W))
+/obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WELDING))
 		if(user.is_busy(src))
 			return
 
-		var/obj/item/weapon/weldingtool/WT = W
+		var/obj/item/weapon/weldingtool/WT = I
 
 		if(!WT.isOn())
 			to_chat(user, "<span class='notice'>The welding tool needs to be on to start this task.</span>")
@@ -403,7 +403,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	if(..(user, 1))
-		to_chat(user, "A small gauge in the corner reads [round(last_flow_rate, 0.1)] L/s; [round(last_power_draw)] W")
+		to_chat(user, "A small gauge in the corner reads [round(last_flow_rate, 0.1)] L/s; [round(last_power_draw)] I")
 	else
 		to_chat(user, "You are too far away to read the gauge.")
 	if(welded)

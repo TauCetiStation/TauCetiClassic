@@ -551,7 +551,7 @@
 		return ..()
 
 /obj/structure/table/reinforced/attack_tools(obj/item/I, mob/user)
-	if(iswelding(I))
+	if(I.get_quality(QUALITY_WELDING))
 		if(user.is_busy())
 			return FALSE
 		var/obj/item/weapon/weldingtool/WT = I
@@ -569,7 +569,7 @@
 			return TRUE
 		return FALSE
 
-	else if(status != 2 && iswrenching(I))
+	else if(status != 2 && I.get_quality(QUALITY_SCREWING))
 		if(user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='notice'>Вы разбираете [CASE(src, ACCUSATIVE_CASE)].</span>")

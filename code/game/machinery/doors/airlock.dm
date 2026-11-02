@@ -925,7 +925,7 @@ var/global/list/airlock_overlays = list()
 	if(istype(I, /obj/item/taperoll))
 		return
 
-	if(iswelding(I) && !(operating > 0))
+	if(I.get_quality(QUALITY_WELDING) && !(operating > 0))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			if(!handle_fumbling(user, src, SKILL_TASK_EASY , list(/datum/skill/engineering = SKILL_LEVEL_NOVICE), message_self = "<span class='notice'>You fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [WT]... </span>"))

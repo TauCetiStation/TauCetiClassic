@@ -195,13 +195,13 @@
 	else
 		attack_hand(user)
 
-/obj/structure/closet/proc/tools_interact(obj/item/weapon/W, mob/user)
-	if(iswelding(W))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/structure/closet/proc/tools_interact(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.isOn())
 			return FALSE
-		if(WT.use(0, user) && W.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING))
+		if(WT.use(0, user) && WT.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING))
 			if(opened)
 				user.visible_message("[user] cut apart [src] with [WT].",
 				                     "<span class='notice'>You cut apart [src] with [WT].</span>")

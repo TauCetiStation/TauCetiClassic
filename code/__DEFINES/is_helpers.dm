@@ -155,7 +155,6 @@
 
 #define iswrenching(I) 	I.get_quality(QUALITY_WRENCHING)
 
-#define iswelding(I) 	I.get_quality(QUALITY_WELDING)
 
 #define iscutter(I) 	I.get_quality(QUALITY_CUTTING) // also use in surgery like scalpel and etc
 

@@ -626,7 +626,7 @@
 
 				return
 
-	if (iswelding(I))
+	if (I.get_quality(QUALITY_WELDING))
 		if (src == user)
 			to_chat(user, "<span class='warning'>You lack the reach to be able to repair yourself.</span>")
 			return

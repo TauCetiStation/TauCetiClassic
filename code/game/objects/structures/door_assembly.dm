@@ -43,7 +43,7 @@
 		created_name = t
 		return
 
-	if(iswelding(I) && ((glass_material && !glass_only) || mineral || !anchored))
+	if(I.get_quality(QUALITY_WELDING) && ((glass_material && !glass_only) || mineral || !anchored))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(!WT.tool_start_check(user, amount=0))
 			return
@@ -68,7 +68,7 @@
 				to_chat(user, "<span class='notice'>You dissasembled the airlock assembly!</span>")
 				deconstruct(TRUE)
 
-	else if(iswrenching(I) && state == ASSEMBLY_SECURED)
+	else if(I.get_quality(QUALITY_WRENCHING) && state == ASSEMBLY_SECURED)
 		if(user.is_busy()) return
 		if(anchored)
 			user.visible_message("[user] unsecures the airlock assembly from the floor.", "You start to unsecure the airlock assembly from the floor.")
@@ -88,7 +88,7 @@
 			state = ASSEMBLY_WIRED
 			to_chat(user, "<span class='notice'>You wire the airlock!</span>")
 
-	else if(iscutter(I) && state == ASSEMBLY_WIRED)
+	else if(I.get_quality(QUALITY_CUTTING) && state == ASSEMBLY_WIRED)
 		if(user.is_busy()) return
 		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
@@ -155,7 +155,7 @@
 				else
 					to_chat(user, "<span class='notice'>You can't add [S] to the [src].</span>")
 
-	else if(isscrewing(I) && state == ASSEMBLY_NEAR_FINISHED )
+	else if(I.get_quality(QUALITY_SCREWING) && state == ASSEMBLY_NEAR_FINISHED )
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Now finishing the airlock.</span>")

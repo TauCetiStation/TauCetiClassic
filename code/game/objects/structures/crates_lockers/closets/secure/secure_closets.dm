@@ -72,10 +72,10 @@
 	else
 		to_chat(user, "<span class='notice'>Access Denied</span>")
 
-/obj/structure/closet/secure_closet/attackby(obj/item/weapon/W, mob/user)
-	if(opened  || istype(W, /obj/item/weapon/grab))
+/obj/structure/closet/secure_closet/attackby(obj/item/I, mob/user)
+	if(opened  || istype(I, /obj/item/weapon/grab))
 		return ..()
-	else if((istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/dualsaber)) && !src.broken)
+	else if((istype(I, /obj/item/weapon/melee/energy/blade)||istype(I, /obj/item/weapon/dualsaber)) && !src.broken)
 		// emag copypaste :(
 		broken = 1
 		locked = 0
@@ -87,10 +87,10 @@
 		update_icon()
 		playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 		playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-		visible_message("<span class='notice'>The locker has been sliced open by [user] with an [W.name]!</span>", blind_message = "<span class='warning'>You hear metal being sliced and sparks flying.</span>", viewing_distance = 3)
+		visible_message("<span class='notice'>The locker has been sliced open by [user] with an [I.name]!</span>", blind_message = "<span class='warning'>You hear metal being sliced and sparks flying.</span>", viewing_distance = 3)
 
-	else if(istype(W,/obj/item/weapon/packageWrap) || iswelding(W) || istype(W, /obj/item/weapon/paper/sticker))
-		return ..(W,user)
+	else if(istype(I,/obj/item/weapon/packageWrap) || I.get_quality(QUALITY_WELDING) || istype(I, /obj/item/weapon/paper/sticker))
+		return ..(I,user)
 	else
 		togglelock(user)
 

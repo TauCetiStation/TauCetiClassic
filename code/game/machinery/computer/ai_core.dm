@@ -26,7 +26,7 @@
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					anchored = TRUE
 					state = 1
-			if(iswelding(I))
+			if(I.get_quality(QUALITY_WELDING))
 				var/obj/item/weapon/weldingtool/WT = I
 				if(!WT.isOn())
 					to_chat(user, "The welder must be on for this task.")

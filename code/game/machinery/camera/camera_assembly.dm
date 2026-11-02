@@ -26,7 +26,7 @@
 	switch(state)
 		if(0)
 			// State 0
-			if(iswrenching(I) && isturf(src.loc))
+			if(I.get_quality(QUALITY_WRENCHING) && isturf(src.loc))
 				to_chat(user, "You wrench the assembly into place.")
 				anchored = TRUE
 				state = 1
@@ -36,14 +36,14 @@
 
 		if(1)
 			// State 1
-			if(iswelding(I))
+			if(I.get_quality(QUALITY_WELDING))
 				if(weld(I, user))
 					to_chat(user, "You weld the assembly securely into place.")
 					anchored = TRUE
 					state = 2
 				return
 
-			else if(iswrenching(I))
+			else if(I.get_quality(QUALITY_WRENCHING))
 				to_chat(user, "You unattach the assembly from it's place.")
 				anchored = FALSE
 				update_icon()
@@ -59,7 +59,7 @@
 					state = 3
 				return
 
-			else if(iswelding(I))
+			else if(I.get_quality(QUALITY_WELDING))
 				if(weld(I, user))
 					to_chat(user, "You unweld the assembly from it's place.")
 					state = 1
@@ -68,7 +68,7 @@
 
 		if(3)
 			// State 3
-			if(isscrewing(I))
+			if(I.get_quality(QUALITY_SCREWING))
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
 				var/input = sanitize_safe(input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13"), MAX_LNAME_LEN)
