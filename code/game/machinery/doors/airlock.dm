@@ -941,12 +941,12 @@ var/global/list/airlock_overlays = list()
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
-	else if(isscrewing(I))
+	else if(I.get_quality(QUALITY_SCREWING))
 		p_open = !p_open
 		update_icon()
-	else if(iscutter(I) && p_open)
+	else if(I.get_quality(QUALITY_CUTTING) && p_open)
 		return attack_hand(user)
-	else if(ispulsing(I))
+	else if(I.get_quality(QUALITY_PULSING))
 		return attack_hand(user)
 	else if(I.get_quality(QUALITY_SIGNALLING))
 		return attack_hand(user)

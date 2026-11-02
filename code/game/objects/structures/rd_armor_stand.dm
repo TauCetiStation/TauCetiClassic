@@ -20,12 +20,12 @@
 	QDEL_NULL(reactive)
 	return ..()
 
-/obj/structure/rd_armor_stand/attackby(obj/item/O, mob/living/user)
+/obj/structure/rd_armor_stand/attackby(obj/item/I, mob/living/user)
 	if (user.is_busy(src))
 		return
 
 	if (isrobot(usr) || lock)
-		if(ispulsing(O))
+		if(I.get_quality(QUALITY_PULSING))
 			to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 			playsound(src, 'sound/machines/lockreset.ogg', VOL_EFFECTS_MASTER)
 			if (do_after(user, 100, target = src))
@@ -33,9 +33,9 @@
 				to_chat(user, "<span class='notice'>You disable the locking modules.</span>")
 				playsound(src, 'sound/machines/airlock/bolts_up_2.ogg', VOL_EFFECTS_MASTER)
 				return
-		if(istype(O, /obj/item/weapon/card/id))
-			var/obj/item/weapon/card/id/I = O
-			if(!(access_rd in I.access))
+		if(istype(I, /obj/item/weapon/card/id))
+			var/obj/item/weapon/card/id/ID = I
+			if(!(access_rd in ID.access))
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 				return
 			else
@@ -44,29 +44,29 @@
 				playsound(src, 'sound/machines/airlock/bolts_up_2.ogg', VOL_EFFECTS_MASTER)
 				return
 
-	else if (istype(O, /obj/item/clothing/suit/armor/vest/reactive) && opened)
+	else if (istype(I, /obj/item/clothing/suit/armor/vest/reactive) && opened)
 		if(!reactive)
-			user.drop_from_inventory(O, src)
-			reactive = O
+			user.drop_from_inventory(I, src)
+			reactive = I
 			to_chat(user, "<span class='notice'>You place the armor back in the [src.name].</span>")
 			update_icon()
 	else
 		if(smashed)
 			return
-		if(ispulsing(O))
+		if(I.get_quality(QUALITY_PULSING))
 			if(opened)
 				opened = FALSE
 				to_chat(user, "<span class='notice'>You closed the [name].</span>")
 				update_icon()
 			else
 				to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
-				if(O.use_tool(src, user, 100, volume = 50, quality = QUALITY_PULSING))
+				if(I.use_tool(src, user, 100, volume = 50, quality = QUALITY_PULSING))
 					lock = TRUE
 					to_chat(user, "<span class='notice'>You re-enable the locking modules.</span>")
 					playsound(src, 'sound/machines/airlock/bolts_down_2.ogg', VOL_EFFECTS_MASTER)
 					return
-		if(istype(O, /obj/item/weapon/card/id))
-			var/obj/item/weapon/card/id/ID = O
+		if(istype(I, /obj/item/weapon/card/id))
+			var/obj/item/weapon/card/id/ID = I
 			if(!(access_rd in ID.access))
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 				return

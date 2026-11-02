@@ -803,19 +803,19 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 	to_chat(user, "You don't want to break these things");
 	return
 
-/obj/machinery/alarm/attackby(obj/item/W, mob/user)
+/obj/machinery/alarm/attackby(obj/item/I, mob/user)
 
 	add_fingerprint(user)
 
 	switch(buildstage)
 		if(2)
-			if(isscrewing(W))  // Opening that Air Alarm up.
+			if(isscrewing(I))  // Opening that Air Alarm up.
 				wiresexposed = !wiresexposed
 				to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 				update_icon()
 				return
 
-			if (iscutter(W) && wiresexposed && wires.is_all_cut())
+			if (iscutter(I) && wiresexposed && wires.is_all_cut())
 				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				new /obj/item/stack/cable_coil/random(loc, 5)
@@ -823,7 +823,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 				update_icon()
 				return
 
-			if (istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))// trying to unlock the interface with an ID card
+			if (istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))// trying to unlock the interface with an ID card
 				if(stat & (NOPOWER|BROKEN))
 					to_chat(user, "It does nothing")
 					return
@@ -835,13 +835,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 					else
 						to_chat(user, "<span class='warning'>Access denied.</span>")
 
-			if(wiresexposed && is_wire_tool(W))
+			if(wiresexposed && is_wire_tool(I))
 				wires.interact(user)
 				return
 
 		if(1)
-			if(iscoil(W))
-				var/obj/item/stack/cable_coil/coil = W
+			if(iscoil(I))
+				var/obj/item/stack/cable_coil/coil = I
 				if(!coil.use(5))
 					to_chat(user, "<span class='warning'>You need 5 pieces of cable to do wire \the [src].</span>")
 					return
@@ -854,11 +854,11 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 				wires.repair()
 				return
 
-			else if(isprying(W))
+			else if(isprying(I))
 				if(user.is_busy())
 					return
 				to_chat(user, "You start prying out the circuit.")
-				if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_PRYING))
+				if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_PRYING))
 					to_chat(user, "You pry out the circuit!")
 					var/obj/item/weapon/airalarm_electronics/circuit = new /obj/item/weapon/airalarm_electronics()
 					circuit.loc = user.loc
@@ -866,14 +866,14 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 					update_icon()
 				return
 		if(0)
-			if(istype(W, /obj/item/weapon/airalarm_electronics))
+			if(istype(I, /obj/item/weapon/airalarm_electronics))
 				to_chat(user, "You insert the circuit!")
-				qdel(W)
+				qdel(I)
 				buildstage = 1
 				update_icon()
 				return
 
-			else if(iswrenching(W))
+			else if(iswrenching(I))
 				to_chat(user, "You remove the fire alarm assembly from the wall!")
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 				deconstruct(TRUE)
@@ -1020,10 +1020,10 @@ FIRE ALARM
 		alarm()
 	..()
 
-/obj/machinery/firealarm/attackby(obj/item/W, mob/user)
+/obj/machinery/firealarm/attackby(obj/item/I, mob/user)
 	add_fingerprint(user)
 
-	if (isscrewing(W) && buildstage == 2)
+	if (isscrewing(I) && buildstage == 2)
 		wiresexposed = !wiresexposed
 		update_icon()
 		return
@@ -1031,21 +1031,21 @@ FIRE ALARM
 	if(wiresexposed)
 		switch(buildstage)
 			if(2)
-				if (ispulsing(W))
+				if (I.get_quality(QUALITY_PULSING))
 					detecting = !detecting
 					if (detecting)
 						user.visible_message("<span class='warning'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
 					else
 						user.visible_message("<span class='warning'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
-				else if (iscutter(W))
+				else if (iscutter(I))
 					user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 					new /obj/item/stack/cable_coil/random(loc, 5)
 					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 					buildstage = 1
 					update_icon()
 			if(1)
-				if(iscoil(W))
-					var/obj/item/stack/cable_coil/coil = W
+				if(iscoil(I))
+					var/obj/item/stack/cable_coil/coil = I
 					if(!coil.use(5))
 						to_chat(user, "<span class='warning'>You need 5 pieces of cable to do wire \the [src].</span>")
 						return
@@ -1054,9 +1054,9 @@ FIRE ALARM
 					to_chat(user, "You wire \the [src]!")
 					update_icon()
 
-				else if(isprying(W))
+				else if(I.get_quality(QUALITY_PRYING))
 					to_chat(user, "You start prying out the circuit.")
-					if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_PRYING))
+					if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_PRYING))
 						to_chat(user, "You pry out the circuit!")
 						var/obj/item/weapon/firealarm_electronics/circuit = new /obj/item/weapon/firealarm_electronics()
 						circuit.loc = user.loc
@@ -1064,13 +1064,13 @@ FIRE ALARM
 						update_icon()
 
 			if(0)
-				if(istype(W, /obj/item/weapon/firealarm_electronics))
+				if(istype(I, /obj/item/weapon/firealarm_electronics))
 					to_chat(user, "You insert the circuit!")
-					qdel(W)
+					qdel(I)
 					buildstage = 1
 					update_icon()
 
-				else if(iswrenching(W))
+				else if(I.get_quality(QUALITY_WRENCHING))
 					if(user.is_busy())
 						return
 					to_chat(user, "You remove the fire alarm assembly from the wall!")

@@ -52,7 +52,7 @@
 	return
 
 /obj/item/proc/try_operate(atom/target, mob/user)
-	if(ishuman(target) && (isorganicsurgery(src) || issynteticsurgery(src)))
+	if(ishuman(target) && length(qualities))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
 		if(BP.open && can_operate(H, user)) // Checks if mob is lying down on table for surgery

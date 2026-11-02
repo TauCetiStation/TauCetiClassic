@@ -182,8 +182,8 @@
 	enter_to_transit(M, get_step(destination.loc, SOUTH))
 	use_power(1000)
 
-/obj/machinery/gateway/center/attackby(obj/item/device/W, mob/user)
-	if(ispulsing(W))
+/obj/machinery/gateway/center/attackby(obj/item/device/I, mob/user)
+	if(I.get_quality(QUALITY_PULSING))
 		calibrate(user)
 	else
 		..()

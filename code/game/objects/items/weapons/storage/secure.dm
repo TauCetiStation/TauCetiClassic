@@ -79,7 +79,7 @@
 				open = !open
 				to_chat(user, "<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")
 			return
-		if ((ispulsing(I)) && (src.open == 1)&& (!src.l_hacking))
+		if ((I.get_quality(QUALITY_PULSING)) && (src.open == 1)&& (!src.l_hacking))
 			user.show_message("<span class='warning'>Now attempting to reset internal memory, please hold.</span>", SHOWMSG_ALWAYS)
 			src.l_hacking = 1
 			if (!user.is_busy(src) && I.use_tool(src, usr, 100, volume = 50, quality = QUALITY_PULSING))

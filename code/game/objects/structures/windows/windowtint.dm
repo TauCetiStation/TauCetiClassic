@@ -27,8 +27,8 @@
 /obj/machinery/windowtint/update_icon()
 	icon_state = "light[active]"
 
-/obj/machinery/windowtint/attackby(obj/item/W as obj, mob/user as mob)
-	if(ispulsing(W))
+/obj/machinery/windowtint/attackby(obj/item/I as obj, mob/user as mob)
+	if(I.get_quality(QUALITY_PULSING))
 		var/t = sanitize(input(user, "Enter an ID for \the [src].", src.name, null), MAX_NAME_LEN)
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")

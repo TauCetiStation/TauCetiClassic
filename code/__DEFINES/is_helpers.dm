@@ -139,17 +139,17 @@
 
 // ASSEMBLY HELPERS
 
-#define isassembly(O) (istype(O, /obj/item/device/assembly))
+#define isassembly(A) (istype(A, /obj/item/device/assembly))
 
-#define isigniter(O) (istype(O, /obj/item/device/assembly/igniter))
+#define isigniter(A) (istype(A, /obj/item/device/assembly/igniter))
 
-#define isinfared(O) (istype(O, /obj/item/device/assembly/infra))
+#define isinfared(A) (istype(A, /obj/item/device/assembly/infra))
 
-#define isprox(O) (istype(O, /obj/item/device/assembly/prox_sensor))
+#define isprox(A) (istype(A, /obj/item/device/assembly/prox_sensor))
 
-#define issignaler(O) (istype(O, /obj/item/device/assembly/signaler))
+#define issignaler(A) (istype(A, /obj/item/device/assembly/signaler))
 
-#define istimer(O) (istype(O, /obj/item/device/assembly/timer))
+#define istimer(A) (istype(A, /obj/item/device/assembly/timer))
 
 // TOOLS HELPERS
 
@@ -163,13 +163,11 @@
 
 #define isprying(I)		I.get_quality(QUALITY_PRYING)
 
-#define ispulsing(I) 	I.get_quality(QUALITY_PULSING)
-
 #define iscoil(A) 		(istype(A, /obj/item/stack/cable_coil))
 
 // SURGERY HELPERS
 
-#define iscanoptable(O) O.get_quality(QUALITY_OPERATE_TABLE)
+#define iscanoptable(A) A.get_quality(QUALITY_OPERATE_TABLE)
 
 #define issurgcutt(I)   I.get_quality(QUALITY_SURG_CUTTING)
 
@@ -190,25 +188,6 @@
 #define iscautery(I)	I.get_quality(QUALITY_CAUTER)
 
 #define ismendingipc(I) I.get_quality(QUALITY_MENDING_IPC)
-
-#define isorganicsurgery(I) (  issurgcutt(I)\
-							|| isclamp(I)\
-							|| isretract(I)\
-							|| issawopen(I)\
-							|| isdrillopen(I)\
-							|| isboneset(I)\
-							|| ismendingbone(I)\
-							|| isfixvein(I)\
-							|| iscautery(I)\
-							|| isdropliquid(I))
-
-#define issynteticsurgery(I) (  iscutter(I)\
-							 || iswrenching(I)\
-							 || iswelding(I)\
-							 || isscrewing(I)\
-							 || isprying(I)\
-							 || ispulsing(I)\
-							 || iscoil(I))
 
 // SURGERY
 #define isalienembryo(A)    istype(A, /obj/item/alien_embryo)

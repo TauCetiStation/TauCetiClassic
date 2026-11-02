@@ -77,8 +77,8 @@
 		updateUsrDialog()
 		return
 
-/obj/machinery/computer/gyrotron_control/attackby(obj/item/W, mob/user)
-	if(ispulsing(W))
+/obj/machinery/computer/gyrotron_control/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_PULSING))
 		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Gyrotron Control", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident

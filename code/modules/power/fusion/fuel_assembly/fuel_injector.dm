@@ -51,15 +51,15 @@ var/global/list/fuel_injectors = list()
 		return
 	set_dir(turn(dir, 90))
 
-/obj/machinery/fusion_fuel_injector/attackby(obj/item/W, mob/user)
+/obj/machinery/fusion_fuel_injector/attackby(obj/item/I, mob/user)
 
-	if(ispulsing(W))
+	if(I.get_quality(QUALITY_PULSING))
 		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Fuel Injector", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident
 		return
 
-	if(istype(W, /obj/item/weapon/fuel_assembly))
+	if(istype(I, /obj/item/weapon/fuel_assembly))
 
 		if(injecting)
 			to_chat(user, "<span class='warning'>Shut \the [src] off before playing with the fuel rod!</span>")
@@ -67,19 +67,19 @@ var/global/list/fuel_injectors = list()
 
 		if(cur_assembly)
 			cur_assembly.forceMove(get_turf(src))
-			visible_message("<span class='notice'>\The [user] swaps \the [src]'s [cur_assembly] for \a [W].</span>")
+			visible_message("<span class='notice'>\The [user] swaps \the [src]'s [cur_assembly] for \a [I].</span>")
 		else
-			visible_message("<span class='notice'>\The [user] inserts \a [W] into \the [src].</span>")
+			visible_message("<span class='notice'>\The [user] inserts \a [I] into \the [src].</span>")
 
-		user.drop_from_inventory(W)
-		W.forceMove(src)
+		user.drop_from_inventory(I)
+		I.forceMove(src)
 		if(cur_assembly)
 			cur_assembly.forceMove(get_turf(src))
 			user.put_in_hands(cur_assembly)
-		cur_assembly = W
+		cur_assembly = I
 		return
 
-	if(iswrenching(W))
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(injecting)
 			to_chat(user, "<span class='warning'>Shut \the [src] off first!</span>")
 			return

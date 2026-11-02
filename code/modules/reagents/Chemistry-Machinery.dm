@@ -157,10 +157,10 @@
 
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 
-/obj/machinery/chem_dispenser/attackby(obj/item/weapon/B, mob/user)
+/obj/machinery/chem_dispenser/attackby(obj/item/I, mob/user)
 //	if(isrobot(user))
 //		return
-	if(ispulsing(B) && hackable)
+	if(I.get_quality(QUALITY_PULSING) && hackable)
 		hackedcheck = !hackedcheck
 		if(hackedcheck)
 			to_chat(user, msg_hack_enable)
@@ -169,27 +169,27 @@
 			to_chat(user, msg_hack_disable)
 			dispensable_reagents -= premium_reagents
 		return
-	if(default_unfasten_wrench(user, B))
+	if(default_unfasten_wrench(user, I))
 		power_change()
 		return
 
 	if(src.beaker)
 		to_chat(user, "Something is already loaded into the machine.")
 		return
-	if(istype(B, /obj/item/weapon/reagent_containers/glass) || istype(B, /obj/item/weapon/reagent_containers/food))
-		if(!accept_glass && istype(B,/obj/item/weapon/reagent_containers/food))
+	if(istype(I, /obj/item/weapon/reagent_containers/glass) || istype(I, /obj/item/weapon/reagent_containers/food))
+		if(!accept_glass && istype(I,/obj/item/weapon/reagent_containers/food))
 			to_chat(user, "<span class='notice'>This machine only accepts beakers</span>")
 			return
-		if(istype(B, /obj/item/weapon/reagent_containers/food/drinks/cans))
-			var/obj/item/weapon/reagent_containers/food/drinks/cans/C = B
+		if(istype(I, /obj/item/weapon/reagent_containers/food/drinks/cans))
+			var/obj/item/weapon/reagent_containers/food/drinks/cans/C = I
 			if(!C.canopened)
 				to_chat(user, "<span class='notice'>You need to open the drink!</span>")
 				return
 		if(!do_skill_checks(user))
 			return
-		src.beaker =  B
-		user.drop_from_inventory(B, src)
-		to_chat(user, "You set [B] on the machine.")
+		src.beaker =  I
+		user.drop_from_inventory(I, src)
+		to_chat(user, "You set [I] on the machine.")
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		return
 
@@ -375,29 +375,29 @@
 			update_power_use()
 	update_power_use()
 
-/obj/machinery/chem_master/attackby(obj/item/B, mob/user)
+/obj/machinery/chem_master/attackby(obj/item/I, mob/user)
 
-	if(default_unfasten_wrench(user, B))
+	if(default_unfasten_wrench(user, I))
 		power_change()
 		return
 
-	if(istype(B, /obj/item/weapon/reagent_containers/glass))
+	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(src.beaker)
 			to_chat(user, "<span class='alert'>A beaker is already loaded into the machine.</span>")
 			return
-		src.beaker = B
-		user.drop_from_inventory(B, src)
+		src.beaker = I
+		user.drop_from_inventory(I, src)
 		to_chat(user, "You add the beaker to the machine!")
 		updateUsrDialog()
 		icon_state = "mixer1"
 
-	else if(!condi && istype(B, /obj/item/weapon/storage/pill_bottle))
+	else if(!condi && istype(I, /obj/item/weapon/storage/pill_bottle))
 		if(src.loaded_pill_bottle)
 			to_chat(user, "<span class='alert'>A pill bottle is already loaded into the machine.</span>")
 			return
 
-		src.loaded_pill_bottle = B
-		user.drop_from_inventory(B, src)
+		src.loaded_pill_bottle = I
+		user.drop_from_inventory(I, src)
 		to_chat(user, "You add the pill bottle into the dispenser slot!")
 		updateUsrDialog()
 
@@ -714,10 +714,10 @@
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
 	component_parts += new /obj/item/weapon/reagent_containers/glass/beaker(null)
 
-/obj/machinery/chem_master/constructable/attackby(obj/item/B, mob/user, params)
+/obj/machinery/chem_master/constructable/attackby(obj/item/I, mob/user, params)
 	. = ..()
 
-	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", B))
+	if(default_deconstruction_screwdriver(user, "mixer0_nopower", "mixer0", I))
 		if(beaker)
 			beaker.loc = src.loc
 			beaker = null
@@ -727,12 +727,12 @@
 			loaded_pill_bottle = null
 		return
 
-	if(exchange_parts(user, B))
+	if(exchange_parts(user, I))
 		return
 
 	if(panel_open)
-		if(isprying(B))
-			default_deconstruction_crowbar(B)
+		if(isprying(I))
+			default_deconstruction_crowbar(I)
 			return TRUE
 		else
 			to_chat(user, "<span class='warning'>You can't use the [src.name] while it's panel is opened.</span>")

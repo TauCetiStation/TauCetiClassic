@@ -79,33 +79,33 @@
 	if(stat & NOPOWER)
 		close_wormhole()
 
-/obj/machinery/computer/telescience/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/bluespace_crystal))
+/obj/machinery/computer/telescience/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/bluespace_crystal))
 		if(crystals.len >= max_crystals)
 			to_chat(user, "<span class='warning'>There are not enough crystal ports.</span>")
 			return
-		user.drop_from_inventory(W)
-		W.loc =  null
-		crystals += W
-		user.visible_message("<span class='notice'>[user] inserts a [W] into the [src]'s crystal port.</span>")
+		user.drop_from_inventory(I)
+		I.loc =  null
+		crystals += I
+		user.visible_message("<span class='notice'>[user] inserts a [I] into the [src]'s crystal port.</span>")
 		updateDialog()
 		return
-	else if(istype(W, /obj/item/device/gps))
+	else if(istype(I, /obj/item/device/gps))
 		if(!inserted_gps)
-			inserted_gps = W
-			user.drop_from_inventory(W, src)
-			user.visible_message("<span class='notice'>[user] inserts [W] into \the [src]'s GPS device slot.</span>")
+			inserted_gps = I
+			user.drop_from_inventory(I, src)
+			user.visible_message("<span class='notice'>[user] inserts [I] into \the [src]'s GPS device slot.</span>")
 		return
-	else if(ispulsing(W))
-		var/obj/item/device/multitool/M = W
-		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
+	else if(I.get_quality(QUALITY_PULSING))
+		var/obj/item/device/multitool/MT = I
+		if(MT.buffer && istype(MT.buffer, /obj/machinery/telepad))
 			if(telepad)
 				telepad.computer = null
 				close_wormhole()
-			telepad = M.buffer
+			telepad = MT.buffer
 			telepad.computer = src
-			M.buffer = null
-			to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
+			MT.buffer = null
+			to_chat(user, "<span class='notice'>You upload the data from the [I.name]'s buffer.</span>")
 		return
 	else
 		return ..()

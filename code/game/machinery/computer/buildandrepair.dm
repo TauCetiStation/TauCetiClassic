@@ -367,7 +367,7 @@
 
 
 /obj/item/weapon/circuitboard/computer/cargo/attackby(obj/item/I, mob/user, params)
-	if(ispulsing(I))
+	if(I.get_quality(QUALITY_PULSING))
 		var/catastasis = src.contraband_enabled
 		var/opposite_catastasis
 		if(catastasis)
@@ -418,7 +418,7 @@
 			to_chat(user, "<span class='notice'>You [locked ? "" : "un"]lock the circuit controls.</span>")
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
-	else if(ispulsing(I))
+	else if(I.get_quality(QUALITY_PULSING))
 		if(locked)
 			to_chat(user, "<span class='warning'>Circuit controls are locked.</span>")
 			return

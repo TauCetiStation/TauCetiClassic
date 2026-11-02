@@ -599,9 +599,8 @@
 
 	return has_alarm
 
-
-/mob/living/silicon/robot/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
+/mob/living/silicon/robot/attackby(obj/item/I, mob/user)
+	if (istype(I, /obj/item/weapon/handcuffs)) // fuck i don't even know why isrobot() in handcuff code isn't working so this will have to do
 		return
 
 	if (user.a_intent == INTENT_HARM)
@@ -610,24 +609,24 @@
 	if(opened) // Are they trying to insert something?
 		for(var/V in components)
 			var/datum/robot_component/C = components[V]
-			if(!C.installed && istype(W, C.external_type))
+			if(!C.installed && istype(I, C.external_type))
 				C.installed = 1
-				C.wrapped = W
+				C.wrapped = I
 				C.install()
 				user.drop_item()
-				W.loc = null
+				I.loc = null
 
-				var/obj/item/robot_parts/robot_component/WC = W
+				var/obj/item/robot_parts/robot_component/WC = I
 				if(istype(WC))
 					C.brute_damage = WC.brute
 					C.electronics_damage = WC.burn
 
-				to_chat(usr, "<span class='notice'>You install the [W.name].</span>")
+				to_chat(usr, "<span class='notice'>You install the [I.name].</span>")
 				playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
 
 				return
 
-	if (iswelding(W))
+	if (iswelding(I))
 		if (src == user)
 			to_chat(user, "<span class='warning'>You lack the reach to be able to repair yourself.</span>")
 			return
@@ -636,7 +635,7 @@
 			to_chat(user, "Nothing to fix here!")
 			return
 		user.SetNextMove(CLICK_CD_INTERACT)
-		var/obj/item/weapon/weldingtool/WT = W
+		var/obj/item/weapon/weldingtool/WT = I
 		if (WT.use(0))
 			adjustBruteLoss(-30)
 			updatehealth()
@@ -646,19 +645,19 @@
 			to_chat(user, "Need more welding fuel!")
 			return
 
-	else if(iscoil(W) && (wiresexposed || isdrone(src)))
+	else if(iscoil(I) && (wiresexposed || isdrone(src)))
 		if (!getFireLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
 		user.SetNextMove(CLICK_CD_INTERACT)
-		var/obj/item/stack/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/coil = I
 		if(!coil.use(1))
 			return
 		adjustFireLoss(-30)
 		updatehealth()
 		user.visible_message("<span class='warning'>[user] has fixed some of the burnt wires on [src]!</span>")
 
-	else if (isprying(W))	// crowbar means open or close the cover
+	else if (isprying(I))	// crowbar means open or close the cover
 		if(opened)
 			if(cell)
 				to_chat(user, "You close the cover.")
@@ -697,14 +696,14 @@
 				if(!remove)
 					return
 				var/datum/robot_component/C = components[remove]
-				var/obj/item/robot_parts/robot_component/I = C.wrapped
-				to_chat(user, "You remove \the [I].")
+				var/obj/item/robot_parts/robot_component/robot_component = C.wrapped
+				to_chat(user, "You remove \the [robot_component].")
 				playsound(src, 'sound/items/remove.ogg', VOL_EFFECTS_MASTER, 75)
-				if(istype(I))
-					I.brute = C.brute_damage
-					I.burn = C.electronics_damage
+				if(istype(robot_component))
+					robot_component.brute = C.brute_damage
+					robot_component.burn = C.electronics_damage
 
-				I.loc = src.loc
+				robot_component.loc = src.loc
 
 				if(C.installed == 1)
 					C.uninstall()
@@ -719,50 +718,50 @@
 				opened = 1
 				updateicon()
 
-	else if (istype(W, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
+	else if (istype(I, /obj/item/weapon/stock_parts/cell) && opened)	// trying to put a cell inside
 		var/datum/robot_component/C = components["power cell"]
 		if(wiresexposed)
 			to_chat(user, "Close the panel first.")
 		else if(cell)
 			to_chat(user, "There is a power cell already installed.")
 		else
-			user.drop_from_inventory(W, src)
-			cell = W
+			user.drop_from_inventory(I, src)
+			cell = I
 			to_chat(user, "You insert the power cell.")
 			playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 35)
 
 			C.installed = 1
-			C.wrapped = W
+			C.wrapped = I
 			C.install()
 			//This will mean that removing and replacing a power cell will repair the mount, but I don't care at this point. ~Z
 			C.brute_damage = 0
 			C.electronics_damage = 0
 			diag_hud_set_borgcell()
 
-	else if (iscutter(W) || ispulsing(W))
+	else if (iscutter(I) || I.get_quality(QUALITY_PULSING))
 		if (!wires.interact(user))
 			to_chat(user, "You can't reach the wiring.")
 
-	else if(isscrewing(W) && opened && !cell)	// haxing
+	else if(isscrewing(I) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		updateicon()
 
-	else if(isscrewing(W) && opened && cell)	// radio
+	else if(isscrewing(I) && opened && cell)	// radio
 		if(radio)
-			radio.attackby(W,user)//Push it to the radio to let it handle everything
+			radio.attackby(I,user)//Push it to the radio to let it handle everything
 		else
 			to_chat(user, "Unable to locate a radio.")
 		updateicon()
 
-	else if(istype(W, /obj/item/device/encryptionkey) && opened)
+	else if(istype(I, /obj/item/device/encryptionkey) && opened)
 		if(radio)//sanityyyyyy
-			radio.attackby(W,user)//GTFO, you have your own procs
+			radio.attackby(I,user)//GTFO, you have your own procs
 		else
 			to_chat(user, "Unable to locate a radio.")
 
-	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
+	else if (istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))			// trying to unlock the interface with an ID card
 		if(emagged)//still allow them to open the cover
 			to_chat(user, "The interface seems slightly damaged")
 		if(opened)
@@ -780,8 +779,8 @@
 			else
 				to_chat(user, "<span class='warning'>Access denied.</span>")
 
-	else if(istype(W, /obj/item/borg/upgrade))
-		var/obj/item/borg/upgrade/U = W
+	else if(istype(I, /obj/item/borg/upgrade))
+		var/obj/item/borg/upgrade/U = I
 		if(!opened)
 			to_chat(usr, "You must access the borgs internals!")
 		else if(!src.module && U.require_module)
@@ -797,7 +796,7 @@
 
 
 	else
-		if( !(istype(W, /obj/item/device/robotanalyzer) || istype(W, /obj/item/device/healthanalyzer)) )
+		if( !(istype(I, /obj/item/device/robotanalyzer) || istype(I, /obj/item/device/healthanalyzer)) )
 			spark_system.start()
 		return ..()
 /mob/living/silicon/robot/emag_act(mob/user)

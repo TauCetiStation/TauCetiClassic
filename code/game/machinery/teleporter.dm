@@ -292,14 +292,14 @@
 		use_power(5000)
 	return
 
-/obj/machinery/teleport/hub/attackby(obj/item/W, mob/user)
-	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
+/obj/machinery/teleport/hub/attackby(obj/item/I, mob/user)
+	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", I))
 		return
 
-	if(exchange_parts(user, W))
+	if(exchange_parts(user, I))
 		return
 
-	default_deconstruction_crowbar(W)
+	default_deconstruction_crowbar(I)
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M, turf/T)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
@@ -413,29 +413,29 @@
 		teleporter_console = null
 	return ..()
 
-/obj/machinery/teleport/station/attackby(obj/item/weapon/W, mob/user)
-	if(ispulsing(W) && panel_open)
+/obj/machinery/teleport/station/attackby(obj/item/weapon/I, mob/user)
+	if(I.get_quality(QUALITY_PULSING) && panel_open)
 		var/actions = list("Download data in buffer", "Load data from buffer", "Connect to nearby machinery")
 		var/choice = tgui_input_list(user, "Choose your action", "Action", actions)
 		if(!Adjacent(user))
 			return
 		switch(choice)
 			if("Download data in buffer")
-				var/obj/item/device/multitool/M = W
-				M.buffer = src
-				to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
+				var/obj/item/device/multitool/MT = I
+				MT.buffer = src
+				to_chat(user, "<span class='notice'>You download the data to the [I.name]'s buffer.</span>")
 				return
 			if("Load data from buffer")
-				var/obj/item/device/multitool/M = W
-				if(istype(M))
-					if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
+				var/obj/item/device/multitool/MT = I
+				if(istype(MT))
+					if(MT.buffer && istype(MT.buffer, /obj/machinery/teleport/station) && MT.buffer != src)
 						if(linked_stations.len < efficiency)
-							linked_stations.Add(M.buffer)
-							M.buffer = null
-							to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
+							linked_stations.Add(MT.buffer)
+							MT.buffer = null
+							to_chat(user, "<span class='notice'>You upload the data from the [I.name]'s buffer.</span>")
 						else
 							to_chat(user, "<span class='alert'>This station can't hold more information, try to use better parts.</span>")
-					else if(M.buffer == src)
+					else if(MT.buffer == src)
 						to_chat(user, "<span class='alert'>You can't load information about the same station.</span>")
 					else
 						to_chat(user, "<span class='alert'>Something went wrong!</span>")
@@ -444,14 +444,14 @@
 				to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
 				return
 
-	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
+	if(default_deconstruction_screwdriver(user, "controller-o", "controller", I))
 		update_icon()
 		return
 
-	if(exchange_parts(user, W))
+	if(exchange_parts(user, I))
 		return
 
-	default_deconstruction_crowbar(W)
+	default_deconstruction_crowbar(I)
 
 /obj/machinery/teleport/station/attack_hand(mob/user)
 	. = ..()

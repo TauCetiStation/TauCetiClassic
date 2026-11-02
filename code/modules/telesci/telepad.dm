@@ -42,7 +42,7 @@
 		return
 
 	if(panel_open)
-		if(ispulsing(I))
+		if(I.get_quality(QUALITY_PULSING))
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
