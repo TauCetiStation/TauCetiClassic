@@ -165,13 +165,7 @@
 
 #define ispulsing(I) 	I.get_quality(QUALITY_PULSING)
 
-#define issignaling(I)  I.get_quality(QUALITY_SIGNALLING)
-
 #define iscoil(A) 		(istype(A, /obj/item/stack/cable_coil))
-
-#define isrockdrill(I) 	I.get_quality(QUALITY_ROCK_DRILL)
-
-#define isdropliquid(I) I.get_quality(QUALITY_DROP_LIQUID)
 
 // SURGERY HELPERS
 

@@ -52,7 +52,7 @@
 		return TRUE
 	if(iscutter(I))
 		return TRUE
-	if(issignaling(I))
+	if(I.get_quality(QUALITY_SIGNALLING))
 		return TRUE
 	return
 
@@ -288,7 +288,7 @@ var/global/list/wire_daltonism_colors = list()
 					L.put_in_hands(O)
 					. = TRUE
 			else
-				if(I && issignaling(I))
+				if(I && I.get_quality(QUALITY_SIGNALLING))
 					L.drop_from_inventory(I, holder)
 					attach_signaler(target_wire, I)
 				else

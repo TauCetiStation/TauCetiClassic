@@ -921,12 +921,12 @@ var/global/list/airlock_overlays = list()
 			return
 	..()
 
-/obj/machinery/door/airlock/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/taperoll))
+/obj/machinery/door/airlock/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/taperoll))
 		return
 
-	if(iswelding(C) && !(operating > 0))
-		var/obj/item/weapon/weldingtool/W = C
+	if(iswelding(I) && !(operating > 0))
+		var/obj/item/weapon/weldingtool/W = I
 		if(W.use(0, user))
 			if(!handle_fumbling(user, src, SKILL_TASK_EASY , list(/datum/skill/engineering = SKILL_LEVEL_NOVICE), message_self = "<span class='notice'>You fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [W]... </span>"))
 				return
@@ -941,28 +941,28 @@ var/global/list/airlock_overlays = list()
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
-	else if(isscrewing(C))
+	else if(isscrewing(I))
 		p_open = !p_open
 		update_icon()
-	else if(iscutter(C) && p_open)
+	else if(iscutter(I) && p_open)
 		return attack_hand(user)
-	else if(ispulsing(C))
+	else if(ispulsing(I))
 		return attack_hand(user)
-	else if(issignaling(C))
+	else if(I.get_quality(QUALITY_SIGNALLING))
 		return attack_hand(user)
-	else if(istype(C, /obj/item/weapon/pai_cable))	// -- TLE
-		var/obj/item/weapon/pai_cable/cable = C
+	else if(istype(I, /obj/item/weapon/pai_cable))	// -- TLE
+		var/obj/item/weapon/pai_cable/cable = I
 		cable.afterattack(src, user)
-	else if(isprying(C))
+	else if(isprying(I))
 		var/beingcrowbarred = null
-		if(isprying(C))
+		if(isprying(I))
 			beingcrowbarred = 1 //derp, Agouri
 		else
 			beingcrowbarred = 0
 		if(beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
 			if(user.is_busy(src)) return
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
-			if(C.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_PRYING))
+			if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_PRYING))
 				deconstruct(TRUE, user)
 				return
 		else if(hasPower())
@@ -972,7 +972,7 @@ var/global/list/airlock_overlays = list()
 		else if( !welded && !operating )
 			if(density)
 				if(beingcrowbarred == 0) //being fireaxe'd
-					var/obj/item/weapon/fireaxe/F = C
+					var/obj/item/weapon/fireaxe/F = I
 					if(HAS_TRAIT(F, TRAIT_DOUBLE_WIELDED))
 						spawn(0)	open(1)
 					else
@@ -981,7 +981,7 @@ var/global/list/airlock_overlays = list()
 					spawn(0)	open(1)
 			else
 				if(beingcrowbarred == 0)
-					var/obj/item/weapon/fireaxe/F = C
+					var/obj/item/weapon/fireaxe/F = I
 					if(HAS_TRAIT(F, TRAIT_DOUBLE_WIELDED))
 						spawn(0)	close(1)
 					else
@@ -989,8 +989,8 @@ var/global/list/airlock_overlays = list()
 				else
 					spawn(0)	close(1)
 
-	else if(istype(C, /obj/item/weapon/airlock_painter)) 		//airlock painter
-		change_paintjob(C, user)
+	else if(istype(I, /obj/item/weapon/airlock_painter)) 		//airlock painter
+		change_paintjob(I, user)
 	else
 		return ..()
 
