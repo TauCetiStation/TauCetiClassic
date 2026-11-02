@@ -30,10 +30,10 @@
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
 
-/obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
-	if(issilicon(user) && is_type_in_list(G, allowed_items))
+/obj/machinery/recharger/attackby(obj/item/I, mob/user)
+	if(issilicon(user) && is_type_in_list(I, allowed_items))
 		return
-	if(is_type_in_list(G, allowed_items))
+	if(is_type_in_list(I, allowed_items))
 		if(charging || panel_open)
 			return
 
@@ -46,17 +46,17 @@
 			to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the item!</span>")
 			return
 
-		if (istype(G, /obj/item/weapon/gun/energy/gun/nuclear) || istype(G, /obj/item/weapon/gun/energy/crossbow))
+		if (istype(I, /obj/item/weapon/gun/energy/gun/nuclear) || istype(I, /obj/item/weapon/gun/energy/crossbow))
 			to_chat(user, "<span class='notice'>Your gun's recharge port was removed to make room for a miniaturized reactor.</span>")
 			return
-		if (istype(G, /obj/item/weapon/gun/magic))
+		if (istype(I, /obj/item/weapon/gun/magic))
 			return
-		user.drop_from_inventory(G, src)
-		charging = G
+		user.drop_from_inventory(I, src)
+		charging = I
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		set_power_use(ACTIVE_POWER_USE)
 		update_icon()
-	else if(iswrenching(G))
+	else if(iswrenching(I))
 		if(charging)
 			to_chat(user, "<span class='warning'>Remove the weapon first!</span>")
 			return
@@ -64,11 +64,11 @@
 		to_chat(user, "You [anchored ? "attached" : "detached"] the recharger.")
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 	if (anchored && !charging)
-		if(default_deconstruction_screwdriver(user, istype(src, /obj/machinery/recharger/wallcharger) ? "wrechargeropen" : "rechargeropen", istype(src, /obj/machinery/recharger/wallcharger) ? "wrecharger0" : "recharger0", G))
+		if(default_deconstruction_screwdriver(user, istype(src, /obj/machinery/recharger/wallcharger) ? "wrechargeropen" : "rechargeropen", istype(src, /obj/machinery/recharger/wallcharger) ? "wrecharger0" : "recharger0", I))
 			return
 
-		if(panel_open && isprying(G))
-			default_deconstruction_crowbar(G)
+		if(panel_open && I.get_quality(QUALITY_PRYING))
+			default_deconstruction_crowbar(I)
 			return
 
 /obj/machinery/recharger/attack_ai(mob/user)

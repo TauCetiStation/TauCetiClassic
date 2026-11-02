@@ -18,8 +18,8 @@
 	cell = new/obj/item/weapon/stock_parts/cell/high(src)
 	. = ..()
 
-/obj/machinery/suspension_gen/attackby(obj/item/weapon/W, mob/user)
-	if (isscrewing(W))
+/obj/machinery/suspension_gen/attackby(obj/item/I, mob/user)
+	if (isscrewing(I))
 		if(!open)
 			if(screwed)
 				screwed = 0
@@ -27,7 +27,7 @@
 				screwed = 1
 			to_chat(user, "<span class='info'>You [screwed ? "screw" : "unscrew"] the battery panel.</span>")
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
-	else if (isprying(W))
+	else if(I.get_quality(QUALITY_PRYING))
 		if(!locked)
 			if(!screwed)
 				if(!suspension_field)
@@ -44,7 +44,7 @@
 				to_chat(user, "<span class='warning'>Unscrew [src]'s battery panel first.</span>")
 		else
 			to_chat(user, "<span class='warning'>[src]'s security locks are engaged.</span>")
-	else if (iswrenching(W))
+	else if (I.get_quality(QUALITY_WRENCHING))
 		if(!suspension_field)
 			if(anchored)
 				anchored = FALSE
@@ -59,21 +59,21 @@
 				desc = "It has stubby legs bolted up against it's body for stabilising."
 		else
 			to_chat(user, "<span class='warning'>You are unable to secure [src] while it is active!</span>")
-	else if (istype(W, /obj/item/weapon/stock_parts/cell))
+	else if (istype(I, /obj/item/weapon/stock_parts/cell))
 		if(open)
 			if(cell)
 				to_chat(user, "<span class='warning'>There is a power cell already installed.</span>")
 			else
-				user.drop_from_inventory(W, src)
-				cell = W
+				user.drop_from_inventory(I, src)
+				cell = I
 				to_chat(user, "<span class='info'>You insert the power cell.</span>")
 				playsound(src, 'sound/items/Screwdriver2.ogg', VOL_EFFECTS_MASTER)
 				if(anchored)
 					icon_state = "suspension_cell_anchored"
 				else
 					icon_state = "suspension_cell"
-	else if(istype(W, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/sci = W
+	else if(istype(I, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/sci = I
 		if(access_xenoarch in sci.access)
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")

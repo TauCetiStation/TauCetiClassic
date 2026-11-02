@@ -292,7 +292,7 @@
 		wires = 1.0
 		to_chat(user, "<span class='info'>You insert the wire!</span>")
 
-	else if(isprying(I))
+	else if(I.get_quality(QUALITY_PRYING))
 		if(!cell)
 			to_chat(user, "<span class='warning'>No cell installed!</span>")
 			return
@@ -328,7 +328,7 @@
 			else
 				flash1 = I
 
-	else if(isprying(I))
+	else if(I.get_quality(QUALITY_PRYING))
 		if(flash1 || flash2)
 			to_chat(user, "<span class='info'>You remove the flash from the eye socket!</span>")
 			if(flash2)

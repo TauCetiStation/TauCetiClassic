@@ -56,7 +56,7 @@
 	regenerate_smooth_icon()
 
 /obj/structure/window/fulltile/attackby(obj/item/I, mob/user)
-	if(isprying(I) && !(resistance_flags & DECONSTRUCT_IMMUNE)) // bad use of resistance_flags? we need some flag to prevent deconstructs
+	if(I.get_quality(QUALITY_PRYING) && !(resistance_flags & DECONSTRUCT_IMMUNE)) // bad use of resistance_flags? we need some flag to prevent deconstructs
 		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to pry the glass out of the frame.</span>"))
 			return
 

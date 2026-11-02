@@ -78,7 +78,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(isprying(I))
+	if(I.get_quality(QUALITY_PRYING))
 		if(anchored == 2)
 			to_chat(user, "Unscrew the hoses first!")
 			return

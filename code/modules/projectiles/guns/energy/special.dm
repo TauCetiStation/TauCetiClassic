@@ -329,7 +329,7 @@
 		user.visible_message("<span class='notice'>[user] [panel_open ? "un" : ""]screws [src]'s panel [panel_open ? "open" : "shut"].</span>", "<span class='notice'>You [panel_open ? "un" : ""]screw [src]'s panel [panel_open ? "open" : "shut"].</span>")
 
 	else if(panel_open)
-		if(isprying(I))
+		if(I.get_quality(QUALITY_PRYING))
 			if(ML)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				user.put_in_hands(ML)

@@ -119,7 +119,7 @@
 		user.drop_from_inventory(I, src)
 
 	// Taking out upgrades
-	else if(isprying(I) && upgrades.len)
+	else if(I.get_quality(QUALITY_PRYING) && upgrades.len)
 		var/obj/U = locate(/obj) in upgrades
 		if(U)
 			to_chat(user, "You unattach an upgrade from the assembly.")

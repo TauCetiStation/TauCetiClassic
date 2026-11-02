@@ -657,7 +657,7 @@
 		updatehealth()
 		user.visible_message("<span class='warning'>[user] has fixed some of the burnt wires on [src]!</span>")
 
-	else if (isprying(I))	// crowbar means open or close the cover
+	else if (I.get_quality(QUALITY_PRYING))	// crowbar means open or close the cover
 		if(opened)
 			if(cell)
 				to_chat(user, "You close the cover.")

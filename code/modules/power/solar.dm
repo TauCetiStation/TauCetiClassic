@@ -59,9 +59,9 @@
 
 
 
-/obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/power/solar/attackby(obj/item/I, mob/user)
 
-	if(isprying(W))
+	if(I.get_quality(QUALITY_PRYING))
 		if(user.is_busy()) return
 		playsound(src, 'sound/machines/click.ogg', VOL_EFFECTS_MASTER)
 		if(do_after(user, 50,target = src))
@@ -218,7 +218,7 @@
 			user.visible_message("<span class='notice'>[user] inserts the electronics into the solar assembly.</span>")
 			return TRUE
 	else
-		if(isprying(I))
+		if(I.get_quality(QUALITY_PRYING))
 			new /obj/item/weapon/tracker_electronics(src.loc)
 			tracker = 0
 			user.visible_message("<span class='notice'>[user] takes out the electronics from the solar assembly.</span>")

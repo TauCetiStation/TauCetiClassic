@@ -60,12 +60,12 @@ var/global/bomb_set
 		if(timeleft <= 0)
 			explode()
 
-/obj/machinery/nuclearbomb/attackby(obj/item/weapon/O, mob/user)
+/obj/machinery/nuclearbomb/attackby(obj/item/I, mob/user)
 	if(isdrone(user))
 		to_chat(user, "<span class='warning'>Это слишком сложно для тебя.</span>")
 		return
 
-	if(isscrewing(O))
+	if(I.get_quality(QUALITY_SCREWING))
 		add_fingerprint(user)
 		if(removal_stage == 5)
 			if(!opened)
@@ -90,22 +90,22 @@ var/global/bomb_set
 		update_icon()
 		return FALSE
 
-	if(is_wire_tool(O) && opened)
+	if(is_wire_tool(I) && opened)
 		if(wires.interact(user))
 			return FALSE
 
-	if(istype(O, /obj/item/weapon/disk/nuclear))
+	if(istype(I, /obj/item/weapon/disk/nuclear))
 		if(!deployed)
 			if(!deploy(user))
 				return
-		insert_disk(user, O)
+		insert_disk(user, I)
 		return FALSE
 
 	if(deployed)
 		switch(removal_stage)
 			if(0)
-				if(iswelding(O))
-					var/obj/item/weapon/weldingtool/WT = O
+				if(I.get_quality(QUALITY_WELDING))
+					var/obj/item/weapon/weldingtool/WT = I
 					if(!WT.isOn())
 						return FALSE
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
@@ -113,24 +113,24 @@ var/global/bomb_set
 						return FALSE
 					if(user.is_busy())
 						return FALSE
-					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает что-то прорезать в [CASE(src, ACCUSATIVE_CASE)], будто [user.gender == MALE ? "он" : "она"] знает, что нужно делать.", "С [CASE(O, ABLATIVE_CASE)] вы начинаете разваривать первый слой...")
+					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает что-то прорезать в [CASE(src, ACCUSATIVE_CASE)], будто [user.gender == MALE ? "он" : "она"] знает, что нужно делать.", "С [CASE(I, ABLATIVE_CASE)] вы начинаете разваривать первый слой...")
 
-					if(O.use_tool(src, user, SKILL_TASK_CHALLENGING, amount = 5, volume = 50))
+					if(I.use_tool(src, user, SKILL_TASK_CHALLENGING, amount = 5, volume = 50))
 						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает прорезать что-то в [CASE(src, DATIVE_CASE)].", "Вы прорезали первый слой.")
 						removal_stage = 1
 				return FALSE
 			if(1)
-				if(isprying(O))
-					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает бить по [CASE(src, DATIVE_CASE)].", "Вы начали вскрывать крышку с помощью [CASE(O, GENITIVE_CASE)]...")
+				if(I.get_quality(QUALITY_PRYING))
+					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает бить по [CASE(src, DATIVE_CASE)].", "Вы начали вскрывать крышку с помощью [CASE(I, GENITIVE_CASE)]...")
 					if(user.is_busy())
 						return FALSE
-					if(O.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
+					if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает бить по [CASE(src, DATIVE_CASE)].", "Вы вскрыли крышку.")
 						removal_stage = 2
 				return FALSE
 			if(2)
-				if(iswelding(O))
-					var/obj/item/weapon/weldingtool/WT = O
+				if(I.get_quality(QUALITY_WELDING))
+					var/obj/item/weapon/weldingtool/WT = I
 					if(!WT.isOn())
 						return FALSE
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
@@ -138,27 +138,27 @@ var/global/bomb_set
 						return FALSE
 					if(user.is_busy())
 						return FALSE
-					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает что-то прорезать в [CASE(src, ACCUSATIVE_CASE)]. Снова.", "Вы начинаете разрезать защитную пластину с помощью [CASE(O, GENITIVE_CASE)]")
+					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает что-то прорезать в [CASE(src, ACCUSATIVE_CASE)]. Снова.", "Вы начинаете разрезать защитную пластину с помощью [CASE(I, GENITIVE_CASE)]")
 
-					if(O.use_tool(src, user, SKILL_TASK_DIFFICULT , amount = 5, volume = 50))
+					if(I.use_tool(src, user, SKILL_TASK_DIFFICULT , amount = 5, volume = 50))
 						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает прорезать что-то в [CASE(src, DATIVE_CASE)].", "Вы закончили разрезать защитную пластину.")
 						removal_stage = 3
 				return FALSE
 			if(3)
-				if(iswrenching(O))
+				if(I.get_quality(QUALITY_WRENCHING))
 					if(user.is_busy())
 						return FALSE
 					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает ковыряться внутри [CASE(src, GENITIVE_CASE)].", "Вы начали откручивать предохраняющие болты...")
-					if(O.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
+					if(I.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
 						user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает ковыряться внутри [CASE(src, GENITIVE_CASE)].", "Вы открутили предохраняющие болты.")
 						removal_stage = 4
 				return FALSE
 			if(4)
-				if(isprying(O))
+				if(I.get_quality(QUALITY_PRYING))
 					if(user.is_busy())
 						return FALSE
 					user.visible_message("[CASE(user, NOMINATIVE_CASE)] начинает бить [CASE(src, GENITIVE_CASE)].", "Вы начинаете взламывать последний защитный слой.")
-					if(O.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
+					if(I.use_tool(src, user, SKILL_TASK_TOUGH, volume = 50))
 						user.visible_message("[CASE(user, NOMINATIVE_CASE)] заканчивает бить [CASE(src, GENITIVE_CASE)].", "Теперь вы можете напрямую взаимодействовать с механизмом [CASE(src, GENITIVE_CASE)]. Отверткой откройте панель управления")
 						removal_stage = 5
 				return FALSE

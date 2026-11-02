@@ -107,7 +107,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			default_unfasten_wrench(user, I)
 		return
 
-	if(isprying(I))
+	if(I.get_quality(QUALITY_PRYING))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You start to [cistern_open ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
 		playsound(src, 'sound/effects/stonedoor_openclose.ogg', VOL_EFFECTS_MASTER)

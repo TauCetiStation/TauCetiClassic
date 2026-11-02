@@ -926,17 +926,17 @@ var/global/list/airlock_overlays = list()
 		return
 
 	if(iswelding(I) && !(operating > 0))
-		var/obj/item/weapon/weldingtool/W = I
-		if(W.use(0, user))
-			if(!handle_fumbling(user, src, SKILL_TASK_EASY , list(/datum/skill/engineering = SKILL_LEVEL_NOVICE), message_self = "<span class='notice'>You fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [W]... </span>"))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(WT.use(0, user))
+			if(!handle_fumbling(user, src, SKILL_TASK_EASY , list(/datum/skill/engineering = SKILL_LEVEL_NOVICE), message_self = "<span class='notice'>You fumble around, figuring out how to [welded? "remove welding from":"welding"] [src]'s shutters with [WT]... </span>"))
 				return
-			user.visible_message("[user] begins [welded? "unwelding":"welding"] [src]'s shutters with [W].",
-			                     "<span class='notice'>You begin [welded? "remove welding from":"welding"] [src]'s shutters with [W]...</span>")
-			if(W.use_tool(src, user, SKILL_TASK_EASY, volume = 100, quality = QUALITY_WELDING))
+			user.visible_message("[user] begins [welded? "unwelding":"welding"] [src]'s shutters with [WT].",
+			                     "<span class='notice'>You begin [welded? "remove welding from":"welding"] [src]'s shutters with [WT]...</span>")
+			if(WT.use_tool(src, user, SKILL_TASK_EASY, volume = 100, quality = QUALITY_WELDING))
 				welded = !welded
 				update_icon()
-				user.visible_message("[user] [welded ? "welds" : "unwelds"] [src]'s shutters with [W].",
-				                     "<span class='notice'>You [welded ? "weld" : "remove welding from"] [src]'s shutters with [W].</span>")
+				user.visible_message("[user] [welded ? "welds" : "unwelds"] [src]'s shutters with [WT].",
+				                     "<span class='notice'>You [welded ? "weld" : "remove welding from"] [src]'s shutters with [WT].</span>")
 				return
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
@@ -953,9 +953,9 @@ var/global/list/airlock_overlays = list()
 	else if(istype(I, /obj/item/weapon/pai_cable))	// -- TLE
 		var/obj/item/weapon/pai_cable/cable = I
 		cable.afterattack(src, user)
-	else if(isprying(I))
+	else if(I.get_quality(QUALITY_PRYING))
 		var/beingcrowbarred = null
-		if(isprying(I))
+		if(I.get_quality(QUALITY_PRYING))
 			beingcrowbarred = 1 //derp, Agouri
 		else
 			beingcrowbarred = 0

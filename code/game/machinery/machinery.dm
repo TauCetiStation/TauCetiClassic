@@ -493,7 +493,7 @@ Class Procs:
 	gl_uid++
 
 /obj/machinery/proc/default_pry_open(obj/item/weapon/I)
-	. = isprying(I) && !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT))
+	. = I.get_quality(QUALITY_PRYING) && !(state_open || panel_open || is_operational() || (flags & NODECONSTRUCT))
 	if(.)
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='notice'>[usr] pry open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
@@ -501,7 +501,7 @@ Class Procs:
 		return 1
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/weapon/I, ignore_panel = 0)
-	. = isprying(I) && (panel_open || ignore_panel) && !(flags & NODECONSTRUCT)
+	. = I.get_quality(QUALITY_PRYING) && (panel_open || ignore_panel) && !(flags & NODECONSTRUCT)
 	if(.)
 		if(!handle_fumbling(usr, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_TRAINED), "<span class='notice'>You fumble around, figuring out how to deconstruct [src].</span>"))
 			return

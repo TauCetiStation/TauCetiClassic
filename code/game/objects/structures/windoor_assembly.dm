@@ -58,13 +58,13 @@
 		return 1
 
 
-/obj/structure/windoor_assembly/attackby(obj/item/W, mob/user)
+/obj/structure/windoor_assembly/attackby(obj/item/I, mob/user)
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
 	if(user.is_busy()) return
 	switch(state)
 		if("01")
-			if(iswelding(W) && !anchored )
-				var/obj/item/weapon/weldingtool/WT = W
+			if(iswelding(I) && !anchored )
+				var/obj/item/weapon/weldingtool/WT = I
 				if (WT.use(0,user))
 					user.visible_message("[user] dissassembles the windoor assembly.", "You start to dissassemble the windoor assembly.")
 					if(WT.use_tool(src, user, 40, volume = 50, quality = QUALITY_WELDING))
@@ -78,9 +78,9 @@
 					return
 
 			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
-			if(iswrenching(W) && !anchored)
+			if(I.get_quality(QUALITY_WRENCHING) && !anchored)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "You start to secure the windoor assembly to the floor.")
-				if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
+				if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
 					if(anchored)
 						return
 					to_chat(user, "<span class='notice'>You've secured the windoor assembly!</span>")
@@ -91,9 +91,9 @@
 						name = "Anchored Windoor Assembly"
 
 			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
-			else if(iswrenching(W) && anchored)
+			else if(I.get_quality(QUALITY_WRENCHING) && anchored)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "You start to unsecure the windoor assembly to the floor.")
-				if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
+				if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
 					if(!anchored)
 						return
 					to_chat(user, "<span class='notice'>You've unsecured the windoor assembly!</span>")
@@ -104,13 +104,13 @@
 						name = "Windoor Assembly"
 
 			//Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
-			else if(istype(W, /obj/item/stack/rods) && !secure)
-				var/obj/item/stack/rods/R = W
+			else if(istype(I, /obj/item/stack/rods) && !secure)
+				var/obj/item/stack/rods/R = I
 				if(R.get_amount() < 4)
 					to_chat(user, "<span class='warning'>You need more rods to do this.</span>")
 					return
 				to_chat(user, "<span class='notice'>You start to reinforce the windoor with rods.</span>")
-				if(W.use_tool(src, user, 40, amount = 4, volume = 100))
+				if(I.use_tool(src, user, 40, amount = 4, volume = 100))
 					if(!secure)
 						return
 
@@ -122,8 +122,8 @@
 						name = "Secure Windoor Assembly"
 
 			//Adding cable to the assembly. Step 5 complete.
-			else if(iscoil(W) && anchored)
-				var/obj/item/stack/cable_coil/CC = W
+			else if(iscoil(I) && anchored)
+				var/obj/item/stack/cable_coil/CC = I
 				user.visible_message("[user] wires the windoor assembly.", "You start to wire the windoor assembly.")
 				if(CC.use_tool(src, user, 40, amount = 1, volume = 100))
 					if(!anchored || state != "01")
@@ -140,9 +140,9 @@
 		if("02")
 
 			//Removing wire from the assembly. Step 5 undone.
-			if(iscutter(W) && !electronics)
+			if(I.get_quality(QUALITY_CUTTING) && !electronics)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
-				if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_CUTTING))
+				if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_CUTTING))
 					if(state != "02")
 						return
 
@@ -155,12 +155,12 @@
 						name = "Anchored Windoor Assembly"
 
 			//Adding airlock electronics for access. Step 6 complete.
-			else if(istype(W, /obj/item/weapon/airlock_electronics))
-				var/obj/item/weapon/airlock_electronics/AE = W
+			else if(istype(I, /obj/item/weapon/airlock_electronics))
+				var/obj/item/weapon/airlock_electronics/AE = I
 				if(!AE.broken)
 					user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
 					user.drop_from_inventory(AE, src)
-					if(W.use_tool(src, user, 40, volume = 100))
+					if(I.use_tool(src, user, 40, volume = 100))
 						if(electronics)
 							AE.loc = loc
 							return
@@ -171,11 +171,11 @@
 						AE.loc = loc
 
 			//Screwdriver to remove airlock electronics. Step 6 undone.
-			else if(isscrewing(W))
+			else if(I.get_quality(QUALITY_SCREWING))
 				if(!electronics)
 					return
 				user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to uninstall electronics from the airlock assembly.")
-				if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_SCREWING))
+				if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_SCREWING))
 					if(!electronics)
 						return
 					to_chat(user, "<span class='notice'>You've removed the airlock electronics!</span>")
@@ -184,7 +184,7 @@
 					electronics = null
 					ae.loc = loc
 
-			else if(istype(W, /obj/item/weapon/pen))
+			else if(istype(I, /obj/item/weapon/pen))
 				var/t = sanitize_safe(input(user, "Enter the name for the door.", name, input_default(created_name)), MAX_LNAME_LEN)
 				if(!t)
 					return
@@ -195,12 +195,12 @@
 
 
 			//Crowbar to complete the assembly, Step 7 complete.
-			else if(isprying(W))
+			else if(I.get_quality(QUALITY_PRYING))
 				if(!electronics)
 					to_chat(usr, "<span class='warning'>The assembly is missing electronics.</span>")
 					return
 				user.visible_message("[user] pries the windoor into the frame.", "You start prying the windoor into the frame.")
-				if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_PRYING))
+				if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_PRYING))
 					if(!electronics)
 						return
 

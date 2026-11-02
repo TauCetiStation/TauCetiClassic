@@ -518,7 +518,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 			else
 				to_chat(user, "<span class='notice'>Похоже, лампочка в порядке, менять её не нужно.</span>")
 
-	if(isprying(I) && !is_plating() && !is_catwalk())
+	if(I.get_quality(QUALITY_PRYING) && !is_plating() && !is_catwalk())
 		remove_floor(I, user)
 		// Can't play sounds from areas. - N3X
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
@@ -576,11 +576,11 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 		if (is_catwalk())
 			to_chat(user, "<span class='warning'>Помост не приспособлен для установки на нем покрытия.</span>")
 		if (!is_plating())
-			var/obj/item/CB = user.get_inactive_hand()
-			if(CB)
-				if (!isprying(CB))
+			var/obj/item/crowbar = user.get_inactive_hand()
+			if(crowbar)
+				if(!crowbar.get_quality(QUALITY_PRYING))
 					return
-				remove_floor(CB, user)
+				remove_floor(crowbar, user)
 				place_floor(I)
 		if(is_plating())
 			if(!broken && !burnt)

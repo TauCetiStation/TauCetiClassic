@@ -161,8 +161,6 @@
 
 #define isscrewing(I) 	I.get_quality(QUALITY_SCREWING)
 
-#define isprying(I)		I.get_quality(QUALITY_PRYING)
-
 #define iscoil(A) 		(istype(A, /obj/item/stack/cable_coil))
 
 // SURGERY HELPERS

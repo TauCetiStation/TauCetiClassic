@@ -52,27 +52,27 @@ var/global/list/rad_collectors = list()
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
 			return 1
 
-/obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
+/obj/machinery/power/rad_collector/attackby(obj/item/I, mob/user)
 	if(!do_skill_checks(user))
 		return
-	if(istype(W, /obj/item/device/analyzer))
-		to_chat(user, "<span class='notice'>The [W.name] detects that [last_power]W were recently produced.</span>")
+	if(istype(I, /obj/item/device/analyzer))
+		to_chat(user, "<span class='notice'>The [I.name] detects that [last_power]I were recently produced.</span>")
 		return 1
-	else if(istype(W, /obj/item/weapon/tank/phoron))
+	else if(istype(I, /obj/item/weapon/tank/phoron))
 		if(!src.anchored)
 			to_chat(user, "<span class='warning'>The [src] needs to be secured to the floor first.</span>")
 			return 1
 		if(src.P)
 			to_chat(user, "<span class='warning'>There's already a phoron tank loaded.</span>")
 			return 1
-		user.drop_from_inventory(W, src)
-		src.P = W
+		user.drop_from_inventory(I, src)
+		src.P = I
 		update_icons()
-	else if(isprying(W))
+	else if(I.get_quality(QUALITY_PRYING))
 		if(P && !src.locked)
 			eject()
 			return 1
-	else if(iswrenching(W))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		if(P)
 			to_chat(user, "<span class='notice'>Remove the phoron tank first.</span>")
 			return 1
@@ -85,7 +85,7 @@ var/global/list/rad_collectors = list()
 			connect_to_network()
 		else
 			disconnect_from_network()
-	else if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	else if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		if (allowed(user))
 			if(active)
 				src.locked = !src.locked

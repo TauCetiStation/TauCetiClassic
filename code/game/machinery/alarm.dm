@@ -854,7 +854,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 				wires.repair()
 				return
 
-			else if(isprying(I))
+			else if(I.get_quality(QUALITY_PRYING))
 				if(user.is_busy())
 					return
 				to_chat(user, "You start prying out the circuit.")

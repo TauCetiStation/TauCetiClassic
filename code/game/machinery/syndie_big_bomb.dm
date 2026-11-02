@@ -108,7 +108,7 @@
 		else
 			wires.interact(user)
 
-	else if(isprying(I))
+	else if(I.get_quality(QUALITY_PRYING))
 		if(open_panel && !degutted && isWireCut(SYNDIEBOMB_WIRE_BOOM) && isWireCut(SYNDIEBOMB_WIRE_UNBOLT) && isWireCut(SYNDIEBOMB_WIRE_DELAY) && isWireCut(SYNDIEBOMB_WIRE_PROCEED) && isWireCut(SYNDIEBOMB_WIRE_ACTIVATE))
 			if(!do_skill_checks(user))
 				return

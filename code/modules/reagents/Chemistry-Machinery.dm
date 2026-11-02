@@ -286,7 +286,7 @@
 		return
 
 	if(panel_open)
-		if(isprying(I))
+		if(I.get_quality(QUALITY_PRYING))
 			if(beaker)
 				var/obj/item/weapon/reagent_containers/glass/B = beaker
 				B.loc = loc
@@ -731,7 +731,7 @@
 		return
 
 	if(panel_open)
-		if(isprying(I))
+		if(I.get_quality(QUALITY_PRYING))
 			default_deconstruction_crowbar(I)
 			return TRUE
 		else

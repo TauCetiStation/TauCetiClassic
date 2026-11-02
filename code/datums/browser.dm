@@ -80,7 +80,7 @@
 
 	for(var/name in scripts)
 		head_content += "<script type='text/javascript' src='[name]'></script>"
-	
+
 	head_content += get_browse_zoom_style(user)
 
 	return {"<!DOCTYPE html>
@@ -245,7 +245,7 @@
 // zoom browser based on user settings
 /proc/get_browse_zoom_style(client/C)
 	. = ""
-	if(C && !C.prefs.window_scale)
+	if(C && !C.?prefs.window_scale)
 		var/ratio = C.window_pixelratio
 
 		if(ratio != 1)
@@ -254,7 +254,7 @@
 // resize browser based on zoom
 /proc/get_browse_size_parameter(client/C, width, height)
 	var/ratio = 1
-	if(C && C.prefs.window_scale)
+	if(C && C.?prefs.window_scale)
 		ratio = C.window_pixelratio
 
 	return "size=[width * ratio]x[height * ratio];"

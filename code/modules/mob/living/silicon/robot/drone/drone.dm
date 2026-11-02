@@ -69,17 +69,17 @@
 		holder.icon_state = "hudstat"
 
 //Drones cannot be upgraded with borg modules so we need to catch some items before they get used in ..().
-/mob/living/silicon/robot/drone/attackby(obj/item/weapon/W, mob/user)
+/mob/living/silicon/robot/drone/attackby(obj/item/I, mob/user)
 
-	if(istype(W, /obj/item/borg/upgrade))
-		to_chat(user, "<span class='warning'>The maintenance drone chassis not compatible with \the [W].</span>")
+	if(istype(I, /obj/item/borg/upgrade))
+		to_chat(user, "<span class='warning'>The maintenance drone chassis not compatible with \the [I].</span>")
 		return
 
-	else if (isprying(W))
+	else if(I.get_quality(QUALITY_PRYING))
 		to_chat(user, "The machine is hermetically sealed. You can't open the case.")
 		return
 
-	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	else if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 
 		if(stat == DEAD)
 

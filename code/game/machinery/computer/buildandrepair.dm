@@ -470,12 +470,12 @@
 	else
 		return ..()
 
-/obj/structure/computerframe/attackby(obj/item/P, mob/user)
+/obj/structure/computerframe/attackby(obj/item/I, mob/user)
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "<span class='warning'>It's too complicated for you.</span>")
 		return
 
-	if((state != 0) && (state != 1) && iswrenching(P))
+	if((state != 0) && (state != 1) && iswrenching(I))
 		if(user.is_busy(src))
 			return
 
@@ -488,7 +488,7 @@
 		if(!dir_choise || !user || !(user in range(1, src)) || user.is_busy(src))
 			return
 
-		if(P.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING) && src && P)
+		if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING) && src && I)
 			user.visible_message("<span class='notice'>[user] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
 			set_dir(text2dir(dir_choise))
 
@@ -496,15 +496,15 @@
 
 	switch(state)
 		if(0)
-			if(iswrenching(P))
+			if(I.get_quality(QUALITY_WRENCHING))
 				if(user.is_busy(src))
 					return
-				if(P.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
+				if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					src.anchored = TRUE
 					src.state = 1
-			if(iswelding(P))
-				var/obj/item/weapon/weldingtool/WT = P
+			if(I.get_quality(QUALITY_WELDING))
+				var/obj/item/weapon/weldingtool/WT = I
 				if(WT.use(0, user))
 					to_chat(user, "<span class='notice'>You start deconstruct the frame.</span>")
 					if(WT.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
@@ -512,31 +512,31 @@
 						new /obj/item/stack/sheet/metal( src.loc, 5 )
 						qdel(src)
 		if(1)
-			if(iswrenching(P))
+			if(I.get_quality(QUALITY_WRENCHING))
 				if(user.is_busy(src))
 					return
-				if(P.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
+				if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
 					src.anchored = FALSE
 					src.state = 0
-			if(istype(P, /obj/item/weapon/circuitboard) && !circuit)
-				var/obj/item/weapon/circuitboard/B = P
+			if(istype(I, /obj/item/weapon/circuitboard) && !circuit)
+				var/obj/item/weapon/circuitboard/B = I
 				if(B.board_type == "computer")
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 					icon_state = "1"
-					circuit = P
+					circuit = I
 					user.drop_item()
 					circuit.add_fingerprint(user)
-					P.loc = null
+					I.loc = null
 				else
 					to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
-			if(isscrewing(P) && circuit)
+			if(I.get_quality(QUALITY_SCREWING) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
 				src.state = 2
 				src.icon_state = "2"
-			if(isprying(P) && circuit)
+			if(I.get_quality(QUALITY_PRYING) && circuit)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				src.state = 1
@@ -544,13 +544,13 @@
 				circuit.loc = src.loc
 				src.circuit = null
 		if(2)
-			if(isscrewing(P) && circuit)
+			if(isscrewing(I) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				src.state = 1
 				src.icon_state = "1"
-			if(iscoil(P))
-				var/obj/item/stack/cable_coil/C = P
+			if(iscoil(I))
+				var/obj/item/stack/cable_coil/C = I
 				if(C.get_amount() >= 5)
 					if(user.is_busy(src))
 						return
@@ -560,15 +560,15 @@
 						src.state = 3
 						src.icon_state = "3"
 		if(3)
-			if(iscutter(P))
+			if(I.get_quality(QUALITY_CUTTING))
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				src.state = 2
 				src.icon_state = "2"
 				new /obj/item/stack/cable_coil/random(loc, 5)
 
-			if(istype(P, /obj/item/stack/sheet/glass))
-				var/obj/item/stack/sheet/glass/G = P
+			if(istype(I, /obj/item/stack/sheet/glass))
+				var/obj/item/stack/sheet/glass/G = I
 				if(G.get_amount() >= 2)
 					if(user.is_busy(src)) return
 					if(G.use_tool(src, user, 20, amount = 2, volume = 50))
@@ -576,13 +576,13 @@
 						src.state = 4
 						src.icon_state = "4"
 		if(4)
-			if(isprying(P))
+			if(I.get_quality(QUALITY_PRYING))
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 				src.state = 3
 				src.icon_state = "3"
 				new /obj/item/stack/sheet/glass( src.loc, 2 )
-			if(isscrewing(P))
+			if(I.get_quality(QUALITY_SCREWING))
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/machinery/computer/new_computer = new src.circuit.build_path (src.loc, circuit)

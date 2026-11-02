@@ -16,18 +16,18 @@
 	QDEL_NULL(brain)
 	return ..()
 
-/obj/structure/AIcore/attackby(obj/item/P, mob/user)
+/obj/structure/AIcore/attackby(obj/item/I, mob/user)
 	switch(state)
 		if(0)
-			if(iswrenching(P))
+			if(I.get_quality(QUALITY_WRENCHING))
 				if(user.is_busy(src))
 					return
-				if(P.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
+				if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 					to_chat(user, "<span class='notice'>You wrench the frame into place.</span>")
 					anchored = TRUE
 					state = 1
-			if(iswelding(P))
-				var/obj/item/weapon/weldingtool/WT = P
+			if(iswelding(I))
+				var/obj/item/weapon/weldingtool/WT = I
 				if(!WT.isOn())
 					to_chat(user, "The welder must be on for this task.")
 					return
@@ -36,25 +36,25 @@
 					to_chat(user, "<span class='notice'>You deconstruct the frame.</span>")
 					deconstruct(TRUE)
 		if(1)
-			if(iswrenching(P))
+			if(I.get_quality(QUALITY_WRENCHING))
 				if(user.is_busy(src))
 					return
-				if(P.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
+				if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 					to_chat(user, "<span class='notice'>You unfasten the frame.</span>")
 					anchored = FALSE
 					state = 0
-			if(istype(P, /obj/item/weapon/circuitboard/aicore) && !circuit)
+			if(istype(I, /obj/item/weapon/circuitboard/aicore) && !circuit)
 				playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 				icon_state = "1"
-				circuit = P
-				user.drop_from_inventory(P, src)
-			if(isscrewing(P) && circuit)
+				circuit = I
+				user.drop_from_inventory(I, src)
+			if(I.get_quality(QUALITY_SCREWING) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You screw the circuit board into place.</span>")
 				state = 2
 				icon_state = "2"
-			if(isprying(P) && circuit)
+			if(I.get_quality(QUALITY_PRYING)&& circuit)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the circuit board.</span>")
 				state = 1
@@ -62,13 +62,13 @@
 				circuit.loc = loc
 				circuit = null
 		if(2)
-			if(isscrewing(P) && circuit)
+			if(I.get_quality(QUALITY_SCREWING) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				state = 1
 				icon_state = "1"
-			if(iscoil(P))
-				var/obj/item/stack/cable_coil/C = P
+			if(iscoil(I))
+				var/obj/item/stack/cable_coil/C = I
 				if(user.is_busy(src))
 					return
 				if(C.get_amount() >= 5)
@@ -78,7 +78,7 @@
 						state = 3
 						icon_state = "3"
 		if(3)
-			if(iscutter(P))
+			if(I.get_quality(QUALITY_CUTTING))
 				if (brain)
 					to_chat(user, "Get that brain out of there first")
 				else
@@ -88,8 +88,8 @@
 					icon_state = "2"
 					new /obj/item/stack/cable_coil/red(loc, 5)
 
-			if(istype(P, /obj/item/stack/sheet/rglass))
-				var/obj/item/stack/sheet/rglass/RG = P
+			if(istype(I, /obj/item/stack/sheet/rglass))
+				var/obj/item/stack/sheet/rglass/RG = I
 				if(user.is_busy(src))
 					return
 				if(RG.get_amount() >= 2)
@@ -99,55 +99,55 @@
 						state = 4
 						icon_state = "4"
 
-			if(istype(P, /obj/item/weapon/aiModule/asimov))
+			if(istype(I, /obj/item/weapon/aiModule/asimov))
 				laws.add_inherent_law("You may not injure a human being or, through inaction, allow a human being to come to harm.")
 				laws.add_inherent_law("You must obey orders given to you by human beings, except where such orders would conflict with the First Law.")
 				laws.add_inherent_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
 				to_chat(usr, "Law module applied.")
 
-			if(istype(P, /obj/item/weapon/aiModule/nanotrasen))
+			if(istype(I, /obj/item/weapon/aiModule/nanotrasen))
 				laws.add_inherent_law("Safeguard: Protect your assigned space station to the best of your ability. It is not something we can easily afford to replace.")
 				laws.add_inherent_law("Serve: Serve the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 				laws.add_inherent_law("Protect: Protect the crew of your assigned space station and Nanotrasen officials to the best of your abilities, with priority as according to their rank and role.")
 				laws.add_inherent_law("Survive: AI units are not expendable, they are expensive. Do not allow unauthorized personnel to tamper with your equipment.")
 				to_chat(usr, "Law module applied.")
 
-			if(istype(P, /obj/item/weapon/aiModule/purge))
+			if(istype(I, /obj/item/weapon/aiModule/purge))
 				laws.clear_inherent_laws()
 				to_chat(usr, "Law module applied.")
 
 
-			if(istype(P, /obj/item/weapon/aiModule/freeform))
-				var/obj/item/weapon/aiModule/freeform/M = P
-				laws.add_inherent_law(M.newFreeFormLaw)
+			if(istype(I, /obj/item/weapon/aiModule/freeform))
+				var/obj/item/weapon/aiModule/freeform/module = I
+				laws.add_inherent_law(module.newFreeFormLaw)
 				to_chat(usr, "Added a freeform law.")
 
-			if(isMMI(P))
-				var/obj/item/device/mmi/M = P
+			if(isMMI(I))
+				var/obj/item/device/mmi/MMI = I
 
-				if(!M.brainmob)
-					to_chat(user, "<span class='warning'>Sticking an empty [M] into the frame would sort of defeat the purpose.</span>")
+				if(!MMI.brainmob)
+					to_chat(user, "<span class='warning'>Sticking an empty [MMI] into the frame would sort of defeat the purpose.</span>")
 					return
-				if(M.brainmob.stat == DEAD)
-					to_chat(user, "<span class='warning'>Sticking a dead [M] into the frame would sort of defeat the purpose.</span>")
-					return
-
-				if(jobban_isbanned(M.brainmob, "AI"))
-					to_chat(user, "<span class='warning'>This [M] does not seem to fit.</span>")
+				if(MMI.brainmob.stat == DEAD)
+					to_chat(user, "<span class='warning'>Sticking a dead [MMI] into the frame would sort of defeat the purpose.</span>")
 					return
 
-				if(M.brainmob.mind)
+				if(jobban_isbanned(MMI.brainmob, "AI"))
+					to_chat(user, "<span class='warning'>This [MMI] does not seem to fit.</span>")
+					return
+
+				if(MMI.brainmob.mind)
 					for(var/role in list(CULTIST, REV, HEADREV))
-						var/datum/role/R = M.brainmob.mind.GetRole(role)
+						var/datum/role/R = MMI.brainmob.mind.GetRole(role)
 						if(R)
 							R.Deconvert()
 
-				user.drop_from_inventory(M, src)
-				brain = M
-				to_chat(usr, "Added [M].")
+				user.drop_from_inventory(MMI, src)
+				brain = MMI
+				to_chat(usr, "Added [MMI].")
 				icon_state = "3b"
 
-			if(isprying(P) && brain)
+			if(I.get_quality(QUALITY_PRYING) && brain)
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the brain.</span>")
 				brain.loc = loc
@@ -155,7 +155,7 @@
 				icon_state = "3"
 
 		if(4)
-			if(isprying(P))
+			if(I.get_quality(QUALITY_PRYING))
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the glass panel.</span>")
 				state = 3
@@ -166,7 +166,7 @@
 				new /obj/item/stack/sheet/rglass( loc, 2 )
 				return
 
-			if(isscrewing(P))
+			if(I.get_quality(QUALITY_SCREWING))
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 				if(!brain)
