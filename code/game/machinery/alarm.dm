@@ -809,13 +809,13 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 
 	switch(buildstage)
 		if(2)
-			if(isscrewing(I))  // Opening that Air Alarm up.
+			if(I.get_quality(QUALITY_SCREWING))  // Opening that Air Alarm up.
 				wiresexposed = !wiresexposed
 				to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 				update_icon()
 				return
 
-			if (iscutter(I) && wiresexposed && wires.is_all_cut())
+			if (I.get_quality(QUALITY_CUTTING) && wiresexposed && wires.is_all_cut())
 				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				new /obj/item/stack/cable_coil/random(loc, 5)
@@ -1037,7 +1037,7 @@ FIRE ALARM
 						user.visible_message("<span class='warning'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
 					else
 						user.visible_message("<span class='warning'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
-				else if (iscutter(I))
+				else if (I.get_quality(QUALITY_CUTTING))
 					user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 					new /obj/item/stack/cable_coil/random(loc, 5)
 					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)

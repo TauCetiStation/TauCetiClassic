@@ -123,7 +123,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return
 
-	if(iscutter(I))
+	if(I.get_quality(QUALITY_CUTTING))
 
 		if (shock(user, 50))
 			return

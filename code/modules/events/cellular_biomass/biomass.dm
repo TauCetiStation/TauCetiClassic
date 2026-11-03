@@ -17,10 +17,10 @@
 		master.growth_queue -= src
 	return ..()
 
-/obj/effect/biomass/attackby(obj/item/weapon/W, mob/user)
-	if (!W || !user || !W.type) return
-	var/temperature = W.get_current_temperature()
-	if(W.sharp || iscutter(W) > 0 || temperature > 3000)
+/obj/effect/biomass/attackby(obj/item/I, mob/user)
+	if (!I || !user || !I.type) return
+	var/temperature = I.get_current_temperature()
+	if(I.sharp || I.get_quality(QUALITY_CUTTING) > 0 || temperature > 3000)
 		qdel(src)
 	else
 		return ..()

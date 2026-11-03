@@ -153,11 +153,6 @@
 
 // TOOLS HELPERS
 
-
-
-
-#define iscutter(I) 	I.get_quality(QUALITY_CUTTING) // also use in surgery like scalpel and etc
-
 #define isscrewing(I) 	I.get_quality(QUALITY_SCREWING)
 
 #define iscoil(A) 		(istype(A, /obj/item/stack/cable_coil))

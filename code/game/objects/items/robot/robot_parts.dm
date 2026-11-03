@@ -301,7 +301,7 @@
 		cell.forceMove(get_turf(src))
 		cell = null
 
-	else if(iscutter(I))
+	else if(I.get_quality(QUALITY_CUTTING))
 		if(!wires)
 			to_chat(user, "<span class='warning'>No wires installed!</span>")
 			return

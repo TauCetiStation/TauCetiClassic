@@ -105,7 +105,7 @@
 							break
 				return
 
-			else if(iscutter(I))
+			else if(I.get_quality(QUALITY_CUTTING))
 				new /obj/item/stack/cable_coil/red(get_turf(src), 2)
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "You cut the wires from the circuits.")

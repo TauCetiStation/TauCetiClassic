@@ -196,12 +196,12 @@
 	else
 		..()
 
-	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), W))
+	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		set_power_use(NO_POWER_USE)
 		update_icon()
 		return
 
-	if(default_deconstruction_crowbar(W))
+	if(default_deconstruction_crowbar(I))
 		return
 
 /obj/machinery/power/generator/interact(mob/user)

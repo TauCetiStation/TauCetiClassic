@@ -112,10 +112,10 @@ var/global/list/alldepartments = list("Central Command")
 				to_chat(usr, "<span class='notice'>You take the item out of \the [src].</span>")
 				tofax = null
 			else
-				var/obj/item/I = usr.get_active_hand()
-				if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/photo) || istype(I, /obj/item/weapon/paper_bundle))
-					usr.drop_from_inventory(I, src)
-					tofax = I
+				var/obj/item/active_hand = usr.get_active_hand()
+				if(istype(active_hand, /obj/item/weapon/paper) || istype(active_hand, /obj/item/weapon/photo) || istype(active_hand, /obj/item/weapon/paper_bundle))
+					usr.drop_from_inventory(active_hand, src)
+					tofax = active_hand
 
 
 		if("scan")
@@ -129,10 +129,10 @@ var/global/list/alldepartments = list("Central Command")
 					scan.loc = src.loc
 					scan = null
 			else if(ishuman (usr))
-				var/obj/item/I = usr.get_active_hand()
-				if (istype(I, /obj/item/weapon/card/id))
-					usr.drop_from_inventory(I, src)
-					scan = I
+				var/obj/item/active_hand = usr.get_active_hand()
+				if(istype(active_hand, /obj/item/weapon/card/id))
+					usr.drop_from_inventory(active_hand, src)
+					scan = active_hand
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				H.sec_hud_set_ID()

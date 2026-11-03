@@ -211,8 +211,8 @@
 		if(do_after(user, 20, target = src))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			new /obj/item/weapon/condiment_shelf(src.loc)
-			for(var/obj/item/I in contents)
-				I.forceMove(get_turf(src))
+			for(var/obj/item/something in contents)
+				something.forceMove(get_turf(src))
 			qdel(src)
 		return
 

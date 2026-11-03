@@ -35,10 +35,10 @@
 			open = !open
 			if(open)
 				icon_state = "[initial(icon_state)]_open"
-				for(var/obj/item/I as anything in contents)
-					I.forceMove(loc)
-					I.pixel_x = rand(-6, 6)
-					I.pixel_y = rand(-8, -12)
+				for(var/obj/item/something as anything in contents)
+					something.forceMove(loc)
+					something.pixel_x = rand(-6, 6)
+					something.pixel_y = rand(-8, -12)
 			else
 				icon_state = initial(icon_state)
 	else

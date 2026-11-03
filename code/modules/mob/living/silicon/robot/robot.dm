@@ -738,7 +738,7 @@
 			C.electronics_damage = 0
 			diag_hud_set_borgcell()
 
-	else if (iscutter(I) || I.get_quality(QUALITY_PULSING))
+	else if (I.get_quality(QUALITY_CUTTING) || I.get_quality(QUALITY_PULSING))
 		if (!wires.interact(user))
 			to_chat(user, "You can't reach the wiring.")
 

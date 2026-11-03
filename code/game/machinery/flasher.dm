@@ -53,8 +53,8 @@
 	update_power_use()
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/weapon/I, mob/user)
-	if (iscutter(I))
+/obj/machinery/flasher/attackby(obj/item/I, mob/user)
+	if (I.get_quality(QUALITY_CUTTING))
 		add_fingerprint(user)
 		disable = !disable
 		user.SetNextMove(CLICK_CD_INTERACT)

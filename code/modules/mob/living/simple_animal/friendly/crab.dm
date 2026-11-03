@@ -49,8 +49,8 @@
 	response_harm   = "stomps"
 
 //LOOK AT THIS - ..()??
-/*/mob/living/simple_animal/crab/attackby(obj/item/O, mob/user)
-	if(iscutter(O))
+/*/mob/living/simple_animal/crab/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_CUTTING))
 		if(prob(50))
 			to_chat(user, "<span class='warning'><b>This kills the crab.</b></span>")
 			health -= 20
@@ -58,9 +58,9 @@
 		else
 			GetMad()
 			get
-	if(istype(O, /obj/item/stack/medical))
+	if(istype(I, /obj/item/stack/medical))
 		if(stat != DEAD)
-			var/obj/item/stack/medical/MED = O
+			var/obj/item/stack/medical/MED = I
 			if(health < maxHealth)
 				if(MED.use(1))
 					health = min(maxHealth, health + MED.heal_brute)
@@ -70,16 +70,16 @@
 		else
 			to_chat(user, "<span class='notice'>this [src] is dead, medical items won't bring it back to life.</span>")
 	else
-		if(O.force)
-			health -= O.force
+		if(I.force)
+			health -= I.force
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_messageold("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
+					M.show_messageold("<span class='warning'><b>[src] has been attacked with the [I] by [user].</b></span>")
 		else
 			to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 			for(var/mob/M in viewers(src, null))
 				if ((M.client && !( M.blinded )))
-					M.show_messageold("<span class='warning'>[user] gently taps [src] with the [O]. </span>")
+					M.show_messageold("<span class='warning'>[user] gently taps [src] with the [I]. </span>")
 
 /mob/living/simple_animal/crab/Topic(href, href_list)
 	if(usr.stat != CONSCIOUS) return

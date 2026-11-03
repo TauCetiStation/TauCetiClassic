@@ -129,7 +129,7 @@
 			to_chat(usr, "You have to unscrew the case first.")
 			return
 
-	if(iI.get_quality(QUALITY_CUTTING))
+	if(I.get_quality(QUALITY_CUTTING))
 		if (stage != STAGE_COILED)
 			return
 		if(!I.use_tool(src, usr, 5, volume = 75, quality = QUALITY_CUTTING))

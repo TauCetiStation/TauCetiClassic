@@ -9,16 +9,16 @@
 	desc = "This cable is tough. It cannot be cut with simple hand tools."
 	layer = POWER_CABLES_HEAVY
 
-/obj/structure/cable/heavyduty/attackby(obj/item/W, mob/user)
+/obj/structure/cable/heavyduty/attackby(obj/item/I, mob/user)
 
 	var/turf/T = src.loc
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return
 
-	if(iscutter(W))
-		to_chat(user, "<span class='notice'>These cables are too tough to be cut with those [W.name].</span>")
+	if(I.get_quality(QUALITY_CUTTING))
+		to_chat(user, "<span class='notice'>These cables are too tough to be cut with those [I.name].</span>")
 		return
-	else if(iscoil(W))
+	else if(iscoil(I))
 		to_chat(user, "<span class='notice'>You will need heavier cables to connect to these.</span>")
 		return
 	else

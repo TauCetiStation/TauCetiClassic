@@ -101,14 +101,14 @@
 		else
 			return !density
 
-/obj/structure/grille/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/grille/attackby(obj/item/I, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(iscutter(W))
+	if(I.get_quality(QUALITY_CUTTING))
 		if(!shock(user, 100))
 			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 			deconstruct(TRUE)
 			return
-	else if((isscrewing(W)) && (istype(loc, /turf/simulated) || anchored))
+	else if(I.get_quality(QUALITY_SCREWING) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored
@@ -125,13 +125,13 @@
 			return
 
 //window placing begin
-	else if( istype(W,/obj/item/stack/sheet/rglass) || istype(W,/obj/item/stack/sheet/glass) )
+	else if(istype(I,/obj/item/stack/sheet/rglass) || istype(I,/obj/item/stack/sheet/glass))
 		var/obj/structure/windowsill/WS = locate() in loc
 		if(WS) // thats for fulltile window, redirect
-			WS.attackby(W, user)
+			WS.attackby(I, user)
 			return
 
-		var/obj/item/stack/ST = W
+		var/obj/item/stack/ST = I
 		if(ST.get_amount() < 1)
 			return
 		var/dir_to_set = 1
@@ -159,7 +159,7 @@
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>You start placing the window.</span>")
-		if(W.use_tool(src, user, 20, volume = 100))
+		if(I.use_tool(src, user, 20, volume = 100))
 			for(var/obj/structure/window/thin/WINDOW in loc)
 				if(WINDOW.dir == dir_to_set)//checking this for a 2nd time to check if a window was made while we were waiting.
 					to_chat(user, "<span class='notice'>There is already a window facing this way there.</span>")
@@ -167,7 +167,7 @@
 			if(!ST.use(1))
 				return
 			var/obj/structure/window/thin/WD
-			if(istype(W,/obj/item/stack/sheet/rglass))
+			if(istype(I,/obj/item/stack/sheet/rglass))
 				WD = new/obj/structure/window/thin/reinforced(loc) //reinforced window
 			else
 				WD = new/obj/structure/window/thin(loc) //normal window

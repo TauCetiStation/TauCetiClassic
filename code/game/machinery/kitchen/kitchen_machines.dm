@@ -88,7 +88,7 @@
 	default_deconstruction_crowbar(I)
 
 	if(broken)
-		if(broken == FULL_BROKEN && iscutter(I)) // If it's broken and they're using a wirecutters.
+		if(broken == FULL_BROKEN && I.get_quality(QUALITY_CUTTING)) // If it's broken and they're using a wirecutters.
 			user.visible_message( \
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \

@@ -18,13 +18,13 @@
 	if(target_zone != BP_HEAD)
 		return FALSE
 
-	var/obj/item/organ/internal/I = I
-	if(!(target.get_species() in I.compability))
-		user.visible_message ( "<span class='warning'> \The [I] not compability to [target]</span>")
+	var/obj/item/organ/internal/internal = I
+	if(!(target.get_species() in internal.compability))
+		user.visible_message ("<span class='warning'> \The [internal] not compability to [target]</span>")
 		return FALSE
 
-	if(I.requires_robotic_bodypart)
-		user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
+	if(internal.requires_robotic_bodypart)
+		user.visible_message ("<span class='warning'>[internal] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
 		return FALSE
 
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -640,25 +640,25 @@
 	if(target_zone in list(O_EYES , O_MOUTH, BP_HEAD))
 		return FALSE
 
-	var/obj/item/organ/internal/I = I
-	if(I.requires_robotic_bodypart)
+	var/obj/item/organ/internal/internal = I
+	if(internal.requires_robotic_bodypart)
 		user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
 		return FALSE
 
-	if(target_zone != I.parent_bodypart)
-		user.visible_message ("<span class='notice'>There is no room for [I] in [target]'s [parse_zone(target_zone)]!</span>")
+	if(target_zone != internal.parent_bodypart)
+		user.visible_message ("<span class='notice'>There is no room for [internal] in [target]'s [parse_zone(target_zone)]!</span>")
 		return FALSE
 
-	if(I.damage > (I.max_damage * 0.75))
-		user.visible_message ("<span class='notice'> \The [I] is in no state to be transplanted.</span>")
+	if(internal.damage > (internal.max_damage * 0.75))
+		user.visible_message ("<span class='notice'> \The [internal] is in no state to be transplanted.</span>")
 		return FALSE
 
-	if(target.get_int_organ(I))
-		user.visible_message ("<span class='warning'> \The [target] already has [I].</span>")
+	if(target.get_int_organ(internal))
+		user.visible_message ("<span class='warning'> \The [target] already has [internal].</span>")
 		return FALSE
 
-	if(!(target.get_species() in I.compability))
-		user.visible_message ("<span class='warning'> \The [I] not compability to [target]</span>")
+	if(!(target.get_species() in internal.compability))
+		user.visible_message ("<span class='warning'> \The [internal] not compability to [target]</span>")
 		return FALSE
 
 	return TRUE
@@ -669,15 +669,15 @@
 	..()
 
 /datum/surgery_step/organ_manipulation/place/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
-	I = I
-	if(target.get_int_organ(I))
+	var/obj/item/organ/internal/internal = I
+	if(target.get_int_organ(internal))
 		user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
 		return FALSE
-	user.drop_from_inventory(I)
-	I.insert_organ(target)
+	user.drop_from_inventory(internal)
+	internal.insert_organ(target)
 	user.visible_message("<span class='notice'> [user] has transplanted \the [I] into [target].</span>", \
 	"<span class='notice'> You have transplanted \the [I] into [target].</span>")
-	I.status &= ~ORGAN_CUT_AWAY
+	internal.status &= ~ORGAN_CUT_AWAY
 
 /datum/surgery_step/organ_manipulation/place/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
@@ -926,16 +926,16 @@
     if(target_zone != O_EYES)
         return FALSE
 
-    var/obj/item/organ/internal/I = I
-    if(I.requires_robotic_bodypart)
+    var/obj/item/organ/internal/internal = I
+    if(internal.requires_robotic_bodypart)
         user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
         return FALSE
 
-    if(I.damage > (I.max_damage * 0.75))
-        user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
+    if(internal.damage > (internal.max_damage * 0.75))
+        user.visible_message ( "<span class='notice'> \The [internal] is in no state to be transplanted.</span>")
         return FALSE
 
-    if(target.get_int_organ(I))
+    if(target.get_int_organ(internal))
         user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
         return FALSE
 
@@ -948,12 +948,12 @@
 	..()
 
 /datum/surgery_step/organ_manipulation/place_eye/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
-	var/obj/item/organ/internal/I = I
-	user.drop_from_inventory(I)
-	I.insert_organ(target)
+	var/obj/item/organ/internal/internal = I
+	user.drop_from_inventory(internal)
+	internal.insert_organ(target)
 	user.visible_message("<span class='notice'> [user] has transplanted \the [I] into [target].</span>", \
 	"<span class='notice'> You have transplanted \the [I] into [target].</span>")
-	I.status &= ~ORGAN_CUT_AWAY
+	internal.status &= ~ORGAN_CUT_AWAY
 
 /datum/surgery_step/organ_manipulation/place_eye/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)

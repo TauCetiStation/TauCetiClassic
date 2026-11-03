@@ -44,7 +44,7 @@
 			use(2)
 			if(!QDELETED(src) && replace)
 				user.put_in_hands(new_item)
-	if(iscutter(I))
+	if(I.get_quality(QUALITY_CUTTING))
 		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message(
 			"[user.name] cuts the [src], turning it into a crossbow bolt.",

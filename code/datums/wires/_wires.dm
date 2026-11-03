@@ -50,7 +50,7 @@
 /proc/is_wire_tool(obj/item/I)
 	if(I.get_quality(QUALITY_PULSING))
 		return TRUE
-	if(iscutter(I))
+	if(I.get_quality(QUALITY_CUTTING))
 		return TRUE
 	if(I.get_quality(QUALITY_SIGNALLING))
 		return TRUE
@@ -268,7 +268,7 @@ var/global/list/wire_daltonism_colors = list()
 		return
 	switch(action)
 		if("cut")
-			if(I && iscutter(I))
+			if(I && I.get_quality(QUALITY_CUTTING))
 				cut_wire_color(target_wire, L)
 				I.play_tool_sound(holder, 20)
 				. = TRUE
