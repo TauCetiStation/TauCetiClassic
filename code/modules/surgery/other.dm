@@ -4,7 +4,8 @@
 //////////////////////////////////////////////////////////////////
 
 
-/datum/surgery_step/fix_vein
+/datum/surgery_step/brain
+	name = "Insert brain"
 	priority = 2
 	allowed_tools = list(
 	/obj/item/organ/internal/brain = 100
@@ -198,6 +199,7 @@
 			IO.take_damage(dam_amt,0)
 
 /datum/surgery_step/groin_organs/fixing_robot //For artificial organs
+	name = "Repair artificial groin organs"
 	allowed_tools = list(
 	/obj/item/stack/nanopaste = 100,
 	/obj/item/weapon/bonegel = 30,
@@ -261,7 +263,11 @@
 //////////////////////////////////////////////////////////////////
 //				CHEST INTERNAL ORGAN SURGERY					//
 //////////////////////////////////////////////////////////////////
+/datum/surgery_step/ribcage
+	name = "Ribcage surgery"
+
 /datum/surgery_step/ribcage/fix_chest_internal
+	name = "Treat internal organs damage"
 	allowed_tools = list(
 	/obj/item/stack/medical/advanced/bruise_pack= 100,
 	/obj/item/stack/medical/bruise_pack/tajaran = 70,
@@ -361,6 +367,7 @@
 			IO.take_damage(dam_amt,0)
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot //For artificial organs
+	name = "Mend artificial organs"
 	allowed_qualities = list(
 	QUALITY_MENDING_IPC
 	)
@@ -418,6 +425,10 @@
 		if(IO.damage > 0 && IO.is_robotic())
 			IO.take_damage(dam_amt,0)
 
+/datum/surgery_step/ipc/ribcage
+
+	name = "IPC ribcage"
+
 /datum/surgery_step/ipc/ribcage/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	if(!..())
 		return FALSE
@@ -432,6 +443,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/ipc/ribcage/import_posibrain
+	name = "Import posibrain"
 	allowed_tools = list(
 	/obj/item/device/mmi/posibrain = 100
 	)
@@ -463,6 +475,7 @@
 	target.timeofdeath = 0
 
 /datum/surgery_step/ipc/ribcage/take_accumulator
+	name = "Take accumulator"
 	allowed_qualities = list(
 	QUALITY_SCREWING
 	)
@@ -494,6 +507,7 @@
 		to_chat(target, "<span class='warning italics'>%SHUTTING DOWN%</span>")
 
 /datum/surgery_step/ipc/ribcage/put_accumulator
+	name = "Put accumulator"
 	allowed_tools = list(
 	/obj/item/weapon/stock_parts/cell = 100
 	)
@@ -526,6 +540,7 @@
 	target.nutrition = C.charge
 
 /datum/surgery_step/ipc/ribcage/hearing_restoration
+	name = "Restore hearing device"
 	allowed_tools = list(
 		/obj/item/robot_parts/robot_component/radio = 100,
 	)
@@ -553,6 +568,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/add_tissue
+	name = "Add tissue"
 	allowed_tools = list(
 	/obj/item/stack/medical/advanced/bruise_pack = 100,
 	/obj/item/stack/medical/advanced/ointment = 100
@@ -609,9 +625,9 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/organ_manipulation
+	name = "Organ manipulation"
 	priority = 2
 	allowed_species = list("exclude", IPC, DIONA, PODMAN)
-	var/obj/item/organ/internal/I = null
 
 /datum/surgery_step/organ_manipulation/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	if(!..())
@@ -625,6 +641,7 @@
 	return FALSE
 
 /datum/surgery_step/organ_manipulation/place
+	name = "Place organ into body"
 	priority = 0
 	allowed_tools = list(
 		/obj/item/organ/internal = 100
@@ -686,6 +703,7 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, I)
 
 /datum/surgery_step/organ_manipulation/treat_necrosis
+	name = "Treat organ necrosis"
 	priority = 0
 
 	allowed_qualities = list(
@@ -789,6 +807,8 @@
 //						LIMB SURGERY							//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/limb
+	name = "Limbs surgery"
+
 /datum/surgery_step/limb/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	if(!..())
 		return FALSE
@@ -800,6 +820,7 @@
 	return FALSE
 
 /datum/surgery_step/limb/attach
+	name = "Attach limb"
 	allowed_tools = list(
 	/obj/item/organ/external = 100,
 	/obj/item/robot_parts = 100,
@@ -909,6 +930,7 @@
 //				EYE SURGERY manipulation for eyes				//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/organ_manipulation/place_eye
+	name = "Place eyes into eye holes"
 	priority = 2
 	allowed_tools = list(
 		/obj/item/organ/internal/eyes = 100

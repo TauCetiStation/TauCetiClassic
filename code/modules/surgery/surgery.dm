@@ -601,7 +601,7 @@
 				swapped = 1
 
 /datum/surgery_step/ipc
-
+	name = "IPC surgery"
 	allowed_species = list(IPC)
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED, /datum/skill/surgery = SKILL_LEVEL_NOVICE)
 	skills_speed_bonus = -0.2

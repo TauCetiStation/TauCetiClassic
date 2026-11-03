@@ -2544,7 +2544,7 @@
 #include "code\modules\surgery\actions\surgery_cut.dm"
 #include "code\modules\surgery\actions\surgery_cutery.dm"
 #include "code\modules\surgery\actions\surgery_drill_open.dm"
-#include "code\modules\surgery\actions\surgery_fix_vein.dm"
+#include "code\modules\surgery\actions\surgery_fix_veins.dm"
 #include "code\modules\surgery\actions\surgery_mend_bone.dm"
 #include "code\modules\surgery\actions\surgery_retract.dm"
 #include "code\modules\surgery\actions\surgery_saw_open.dm"

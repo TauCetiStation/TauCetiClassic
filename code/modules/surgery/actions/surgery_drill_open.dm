@@ -5,6 +5,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/drill_open
+	name = "Check cavity in target"
 	name = "Drill"
 	priority = 1
 	allowed_species = null
@@ -38,6 +39,7 @@
 	return 0
 
 /datum/surgery_step/drill_open/make_space
+	name = "Make cavity in victim"
 	allowed_qualities = list(
 		QUALITY_DRILL_OPEN
 	)
@@ -74,6 +76,7 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/drill_open/place_item
+	name = "Place item into cavern"
 	priority = 3
 	allowed_tools = list(
 		/obj/item = 100
