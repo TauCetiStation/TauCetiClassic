@@ -52,30 +52,30 @@
 			I.loc = src
 
 
-/obj/structure/filingcabinet/attackby(obj/item/P, mob/user)
+/obj/structure/filingcabinet/attackby(obj/item/I, mob/user)
 	add_fingerprint(user)
 	if(!allowed(usr))
 		to_chat(usr, "[bicon(src)] [name] <span class='warning'>Доступ запрещён</span>")
 		return FALSE
 
-	if(istype(P, /obj/item/weapon/paper) || istype(P, /obj/item/weapon/folder) || istype(P, /obj/item/weapon/photo) || istype(P, /obj/item/weapon/paper_bundle))
-		to_chat(user, "<span class='notice'>You put [P] in [src].</span>")
-		user.drop_from_inventory(P, src)
+	if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/folder) || istype(I, /obj/item/weapon/photo) || istype(I, /obj/item/weapon/paper_bundle))
+		to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
+		user.drop_from_inventory(I, src)
 		flick("[initial(icon_state)]-open", src)
 		updateUsrDialog()
 
-	else if(iswrenching(P))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
-	else if(isscrewing(P))
-		if(P.use_tool(src, user, 15, quality = QUALITY_SCREWING))
+	else if(I.get_quality(QUALITY_SCREWING))
+		if(I.use_tool(src, user, 15, quality = QUALITY_SCREWING))
 			deconstruct(TRUE)
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 	else
-		to_chat(user, "<span class='notice'>You can't put [P] in [src]!</span>")
+		to_chat(user, "<span class='notice'>You can't put [I] in [src]!</span>")
 		..()
 
 /obj/structure/filingcabinet/deconstruct(disassembled)
@@ -100,8 +100,8 @@
 	var/dat = "<center><table>"
 	var/i
 	for(i=contents.len, i>=1, i--)
-		var/obj/item/P = contents[i]
-		dat += "<tr><td><a href='byond://?src=\ref[src];retrieve=\ref[P]'>[sanitize(P.name)]</a></td></tr>"
+		var/obj/item/I = contents[i]
+		dat += "<tr><td><a href='byond://?src=\ref[src];retrieve=\ref[I]'>[sanitize(I.name)]</a></td></tr>"
 	dat += "</table></center>"
 
 	var/datum/browser/popup = new(user, "filingcabinet", src.name, 350, 300)
@@ -113,9 +113,9 @@
 		usr << browse(null, "window=filingcabinet") // Close the menu
 
 		//var/retrieveindex = text2num(href_list["retrieve"])
-		var/obj/item/P = locate(href_list["retrieve"]) in src //contents[retrieveindex]
-		if(P && Adjacent(usr))
-			usr.put_in_hands(P)
+		var/obj/item/I = locate(href_list["retrieve"]) in src //contents[retrieveindex]
+		if(I && Adjacent(usr))
+			usr.put_in_hands(I)
 			updateUsrDialog()
 			flick("[initial(icon_state)]-open", src)
 

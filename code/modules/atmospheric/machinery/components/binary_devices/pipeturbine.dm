@@ -68,8 +68,8 @@
 	if (kin_energy > 1000000)
 		add_overlay(image('icons/obj/pipeturbine.dmi', "hi-turb"))
 
-/obj/machinery/atmospherics/components/pipeturbine/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
+/obj/machinery/atmospherics/components/pipeturbine/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		user.visible_message(
@@ -160,8 +160,8 @@
 	add_avail(power_generated)
 
 
-/obj/machinery/power/turbinemotor/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
+/obj/machinery/power/turbinemotor/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		anchored = !anchored
 		turbine = null
 		to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding \the [src] to the floor.</span>")

@@ -15,16 +15,16 @@
 /obj/machinery/build_crane/update_icon()
 	icon_state = "crane[occupant ? "" : "_open"]"
 
-/obj/machinery/build_crane/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/build_crane/attackby(obj/item/weapon/I, mob/user)
 	. = ..()
-	if (iswrenching(W) && !user.is_busy())
+	if (I.get_quality(QUALITY_WRENCHING) && !user.is_busy())
 		if(anchored)
 			if(occupant)
 				to_chat(user, "<span class='warning'>Внутри кто-то находится!</span>")
 				return
 
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>")
-			if(W.use_tool(src, user, 2 SECONDS, volume = 50, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 2 SECONDS, volume = 50, quality = QUALITY_WRENCHING))
 				user.visible_message( \
 					"<span class='notice'>\The [user] unfastens \the [src].</span>", \
 					"<span class='notice'>You have unfastened \the [src]. Now it can be pulled somewhere else.</span>", \
@@ -32,7 +32,7 @@
 				anchored = FALSE
 		else
 			to_chat(user, "<span class='notice'>You begin to fasten \the [src] to the floor...</span>")
-			if(W.use_tool(src, user, 2 SECONDS, volume = 50, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 2 SECONDS, volume = 50, quality = QUALITY_WRENCHING))
 				user.visible_message( \
 					"<span class='notice'>\The [user] fastens \the [src].</span>", \
 					"<span class='notice'>You have fastened \the [src]. Now it can dispense pipes.</span>", \

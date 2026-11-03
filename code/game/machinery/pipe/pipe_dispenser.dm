@@ -100,16 +100,16 @@
 			spawn(15)
 				wait = 0
 
-/obj/machinery/pipedispenser/attackby(obj/item/W, mob/user)
+/obj/machinery/pipedispenser/attackby(obj/item/I, mob/user)
 	add_fingerprint(usr)
-	if (istype(W, /obj/item/pipe) || istype(W, /obj/item/pipe_meter))
-		to_chat(usr, "<span class='notice'>You put \the [W] back into \the [src].</span>")
-		qdel(W)
+	if (istype(I, /obj/item/pipe) || istype(I, /obj/item/pipe_meter))
+		to_chat(usr, "<span class='notice'>You put \the [I] back into \the [src].</span>")
+		qdel(I)
 		return
-	else if (iswrenching(W) && !user.is_busy(src))
+	else if (I.get_quality(QUALITY_WRENCHING) && !user.is_busy(src))
 		if (unwrenched == 0)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>")
-			if(W.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 				user.visible_message( \
 					"<span class='notice'>\The [user] unfastens \the [src].</span>", \
 					"<span class='notice'>You have unfastened \the [src]. Now it can be pulled somewhere else.</span>", \
@@ -121,7 +121,7 @@
 					usr << browse(null, "window=pipedispenser")
 		else /*if (unwrenched==1)*/
 			to_chat(user, "<span class='notice'>You begin to fasten \the [src] to the floor...</span>")
-			if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 				user.visible_message( \
 					"<span class='notice'>\The [user] fastens \the [src].</span>", \
 					"<span class='notice'>You have fastened \the [src]. Now it can dispense pipes.</span>", \

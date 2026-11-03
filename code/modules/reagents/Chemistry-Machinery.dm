@@ -830,21 +830,21 @@
 	return
 
 
-/obj/machinery/reagentgrinder/attackby(obj/item/O, mob/user)
+/obj/machinery/reagentgrinder/attackby(obj/item/I, mob/user)
 
-	if(iswrenching(O))
-		default_unfasten_wrench(user, O)
+	if(I.get_quality(QUALITY_WRENCHING))
+		default_unfasten_wrench(user, I)
 		return
 
-	if (istype(O,/obj/item/weapon/reagent_containers/glass) || \
-		istype(O,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || \
-		istype(O,/obj/item/weapon/reagent_containers/food/drinks/shaker))
+	if (istype(I,/obj/item/weapon/reagent_containers/glass) || \
+		istype(I,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass) || \
+		istype(I,/obj/item/weapon/reagent_containers/food/drinks/shaker))
 
 		if (beaker)
 			return TRUE
 		else
-			src.beaker =  O
-			user.drop_from_inventory(O, src)
+			src.beaker =  I
+			user.drop_from_inventory(I, src)
 			update_icon()
 			updateUsrDialog()
 			return FALSE
@@ -854,28 +854,28 @@
 		return TRUE
 
 	//Fill machine with the plantbag!
-	if(istype(O, /obj/item/weapon/storage/bag/plants))
+	if(istype(I, /obj/item/weapon/storage/bag/plants))
 
-		var/obj/item/weapon/storage/bag/plants/P = O
-		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in O.contents)
+		var/obj/item/weapon/storage/bag/plants/P = I
+		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in I.contents)
 			P.remove_from_storage(G, src)
 			holdingitems += G
 			if(holdingitems && holdingitems.len >= limit) //Sanity checking so the blender doesn't overfill
 				to_chat(user, "You fill the All-In-One grinder to the brim.")
 				break
 
-		if(!O.contents.len)
+		if(!I.contents.len)
 			to_chat(user, "You empty the plant bag into the All-In-One grinder.")
 
 		updateUsrDialog()
 		return FALSE
 
-	if (!is_type_in_list(O, blend_items) && !is_type_in_list(O, juice_items))
+	if (!is_type_in_list(I, blend_items) && !is_type_in_list(I, juice_items))
 		to_chat(user, "Cannot refine into a reagent.")
 		return TRUE
 
-	user.drop_from_inventory(O, src)
-	holdingitems += O
+	user.drop_from_inventory(I, src)
+	holdingitems += I
 	updateUsrDialog()
 	return FALSE
 
@@ -900,8 +900,8 @@
 	var/dat = ""
 
 	if(!inuse)
-		for (var/obj/item/O in holdingitems)
-			processing_chamber += "\A [O.name]<BR>"
+		for (var/obj/item/I in holdingitems)
+			processing_chamber += "\A [I.name]<BR>"
 
 		if (!processing_chamber)
 			is_chamber_empty = 1
@@ -970,8 +970,8 @@
 		if(beaker)
 			to_chat(user, "<span class='notice'>- \A [beaker].</span>")
 		for(var/i in holdingitems)
-			var/obj/item/O = i
-			to_chat(user, "<span class='notice'>- \A [O.name].</span>")
+			var/obj/item/I = i
+			to_chat(user, "<span class='notice'>- \A [I.name].</span>")
 
 	if(!(stat & (NOPOWER|BROKEN)))
 		to_chat(user, "<span class='notice'>The status display reads:</span>")
@@ -993,8 +993,8 @@
 /obj/machinery/reagentgrinder/proc/drop_all_items()
 	if(holdingitems.len == 0)
 		return
-	for(var/obj/item/O as anything in holdingitems)
-		O.forceMove(loc)
+	for(var/obj/item/I as anything in holdingitems)
+		I.forceMove(loc)
 	holdingitems.Cut()
 
 /obj/machinery/reagentgrinder/proc/eject()
@@ -1040,9 +1040,9 @@
 	else
 		return round(5*sqrt(O.potency))
 
-/obj/machinery/reagentgrinder/proc/remove_object(obj/item/O)
-	holdingitems -= O
-	qdel(O)
+/obj/machinery/reagentgrinder/proc/remove_object(obj/item/I)
+	holdingitems -= I
+	qdel(I)
 
 /obj/machinery/reagentgrinder/proc/start_shaking()
 	var/static/list/transforms

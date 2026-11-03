@@ -193,7 +193,7 @@
 	if(!is_robotic())
 		return
 
-	if(iswrenching(I) && can_relocate)
+	if(I.get_quality(QUALITY_WRENCHING) && can_relocate)
 		toggle_parent_bodypart(user)
 
 	return ..()

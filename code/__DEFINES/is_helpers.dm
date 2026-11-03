@@ -153,7 +153,7 @@
 
 // TOOLS HELPERS
 
-#define iswrenching(I) 	I.get_quality(QUALITY_WRENCHING)
+
 
 
 #define iscutter(I) 	I.get_quality(QUALITY_CUTTING) // also use in surgery like scalpel and etc

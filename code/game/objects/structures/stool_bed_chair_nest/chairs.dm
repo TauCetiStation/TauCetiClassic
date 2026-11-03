@@ -272,15 +272,15 @@
 	name = "wooden chair"
 	desc = "Old is never too old to not be in fashion."
 
-/obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
+/obj/structure/stool/bed/chair/wood/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/wood(loc)
 		qdel(src)
 		return
-	else if(istype(W, /obj/item/weapon/melee/energy/blade))
-		var/obj/item/weapon/melee/energy/blade/B = W
+	else if(istype(I, /obj/item/weapon/melee/energy/blade))
+		var/obj/item/weapon/melee/energy/blade/B = I
 		if(B.active)
 			user.do_attack_animation(src)
 			user.SetNextMove(CLICK_CD_MELEE)
@@ -480,13 +480,13 @@
 		N.color = color
 	qdel(src)
 
-/obj/structure/stool/bed/chair/noose/attackby(obj/item/W, mob/user)
-	if(iscutter(W))
+/obj/structure/stool/bed/chair/noose/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_CUTTING))
 		rip(user)
 		return ..()
-	if(!istype(W, /obj/item/weapon/grab))
+	if(!istype(I, /obj/item/weapon/grab))
 		return ..()
-	var/obj/item/weapon/grab/grab = W
+	var/obj/item/weapon/grab/grab = I
 	if(!ismob(grab.affecting))
 		return
 	if(user.is_busy())

@@ -130,7 +130,7 @@
 		to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
 		qdel(src)
 		return
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(!(stat & BROKEN))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			set_dir(turn(dir,-45))

@@ -10,8 +10,8 @@
 	. = ..()
 	add_overlay(image('icons/obj/objects.dmi', src, "echair_over", MOB_LAYER + 1, dir))
 
-/obj/structure/stool/bed/chair/e_chair/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
+/obj/structure/stool/bed/chair/e_chair/attackby(obj/item/weapon/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		var/obj/structure/stool/bed/chair/C = new /obj/structure/stool/bed/chair(loc)
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		C.set_dir(dir)

@@ -79,7 +79,7 @@ var/global/list/alldepartments = list("Central Command")
 /obj/machinery/faxmachine/is_operational()
 	return TRUE
 
-/obj/machinery/faxmachine/tgui_act(action, params, obj/item/O)
+/obj/machinery/faxmachine/tgui_act(action, params, obj/item/I)
 	. = ..()
 	if(.)
 		return
@@ -147,30 +147,30 @@ var/global/list/alldepartments = list("Central Command")
 				return
 			dptdest = new_dep_dest
 
-/obj/machinery/faxmachine/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/photo) || istype(O, /obj/item/weapon/paper_bundle))
+/obj/machinery/faxmachine/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/photo) || istype(I, /obj/item/weapon/paper_bundle))
 		if(!tofax)
-			user.drop_from_inventory(O, src)
-			tofax = O
-			to_chat(user, "<span class='notice'>You insert \the [O] into \the [src].</span>")
+			user.drop_from_inventory(I, src)
+			tofax = I
+			to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
 			flick("faxsend", src)
 			SStgui.update_uis(src)
 		else
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
-	else if(istype(O, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/idcard = O
+	else if(istype(I, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/ID = I
 		if(!scan)
-			usr.drop_from_inventory(idcard, src)
-			idcard.loc = src
-			scan = idcard
+			usr.drop_from_inventory(ID, src)
+			ID.loc = src
+			scan = ID
 			if ( (!( authenticated ) && (scan)) )
 				if (check_access(scan))
 					authenticated = 1
 			if(ishuman(usr))
 				var/mob/living/carbon/human/H = usr
 				H.sec_hud_set_ID()
-	else if(iswrenching(O))
-		default_unfasten_wrench(user, O)
+	else if(I.get_quality(QUALITY_WRENCHING))
+		default_unfasten_wrench(user, I)
 
 /obj/item/proc/get_fax_info()
 	return null

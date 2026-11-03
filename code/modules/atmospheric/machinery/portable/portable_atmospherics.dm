@@ -90,17 +90,17 @@
 	var/datum/pipeline/connected_port_parent = connected_port.PARENT1
 	connected_port_parent.update = 1
 
-/obj/machinery/portable_atmospherics/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/portable_atmospherics/attackby(obj/item/I, mob/user)
 	if(!do_skill_checks(user))
 		return
-	if (istype(W, /obj/item/weapon/tank))
+	if (istype(I, /obj/item/weapon/tank))
 		if(!(stat & BROKEN))
-			if (holding || !user.drop_from_inventory(W, src))
+			if (holding || !user.drop_from_inventory(I, src))
 				return
-			var/obj/item/weapon/tank/T = W
+			var/obj/item/weapon/tank/T = I
 			holding = T
 			update_icon()
-	else if (iswrenching(W))
+	else if (I.get_quality(QUALITY_WRENCHING))
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
@@ -126,7 +126,7 @@
 					"<span class='notice'>You fasten [src] to the port.</span>",
 					"<span class='italics'>You hear a ratchet.</span>")
 				update_icon()
-	else if (istype(W, /obj/item/device/analyzer)) // Incase someone do something with this.
+	else if (istype(I, /obj/item/device/analyzer)) // Incase someone do something with this.
 		return
 	else
 		return ..()

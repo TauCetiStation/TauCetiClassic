@@ -40,15 +40,15 @@
 	. = ..()
 	update_layer()
 
-/obj/structure/fence/attackby(obj/item/W, mob/user)
-	if(!(resistance_flags & DECONSTRUCT_IMMUNE) && iswrenching(W))
-		if(W.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
+/obj/structure/fence/attackby(obj/item/I, mob/user)
+	if(!(resistance_flags & DECONSTRUCT_IMMUNE) && I.get_quality(QUALITY_WRENCHING))
+		if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_WRENCHING))
 			to_chat(user, "<span class='notice'>Вы демонтируете забор.</span>")
 			deconstruct(TRUE)
 			return TRUE
 		return FALSE
-	else if(can_be_screwed && isscrewing(W))
-		if(W.use_tool(src, user, 50, volume = 50, quality = QUALITY_SCREWING))
+	else if(can_be_screwed && isscrewing(I))
+		if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_SCREWING))
 			if(screwed)
 				to_chat(user, "<span class='notice'>Вы ослабили крепления, забор не выдержит нагрузок.</span>")
 			else
@@ -197,9 +197,9 @@
 	if(W.use_tool(src, user, 50, 1))
 		change_color(new_color)
 
-/obj/structure/fence/metal/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/airlock_painter))
-		change_paintjob(W, user)
+/obj/structure/fence/metal/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/airlock_painter))
+		change_paintjob(I, user)
 		return
 
 	return ..()

@@ -1226,8 +1226,8 @@ var/global/list/airlock_overlays = list()
 	//light_color = "#cc0000"
 
 
-/obj/structure/door_scrap/attackby(obj/item/O, mob/user)
-	if(iswrenching(O))
+/obj/structure/door_scrap/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(ticker >= 300)
 			user.visible_message("[user] has disassemble these scrap...")
 			new /obj/item/stack/sheet/metal(loc)
@@ -1237,7 +1237,7 @@ var/global/list/airlock_overlays = list()
 			to_chat(user,"<span=userdanger>This is too hot to dismantle it</span>")
 			if(prob(10))
 				to_chat(user,"<span=userdanger>You accidentally drop your wrench in the flame</span>")
-				qdel(O)
+				qdel(I)
 
 /obj/structure/door_scrap/atom_init()
 	. = ..()

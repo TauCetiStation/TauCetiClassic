@@ -189,12 +189,12 @@
 
 /obj/item/solar_assembly/attackby(obj/item/I, mob/user, params)
 	if(!anchored && isturf(loc))
-		if(iswrenching(I))
+		if(I.get_quality(QUALITY_WRENCHING))
 			anchored = TRUE
 			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>")
 			return TRUE
 	else
-		if(iswrenching(I))
+		if(I.get_quality(QUALITY_WRENCHING))
 			anchored = FALSE
 			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from it's place.</span>")
 			return TRUE

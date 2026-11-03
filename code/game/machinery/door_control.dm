@@ -435,7 +435,7 @@
 	icon_state = "doorctrl_assembly0"
 
 /obj/item/door_control_frame/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		new /obj/item/stack/sheet/metal(get_turf(src.loc), 1)
 		qdel(src)
 		return

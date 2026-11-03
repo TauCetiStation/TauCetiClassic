@@ -14,7 +14,7 @@
 	return ..()
 
 /obj/item/assembly/shock_kit/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I) && !status)
+	if(I.get_quality(QUALITY_WRENCHING) && !status)
 		var/turf/T = loc
 		if(ismob(T))
 			T = T.loc

@@ -71,7 +71,7 @@
 	to_chat(user, "<span class='notice'>A digital display on it reads \"[timer]\".</span>")
 
 /obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user)
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(!anchored)
 			if(!isturf(src.loc) || isspaceturf(src.loc))
 				to_chat(user, "<span class='notice'>The bomb must be placed on solid ground to attach it</span>")

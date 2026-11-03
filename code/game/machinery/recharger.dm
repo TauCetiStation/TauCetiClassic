@@ -56,14 +56,14 @@
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 		set_power_use(ACTIVE_POWER_USE)
 		update_icon()
-	else if(iswrenching(I))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		if(charging)
 			to_chat(user, "<span class='warning'>Remove the weapon first!</span>")
 			return
 		anchored = !anchored
 		to_chat(user, "You [anchored ? "attached" : "detached"] the recharger.")
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
-	if (anchored && !charging)
+	if(anchored && !charging)
 		if(default_deconstruction_screwdriver(user, istype(src, /obj/machinery/recharger/wallcharger) ? "wrechargeropen" : "rechargeropen", istype(src, /obj/machinery/recharger/wallcharger) ? "wrecharger0" : "recharger0", I))
 			return
 

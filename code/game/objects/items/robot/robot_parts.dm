@@ -118,7 +118,7 @@
 		qdel(src)
 		return
 
-	else if(iswrenching(I))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		if(contents.len)
 			to_chat(user, "<span class='info'>You disassemble robot frame to parts!</span>")
 			var/turf/T = get_turf(src)

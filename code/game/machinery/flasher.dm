@@ -53,8 +53,8 @@
 	update_power_use()
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user)
-	if (iscutter(W))
+/obj/machinery/flasher/attackby(obj/item/weapon/I, mob/user)
+	if (iscutter(I))
 		add_fingerprint(user)
 		disable = !disable
 		user.SetNextMove(CLICK_CD_INTERACT)
@@ -121,8 +121,8 @@
 		if(M.m_intent != MOVE_INTENT_WALK)
 			flash()
 
-/obj/machinery/flasher/portable/attackby(obj/item/weapon/W, mob/user)
-	if (iswrenching(W))
+/obj/machinery/flasher/portable/attackby(obj/item/I, mob/user)
+	if (I.get_quality(QUALITY_WRENCHING))
 		add_fingerprint(user)
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(user.is_busy())
@@ -142,7 +142,7 @@
 			req_access = list(access_security)
 			anchored = TRUE
 
-/obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/flasher_button/attackby(obj/item/weapon/I, mob/user)
 	return attack_hand(user)
 
 /obj/machinery/flasher_button/attack_hand(mob/user)

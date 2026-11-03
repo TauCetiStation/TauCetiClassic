@@ -159,25 +159,25 @@
 	p.pixel_x = rand(-9, 9)
 	return p
 
-/obj/machinery/photocopier/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/weapon/paper) || istype(O, /obj/item/weapon/photo) || istype(O, /obj/item/weapon/paper_bundle))
+/obj/machinery/photocopier/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/photo) || istype(I, /obj/item/weapon/paper_bundle))
 		if(!copyitem)
-			user.drop_from_inventory(O, src)
-			copyitem = O
-			to_chat(user, "<span class='notice'>You insert \the [O] into \the [src].</span>")
+			user.drop_from_inventory(I, src)
+			copyitem = I
+			to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
 		else
 			to_chat(user, "<span class='notice'>There is already something in \the [src].</span>")
-	else if(istype(O, /obj/item/device/toner))
+	else if(istype(I, /obj/item/device/toner))
 		if(toner == 0)
 			user.drop_item()
-			qdel(O)
+			qdel(I)
 			toner = 30
 			to_chat(user, "<span class='notice'>You insert the toner cartridge into \the [src].</span>")
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
-	else if(iswrenching(O))
-		default_unfasten_wrench(user, O)
+	else if(I.get_quality(QUALITY_WRENCHING))
+		default_unfasten_wrench(user, I)
 
 /obj/machinery/photocopier/atom_break(damage_flag)
 	. = ..()

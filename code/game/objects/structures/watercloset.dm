@@ -97,7 +97,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	if(..())
 		return
 
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(broken)
 			to_chat(user, "<span class='notice'>You start fixing \the [src].</span>")
 			if(I.use_tool(src, user, 60, volume = 100, quality = QUALITY_WRENCHING))
@@ -423,7 +423,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
 	if(I.type == /obj/item/device/analyzer) // istype?
 		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
-	else if(iswrenching(I))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>")
 		if(I.use_tool(src, user, 50, volume = 100, quality = QUALITY_WRENCHING))

@@ -334,7 +334,7 @@ var/global/list/turret_icons
 					to_chat(user, "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>")
 				qdel(src) // qdel
 
-	else if(iswrenching(I))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		if((anchored && enabled) || raised)
 			to_chat(user, "<span class='warning'>You cannot unsecure an active turret!</span>")
 			return

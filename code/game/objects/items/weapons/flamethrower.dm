@@ -71,7 +71,7 @@
 			flame_turf(turflist)
 
 /obj/item/weapon/flamethrower/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I) && !status)//Taking this apart
+	if(I.get_quality(QUALITY_WRENCHING) && !status)//Taking this apart
 		var/turf/T = get_turf(src)
 		if(weldtool)
 			weldtool.forceMove(T)

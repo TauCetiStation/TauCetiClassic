@@ -526,8 +526,8 @@ Class Procs:
 		return 1
 	return 0
 
-/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/weapon/I)
-	if(panel_open && iswrenching(I))
+/obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/I)
+	if(panel_open && I.get_quality(QUALITY_WRENCHING))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		set_dir(turn(dir,-90))
 		to_chat(user, "<span class='notice'>You rotate [src].</span>")
@@ -535,7 +535,7 @@ Class Procs:
 	return 0
 
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/I, time = SKILL_TASK_VERY_EASY)
-	if(iswrenching(I) && !(flags & NODECONSTRUCT))
+	if(I.get_quality(QUALITY_WRENCHING) && !(flags & NODECONSTRUCT))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
 		if(I.use_tool(src, user, time, volume = 50, quality = QUALITY_WRENCHING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_NOVICE)))

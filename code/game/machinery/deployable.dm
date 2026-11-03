@@ -85,14 +85,14 @@ for reference:
 		if(BURN)
 			return damage_amount
 
-/obj/structure/barricade/wooden/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/stack/sheet/wood))
+/obj/structure/barricade/wooden/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/stack/sheet/wood))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(get_integrity() < max_integrity && !user.is_busy())
 			visible_message("<span class='warning'>[user] begins to repair \the [src]!</span>")
-			if(W.use_tool(src, user, 2 SECONDS, volume = 50))
+			if(I.use_tool(src, user, 2 SECONDS, volume = 50))
 				update_integrity(max_integrity)
-				var/obj/item/stack/sheet/wood/wood = W
+				var/obj/item/stack/sheet/wood/wood = I
 				wood.use(1)
 				visible_message("<span class='warning'>[user] repairs \the [src]!</span>")
 				return
@@ -169,8 +169,8 @@ for reference:
 		if(BURN)
 			return damage_amount * 0.75
 
-/obj/machinery/deployable/barrier/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/card/id))
+/obj/machinery/deployable/barrier/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/card/id))
 		if(allowed(user))
 			if(emagged < 2.0)
 				locked = !locked
@@ -185,7 +185,7 @@ for reference:
 				visible_message("<span class='warning'>BZZzZZzZZzZT</span>")
 				return
 		return
-	else if (iswrenching(W))
+	else if (I.get_quality(QUALITY_WRENCHING))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (get_integrity() < max_integrity || emagged)
 			update_integrity(max_integrity)

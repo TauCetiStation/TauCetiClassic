@@ -117,7 +117,7 @@ var/global/list/fusion_cores = list()
 			id_tag = new_ident
 		return
 
-	else if(iswrenching(I))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		user.SetNextMove(CLICK_CD_INTERACT)

@@ -27,8 +27,8 @@
 
 	return
 
-/obj/machinery/idpainter/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/weapon/card/id))
+/obj/machinery/idpainter/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/card/id))
 		if(storedcard)
 			to_chat(user, "There is already a card inside.")
 			return
@@ -43,7 +43,7 @@
 					var/mob/living/carbon/human/H = usr
 					H.sec_hud_set_ID()
 	else
-		if(iswrenching(O))
+		if(I.get_quality(QUALITY_WRENCHING))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")

@@ -212,7 +212,7 @@
 
 // React to tools attacking src.
 /obj/structure/table/proc/attack_tools(obj/item/I, mob/user)
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(user.is_busy(src))
 			return FALSE
 		to_chat(user, "<span class='notice'>Вы начинаете разбирать [CASE(src, ACCUSATIVE_CASE)].</span>")
@@ -228,8 +228,8 @@
 			return TRUE
 	..()
 
-/obj/structure/table/attackby(obj/item/W, mob/user, params)
-	if(attack_tools(W, user))
+/obj/structure/table/attackby(obj/item/I, mob/user, params)
+	if(attack_tools(I, user))
 		return TRUE
 
 	return ..()
@@ -579,9 +579,9 @@
 
 	return FALSE
 
-/obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/door_control_frame))
-		var/obj/item/door_control_frame/frame = W
+/obj/structure/table/reinforced/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/door_control_frame))
+		var/obj/item/door_control_frame/frame = I
 		frame.try_build(src)
 		return
 
@@ -815,8 +815,8 @@
 	else
 		return 0
 
-/obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
-	if (iswrenching(W))
+/obj/structure/rack/attackby(obj/item/I, mob/user)
+	if (I.get_quality(QUALITY_WRENCHING))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		deconstruct(TRUE)
 		return
@@ -826,11 +826,11 @@
 		return FALSE
 
 	var/can_cut = FALSE
-	if(istype(W, /obj/item/weapon/melee/energy))
-		var/obj/item/weapon/melee/energy/E = W
+	if(istype(I, /obj/item/weapon/melee/energy))
+		var/obj/item/weapon/melee/energy/E = I
 		can_cut = E.active
-	else if(istype(W, /obj/item/weapon/dualsaber))
-		var/obj/item/weapon/dualsaber/D = W
+	else if(istype(I, /obj/item/weapon/dualsaber))
+		var/obj/item/weapon/dualsaber/D = I
 		can_cut = HAS_TRAIT(D, TRAIT_DOUBLE_WIELDED)
 
 	if(!can_cut)
@@ -955,26 +955,26 @@
 		parts.deconstruct(FALSE)
 	..()
 
-/obj/structure/mangal/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
+/obj/structure/mangal/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		deconstruct(TRUE)
 		return
 
-	if(istype(W, /obj/item/weapon/ore/coal) && (coal_amount < coal_max))
-		qdel(W)
+	if(istype(I, /obj/item/weapon/ore/coal) && (coal_amount < coal_max))
+		qdel(I)
 		coal_amount++
-		visible_message("<span class='notice'>[user] добавляет [CASE(W, ACCUSATIVE_CASE)] в мангал</span>")
+		visible_message("<span class='notice'>[user] добавляет [CASE(I, ACCUSATIVE_CASE)] в мангал</span>")
 		update_icon()
 		return
 
-	if(W.get_current_temperature() && (coal_amount > 0))
-		visible_message("<span class='notice'>[user] поджигает [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)].</span>")
+	if(I.get_current_temperature() && (coal_amount > 0))
+		visible_message("<span class='notice'>[user] поджигает [CASE(src, ACCUSATIVE_CASE)] [CASE(I, ABLATIVE_CASE)].</span>")
 		StartBurning()
 		return
 
-	if(W.is_open_container() && W.reagents && W.reagents.remove_reagent("water", 1))
-		visible_message("<span class='notice'>[user] тушит [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)].</span>")
+	if(I.is_open_container() && I.reagents && I.reagents.remove_reagent("water", 1))
+		visible_message("<span class='notice'>[user] тушит [CASE(src, ACCUSATIVE_CASE)] [CASE(I, ABLATIVE_CASE)].</span>")
 		extinguish()
 		return
 

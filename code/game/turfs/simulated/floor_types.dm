@@ -117,12 +117,12 @@
 /turf/simulated/floor/engine/burn_tile()
 	return
 
-/turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
-	if(iswrenching(C))
+/turf/simulated/floor/engine/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Вы начинаете удалять стержни.</span>")
-		if(C.use_tool(src, user, 30, volume = 80, quality = QUALITY_WRENCHING))
+		if(I.use_tool(src, user, 30, volume = 80, quality = QUALITY_WRENCHING))
 			new /obj/item/stack/rods(src, 2)
 			ChangeTurf(/turf/simulated/floor)
 			var/turf/simulated/floor/F = src
@@ -498,9 +498,9 @@
 
 	var/dirs = 0
 	for(var/direction in cardinal)
-		var/turf/T = get_step(src,direction)
+		var/turf/T = get_step(src, direction)
 		if(T.is_catwalk())
-			var/turf/simulated/floor/plating/airless/catwalk/C=T
+			var/turf/simulated/floor/plating/airless/catwalk/C = T
 			dirs |= direction
 			if(propogate)
 				C.update_icon(0)

@@ -66,7 +66,7 @@
 	var/stage = 0
 
 /obj/machinery/telepad_cargo/attackby(obj/item/weapon/I, mob/user)
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		if(anchored)
 			anchored = FALSE

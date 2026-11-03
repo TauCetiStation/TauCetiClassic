@@ -102,7 +102,7 @@
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						deconstruct(TRUE)
 
-			else if(iswrenching(I))
+			else if(I.get_quality(QUALITY_WRENCHING))
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
@@ -111,7 +111,7 @@
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 						anchored = !anchored
 		if(2)
-			if(iswrenching(I))
+			if(I.get_quality(QUALITY_WRENCHING))
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")

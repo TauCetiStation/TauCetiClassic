@@ -186,8 +186,8 @@
 		update_icon()
 	add_avail(lastgen)
 
-/obj/machinery/power/generator/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
+/obj/machinery/power/generator/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.</span>")
 		lastgenlev = 0

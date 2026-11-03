@@ -1096,7 +1096,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	pixel_y = -32
 
 /obj/item/device/gps/computer/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I) && !(flags & NODECONSTRUCT))
+	if(I.get_quality(QUALITY_WRENCHING) && !(flags & NODECONSTRUCT))
 		if(user.is_busy(src))
 			return
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
@@ -1140,9 +1140,9 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	ispowered = 1
 	return
 
-/obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
-	if(isitem(O))
-		if(O.flags & NODROP || !O.canremove)
+/obj/machinery/smartfridge/survival_pod/accept_check(obj/item/I)
+	if(isitem(I))
+		if(I.flags & NODROP || !I.canremove)
 			return 0
 		return 1
 	return 0
@@ -1177,28 +1177,28 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	forbidden_tools += typecacheof(/obj/item/weapon/wrench)
 	forbidden_tools += typecacheof(/obj/item/weapon/wirecutters)
 
-/obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
-	if(is_type_in_typecache(O,forbidden_tools))
-		if(iswrenching(O))
+/obj/machinery/smartfridge/survival_pod/attackby(obj/item/I, mob/user)
+	if(is_type_in_typecache(I,forbidden_tools))
+		if(I.get_quality(QUALITY_WRENCHING))
 			if(user.is_busy(src))
 				return
 			to_chat(user, "<span class='notice'>You start to disassemble the storage unit...</span>")
-			if(O.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 				qdel(src)
 			return
-		if(accept_check(O))
+		if(accept_check(I))
 			if(contents.len >= max_n_of_items)
 				to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 				return 1
 			else
-				user.remove_from_mob(O)
-				O.loc = src
-				if(item_quants[O.name])
-					item_quants[O.name]++
+				user.remove_from_mob(I)
+				I.loc = src
+				if(item_quants[I.name])
+					item_quants[I.name]++
 				else
-					item_quants[O.name] = 1
-				user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
-									 "<span class='notice'>You add \the [O] to \the [src].</span>")
+					item_quants[I.name] = 1
+				user.visible_message("<span class='notice'>[user] has added \the [I] to \the [src].</span>", \
+									 "<span class='notice'>You add \the [I] to \the [src].</span>")
 				nanomanager.update_uis(src)
 				return
 
@@ -1213,14 +1213,14 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	anchored = TRUE
 	density = TRUE
 
-/obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
-	if(iswrenching(W) && !(flags&NODECONSTRUCT))
+/obj/structure/fans/attackby(obj/item/I, mob/user, params)
+	if(I.get_quality(QUALITY_WRENCHING) && !(flags & NODECONSTRUCT))
 		if(user.is_busy(src))
 			return
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
-		if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
+		if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 			if(src.name == "environmental regulation system")
 				new /obj/item/weapon/tank/air(src.loc)
 			qdel(src)
