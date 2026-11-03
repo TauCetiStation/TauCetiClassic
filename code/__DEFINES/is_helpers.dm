@@ -151,34 +151,6 @@
 
 #define istimer(A) (istype(A, /obj/item/device/assembly/timer))
 
-// TOOLS HELPERS
-
-#define iscoil(A) 		(istype(A, /obj/item/stack/cable_coil))
-
-// SURGERY HELPERS
-
-#define iscanoptable(A) A.get_quality(QUALITY_OPERATE_TABLE)
-
-#define issurgcutt(I)   I.get_quality(QUALITY_SURG_CUTTING)
-
-#define isclamp(I) 		I.get_quality(QUALITY_CLAMP)
-
-#define isretract(I) 	I.get_quality(QUALITY_RETRACT)
-
-#define issawopen(I) 	I.get_quality(QUALITY_SAW_OPEN)
-
-#define isdrillopen(I)  I.get_quality(QUALITY_DRILL_OPEN)
-
-#define isboneset(I) 	I.get_quality(QUALITY_BONE_SET)
-
-#define ismendingbone(I)I.get_quality(QUALITY_MENDING_BONE)
-
-#define isfixvein(I) 	I.get_quality(QUALITY_FIX_VEIN)
-
-#define iscautery(I)	I.get_quality(QUALITY_CAUTER)
-
-#define ismendingipc(I) I.get_quality(QUALITY_MENDING_IPC)
-
 // SURGERY
 #define isalienembryo(A)    istype(A, /obj/item/alien_embryo)
 #define isborer(A)          istype(A, /mob/living/simple_animal/borer)

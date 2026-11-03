@@ -840,7 +840,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 				return
 
 		if(1)
-			if(iscoil(I))
+			if(istype(I, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = I
 				if(!coil.use(5))
 					to_chat(user, "<span class='warning'>You need 5 pieces of cable to do wire \the [src].</span>")
@@ -1023,7 +1023,7 @@ FIRE ALARM
 /obj/machinery/firealarm/attackby(obj/item/I, mob/user)
 	add_fingerprint(user)
 
-	if (isscrewing(I) && buildstage == 2)
+	if (I.get_quality(QUALITY_SCREWING) && buildstage == 2)
 		wiresexposed = !wiresexposed
 		update_icon()
 		return
@@ -1044,7 +1044,7 @@ FIRE ALARM
 					buildstage = 1
 					update_icon()
 			if(1)
-				if(iscoil(I))
+				if(istype(I, /obj/item/stack/cable_coil))
 					var/obj/item/stack/cable_coil/coil = I
 					if(!coil.use(5))
 						to_chat(user, "<span class='warning'>You need 5 pieces of cable to do wire \the [src].</span>")

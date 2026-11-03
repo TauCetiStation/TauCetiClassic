@@ -79,7 +79,7 @@
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secured the airlock assembly!</span>")
 			anchored = !anchored
 
-	else if(iscoil(I) && state == ASSEMBLY_SECURED && anchored )
+	else if(istype(I, /obj/item/stack/cable_coil) && state == ASSEMBLY_SECURED && anchored )
 		if(user.is_busy(src))
 			return
 		var/obj/item/stack/cable_coil/coil = I

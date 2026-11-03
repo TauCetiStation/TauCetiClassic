@@ -26,7 +26,7 @@
 		part2 = null
 		qdel(src)
 		return
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		status = !status
 		to_chat(user, "<span class='notice'>[src] is now [status ? "secured" : "unsecured"]!</span>")
 		add_fingerprint(user)

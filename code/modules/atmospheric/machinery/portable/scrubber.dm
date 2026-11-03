@@ -250,7 +250,7 @@
 	//doesn't use power cells
 	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		return
-	if (isscrewing(I))
+	if (I.get_quality(QUALITY_SCREWING))
 		return
 
 	//doesn't hold tanks

@@ -692,10 +692,10 @@
 			to_chat(user, "You close the hatch to the power unit")
 			playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		return
-	else if(iscoil(I))
+	else if(istype(I, /obj/item/stack/cable_coil))
 		if(state == 3 && hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
-			var/obj/item/stack/cable_coil/CC = I
-			if(!CC.use(2))
+			var/obj/item/stack/cable_coil/coil = I
+			if(!coil.use(2))
 				to_chat(user, "There's not enough wire to finish the task.")
 				return
 			clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)

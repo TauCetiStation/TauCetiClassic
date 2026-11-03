@@ -86,7 +86,7 @@
 		qdel(src)
 		return
 
-	if(isscrewing(I) && igniter && !lit)
+	if(I.get_quality(QUALITY_SCREWING) && igniter && !lit)
 		status = !status
 		to_chat(user, "<span class='notice'>[igniter] is now [status ? "secured" : "unsecured"]!</span>")
 		update_icon()

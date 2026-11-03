@@ -562,18 +562,18 @@
 				else
 					to_chat(user, "Ошибка [ locked ? "разблокировки" : "блокировки"] терминала [CASE(src, GENITIVE_CASE)].")
 
-	else if(iscoil(I) && !terminal && opened != APC_COVER_CLOSED && has_electronics != 2)
+	else if(istype(I, /obj/item/stack/cable_coil) && !terminal && opened != APC_COVER_CLOSED && has_electronics != 2)
 		var/turf/TT = get_turf(src)
 		if(TT.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 			to_chat(user, "<span class='warning'>Вскройте пол перед [CASE(src, ABLATIVE_CASE)].</span>")
 			return
-		var/obj/item/stack/cable_coil/C = I
-		if(C.get_amount() < 10)
+		var/obj/item/stack/cable_coil/coil = I
+		if(coil.get_amount() < 10)
 			to_chat(user, "<span class='warning'>Нужно больше проводов.</span>")
 			return
 		if(user.is_busy()) return
 		to_chat(user, "Вы вставляете провода в [CASE(src, ACCUSATIVE_CASE)].")
-		if(C.use_tool(src, user, 20, volume = 50) && C.get_amount() >= 10)
+		if(coil.use_tool(src, user, 20, volume = 50) && coil.get_amount() >= 10)
 			var/turf/T = get_turf_loc(src)
 			var/obj/structure/cable/N = T.get_cable_node()
 			if(prob(50) && electrocute_mob(usr, N, N))
@@ -581,7 +581,7 @@
 				s.set_up(5, 1, src)
 				s.start()
 				return
-			C.use(10)
+			coil.use(10)
 			user.visible_message(\
 				"<span class='warning'>[user.name] подключил проводку в [CASE(src, PREPOSITIONAL_CASE)]!</span>",\
 				"Вы подключили проводку в [CASE(src, PREPOSITIONAL_CASE)].")

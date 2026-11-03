@@ -84,7 +84,7 @@
 /obj/vehicle/attackby(obj/item/I, mob/user)
 	if(istagger(I))
 		return
-	else if(isscrewing(I))
+	else if(I.get_quality(QUALITY_SCREWING))
 		open = !open
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(on && open)

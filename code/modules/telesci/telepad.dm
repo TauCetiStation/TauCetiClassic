@@ -75,7 +75,7 @@
 			anchored = TRUE
 			to_chat(user, "<span class='notice'>The [src] is now secured.</span>")
 		return
-	else if(isscrewing(I))
+	else if(I.get_quality(QUALITY_SCREWING))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You unscrew the telepad's tracking beacon.</span>")

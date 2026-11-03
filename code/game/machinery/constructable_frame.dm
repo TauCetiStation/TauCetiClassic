@@ -75,7 +75,7 @@
 				to_chat(user, "<span class='warning'>The frame needs wiring first!</span>")
 				return
 
-			else if(iscoil(I))
+			else if(istype(I, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = I
 				if(C.get_amount() < 5)
 					to_chat(user, "<span class='warning'>You need five length of cable to wire the frame!</span>")
@@ -92,7 +92,7 @@
 						state = 2
 						icon_state = "box_1"
 
-			else if(isscrewing(I) && !anchored)
+			else if(I.get_quality(QUALITY_SCREWING) && !anchored)
 				if(user.is_busy(src))
 					return
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
@@ -163,7 +163,7 @@
 				components = null
 				icon_state = "box_1"
 
-			if(isscrewing(I))
+			if(I.get_quality(QUALITY_SCREWING))
 				var/component_check = 1
 				for(var/R in req_components)
 					if(req_components[R] > 0)
@@ -217,7 +217,7 @@
 			if(isitem(I) && get_req_components_amt())
 				for(var/components in req_components)
 					if(istype(I, components) && (req_components[I] > 0))
-						if(iscoil(I))
+						if(istype(I, /obj/item/stack/cable_coil))
 							var/obj/item/stack/cable_coil/CP = I
 							if(CP.use(1))
 								var/obj/item/stack/cable_coil/CC = new(src, 1, CP.color)
@@ -253,7 +253,7 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/vending_refill/boozeomat = 3)
 
 /obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		var/static/list/names_of_vendings = list()
 		var/static/list/radial_icons = list()
 
@@ -553,7 +553,7 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/matter_bin = 1)
 
 /obj/item/weapon/circuitboard/smartfridge/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		var/static/list/names_of_smartfridges
 		var/static/list/radial_icons
 
@@ -1006,7 +1006,7 @@ to destroy them and players will be able to make replacements.
 	return TRUE
 
 /obj/item/weapon/circuitboard/suit_storage/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		var/suit_storage_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
 		if(isnull(suit_storage_name))
 			return

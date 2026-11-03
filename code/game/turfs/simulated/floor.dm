@@ -524,7 +524,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 		playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		return
 
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(is_wood_floor())
 			if(broken || burnt)
 				return
@@ -588,7 +588,7 @@ var/global/list/icons_to_ignore_at_floor_init = list("damaged1","damaged2","dama
 			else
 				to_chat(user, "<span class='notice'>Эта секция слишком повреждена, чтобы выдержать покрытие. Используйте сварочный аппарат для ремонта.</span>")
 
-	if(iscoil(I))
+	if(istype(I, /obj/item/stack/cable_coil))
 		if(is_plating() || is_catwalk())
 			var/obj/item/stack/cable_coil/coil = I
 			for(var/obj/structure/cable/LC in src)

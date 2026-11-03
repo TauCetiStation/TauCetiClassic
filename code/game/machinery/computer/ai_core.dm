@@ -67,13 +67,13 @@
 				to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				state = 1
 				icon_state = "1"
-			if(iscoil(I))
-				var/obj/item/stack/cable_coil/C = I
+			if(istype(I, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/coil = I
 				if(user.is_busy(src))
 					return
-				if(C.get_amount() >= 5)
+				if(coil.get_amount() >= 5)
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
-					if(C.use_tool(src, user, 20, amount = 5, volume = 50))
+					if(coil.use_tool(src, user, 20, amount = 5, volume = 50))
 						to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 						state = 3
 						icon_state = "3"

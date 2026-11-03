@@ -92,13 +92,13 @@
 		return
 	else if(istagger(I))
 		return
-	else if(iscoil(I))
+	else if(istype(I, /obj/item/stack/cable_coil))
 		if(rigged)
 			to_chat(user, "<span class='notice'>[src] is already rigged!</span>")
 			return
 
-		var/obj/item/stack/cable_coil/C = I
-		if(!C.use(1))
+		var/obj/item/stack/cable_coil/coil = I
+		if(!coil.use(1))
 			return
 
 		to_chat(user, "<span class='notice'>You rig [src].</span>")

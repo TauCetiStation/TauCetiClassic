@@ -35,7 +35,7 @@
 	update_world_icon()
 
 /obj/item/weapon/grenade/cancasing/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		return
 
 /obj/item/weapon/grenade/cancasing/activate(mob/user)

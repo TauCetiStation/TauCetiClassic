@@ -306,8 +306,8 @@
 		add_overlay(image('icons/obj/computer.dmi', "solar_overlay_[dir]", FLY_LAYER, angle2dir(cdir)))
 	return
 
-/obj/machinery/power/solar_control/attackby(obj/item/weapon/I, mob/user)
-	if(isscrewing(I))
+/obj/machinery/power/solar_control/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_SCREWING))
 		if(user.is_busy()) return
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(do_after(user, 20, target = src))

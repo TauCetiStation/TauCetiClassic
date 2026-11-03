@@ -93,13 +93,13 @@
 	coinflip = "heads"
 
 /obj/item/weapon/coin/attackby(obj/item/I, mob/user, params)
-	if(iscoil(I))
-		var/obj/item/stack/cable_coil/CC = I
+	if(istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = I
 		if(string_attached)
 			to_chat(user, "<span class='warning'>There already is a string attached to this coin!</span>")
 			return
 
-		if(CC.use(1))
+		if(coil.use(1))
 			add_overlay(image('icons/obj/items.dmi',"coin_string_overlay"))
 			string_attached = 1
 			to_chat(user, "<span class='notice'>You attach a string to the coin.</span>")

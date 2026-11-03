@@ -215,9 +215,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 						"You remove the external bolts.")
 					temp_state--
-			else if(iscoil(I))
-				var/obj/item/stack/cable_coil/C = I
-				if(C.use(1))
+			else if(istype(I, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/coil = I
+				if(coil.use(1))
 					user.visible_message("[user.name] adds wires to the [src.name].", \
 						"You add some wires.")
 					temp_state++
@@ -352,7 +352,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 						"You remove the external bolts.")
 					temp_state--
-			else if(iscoil(I))
+			else if(istype(I, /obj/item/stack/cable_coil))
 				if(I:use(1))
 					user.visible_message("[user.name] adds wires to the [src.name].", \
 						"You add some wires.")

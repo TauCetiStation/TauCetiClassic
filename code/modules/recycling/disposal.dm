@@ -62,7 +62,7 @@
 
 	add_fingerprint(user)
 	if(mode<=0) // It's off
-		if(isscrewing(I))
+		if(I.get_quality(QUALITY_SCREWING))
 			if(contents.len > 0)
 				to_chat(user, "Eject the items first!")
 				return
@@ -1365,7 +1365,7 @@
 	if(!I || !user)
 		return
 	add_fingerprint(user)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(mode==0)
 			mode=1
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)

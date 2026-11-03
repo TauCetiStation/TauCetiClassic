@@ -46,7 +46,7 @@
 		else
 			to_chat(user, "<span class='red'>There is currently no wiring on the [src].</span>")
 			return
-	if(iscoil(I)) // If we want to put the wiring
+	if(istype(I, /obj/item/stack/cable_coil)) // If we want to put the wiring
 		if(!wired)
 			var/obj/item/stack/cable_coil/CC = I
 			if(!CC.use(2))

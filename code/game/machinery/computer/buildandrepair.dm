@@ -396,7 +396,7 @@
 	return TRUE
 
 /obj/item/weapon/circuitboard/libraryconsole/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 			details = "circuit board (Library Visitor Console)"
 			build_path = /obj/machinery/computer/libraryconsole
@@ -544,18 +544,18 @@
 				circuit.loc = src.loc
 				src.circuit = null
 		if(2)
-			if(isscrewing(I) && circuit)
+			if(I.get_quality(QUALITY_SCREWING) && circuit)
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				src.state = 1
 				src.icon_state = "1"
-			if(iscoil(I))
-				var/obj/item/stack/cable_coil/C = I
-				if(C.get_amount() >= 5)
+			if(istype(I, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/coil = I
+				if(coil.get_amount() >= 5)
 					if(user.is_busy(src))
 						return
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
-					if(C.use_tool(src, user, 20, amount = 5, volume = 50))
+					if(coil.use_tool(src, user, 20, amount = 5, volume = 50))
 						to_chat(user, "<span class='notice'>You add cables to the frame.</span>")
 						src.state = 3
 						src.icon_state = "3"

@@ -645,7 +645,7 @@
 			to_chat(user, "Need more welding fuel!")
 			return
 
-	else if(iscoil(I) && (wiresexposed || isdrone(src)))
+	else if(istype(I, /obj/item/stack/cable_coil) && (wiresexposed || isdrone(src)))
 		if (!getFireLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
@@ -742,13 +742,13 @@
 		if (!wires.interact(user))
 			to_chat(user, "You can't reach the wiring.")
 
-	else if(isscrewing(I) && opened && !cell)	// haxing
+	else if(I.get_quality(QUALITY_SCREWING) && opened && !cell)	// haxing
 		wiresexposed = !wiresexposed
 		to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		updateicon()
 
-	else if(isscrewing(I) && opened && cell)	// radio
+	else if(I.get_quality(QUALITY_SCREWING) && opened && cell)	// radio
 		if(radio)
 			radio.attackby(I,user)//Push it to the radio to let it handle everything
 		else

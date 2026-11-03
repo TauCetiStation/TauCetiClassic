@@ -131,7 +131,7 @@
 			to_chat(user, "The device must first be secured to the floor.")
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/I, mob/user)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(is_open)
 			to_chat(user, "<span class='notice'>You close the panel.</span>")
@@ -140,7 +140,7 @@
 			to_chat(user, "<span class='notice'>You open the panel and expose the wiring.</span>")
 			is_open = 1
 
-	else if(iscoil(I) && malfunction && is_open)
+	else if(istype(I, /obj/item/stack/cable_coil) && malfunction && is_open)
 		var/obj/item/stack/cable_coil/coil = I
 		if(user.is_busy(src)) return
 		if(!do_skill_checks(user))

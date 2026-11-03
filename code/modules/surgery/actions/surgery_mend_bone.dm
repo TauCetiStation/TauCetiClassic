@@ -1,9 +1,9 @@
 #define BONE_GEL_SURGERY ((bodypart.stage & BP_SET || !(bodypart.stage & BP_GEL)) && bodypart.open >= BP_RETRACT_OS)
-#define BONE_GEL_ACTION  "[bodypart.stage & BP_SET ? "mending" : "applying medication"] to the damaged bones in [surgery_victim]'s [bodypart.name] with \the [tool] "
+#define BONE_GEL_ACTION  "[bodypart.stage & BP_SET ? "mending" : "applying medication"] to the damaged bones in [surgery_victim]'s [bodypart.name] with \the [I] "
 
 #define MEND_IPC_EYES_SURGERY (target_zone == O_EYES && bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
 #define MEND_IPC_FACE_SURGERY (target_zone == O_MOUTH && bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
-#define MEND_IPC_FACE_ACTION  "repair [surgery_victim]'s screen with \the [tool]"
+#define MEND_IPC_FACE_ACTION  "repair [surgery_victim]'s screen with \the [I]"
 
 /datum/surgery_step/mend_bones
 	name = "Glue bone"
@@ -16,7 +16,7 @@
 	min_duration = 4 SECONDS
 	max_duration = 6 SECONDS
 
-/datum/surgery_step/mend_bones/can_use(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
+/datum/surgery_step/mend_bones/can_use(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/I)
 	if(!..())
 		return FALSE
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
@@ -25,8 +25,8 @@
 		if(!eyes)
 			return FALSE
 		if(eyes.surgery_stage == BP_RETRACT_OS)
-			msg = "<span class='notice'>[user] begin to [EYES_MENDING_ACTION].</span>"
-			self_msg = "<span class='notice'>You start to [EYES_MENDING_ACTION].</span>"
+			msg = "<span class='notice'>[user] begin to mending the nerves and lenses in [surgery_victim]'s eyes with \the [I].</span>"
+			self_msg = "<span class='notice'>You start to mending the nerves and lenses in [surgery_victim]'s eyes with \the [I].</span>"
 			user.visible_message(msg, self_msg)
 			return TRUE
 	if(MEND_IPC_FACE_SURGERY)
@@ -43,7 +43,7 @@
 		user.visible_message(msg, self_msg)
 		return TRUE
 
-/datum/surgery_step/mend_bones/end_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
+/datum/surgery_step/mend_bones/end_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/I)
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
 
 	if(MEND_IPC_EYES_SURGERY)

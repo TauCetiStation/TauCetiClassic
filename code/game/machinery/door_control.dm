@@ -166,7 +166,7 @@
 					return
 				return
 		if(DOOR_CONTROL_WITHOUT_WIRES)
-			if(iscoil(I))
+			if(istype(I, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = I
 				coil.use(1)
 				to_chat(user, "You wire the door control frame.")

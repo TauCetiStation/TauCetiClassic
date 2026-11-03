@@ -154,9 +154,9 @@
 	bitesize = reagents.total_volume
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/I, mob/user, params)
-	if(iscoil(I))
-		var/obj/item/stack/cable_coil/C = I
-		if(C.use(5))
+	if(istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = I
+		if(coil.use(5))
 			to_chat(user, "<span class='notice'>Вы добавляете провода к картофелине и получаете самодельную батарею.</span>")
 			var/obj/item/weapon/stock_parts/cell/potato/pocell = new(get_turf(user))
 			pocell.maxcharge = src.potency * 10

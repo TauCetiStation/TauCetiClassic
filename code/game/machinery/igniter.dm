@@ -67,15 +67,15 @@
 		icon_state = "[base_state]-p"
 	update_power_use()
 
-/obj/machinery/sparker/attackby(obj/item/weapon/W, mob/user)
-	if (isscrewing(W))
+/obj/machinery/sparker/attackby(obj/item/I, mob/user)
+	if (I.get_quality(QUALITY_SCREWING))
 		add_fingerprint(user)
 		src.disable = !src.disable
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if (src.disable)
+		if(src.disable)
 			user.visible_message("<span class='warning'>[user] has disabled the [src]!</span>", "<span class='warning'>You disable the connection to the [src].</span>")
 			icon_state = "[base_state]-d"
-		if (!src.disable)
+		if(!src.disable)
 			user.visible_message("<span class='warning'>[user] has reconnected the [src]!</span>", "<span class='warning'>You fix the connection to the [src].</span>")
 			if(powered())
 				icon_state = "[base_state]"

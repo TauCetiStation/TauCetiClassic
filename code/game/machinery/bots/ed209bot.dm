@@ -98,8 +98,8 @@
 	popup.open()
 
 
-/obj/machinery/bot/secbot/ed209/beingAttacked(obj/item/weapon/W, mob/user)
-	if(!isscrewing(W) && W.force && !target)
+/obj/machinery/bot/secbot/ed209/beingAttacked(obj/item/weapon/I, mob/user)
+	if(!I.get_quality(QUALITY_SCREWING) && I.force && !target)
 		target = user
 		mode = SECBOT_HUNT
 		if(lasertag_color)//To make up for the fact that lasertag bots don't hunt
@@ -424,7 +424,7 @@
 				did_something = TRUE
 
 		if(6)
-			if(iscoil(I))
+			if(istype(I, /obj/item/stack/cable_coil))
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
@@ -459,7 +459,7 @@
 			did_something = TRUE
 
 		if(8)
-			if(isscrewing(I))
+			if(I.get_quality(QUALITY_SCREWING))
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")

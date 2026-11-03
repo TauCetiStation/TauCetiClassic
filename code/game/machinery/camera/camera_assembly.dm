@@ -52,9 +52,9 @@
 
 		if(2)
 			// State 2
-			if(iscoil(I))
-				var/obj/item/stack/cable_coil/C = I
-				if(C.use(2))
+			if(istype(I, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/coil = I
+				if(coil.use(2))
 					to_chat(user, "You add wires to the assembly.")
 					state = 3
 				return

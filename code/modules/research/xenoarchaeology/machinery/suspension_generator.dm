@@ -19,7 +19,7 @@
 	. = ..()
 
 /obj/machinery/suspension_gen/attackby(obj/item/I, mob/user)
-	if (isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(!open)
 			if(screwed)
 				screwed = 0

@@ -122,10 +122,10 @@
 						name = "Secure Windoor Assembly"
 
 			//Adding cable to the assembly. Step 5 complete.
-			else if(iscoil(I) && anchored)
-				var/obj/item/stack/cable_coil/CC = I
+			else if(istype(I, /obj/item/stack/cable_coil) && anchored)
+				var/obj/item/stack/cable_coil/coil = I
 				user.visible_message("[user] wires the windoor assembly.", "You start to wire the windoor assembly.")
-				if(CC.use_tool(src, user, 40, amount = 1, volume = 100))
+				if(coil.use_tool(src, user, 40, amount = 1, volume = 100))
 					if(!anchored || state != "01")
 						return
 					to_chat(user, "<span class='notice'>You wire the windoor!</span>")

@@ -15,15 +15,15 @@
 		icon_state = "door_construction"
 
 /obj/structure/firedoor_assembly/attackby(obj/item/I, mob/user)
-	if(iscoil(I) && !wired && anchored)
-		var/obj/item/stack/cable_coil/cable = I
-		if (cable.get_amount() < 1)
+	if(istype(I, /obj/item/stack/cable_coil) && !wired && anchored)
+		var/obj/item/stack/cable_coil/coil = I
+		if(coil.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need one length of coil to wire \the [src].</span>")
 			return
 		if(user.is_busy(src)) return
 		user.visible_message("[user] wires \the [src].", "You start to wire \the [src].")
-		if(cable.use_tool(src, user, 40, volume = 50) && !wired && anchored)
-			if (cable.use(1))
+		if(coil.use_tool(src, user, 40, volume = 50) && !wired && anchored)
+			if (coil.use(1))
 				wired = 1
 				to_chat(user, "<span class='notice'>You wire \the [src].</span>")
 

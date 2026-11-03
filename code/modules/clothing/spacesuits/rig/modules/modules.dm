@@ -104,7 +104,7 @@
 			to_chat(user, "You mend the damage to [src] with [paste].")
 		return
 
-	else if(iscoil(I))
+	else if(istype(I, /obj/item/stack/cable_coil))
 		if(user.is_busy())
 			return
 
@@ -116,15 +116,15 @@
 				to_chat(user, "There is no damage that you are capable of mending with such crude tools.")
 				return
 
-		var/obj/item/stack/cable_coil/cable = I
-		if(!cable.amount >= 5)
-			to_chat(user, "You need five units of cable to repair \the [src].")
+		var/obj/item/stack/cable_coil/coil = I
+		if(!coil.amount >= 5)
+			to_chat(user, "You need five units of coil to repair \the [src].")
 			return
 
 		to_chat(user, "You start mending the damaged portions of \the [src]...")
-		if(cable.use_tool(src, user, 30, amount = 5, volume = 50))
+		if(coil.use_tool(src, user, 30, amount = 5, volume = 50))
 			damage = MODULE_NO_DAMAGE
-			to_chat(user, "You mend the damage to [src] with [cable].")
+			to_chat(user, "You mend the damage to [src] with [coil].")
 		return
 
 	return ..()

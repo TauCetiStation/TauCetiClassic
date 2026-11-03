@@ -74,7 +74,7 @@
 			to_chat(user, "You slice through the lock on [src].")
 			return
 
-		if (isscrewing(I))
+		if (I.get_quality(QUALITY_SCREWING))
 			if(!user.is_busy(src) && I.use_tool(src, user, 20, volume = 50, quality = QUALITY_SCREWING))
 				open = !open
 				to_chat(user, "<span class='notice'>You [src.open ? "open" : "close"] the service panel.</span>")

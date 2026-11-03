@@ -236,7 +236,7 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
 			return

@@ -718,7 +718,7 @@ var/global/GLOBAL_RADIO_TYPE = 1 // radio type to use
 /obj/item/device/radio/borg/attackby(obj/item/I, mob/user, params)
 	user.set_machine(src)
 
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(keyslot)
 			for(var/ch_name in channels)
 				radio_controller.remove_object(src, radiochannels[ch_name])

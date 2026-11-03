@@ -280,7 +280,7 @@
 		cell = I
 		to_chat(user, "<span class='info'>You insert the cell!</span>")
 
-	else if(iscoil(I))
+	else if(istype(I, /obj/item/stack/cable_coil))
 		if(wires)
 			to_chat(user, "<span class='info'>You have already inserted wire!</span>")
 			return

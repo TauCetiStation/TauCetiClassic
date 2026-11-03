@@ -150,7 +150,7 @@
 		return
 
 	// building and linking a terminal
-	if(iscoil(I))
+	if(istype(I, /obj/item/stack/cable_coil))
 		var/dir = get_dir(user, src)
 		if(dir & (dir - 1)) // we don't want diagonal click
 			return

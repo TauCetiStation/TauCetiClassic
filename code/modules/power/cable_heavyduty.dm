@@ -18,7 +18,7 @@
 	if(I.get_quality(QUALITY_CUTTING))
 		to_chat(user, "<span class='notice'>These cables are too tough to be cut with those [I.name].</span>")
 		return
-	else if(iscoil(I))
+	else if(istype(I, /obj/item/stack/cable_coil))
 		to_chat(user, "<span class='notice'>You will need heavier cables to connect to these.</span>")
 		return
 	else

@@ -323,7 +323,7 @@
 		..()
 
 /obj/item/weapon/gun/energy/pyrometer/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		panel_open = !panel_open
 		user.visible_message("<span class='notice'>[user] [panel_open ? "un" : ""]screws [src]'s panel [panel_open ? "open" : "shut"].</span>", "<span class='notice'>You [panel_open ? "un" : ""]screw [src]'s panel [panel_open ? "open" : "shut"].</span>")
@@ -476,21 +476,21 @@
 		return FALSE
 	return TRUE
 
-/obj/item/weapon/gun/energy/gun/portal/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/device/assembly/signaler/anomaly))
+/obj/item/weapon/gun/energy/gun/portal/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/device/assembly/signaler/anomaly))
 		if(firing_core)
 			to_chat(user, "<span class='warning'>В проекторе червоточины уже установлено ядро аномалии!</span>")
 			playsound(user, 'sound/machines/airlock/access_denied.ogg', VOL_EFFECTS_MASTER)
 			return
-		user.drop_from_inventory(C, src)
-		to_chat(user, "<span class='notice'>Вы вставляете [C] в проектор червоточины, и устройство начинает мягко гудеть.</span>")
+		user.drop_from_inventory(I, src)
+		to_chat(user, "<span class='notice'>Вы вставляете [I] в проектор червоточины, и устройство начинает мягко гудеть.</span>")
 		playsound(user, 'sound/weapons/guns/plasma10_load.ogg', VOL_EFFECTS_MASTER)
-		firing_core = C
+		firing_core = I
 		modifystate = 2
 		update_icon()
 		update_inv_mob()
 
-	if(isscrewing(C))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(!firing_core)
 			to_chat(user, "<span class='warning'>В нем не установлено ядро аномалии!</span>")
 			return
@@ -551,8 +551,8 @@
 
 /obj/item/weapon/gun/energy/gun/portal/loaded/atom_init()
 	. = ..()
-	var/obj/item/device/assembly/signaler/anomaly/C = new(src)
-	firing_core = C
+	var/obj/item/device/assembly/signaler/anomaly/I = new(src)
+	firing_core = I
 	modifystate = 2
 	update_icon()
 

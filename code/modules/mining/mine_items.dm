@@ -369,7 +369,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	return
 
 /obj/item/weapon/pickaxe/drill/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(state==0)
 			state = 1
 			to_chat(user, "<span class='notice'>You open maintenance panel.</span>")
@@ -601,7 +601,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 		qdel(I)
 
-	else if(isscrewing(I))
+	else if(I.get_quality(QUALITY_SCREWING))
 		if(!length(installed_upgrades))
 			to_chat(user, "<span class='warning'>Нет улучшений для извлечения!</span>")
 			return

@@ -160,8 +160,8 @@
 		beingAttacked(W, user)
 
 
-/obj/machinery/bot/secbot/proc/beingAttacked(obj/item/weapon/W, mob/user)
-	if(!isscrewing(W) && W.force && !target)
+/obj/machinery/bot/secbot/proc/beingAttacked(obj/item/I, mob/user)
+	if(!I.get_quality(QUALITY_SCREWING) && I.force && !target)
 		target = user
 		mode = SECBOT_HUNT
 

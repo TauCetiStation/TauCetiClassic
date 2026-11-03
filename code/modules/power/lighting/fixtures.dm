@@ -146,7 +146,7 @@
 			"You remove the wiring from [src].", "You hear a noise.")
 		return
 
-	if(iscoil(I))
+	if(istype(I, /obj/item/stack/cable_coil))
 		if (stage != STAGE_START)
 			return
 		if(!I.use_tool(src, usr, 5, amount = 1, volume = 75))

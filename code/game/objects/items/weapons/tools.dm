@@ -200,7 +200,7 @@
 			to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of fuel!")
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(active)
 			to_chat(user, "<span class='rose'>Off [src], first!</span>")
 			return

@@ -47,7 +47,7 @@
 			deconstruct(TRUE)
 			return TRUE
 		return FALSE
-	else if(can_be_screwed && isscrewing(I))
+	else if(can_be_screwed && I.get_quality(QUALITY_SCREWING))
 		if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_SCREWING))
 			if(screwed)
 				to_chat(user, "<span class='notice'>Вы ослабили крепления, забор не выдержит нагрузок.</span>")

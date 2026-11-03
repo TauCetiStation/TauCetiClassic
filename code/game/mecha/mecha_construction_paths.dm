@@ -19,9 +19,9 @@
 	else if(I.get_quality(QUALITY_CUTTING))
 		playsound(holder, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		return 1
-	else if(iscoil(I))
-		var/obj/item/stack/cable_coil/C = I
-		if(!C.use(4))
+	else if(istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = I
+		if(!coil.use(4))
 			to_chat(user, ("There's not enough cable to finish the task."))
 			return 0
 		playsound(holder, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
