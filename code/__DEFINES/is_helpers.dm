@@ -153,8 +153,6 @@
 
 // TOOLS HELPERS
 
-#define isscrewing(I) 	I.get_quality(QUALITY_SCREWING)
-
 #define iscoil(A) 		(istype(A, /obj/item/stack/cable_coil))
 
 // SURGERY HELPERS
