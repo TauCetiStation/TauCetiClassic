@@ -284,8 +284,10 @@
 		qdel(C)
 		qdel(src)
 		return
-
-	character.forceMove(pick(latejoin), keep_buckled = TRUE)
+	if(length(testmaplatejoin))
+		character.forceMove(pick(testmaplatejoin), keep_buckled = TRUE)
+	else
+		character.forceMove(pick(latejoin), keep_buckled = TRUE)
 	show_location_blurb(character.client)
 
 	SSticker.mode.latespawn(character)

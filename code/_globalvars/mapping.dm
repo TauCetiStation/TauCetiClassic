@@ -11,6 +11,7 @@ var/global/list/global_map = null
 
 var/global/list/newplayer_start = list()
 var/global/list/latejoin = list()
+var/global/list/testmaplatejoin = list()
 var/global/list/prisonwarp = list()	//prisoners go to these
 var/global/list/xeno_spawn = list()//Aliens spawn at these.
 var/global/list/tdome1 = list()

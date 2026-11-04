@@ -6,17 +6,17 @@
 /turf/unsimulated/wall{
 	icon_state = "iron6"
 	},
-/area/centcom)
+/area/centcom/test)
 "ac" = (
 /turf/unsimulated/wall{
 	icon_state = "iron12"
 	},
-/area/centcom)
+/area/centcom/test)
 "ad" = (
 /turf/unsimulated/wall{
 	icon_state = "iron10"
 	},
-/area/centcom)
+/area/centcom/test)
 "ae" = (
 /turf/unsimulated/wall,
 /area/start)
@@ -24,7 +24,7 @@
 /turf/unsimulated/wall{
 	icon_state = "iron3"
 	},
-/area/centcom)
+/area/centcom/test)
 "ag" = (
 /obj/machinery/light{
 	dir = 8
@@ -32,7 +32,7 @@
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
-/area/centcom)
+/area/centcom/test)
 "ah" = (
 /obj/machinery/gateway{
 	dir = 9
@@ -40,7 +40,7 @@
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
-/area/centcom)
+/area/centcom/test)
 "ai" = (
 /obj/machinery/gateway{
 	dir = 1
@@ -48,7 +48,7 @@
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
-/area/centcom)
+/area/centcom/test)
 "aj" = (
 /obj/machinery/gateway{
 	dir = 5
@@ -56,7 +56,7 @@
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
-/area/centcom)
+/area/centcom/test)
 "ak" = (
 /obj/machinery/light{
 	dir = 4
@@ -64,12 +64,12 @@
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
-/area/centcom)
+/area/centcom/test)
 "al" = (
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
-/area/centcom)
+/area/centcom/test)
 "am" = (
 /obj/machinery/gateway{
 	dir = 8
@@ -77,13 +77,13 @@
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
-/area/centcom)
+/area/centcom/test)
 "an" = (
 /obj/machinery/gateway/center/station,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
-/area/centcom)
+/area/centcom/test)
 "ao" = (
 /obj/machinery/gateway{
 	dir = 4
@@ -91,7 +91,7 @@
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
-/area/centcom)
+/area/centcom/test)
 "ap" = (
 /obj/machinery/gateway{
 	dir = 10
@@ -99,13 +99,13 @@
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
-/area/centcom)
+/area/centcom/test)
 "aq" = (
 /obj/machinery/gateway,
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
-/area/centcom)
+/area/centcom/test)
 "ar" = (
 /obj/machinery/gateway{
 	dir = 6
@@ -113,122 +113,126 @@
 /turf/unsimulated/floor{
 	icon_state = "vaultfull"
 	},
-/area/centcom)
+/area/centcom/test)
 "as" = (
 /turf/unsimulated/wall{
 	icon_state = "iron9"
 	},
-/area/centcom)
+/area/centcom/test)
 "at" = (
 /turf/unsimulated/wall{
 	icon_state = "iron5"
 	},
-/area/centcom)
+/area/centcom/test)
 "au" = (
 /obj/structure/table,
-/obj/item/weapon/hemostat{
-	pixel_y = 4
-	},
-/obj/item/weapon/cautery,
 /obj/machinery/camera{
 	c_tag = "Surgery Operating 2";
 	network = list("SS13","Medical");
 	pixel_x = 22
 	},
+/obj/item/weapon/storage/visuals/surgery/full{
+	pixel_y = 5
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "av" = (
 /obj/structure/table,
-/obj/item/weapon/retractor,
-/obj/item/weapon/surgicaldrill,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine{
+	pixel_x = -10
+	},
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine{
+	pixel_x = 10
+	},
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine,
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine{
+	pixel_x = 5
+	},
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/metatrombine{
+	pixel_x = -5
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "aw" = (
 /obj/structure/table,
-/obj/item/weapon/scalpel,
-/obj/item/weapon/circular_saw{
-	pixel_y = 10
-	},
+/obj/item/robot_parts/r_leg,
+/obj/item/robot_parts/r_arm,
+/obj/item/robot_parts/l_leg,
+/obj/item/robot_parts/l_arm,
+/obj/item/robot_parts/head,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "ax" = (
 /obj/structure/table,
-/obj/item/weapon/bonegel{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/item/weapon/FixOVein{
-	pixel_x = -6;
-	pixel_y = 1
-	},
-/obj/item/weapon/bonesetter,
+/obj/item/device/healthanalyzer,
+/obj/item/clothing/glasses/hud/health,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "ay" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "az" = (
 /obj/structure/table/reinforced,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "aA" = (
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "neutral"
 	},
-/area/centcom)
+/area/centcom/test)
 "aB" = (
 /turf/unsimulated/floor{
 	dir = 8;
 	icon_state = "neutral"
 	},
-/area/centcom)
+/area/centcom/test)
 "aC" = (
 /obj/structure/table/reinforced,
 /obj/item/device/mmi,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "aD" = (
 /mob/living/simple_animal/crab,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "aE" = (
 /obj/machinery/optable,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "aF" = (
 /obj/machinery/computer/operating,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "aG" = (
 /mob/living/carbon/monkey/tajara,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "aH" = (
 /turf/unsimulated/floor,
 /area/start)
@@ -238,7 +242,7 @@
 	icon_state = "gr_window_reinforced"
 	},
 /turf/unsimulated/floor,
-/area/centcom)
+/area/centcom/test)
 "aL" = (
 /obj/effect/landmark/start{
 	name = "Fallback-Start"
@@ -246,48 +250,90 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "aM" = (
-/obj/effect/landmark{
-	name = "JoinLate"
+/obj/effect/landmark/start/assistant,
+/obj/effect/landmark/start/barber,
+/obj/effect/landmark/start/bartender,
+/obj/effect/landmark/start/blueshield_officer,
+/obj/effect/landmark/start/botanist,
+/obj/effect/landmark/start/captain,
+/obj/effect/landmark/start/cargo_technician,
+/obj/effect/landmark/start/chaplain,
+/obj/effect/landmark/start/chef,
+/obj/effect/landmark/start/chemist,
+/obj/effect/landmark/start/chief_engineer,
+/obj/effect/landmark/start/chief_medical_officer,
+/obj/effect/landmark/start/clown,
+/obj/effect/landmark/start/cyborg,
+/obj/effect/landmark/start/detective,
+/obj/effect/landmark/start/forensic_technician,
+/obj/effect/landmark/start/geneticist,
+/obj/effect/landmark/start/head_of_personnel,
+/obj/effect/landmark/start/head_of_security,
+/obj/effect/landmark/start/internal_affairs_agent,
+/obj/effect/landmark/start/janitor,
+/obj/effect/landmark/start/librarian,
+/obj/effect/landmark/start/medical_doctor,
+/obj/effect/landmark/start/medical_intern,
+/obj/effect/landmark/start/mime,
+/obj/effect/landmark/start/paramedic,
+/obj/effect/landmark/start/psychiatrist,
+/obj/effect/landmark/start/quartermaster,
+/obj/effect/landmark/start/recycler,
+/obj/effect/landmark/start/research_assistant,
+/obj/effect/landmark/start/research_director,
+/obj/effect/landmark/start/roboticist,
+/obj/effect/landmark/start/scientist,
+/obj/effect/landmark/start/security_cadet,
+/obj/effect/landmark/start/security_officer,
+/obj/effect/landmark/start/shaft_miner,
+/obj/effect/landmark/start/station_engineer,
+/obj/effect/landmark/start/technical_assistant,
+/obj/effect/landmark/start/virologist,
+/obj/effect/landmark/start/warden,
+/obj/effect/landmark/start/xenoarchaeologist,
+/obj/effect/landmark/start/xenobiologist,
+/obj/effect/landmark/latejoin{
+	testmap = 1
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "aN" = (
-/obj/effect/landmark{
-	name = "Observer-Start"
+/obj/effect/landmark/latejoin{
+	testmap = 1
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "aO" = (
 /mob/living/carbon/monkey,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "aP" = (
 /mob/living/carbon/monkey/diona,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "aR" = (
 /obj/effect/decal/turf_decal{
 	dir = 1;
 	icon_state = "warn"
 	},
 /turf/unsimulated/floor,
-/area/centcom)
+/area/centcom/test)
 "aT" = (
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
 /turf/unsimulated/floor,
-/area/centcom)
+/area/centcom/test)
 "aW" = (
 /obj/structure/table/reinforced,
 /obj/machinery/light{
@@ -296,7 +342,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "aX" = (
 /obj/machinery/light{
 	dir = 1
@@ -304,13 +350,13 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "aY" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "bg" = (
 /obj/machinery/light{
 	dir = 4
@@ -318,23 +364,23 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "bl" = (
 /turf/unsimulated/wall{
 	icon_state = "iron8"
 	},
-/area/centcom)
+/area/centcom/test)
 "bn" = (
 /turf/unsimulated/wall{
 	icon_state = "iron4"
 	},
-/area/centcom)
+/area/centcom/test)
 "br" = (
 /mob/living/carbon/monkey/skrell,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 "bI" = (
 /obj/machinery/light{
 	dir = 8
@@ -342,7 +388,7 @@
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
-/area/centcom)
+/area/centcom/test)
 
 (1,1,1) = {"
 aa
@@ -4959,7 +5005,7 @@ al
 ay
 ay
 ay
-aM
+aN
 ay
 ay
 ay

@@ -358,10 +358,14 @@ var/global/list/list/landmarks_list = list() // assoc list of all landmarks crea
 
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
+	var/testmap = FALSE
 
 /obj/effect/landmark/latejoin/New(loc)
 	..()
-	latejoin += loc
+	if(testmap)
+		testmaplatejoin.Add(loc)
+	else
+		latejoin.Add(loc)
 
 /obj/effect/landmark/latejoin/atom_init(mapload)
 	..()
