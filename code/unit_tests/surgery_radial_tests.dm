@@ -156,7 +156,7 @@
 	IO.damage = 1
 	IO.status |= ORGAN_DEAD
 	if(target_zone == BP_CHEST)
-		target.op_stage.ribcage = 2
+		BP.open = BP_OPEN_RIBCAGE
 	else if(target_zone == BP_GROIN)
 		BP.open = 1
 
