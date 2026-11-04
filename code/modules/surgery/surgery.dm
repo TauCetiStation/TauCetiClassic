@@ -66,7 +66,17 @@
 
 // checks whether this step can be applied with the given user and target
 /datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
-	return FALSE
+	if(!ishuman(target))
+		return FALSE
+	var/obj/item/organ/external/bodypart = target.get_bodypart(target_zone)
+	if(!bodypart)
+		return FALSE
+	if(bodypart.status & ORGAN_BLEEDING && !I.get_quality(QUALITY_CLAMP))
+		msg = "<span class='warning'>[target]`s [bodypart.name] bleeding!</span>"
+		self_msg = "<span class='warning'>You try to reach operation zone, but [target]`s [bodypart.name] bleeding!</span>"
+		user.visible_message(msg, self_msg)
+		return FALSE
+	return TRUE
 
 /datum/surgery_step/proc/prepare_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	return TRUE
