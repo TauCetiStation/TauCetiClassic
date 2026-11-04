@@ -38,7 +38,7 @@
 /datum/surgery_step/cut
 	name = "Cut"
 	allowed_qualities = list(
-		QUALITY_SURG_CUTTING,
+		QUALITY_SURGERY_CUTTING,
 		QUALITY_SCREWING // for ipc, burn it
 		)
 

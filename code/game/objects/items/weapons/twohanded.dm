@@ -15,7 +15,7 @@
 	qualities = list(
 		QUALITY_PRYING = 100,
 		QUALITY_CUTTING = 100,
-		QUALITY_SURG_CUTTING = 50
+		QUALITY_SURGERY_CUTTING = 50
 	)
 
 /obj/item/weapon/fireaxe/atom_init()

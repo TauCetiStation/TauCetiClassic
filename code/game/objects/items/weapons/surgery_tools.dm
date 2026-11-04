@@ -122,7 +122,7 @@
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	qualities = list(
 		QUALITY_CUTTING = 50,
-		QUALITY_SURG_CUTTING = 100
+		QUALITY_SURGERY_CUTTING = 100
 	)
 
 /obj/item/weapon/scalpel/suicide_act(mob/user)
@@ -143,7 +143,7 @@
 	usesound = 'sound/items/surgery/laserscalp.ogg'
 	qualities = list(
 		QUALITY_CUTTING = 50,
-		QUALITY_SURG_CUTTING = 125
+		QUALITY_SURGERY_CUTTING = 125
 	)
 
 /obj/item/weapon/scalpel/laser2
@@ -156,7 +156,7 @@
 	usesound = 'sound/items/surgery/laserscalp.ogg'
 	qualities = list(
 		QUALITY_CUTTING = 50,
-		QUALITY_SURG_CUTTING = 150
+		QUALITY_SURGERY_CUTTING = 150
 	)
 
 /obj/item/weapon/scalpel/laser3
@@ -169,7 +169,7 @@
 	usesound = 'sound/items/surgery/laserscalp.ogg'
 	qualities = list(
 		QUALITY_CUTTING = 50,
-		QUALITY_SURG_CUTTING = 175
+		QUALITY_SURGERY_CUTTING = 175
 	)
 
 /obj/item/weapon/scalpel/manager
@@ -181,7 +181,7 @@
 	damtype = BURN
 	qualities = list(
 		QUALITY_CUTTING = 50,
-		QUALITY_SURG_CUTTING = 175,
+		QUALITY_SURGERY_CUTTING = 175,
 		QUALITY_SURGERY_CLAMP   = 175,
 		QUALITY_SURGERY_RETRACT = 175
 	)

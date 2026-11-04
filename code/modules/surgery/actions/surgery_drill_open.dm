@@ -41,7 +41,7 @@
 /datum/surgery_step/surgery_drill/make_space
 	name = "Make cavity in victim"
 	allowed_qualities = list(
-		QUALITY_DRILL_OPEN
+		QUALITY_SURGERY_DRILL
 	)
 
 	min_duration = 6 SECONDS

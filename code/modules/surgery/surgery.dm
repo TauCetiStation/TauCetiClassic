@@ -115,7 +115,7 @@
 		bodypart.burn_kit = FALSE
 		if((I.get_quality(QUALITY_SURGERY_SAW) || I.get_quality(QUALITY_SURGERY_RETRACT)) && !isstump(bodypart) && pick(0, 1))
 			bodypart.fracture()
-		if((I.get_quality(QUALITY_SURG_CUTTING) ||  I.get_quality(QUALITY_SURGERY_SAW)) && bodypart.open == BP_RIBCAGE_OS)
+		if((I.get_quality(QUALITY_SURGERY_CUTTING) ||  I.get_quality(QUALITY_SURGERY_SAW)) && bodypart.open == BP_RIBCAGE_OS)
 			if(pick(0, 1))
 				for(var/obj/item/organ in bodypart.bodypart_organs)
 					if(isorgan(organ))

@@ -117,7 +117,7 @@
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 	qualities = list(
 		QUALITY_CUTTING = 100,
-		QUALITY_SURG_CUTTING = 75,
+		QUALITY_SURGERY_CUTTING = 75,
 		QUALITY_SURGERY_CLAMP = 75
 	)
 
@@ -657,7 +657,7 @@
 	sharp = 1
 	qualities = list(
 		QUALITY_CUTTING = 300,
-		QUALITY_SURG_CUTTING = 75
+		QUALITY_SURGERY_CUTTING = 75
 	)
 	item_action_types = list(/datum/action/item_action/hands_free/change_mode)
 
@@ -678,7 +678,7 @@
 	else
 		qualities = list(
 			QUALITY_CUTTING = 300,
-			QUALITY_SURG_CUTTING = 75
+			QUALITY_SURGERY_CUTTING = 75
 		)
 		sharp = 1
 		icon_state = "jaws_cutter"

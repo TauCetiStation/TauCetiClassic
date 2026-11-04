@@ -108,7 +108,7 @@
 		hitsound = list('sound/weapons/bladeslice.ogg')
 		qualities = list(
 		QUALITY_CUTTING = 100,
-		QUALITY_SURG_CUTTING = 75
+		QUALITY_SURGERY_CUTTING = 75
 		)
 	else
 		force = 1

@@ -452,7 +452,7 @@
 	item_state_world = null
 	qualities = list(
 		QUALITY_CUTTING = 100,
-		QUALITY_SURG_CUTTING = 300
+		QUALITY_SURGERY_CUTTING = 300
 	)
 
 /obj/item/weapon/hemostat/alien

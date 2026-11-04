@@ -4,7 +4,7 @@
 /datum/surgery_step/cutery
 	name = "Cauterize"
 	allowed_qualities = list(
-		QUALITY_CAUTER
+		QUALITY_SURGERY_CAUTER
 		)
 
 	min_duration = 6 SECONDS

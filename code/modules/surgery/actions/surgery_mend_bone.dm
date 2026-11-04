@@ -58,9 +58,9 @@
 		msg = "<span class='notice'>[user] finish to [BONE_GEL_ACTION].</span>"
 		self_msg = "<span class='notice'>You finish to [BONE_GEL_ACTION].</span>"
 		user.visible_message(msg, self_msg)
-		if(bodypart.stage & BP_SET)
+		if(bodypart.stage & BONESET_STAGE)
 			bodypart.status &= ~(ORGAN_BROKEN | ORGAN_SPLINTED)
-			bodypart.stage &= ~(BONEGEL_STAGE | BP_SET)
+			bodypart.stage &= ~(BONEGEL_STAGE | BONESET_STAGE)
 			bodypart.perma_injury = 0
 		else
 			bodypart.stage |= BONEGEL_STAGE

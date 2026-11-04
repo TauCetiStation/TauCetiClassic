@@ -140,7 +140,7 @@
 	var/on_step_sound = 'sound/effects/glass_step.ogg'
 	qualities = list(
 		QUALITY_CUTTING = 50,
-		QUALITY_SURG_CUTTING = 25
+		QUALITY_SURGERY_CUTTING = 25
 	)
 
 /obj/item/weapon/shard/atom_init()

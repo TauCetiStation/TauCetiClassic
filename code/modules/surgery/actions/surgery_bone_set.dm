@@ -1,4 +1,4 @@
-#define SET_BONE_SURGERY (bodypart.open >= BP_RETRACT_OS && (bodypart.stage & BP_GEL) && !(bodypart.stage & BP_SET))
+#define SET_BONE_SURGERY (bodypart.open >= BP_RETRACT_OS && (bodypart.stage & BONEGEL_STAGE) && !(bodypart.stage & BONESET_STAGE))
 #define SET_BONE_ACTION  "set the bone in [surgery_victim]'s [bodypart.name] in place with \the [tool]"
 /datum/surgery_step/bone_set
 	name = "Set bone"
@@ -26,7 +26,7 @@
 
 /datum/surgery_step/bone_set/end_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
-	bodypart.stage |= BP_SET
+	bodypart.stage |= BONESET_STAGE
 	msg = "<span class='notice'>[user] finish to [SET_BONE_ACTION].</span>"
 	self_msg = "<span class='notice'>You finish to [SET_BONE_ACTION].</span>"
 	user.visible_message(msg, self_msg)
