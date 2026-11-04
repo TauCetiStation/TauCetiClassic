@@ -15,7 +15,7 @@
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	qualities = list(
 		QUALITY_PRYING = 50,
-		QUALITY_MENDING_BONE = 50
+		QUALITY_SURGERY_MENDINGBONE = 50
 	)
 
 /obj/item/stack/rods/update_icon()

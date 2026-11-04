@@ -3,7 +3,7 @@
 /datum/surgery_step/bone_set
 	name = "Set bone"
 	allowed_qualities = list(
-		QUALITY_BONE_SET
+		QUALITY_SURGERY_BONESET
 		)
 
 	allowed_species = list("exclude", IPC, DIONA)

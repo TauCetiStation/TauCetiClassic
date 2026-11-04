@@ -8,7 +8,7 @@
 
 // Output Sortcut Defines
 // Slime action
-#define SLIME_CUT_ACTION          "cut through [slime]'s [slime.surgery_status == CUTTED ? "silky innards" : "flesh"] with \the [I]"
+#define SLIME_CUT_ACTION          "cut through [slime]'s [slime.surgery_status == SLIME_SKIN_CUTTED ? "silky innards" : "flesh"] with \the [I]"
 
 // Default cut|screw action
 #define SCREWING_ACTION            isstump(bodypart) ? "reposition wires where [surgery_victim]'s [bodypart] used to be with \the [I]" : "[bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s maintenance hatch with \the [I]"
@@ -61,7 +61,7 @@
 //Must be first, to invoke ..() and check bodyparts
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
-		if(slime.stat == DEAD && slime.surgery_status != PREPARED)
+		if(slime.stat == DEAD && slime.surgery_status != SLIME_SKIN_PREPARED)
 			msg = "<span class='notice'>[user] begin [SLIME_CUT_ACTION].</span>"
 			self_msg = "<span class='notice'>You start [SLIME_CUT_ACTION].</span>"
 			user.visible_message(msg, self_msg)
@@ -122,12 +122,12 @@
 		msg = "<span class='notice'>[user] finish [SLIME_CUT_ACTION].</span>"
 		self_msg = "<span class='notice'>You finish [SLIME_CUT_ACTION], exposing the cores.</span>"
 		switch(slime.surgery_status)
-			if(NORMAL)
+			if(SLIME_SKIN_NORMAL_STATE)
 			// cut flesh
-				slime.surgery_status = CUTTED
-			if(CUTTED)
+				slime.surgery_status = SLIME_SKIN_CUTTED
+			if(SLIME_SKIN_CUTTED)
 			// cut internals flesh
-				slime.surgery_status = PREPARED
+				slime.surgery_status = SLIME_SKIN_PREPARED
 		user.visible_message(msg, self_msg)
 		return
 

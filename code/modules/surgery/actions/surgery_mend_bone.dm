@@ -1,5 +1,5 @@
-#define BONE_GEL_SURGERY ((bodypart.stage & BP_SET || !(bodypart.stage & BP_GEL)) && bodypart.open >= BP_RETRACT_OS)
-#define BONE_GEL_ACTION  "[bodypart.stage & BP_SET ? "mending" : "applying medication"] to the damaged bones in [surgery_victim]'s [bodypart.name] with \the [I] "
+#define BONE_GEL_SURGERY ((bodypart.stage & BONESET_STAGE || !(bodypart.stage & BONEGEL_STAGE)) && bodypart.open >= BP_RETRACT_OS)
+#define BONE_GEL_ACTION  "[bodypart.stage & BONESET_STAGE ? "mending" : "applying medication"] to the damaged bones in [surgery_victim]'s [bodypart.name] with \the [I] "
 
 #define MEND_IPC_EYES_SURGERY (target_zone == O_EYES && bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
 #define MEND_IPC_FACE_SURGERY (target_zone == O_MOUTH && bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
@@ -8,7 +8,7 @@
 /datum/surgery_step/mend_bones
 	name = "Glue bone"
 	allowed_qualities = list(
-		QUALITY_MENDING_BONE,
+		QUALITY_SURGERY_MENDINGBONE,
 		QUALITY_MENDING_IPC
 		)
 
@@ -60,7 +60,7 @@
 		user.visible_message(msg, self_msg)
 		if(bodypart.stage & BP_SET)
 			bodypart.status &= ~(ORGAN_BROKEN | ORGAN_SPLINTED)
-			bodypart.stage &= ~(BP_GEL | BP_SET)
+			bodypart.stage &= ~(BONEGEL_STAGE | BP_SET)
 			bodypart.perma_injury = 0
 		else
-			bodypart.stage |= BP_GEL
+			bodypart.stage |= BONEGEL_STAGE

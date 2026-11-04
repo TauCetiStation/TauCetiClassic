@@ -71,7 +71,7 @@
 	var/obj/item/organ/external/bodypart = target.get_bodypart(target_zone)
 	if(!bodypart)
 		return FALSE
-	if(bodypart.status & ORGAN_BLEEDING && !I.get_quality(QUALITY_CLAMP))
+	if(bodypart.status & ORGAN_BLEEDING && !I.get_quality(QUALITY_SURGERY_CLAMP))
 		msg = "<span class='warning'>[target]`s [bodypart.name] bleeding!</span>"
 		self_msg = "<span class='warning'>You try to reach operation zone, but [target]`s [bodypart.name] bleeding!</span>"
 		user.visible_message(msg, self_msg)
@@ -113,9 +113,9 @@
 		bodypart.take_damage(pick(5, 10, 20), 0, DAM_SHARP|DAM_EDGE, I)
 		bodypart.trauma_kit = FALSE
 		bodypart.burn_kit = FALSE
-		if((I.get_quality(QUALITY_SAW_OPEN) || I.get_quality(QUALITY_RETRACT)) && !isstump(bodypart) && pick(0, 1))
+		if((I.get_quality(QUALITY_SURGERY_SAW) || I.get_quality(QUALITY_SURGERY_RETRACT)) && !isstump(bodypart) && pick(0, 1))
 			bodypart.fracture()
-		if((I.get_quality(QUALITY_SURG_CUTTING) ||  I.get_quality(QUALITY_SAW_OPEN)) && bodypart.open == BP_RIBCAGE_OS)
+		if((I.get_quality(QUALITY_SURG_CUTTING) ||  I.get_quality(QUALITY_SURGERY_SAW)) && bodypart.open == BP_RIBCAGE_OS)
 			if(pick(0, 1))
 				for(var/obj/item/organ in bodypart.bodypart_organs)
 					if(isorgan(organ))
@@ -288,7 +288,7 @@
 		var/best_quality = 0
 		var/obj/item/best_tool
 		for(var/obj/item/I in items)
-			if(isrobot(user) && istype(S, /datum/surgery_step/drill_open/place_item) && robot_carriers && robot_carriers[I] == I)
+			if(isrobot(user) && istype(S, /datum/surgery_step/surgery_drill/place_item) && robot_carriers && robot_carriers[I] == I)
 				continue
 			var/quality = S.tool_quality(I, target, target_zone)
 			if(!quality || quality <= best_quality)

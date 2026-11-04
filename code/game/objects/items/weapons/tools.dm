@@ -34,7 +34,7 @@
 
 	qualities = list(
 		QUALITY_WRENCHING = 100,
-		QUALITY_BONE_SET = 75,
+		QUALITY_SURGERY_BONESET = 75,
 		QUALITY_MENDING_IPC = 50
 	)
 
@@ -68,7 +68,7 @@
 	usesound = 'sound/items/Screwdriver.ogg'
 	qualities = list(
 		QUALITY_SCREWING = 100,
-		QUALITY_RETRACT = 75
+		QUALITY_SURGERY_RETRACT = 75
 	)
 	stab_eyes = TRUE
 
@@ -118,7 +118,7 @@
 	qualities = list(
 		QUALITY_CUTTING = 100,
 		QUALITY_SURG_CUTTING = 75,
-		QUALITY_CLAMP = 75
+		QUALITY_SURGERY_CLAMP = 75
 	)
 
 /obj/item/weapon/wirecutters/atom_init(mapload, param_color)
@@ -416,7 +416,7 @@
 			src.damtype = BURN
 			src.icon_state = initial(src.icon_state) + "1"
 			qualities = list(
-				QUALITY_CAUTER = cautarize_quiality,
+				QUALITY_SURGERY_CAUTER = cautarize_quiality,
 				QUALITY_WELDING = weld_quality
 				)
 			START_PROCESSING(SSobj, src)
@@ -552,7 +552,7 @@
 
 	qualities = list(
 		QUALITY_PRYING = 100,
-		QUALITY_SAW_OPEN = 50
+		QUALITY_SURGERY_SAW = 50
 	)
 
 /obj/item/weapon/crowbar/red
@@ -568,7 +568,7 @@
 
 	qualities = list(
 		QUALITY_PRYING = 75,
-		QUALITY_SAW_OPEN = 75 //easier to perform small operations with a small crowbar
+		QUALITY_SURGERY_SAW = 75 //easier to perform small operations with a small crowbar
 	)
 
 /obj/item/weapon/weldingtool/attack(mob/M, mob/user, def_zone)
@@ -620,7 +620,7 @@
 	attack_verb = list("drilled", "screwed", "jabbed")
 	qualities = list(
 		QUALITY_WRENCHING = 300,
-		QUALITY_BONE_SET = 75
+		QUALITY_SURGERY_BONESET = 75
 	)
 	item_action_types = list(/datum/action/item_action/hands_free/change_mode)
 
@@ -633,14 +633,14 @@
 	if(mode)
 		qualities = list(
 			QUALITY_SCREWING = 300,
-			QUALITY_RETRACT = 75
+			QUALITY_SURGERY_RETRACT = 75
 		)
 		icon_state = "drill_screw"
 		to_chat(user, "<span class='notice'>You attach the screw driver bit to [src].</span>")
 	else
 		qualities = list(
 			QUALITY_WRENCHING = 300,
-			QUALITY_BONE_SET = 75
+			QUALITY_SURGERY_BONESET = 75
 		)
 		icon_state = "drill_bolt"
 		to_chat(user, "<span class='notice'>You attach the bolt driver bit to [src].</span>")
@@ -670,7 +670,7 @@
 	if(mode)
 		qualities = list(
 			QUALITY_PRYING = 300,
-			QUALITY_SAW_OPEN = 75
+			QUALITY_SURGERY_SAW = 75
 		)
 		sharp = 0
 		icon_state = "jaws_pry"

@@ -6,10 +6,10 @@
 #define SAW_BONE_ACTION  "cut through [surgery_victim]'s ribcage with \the [tool]"
 #define DIONA_SAW_ACTION "separating [surgery_victim]'s brain from \his spine with \the [tool]"
 #define SLIME_SAW_ACTION "cut out one of [target]'s cores with \the [tool]"
-/datum/surgery_step/saw_open
+/datum/surgery_step/surgery_saw
 	name = "Saw"
 	allowed_qualities = list(
-		QUALITY_SAW_OPEN,
+		QUALITY_SURGERY_SAW,
 		QUALITY_PRYING
 		)
 
@@ -19,12 +19,12 @@
 	max_duration = 12 SECONDS
 
 
-/datum/surgery_step/saw_open/can_use(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
+/datum/surgery_step/surgery_saw/can_use(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
 		msg = "[user] begin to [SLIME_SAW_ACTION]."
 		self_msg = "You begin to [SLIME_SAW_ACTION]."
-		if(slime.surgery_status == PREPARED)
+		if(slime.surgery_status == SLIME_SKIN_PREPARED)
 			user.visible_message(msg, self_msg)
 			return TRUE
 		return FALSE
@@ -56,12 +56,12 @@
 		return TRUE
 	return FALSE
 
-/datum/surgery_step/saw_open/end_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
+/datum/surgery_step/surgery_saw/end_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
 		msg = "[user] finish to [SLIME_SAW_ACTION]."
 		self_msg = "You finish to [SLIME_SAW_ACTION]."
-		if(slime.surgery_status == PREPARED)
+		if(slime.surgery_status == SLIME_SKIN_PREPARED)
 			if(slime.cores >= 0)
 				new slime.coretype(slime.loc)
 			if(slime.cores <= 0)

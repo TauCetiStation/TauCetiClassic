@@ -1207,8 +1207,8 @@ Turf and target are seperate in case you want to teleport some distance from a t
 //check if mob is lying down on something we can operate him on.
 /proc/can_operate(mob/living/carbon/M, mob/user)
 	for(var/obj/O in M.loc)
-		if(O.get_quality(QUALITY_OPERATE_TABLE) && M.crawling)
-			if(user.mood_prob(O.get_quality(QUALITY_OPERATE_TABLE)))
+		if(O.get_quality(QUALITY_SURGERY_OPERATE_TABLE) && M.crawling)
+			if(user.mood_prob(O.get_quality(QUALITY_SURGERY_OPERATE_TABLE)))
 				return TRUE
 	return FALSE
 

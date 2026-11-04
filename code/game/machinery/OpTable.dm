@@ -14,7 +14,7 @@
 
 	var/obj/machinery/computer/operating/computer = null
 	qualities = list(
-		QUALITY_OPERATE_TABLE = 100
+		QUALITY_SURGERY_OPERATE_TABLE = 100
 	)
 
 

@@ -10,7 +10,7 @@
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 	qualities = list(
 		QUALITY_MENDING_IPC = 100,
-		QUALITY_MENDING_BONE = 75
+		QUALITY_SURGERY_MENDINGBONE = 75
 	)
 
 /obj/item/stack/nanopaste/attack(mob/living/M, mob/user, def_zone)

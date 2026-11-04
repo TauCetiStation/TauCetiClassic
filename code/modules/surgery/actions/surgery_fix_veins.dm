@@ -7,7 +7,7 @@
 /datum/surgery_step/fix_veins
 	name = "FixOvein"
 	allowed_qualities = list(
-		QUALITY_FIX_VEIN
+		QUALITY_SURGERY_FIXVEIN
 		)
 
 	allowed_species = list("exclude", DIONA, IPC)

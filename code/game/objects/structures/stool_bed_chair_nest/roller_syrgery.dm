@@ -8,7 +8,7 @@
 	anchored = FALSE
 	type_roller = /obj/item/roller/roller_holder_surg
 	qualities = list(
-		QUALITY_OPERATE_TABLE = 95
+		QUALITY_SURGERY_OPERATE_TABLE = 95
 		)
 
 /obj/item/roller/roller_holder_surg

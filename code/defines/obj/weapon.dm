@@ -515,7 +515,7 @@
 	attack_verb = list("chopped", "torn", "cut")
 	qualities = list(
 		QUALITY_PRYING = 50,
-		QUALITY_SAW_OPEN = 25
+		QUALITY_SURGERY_SAW = 25
 	)
 
 /obj/item/weapon/hatchet/atom_init()

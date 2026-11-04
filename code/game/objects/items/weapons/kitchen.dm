@@ -92,8 +92,8 @@
 	m_amt = 300
 	qualities = list(
 		QUALITY_SCREWING = 50,
-		QUALITY_RETRACT = 50,
-		QUALITY_CLAMP = 50
+		QUALITY_SURGERY_RETRACT = 50,
+		QUALITY_SURGERY_CLAMP = 50
 	)
 
 /obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity, params)
@@ -114,8 +114,8 @@
 	icon_state = "sticks"
 	overlay_food_string = "food_sticks"
 	qualities = list(
-		QUALITY_CLAMP = 75,
-		QUALITY_RETRACT = 75
+		QUALITY_SURGERY_CLAMP = 75,
+		QUALITY_SURGERY_RETRACT = 75
 	)
 
 /obj/item/weapon/kitchen/utensil/pfork
@@ -265,7 +265,7 @@
 	sweep_step = 2
 	qualities = list(
 		QUALITY_CUTTING = 100,
-		QUALITY_SAW_OPEN = 75,
+		QUALITY_SURGERY_SAW = 75,
 		QUALITY_SCREWING = 50
 		)
 /*

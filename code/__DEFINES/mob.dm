@@ -35,15 +35,14 @@
 #define IO_ORGAN_CUTTED (1<<2)
 
 // Operation stages
-#define NO_STAGE    (0<<2)
-#define BP_GEL 	    (1<<2)
-#define BP_SET 	    (2<<2)
-#define BP_VEIN     (3<<2)
+#define NO_STAGE       (0<<2)
+#define BONEGEL_STAGE  (1<<2)
+#define BONESET_STAGE  (2<<2)
 
 // Slime
-#define NORMAL      0
-#define CUTTED      1
-#define PREPARED    2
+#define SLIME_SKIN_NORMAL_STATE 0
+#define SLIME_SKIN_CUTTED       1
+#define SLIME_SKIN_PREPARED     2
 
 // Bodypart defines
 #define BP_CHEST  "chest"

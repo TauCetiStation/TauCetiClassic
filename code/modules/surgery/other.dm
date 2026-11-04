@@ -707,7 +707,7 @@
 	priority = 0
 
 	allowed_qualities = list(
-		QUALITY_DROP_LIQUID
+		QUALITY_SURGERY_DROP_LIQUID
 	)
 
 	min_duration = 12 SECONDS

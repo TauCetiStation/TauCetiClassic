@@ -460,7 +460,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
 	qualities = list(
-		QUALITY_CLAMP = 300,
+		QUALITY_SURGERY_CLAMP = 300,
 		QUALITY_SCREWING = 100
 	)
 
@@ -469,7 +469,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
 	qualities = list(
-		QUALITY_RETRACT = 300
+		QUALITY_SURGERY_RETRACT = 300
 	)
 
 /obj/item/weapon/circular_saw/alien
@@ -478,7 +478,7 @@
 	item_state_world = null
 	icon_state = "saw"
 	qualities = list(
-		QUALITY_SAW_OPEN = 300,
+		QUALITY_SURGERY_SAW = 300,
 		QUALITY_CUTTING = 25
 	)
 /obj/item/weapon/surgicaldrill/alien
@@ -486,7 +486,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
 	qualities = list(
-		QUALITY_DRILL_OPEN = 300
+		QUALITY_SURGERY_DRILL= 300
 	)
 
 /obj/item/weapon/cautery/alien
@@ -494,7 +494,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	item_state_world = null
 	qualities = list(
-		QUALITY_CAUTER = 300
+		QUALITY_SURGERY_CAUTER = 300
 	)
 
 /obj/item/weapon/bonegel/alien
@@ -504,8 +504,8 @@
 	icon_state = "ectoplasm"
 	item_state_world = null
 	qualities = list(
-		QUALITY_MENDING_BONE = 300,
-		QUALITY_FIX_VEIN = 300
+		QUALITY_SURGERY_MENDINGBONE = 300,
+		QUALITY_SURGERY_FIXVEIN = 300
 	)
 
 // OPERATING TABLE / BEDS / LOCKERS	/ OTHER
@@ -517,7 +517,7 @@
 	var/belt = null
 	var/mob/living/carbon/fastened = null
 	qualities = list(
-		QUALITY_OPERATE_TABLE = 300
+		QUALITY_SURGERY_OPERATE_TABLE = 300
 	)
 
 /obj/machinery/optable/abductor/atom_init()

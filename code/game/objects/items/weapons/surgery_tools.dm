@@ -25,7 +25,7 @@
 	usesound = 'sound/items/surgery/Retract.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	qualities = list(
-		QUALITY_RETRACT = 100
+		QUALITY_SURGERY_RETRACT = 100
 	)
 /*
  * Hemostat
@@ -45,7 +45,7 @@
 	usesound = 'sound/items/surgery/Hemostat.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	qualities = list(
-		QUALITY_CLAMP = 100,
+		QUALITY_SURGERY_CLAMP = 100,
 		QUALITY_SCREWING = 50
 	)
 /*
@@ -66,7 +66,7 @@
 	usesound = 'sound/items/surgery/cautery.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	qualities = list(
-		QUALITY_CAUTER = 100
+		QUALITY_SURGERY_CAUTER = 100
 	)
 /*
  * Surgical Drill
@@ -88,7 +88,7 @@
 	usesound = 'sound/items/surgery/SurgDrill.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	qualities = list(
-		QUALITY_DRILL_OPEN = 100,
+		QUALITY_SURGERY_DRILL= 100,
 		QUALITY_ROCK_DRILL = 25
 	)
 
@@ -182,8 +182,8 @@
 	qualities = list(
 		QUALITY_CUTTING = 50,
 		QUALITY_SURG_CUTTING = 175,
-		QUALITY_CLAMP   = 175,
-		QUALITY_RETRACT = 175
+		QUALITY_SURGERY_CLAMP   = 175,
+		QUALITY_SURGERY_RETRACT = 175
 	)
 /*
  * Circular Saw
@@ -210,7 +210,7 @@
 	usesound = 'sound/items/surgery/Bone_Saw.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	qualities = list(
-		QUALITY_SAW_OPEN = 100,
+		QUALITY_SURGERY_SAW = 100,
 		QUALITY_CUTTING = 25
 	)
 
@@ -226,7 +226,7 @@
 	usesound = 'sound/items/surgery/Bone_Gel.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	qualities = list(
-		QUALITY_MENDING_BONE = 100,
+		QUALITY_SURGERY_MENDINGBONE = 100,
 		QUALITY_MENDING_IPC = 75
 	)
 
@@ -243,7 +243,7 @@
 	usesound = 'sound/items/surgery/Fix-O-vein.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	qualities = list(
-		QUALITY_FIX_VEIN = 100
+		QUALITY_SURGERY_FIXVEIN = 100
 	)
 
 /obj/item/weapon/bonesetter
@@ -260,6 +260,6 @@
 	usesound = 'sound/items/surgery/BonSet.ogg'
 	required_skills = list(/datum/skill/surgery = SKILL_LEVEL_TRAINED)
 	qualities = list(
-		QUALITY_BONE_SET = 100,
+		QUALITY_SURGERY_BONESET = 100,
 		QUALITY_WRENCHING = 75
 	)

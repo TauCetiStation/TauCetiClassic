@@ -52,7 +52,7 @@
 	if(!armed)
 		to_chat(user, "<span class='notice'>You arm [src].</span>")
 		qualities = list(
-			QUALITY_CLAMP = 25
+			QUALITY_SURGERY_CLAMP = 25
 		)
 	else
 		if((user.getBrainLoss() >= 60 && prob(50)) || user.ClumsyProbabilityCheck(50))
