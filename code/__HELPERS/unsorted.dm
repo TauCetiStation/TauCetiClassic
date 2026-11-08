@@ -1240,7 +1240,7 @@ Checks if that loc and dir has a item on the wall
 var/global/list/WALLITEMS = typecacheof(list(
 	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
 	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
-	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch,
+	/obj/machinery/status_display, /obj/machinery/ai_status_display, /obj/machinery/requests_console, /obj/machinery/light_switch,
 	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/door_control,
 	/obj/machinery/computer/security/telescreen,
 	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
