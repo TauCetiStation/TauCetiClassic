@@ -126,6 +126,10 @@
 	name = "Киборг синдиката"
 	ranks = list(ROLE_OPERATIVE)
 
+/datum/spawner/living/robot/cult
+	name = "Киборг культа"
+	ranks = list(ROLE_CULTIST)
+
 /datum/spawner/living/robot/drone
 	name = "Дрон"
 	wiki_ref = "Maintenance_drone"

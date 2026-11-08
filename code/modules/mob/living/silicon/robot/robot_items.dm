@@ -172,3 +172,99 @@
 	var/mob/living/silicon/robot/R = user
 	user.visible_message("[src] fizzles and sparks - it seems it's been used once too often, and is now broken.")
 	R.module.remove_item(src)
+
+//Agent ID card for cyborgs, so they wont put it in silly places. Let's pretend that its a device, not just a card.
+/obj/item/weapon/card/access_grabber
+	name = "robotic access grabber device"
+	desc = "Устройство, используемое для копирования станционного доступа с ID карт."
+	icon_state = "id"
+
+/obj/item/weapon/card/access_grabber/afterattack(atom/target, mob/user, proximity, params)
+	if(!proximity)
+		return
+	var/mob/living/silicon/robot/R = user
+	if(isrobot(target))
+		var/mob/living/silicon/robot/S = target
+		if(istype(S.module, R.module.type))
+			R.req_access |= S.req_access
+	if(istype(target, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/I = target
+		R.req_access |= I.access
+		if(isliving(user) && user.mind)
+			to_chat(user, "<span class='notice'>The device's microscanners activate as you pass it over the ID, copying its access.</span>")
+
+/obj/item/weapon/tool_package
+	name = "tool package"
+	desc = "Инновационная RedSpace разработка для синтетиков, позволяющая владельцу выбрать 1 из 2 наборов инструментов: для боя или для поддержки. Первый сочитает в себе все необходимое для медицины и инженерии, второй обладает встроенным вооружением."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "doom_box"
+
+/obj/item/weapon/tool_package/attack_self(mob/user)
+	. = ..()
+	if(!isrobot(user))
+		CRASH("Предмет для киборгов оказался в руках не-киборга [loc]!")
+	var/mob/living/silicon/robot/R = user
+	switch(tgui_input_list(user,"Select a role!","Custom Setup Creation", list("combat", "support")))
+		if("combat")
+			R.module.modules += new /obj/item/weapon/handcuffs/cyborg(R.module)
+			R.module.modules += new /obj/item/weapon/melee/baton(R.module)
+			R.module.modules += new /obj/item/weapon/melee/cultblade(R.module)
+			R.module.modules += new /obj/item/borg/sight/night(R.module)
+
+			var/obj/item/device/hailer/H = new(R.module)
+			H.emagged = TRUE
+			H.insults = 2
+			R.module.modules += H
+		if("support")
+			//Engineer
+			R.module.modules += new /obj/item/weapon/reagent_containers/spray/extinguisher/cyborg(R.module)
+			R.module.modules += new /obj/item/weapon/weldingtool/largetank(R.module)
+			R.module.modules += new /obj/item/weapon/screwdriver(R.module)
+			R.module.modules += new /obj/item/weapon/wrench(R.module)
+			R.module.modules += new /obj/item/weapon/wirecutters(R.module)
+			R.module.modules += new /obj/item/device/multitool(R.module)
+			R.module.modules += new /obj/item/weapon/rcd/borg(R.module)
+			R.module.modules += new /obj/item/device/analyzer(R.module)
+			R.module.modules += new /obj/item/weapon/gripper(R.module)
+			R.module.modules += new /obj/item/weapon/matter_decompiler(R.module)
+			//Medic
+			R.module.modules += new /obj/item/device/healthanalyzer(R.module)
+			R.module.modules += new /obj/item/weapon/reagent_containers/borghypo/medical(R.module)
+			R.module.modules += new /obj/item/weapon/scalpel/manager(R.module)
+			R.module.modules += new /obj/item/weapon/FixOVein(R.module)
+			R.module.modules += new /obj/item/weapon/hemostat(R.module)
+			R.module.modules += new /obj/item/weapon/retractor(R.module)
+			R.module.modules += new /obj/item/weapon/cautery(R.module)
+			R.module.modules += new /obj/item/weapon/bonegel(R.module)
+			R.module.modules += new /obj/item/weapon/bonesetter(R.module)
+			R.module.modules += new /obj/item/weapon/circular_saw(R.module)
+			R.module.modules += new /obj/item/weapon/surgicaldrill(R.module)
+			R.module.modules += new /obj/item/weapon/razor(R.module)
+			R.module.modules += new /obj/item/weapon/gripper/medical(R.module)
+			R.module.modules += new /obj/item/device/reagent_scanner/adv(R.module)
+			R.module.modules += new /obj/item/roller_holder(R.module)
+			R.module.modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(R.module)
+			R.module.modules += new /obj/item/weapon/reagent_containers/dropper/robot(R.module)
+			R.module.modules += new /obj/item/weapon/reagent_containers/syringe(R.module)
+			R.module.modules += new /obj/item/weapon/shockpaddles/robot(R.module)
+			R.module.modules += new /obj/item/weapon/reagent_containers/spray/cleaner/cyborg(R.module)
+
+			R.module.stacktypes = list(
+				/obj/item/stack/sheet/metal/cyborg = 50,
+				/obj/item/stack/sheet/glass/cyborg = 50,
+				/obj/item/stack/sheet/rglass/cyborg = 50,
+				/obj/item/stack/cable_coil/cyborg = 50,
+				/obj/item/stack/rods = 15,
+				/obj/item/stack/tile/plasteel = 15,
+				/obj/item/stack/medical/advanced/bruise_pack = 6,
+				/obj/item/stack/medical/advanced/ointment = 6,
+				/obj/item/stack/nanopaste = 10,
+				/obj/item/stack/medical/splint = 5
+				)
+			for(var/T in R.module.stacktypes)
+				var/obj/item/stack/W = new T(R.module)
+				W.set_amount(R.module.stacktypes[T])
+				R.module.modules += W
+	R.module.modules -= src
+	qdel(src)
+	R.hud_used.update_robot_modules_display()
