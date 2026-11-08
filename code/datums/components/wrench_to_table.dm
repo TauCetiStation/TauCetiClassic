@@ -5,14 +5,14 @@
 	var/datum/callback/on_unwrenched
 
 /datum/component/wrench_to_table/Initialize(datum/callback/_on_wrenched = null, datum/callback/_on_unwrenched = null)
+	on_wrenched = _on_wrenched
+	on_unwrenched = _on_unwrenched
+
 	var/obj/item/parent_item = parent
 	var/obj/structure/table/table = locate(/obj/structure/table, get_turf(parent_item))
 	if(table)
 		wrenched_to = table
 		wrench()
-
-	on_wrenched = _on_wrenched
-	on_unwrenched = _on_unwrenched
 
 	RegisterSignal(parent, list(COMSIG_PARENT_ATTACKBY), PROC_REF(try_wrench))
 	RegisterSignal(parent, list(COMSIG_PARENT_QDELETING), PROC_REF(on_destroyed))
