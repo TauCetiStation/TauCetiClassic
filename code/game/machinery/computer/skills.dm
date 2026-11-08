@@ -83,9 +83,9 @@
 				if(SKILLS_MODE_EDIT_SCREEN)
 					dat += "<center><b>Employment Record</b></center><br>"
 					if ((istype(active1, /datum/data/record) && data_core.general.Find(active1)))
-						var/icon/front = active1.fields["photo_f"]
+						var/icon/front = new/icon(active1.fields["photo_f"])
 						front.Blend(mugshot,ICON_UNDERLAY,1,1)
-						var/icon/side = active1.fields["photo_s"]
+						var/icon/side = new/icon(active1.fields["photo_s"])
 						side.Blend(mugshot,ICON_UNDERLAY,1,1)
 						user << browse_rsc(front, "front.png")
 						user << browse_rsc(side, "side.png")
