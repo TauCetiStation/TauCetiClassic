@@ -79,6 +79,10 @@
 	. += 					"<td><a href='byond://?_src_=prefs;preference=ambientocclusion'><b>[ambientocclusion ? "Enabled" : "Disabled"]</b></a></td>"
 	. += 				"</tr>"
 	. += 				"<tr>"
+	. += 					"<td width='45%'>Emissive Lighting:</td>"
+	. += 					"<td><a href='byond://?_src_=prefs;preference=emissive_lighting'><b>[emissive_lighting ? "Enabled" : "Disabled"]</b></a></td>"
+	. += 				"</tr>"
+	. += 				"<tr>"
 	. += 					"<td width='45%'>Fit Viewport:</td>"
 	. += 					"<td><a href='byond://?_src_=prefs;preference=auto_fit_viewport'><b>[auto_fit_viewport ? "Auto" : "Manual"]</b></a></td>"
 	. += 				"</tr>"
@@ -182,6 +186,9 @@
 			ambientocclusion = !ambientocclusion
 			if(parent && parent.screen && parent.screen.len)
 				parent.update_plane_masters(/atom/movable/screen/plane_master/game_world)
+
+		if("emissive_lighting")
+			parent?.toggle_emissive_lighting()
 
 		if("lobbyanimation")
 			lobbyanimation = !lobbyanimation // shouldn't prefs changes be saved somewhere here?

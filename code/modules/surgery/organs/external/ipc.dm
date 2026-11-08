@@ -32,6 +32,9 @@
 	icon = species.icobase
 	icon_state = "[body_zone]_[ipc_head]"
 
+/obj/item/organ/external/head/robot/ipc/is_hair_emissive()
+	return owner && owner.stat != DEAD && screen_toggle && !is_stump && h_style != /datum/sprite_accessory/hair/ipc_screen_off::name
+
 /obj/item/organ/external/head/robot/ipc/cobalt
 	ipc_head = "Cobalt"
 

@@ -57,6 +57,7 @@
 		icon_state = "atmos_alert_1"
 	else
 		icon_state = "atmos_alert_0"
+	update_emissive()
 
 
 /obj/machinery/computer/atmos_alert/proc/return_text()

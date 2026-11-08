@@ -424,3 +424,4 @@
 		else
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
+	update_emissive()

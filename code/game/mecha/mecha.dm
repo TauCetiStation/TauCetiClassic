@@ -18,6 +18,7 @@
 	flags = HEAR_TALK
 	density = TRUE //Dense. To raise the heat.
 	opacity = 1 ///opaque. Menacing.
+	blocks_emissive = TRUE
 	anchored = TRUE //no pulling around.
 	unacidable = 1 //and no deleting hoomans inside
 	layer = MOB_LAYER //icon draw layer

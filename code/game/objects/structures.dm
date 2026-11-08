@@ -1,4 +1,5 @@
 /obj/structure
+	blocks_emissive = TRUE
 	icon = 'icons/obj/structures.dmi'
 	var/climbable
 	var/list/climbers = list()

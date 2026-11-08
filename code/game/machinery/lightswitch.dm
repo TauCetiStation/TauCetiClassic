@@ -35,8 +35,7 @@
 
 /obj/machinery/light_switch/proc/updateicon()
 	if(!overlay)
-		overlay = image(icon, "light1-overlay", layer = ABOVE_LIGHTING_LAYER)
-		overlay.plane = LIGHTING_LAMPS_PLANE
+		overlay = emissive_appearance(icon, "light1-overlay")
 
 	cut_overlays()
 	if(stat & (NOPOWER|BROKEN))

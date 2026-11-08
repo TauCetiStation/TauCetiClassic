@@ -298,6 +298,16 @@
 	light_color = "#ea4444"
 	circuit = /obj/item/weapon/circuitboard/security/entertainment
 
+/obj/machinery/computer/security/telescreen/entertainment/update_icon()
+	. = ..()
+	update_emissive()
+
+/obj/machinery/computer/security/telescreen/entertainment/update_emissive()
+	var/mask = get_emissive_overlay('icons/obj/monitors_emissive.dmi', "entertainment", mask_only = TRUE)
+	cut_overlay(mask)
+	if(!(stat & (NOPOWER|BROKEN)) && icon == 'icons/obj/status_display.dmi')
+		add_overlay(mask)
+
 /obj/machinery/computer/security/wooden_tv
 	name = "security camera monitor"
 	desc = "An old TV hooked into the stations camera network."

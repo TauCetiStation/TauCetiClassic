@@ -298,21 +298,11 @@ SUBSYSTEM_DEF(demo)
 		for(var/i in 1 to old_list.len)
 			inted[i] += round(old_list[i] * 255)
 		color_string = jointext(inted, ",")
-	var/overlays_string = "\[]"
-	if(appearance.overlays.len && !remove_overlays)
-		var/list/overlays_list = list()
-		for(var/i in 1 to appearance.overlays.len)
-			var/image/overlay = appearance.overlays[i]
-			overlays_list += encode_appearance(overlay, appearance, TRUE)
-		overlays_string = "\[[jointext(overlays_list, ",")]]"
+	var/list/overlays_list = remove_overlays ? list() : encode_render_list(appearance.overlays, appearance)
+	var/overlays_string = "\[[jointext(overlays_list, ",")]]"
 
-	var/underlays_string = "\[]"
-	if(appearance.underlays.len)
-		var/list/underlays_list = list()
-		for(var/i in 1 to appearance.underlays.len)
-			var/image/underlay = appearance.underlays[i]
-			underlays_list += encode_appearance(underlay, appearance, TRUE)
-		underlays_string = "\[[jointext(underlays_list, ",")]]"
+	var/list/underlays_list = encode_render_list(appearance.underlays, appearance)
+	var/underlays_string = "\[[jointext(underlays_list, ",")]]"
 
 	var/appearance_transform_string = "i"
 	if(appearance.transform)
@@ -337,8 +327,8 @@ SUBSYSTEM_DEF(demo)
 		appearance:invisibility == INVISIBILITY_NONE ? "" : appearance:invisibility, // colon because dreamchecker is dumb
 		appearance.pixel_w == 0 ? "" : appearance.pixel_w,
 		appearance.pixel_z == 0 ? "" : appearance.pixel_z,
-		appearance.overlays.len ? overlays_string : "",
-		appearance.underlays.len ? underlays_string : ""
+		overlays_list.len ? overlays_string : "",
+		underlays_list.len ? underlays_string : ""
 		)
 	while(appearance_list[appearance_list.len] == "" && appearance_list.len > 0)
 		appearance_list.len--
@@ -402,6 +392,13 @@ SUBSYSTEM_DEF(demo)
 		if(length(diffed_string) < length(undiffed_string))
 			return diffed_string
 	return undiffed_string
+
+// emissive masks only feed plane master filters, the viewer would draw them as plain sprites
+/datum/controller/subsystem/demo/proc/encode_render_list(list/images, image/parent)
+	. = list()
+	for(var/image/child as anything in images)
+		if(!IS_EMISSIVE_RENDER_PLANE(child.plane))
+			. += encode_appearance(child, parent, TRUE)
 
 /datum/controller/subsystem/demo/stat_entry(msg)
 	msg += "Remaining: {"

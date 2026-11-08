@@ -119,10 +119,11 @@ What is the naming convention for planes or layers?
   #define SIGN_LAYER                      3.4   // Default value for /obj/structure/sign
   #define BELOW_MOB_LAYER                 3.7   // Currently used only by fluff struct in bluespace shelter
   //efine MOB_LAYER                       4     // For easy recordkeeping; this is a byond define
+  #define LAMPS_LAYER                     4.01
+  #define LARGE_MOB_LAYER                 4.05
   #define BELL_LAYER                      4.20
   #define INFRONT_MOB_LAYER               4.25
   //efine FLY_LAYER                       5     // For easy recordkeeping; this is a byond define
-  #define LAMPS_LAYER                     5
   #define TALL_STRUCTURE                  5.2
   #define MOB_ELECTROCUTION_LAYER         5.3
   #define INDICATOR_LAYER                 5.3  // Emotes should be above this as they are shown only temporary.
@@ -153,6 +154,10 @@ What is the naming convention for planes or layers?
 
 #define ENVIRONMENT_LIGHTING_PLANE 105
 #define ENVIRONMENT_LIGHTING_LOCAL_PLANE 106
+
+#define EMISSIVE_MASK_PLANE 107
+#define EMISSIVE_COLOR_PLANE 108
+#define EMISSIVE_VISIBILITY_PLANE 109
 
 #define LIGHTING_EXPOSURE_PLANE 110 // Light sources "cones"
 #define LIGHTING_LAMPS_SELFGLOW 111 // Light sources glow (lamps, doors overlay, etc.)
