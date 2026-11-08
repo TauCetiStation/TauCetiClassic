@@ -21,6 +21,7 @@
 	var/poison_type = "phoron"
 	var/last_successful_breath
 	var/breathing = FALSE
+	var/fractol_addiction = 0
 
 
 /obj/item/organ/internal/lungs/proc/handle_breath(datum/gas_mixture/breath, forced)
@@ -36,7 +37,8 @@
 	var/list/breath_gas = breath.gas
 	var/breath_total_moles = breath.total_moles
 
-	var/inhaling = breath_gas[breath_type]
+	var/inhale_type = breath_type
+	var/inhaling = breath_gas[inhale_type]
 	var/exhaling = breath_gas[exhale_type]
 	var/poison = breath_gas[poison_type]
 	var/sleeping_agent = breath_gas["sleeping_agent"]
@@ -54,10 +56,15 @@
 	var/druggy_inhaling = breath_gas[druggy_breath_type]
 	var/druggy_inhale_pp = druggy_inhaling ? (druggy_inhaling / breath_total_moles) * breath_pressure : 0
 
-	breath_type = inhale_pp >= druggy_inhale_pp ? breath_type : druggy_breath_type
+	inhale_type = inhale_pp >= druggy_inhale_pp ? inhale_type : druggy_breath_type
 	inhaling = inhale_pp >= druggy_inhale_pp ? inhaling : druggy_inhaling
 	inhale_pp = inhale_pp >= druggy_inhale_pp ? inhale_pp : druggy_inhale_pp
 
+	if(inhale_type == druggy_breath_type)
+		fractol_addiction++
+	else if(fractol_addiction > 0)
+		fractol_addiction--
+		inhale_type = druggy_breath_type
 
 	if(!owner)
 		return TRUE
@@ -99,7 +106,7 @@
 		failed_inhale = TRUE
 		owner.inhale_alert = TRUE
 
-	breath.adjust_gas(breath_type, -inhaled_gas_used, update = FALSE) //update afterwards
+	breath.adjust_gas(inhale_type, -inhaled_gas_used, update = FALSE) //update afterwards
 
 	if(exhale_type)
 		breath.adjust_gas_temp(exhale_type, inhaled_gas_used, owner.bodytemperature, update = FALSE) //update afterwards
