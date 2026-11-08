@@ -10,12 +10,18 @@
 	var/list/access = list()
 
 	//How many players can be this job
-	var/total_positions = 0
+	var/baseline_positions = 0
 
 	//How many players can spawn in as this job
 	var/spawn_positions = 0
 
-	// total_positions override by map
+	// Scale dynamic positions for this job
+	var/players_scale
+
+	// Max number of slots (baseline + dynamic) for this job
+	var/total_positions
+
+	// baseline_positions override by map
 	var/map_total_positions
 	// spawn_positions override by map
 	var/map_spawn_positions
@@ -189,7 +195,8 @@
 	return max(0, roles_ingame_minute_unlock[role] - C.player_ingame_age)
 
 /datum/job/proc/is_position_available()
-	return (current_positions < total_positions) || (total_positions == -1)
+	var/dyn_pos_count = round_summary_positions()
+	return (current_positions < dyn_pos_count) || (dyn_pos_count == -1)
 
 /datum/job/proc/map_check()
 	return TRUE
@@ -198,3 +205,14 @@
 	if(alt_titles && H.mind.role_alt_title)
 		return skillsets[H.mind.role_alt_title] || skillsets[title]
 	return skillsets[title]
+
+/datum/job/proc/round_summary_positions()
+	if(map_total_positions == 0)
+		return 0
+
+	. = map_total_positions || baseline_positions
+	if(. == -1)
+		return
+
+	if(total_positions > 0)
+		. = min(total_positions, . + floor(length(global.clients) / players_scale))
