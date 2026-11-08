@@ -19,10 +19,7 @@
 	var/list/cook_verbs = list("Cooking")
 	var/on_sound // the sound produced during operation
 	//Recipe & Item vars
-	var/recipe_type		//Make sure to set this on the machine definition, or else you're gonna runtime on New()
-	var/list/datum/recipe/available_recipes // List of the recipes you can use
-	var/list/acceptable_items // List of the items you can put in
-	var/list/acceptable_reagents // List of the reagents you can put in
+	var/recipe_type
 	var/max_n_of_items = 10
 	//Icon states
 	var/off_icon
@@ -37,26 +34,9 @@
 
 /obj/machinery/kitchen_machine/atom_init()
 	..()
-	reagents = new/datum/reagents(100)
+	reagents = new/datum/reagents(1000)
 	reagents.my_atom = src
-	if(!available_recipes)
-		available_recipes = new
-		acceptable_items = new
-		acceptable_reagents = new
 	return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/kitchen_machine/atom_init_late()
-	for(var/type in subtypesof(recipe_type))
-		var/datum/recipe/recipe = new type
-		if(recipe.result) // Ignore recipe subtypes that lack a result
-			available_recipes += recipe
-			for(var/item in recipe.items)
-				acceptable_items |= item
-			for(var/reagent in recipe.reagents)
-				acceptable_reagents |= reagent
-		else
-			qdel(recipe)
-	acceptable_items |= /obj/item/weapon/reagent_containers/food/snacks/grown
 
 /obj/machinery/kitchen_machine/RefreshParts()
 	..()
@@ -154,7 +134,7 @@
 		to_chat(user, "<span class='warning'>It doesn't react. Examine to find out the reason.</span>")
 		return TRUE
 
-	else if(is_type_in_list(O, acceptable_items))
+	else if(can_be_inserted(O))
 		if(contents.len >= max_n_of_items)
 			to_chat(user, "<span class='danger'>\The [src] is full of ingredients, you cannot put more.</span>")
 			return TRUE
@@ -177,10 +157,6 @@
 		var/obj/item/weapon/reagent_containers/RC = O
 		if(!RC.reagents)
 			return TRUE
-		for(var/datum/reagent/R in RC.reagents.reagent_list)
-			if (!(R.id in acceptable_reagents))
-				to_chat(user, "Your [RC] contains components unsuitable for cookery")
-				return TRUE
 		var/trans = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [src].</span>")
 
@@ -191,6 +167,18 @@
 	else
 		to_chat(user, "<span class='danger'>You have no idea what you can cook with this [O].</span>")
 		return TRUE
+
+/obj/machinery/kitchen_machine/proc/can_be_inserted(obj/item/O)
+	if(!istype(O) || (O.flags & ABSTRACT) || O.anchored)
+		return FALSE
+
+	if(O.is_open_container())
+		return FALSE
+
+	if(istype(O, /obj/item/weapon/grab))
+		return FALSE
+
+	return TRUE
 
 /obj/machinery/kitchen_machine/attack_ai(mob/user)
 	ui_interact(user, FALSE)
@@ -254,7 +242,17 @@
 		stop()
 		return
 
-	var/datum/recipe/recipe = select_recipe(available_recipes, src)
+	var/alist/ingredients = alist()
+	for(var/datum/reagent/R in reagents.reagent_list)
+		ingredients[R.id] = reagents.get_reagent_amount(R.id)
+
+	for(var/obj/item/I in contents)
+		if(!ingredients["[I.type]"])
+			ingredients["[I.type]"] = 1
+		else
+			ingredients["[I.type]"] = ingredients["[I.type]"] + 1
+
+	var/datum/recipe/recipe = select_recipe(recipe_type, ingredients)
 	var/obj/cooked
 	var/obj/byproduct
 	if(!recipe)
@@ -295,17 +293,31 @@
 			cooked = fail()
 			cooked.loc = loc
 			return
-		cooked = recipe.make_food(src)
-		byproduct = recipe.get_byproduct()
 		stop()
-		if(cooked)
-			cooked.loc = loc
-		for(var/i = 1, i < efficiency, i++)
-			cooked = new cooked.type(loc)
+		make_items(recipe, values_sum(ingredients))
+		byproduct = recipe.get_byproduct()
 		if(byproduct)
 			new byproduct(loc)
 		SSStatistics.score.meals++
 		return
+
+/obj/machinery/kitchen_machine/proc/make_items(datum/recipe/recipe, ingredients_count)
+	var/list/cook_amount = recipe.get_product_amount(ingredients_count, efficiency)
+
+	var/list/cooked_list = list()
+	for(var/i in 1 to cook_amount)
+		cooked_list += recipe.make_food(loc)
+
+	for(var/reagent_type in recipe.reagents)
+		reagents.del_reagent(reagent_type)
+
+	for(var/obj/item/I in contents)
+		I.reagents.trans_to(src, I.reagents.total_volume)
+		qdel(I)
+
+	var/reagents_transfer_count = round(reagents.total_volume / cook_amount)
+	for(var/obj/item/cooked_item in cooked_list)
+		reagents.trans_to(cooked_item, reagents_transfer_count)
 
 /obj/machinery/kitchen_machine/proc/cook_process(seconds)
 	for(var/i = 1 to seconds)
@@ -449,7 +461,6 @@
 	desc = "A microwave, perfect for reheating things with radiation."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "mw"
-	recipe_type = /datum/recipe/microwave
 	off_icon = "mw"
 	on_icon = "mw1"
 	broken_icon = "mwb"
@@ -459,6 +470,9 @@
 
 /obj/machinery/kitchen_machine/microwave/atom_init()
 	. = ..()
+
+	recipe_type = global.microwave_recipes
+
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/microwave(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
@@ -472,7 +486,6 @@
 	desc = "Cookies are ready, dear."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "oven_off"
-	recipe_type = /datum/recipe/oven
 	off_icon = "oven_off"
 	on_icon = "oven_on"
 	broken_icon = "oven_broke"
@@ -482,6 +495,9 @@
 
 /obj/machinery/kitchen_machine/oven/atom_init()
 	. = ..()
+
+	recipe_type = global.oven_recipes
+
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/oven(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
@@ -495,7 +511,6 @@
 	desc = "Backyard grilling, IN SPACE."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grill_off"
-	recipe_type = /datum/recipe/grill
 	off_icon = "grill_off"
 	on_icon = "grill_on"
 	broken_icon = "grill_broke"
@@ -505,6 +520,9 @@
 
 /obj/machinery/kitchen_machine/grill/atom_init()
 	. = ..()
+
+	recipe_type = global.grill_recipes
+
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/grill(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
@@ -518,7 +536,6 @@
 	desc = "The stuff of nightmares for a dentist."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "candymaker_off"
-	recipe_type = /datum/recipe/candy
 	off_icon = "candymaker_off"
 	on_icon = "candymaker_on"
 	broken_icon = "candymaker_broke"
@@ -528,6 +545,9 @@
 
 /obj/machinery/kitchen_machine/candymaker/atom_init()
 	. = ..()
+
+	recipe_type = global.candy_recipes
+
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/candymaker(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
