@@ -184,7 +184,7 @@
 	name = SHADOWLING
 	initial_skills = list(
 		/datum/skill/police = SKILL_LEVEL_MASTER,
-		/datum/skill/melee = SKILL_LEVEL_MASTER,
+		/datum/skill/melee = SKILL_LEVEL_NONE,
 		/datum/skill/engineering = SKILL_LEVEL_MASTER,
 		/datum/skill/construction = SKILL_LEVEL_MASTER,
 		/datum/skill/atmospherics = SKILL_LEVEL_MASTER,

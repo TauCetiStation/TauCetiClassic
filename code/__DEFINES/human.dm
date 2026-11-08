@@ -19,8 +19,8 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
-#define LIGHT_DAM_THRESHOLD 3
-#define LIGHT_HEAL_THRESHOLD 3
+#define LIGHT_DAM_THRESHOLD 0.3
+#define LIGHT_HEAL_THRESHOLD 0.3
 #define LIGHT_DAMAGE_TAKEN 10
 
 #define HUMAN_DEFAULT_SKIN_TONE /datum/skin_tone/albino::name

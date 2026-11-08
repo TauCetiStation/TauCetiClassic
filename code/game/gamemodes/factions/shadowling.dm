@@ -26,3 +26,14 @@
 	R.OnPostSetup() // for huds
 
 	return R
+
+/datum/faction/shadowlings/proc/thrall2master(mob/M, datum/role/thrall/T)
+	T.Drop()
+	add_faction_member(src, M, FALSE, TRUE)
+	for(var/datum/role/R in members)
+		SEND_SIGNAL(R.antag.current, COMSIG_CLEAR_MOOD_EVENT, "master_died")
+		to_chat(R.antag.current, "<span class='shadowling'><font size=3>Появился новый Мастер! Возрадуемся!</span></font>")
+
+		var/obj/effect/proc_holder/spell/S = M.GetSpell(/obj/effect/proc_holder/spell/no_target/shadow_ascension)
+		if(S)
+			M.RemoveSpell(S)
