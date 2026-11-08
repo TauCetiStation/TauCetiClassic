@@ -82,73 +82,76 @@ var/global/list/spawned_surprises = list()
 	return
 
 
-//////////////
-
-/proc/make_mining_asteroid_secret(size = 5)
-	var/valid = 0
-	var/turf/T = null
-	var/sanity = 0
-	var/list/room = null
-	var/list/turfs = null
-
-
-	turfs = get_area_turfs(/area/asteroid/mine/unexplored)
+/proc/pick_valid_asteroid_room_spawn_turf(size_x, size_y)
+	var/valid = FALSE
+	var/iterator = 0
+	var/list/turfs = get_area_turfs(/area/asteroid/mine/unexplored)
+	var/turf/T
 
 	if(!turfs.len)
-		return 0
+		return FALSE
 
 	while(!valid)
-		valid = 1
-		sanity++
-		if(sanity > 100)
-			return 0
+		valid = TRUE
+		iterator++
+		if(iterator > 100)
+			return FALSE
 
 		T=pick(turfs)
 		if(!T)
-			return 0
+			return FALSE
 
 		var/list/surroundings = list()
 
 		surroundings += range(7, locate(T.x,T.y,T.z))
-		surroundings += range(7, locate(T.x+size,T.y,T.z))
-		surroundings += range(7, locate(T.x,T.y+size,T.z))
-		surroundings += range(7, locate(T.x+size,T.y+size,T.z))
+		surroundings += range(7, locate(T.x+size_x,T.y,T.z))
+		surroundings += range(7, locate(T.x,T.y+size_y,T.z))
+		surroundings += range(7, locate(T.x+size_x,T.y+size_y,T.z))
 
 		if(locate(/area/asteroid/mine/explored) in surroundings)			// +5s are for view range
-			valid = 0
+			valid = FALSE
 			continue
 
 		if(locate(/turf/environment) in surroundings)
-			valid = 0
+			valid = FALSE
 			continue
 
 		if(locate(/area/asteroid/artifactroom) in surroundings)
-			valid = 0
+			valid = FALSE
 			continue
 
 		if(locate(/turf/simulated/floor/plating/airless/asteroid) in surroundings)
-			valid = 0
+			valid = FALSE
 			continue
 
 	if(!T)
-		return 0
+		return FALSE
 
-	room = spawn_room(T,size,size,,,1)
+	return T
+
+//////////////
+
+/proc/make_mining_asteroid_secret(size = 5)
+	var/turf/T = pick_valid_asteroid_room_spawn_turf(size, size)
+	if(!T)
+		return FALSE
+
+	var/list/room = spawn_room(T,size,size,,,1)
 
 	if(room)
 		T = pick(room["floors"])
 		if(T)
 			var/surprise = null
-			valid = 0
+			var/valid = FALSE
 			while(!valid)
 				surprise = pickweight(space_surprises)
 				if(surprise in spawned_surprises)
 					if(prob(20))
-						valid++
+						valid = TRUE
 					else
 						continue
 				else
-					valid++
+					valid = TRUE
 
 			spawned_surprises.Add(surprise)
 			new surprise(T)
