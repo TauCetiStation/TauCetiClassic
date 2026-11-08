@@ -206,6 +206,7 @@ var/global/list/alldepartments = list("Central Command")
 	P.ico        = LAZYCOPY(ico)
 	P.offset_x   = LAZYCOPY(offset_x)
 	P.offset_y   = LAZYCOPY(offset_y)
+	COMPILE_OVERLAYS(src)
 	P.copy_overlays(src, TRUE)
 
 	P.updateinfolinks()
