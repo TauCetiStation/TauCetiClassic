@@ -127,8 +127,8 @@
 /atom/proc/BorgCtrlShiftClick(mob/living/silicon/robot/user) //forward to human click if not overriden
 	CtrlShiftClick(user)
 
-/obj/machinery/door/airlock/BorgCtrlShiftClick()
-	AICtrlShiftClick()
+/obj/machinery/door/airlock/BorgCtrlShiftClick(mob/living/silicon/robot/user) // Cut power to doors. Forwards to AI code.
+	AICtrlShiftClick(user)
 
 /atom/proc/BorgShiftClick(mob/living/silicon/robot/user) //forward to human click if not overriden
 	ShiftClick(user)
