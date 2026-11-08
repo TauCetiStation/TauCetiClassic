@@ -107,6 +107,9 @@
 		update_icon()
 	return
 
+/obj/item/weapon/folder/try_wrap_up(wrap_type, wrap_icon_state = "deliveryenvelope")
+	. = ..()
+
 /obj/item/folder_holder
 	name = "folder holder"
 	desc = "Папка всех папок."

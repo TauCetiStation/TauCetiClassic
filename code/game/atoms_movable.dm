@@ -581,7 +581,16 @@
 			rad_power *= sqrt(1 / (distance_rad_signal + 1))
 			counter.recieve_rad_signal(rad_power, distance_rad_signal)
 
-/atom/movable/proc/try_wrap_up(wrap_type)
-	return null
+/atom/movable/proc/try_wrap_up(wrap_type, wrap_icon_state = null)
+	if(!wrap_icon_state)
+		return null
+
+	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
+	P.icon_state = wrap_icon_state
+	P.add_texture(wrap_type)
+
+	forceMove(P)
+
+	return P
 
 #undef GEIGER_RANGE

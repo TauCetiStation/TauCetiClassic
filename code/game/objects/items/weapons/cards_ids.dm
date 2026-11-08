@@ -17,6 +17,9 @@
 
 	var/list/files = list(  )
 
+/obj/item/weapon/card/try_wrap_up(wrap_type, wrap_icon_state = "deliveryenvelope")
+	. = ..()
+
 /obj/item/weapon/card/ticket // tickets for ticket machine
 	name = "ticket"
 	desc = "Билет"
