@@ -14,11 +14,10 @@
 		/obj/item/device/assembly/timer = 2,
 	)
 	premium = list(
-		/obj/item/weapon/circuitboard/vendor = 2,
+		/obj/item/weapon/table_parts/stall = 3,
 		/obj/item/device/tagger = 2,
 	)
 	product_ads = "Only the finest!;Have some tools.;The most robust equipment.;The finest gear in space!"
-	refill_canister = /obj/item/weapon/vending_refill/assist
 	private = FALSE
 
 /obj/machinery/vending/phoronresearch
@@ -62,7 +61,6 @@
 	prices = list(
 		/obj/item/weapon/weldingtool/largetank = 50,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/tool
 	private = TRUE
 
 /obj/machinery/vending/engivend
@@ -103,7 +101,6 @@
 	prices = list(
 		/obj/item/clothing/glasses/welding = 200,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/engivend
 	private = TRUE
 
 /obj/machinery/vending/engineering

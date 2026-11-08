@@ -244,48 +244,6 @@ Note: Once everything is added to the public areas, will add m_amt and g_amt to 
 to destroy them and players will be able to make replacements.
 */
 
-/obj/item/weapon/circuitboard/vendor
-	name = "circuit board (Booze-O-Mat Vendor)"
-	build_path = /obj/machinery/vending/boozeomat
-	board_type = "machine"
-	origin_tech = "programming=1"
-	req_components = list(
-							/obj/item/weapon/vending_refill/boozeomat = 3)
-
-/obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
-		var/static/list/names_of_vendings = list()
-		var/static/list/radial_icons = list()
-
-		if(names_of_vendings.len == 0)
-			for(var/obj/machinery/vending/type as anything in typesof(/obj/machinery/vending))
-				if(!initial(type.refill_canister))
-					continue
-				var/full_name
-				if(initial(type.subname))
-					full_name = "[initial(type.name)] ([initial(type.subname)])"
-				else
-					full_name = initial(type.name)
-
-				ASSERT(!names_of_vendings[full_name])
-
-				names_of_vendings[full_name] = type
-				radial_icons[full_name] = icon(initial(type.icon), initial(type.icon_state))
-
-		var/vending_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
-		if(isnull(vending_name))
-			return
-
-		var/obj/machinery/vending/vending_type = names_of_vendings[vending_name]
-
-		to_chat(user, "<span class='notice'>You set the board to [vending_name].</span>")
-
-		name = "circuit board ([vending_name] Vendor)"
-		build_path = vending_type
-		req_components = list(initial(vending_type.refill_canister) = 3)
-		return
-	return ..()
-
 /obj/item/weapon/circuitboard/smes
 	details = "circuit board (SMES)"
 	build_path = /obj/machinery/power/smes
