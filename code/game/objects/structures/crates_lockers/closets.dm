@@ -311,16 +311,9 @@
 		to_chat(user, "<span class='notice'>You successfully break out of [src]!</span>")
 		open()
 
-/obj/structure/closet/try_wrap_up(wrap_type)
-	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
-	P.icon_state = "deliverycloset"
-	P.add_texture(wrap_type)
-
+/obj/structure/closet/try_wrap_up(wrap_type, wrap_icon_state = "deliverycloset")
+	. = ..()
 	welded = TRUE
-
-	forceMove(P)
-
-	return P
 
 /obj/structure/closet/proc/spawn_infill_particle(min_x = -5, min_y = -13, max_x = 5, max_y = 7)
 	if(!isturf(loc))

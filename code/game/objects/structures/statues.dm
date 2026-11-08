@@ -77,3 +77,6 @@
 		playsound(src, 'sound/effects/rockfall.ogg', VOL_EFFECTS_MASTER)
 		visible_message("<span class='danger'>[C_CASE(src, NOMINATIVE_CASE)] рассыпается в пыль!</span>")
 	return ..()
+
+/obj/structure/fallen_statue/try_wrap_up(wrap_type, wrap_icon_state = "deliveryhuman")
+	. = ..()
