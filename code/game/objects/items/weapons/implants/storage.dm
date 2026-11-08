@@ -4,6 +4,7 @@
 	max_w_class = SIZE_SMALL
 	storage_slots = 2
 	cant_hold = list(/obj/item/weapon/disk/nuclear)
+	silent = TRUE
 
 /obj/item/weapon/implant/storage
 	name = "storage implant"
