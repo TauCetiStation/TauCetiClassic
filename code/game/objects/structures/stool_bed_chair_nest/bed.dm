@@ -15,6 +15,8 @@
 	can_buckle = 1
 	buckle_lying = 1
 
+	hidden_cache = /obj/item/weapon/storage/hidden_cache/pillow
+
 /obj/structure/stool/bed/psych
 	name = "psychiatrists couch"
 	desc = "For prime comfort during psychiatric evaluations."
@@ -63,6 +65,8 @@
 	icon_state = "down"
 	anchored = FALSE
 	var/type_roller = /obj/item/roller
+
+	hidden_cache = null
 
 /obj/structure/stool/bed/roller/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,src) || istype(W, /obj/item/roller_holder))

@@ -26,6 +26,8 @@
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-1"
 
+	hidden_cache = /obj/item/weapon/storage/hidden_cache/flowerpot
+
 /obj/item/weapon/flora/pottedplant/fern
 	name = "potted fern"
 	desc = "This is an ordinary looking fern. It looks like it could do with some water."

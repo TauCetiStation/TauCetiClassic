@@ -32,11 +32,17 @@
 	// A (nested) list of contents that need to be sent signals to when moving between areas. Can include src.
 	var/list/area_sensitive_contents
 
+	var/obj/item/weapon/storage/hidden_cache/hidden_cache
+
 /atom/movable/Destroy()
 
 	var/turf/T = loc
 
 	unbuckle_mob()
+
+	if(hidden_cache && !ispath(hidden_cache))
+		hidden_cache.spill()
+		qdel(hidden_cache)
 
 	if(loc)
 		loc.handle_atom_del(src)
@@ -583,5 +589,20 @@
 
 /atom/movable/proc/try_wrap_up(wrap_type)
 	return null
+
+/atom/movable/CtrlShiftClick(mob/user)
+	if(hidden_cache)
+		if(ispath(hidden_cache))
+			hidden_cache = new hidden_cache(src)
+
+		hidden_cache.try_open(user)
+
+	..()
+
+/atom/movable/examine(mob/user)
+	. = ..()
+
+	if(hidden_cache && Adjacent(user))
+		to_chat(user, "<span class='notice'>Вы можете проверить тайник кликнув CTRL+SHIFT+LMB на [src].</span>")
 
 #undef GEIGER_RANGE

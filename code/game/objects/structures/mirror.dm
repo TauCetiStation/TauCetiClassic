@@ -12,6 +12,7 @@
 	integrity_failure = 0.5
 	resistance_flags = UNACIDABLE | CAN_BE_HIT
 
+	hidden_cache = /obj/item/weapon/storage/hidden_cache/mirror
 
 /obj/structure/mirror/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
