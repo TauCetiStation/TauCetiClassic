@@ -83,6 +83,7 @@
 
 /obj/item/organ/external/head/robot
 	name = "robotic head"
+	vital = FALSE
 
 	icon = 'icons/mob/human/robotic.dmi'
 	icon_state = "head_m"
