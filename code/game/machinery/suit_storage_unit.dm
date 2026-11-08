@@ -143,7 +143,7 @@
 	var/mutable_appearance/I
 	ssu_left = locate(/obj/machinery/suit_storage_unit) in get_step(src, WEST)
 	if(!QDELETED(ssu_left))
-		if(ssu_left)
+		if(ssu_left && !istype(ssu_left, /obj/machinery/suit_storage_unit/surgery))
 			if(ssu_left.icon == src.icon)
 				I = mutable_appearance(icon = overlays_file, icon_state = "left_connect_[initial(icon_state)]")
 			else
@@ -154,7 +154,7 @@
 
 	ssu_right = locate(/obj/machinery/suit_storage_unit) in get_step(src, EAST)
 	if(!QDELETED(ssu_right))
-		if(ssu_right)
+		if(ssu_right && !istype(ssu_right, /obj/machinery/suit_storage_unit/surgery))
 			if(ssu_right.icon == src.icon)
 				I = mutable_appearance(icon = overlays_file, icon_state = "right_connect_[initial(icon_state)]")
 			else
@@ -853,3 +853,176 @@
 	name = "Vox Engineer Suit Storage Unit"
 	suit_type = /obj/item/clothing/suit/space/vox/pressure
 	helmet_type = /obj/item/clothing/head/helmet/space/vox/pressure
+
+
+
+/obj/machinery/suit_storage_unit/surgery
+	name = "Medical Surgery Storage Unit"
+	req_access = list()
+	suit_type = null
+	mask_type = null
+
+	icon_state = "surgery"
+	icon = 'icons/obj/suit_storage/medical.dmi'
+
+	locked = FALSE
+
+	filled = TRUE
+
+	var/alist/contents_by_slot = alist(
+		SLOT_BACK = null,
+		SLOT_BELT = null,
+		SLOT_WEAR_ID = null,
+		SLOT_L_STORE = null,
+		SLOT_R_STORE = null,
+		SLOT_S_STORE = null,
+		SLOT_WEAR_SUIT = null,
+		SLOT_HEAD = null,
+		SLOT_WEAR_MASK = null,
+		SLOT_L_EAR = null,
+		SLOT_R_EAR = null,
+		SLOT_GLASSES = null,
+		SLOT_NECK = null,
+		SLOT_GLOVES = null,
+		SLOT_W_UNIFORM = null,
+		SLOT_SHOES = null
+	)
+
+	var/obj/item/clothing/under/patient_gown/gown
+
+/obj/machinery/suit_storage_unit/surgery/Destroy()
+	gown = null
+	contents_by_slot = null
+	..()
+
+/obj/machinery/suit_storage_unit/surgery/toggle_lock()
+	return
+
+/obj/machinery/suit_storage_unit/surgery/make_full()
+	gown = new(src)
+
+/obj/machinery/suit_storage_unit/surgery/fast_equip(mob/living/operator)
+	if(!ishuman(operator))
+		return
+
+	var/mob/living/target = operator
+	if(occupant && ishuman(occupant))
+		target = occupant
+
+	if(get_insurance_type(target) == INSURANCE_NONE)
+		to_chat(operator, "<span class='userdanger'>У [target] отсутствует страховка!</span>")
+		return FALSE
+
+	var/obj/item/uniform = target?.get_equipped_item(SLOT_W_UNIFORM)
+	if(!gown && uniform)
+		if(target?.drop_from_inventory(uniform, src))
+			gown = uniform
+
+	for(var/i in global.undress_sequence.len to 1 step -1)
+		var/slot = global.undress_sequence[i]
+		if(!slot || !contents_by_slot[slot])
+			continue
+
+		if(!do_after(operator, 0.1 SECONDS, FALSE, src))
+			continue
+
+		var/obj/item/I = contents_by_slot[slot]
+
+		if(!target?.equip_to_slot_if_possible(I, slot, disable_warning = TRUE))
+			if(!I.forceMove(target?.loc))
+				I.forceMove(loc)
+
+		contents_by_slot[slot] = null
+		playsound(src, 'sound/misc/riginternaloff.ogg', VOL_EFFECTS_MASTER, 15)
+
+	update_icon()
+
+/obj/machinery/suit_storage_unit/surgery/fast_unequip(mob/living/operator)
+	if(!ishuman(operator))
+		return
+
+	var/mob/living/target = operator
+	if(occupant && ishuman(occupant))
+		target = occupant
+
+	if(get_insurance_type(target) == INSURANCE_NONE)
+		to_chat(operator, "<span class='userdanger'>У [target] отсутствует страховка!</span>")
+		return FALSE
+
+	for(var/slot in global.undress_sequence)
+		if(contents_by_slot[slot])
+			continue
+		var/obj/item/I = target.get_equipped_item(slot)
+		if(!(I && I.canremove))
+			continue
+
+		if(!target.drop_from_inventory(I, src))
+			continue
+		contents_by_slot[slot] = I
+
+	if(gown)
+		if(!target?.equip_to_slot_if_possible(gown, SLOT_W_UNIFORM, disable_warning = TRUE))
+			return
+
+		gown = null
+
+	update_icon()
+
+/obj/machinery/suit_storage_unit/surgery/attackby(obj/item/I, mob/user)
+	if(!opened)
+		return ..()
+
+	if(gown)
+		return
+
+	if(istype(I, /obj/item/clothing/under))
+		if(!user.drop_from_inventory(I, src))
+			return ..()
+
+		gown = I
+		return
+
+/obj/machinery/suit_storage_unit/surgery/MouseDrop_T(atom/something, mob/user)
+	add_fingerprint(user)
+	if(stat & BROKEN)
+		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
+		return FALSE
+	if(!opened || !ishuman(something))
+		return FALSE
+	place_occupant(something, user)
+	return TRUE
+
+/obj/machinery/suit_storage_unit/surgery/dispense(atom/movable/selected)
+	. = ..()
+
+	if(. && (selected == gown))
+		gown = null
+
+/obj/machinery/suit_storage_unit/surgery/update_icon()
+	if(length(suit_storage_overlays))
+		cut_overlay(suit_storage_overlays)
+		LAZYCLEARLIST(suit_storage_overlays)
+	if(stat & BROKEN)
+		icon_state = "[initial(icon_state)]_broken"
+
+	if(gown)
+		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "uniform")
+
+	var/mutable_appearance/door_I = null
+	if(!(stat & BROKEN))
+		door_I = mutable_appearance(icon = overlays_file, icon_state = "[opened ? "door_open_[icon_state]" : "door_closed_[icon_state]"]")
+	if(overlay_color)
+		var/mutable_appearance/unit_color = mutable_appearance(icon = overlays_file, icon_state = "[stat & BROKEN ? "suitholder_broken_color" : "suitholder_color"]")
+		door_I?.color = overlay_color
+		unit_color.color = overlay_color
+		suit_storage_overlays += unit_color
+	if(door_I)
+		suit_storage_overlays += door_I
+	if(!opened)
+		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "[locked ? "lock_closed_surgery" : "lock_open_surgery"]")
+	if(ultra_violet)
+		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "lock_closed_surgery")
+		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "[emagged ? "termalclean_emag_surgery" : "termalclean_surgery"]")
+	if(panel_open)
+		suit_storage_overlays += mutable_appearance(icon = overlays_file, icon_state = "panel_open")
+	add_overlay(suit_storage_overlays)

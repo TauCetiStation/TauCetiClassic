@@ -84,6 +84,25 @@ var/global/list/slot_equipment_priority = list(
 	SLOT_R_STORE
 	)
 
+var/global/list/undress_sequence = list(
+		SLOT_BACK,
+		SLOT_BELT,
+		SLOT_WEAR_ID,
+		SLOT_L_STORE,
+		SLOT_R_STORE,
+		SLOT_S_STORE,
+		SLOT_WEAR_SUIT,
+		SLOT_HEAD,
+		SLOT_WEAR_MASK,
+		SLOT_L_EAR,
+		SLOT_R_EAR,
+		SLOT_GLASSES,
+		SLOT_NECK,
+		SLOT_GLOVES,
+		SLOT_W_UNIFORM,
+		SLOT_SHOES
+	)
+
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W, check_obscured = FALSE)
