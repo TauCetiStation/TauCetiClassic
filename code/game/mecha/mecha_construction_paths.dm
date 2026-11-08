@@ -2,26 +2,26 @@
 ///// Construction datums //////
 ////////////////////////////////
 
-/datum/construction/reversible/mecha/custom_action(index, diff, obj/item/weapon/I, mob/user)
-	if(iswelding(I))
+/datum/construction/reversible/mecha/custom_action(index, diff, obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WELDING))
 		if (I.use(3, user))
 			playsound(holder, 'sound/items/Welder2.ogg', VOL_EFFECTS_MASTER)
 			return 1
 		else
 			to_chat(user, ("There's not enough fuel."))
 			return 0
-	else if(iswrenching(I))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		playsound(holder, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		return 1
-	else if(isscrewing(I))
+	else if(I.get_quality(QUALITY_SCREWING))
 		playsound(holder, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		return 1
-	else if(iscutter(I))
+	else if(I.get_quality(QUALITY_CUTTING))
 		playsound(holder, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		return 1
-	else if(iscoil(I))
-		var/obj/item/stack/cable_coil/C = I
-		if(!C.use(4))
+	else if(istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = I
+		if(!coil.use(4))
 			to_chat(user, ("There's not enough cable to finish the task."))
 			return 0
 		playsound(holder, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)

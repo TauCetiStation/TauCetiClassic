@@ -147,9 +147,9 @@
 	//No other icons for it atm
 
 
-/obj/machinery/power/am_control_unit/attackby(obj/item/W, mob/user)
-	if(!istype(W) || !user) return
-	if(iswrenching(W))
+/obj/machinery/power/am_control_unit/attackby(obj/item/I, mob/user)
+	if(!istype(I) || !user) return
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(!anchored)
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("[user.name] secures the [src.name] to the floor.", \
@@ -168,20 +168,20 @@
 			to_chat(user, "<span class='warning'>Once bolted and linked to a shielding unit it the [src.name] is unable to be moved!</span>")
 		return
 
-	if(istype(W, /obj/item/weapon/am_containment))
+	if(istype(I, /obj/item/weapon/am_containment))
 		if(fueljar)
 			to_chat(user, "<span class='warning'>There is already a [fueljar] inside!</span>")
 			return
-		fueljar = W
-		user.remove_from_mob(W)
+		fueljar = I
+		user.remove_from_mob(I)
 		user.update_icons()
-		user.visible_message("[user.name] loads an [W.name] into the [src.name].", \
-				"You load an [W.name].", \
+		user.visible_message("[user.name] loads an [I.name] into the [src.name].", \
+				"You load an [I.name].", \
 				"You hear a thunk.")
 		return
 
-	if(W.force >= 20)
-		stability -= W.force/2
+	if(I.force >= 20)
+		stability -= I.force/2
 		user.SetNextMove(CLICK_CD_MELEE)
 		check_stability()
 	..()

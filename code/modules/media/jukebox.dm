@@ -141,14 +141,14 @@ var/global/loopModeNames=list("Shuffle", "Single", "Once")
 	popup.set_content(t)
 	popup.open()
 
-/obj/machinery/media/jukebox/attackby(obj/item/W, mob/user, params)
+/obj/machinery/media/jukebox/attackby(obj/item/I, mob/user, params)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	if(iswrenching(W))
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(user.is_busy(src))
 			return
 		var/un = !anchored ? "" : "un"
 		user.visible_message("<span class='notice'>[user.name] begins [un]locking \the [src.name]'s casters.</span>","<span class='notice'>You begin [un]locking \the [src.name]'s casters.</span>")
-		if(W.use_tool(src, user, 30, volume = 50, quality = QUALITY_WRENCHING))
+		if(I.use_tool(src, user, 30, volume = 50, quality = QUALITY_WRENCHING))
 			anchored = !anchored
 			user.visible_message("<span class='notice'>[user.name] [un]locks \the [src.name]'s casters.</span>","<span class='warning'>You [un]lock \the [src.name]'s casters.</span>")
 			playing = emagged
@@ -377,8 +377,8 @@ var/global/loopModeNames=list("Shuffle", "Single", "Once")
 	update_icon()
 	update_music()
 
-/obj/machinery/media/jukebox/syndi/attackby(obj/item/W, mob/user, params)
-	if(iswrenching(W))
+/obj/machinery/media/jukebox/syndi/attackby(obj/item/I, mob/user, params)
+	if(I.get_quality(QUALITY_WRENCHING))
 		return
 	else
 		..()

@@ -100,8 +100,8 @@
 	START_PROCESSING(SSobj, src)
 	leak(amount_per_transfer_from_this)
 
-/obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
-	if (iswrenching(W))
+/obj/structure/reagent_dispensers/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
@@ -111,25 +111,25 @@
 		else
 			start_leaking()
 		return
-	else if (istype(W,/obj/item/device/assembly_holder))
+	else if (istype(I,/obj/item/device/assembly_holder))
 		if (rig)
 			to_chat(user, "<span class='warning'>There is another device in the way.</span>")
 			return
 		if(user.is_busy()) return
-		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
-		if(W.use_tool(src, user, 20))
-			user.visible_message("<span class='notice'>[user] rigs [W] to \the [src].</span>", "<span class='notice'>You rig [W] to \the [src]</span>")
+		user.visible_message("[user] begins rigging [I] to \the [src].", "You begin rigging [I] to \the [src]")
+		if(I.use_tool(src, user, 20))
+			user.visible_message("<span class='notice'>[user] rigs [I] to \the [src].</span>", "<span class='notice'>You rig [I] to \the [src]</span>")
 
-			var/obj/item/device/assembly_holder/H = W
+			var/obj/item/device/assembly_holder/H = I
 			if (isigniter(H.a_left) || isigniter(H.a_right))
 				message_admins("[key_name_admin(user)] rigged [src] at [COORD(loc)] for explosion. [ADMIN_JMP(user)]")
 				log_game("[key_name(user)] rigged [src] at [COORD(loc)] for explosion.")
 
-			rig = W
-			user.drop_from_inventory(W, src)
-			W.loc = src
+			rig = I
+			user.drop_from_inventory(I, src)
+			I.loc = src
 
-			var/icon/test = getFlatIcon(W)
+			var/icon/test = getFlatIcon(I)
 			test.Shift(NORTH,1)
 			test.Shift(EAST,6)
 			add_overlay(test)
@@ -291,15 +291,15 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 	else
 		to_chat(user, "<span class='warning'>There are no cups left in [src]!</span>")
 
-/obj/structure/reagent_dispensers/water_cooler/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
-		default_unfasten_wrench(user, W)
+/obj/structure/reagent_dispensers/water_cooler/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
+		default_unfasten_wrench(user, I)
 		return
-	else if(isscrewing(W))
+	else if(I.get_quality(QUALITY_SCREWING))
 		user.SetNextMove(CLICK_CD_RAPID)
 		if(reagents.total_volume > 0)
-			user.visible_message("[user] starts loosening the valve on [src] with [W].", \
-				"You start loosening the valve on [src] with [W], causing water to leak out.")
+			user.visible_message("[user] starts loosening the valve on [src] with [I].", \
+				"You start loosening the valve on [src] with [I], causing water to leak out.")
 			if(do_after(user, 30, target = src))
 				user.visible_message("<span class='notice'>[user] loosens the valve on [src], causing water to leak out.</span>", \
 					"<span class='notice'>You loosen the valve on [src], causing water to leak out.</span>")

@@ -27,7 +27,7 @@
 	if(istype(I, /obj/item/device/analyzer))
 		return bombtank.attackby(I, user, params)
 
-	if(iswrenching(I) && !status)	//This is basically bomb assembly code inverted. apparently it works.
+	if(I.get_quality(QUALITY_WRENCHING) && !status)	//This is basically bomb assembly code inverted. apparently it works.
 		to_chat(user, "<span class='notice'>You disassemble [src].</span>")
 
 		bombassembly.forceMove(user.loc)
@@ -41,9 +41,9 @@
 		qdel(src)
 		return
 
-	if((iswelding(I)))
-		var/obj/item/weapon/weldingtool/W = I
-		if(!W.isOn())
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(!WT.isOn())
 			if(!status)
 				status = 1
 				bombers += "[key_name(user)] welded a single tank bomb. Temp: [bombtank.air_contents.temperature-T0C]"
@@ -77,7 +77,7 @@
 
 // ---------- Procs below are for tanks that are used exclusively in 1-tank bombs ----------
 
-/obj/item/weapon/tank/proc/bomb_assemble(W,user)	//Bomb assembly proc. This turns assembly+tank into a bomb
+/obj/item/weapon/tank/proc/bomb_assemble(W, user)	//Bomb assembly proc. This turns assembly+tank into a bomb
 	var/obj/item/device/assembly_holder/S = W
 	var/mob/M = user
 	if(!S.secured)										//Check if the assembly is secured

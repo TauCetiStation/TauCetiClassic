@@ -11,7 +11,8 @@
 	hitsound = list('sound/weapons/bladeslice.ogg')
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
 	qualities = list(
-		QUALITY_CUTTING = 1
+		QUALITY_CUTTING = 100,
+		QUALITY_SURGERY_CUTTING = 25
 	)
 
 /obj/item/weapon/spear/atom_init()
@@ -155,7 +156,7 @@
 		else
 			to_chat(user, "<span class='notice'>[src] already has a cell.</span>")
 
-	else if(isscrewing(I))
+	else if(I.get_quality(QUALITY_SCREWING))
 		if(bcell)
 			to_chat(user, "<span class='notice'>You remove \the [bcell] from the [src].</span>")
 			bcell.update_icon()
@@ -263,8 +264,8 @@
 	N.color = color
 	qdel(src)
 
-/obj/item/weapon/noose/attackby(obj/item/W, mob/user)
-	if(!iscutter(W))
+/obj/item/weapon/noose/attackby(obj/item/I, mob/user)
+	if(!I.get_quality(QUALITY_CUTTING))
 		return ..()
 	user.visible_message("<span class='notice'>[user] cuts the noose.</span>", "<span class='notice'>You cut the noose.</span>")
 	var/obj/item/stack/cable_coil/C = new(get_turf(src))

@@ -61,7 +61,7 @@
 	return
 
 /obj/item/clothing/gloves/pipboy/attackby(obj/item/I, mob/user, params)
-	if(iscoil(I) || istype(I, /obj/item/weapon/stock_parts/cell) || iscutter(I) || istype(I, /obj/item/weapon/scalpel))
+	if(istype(I, /obj/item/stack/cable_coil) || istype(I, /obj/item/weapon/stock_parts/cell) || I.get_quality(QUALITY_CUTTING) || istype(I, /obj/item/weapon/scalpel))
 		return
 	return ..()
 

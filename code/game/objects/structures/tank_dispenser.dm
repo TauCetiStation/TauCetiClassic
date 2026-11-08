@@ -67,7 +67,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/dispenser, tank_dispenser_list)
 			to_chat(user, "<span class='notice'>CASE(src, NOMINATIVE_CASE)] полон.</span>")
 		updateUsrDialog()
 		return
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(anchored)
 			to_chat(user, "<span class='notice'>Вы открутили [CASE(src, ACCUSATIVE_CASE)].</span>")
 			anchored = FALSE

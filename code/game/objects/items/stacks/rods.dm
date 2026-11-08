@@ -14,7 +14,8 @@
 	usesound = 'sound/weapons/Genhit.ogg'
 	attack_verb = list("hit", "bludgeoned", "whacked")
 	qualities = list(
-		QUALITY_PRYING = 0.5
+		QUALITY_PRYING = 50,
+		QUALITY_SURGERY_MENDINGBONE = 50
 	)
 
 /obj/item/stack/rods/update_icon()
@@ -25,7 +26,7 @@
 		icon_state = "rods"
 
 /obj/item/stack/rods/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
+	if(I.get_quality(QUALITY_WELDING))
 		var/obj/item/weapon/weldingtool/WT = I
 
 		if(get_amount() < 2)
@@ -43,7 +44,7 @@
 			use(2)
 			if(!QDELETED(src) && replace)
 				user.put_in_hands(new_item)
-	if(iscutter(I))
+	if(I.get_quality(QUALITY_CUTTING))
 		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message(
 			"[user.name] cuts the [src], turning it into a crossbow bolt.",

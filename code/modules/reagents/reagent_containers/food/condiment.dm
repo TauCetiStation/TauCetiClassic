@@ -143,7 +143,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 
 /obj/item/weapon/condiment_shelf/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		new /obj/item/stack/sheet/wood(loc)
 		qdel(src)
@@ -203,22 +203,22 @@
 		pixel_y = (ndir & 3)? (ndir == NORTH ? 32 : -32) : 0
 	update_icon()
 
-/obj/structure/condiment_shelf/attackby(obj/item/weapon/O, mob/user)
-	if(iswrenching(O))
+/obj/structure/condiment_shelf/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(user.is_busy())
 			return
 		user.visible_message("<span class='warning'>[user] starts to disassemble \the [src].</span>")
 		if(do_after(user, 20, target = src))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			new /obj/item/weapon/condiment_shelf(src.loc)
-			for(var/obj/item/I in contents)
-				I.forceMove(get_turf(src))
+			for(var/obj/item/something in contents)
+				something.forceMove(get_turf(src))
 			qdel(src)
 		return
 
-	if(O.type in can_be_placed)
+	if(I.type in can_be_placed)
 		if(contents.len < max_items_inside)
-			user.drop_from_inventory(O, src)
+			user.drop_from_inventory(I, src)
 			update_icon()
 		else
 			to_chat(user, "<span class='rose'>\The [src] is full!</span>")

@@ -38,9 +38,9 @@
 	M.Turn(rand(-20,20))
 	transform = M
 
-/obj/structure/headpole/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/headpole/attackby(obj/item/I, mob/user)
 	..()
-	if(isprying(W))
+	if(I.get_quality(QUALITY_PRYING))
 		to_chat(user, "You pry \the [head] off \the [spear].")
 		if(head)
 			head.forceMove(get_turf(src))

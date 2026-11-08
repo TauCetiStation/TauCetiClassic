@@ -101,7 +101,7 @@
 			to_chat(user, "<span class='notice'>You install a cell in \the [src].</span>")
 			update_icon()
 
-	else if(isscrewing(I))
+	else if(I.get_quality(QUALITY_SCREWING))
 		if(bcell)
 			bcell.update_icon()
 			bcell.forceMove(get_turf(src.loc))
@@ -305,7 +305,7 @@
 	if(!H.organs_by_name[O_BRAIN])
 		return FALSE
 	var/obj/item/organ/external/bodypart_head = H.bodyparts_by_name[BP_HEAD]
-	if(!bodypart_head || (bodypart_head.is_stump))
+	if(!bodypart_head || (isstump(bodypart_head)))
 		return FALSE
 	return TRUE
 

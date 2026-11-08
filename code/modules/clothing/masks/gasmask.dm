@@ -98,7 +98,7 @@
 		"Живым или мертвым - ты пиздуешь со мной." = 'sound/voice/complionator/zhivym_ili_mertvym.ogg')
 
 /obj/item/clothing/mask/breath/gas/sechailer/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		var/obj/item/weapon/screwdriver/S = I
 		if(S.use_tool(src, user, SKILL_TASK_TRIVIAL, volume = 40, quality = QUALITY_SCREWING))
 			shitcurity_mode = !shitcurity_mode

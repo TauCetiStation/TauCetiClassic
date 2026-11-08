@@ -48,11 +48,11 @@
 #define SEE_BLIND 1
 
 /proc/is_wire_tool(obj/item/I)
-	if(ispulsing(I))
+	if(I.get_quality(QUALITY_PULSING))
 		return TRUE
-	if(iscutter(I))
+	if(I.get_quality(QUALITY_CUTTING))
 		return TRUE
-	if(issignaling(I))
+	if(I.get_quality(QUALITY_SIGNALLING))
 		return TRUE
 	return
 
@@ -268,14 +268,14 @@ var/global/list/wire_daltonism_colors = list()
 		return
 	switch(action)
 		if("cut")
-			if(I && iscutter(I))
+			if(I && I.get_quality(QUALITY_CUTTING))
 				cut_wire_color(target_wire, L)
 				I.play_tool_sound(holder, 20)
 				. = TRUE
 			else
 				to_chat(L, "<span class='warning'>You need wirecutters!</span>")
 		if("pulse")
-			if(I && ispulsing(I))
+			if(I && I.get_quality(QUALITY_PULSING))
 				pulse_color(target_wire)
 				I.play_tool_sound(holder, 20)
 				. = TRUE
@@ -288,7 +288,7 @@ var/global/list/wire_daltonism_colors = list()
 					L.put_in_hands(O)
 					. = TRUE
 			else
-				if(I && issignaling(I))
+				if(I && I.get_quality(QUALITY_SIGNALLING))
 					L.drop_from_inventory(I, holder)
 					attach_signaler(target_wire, I)
 				else

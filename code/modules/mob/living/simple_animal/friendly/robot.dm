@@ -76,13 +76,13 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/det5, chief_animal_list)
 	qdel(src)
 	return
 
-/mob/living/simple_animal/det5/attackby(obj/item/W, mob/user)
-	if(ispulsing(W))
-		var/obj/item/device/multitool/M = W
-		if(M.buffer && istype(M.buffer, /obj/machinery/computer/rdconsole))
-			rdconsole = M.buffer
-			M.buffer = null
-			to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
+/mob/living/simple_animal/det5/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_PULSING))
+		var/obj/item/device/multitool/MT = I
+		if(MT.buffer && istype(MT.buffer, /obj/machinery/computer/rdconsole))
+			rdconsole = MT.buffer
+			MT.buffer = null
+			to_chat(user, "<span class='notice'>You upload the data from the [I.name]'s buffer.</span>")
 	else
 		..()
 

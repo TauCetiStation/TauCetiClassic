@@ -65,36 +65,36 @@
 	required_grind = req_grind
 	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cubes_made] cube(s) for every [required_grind] monkey(s) inserted. Can also quickly extract cores from dead slimes."
 
-/obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
+/obj/machinery/monkey_recycler/attackby(obj/item/I, mob/user, params)
+	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", I))
 		return
 
-	if(exchange_parts(user, O))
+	if(exchange_parts(user, I))
 		return
 
-	if(default_pry_open(O))
+	if(default_pry_open(I))
 		return
 
-	if(default_unfasten_wrench(user, O))
+	if(default_unfasten_wrench(user, I))
 		power_change()
 		return
 
-	default_deconstruction_crowbar(O)
+	default_deconstruction_crowbar(I)
 
 	if (src.stat) //NOPOWER etc
 		return
-	if (istype(O, /obj/item/weapon/holder/monkey))
+	if (istype(I, /obj/item/weapon/holder/monkey))
 		var/mob/living/G
-		for (var/mob/living/M in O.contents)
+		for (var/mob/living/M in I.contents)
 			G = M
 		if (G.stat == CONSCIOUS)
 			to_chat(user, "<span class='warning'>The subject is struggling far too much to put it in the recycler.</span>")
 		else
 			user.drop_item()
 			to_chat(user, "<span class='notice'>You stuff the subject in the machine.</span>")
-			grind(O, user)
-	if (istype(O, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = O
+			grind(I, user)
+	if (istype(I, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = I
 		var/grabbed = G.affecting
 		if(ismonkey(grabbed) || isslime(grabbed))
 			var/mob/living/carbon/target = grabbed
@@ -108,10 +108,10 @@
 			to_chat(user, "<span class='warning'>The machine only accepts monkeys and slimes!</span>")
 
 	if(panel_open)
-		if(ispulsing(O))
-			var/obj/item/device/multitool/M = O
-			M.buffer = src
-			to_chat(user, "<span class='notice'>You save the data in the [O.name]'s buffer.</span>")
+		if(I.get_quality(QUALITY_PULSING))
+			var/obj/item/device/multitool/MT = I
+			MT.buffer = src
+			to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
 	return
 
 /obj/machinery/monkey_recycler/attack_hand(mob/user)

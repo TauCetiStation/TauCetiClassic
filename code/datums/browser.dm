@@ -80,7 +80,7 @@
 
 	for(var/name in scripts)
 		head_content += "<script type='text/javascript' src='[name]'></script>"
-	
+
 	head_content += get_browse_zoom_style(user)
 
 	return {"<!DOCTYPE html>

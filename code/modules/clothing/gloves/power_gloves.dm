@@ -79,7 +79,7 @@
 			to_chat(user, "<span class='notice'>You attach the [cell] to the [src].</span>")
 		else
 			to_chat(user, "<span class='notice'>A [cell] is already attached to the [src].</span>")
-	else if(isscrewing(I))
+	else if(I.get_quality(QUALITY_SCREWING))
 		if(cell)
 			cell.update_icon()
 			to_chat(user, "<span class='notice'>You unscrew the [cell] away from the [src].</span>")

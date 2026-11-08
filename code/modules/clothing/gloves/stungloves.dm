@@ -4,8 +4,8 @@
 		return ..()
 
 	//add wires
-	if(iscoil(I))
-		var/obj/item/stack/cable_coil/C = I
+	if(istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = I
 		if (clipped)
 			to_chat(user, "<span class='notice'>The [src] are too badly mangled for wiring.</span>")
 			return
@@ -14,7 +14,7 @@
 			to_chat(user, "<span class='notice'>The [src] are already wired.</span>")
 			return
 
-		if(!C.use(2))
+		if(!coil.use(2))
 			to_chat(user, "<span class='notice'>There is not enough wire to cover the [src].</span>")
 			return
 
@@ -37,7 +37,7 @@
 			to_chat(user, "<span class='notice'>A [cell] is already attached to the [src].</span>")
 		return
 
-	else if(iscutter(I))
+	else if(I.get_quality(QUALITY_CUTTING))
 		//stunglove stuff
 		if(cell)
 			cell.update_icon()

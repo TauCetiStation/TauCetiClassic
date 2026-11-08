@@ -18,7 +18,7 @@
 	sheets_refunded = 1
 
 /obj/item/light_fixture_frame/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		deconstruct(TRUE)
 		user.SetNextMove(CLICK_CD_RAPID)
 		return
@@ -106,15 +106,15 @@
 			if(STAGE_SCREWED)
 				to_chat(user, "The casing is closed.")
 
-/obj/machinery/light_construct/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/light_construct/attackby(obj/item/I, mob/user)
 	add_fingerprint(user)
 	user.SetNextMove(CLICK_CD_RAPID)
-	if (iswrenching(W))
+	if (I.get_quality(QUALITY_WRENCHING))
 		if (stage == STAGE_START)
 			if(user.is_busy(src))
 				return
 			to_chat(user, "You begin deconstructing [src].")
-			if(!W.use_tool(src, usr, 5, volume = 75, quality = QUALITY_WRENCHING))
+			if(!I.use_tool(src, usr, 5, volume = 75, quality = QUALITY_WRENCHING))
 				return
 			user.visible_message("[user.name] deconstructs [src].", \
 				"You deconstruct [src].", "You hear a noise.")
@@ -129,10 +129,10 @@
 			to_chat(usr, "You have to unscrew the case first.")
 			return
 
-	if(iscutter(W))
+	if(I.get_quality(QUALITY_CUTTING))
 		if (stage != STAGE_COILED)
 			return
-		if(!W.use_tool(src, usr, 5, volume = 75, quality = QUALITY_CUTTING))
+		if(!I.use_tool(src, usr, 5, volume = 75, quality = QUALITY_CUTTING))
 			return
 		stage = STAGE_START
 		switch(fitting)
@@ -146,10 +146,10 @@
 			"You remove the wiring from [src].", "You hear a noise.")
 		return
 
-	if(iscoil(W))
+	if(istype(I, /obj/item/stack/cable_coil))
 		if (stage != STAGE_START)
 			return
-		if(!W.use_tool(src, usr, 5, amount = 1, volume = 75))
+		if(!I.use_tool(src, usr, 5, amount = 1, volume = 75))
 			return
 		switch(fitting)
 			if(LAMP_FITTING_BULB)
@@ -161,10 +161,10 @@
 			"You add wires to [src].")
 		return
 
-	if(isscrewing(W))
+	if(I.get_quality(QUALITY_SCREWING))
 		if (stage != STAGE_COILED)
 			return
-		if(!W.use_tool(src, usr, 5, volume = 75, quality = QUALITY_SCREWING))
+		if(!I.use_tool(src, usr, 5, volume = 75, quality = QUALITY_SCREWING))
 			return
 
 		user.visible_message("[user.name] closes [src]'s casing.", \

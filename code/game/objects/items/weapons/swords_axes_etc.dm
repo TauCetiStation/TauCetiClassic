@@ -53,7 +53,8 @@
 	active = !active
 	if (active)
 		qualities = list(
-			QUALITY_KNIFE = 1
+			QUALITY_CUTTING = 100,
+			QUALITY_SURGERY_CUTTING = 50
 		)
 		sharp = TRUE
 		force = 30

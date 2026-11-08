@@ -47,8 +47,8 @@ var/global/list/gyrotrons = list()
 	E.damage = mega_energy * 50
 	return E
 
-/obj/machinery/power/emitter/gyrotron/attackby(obj/item/W, mob/user)
-	if(ispulsing(W))
+/obj/machinery/power/emitter/gyrotron/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_PULSING))
 		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Gyrotron", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident

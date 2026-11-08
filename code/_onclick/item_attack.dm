@@ -51,15 +51,25 @@
 /obj/item/proc/afterattack(atom/target, mob/user, proximity, params)
 	return
 
+/obj/item/proc/try_operate(atom/target, mob/user)
+	if(ishuman(target) && length(qualities))
+		var/mob/living/carbon/human/H = target
+		var/obj/item/organ/external/BP = H.get_bodypart(user.get_targetzone())
+		if(BP && can_operate(H, user)) // Checks if mob is lying down on table for surgery and have mob needle bodypart
+			do_surgery(H, user, src)
+			return TRUE
+		else
+			to_chat(user, "<span class='notice'>[H] [BP] cannot be operated on in this condition!</span>")
+		return FALSE
+
 
 /obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user, def_zone) & COMPONENT_ITEM_NO_ATTACK)
 		return
 
 	var/mob/messagesource = M
-	if (can_operate(M, user))  //Checks if mob is lying down on table for surgery
-		if (do_surgery(M, user, src))
-			return FALSE
+	if(try_operate(M, user))
+		return FALSE
 
 	if(stab_eyes && user.a_intent != INTENT_HELP && (def_zone == O_EYES || def_zone == BP_HEAD))
 		if(user.ClumsyProbabilityCheck(50))

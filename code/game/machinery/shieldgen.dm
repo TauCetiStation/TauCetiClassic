@@ -130,8 +130,8 @@
 		else
 			to_chat(user, "The device must first be secured to the floor.")
 
-/obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewing(W))
+/obj/machinery/shieldgen/attackby(obj/item/weapon/I, mob/user)
+	if(I.get_quality(QUALITY_SCREWING))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(is_open)
 			to_chat(user, "<span class='notice'>You close the panel.</span>")
@@ -140,8 +140,8 @@
 			to_chat(user, "<span class='notice'>You open the panel and expose the wiring.</span>")
 			is_open = 1
 
-	else if(iscoil(W) && malfunction && is_open)
-		var/obj/item/stack/cable_coil/coil = W
+	else if(istype(I, /obj/item/stack/cable_coil) && malfunction && is_open)
+		var/obj/item/stack/cable_coil/coil = I
 		if(user.is_busy(src)) return
 		if(!do_skill_checks(user))
 			return
@@ -152,7 +152,7 @@
 			to_chat(user, "<span class='notice'>You repair the [src]!</span>")
 			update_icon()
 
-	else if(iswrenching(W))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		if(locked)
 			to_chat(user, "The bolts are covered, unlocking this would retract the covers.")
 			return
@@ -172,7 +172,7 @@
 			anchored = TRUE
 
 
-	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+	else if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		if(allowed(user))
 			src.locked = !src.locked
 			to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
@@ -365,8 +365,8 @@
 		CF.set_dir(field_dir)
 
 
-/obj/machinery/shieldwallgen/attackby(obj/item/W, mob/user)
-	if(iswrenching(W))
+/obj/machinery/shieldwallgen/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(active)
 			to_chat(user, "Turn off the field generator first.")
 			return
@@ -388,7 +388,7 @@
 			src.anchored = FALSE
 			return
 
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
 		if (allowed(user))
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
@@ -397,7 +397,7 @@
 
 	else
 		add_fingerprint(user)
-		visible_message("<span class='warning'>The [src.name] has been hit with \the [W.name] by [user.name]!</span>")
+		visible_message("<span class='warning'>The [src.name] has been hit with \the [I.name] by [user.name]!</span>")
 		user.SetNextMove(CLICK_CD_MELEE)
 
 /obj/machinery/shieldwallgen/proc/cleanup(NSEW)

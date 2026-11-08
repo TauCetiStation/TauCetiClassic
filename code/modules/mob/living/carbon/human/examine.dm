@@ -28,7 +28,7 @@
 		skipears = TRUE
 
 	var/obj/item/organ/external/head/MyHead = bodyparts_by_name[BP_HEAD]
-	if(!istype(MyHead) || MyHead.is_stump)
+	if(!istype(MyHead) || isstump(MyHead))
 		skipface = TRUE
 
 	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<

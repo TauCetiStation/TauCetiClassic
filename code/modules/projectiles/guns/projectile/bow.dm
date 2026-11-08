@@ -70,9 +70,9 @@
 		else
 			to_chat(user, "<span class='notice'>Батарейка уже установлена в [CASE(src, ACCUSATIVE_CASE)]</span>")
 
-	else if(isscrewing(I))
+	else if(I.get_quality(QUALITY_SCREWING))
 		if(cell)
-			var/obj/item/C = cell
+			var/obj/item/weapon/stock_parts/cell/C = cell
 			C.forceMove(get_turf(user))
 			cell = null
 			to_chat(user, "<span class='notice'>Вы вынимаете батарейку из [CASE(src, GENITIVE_CASE)] [I].</span>")

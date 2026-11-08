@@ -158,10 +158,10 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/update_icon()
 	return null
 
-/obj/machinery/atmospherics/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/analyzer))
+/obj/machinery/atmospherics/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/device/analyzer))
 		return
-	else if(iswrenching(W))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		if(user.is_busy()) return
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
@@ -189,7 +189,7 @@ Pipelines + Other Objects -> Pipe network
 					unsafe_wrenching = TRUE //Oh dear oh dear
 				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
 
-			if (W.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, quality = QUALITY_WRENCHING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_NOVICE)))
+			if (I.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, quality = QUALITY_WRENCHING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_NOVICE)))
 				user.visible_message(
 					"[user] unfastens \the [src].", \
 					"<span class='notice'>You unfasten \the [src].</span>",

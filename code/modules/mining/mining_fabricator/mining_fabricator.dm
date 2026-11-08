@@ -145,26 +145,26 @@
 	return result
 
 
-/obj/machinery/mecha_part_fabricator/mining_fabricator/attackby(obj/item/weapon/W, mob/user, params)
+/obj/machinery/mecha_part_fabricator/mining_fabricator/attackby(obj/item/I, mob/user, params)
 
-	if(default_deconstruction_screwdriver(user, "fab", "fab", W))
+	if(default_deconstruction_screwdriver(user, "fab", "fab", I))
 		update_icon()
 		return
 
-	if(exchange_parts(user, W))
+	if(exchange_parts(user, I))
 		return
 
 	if(panel_open)
-		if(isprying(W))
-			default_deconstruction_crowbar(W)
+		if(I.get_quality(QUALITY_PRYING))
+			default_deconstruction_crowbar(I)
 			return 1
 		else
 			to_chat(user, "<span class='warning'>You can't load \the [name] while it's opened!</span>")
 			return 1
 
-	if(istype(W, /obj/item/stack))
+	if(istype(I, /obj/item/stack))
 		var/material
-		switch(W.type)
+		switch(I.type)
 			if(/obj/item/stack/sheet/mineral/gold)
 				material = MAT_GOLD
 			if(/obj/item/stack/sheet/mineral/silver)
@@ -190,7 +190,7 @@
 		if(res_max_amount - resources[material] < MINERAL_MATERIAL_AMOUNT) //overstuffing the fabricator
 			to_chat(user, "<span class='warning'>\The [src] [material] storage is full!</span>")
 			return
-		var/obj/item/stack/sheet/stack = W
+		var/obj/item/stack/sheet/stack = I
 		var/sname = "[stack.name]"
 		if(resources[material] < res_max_amount)
 			add_overlay("fab-load-[material]")//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey

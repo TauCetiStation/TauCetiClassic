@@ -218,37 +218,37 @@ var/global/list/dyed_item_types = list(
 /obj/machinery/washing_machine/update_icon()
 	icon_state = "wm_[state][panel]"
 
-/obj/machinery/washing_machine/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
-		default_unfasten_wrench(user, W)
+/obj/machinery/washing_machine/attackby(obj/item/weapon/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
+		default_unfasten_wrench(user, I)
 		return
 
-	if(istype(W,/obj/item/toy/crayon) ||istype(W,/obj/item/weapon/stamp))
+	if(istype(I,/obj/item/toy/crayon) ||istype(I,/obj/item/weapon/stamp))
 		if( state in list(	1, 3, 6 ) )
 			if(!crayon)
-				user.drop_from_inventory(W, src)
-				crayon = W
+				user.drop_from_inventory(I, src)
+				crayon = I
 			else
 				..()
 		else
 			..()
-	else if(istype(W,/obj/item/weapon/grab))
+	else if(istype(I,/obj/item/weapon/grab))
 		if( (state == 1) && hacked)
-			var/obj/item/weapon/grab/G = W
+			var/obj/item/weapon/grab/G = I
 			if(ishuman(G.assailant) && (iscorgi(G.affecting) || isIAN(G.affecting)))
 				G.affecting.loc = src
 				qdel(G)
 				state = 3
 		else
 			..()
-	else if(is_type_in_typecache(W, global.washing_items_list))
-		if(!W.canremove) //if "can't drop" item
-			to_chat(user, "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
+	else if(is_type_in_typecache(I, global.washing_items_list))
+		if(!I.canremove) //if "can't drop" item
+			to_chat(user, "<span class='notice'>\The [I] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return
 
 		if(contents.len < 5)
 			if ( state in list(1, 3) )
-				user.drop_from_inventory(W, src)
+				user.drop_from_inventory(I, src)
 				state = 3
 			else
 				to_chat(user, "<span class='notice'>You can't put the item in right now.</span>")

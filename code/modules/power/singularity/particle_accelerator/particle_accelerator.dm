@@ -193,45 +193,45 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 	return 0
 
 
-/obj/structure/particle_accelerator/proc/process_tool_hit(obj/item/O, mob/user)
-	if(!(O) || !(user))
+/obj/structure/particle_accelerator/proc/process_tool_hit(obj/item/I, mob/user)
+	if(!(I) || !(user))
 		return 0
-	if(!ismob(user) || !isobj(O))
+	if(!ismob(user) || !isobj(I))
 		return 0
 	var/temp_state = src.construction_state
 
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
-			if(iswrenching(O))
-				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, quality = QUALITY_WRENCHING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+			if(I.get_quality(QUALITY_WRENCHING))
+				if(I.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, quality = QUALITY_WRENCHING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					src.anchored = TRUE
 					user.visible_message("[user.name] secures the [src.name] to the floor.", \
 						"You secure the external bolts.")
 					temp_state++
 		if(1)
-			if(iswrenching(O))
-				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, quality = QUALITY_WRENCHING,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+			if(I.get_quality(QUALITY_WRENCHING))
+				if(I.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, quality = QUALITY_WRENCHING,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					src.anchored = FALSE
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 						"You remove the external bolts.")
 					temp_state--
-			else if(iscoil(O))
-				var/obj/item/stack/cable_coil/C = O
-				if(C.use(1))
+			else if(istype(I, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/coil = I
+				if(coil.use(1))
 					user.visible_message("[user.name] adds wires to the [src.name].", \
 						"You add some wires.")
 					temp_state++
 		if(2)
-			if(iscutter(O))//TODO:Shock user if its on?
+			if(I.get_quality(QUALITY_CUTTING))//TODO:Shock user if its on?
 				user.visible_message("[user.name] removes some wires from the [src.name].", \
 					"You remove some wires.")
 				temp_state--
-			else if(isscrewing(O))
+			else if(I.get_quality(QUALITY_SCREWING))
 				user.visible_message("[user.name] closes the [src.name]'s access panel.", \
 					"You close the access panel.")
 				temp_state++
 		if(3)
-			if(isscrewing(O))
+			if(I.get_quality(QUALITY_SCREWING))
 				user.visible_message("[user.name] opens the [src.name]'s access panel.", \
 					"You open the access panel.")
 				temp_state--
@@ -331,43 +331,43 @@ ADD_TO_GLOBAL_LIST(/obj/structure/particle_accelerator, particle_accelerator_lis
 	return 0
 
 
-/obj/machinery/particle_accelerator/proc/process_tool_hit(obj/item/O, mob/user)
-	if(!(O) || !(user))
+/obj/machinery/particle_accelerator/proc/process_tool_hit(obj/item/I, mob/user)
+	if(!(I) || !(user))
 		return 0
-	if(!ismob(user) || !isobj(O))
+	if(!ismob(user) || !isobj(I))
 		return 0
 	var/temp_state = src.construction_state
 	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
-			if(iswrenching(O))
-				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, quality = QUALITY_WRENCHING,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+			if(I.get_quality(QUALITY_WRENCHING))
+				if(I.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, quality = QUALITY_WRENCHING,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					src.anchored = TRUE
 					user.visible_message("[user.name] secures the [src.name] to the floor.", \
 						"You secure the external bolts.")
 					temp_state++
 		if(1)
-			if(iswrenching(O))
-				if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, quality = QUALITY_WRENCHING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+			if(I.get_quality(QUALITY_WRENCHING))
+				if(I.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 75, quality = QUALITY_WRENCHING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					src.anchored = FALSE
 					user.visible_message("[user.name] detaches the [src.name] from the floor.", \
 						"You remove the external bolts.")
 					temp_state--
-			else if(iscoil(O))
-				if(O:use(1))
+			else if(istype(I, /obj/item/stack/cable_coil))
+				if(I:use(1))
 					user.visible_message("[user.name] adds wires to the [src.name].", \
 						"You add some wires.")
 					temp_state++
 		if(2)
-			if(iscutter(O))//TODO:Shock user if its on?
+			if(I.get_quality(QUALITY_CUTTING))//TODO:Shock user if its on?
 				user.visible_message("[user.name] removes some wires from the [src.name].", \
 					"You remove some wires.")
 				temp_state--
-			else if(isscrewing(O))
+			else if(I.get_quality(QUALITY_SCREWING))
 				user.visible_message("[user.name] closes the [src.name]'s access panel.", \
 					"You close the access panel.")
 				temp_state++
 		if(3)
-			if(isscrewing(O))
+			if(I.get_quality(QUALITY_SCREWING))
 				user.visible_message("[user.name] opens the [src.name]'s access panel.", \
 					"You open the access panel.")
 				temp_state--

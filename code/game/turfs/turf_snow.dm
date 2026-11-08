@@ -160,7 +160,7 @@
 		var/obj/item/weapon/pickaxe/P = W
 		if(next_act > world.time)//prevents message spam
 			return
-		next_act = world.time + 10 * P.toolspeed
+		next_act = world.time + 1 SECOND
 
 		if(istype(P, /obj/item/weapon/pickaxe/drill))
 			var/obj/item/weapon/pickaxe/drill/D = P
@@ -175,7 +175,7 @@
 		playsound(user, P.usesound, VOL_EFFECTS_INSTRUMENT)
 		to_chat(user, "<span class='warning'>You start [P.drill_verb].</span>")
 
-		if(!user.is_busy(src) && P.use_tool(src, user, 10, volume = 100))
+		if(!user.is_busy(src) && P.use_tool(src, user, 1 SECOND, volume = 100))
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 			GetDrilled()
 

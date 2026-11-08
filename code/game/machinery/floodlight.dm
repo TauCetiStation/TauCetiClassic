@@ -92,8 +92,8 @@
 
 	set_dir(turn(dir, 90))
 
-/obj/machinery/floodlight/attackby(obj/item/weapon/W, mob/user)
-	if (isscrewing(W))
+/obj/machinery/floodlight/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_SCREWING))
 		if (!open)
 			if(unlocked)
 				unlocked = FALSE
@@ -102,7 +102,7 @@
 				unlocked = TRUE
 				to_chat(user, "You unscrew the battery panel.")
 
-	if (isprying(W))
+	if(I.get_quality(QUALITY_PRYING))
 		if(unlocked)
 			if(open)
 				open = FALSE
@@ -113,13 +113,13 @@
 					open = TRUE
 					to_chat(user, "You remove the battery panel.")
 
-	if (istype(W, /obj/item/weapon/stock_parts/cell))
+	if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(open)
 			if(cell)
 				to_chat(user, "There is a power cell already installed.")
 			else
-				user.drop_from_inventory(W, src)
-				cell = W
+				user.drop_from_inventory(I, src)
+				cell = I
 				to_chat(user, "You insert the power cell.")
 	update_icon()
 

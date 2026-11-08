@@ -88,6 +88,11 @@ This is emryo growth procs
 	baby = null
 	return ..()
 
+
+/obj/item/alien_embryo/proc/detach()
+	forceMove(affected_mob.loc)
+	detach_from_host()
+
 /obj/item/alien_embryo/proc/detach_from_host()
 	if(!affected_mob)
 		return

@@ -57,24 +57,24 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		am += loaded_materials[M].amount
 	return am
 
-/obj/machinery/r_n_d/circuit_imprinter/attackby(obj/item/O, mob/user)
+/obj/machinery/r_n_d/circuit_imprinter/attackby(obj/item/I, mob/user)
 	if (shocked)
 		shock(user,50)
-	if (default_deconstruction_screwdriver(user, "circuit_imprinter", "circuit_imprinter", O))
+	if (default_deconstruction_screwdriver(user, "circuit_imprinter", "circuit_imprinter", I))
 		update_icon()
 		if(linked_console)
 			linked_console.linked_imprinter = null
 			linked_console = null
 		return
 
-	if(exchange_parts(user, O))
+	if(exchange_parts(user, I))
 		return
 
 	if (panel_open)
-		if(isprying(O))
-			default_deconstruction_crowbar(O)
+		if(I.get_quality(QUALITY_PRYING))
+			default_deconstruction_crowbar(I)
 			return
-		else if(is_wire_tool(O) && wires.interact(user))
+		else if(is_wire_tool(I) && wires.interact(user))
 			return
 		else
 			to_chat(user, "<span class='warning'>You can't load the [src.name] while it's opened.</span>")
@@ -84,9 +84,9 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	if (!linked_console)
 		to_chat(user, "<span class='warning'>\The [name] must be linked to an R&D console first!</span>")
 		return 1
-	if (O.is_open_container())
+	if (I.is_open_container())
 		return
-	if (!istype(O, /obj/item/stack/sheet/glass) && !istype(O, /obj/item/stack/sheet/mineral/gold) && !istype(O, /obj/item/stack/sheet/mineral/diamond))
+	if (!istype(I, /obj/item/stack/sheet/glass) && !istype(I, /obj/item/stack/sheet/mineral/gold) && !istype(I, /obj/item/stack/sheet/mineral/diamond))
 		to_chat(user, "<span class='warning'>You cannot insert this item into the [name]!</span>")
 		return
 	if (stat)
@@ -94,7 +94,7 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	if (busy)
 		to_chat(user, "<span class='warning'>The [name] is busy. Please wait for completion of previous operation.</span>")
 		return
-	var/obj/item/stack/sheet/stack = O
+	var/obj/item/stack/sheet/stack = I
 	if ((TotalMaterials() + stack.perunit) > max_material_amount)
 		to_chat(user, "<span class='warning'>The [name] is full. Please remove glass from the protolathe in order to insert more.</span>")
 		return
@@ -181,8 +181,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	var/datum/design/D = RNDD.design
 	var/atom/A = new D.build_path(loc)
 	if(isobj(A))
-		var/obj/O = A
-		O.origin_tech = null
+		var/obj/I = A
+		I.origin_tech = null
 	busy = FALSE
 	flick("circuit_imprinter_ani", src)
 	queue -= RNDD

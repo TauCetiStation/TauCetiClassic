@@ -7,10 +7,10 @@
 
 	resistance_flags = CAN_BE_HIT
 
-/obj/structure/cult/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W) && can_unwrench)
+/obj/structure/cult/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING) && can_unwrench)
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
-		if(W.use_tool(src, user, 20, volume = 50))
+		if(I.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 		return FALSE
@@ -151,9 +151,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 	religion?.torture_tables -= src
 	return ..()
 
-/obj/machinery/optable/torture_table/attackby(obj/item/W, mob/user, params)
-	if(!charged && istype(W, /obj/item/weapon/storage/bible/tome))
-		var/obj/item/weapon/storage/bible/tome/T = W
+/obj/machinery/optable/torture_table/attackby(obj/item/I, mob/user, params)
+	if(!charged && istype(I, /obj/item/weapon/storage/bible/tome))
+		var/obj/item/weapon/storage/bible/tome/T = I
 		if(T.religion && istype(T.religion, /datum/religion/cult))
 			var/datum/religion/cult/C = T.religion
 			C.torture_tables += src
@@ -164,9 +164,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 			new /obj/effect/temp_visual/cult/sparks(loc)
 			return FALSE
 
-	if(iswrenching(W))
+	if(I.get_quality(QUALITY_WRENCHING))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
-		if(W.use_tool(src, user, 20, volume = 50))
+		if(I.use_tool(src, user, 20, volume = 50))
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 		return FALSE
@@ -275,7 +275,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/cult/pylon, pylons)
 /obj/structure/cult/anomaly
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
-/obj/structure/cult/anomaly/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/cult/anomaly/attackby(obj/item/I, mob/user)
 	return FALSE
 
 /obj/structure/cult/anomaly/attack_animal(mob/living/simple_animal/user)

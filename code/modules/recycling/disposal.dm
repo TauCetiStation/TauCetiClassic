@@ -62,7 +62,7 @@
 
 	add_fingerprint(user)
 	if(mode<=0) // It's off
-		if(isscrewing(I))
+		if(I.get_quality(QUALITY_SCREWING))
 			if(contents.len > 0)
 				to_chat(user, "Eject the items first!")
 				return
@@ -76,16 +76,16 @@
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "You attach the screws around the power connection.")
 				return
-		else if(iswelding(I) && mode==-1)
+		else if(I.get_quality(QUALITY_WELDING)&& mode==-1)
 			if(contents.len > 0)
 				to_chat(user, "<span class='warning'>Eject the items first!</span>")
 				return
 			if(user.is_busy()) return
-			var/obj/item/weapon/weldingtool/W = I
-			if(W.use(0,user))
+			var/obj/item/weapon/weldingtool/WT = I
+			if(WT.use(0,user))
 				to_chat(user, "You start slicing the floorweld off the disposal unit.")
 
-				if(W.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
+				if(WT.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 					to_chat(user, "You sliced the floorweld off the disposal unit.")
 					deconstruct(TRUE)
 				return
@@ -880,13 +880,13 @@
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
 	if(user.is_busy()) return
-	if(iswelding(I))
-		var/obj/item/weapon/weldingtool/W = I
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 
-		if(W.use(0,user))
+		if(WT.use(0,user))
 			// check if anything changed over 2 seconds
 			to_chat(user, "You start slicing the disposal pipe.")
-			if(W.use_tool(src, user, 30, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
+			if(WT.use_tool(src, user, 30, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
 				welded()
 			else
@@ -1242,12 +1242,12 @@
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return		// prevent interaction with T-scanner revealed pipes
 	add_fingerprint(user)
-	if(iswelding(I))
-		var/obj/item/weapon/weldingtool/W = I
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(user.is_busy()) return
-		if(W.use(0,user))
+		if(WT.use(0,user))
 			to_chat(user, "You start slicing the disposal pipe.")
-			if(W.use_tool(src, user, 30, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
+			if(WT.use_tool(src, user, 30, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
 				welded()
 			else
@@ -1365,7 +1365,7 @@
 	if(!I || !user)
 		return
 	add_fingerprint(user)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(mode==0)
 			mode=1
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
@@ -1376,11 +1376,11 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
-	else if(iswelding(I) && mode==1 && !user.is_busy())
-		var/obj/item/weapon/weldingtool/W = I
-		if(W.use(0,user))
+	else if(I.get_quality(QUALITY_WELDING) && mode==1 && !user.is_busy())
+		var/obj/item/weapon/weldingtool/WT = I
+		if(WT.use(0,user))
 			to_chat(user, "You start slicing the floorweld off the disposal outlet.")
-			if(W.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
+			if(WT.use_tool(src, user, 20, volume = 100, quality = QUALITY_WELDING, required_skills_override = list(/datum/skill/atmospherics = SKILL_LEVEL_TRAINED)))
 				to_chat(user, "You sliced the floorweld off the disposal outlet.")
 				var/obj/structure/disposalconstruct/C = new (src.loc)
 				transfer_fingerprints_to(C)

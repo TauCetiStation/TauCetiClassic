@@ -41,60 +41,60 @@
 	)
 	smooth = SMOOTH_TRUE
 
-/obj/structure/girder/attackby(obj/item/W, mob/user)
+/obj/structure/girder/attackby(obj/item/I, mob/user)
 	if(user.is_busy())
 		return
 
-	else if(iswrenching(W) && state == 0)
+	else if(I.get_quality(QUALITY_WRENCHING) && state == 0)
 		if(anchored && !istype(src,/obj/structure/girder/displaced))
 			to_chat(user, "<span class='notice'>Вы разбираете каркас.</span>")
-			if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
 				if(!src) return
 				to_chat(user, "<span class='notice'>Вы разобрали каркас!</span>")
 				deconstruct(TRUE)
 		else if(!anchored)
 			to_chat(user, "<span class='notice'>Вы фиксируете каркас.</span>")
-			if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
 				to_chat(user, "<span class='notice'>Вы зафиксировали каркас!</span>")
 				new/obj/structure/girder( src.loc )
 				qdel(src)
 
-	else if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
+	else if(istype(I, /obj/item/weapon/gun/energy/laser/cutter))
 		to_chat(user, "<span class='notice'>Вы режете каркас.</span>")
-		if(W.use_tool(src, user, 30, volume = 100))
+		if(I.use_tool(src, user, 30, volume = 100))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы разрезали каркас!</span>")
 			deconstruct(TRUE)
 
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+	else if(I.get_quality(QUALITY_ROCK_DRILL))
 		to_chat(user, "<span class='notice'>Вы просверлили каркас!</span>")
 		deconstruct(TRUE)
 
-	else if(isscrewing(W) && state == 2 && istype(src,/obj/structure/girder/reinforced))
+	else if(I.get_quality(QUALITY_SCREWING) && state == 2 && istype(src,/obj/structure/girder/reinforced))
 		to_chat(user, "<span class='notice'>Вы ослабляете кронштейны.</span>")
-		if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_SCREWING))
+		if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_SCREWING))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы ослабили кронштейны!</span>")
 			state = 1
 
-	else if(iscutter(W) && istype(src,/obj/structure/girder/reinforced) && state == 1)
+	else if(I.get_quality(QUALITY_CUTTING) && istype(src,/obj/structure/girder/reinforced) && state == 1)
 		to_chat(user, "<span class='notice'>Вы разбираете кронштейны.</span>")
-		if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_CUTTING))
+		if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_CUTTING))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы разобрали кронштейны!</span>")
 			new/obj/structure/girder( src.loc )
 			qdel(src)
 
-	else if(isprying(W) && state == 0 && anchored )
+	else if(I.get_quality(QUALITY_PRYING) && state == 0 && anchored )
 		to_chat(user, "<span class='notice'>Вы делаете каркас подвижным.</span>")
-		if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_PRYING))
+		if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_PRYING))
 			if(!src) return
 			to_chat(user, "<span class='notice'>Вы сделали каркас подвижным!</span>")
 			new/obj/structure/girder/displaced( src.loc )
 			qdel(src)
 
-	else if(istype(W, /obj/item/stack/sheet))
-		var/obj/item/stack/sheet/S = W
+	else if(istype(I, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/S = I
 		switch(S.type)
 
 			if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
@@ -173,8 +173,8 @@
 
 		add_hiddenprint(usr)
 
-	else if(istype(W, /obj/item/pipe))
-		var/obj/item/pipe/P = W
+	else if(istype(I, /obj/item/pipe))
+		var/obj/item/pipe/P = I
 		if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
 			user.drop_from_inventory(P, loc)
 			to_chat(user, "<span class='notice'>Вы встроили трубу в каркас!</span>")

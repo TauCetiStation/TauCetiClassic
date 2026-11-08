@@ -124,35 +124,35 @@
 	new /obj/item/stack/rods (loc, 2)
 	return ..()
 
-/obj/structure/stacklifter/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
+/obj/structure/stacklifter/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(user.is_busy())
 			return
 		if(anchored)
-			if(W.use_tool(src, user, 5 SECONDS, volume = 100, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 5 SECONDS, volume = 100, quality = QUALITY_WRENCHING))
 				anchored = FALSE
-				to_chat(user, "<span class='notice'>You unfasten \the [src] with \the [W].</span>")
+				to_chat(user, "<span class='notice'>You unfasten \the [src] with \the [I].</span>")
 				return
 		else
-			if(W.use_tool(src, user, 5 SECONDS, volume = 100, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 5 SECONDS, volume = 100, quality = QUALITY_WRENCHING))
 				anchored = TRUE
-				to_chat(user, "<span class='notice'>You fasten \the [src] to the floor with \the [W].</span>")
+				to_chat(user, "<span class='notice'>You fasten \the [src] to the floor with \the [I].</span>")
 				return
 	return ..()
 
-/obj/structure/weightlifter/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
+/obj/structure/weightlifter/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(user.is_busy())
 			return
 		if(anchored)
-			if(W.use_tool(src, user, 5 SECONDS, volume = 100, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 5 SECONDS, volume = 100, quality = QUALITY_WRENCHING))
 				anchored = FALSE
-				to_chat(user, "<span class='notice'>You unfasten \the [src] with \the [W].</span>")
+				to_chat(user, "<span class='notice'>You unfasten \the [src] with \the [I].</span>")
 				return
 		else
-			if(W.use_tool(src, user, 5 SECONDS, volume = 100, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 5 SECONDS, volume = 100, quality = QUALITY_WRENCHING))
 				anchored = TRUE
-				to_chat(user, "<span class='notice'>You fasten \the [src] to the floor with \the [W].</span>")
+				to_chat(user, "<span class='notice'>You fasten \the [src] to the floor with \the [I].</span>")
 				return
 	return ..()
 
@@ -329,7 +329,7 @@
 	return ..()
 
 /obj/structure/dumbbells_rack/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(user.is_busy())
 			return
 		if(anchored)

@@ -90,30 +90,30 @@
 					else
 						break
 
-/obj/machinery/mineral/ore_redemption/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/I = usr.get_active_hand()
-		if(istype(I) && !istype(inserted_id))
-			if(!user.drop_from_inventory(I, src))
+/obj/machinery/mineral/ore_redemption/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/ID = usr.get_active_hand()
+		if(istype(ID) && !istype(inserted_id))
+			if(!user.drop_from_inventory(ID, src))
 				return
-			inserted_id = I
+			inserted_id = ID
 			updateUsrDialog()
 		return
-	if(exchange_parts(user, W))
+	if(exchange_parts(user, I))
 		return
 
-	if(default_pry_open(W))
+	if(default_pry_open(I))
 		return
 
-	if(default_unfasten_wrench(user, W))
+	if(default_unfasten_wrench(user, I))
 		return
-	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
+	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", I))
 		updateUsrDialog()
 		return
 	if(panel_open)
-		if(isprying(W))
+		if(I.get_quality(QUALITY_PRYING))
 			empty_content()
-			default_deconstruction_crowbar(W)
+			default_deconstruction_crowbar(I)
 		return 1
 	..()
 
@@ -420,7 +420,7 @@
 		tgui_interact(user)
 		return
 	if(panel_open)
-		if(isprying(I))
+		if(I.get_quality(QUALITY_PRYING))
 			default_deconstruction_crowbar(I)
 		return
 	return ..()
@@ -741,10 +741,10 @@
 	projectilesound = 'sound/weapons/guns/kenetic_accel.ogg'
 
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user)
-	if(iswelding(I))
-		var/obj/item/weapon/weldingtool/W = I
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(W.use(0, user) && stat == CONSCIOUS)
+		if(WT.use(0, user) && stat == CONSCIOUS)
 			if(stance != HOSTILE_STANCE_IDLE)
 				to_chat(user, "<span class='info'>You can't repair the [src] while it is moving!</span>")
 				return
@@ -752,7 +752,7 @@
 				to_chat(user, "<span class='info'>[src] is at full integrity.</span>")
 			else
 				to_chat(user, "<span class='info'>You begin to weld some cracks on the [src].</span>")
-				if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
+				if(WT.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
 					health += 15
 					to_chat(user, "<span class='info'>You have repaired [src]'s armor.</span>")
 			return

@@ -46,10 +46,10 @@
 		return
 	to_chat(user, "<span class='notice'>You cant move.</span>")
 
-/obj/effect/spresent/attackby(obj/item/weapon/W, mob/user)
+/obj/effect/spresent/attackby(obj/item/weapon/I, mob/user)
 	..()
 
-	if (!iscutter(W))
+	if (!I.get_quality(QUALITY_CUTTING))
 		to_chat(user, "<span class='notice'>I need wirecutters for that.</span>")
 		return
 

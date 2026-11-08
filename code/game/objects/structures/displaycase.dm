@@ -144,10 +144,10 @@
 		. += "[initial(icon_state)]_closed"
 		return
 
-/obj/structure/displaycase/attackby(obj/item/W, mob/living/user, params)
+/obj/structure/displaycase/attackby(obj/item/I, mob/living/user, params)
 	if(broken)
-		if(istype(W, /obj/item/stack/sheet/glass))
-			var/obj/item/stack/sheet/glass/G = W
+		if(istype(I, /obj/item/stack/sheet/glass))
+			var/obj/item/stack/sheet/glass/G = I
 			if(G.get_amount() < 2)
 				to_chat(user, "<span class='warning'>You need two glass sheets to fix the case!</span>")
 				return
@@ -159,33 +159,33 @@
 				update_integrity(max_integrity)
 				update_icon()
 			return
-		else if(isprying(W))
+		else if(I.get_quality(QUALITY_PRYING))
 			if(showpiece)
 				to_chat(user, "<span class='warning'>Remove the displayed object first!</span>")
 			else
 				to_chat(user, "<span class='notice'>You remove the destroyed case.</span>")
 				deconstruct(TRUE)
 	else
-		if(W.GetID())
+		if(I.GetID())
 			if(allowed(user))
 				to_chat(user, "<span class='notice'>You [open ? "close" : "open"] [src].</span>")
 				toggle_lock(user)
 			else
 				to_chat(user, "<span class='alert'>Access denied.</span>")
 			return
-		else if(iswelding(W))
+		else if(I.get_quality(QUALITY_WELDING))
 			if(atom_integrity < max_integrity)
-				if(!W.tool_start_check(user, amount=5))
+				if(!I.tool_start_check(user, amount=5))
 					return
 
 				to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, amount = 5, volume = 50, quality = QUALITY_WELDING))
+				if(I.use_tool(src, user, SKILL_TASK_AVERAGE, amount = 5, volume = 50, quality = QUALITY_WELDING))
 					update_integrity(max_integrity)
 					to_chat(user, "<span class='notice'>You repair [src].</span>")
 			else
 				to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 			return
-	if(open && !showpiece && insert_showpiece(W, user))
+	if(open && !showpiece && insert_showpiece(I, user))
 		return
 	return ..()
 
@@ -233,13 +233,13 @@
 	return ..()
 
 /obj/structure/displaycase_chassis/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		to_chat(user, "<span class='notice'>You start disassembling [src]...</span>")
 		if(I.use_tool(src, user, SKILL_TASK_EASY, volume = 50, quality = QUALITY_WRENCHING))
 			playsound(loc, 'sound/items/deconstruct.ogg', VOL_EFFECTS_MASTER, 50, TRUE)
 			deconstruct(TRUE)
 
-	else if(isprying(I) && electronics)
+	else if(I.get_quality(QUALITY_PRYING) && electronics)
 		to_chat(user, "<span class='notice'>You start to remove the electronics from [src]...</span>")
 		if(I.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 100, quality = QUALITY_PRYING))
 			to_chat(user, "<span class='notice'>You have removed the electronics from [src]!</span>")

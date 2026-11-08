@@ -419,12 +419,12 @@
 
 //attack with an item - open/close cover, insert cell, or (un)lock interface
 
-/obj/machinery/power/apc/attackby(obj/item/W, mob/user)
+/obj/machinery/power/apc/attackby(obj/item/I, mob/user)
 
 	if(issilicon(user) && get_dist(src,user) > 1)
 		return attack_hand(user)
 	add_fingerprint(user)
-	if(isprying(W) && opened != APC_COVER_CLOSED)
+	if(I.get_quality(QUALITY_PRYING) && opened != APC_COVER_CLOSED)
 		if(has_electronics == 1)
 			if(terminal)
 				to_chat(user, "<span class='warning'>Отключите щиток от питания.</span>")
@@ -432,7 +432,7 @@
 			if(user.is_busy(src))
 				return
 			to_chat(user, "Вы пытаетесь извлечь плату...") // lpeters - fixed grammar issues
-			if(W.use_tool(src, user, 50, volume = 50, quality = QUALITY_PRYING))
+			if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_PRYING))
 				has_electronics = 0
 				area.poweralert(FALSE, src)
 				if((stat & BROKEN) || malfhack)
@@ -450,10 +450,10 @@
 			opened = APC_COVER_CLOSED
 			update_icon()
 
-	else if(isprying(W) && opened == APC_COVER_CLOSED)
+	else if(I.get_quality(QUALITY_PRYING) && opened == APC_COVER_CLOSED)
 		if(stat & BROKEN)
 			user.visible_message("<span class='warning'>[user.name] пытается открыть крышку [CASE(src, GENITIVE_CASE)].</span>", "<span class='notice'>Вы пытаетесь открыть крышку [CASE(src, GENITIVE_CASE)].</span>")
-			if(W.use_tool(src, user, 25, volume = 25, quality = QUALITY_PRYING))
+			if(I.use_tool(src, user, 25, volume = 25, quality = QUALITY_PRYING))
 				opened = APC_COVER_OPENED
 				locked = FALSE
 				if(cell)
@@ -470,16 +470,16 @@
 				opened = APC_COVER_OPENED
 				update_icon()
 
-	else if(iswrenching(W) && opened != APC_COVER_CLOSED && (stat & BROKEN))
+	else if(I.get_quality(QUALITY_WRENCHING) && opened != APC_COVER_CLOSED && (stat & BROKEN))
 		if(coverlocked)
 			to_chat(user, "<span class='notice'>Вы откручиваете защитные болты.</span>")
-			if(W.use_tool(src, user, 5, volume = 5, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 5, volume = 5, quality = QUALITY_WRENCHING))
 				coverlocked = FALSE
 				update_icon()
 		else
 			to_chat(user, "<span class='warning'>Защитные болты уже откручены.</span>")
 
-	else if	(istype(W, /obj/item/weapon/stock_parts/cell) && opened != APC_COVER_CLOSED) // trying to put a cell inside
+	else if	(istype(I, /obj/item/weapon/stock_parts/cell) && opened != APC_COVER_CLOSED) // trying to put a cell inside
 		if(cell)
 			to_chat(user, "В [CASE(src, PREPOSITIONAL_CASE)] уже есть аккумулятор.")
 			return
@@ -487,15 +487,15 @@
 			if(stat & MAINT)
 				to_chat(user, "<span class='warning'>В [CASE(src, PREPOSITIONAL_CASE)] отсутствует разъём для аккумулятора.</span>")
 				return
-			user.drop_from_inventory(W, src)
-			cell = W
+			user.drop_from_inventory(I, src)
+			cell = I
 			user.visible_message(\
 				"<span class='warning'>[user.name] установил[VERB_RU(user)] аккумулятор в [CASE(src, ACCUSATIVE_CASE)]!</span>",\
 				"Вы устанавливаете аккумулятор в [CASE(src, ACCUSATIVE_CASE)].")
 			chargecount = 0
 			update_icon()
 
-	else if	(isscrewing(W)) // haxing
+	else if	(I.get_quality(QUALITY_SCREWING)) // haxing
 		if(opened != APC_COVER_CLOSED)
 			if(cell)
 				to_chat(user, "<span class='warning'>Закройте крышку [CASE(src, GENITIVE_CASE)].</span>") // Less hints more mystery!
@@ -523,7 +523,7 @@
 			to_chat(user, "Провода [wiresexposed ? "извлечены" : "вложены"]")
 			update_icon()
 
-	else if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda)) // trying to unlock the interface with an ID card
+	else if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda)) // trying to unlock the interface with an ID card
 		if(emagged)
 			to_chat(user, "Терминал сломан.")
 		else if(opened != APC_COVER_CLOSED)
@@ -540,7 +540,7 @@
 			else
 				to_chat(user, "<span class='warning'>Доступ запрещён.</span>")
 
-	else if(istype(W, /obj/item/weapon/card/emag) && !(emagged || malfhack)) // trying to unlock with an emag card
+	else if(istype(I, /obj/item/weapon/card/emag) && !(emagged || malfhack)) // trying to unlock with an emag card
 		if(opened != APC_COVER_CLOSED)
 			to_chat(user, "Закройте крышку [CASE(src, GENITIVE_CASE)], перед тем как провести ID картой.")
 		else if(wiresexposed)
@@ -551,7 +551,7 @@
 			if(user.is_busy(src))
 				return
 			flick("apc-spark", src)
-			if(W.use_tool(src, user, 6, volume = 50, particle_type = /particles/tool/signal/emag))
+			if(I.use_tool(src, user, 6, volume = 50, particle_type = /particles/tool/signal/emag))
 				if(prob(50))
 					emagged = 1
 					locked = 0
@@ -562,18 +562,18 @@
 				else
 					to_chat(user, "Ошибка [ locked ? "разблокировки" : "блокировки"] терминала [CASE(src, GENITIVE_CASE)].")
 
-	else if(iscoil(W) && !terminal && opened != APC_COVER_CLOSED && has_electronics != 2)
+	else if(istype(I, /obj/item/stack/cable_coil) && !terminal && opened != APC_COVER_CLOSED && has_electronics != 2)
 		var/turf/TT = get_turf(src)
 		if(TT.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 			to_chat(user, "<span class='warning'>Вскройте пол перед [CASE(src, ABLATIVE_CASE)].</span>")
 			return
-		var/obj/item/stack/cable_coil/C = W
-		if(C.get_amount() < 10)
+		var/obj/item/stack/cable_coil/coil = I
+		if(coil.get_amount() < 10)
 			to_chat(user, "<span class='warning'>Нужно больше проводов.</span>")
 			return
 		if(user.is_busy()) return
 		to_chat(user, "Вы вставляете провода в [CASE(src, ACCUSATIVE_CASE)].")
-		if(C.use_tool(src, user, 20, volume = 50) && C.get_amount() >= 10)
+		if(coil.use_tool(src, user, 20, volume = 50) && coil.get_amount() >= 10)
 			var/turf/T = get_turf_loc(src)
 			var/obj/structure/cable/N = T.get_cable_node()
 			if(prob(50) && electrocute_mob(usr, N, N))
@@ -581,31 +581,31 @@
 				s.set_up(5, 1, src)
 				s.start()
 				return
-			C.use(10)
+			coil.use(10)
 			user.visible_message(\
 				"<span class='warning'>[user.name] подключил проводку в [CASE(src, PREPOSITIONAL_CASE)]!</span>",\
 				"Вы подключили проводку в [CASE(src, PREPOSITIONAL_CASE)].")
 			make_terminal()
 			terminal.connect_to_network()
 
-	else if(iscutter(W) && terminal && opened != APC_COVER_CLOSED && has_electronics!=2)
+	else if(I.get_quality(QUALITY_CUTTING) && terminal && opened != APC_COVER_CLOSED && has_electronics!=2)
 		terminal.dismantle(user)
 
-	else if(istype(W, /obj/item/weapon/module/power_control) && opened != APC_COVER_CLOSED && has_electronics == 0 && !((stat & BROKEN) || malfhack))
+	else if(istype(I, /obj/item/weapon/module/power_control) && opened != APC_COVER_CLOSED && has_electronics == 0 && !((stat & BROKEN) || malfhack))
 		if(user.is_busy()) return
 		to_chat(user, "Вы пытаетесь установить плату в [CASE(src, ACCUSATIVE_CASE)]")
-		if(W.use_tool(src, user, 10, volume = 50))
+		if(I.use_tool(src, user, 10, volume = 50))
 			has_electronics = 1
 			to_chat(user, "Вы устанавливаете плату в [CASE(src, ACCUSATIVE_CASE)].")
-			qdel(W)
+			qdel(I)
 
-	else if(istype(W, /obj/item/weapon/module/power_control) && opened != APC_COVER_CLOSED && has_electronics == 0 && ((stat & BROKEN) || malfhack))
+	else if(istype(I, /obj/item/weapon/module/power_control) && opened != APC_COVER_CLOSED && has_electronics == 0 && ((stat & BROKEN) || malfhack))
 		to_chat(user, "<span class='warning'>Плата не подходит из-за поломки корпуса [CASE(src, GENITIVE_CASE)].</span>")
 		return
 
-	else if(iswelding(W) && opened != APC_COVER_CLOSED && has_electronics == 0 && !terminal)
+	else if(I.get_quality(QUALITY_WELDING) && opened != APC_COVER_CLOSED && has_electronics == 0 && !terminal)
 		if(user.is_busy()) return
-		var/obj/item/weapon/weldingtool/WT = W
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.get_fuel() < 3)
 			to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 			return
@@ -614,27 +614,27 @@
 			deconstruct(TRUE, user)
 			return
 
-	else if(istype(W, /obj/item/apc_frame) && opened != APC_COVER_CLOSED && emagged)
+	else if(istype(I, /obj/item/apc_frame) && opened != APC_COVER_CLOSED && emagged)
 		emagged = 0
 		if(opened == APC_COVER_REMOVED)
 			opened = APC_COVER_OPENED
 		user.visible_message(\
 			"<span class='warning'>[user.name] заменяет сломанную крышку [CASE(src, GENITIVE_CASE)].</span>",\
 			"Вы заменили сломанную крышку [CASE(src, GENITIVE_CASE)].")
-		qdel(W)
+		qdel(I)
 		update_icon()
 
-	else if(istype(W, /obj/item/apc_frame) && opened != APC_COVER_CLOSED && ((stat & BROKEN) || malfhack))
+	else if(istype(I, /obj/item/apc_frame) && opened != APC_COVER_CLOSED && ((stat & BROKEN) || malfhack))
 		if(has_electronics)
 			to_chat(user, "Перед починкой отключите и извлеките компоненты [CASE(src, GENITIVE_CASE)].")
 			return
 		if(user.is_busy()) return
 		to_chat(user, "Вы заменяете сломанный корпус [CASE(src, GENITIVE_CASE)]...")
-		if(W.use_tool(src, user, 50, volume = 50))
+		if(I.use_tool(src, user, 50, volume = 50))
 			user.visible_message(\
 				"<span class='warning'>[user.name] заменил[VERB_RU(user)] сломанный корпус [CASE(src, GENITIVE_CASE)].</span>",\
 				"Вы заменили сломанный корпус [CASE(src, GENITIVE_CASE)].")
-			qdel(W)
+			qdel(I)
 			stat &= ~BROKEN
 			malfai = null
 			malfhack = 0
@@ -642,12 +642,12 @@
 				opened = APC_COVER_OPENED
 			update_icon()
 
-	else if(opened == APC_COVER_CLOSED && wiresexposed && is_wire_tool(W))
+	else if(opened == APC_COVER_CLOSED && wiresexposed && is_wire_tool(I))
 		if(issilicon(user))
 			return wires.interact(user)
 		user.SetNextMove(CLICK_CD_MELEE)
-		user.visible_message("<span class='warning'>[user.name] ударил[VERB_RU(user)] [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)]!</span>", \
-			"<span class='warning'>Вы ударили [CASE(src, ACCUSATIVE_CASE)] [CASE(W, ABLATIVE_CASE)]!</span>", \
+		user.visible_message("<span class='warning'>[user.name] ударил[VERB_RU(user)] [CASE(src, ACCUSATIVE_CASE)] [CASE(I, ABLATIVE_CASE)]!</span>", \
+			"<span class='warning'>Вы ударили [CASE(src, ACCUSATIVE_CASE)] [CASE(I, ABLATIVE_CASE)]!</span>", \
 			"Вы слышите удар.")
 		return wires.interact(user)
 	else

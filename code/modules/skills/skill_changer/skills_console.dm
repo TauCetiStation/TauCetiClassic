@@ -30,12 +30,12 @@
 	return scanner && scanner.cartridge != null
 
 /obj/machinery/computer/skills_console/attackby(obj/item/I, mob/user)
-	if(ispulsing(I))
-		var/obj/item/device/multitool/M = I
-		if(M.buffer && istype(M.buffer, /obj/machinery/optable/skill_scanner))
-			scanner = M.buffer
+	if(I.get_quality(QUALITY_PULSING))
+		var/obj/item/device/multitool/MT = I
+		if(MT.buffer && istype(MT.buffer, /obj/machinery/optable/skill_scanner))
+			scanner = MT.buffer
 			scanner.console = src
-			M.buffer = null
+			MT.buffer = null
 			to_chat(user, "<span class='notice'>You upload the data from the [I.name]'s buffer.</span>")
 			tgui_interact(user)
 		return FALSE

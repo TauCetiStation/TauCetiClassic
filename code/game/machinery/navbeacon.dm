@@ -89,7 +89,7 @@
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return		// prevent intraction when T-scanner revealed
 
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		open = !open
 		user.SetNextMove(CLICK_CD_RAPID)
 

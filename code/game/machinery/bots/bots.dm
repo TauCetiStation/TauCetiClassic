@@ -95,17 +95,17 @@
 	if(.)
 		visible_message("<span class='warning'><B>[user] has slashed [src]!</B></span>")
 
-/obj/machinery/bot/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewing(W))
+/obj/machinery/bot/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_SCREWING))
 		if(!locked)
 			open = !open
 			to_chat(user, "<span class='notice'>Maintenance panel is now [src.open ? "opened" : "closed"].</span>")
-	else if(iswelding(W))
-		if(W.use(0, user))
+	else if(I.get_quality(QUALITY_WELDING))
+		if(I.use(0, user))
 			if(get_integrity() < max_integrity)
 				if(open)
 					user.visible_message("<span class='warning'>[user] start repair [src]!</span>","<span class='notice'>You start repair [src]!</span>")
-					if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
+					if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WELDING))
 						repair_damage(10)
 						user.visible_message("<span class='warning'>[user] repaired [src]!</span>","<span class='notice'>You repaired [src]!</span>")
 				else

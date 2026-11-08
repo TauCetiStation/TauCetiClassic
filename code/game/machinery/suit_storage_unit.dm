@@ -449,11 +449,11 @@
 		else
 			load_something(I, user)
 	else if(opened && !occupant)
-		if(isscrewing(I))
+		if(I.get_quality(QUALITY_SCREWING))
 			if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 				update_icon()
 				return TRUE
-		if(isprying(I))
+		if(I.get_quality(QUALITY_PRYING))
 			if(default_deconstruction_crowbar(I))
 				return TRUE
 	update_icon()

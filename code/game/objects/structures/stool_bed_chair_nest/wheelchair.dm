@@ -78,7 +78,7 @@
 		var/mob/living/carbon/human/driver = user
 		var/obj/item/organ/external/l_hand = driver.bodyparts_by_name[BP_L_ARM]
 		var/obj/item/organ/external/r_hand = driver.bodyparts_by_name[BP_R_ARM]
-		if((!l_hand || (l_hand.is_stump)) && (!r_hand || (r_hand.is_stump)))
+		if((!l_hand || isstump(l_hand)) && (!r_hand || isstump(r_hand)))
 			return // No hands to drive your chair? Tough luck!
 
 	// Let's roll

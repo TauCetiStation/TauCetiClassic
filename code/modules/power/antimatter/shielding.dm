@@ -212,7 +212,7 @@
 	m_amt = 100
 
 /obj/item/device/am_shielding_container/attackby(obj/item/I, mob/user, params)
-	if(ispulsing(I) && istype(loc, /turf))
+	if(I.get_quality(QUALITY_PULSING) && istype(loc, /turf))
 		new/obj/machinery/am_shielding(loc)
 		qdel(src)
 		return

@@ -27,8 +27,8 @@
 		if(src) qdel(src)
 		QDEL_IN(animation, 10)
 
-/obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
-	if(iswrenching(W))
+/obj/machinery/the_singularitygen/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		anchored = !anchored
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		if(anchored)

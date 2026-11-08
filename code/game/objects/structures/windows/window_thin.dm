@@ -59,16 +59,16 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/window/thin/attackby(obj/item/W, mob/user)
+/obj/structure/window/thin/attackby(obj/item/I, mob/user)
 	if(flags & NODECONSTRUCT)
-		if(isscrewing(W) | isprying(W))
+		if(I.get_quality(QUALITY_SCREWING) | I.get_quality(QUALITY_PRYING))
 			return ..()
 
 	user.SetNextMove(CLICK_CD_INTERACT)
 
 	var/isreinforced = istype(src, /obj/structure/window/thin/reinforced)
 
-	if(isscrewing(W))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(isreinforced && state >= 1)
 			if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [state == 1 ? "fasten the window to the frame." : "unfasten the window from the frame."]</span>" ))
 				return
@@ -90,7 +90,7 @@
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>"))
 
-	else if(isprying(W) && isreinforced && state <= 1)
+	else if(I.get_quality(QUALITY_PRYING) && isreinforced && state <= 1)
 		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to [state ? "pry the window out of the frame." : "pry the window into the frame."]</span>" ))
 			return
 		state = 1 - state
@@ -235,10 +235,10 @@
 /obj/structure/window/thin/reinforced/holowindow // should be moved from subtypes to flags
 	flags = NODECONSTRUCT | ON_BORDER
 
-/obj/structure/window/thin/reinforced/holowindow/attackby(obj/item/W, mob/user)
-	if(isscrewing(W))
+/obj/structure/window/thin/reinforced/holowindow/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_SCREWING))
 		to_chat(user, ("<span class='notice'>It's a holowindow, you can't unfasten it!</span>"))
-	else if(isprying(W))
+	else if(I.get_quality(QUALITY_PRYING))
 		to_chat(user, ("<span class='notice'>It's a holowindow, you can't pry it!</span>"))
 	else
 		return ..()

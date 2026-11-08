@@ -128,21 +128,21 @@
 				continue
 			AA.theImage.icon_state = "[initial(AA.alternate_obj.icon_state)][icon_state_postfix]"
 
-/obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/pickaxe) && !(istype(src, /obj/structure/mineral_door/wood) || istype(src, /obj/structure/mineral_door/metal)))
+/obj/structure/mineral_door/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/pickaxe) && !(istype(src, /obj/structure/mineral_door/wood) || istype(src, /obj/structure/mineral_door/metal)))
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>You start digging the [name].</span>")
-		if(W.use_tool(src, user, 50, volume = 100))
+		if(I.use_tool(src, user, 50, volume = 100))
 			to_chat(user, "<span class='notice'>You finished digging!</span>")
 			deconstruct(TRUE)
 
-	else if(iswrenching(W) && can_unwrench)
+	else if(I.get_quality(QUALITY_WRENCHING) && can_unwrench)
 		if(user.is_busy(src))
 			return
 		if(anchored)
 			to_chat(user, "<span class='notice'>You start dissassembling the [name].</span>")
-			if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
 				to_chat(user, "<span class='notice'>You dissassembled the [name]!</span>")
 				anchored = FALSE
 				name = "disassembled [name]"
@@ -152,7 +152,7 @@
 				set_opacity(FALSE)
 		else
 			to_chat(user, "<span class='notice'>You start assembling the [name]!</span>")
-			if(W.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 40, volume = 100, quality = QUALITY_WRENCHING))
 				to_chat(user, "<span class='notice'>You assembled the [name]!</span>")
 				anchored = TRUE
 				name = initial(name)
@@ -162,17 +162,17 @@
 				if(!istype(src, /obj/structure/mineral_door/transparent))
 					set_opacity(TRUE)
 
-	else if(istype(W, /obj/item/weapon/key))
-		var/obj/item/weapon/key/K = W
+	else if(istype(I, /obj/item/weapon/key))
+		var/obj/item/weapon/key/K = I
 		try_key(K, user)
 
-	else if(istype(W, /obj/item/weapon/storage/keyring))
-		var/obj/item/weapon/storage/keyring/KR = W
+	else if(istype(I, /obj/item/weapon/storage/keyring))
+		var/obj/item/weapon/storage/keyring/KR = I
 		for(var/obj/item/weapon/key/K in KR.contents)
 			if(try_key(K, user))
 				break
 
-	else if(isscrewing(W))
+	else if(I.get_quality(QUALITY_SCREWING))
 		if(lock_broken)
 			to_chat(user, "<span class='notice'>Замок этой двери уже сломан!</span>")
 			return
@@ -222,11 +222,11 @@
 	sheetType = /obj/item/stack/sheet/metal
 	can_unwrench = FALSE
 
-/obj/structure/mineral_door/metal/attackby(obj/item/weapon/W, mob/user)
-	if(iswelding(W))
+/obj/structure/mineral_door/metal/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WELDING))
 		if(user.is_busy())
 			return
-		var/obj/item/weapon/weldingtool/WT = W
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			to_chat(user, "<span class='notice'>You start dissassembling the [name] to the metal sheets.</span>")
 			if(WT.use_tool(src, user, 60, volume = 100, quality = QUALITY_WELDING))
@@ -273,9 +273,9 @@
 	icon_state = "phoron"
 	sheetType = /obj/item/stack/sheet/mineral/phoron
 
-/obj/structure/mineral_door/transparent/phoron/attackby(obj/item/weapon/W, mob/user)
-	if(iswelding(W))
-		var/obj/item/weapon/weldingtool/WT = W
+/obj/structure/mineral_door/transparent/phoron/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			TemperatureAct(100)
 	..()
@@ -307,12 +307,12 @@
 
 	hit_particle_type = /particles/tool/digging/wood
 
-/obj/structure/mineral_door/wood/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/fireaxe))
+/obj/structure/mineral_door/wood/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/fireaxe))
 		if(user.is_busy())
 			return
 		to_chat(user, "<span class='notice'>You start cutting the [name] with the axe.</span>")
-		if(W.use_tool(src, user, 40, volume = 100))
+		if(I.use_tool(src, user, 40, volume = 100))
 			to_chat(user, "<span class='notice'>You finished cutting the [name]!</span>")
 			deconstruct(TRUE)
 		return

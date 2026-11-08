@@ -205,13 +205,8 @@
 					var/obj/item/weapon/reagent_containers/glass/GB = CM.beakers[CM.filling_tank_id]
 					GB.afterattack(src, user, proximity)
 				else
-					afterattack(CM.beakers[CM.filling_tank_id], user, proximity)
-				CM.updateUsrDialog()
-				CM.update_icon()
-				return
-			else
-				to_chat(user, "<span class='warning'>You try to fill [user.a_intent == INTENT_GRAB ? "[src] up from a tank" : "a tank up"], but find it is absent.</span>")
-				return
+					to_chat(user, "<span class='warning'>You try to fill [user.a_intent == INTENT_GRAB ? "[src] up from a tank" : "a tank up"], but find it is absent.</span>")
+					return
 
 
 	else if(reagents && reagents.total_volume)
@@ -503,7 +498,7 @@
 		qdel(src)
 		return
 
-	if(iswelding(I))
+	if(I.get_quality(QUALITY_WELDING))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0,user))
 			var/obj/item/clothing/head/helmet/battlebucket/BBucket = new(usr.loc)

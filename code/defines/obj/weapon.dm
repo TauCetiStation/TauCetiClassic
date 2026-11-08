@@ -138,6 +138,10 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("stabbed", "slashed", "sliced", "cut")
 	var/on_step_sound = 'sound/effects/glass_step.ogg'
+	qualities = list(
+		QUALITY_CUTTING = 50,
+		QUALITY_SURGERY_CUTTING = 25
+	)
 
 /obj/item/weapon/shard/atom_init()
 	var/icon_variant = pick("large", "medium", "small")
@@ -174,7 +178,7 @@
 	..()
 
 /obj/item/weapon/shard/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
+	if(I.get_quality(QUALITY_WELDING))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			var/obj/item/stack/sheet/glass/NG = new (user.loc)
@@ -253,7 +257,7 @@
 	edge = 1
 
 /obj/item/weapon/shard/phoron/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
+	if(I.get_quality(QUALITY_WELDING))
 		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(WT.use(0, user))
@@ -509,6 +513,10 @@
 	m_amt = 15000
 	origin_tech = "materials=2;combat=1"
 	attack_verb = list("chopped", "torn", "cut")
+	qualities = list(
+		QUALITY_PRYING = 50,
+		QUALITY_SURGERY_SAW = 25
+	)
 
 /obj/item/weapon/hatchet/atom_init()
 	. = ..()

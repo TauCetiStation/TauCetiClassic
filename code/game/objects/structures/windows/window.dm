@@ -83,11 +83,11 @@
 		return TRUE
 	return !density
 
-/obj/structure/window/attackby(obj/item/W, mob/user)
-	if(iswelding(W))
+/obj/structure/window/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WELDING))
 		if((flags & NODECONSTRUCT) || (resistance_flags & INDESTRUCTIBLE))
 			return ..()
-		var/obj/item/weapon/weldingtool/WT = W
+		var/obj/item/weapon/weldingtool/WT = I
 		if(!WT.use(0, user)) // сварка должна быть включена (и тут же eyecheck)
 			return
 		if(weld_react(user, WT))
@@ -109,18 +109,18 @@
 									 "<span class='notice'>Вы починили [CASE(src, ACCUSATIVE_CASE)].</span>")
 		return
 
-	if(istype(W, /obj/item/weapon/airlock_painter))
-		change_paintjob(W, user)
+	if(istype(I, /obj/item/weapon/airlock_painter))
+		change_paintjob(I, user)
 		return
 
-	if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
-		var/obj/item/weapon/grab/G = W
+	if(istype(I, /obj/item/weapon/grab) && get_dist(src,user)<2)
+		var/obj/item/weapon/grab/G = I
 		if (isliving(G.affecting))
 			user.SetNextMove(CLICK_CD_MELEE)
 			var/mob/living/M = G.affecting
 			var/mob/living/A = G.assailant
 			var/state = G.state
-			qdel(W)	//gotta delete it here because if window breaks, it won't get deleted
+			qdel(I)	//gotta delete it here because if window breaks, it won't get deleted
 			switch (state)
 				if(1)
 					M.apply_damage(7)

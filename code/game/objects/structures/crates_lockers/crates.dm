@@ -84,30 +84,30 @@
 	src.opened = 0
 	return 1
 
-/obj/structure/closet/crate/attackby(obj/item/weapon/W, mob/user)
-	if(opened || istype(W, /obj/item/weapon/grab))
+/obj/structure/closet/crate/attackby(obj/item/I, mob/user)
+	if(opened || istype(I, /obj/item/weapon/grab))
 		return ..()
 
-	else if(istype(W, /obj/item/weapon/packageWrap))	//OOP? Doesn't heard.
+	else if(istype(I, /obj/item/weapon/packageWrap))	//OOP? Doesn't heard.
 		return
-	else if(istagger(W))
+	else if(istagger(I))
 		return
-	else if(iscoil(W))
+	else if(istype(I, /obj/item/stack/cable_coil))
 		if(rigged)
 			to_chat(user, "<span class='notice'>[src] is already rigged!</span>")
 			return
 
-		var/obj/item/stack/cable_coil/C = W
-		if(!C.use(1))
+		var/obj/item/stack/cable_coil/coil = I
+		if(!coil.use(1))
 			return
 
 		to_chat(user, "<span class='notice'>You rig [src].</span>")
 		rigged = 1
-	else if(istype(W, /obj/item/device/radio/electropack))
+	else if(istype(I, /obj/item/device/radio/electropack))
 		if(rigged)
-			to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
-			user.drop_from_inventory(W, src)
-	else if(iscutter(W))
+			to_chat(user, "<span class='notice'>You attach [I] to [src].</span>")
+			user.drop_from_inventory(I, src)
+	else if(I.get_quality(QUALITY_CUTTING))
 		if(rigged)
 			to_chat(user, "<span class='notice'>You cut away the wiring.</span>")
 			playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)

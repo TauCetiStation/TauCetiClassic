@@ -202,29 +202,29 @@
 	if(secondary_effect?.release_method == ARTIFACT_EFFECT_TOUCH && secondary_effect.activated)
 		secondary_effect.DoEffectTouch(user)
 
-/obj/machinery/artifact/attackby(obj/item/weapon/W, mob/living/user)
+/obj/machinery/artifact/attackby(obj/item/I, mob/living/user)
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(istype(W, /obj/item/weapon/reagent_containers))
-		if(W.reagents.has_reagent("hydrogen", 1) || W.reagents.has_reagent("water", 1))
+	if(istype(I, /obj/item/weapon/reagent_containers))
+		if(I.reagents.has_reagent("hydrogen", 1) || I.reagents.has_reagent("water", 1))
 			try_toggle_effects(TRIGGER_WATER)
-		else if(W.reagents.has_reagent("acid", 1) || W.reagents.has_reagent("pacid", 1) || W.reagents.has_reagent("diethylamine", 1))
+		else if(I.reagents.has_reagent("acid", 1) || I.reagents.has_reagent("pacid", 1) || I.reagents.has_reagent("diethylamine", 1))
 			try_toggle_effects(TRIGGER_ACID)
-		else if(W.reagents.has_reagent("phoron", 1) || W.reagents.has_reagent("thermite", 1))
+		else if(I.reagents.has_reagent("phoron", 1) || I.reagents.has_reagent("thermite", 1))
 			try_toggle_effects(TRIGGER_VOLATILE)
-		else if(W.reagents.has_reagent("toxin", 1) || W.reagents.has_reagent("cyanide", 1) || W.reagents.has_reagent("amanitin", 1) || W.reagents.has_reagent("neurotoxin", 1))
+		else if(I.reagents.has_reagent("toxin", 1) || I.reagents.has_reagent("cyanide", 1) || I.reagents.has_reagent("amanitin", 1) || I.reagents.has_reagent("neurotoxin", 1))
 			try_toggle_effects(TRIGGER_TOXIN)
 	else
-		if(istype(W, /obj/item/weapon/melee/baton))
-			var/obj/item/weapon/melee/baton/B = W
+		if(istype(I, /obj/item/weapon/melee/baton))
+			var/obj/item/weapon/melee/baton/B = I
 			if(B.status)
 				try_toggle_effects(TRIGGER_ENERGY)
-		else if(istype(W, /obj/item/weapon/melee/energy) ||\
-			istype(W, /obj/item/weapon/melee/cultblade) ||\
-			istype(W, /obj/item/weapon/card/emag) ||\
-			ispulsing(W))
+		else if(istype(I, /obj/item/weapon/melee/energy) ||\
+			istype(I, /obj/item/weapon/melee/cultblade) ||\
+			istype(I, /obj/item/weapon/card/emag) ||\
+			I.get_quality(QUALITY_PULSING))
 			try_toggle_effects(TRIGGER_ENERGY)
 	if(first_effect?.trigger == TRIGGER_HEAT || secondary_effect?.trigger == TRIGGER_HEAT)
-		if(W.get_current_temperature() > 700)
+		if(I.get_current_temperature() > 700)
 			try_toggle_effects(TRIGGER_HEAT)
 			return
 	..()

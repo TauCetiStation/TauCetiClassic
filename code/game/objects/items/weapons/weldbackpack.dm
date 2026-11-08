@@ -15,9 +15,9 @@
 	R.add_reagent("fuel", max_fuel)
 
 /obj/item/weapon/weldpack/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
-		var/obj/item/weapon/weldingtool/T = I
-		if(T.isOn() & prob(50))
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(WT.isOn() & prob(50))
 			message_admins("[key_name_admin(user)] triggered a welding kit explosion. [ADMIN_JMP(user)]")
 			log_game("[key_name(user)] triggered a fueltank explosion.")
 			to_chat(user, "<span class='warning'>That was stupid of you.</span>")
@@ -26,9 +26,9 @@
 				qdel(src)
 			return
 		else
-			if(T.isOn())
+			if(WT.isOn())
 				to_chat(user, "<span class='warning'>That was close!</span>")
-			reagents.trans_to(I, T.max_fuel)
+			reagents.trans_to(I, WT.max_fuel)
 			to_chat(user, "<span class='notice'>Welder refilled!</span>")
 			playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
 			return
@@ -60,9 +60,9 @@
 	var/obj/item/weapon/flamethrower_M2/Connected_Flamethrower = null
 
 /obj/item/weapon/weldpack/M2_fuelback/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
-		var/obj/item/weapon/weldingtool/T = I
-		if(T.isOn())
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(WT.isOn())
 			message_admins("[key_name_admin(user)] triggered a flamethrower back explosion. [ADMIN_JMP(user)]")
 			log_game("[key_name(user)] triggered a flamethrower back explosion.")
 			to_chat(user, "<span class='warning'>That was stupid of you.</span>")

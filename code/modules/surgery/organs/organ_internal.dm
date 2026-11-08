@@ -11,6 +11,7 @@
 	var/min_bruised_damage = 10 // Damage before considered bruised
 	var/damage = 0              // Amount of damage to the organ
 
+	var/surgery_stage = BP_SCALPEL_OS
 
 	var/process_accuracy = 0
 
@@ -192,7 +193,7 @@
 	if(!is_robotic())
 		return
 
-	if(iswrenching(I) && can_relocate)
+	if(I.get_quality(QUALITY_WRENCHING) && can_relocate)
 		toggle_parent_bodypart(user)
 
 	return ..()

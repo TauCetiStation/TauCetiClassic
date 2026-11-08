@@ -56,7 +56,7 @@ var/global/list/datum/stack_recipe/glass_reinforced_phoron_recipes = list (
 	g_amt = 0
 
 /obj/item/stack/sheet/glass/attackby(obj/item/I, mob/user, params)
-	if(iscoil(I))
+	if(istype(I, /obj/item/stack/cable_coil))
 		var/list/resources_to_use = list()
 		resources_to_use[I] = 5
 		resources_to_use[src] = 1
