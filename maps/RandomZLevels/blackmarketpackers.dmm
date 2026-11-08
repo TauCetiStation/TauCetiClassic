@@ -1486,7 +1486,7 @@
 	},
 /area/awaymission/BMPship2)
 "eC" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"

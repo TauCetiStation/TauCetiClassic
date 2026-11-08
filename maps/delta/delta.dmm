@@ -19216,7 +19216,7 @@
 	},
 /area/station/engineering/chiefs_office)
 "bgI" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "bgO" = (
@@ -27529,7 +27529,7 @@
 	},
 /area/station/hallway/primary/central)
 "cZC" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -42191,7 +42191,7 @@
 "gEa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /turf/simulated/floor{
 	icon_state = "graychoco"
 	},
@@ -43537,7 +43537,7 @@
 	},
 /area/station/engineering/atmos/atmos_office)
 "gUX" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
@@ -64065,7 +64065,7 @@
 /area/station/maintenance/atmos)
 "lKX" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "lLc" = (
@@ -86901,7 +86901,7 @@
 "rqc" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency2)
 "rqe" = (
@@ -90334,7 +90334,7 @@
 	},
 /area/station/cargo/storage)
 "seV" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -98912,7 +98912,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/engineering)
 "unh" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -113315,7 +113315,7 @@
 /turf/simulated/floor/engine/carbon_dioxide,
 /area/station/engineering/atmos)
 "xUW" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/machinery/light/smart{
 	dir = 4
 	},

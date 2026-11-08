@@ -238,7 +238,7 @@ robot_fabricator
 			/obj/machinery/r_n_d,
 			/obj/machinery/mecha_part_fabricator,
 			/obj/machinery/photocopier,
-			/obj/machinery/shieldwallgen,
+			/obj/machinery/power/shieldwallgen,
 			/obj/machinery/pdapainter,
 			/obj/machinery/monkey_recycler,
 			/obj/machinery/telepad,
