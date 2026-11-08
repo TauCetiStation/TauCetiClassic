@@ -146,3 +146,9 @@
 	cost = 50
 	unit_name = "monkey cube"
 	export_types = list(/obj/item/weapon/storage/box/monkeycubes)
+
+/datum/export/woodencrate
+	cost = 10
+	unit_name = "wooden crate"
+	export_types = list(/obj/item/weapon/woodencrate)
+	include_subtypes = TRUE
