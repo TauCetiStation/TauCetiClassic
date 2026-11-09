@@ -10,6 +10,12 @@
 	var/icon_state_detached
 	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
+	var/datum/beam/cord = null
+
+/obj/effect/ebeam/life_assist_cord
+	name = "life assist cord"
+	icon_state = "life_assist_cord"
+
 /obj/machinery/life_assist/atom_init()
 	. = ..()
 	update_icon()
@@ -28,6 +34,7 @@
 /obj/machinery/life_assist/proc/attach(mob/living/carbon/human/H)
 	attached = H
 	AddComponent(/datum/component/bounded, H, 0, 1, CALLBACK(src, PROC_REF(resolve_stranded)))
+	cord = Beam(H, icon_state = "life_assist_cord", time = INFINITY, maxdistance = 2, beam_type = /obj/effect/ebeam/life_assist_cord)
 	visible_message("<span class='notice'>[usr] attaches \the [src] to \the [H].</span>")
 	assist(H)
 	update_icon()
@@ -40,6 +47,8 @@
 		attached.apply_damage(15, BRUTE, BP_CHEST)
 
 	qdel(GetComponent(/datum/component/bounded))
+	if(cord)
+		cord.End()
 	deassist(attached)
 	attached = null
 	update_icon()
