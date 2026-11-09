@@ -22224,7 +22224,7 @@
 	color = "#ff0000";
 	dir = 1
 	},
-/turf/simulated/floor/carpet/red,
+/turf/unsimulated/floor/carpet/red,
 /area/centcom/bar)
 "bDb" = (
 /obj/machinery/door/airlock/centcom{
@@ -24521,7 +24521,7 @@
 	dir = 1
 	},
 /obj/item/weapon/flora/random,
-/turf/simulated/floor/carpet/red,
+/turf/unsimulated/floor/carpet/red,
 /area/centcom/bar)
 "feb" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -25340,7 +25340,7 @@
 	color = "#ff0000";
 	dir = 1
 	},
-/turf/simulated/floor/carpet/red,
+/turf/unsimulated/floor/carpet/red,
 /area/centcom/bar)
 "gug" = (
 /turf/unsimulated/floor{
@@ -25794,7 +25794,7 @@
 	color = "#ff0000"
 	},
 /obj/item/weapon/flora/random,
-/turf/simulated/floor/carpet/red,
+/turf/unsimulated/floor/carpet/red,
 /area/centcom/bar)
 "hjb" = (
 /obj/machinery/vending/engineering,
@@ -26367,7 +26367,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/red,
+/turf/unsimulated/floor/carpet/red,
 /area/centcom/bar)
 "idb" = (
 /obj/effect/decal/turf_decal/blue{
@@ -27285,7 +27285,7 @@
 	color = "#ff0000"
 	},
 /obj/item/weapon/flora/random,
-/turf/simulated/floor/carpet/red,
+/turf/unsimulated/floor/carpet/red,
 /area/centcom/bar)
 "jNb" = (
 /obj/structure/window/thin/reinforced{
@@ -28075,7 +28075,7 @@
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/simulated/floor/carpet/red,
+/turf/unsimulated/floor/carpet/red,
 /area/centcom/bar)
 "kZa" = (
 /obj/structure/object_wall/velocity{
@@ -28744,7 +28744,7 @@
 /obj/structure/fence/metal{
 	color = "#ff0000"
 	},
-/turf/simulated/floor/carpet/red,
+/turf/unsimulated/floor/carpet/red,
 /area/centcom/bar)
 "mhb" = (
 /obj/machinery/door/airlock/multi_tile/glass{
@@ -29348,7 +29348,7 @@
 	color = "#ff0000"
 	},
 /obj/item/weapon/flora/random,
-/turf/simulated/floor/carpet/red,
+/turf/unsimulated/floor/carpet/red,
 /area/centcom/bar)
 "npb" = (
 /obj/structure/disposalpipe/segment,
@@ -30278,7 +30278,7 @@
 /obj/structure/fence/metal{
 	color = "#ff0000"
 	},
-/turf/simulated/floor/carpet/red,
+/turf/unsimulated/floor/carpet/red,
 /area/centcom/bar)
 "oWb" = (
 /obj/machinery/light{
@@ -30330,7 +30330,7 @@
 	dir = 8
 	},
 /obj/item/weapon/flora/random,
-/turf/simulated/floor/carpet/red,
+/turf/unsimulated/floor/carpet/red,
 /area/centcom/bar)
 "pbb" = (
 /obj/machinery/light{
@@ -31076,7 +31076,7 @@
 	dir = 4
 	},
 /obj/item/weapon/flora/random,
-/turf/simulated/floor/carpet/red,
+/turf/unsimulated/floor/carpet/red,
 /area/centcom/bar)
 "rIG" = (
 /turf/unsimulated/floor{
