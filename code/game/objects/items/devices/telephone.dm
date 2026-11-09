@@ -4,8 +4,8 @@ var/global/new_private_phone_number = 1
 ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 /obj/item/device/telephone
 	name = "telephone"
-	cases = list("телефон", "телефона", "телефону", "телефон", "телефоном", "телефоне")
-	desc = "Используется для общения между отделами."
+	cases = list("С‚РµР»РµС„РѕРЅ", "С‚РµР»РµС„РѕРЅР°", "С‚РµР»РµС„РѕРЅСѓ", "С‚РµР»РµС„РѕРЅ", "С‚РµР»РµС„РѕРЅРѕРј", "С‚РµР»РµС„РѕРЅРµ")
+	desc = "РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ РѕР±С‰РµРЅРёСЏ РјРµР¶РґСѓ РѕС‚РґРµР»Р°РјРё."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "telephone_full"
 	w_class = SIZE_NORMAL
@@ -72,7 +72,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 	if(handset)
 		if(ismob(handset.loc))
 			var/mob/user = handset.loc
-			visible_message("<span class='notice'>[user] кладёт [CASE(handset, ACCUSATIVE_CASE)].</span>")
+			visible_message("<span class='notice'>[user] РєР»Р°РґС‘С‚ [CASE(handset, ACCUSATIVE_CASE)].</span>")
 			user.drop_from_inventory(handset, src)
 		else
 			handset.forceMove(src)
@@ -102,7 +102,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 	if((handset.loc == src) && user.put_in_hands(handset))
 		handset.add_fingerprint(user)
 		icon_state = "telephone_empty"
-		visible_message("<span class='notice'>[user] берёт [CASE(handset, ACCUSATIVE_CASE)].</span>")
+		visible_message("<span class='notice'>[user] Р±РµСЂС‘С‚ [CASE(handset, ACCUSATIVE_CASE)].</span>")
 
 		phone_cord = new(src, user, time = INFINITY, beam_icon_state = "telephone_cord", btype = /obj/effect/ebeam/phone_cord)
 		INVOKE_ASYNC(phone_cord, TYPE_PROC_REF(/datum/beam, Start))
@@ -133,12 +133,12 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 
 /obj/item/device/telephone/examine(mob/user)
 	. = ..()
-	to_chat(user, "Номер: [phone_frequency]")
+	to_chat(user, "РќРѕРјРµСЂ: [phone_frequency]")
 
 /obj/item/device/telephone/tgui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "Telephone", "Телефон")
+		ui = new(user, src, "Telephone", "РўРµР»РµС„РѕРЅ")
 		ui.open()
 
 /obj/item/device/telephone/tgui_data(mob/user)
@@ -174,9 +174,9 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 
 		if("listen_records")
 			if(!recordings.len)
-				to_chat(usr, "<span class='notice'>Автоответчик не имеет записей.</span>")
+				to_chat(usr, "<span class='notice'>РђРІС‚РѕРѕС‚РІРµС‚С‡РёРє РЅРµ РёРјРµРµС‚ Р·Р°РїРёСЃРµР№.</span>")
 			else
-				to_chat(usr, "<span class='notice'>Автоответчик начинает проигрывать записи.</span>")
+				to_chat(usr, "<span class='notice'>РђРІС‚РѕРѕС‚РІРµС‚С‡РёРє РЅР°С‡РёРЅР°РµС‚ РїСЂРѕРёРіСЂС‹РІР°С‚СЊ Р·Р°РїРёСЃРё.</span>")
 				play_recordings()
 
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
@@ -199,7 +199,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 
 /obj/item/device/telephone/proc/approve()
 	if(display_numbers < 10 || display_numbers > 99)
-		visible_message("<span class='notice'>Номер не существует.</span>")
+		visible_message("<span class='notice'>РќРѕРјРµСЂ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚.</span>")
 	try_call(display_numbers)
 	display_numbers = 0
 
@@ -212,7 +212,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 			continue
 
 		if(T.phone_caller)
-			visible_message("<span class='notice'>В настоящий момент абонент разговаривает.</span>")
+			visible_message("<span class='notice'>Р’ РЅР°СЃС‚РѕСЏС‰РёР№ РјРѕРјРµРЅС‚ Р°Р±РѕРЅРµРЅС‚ СЂР°Р·РіРѕРІР°СЂРёРІР°РµС‚.</span>")
 		else
 			T.wait_for(src)
 			wait_for(T, i_am_caller = TRUE)
@@ -272,7 +272,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 	handset.broadcasting = TRUE
 
 /obj/item/device/telephone/proc/start_recording()
-	visible_message("<span class='notice'>Абонент не отвечает. Оставьте своё сообщение.</span>")
+	visible_message("<span class='notice'>РђР±РѕРЅРµРЅС‚ РЅРµ РѕС‚РІРµС‡Р°РµС‚. РћСЃС‚Р°РІСЊС‚Рµ СЃРІРѕС‘ СЃРѕРѕР±С‰РµРЅРёРµ.</span>")
 	handset.recording_call = TRUE
 	call_timer = addtimer(CALLBACK(src, PROC_REF(reject_call)), 15 SECONDS, TIMER_STOPPABLE)
 
@@ -290,8 +290,8 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 
 /obj/item/device/radio/telephone_handset
 	name = "telephone handset"
-	cases = list("телефонная трубка", "телефонной трубки", "телефонной трубке", "телефонную трубку", "телефонной трубкой", "телефонной трубке")
-	desc = "Хлипкая и дешёвая на ощупь телефонная трубка. Воняет пластиком."
+	cases = list("С‚РµР»РµС„РѕРЅРЅР°СЏ С‚СЂСѓР±РєР°", "С‚РµР»РµС„РѕРЅРЅРѕР№ С‚СЂСѓР±РєРё", "С‚РµР»РµС„РѕРЅРЅРѕР№ С‚СЂСѓР±РєРµ", "С‚РµР»РµС„РѕРЅРЅСѓСЋ С‚СЂСѓР±РєСѓ", "С‚РµР»РµС„РѕРЅРЅРѕР№ С‚СЂСѓР±РєРѕР№", "С‚РµР»РµС„РѕРЅРЅРѕР№ С‚СЂСѓР±РєРµ")
+	desc = "РҐР»РёРїРєР°СЏ Рё РґРµС€С‘РІР°СЏ РЅР° РѕС‰СѓРїСЊ С‚РµР»РµС„РѕРЅРЅР°СЏ С‚СЂСѓР±РєР°. Р’РѕРЅСЏРµС‚ РїР»Р°СЃС‚РёРєРѕРј."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "telephone_handset"
 	item_state = "telephone_handset"
