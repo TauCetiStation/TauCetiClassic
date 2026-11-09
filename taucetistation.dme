@@ -1100,6 +1100,7 @@
 #include "code\game\objects\items\devices\suit_cooling.dm"
 #include "code\game\objects\items\devices\tabletop_assistant.dm"
 #include "code\game\objects\items\devices\taperecorder.dm"
+#include "code\game\objects\items\devices\telephone.dm"
 #include "code\game\objects\items\devices\traitor_caller.dm"
 #include "code\game\objects\items\devices\traitordevices.dm"
 #include "code\game\objects\items\devices\transfer_valve.dm"
