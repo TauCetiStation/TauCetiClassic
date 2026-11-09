@@ -2,8 +2,8 @@
   width: 208px;
   height: 50px;
   background: hsl(0, 0%, 6.7%);
-  border-bottom: 2px solid #88a3bc;
-  border-top: 3px solid #1b2447;
+  border-bottom: 2px solid hsl(209, 28%, 64%);
+  border-top: 3px solid hsl(228, 45%, 19%);
   padding: 0px;
   padding-top: 4px;
   padding-left: -20px;
@@ -11,50 +11,50 @@
 }
 
 .cardpay_window-contents--black {
-  background: #485262 !important;
+  background: hsl(217, 15%, 33%) !important;
   border-radius: 0px 0px 15px 15px;
 }
 
 .cardpay_button--black {
-  background: #1b2447;
-  border-color: #1b2447;
-  border-top-color: #485262;
+  background: hsl(228, 45%, 19%);
+  border-color: hsl(228, 45%, 19%);
+  border-top-color: hsl(217, 15%, 33%);
 
   &:hover {
     border-top-width: 4px;
-    background: #1b2447 !important;
+    background: hsl(228, 45%, 19%) !important;
   }
 }
 
 .cardpay_button--black.Button--selected {
   height: 48px;
   width: 48px;
-  background: #1b2447;
+  background: hsl(228, 45%, 19%);
   outline: hsl(232.5, 12.9%, 12.2%) solid 3px;
-  border: 4px solid #1b2447;
-  border-top: 6px solid #485262;
+  border: 4px solid hsl(228, 45%, 19%);
+  border-top: 6px solid hsl(217, 15%, 33%);
   padding: 0px;
   margin-left: 2.5px;
   &:hover {
     border-top-width: 8px;
-    background: #1b2447 !important;
+    background: hsl(228, 45%, 19%) !important;
   }
 }
 
 .cardpay_button-inside--black {
-  background: #5e718e;
-  border-bottom-color: #88a3bc;
+  background: hsl(216, 20%, 46%);
+  border-bottom-color: hsl(209, 28%, 64%);
   color: hsl(240, 14.3%, 23.3%);
 }
 
 .telephone_label {
   width: 110px;
-  background-color: #eedfbf;
+  background-color: hsl(41, 58%, 84%);
 
-  border-top: 2px solid #ffefcf;
-  border-left: 2px solid #ffefcf;
-  border-bottom: 3px solid #aaac9c;
-  border-right: 3px solid #aaac9c;
+  border-top: 2px solid hsl(40, 100%, 91%);
+  border-left: 2px solid hsl(40, 100%, 91%);
+  border-bottom: 3px solid hsl(68, 9%, 64%);
+  border-right: 3px solid hsl(68, 9%, 64%);
 
   ul {
     color: black;
@@ -67,7 +67,7 @@
       width: 100%;
       height: 20px;
       padding-left: 15px;
-      border-bottom: 2px solid #cccebf;
+      border-bottom: 2px solid hsl(68, 13%, 78%);
     }
   }
 }
