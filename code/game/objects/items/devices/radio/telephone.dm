@@ -78,7 +78,10 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 			handset.forceMove(src)
 
 	icon_state = "telephone_full"
-	QDEL_NULL(phone_cord)
+
+	if(phone_cord)
+		phone_cord.End()
+
 	SStgui.close_uis(src)
 	reject_call()
 	if(phone_caller)
@@ -104,8 +107,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 		icon_state = "telephone_empty"
 		visible_message("<span class='notice'>[user] берёт [CASE(handset, ACCUSATIVE_CASE)].</span>")
 
-		phone_cord = new(src, user, time = INFINITY, beam_icon_state = "telephone_cord", btype = /obj/effect/ebeam/phone_cord)
-		INVOKE_ASYNC(phone_cord, TYPE_PROC_REF(/datum/beam, Start))
+		phone_cord = Beam(user, icon_state = "telephone_cord", time = INFINITY, maxdistance = 4, beam_type = /obj/effect/ebeam/phone_cord)
 
 		AddComponent(/datum/component/bounded, user, 0, 2, CALLBACK(src, PROC_REF(resolve_stranded)))
 
@@ -174,9 +176,9 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 
 		if("listen_records")
 			if(!recordings.len)
-				to_chat(usr, "<span class='notice'>Автоответчик не имеет записей.</span>")
+				to_chat(usr, "<span class='info'>Автоответчик не имеет записей.</span>")
 			else
-				to_chat(usr, "<span class='notice'>Автоответчик начинает проигрывать записи.</span>")
+				to_chat(usr, "<span class='info'>Автоответчик начинает проигрывать записи.</span>")
 				play_recordings()
 
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
@@ -194,12 +196,13 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 	display_numbers = 0
 
 	if(phone_caller)
+		to_chat(usr, "<span class='info'>Вызов отменён.</span>")
 		phone_caller.reject_call()
 		reject_call()
 
 /obj/item/device/telephone/proc/approve()
 	if(display_numbers < 10 || display_numbers > 99)
-		visible_message("<span class='notice'>Номер не существует.</span>")
+		visible_message("<span class='warning'>Номер не существует.</span>")
 	try_call(display_numbers)
 	display_numbers = 0
 
@@ -212,8 +215,9 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 			continue
 
 		if(T.phone_caller)
-			visible_message("<span class='notice'>В настоящий момент абонент разговаривает.</span>")
+			visible_message("<span class='warning'>В настоящий момент абонент разговаривает.</span>")
 		else
+			to_chat(usr, "<span class='info'>Устанавливается соединение.</span>")
 			T.wait_for(src)
 			wait_for(T, i_am_caller = TRUE)
 			handset.frequency = BASIC_PHONE_FREQUENCY + number
@@ -221,6 +225,8 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 			handset.broadcasting = TRUE
 
 		break
+
+	visible_message("<span class='warning'>Номер не существует.</span>")
 
 /obj/item/device/telephone/proc/wait_for(obj/item/device/telephone/T, amount = 5, i_am_caller = FALSE)
 	if(!istalking && (amount <= 0))
@@ -240,7 +246,10 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 			return
 
 		flick("telephone_ring", src)
-		playsound(src, 'sound/weapons/ring.ogg', VOL_EFFECTS_MASTER, 50)
+		playsound(src, 'sound/weapons/ring.ogg', VOL_EFFECTS_MASTER, 50, vary = FALSE)
+	else if(ismob(handset.loc))
+		var/mob/user = handset.loc
+		user.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, 30, vary = FALSE)
 
 	if(istalking)
 		return
@@ -272,7 +281,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 	handset.broadcasting = TRUE
 
 /obj/item/device/telephone/proc/start_recording()
-	visible_message("<span class='notice'>Абонент не отвечает. Оставьте своё сообщение.</span>")
+	visible_message("<span class='warning'>Абонент не отвечает. Оставьте своё сообщение.</span>")
 	handset.recording_call = TRUE
 	call_timer = addtimer(CALLBACK(src, PROC_REF(reject_call)), 15 SECONDS, TIMER_STOPPABLE)
 
@@ -316,9 +325,22 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 	return ..()
 
 /obj/item/device/radio/telephone_handset/dropped(mob/user)
-	..()
 	if(telephone)
 		telephone.retract_handset()
+
+	..()
+
+/obj/item/device/radio/telephone_handset/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
+	. = ..()
+
+	if(telephone)
+		telephone.retract_handset()
+
+/obj/item/device/radio/telephone_handset/attack_self(mob/user)
+	return
+
+/obj/item/device/radio/telephone_handset/attackby(obj/item/I, mob/user, params)
+	return
 
 /obj/item/device/radio/telephone_handset/hear_talk(mob/M, msg, verb = "says", datum/language/speaking = null)
 	if(recording_call && telephone && telephone.phone_caller)
