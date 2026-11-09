@@ -25,18 +25,18 @@ export const Telephone = (props, context) => {
   }
 
   const getText = () => {
-    let result_text = ''
-    if(call_timer) {
-      result_text = "Вызов";
-      if(recording) {
+    let result_text = '';
+    if (call_timer) {
+      result_text = 'Вызов';
+      if (recording) {
         let timer_text = Math.round(call_timer / 10).toString();
-        result_text = timer_text + ' сек'
+        result_text = timer_text + ' сек';
       }
-    } else if(istalking) {
-      result_text = "Разговор"
+    } else if (istalking) {
+      result_text = 'Разговор';
     } else {
       let numtext = numbers.toString();
-      result_text = 'N°' + (numbers ? numtext : '0')
+      result_text = 'N°' + (numbers ? numtext : '0');
     }
     return result_text;
   };
@@ -55,7 +55,8 @@ export const Telephone = (props, context) => {
             display_text={getText()}
           />
         </Box>
-        <Box className="telephone_label"
+        <Box
+          className="telephone_label"
           position="absolute"
           left="210px"
           top="95px">
@@ -69,7 +70,7 @@ export const Telephone = (props, context) => {
             <li>6Х - Карго</li>
           </ul>
         </Box>
-        
+
         <Box
           width="158px"
           height="208px"
@@ -106,17 +107,17 @@ export const Telephone = (props, context) => {
           />
         </Box>
         <Button
-            position="absolute"
-            left="240px"
-            top="250px"
-            className="cardpay_button cardpay_button--black"
-            content={
-              <Box className="cardpay_button-inside cardpay_button-inside--black">
-                {'>'}
-              </Box>
-            }
-            onClick={() => act('listen_records')}
-          />
+          position="absolute"
+          left="240px"
+          top="250px"
+          className="cardpay_button cardpay_button--black"
+          content={
+            <Box className="cardpay_button-inside cardpay_button-inside--black">
+              {'>'}
+            </Box>
+          }
+          onClick={() => act('listen_records')}
+        />
       </Window.Content>
     </Window>
   );
