@@ -1358,7 +1358,6 @@
 /area/centcom/waitingroom)
 "adZ" = (
 /obj/machinery/light,
-/obj/structure/statue_pedestal,
 /turf/unsimulated/floor{
 	dir = 6;
 	icon_state = "green"
@@ -15880,10 +15879,12 @@
 	},
 /area/custom/syndicate_mothership)
 "aLc" = (
+/obj/structure/stool/bed/chair/metal/white{
+	dir = 8
+	},
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/statue_pedestal,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "green"
@@ -22753,13 +22754,6 @@
 	icon_state = "freezerfloor"
 	},
 /area/velocity)
-"cpi" = (
-/obj/structure/statue_pedestal,
-/turf/unsimulated/floor{
-	dir = 1;
-	icon_state = "brown"
-	},
-/area/centcom/bar)
 "cqb" = (
 /obj/structure/disposalpipe/segment,
 /turf/unsimulated/wall/like_a_normal/beige,
@@ -25331,12 +25325,6 @@
 	icon_state = "engine"
 	},
 /area/velocity)
-"gws" = (
-/obj/structure/statue_pedestal,
-/turf/unsimulated/floor{
-	icon_state = "brown"
-	},
-/area/centcom/bar)
 "gxb" = (
 /obj/structure/sign/velocity_tablo{
 	icon_state = "velocity_tablo";
@@ -27545,7 +27533,6 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/obj/structure/statue_pedestal,
 /turf/unsimulated/floor,
 /area/centcom/waitingroom)
 "knb" = (
@@ -28135,7 +28122,6 @@
 	},
 /area/centcom/waitingroom)
 "lob" = (
-/obj/structure/statue_pedestal,
 /turf/unsimulated/floor{
 	icon_state = "yellow"
 	},
@@ -28596,12 +28582,6 @@
 	icon_state = "white"
 	},
 /area/centcom/holding)
-"mcF" = (
-/obj/structure/statue_pedestal,
-/turf/unsimulated/floor{
-	icon_state = "dark"
-	},
-/area/centcom/evac)
 "mdb" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/eastleft{
@@ -56079,7 +56059,7 @@ aSc
 aWc
 aSc
 aSc
-mcF
+aSc
 aSc
 aSc
 aSc
@@ -56093,7 +56073,7 @@ aaV
 aSc
 aSc
 aSc
-mcF
+aSc
 aSc
 aSc
 oQb
@@ -60691,7 +60671,7 @@ aQa
 aPy
 ldb
 aSD
-gws
+lqb
 adP
 aSF
 aSF
@@ -66595,14 +66575,14 @@ aaS
 aaM
 aaM
 adP
-cpi
+jXb
 aSD
 kyb
 kKb
 kUb
 lcb
 aSD
-gws
+lqb
 neb
 aSG
 aXv
