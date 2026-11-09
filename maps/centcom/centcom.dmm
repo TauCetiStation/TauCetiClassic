@@ -22218,6 +22218,14 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"bCP" = (
+/obj/structure/statue_pedestal,
+/obj/structure/fence/metal{
+	color = "#ff0000";
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red,
+/area/centcom/bar)
 "bDb" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Creed's Office";
@@ -23240,6 +23248,11 @@
 	icon_state = "green"
 	},
 /area/velocity/waitingroom)
+"cWV" = (
+/turf/unsimulated/floor{
+	icon_state = "wood11"
+	},
+/area/centcom/bar)
 "cXb" = (
 /obj/structure/stool/bed/chair/comfy/black{
 	dir = 1
@@ -24465,6 +24478,14 @@
 	icon_state = "floor4"
 	},
 /area/shuttle/officer/velocity)
+"fag" = (
+/obj/structure/stool/bed/bench{
+	dir = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood10"
+	},
+/area/centcom/bar)
 "fbb" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -24494,6 +24515,14 @@
 	},
 /turf/environment/space,
 /area/shuttle/arrival/velocity)
+"fdK" = (
+/obj/structure/fence/metal{
+	color = "#ff0000";
+	dir = 1
+	},
+/obj/item/weapon/flora/random,
+/turf/simulated/floor/carpet/red,
+/area/centcom/bar)
 "feb" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	dir = 4;
@@ -25131,6 +25160,15 @@
 /obj/item/weapon/tank/emergency_oxygen/double,
 /turf/unsimulated/floor,
 /area/centcom/specops)
+"ged" = (
+/obj/structure/window/fulltile/reinforced{
+	grilled = 1;
+	icon_state = "gr_window_reinforced"
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood17"
+	},
+/area/centcom/bar)
 "ggb" = (
 /obj/structure/table/reinforced,
 /obj/item/clothing/mask/breath/gas,
@@ -25219,6 +25257,11 @@
 	icon_state = "engine"
 	},
 /area/velocity)
+"gnB" = (
+/turf/unsimulated/floor{
+	icon_state = "wood10"
+	},
+/area/centcom/bar)
 "gnG" = (
 /obj/machinery/door/airlock/external{
 	dir = 4;
@@ -25292,6 +25335,13 @@
 	icon_state = "vaultfull"
 	},
 /area/centcom/specops)
+"gtG" = (
+/obj/structure/fence/metal{
+	color = "#ff0000";
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red,
+/area/centcom/bar)
 "gug" = (
 /turf/unsimulated/floor{
 	icon_state = "purplechecker"
@@ -25319,6 +25369,15 @@
 	},
 /turf/environment/space,
 /area/shuttle/arrival/velocity)
+"gvV" = (
+/obj/structure/stool/bed/bench{
+	dir = 1;
+	icon_state = "bench_2"
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood10"
+	},
+/area/centcom/bar)
 "gwb" = (
 /obj/effect/landmark/blockway,
 /turf/unsimulated/floor{
@@ -25730,6 +25789,13 @@
 	icon_state = "dark"
 	},
 /area/centcom/specops)
+"hil" = (
+/obj/structure/fence/metal{
+	color = "#ff0000"
+	},
+/obj/item/weapon/flora/random,
+/turf/simulated/floor/carpet/red,
+/area/centcom/bar)
 "hjb" = (
 /obj/machinery/vending/engineering,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -26293,6 +26359,16 @@
 	icon_state = "white"
 	},
 /area/velocity/dormitories)
+"icd" = (
+/obj/structure/statue_pedestal,
+/obj/structure/fence/metal{
+	color = "#ff0000"
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red,
+/area/centcom/bar)
 "idb" = (
 /obj/effect/decal/turf_decal/blue{
 	dir = 1;
@@ -27063,6 +27139,14 @@
 	icon_state = "white"
 	},
 /area/centcom/holding)
+"jzk" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood10"
+	},
+/area/centcom/bar)
 "jAb" = (
 /obj/structure/window/thin/reinforced{
 	dir = 4
@@ -27163,6 +27247,14 @@
 	icon_state = "dark"
 	},
 /area/centcom/control)
+"jIt" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood10"
+	},
+/area/centcom/bar)
 "jJb" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -27184,6 +27276,17 @@
 	icon_state = "dark"
 	},
 /area/centcom/living)
+"jMU" = (
+/obj/structure/fence/metal{
+	color = "#ff0000";
+	dir = 8
+	},
+/obj/structure/fence/metal{
+	color = "#ff0000"
+	},
+/obj/item/weapon/flora/random,
+/turf/simulated/floor/carpet/red,
+/area/centcom/bar)
 "jNb" = (
 /obj/structure/window/thin/reinforced{
 	dir = 8
@@ -27269,6 +27372,14 @@
 /obj/item/clothing/under/suit_jacket,
 /turf/unsimulated/floor{
 	icon_state = "wood"
+	},
+/area/centcom/bar)
+"jTJ" = (
+/obj/structure/stool/bed/bench{
+	icon_state = "bench_2"
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood10"
 	},
 /area/centcom/bar)
 "jUb" = (
@@ -27957,6 +28068,15 @@
 	icon_state = "greencorner"
 	},
 /area/centcom/living)
+"kYC" = (
+/obj/structure/statue_pedestal,
+/obj/structure/fence/metal{
+	color = "#ff0000";
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/simulated/floor/carpet/red,
+/area/centcom/bar)
 "kZa" = (
 /obj/structure/object_wall/velocity{
 	dir = 8;
@@ -28620,6 +28740,12 @@
 	icon_state = "white"
 	},
 /area/centcom/holding)
+"mgJ" = (
+/obj/structure/fence/metal{
+	color = "#ff0000"
+	},
+/turf/simulated/floor/carpet/red,
+/area/centcom/bar)
 "mhb" = (
 /obj/machinery/door/airlock/multi_tile/glass{
 	dir = 4
@@ -29213,6 +29339,17 @@
 	icon_state = "redyellowfull"
 	},
 /area/centcom/tdome/tdomeadmin)
+"noi" = (
+/obj/structure/fence/metal{
+	color = "#ff0000";
+	dir = 4
+	},
+/obj/structure/fence/metal{
+	color = "#ff0000"
+	},
+/obj/item/weapon/flora/random,
+/turf/simulated/floor/carpet/red,
+/area/centcom/bar)
 "npb" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/stool/bed/chair/metal{
@@ -29611,6 +29748,12 @@
 /obj/machinery/light,
 /turf/unsimulated/floor,
 /area/velocity)
+"nUW" = (
+/obj/structure/stool/bed/bench,
+/turf/unsimulated/floor{
+	icon_state = "wood10"
+	},
+/area/centcom/bar)
 "nVb" = (
 /turf/unsimulated/floor{
 	icon_state = "wizlava";
@@ -30130,6 +30273,13 @@
 	},
 /turf/environment/space,
 /area/shuttle/escape/centcom)
+"oVq" = (
+/obj/structure/statue_pedestal,
+/obj/structure/fence/metal{
+	color = "#ff0000"
+	},
+/turf/simulated/floor/carpet/red,
+/area/centcom/bar)
 "oWb" = (
 /obj/machinery/light{
 	dir = 8
@@ -30170,6 +30320,18 @@
 	},
 /turf/unsimulated/floor,
 /area/centcom/evac)
+"pac" = (
+/obj/structure/fence/metal{
+	color = "#ff0000";
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	color = "#ff0000";
+	dir = 8
+	},
+/obj/item/weapon/flora/random,
+/turf/simulated/floor/carpet/red,
+/area/centcom/bar)
 "pbb" = (
 /obj/machinery/light{
 	dir = 1
@@ -30904,6 +31066,18 @@
 	icon_state = "grass2"
 	},
 /area/centcom/evac)
+"rEO" = (
+/obj/structure/fence/metal{
+	color = "#ff0000";
+	dir = 1
+	},
+/obj/structure/fence/metal{
+	color = "#ff0000";
+	dir = 4
+	},
+/obj/item/weapon/flora/random,
+/turf/simulated/floor/carpet/red,
+/area/centcom/bar)
 "rIG" = (
 /turf/unsimulated/floor{
 	icon_state = "heavenfull2"
@@ -30964,6 +31138,14 @@
 	},
 /turf/environment/space,
 /area/space)
+"skB" = (
+/obj/machinery/door/airlock/centcom{
+	name = "Holding Facility"
+	},
+/turf/unsimulated/floor{
+	icon_state = "wood17"
+	},
+/area/centcom/bar)
 "skC" = (
 /obj/item/weapon/reagent_containers/blood/AMinus{
 	pixel_x = -7;
@@ -60941,24 +61123,24 @@ aaM
 aaM
 aaM
 aaM
-neb
-neb
-neb
-neb
-neb
-neb
-neb
-neb
-neb
-neb
-neb
-neb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
+neb
+neb
+neb
+neb
+neb
+neb
+neb
+neb
+neb
+neb
+neb
+neb
 aaM
 aaM
 aaM
@@ -61190,7 +61372,13 @@ adP
 adP
 adP
 adP
-aaM
+adP
+adP
+adP
+iIb
+iIb
+iIb
+iIb
 neb
 neb
 neb
@@ -61210,12 +61398,6 @@ aUb
 aUb
 aZd
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -61443,7 +61625,13 @@ kWb
 lcb
 lqb
 lzb
-aaU
+adP
+hil
+gnB
+jzk
+gnB
+fdK
+adP
 aaM
 eYb
 aKu
@@ -61469,12 +61657,6 @@ njb
 neb
 neb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -61700,7 +61882,13 @@ kWb
 ldb
 lqb
 nBb
-aaU
+adP
+icd
+gnB
+gnB
+gnB
+kYC
+adP
 aaM
 lSb
 aKu
@@ -61726,12 +61914,6 @@ aXv
 aZs
 aXv
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -61958,6 +62140,12 @@ leb
 lqb
 nBb
 aaU
+mgJ
+gnB
+nUW
+gnB
+gtG
+aaU
 aaM
 lTb
 aKu
@@ -61983,12 +62171,6 @@ neb
 neb
 aXv
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -62215,6 +62397,12 @@ lcb
 lqb
 mnb
 aaU
+mgJ
+gnB
+jTJ
+gnB
+gtG
+aaU
 aaM
 aqK
 aKu
@@ -62240,12 +62428,6 @@ aZf
 neb
 lKb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -62472,6 +62654,12 @@ lcb
 lrb
 lAb
 adP
+oVq
+gnB
+gnB
+gnB
+bCP
+adP
 aaM
 apy
 aKu
@@ -62497,12 +62685,6 @@ aZf
 neb
 mqb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -62728,7 +62910,13 @@ aPy
 ldb
 aSD
 lBb
-adP
+aaU
+hil
+gnB
+gnB
+gnB
+fdK
+aaU
 aaM
 lSb
 aKu
@@ -62754,12 +62942,6 @@ aZf
 neb
 lKb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -62985,7 +63167,13 @@ aPz
 leb
 aSD
 lqb
-adP
+aaU
+mgJ
+gnB
+gnB
+gnB
+gtG
+aaU
 aaM
 app
 aKu
@@ -63012,12 +63200,6 @@ neb
 lKb
 neb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -63243,6 +63425,12 @@ lcb
 aSD
 lqb
 adP
+icd
+gnB
+gnB
+gnB
+kYC
+adP
 aaM
 aTi
 aKu
@@ -63269,12 +63457,6 @@ neb
 mqb
 lKb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -63500,6 +63682,12 @@ lcb
 aON
 lqb
 aaU
+mgJ
+gnB
+gvV
+gnB
+gtG
+aaU
 aaM
 eYb
 aKu
@@ -63527,12 +63715,6 @@ neb
 tAz
 neb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -63757,6 +63939,12 @@ lfb
 aOO
 lCb
 aaU
+hil
+gnB
+fag
+gnB
+fdK
+aaU
 aaM
 eYb
 aKu
@@ -63784,12 +63972,6 @@ nlb
 nlb
 nub
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -64014,6 +64196,12 @@ leb
 aOP
 lqb
 adP
+oVq
+gnB
+gnB
+gnB
+bCP
+adP
 aaM
 eYb
 aKu
@@ -64041,12 +64229,6 @@ nlb
 nlb
 nub
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -64270,6 +64452,12 @@ kUb
 lcb
 aON
 lDb
+aaU
+mgJ
+gnB
+gnB
+gnB
+gtG
 neb
 neb
 neb
@@ -64298,12 +64486,6 @@ nqb
 nlb
 nub
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -64527,6 +64709,12 @@ kVb
 lgb
 aOO
 lCb
+aaU
+mgJ
+gnB
+gnB
+gnB
+gtG
 neb
 aSG
 aXv
@@ -64555,12 +64743,6 @@ nlb
 ntb
 nvb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -64784,6 +64966,12 @@ aPy
 ldb
 aOP
 lEb
+adP
+icd
+gnB
+gnB
+gnB
+kYC
 neb
 aXv
 aTn
@@ -64812,12 +65000,6 @@ nqb
 ntb
 nwb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -65041,6 +65223,12 @@ aPz
 leb
 aSD
 aRU
+ged
+noi
+gnB
+gnB
+gnB
+rEO
 aRH
 aRH
 aTo
@@ -65069,12 +65257,6 @@ nlb
 ntb
 nxb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -65298,6 +65480,12 @@ aPy
 aPy
 leb
 aRV
+ged
+cWV
+cWV
+cWV
+cWV
+cWV
 aRH
 aSJ
 aSJ
@@ -65326,12 +65514,6 @@ nlb
 nlb
 nyb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -65555,6 +65737,12 @@ kqb
 kqb
 kqb
 aRU
+skB
+cWV
+cWV
+cWV
+cWV
+cWV
 aUH
 lKb
 lKb
@@ -65583,12 +65771,6 @@ nlb
 nlb
 nlb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -65812,6 +65994,12 @@ aPz
 aPz
 ldb
 aRV
+ged
+cWV
+cWV
+cWV
+cWV
+cWV
 aRH
 aSL
 aSL
@@ -65840,12 +66028,6 @@ nrb
 nlb
 nzb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -66069,6 +66251,12 @@ aPy
 ldb
 aSD
 aRU
+ged
+jMU
+gnB
+gnB
+gnB
+pac
 aRH
 aRH
 aTp
@@ -66097,12 +66285,6 @@ nlb
 ntb
 nCb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -66326,6 +66508,12 @@ aPz
 leb
 aSD
 lEb
+adP
+icd
+gnB
+gnB
+gnB
+kYC
 neb
 aXv
 aTq
@@ -66354,12 +66542,6 @@ nqb
 ntb
 nDb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -66583,6 +66765,12 @@ kUb
 lcb
 aSD
 lqb
+adP
+hil
+gnB
+jIt
+gnB
+fdK
 neb
 aSG
 aXv
@@ -66611,12 +66799,6 @@ nlb
 ntb
 nEb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -66840,6 +67022,12 @@ kVb
 lcb
 aRE
 adP
+adP
+adP
+adP
+adP
+adP
+adP
 neb
 neb
 neb
@@ -66868,12 +67056,6 @@ nqb
 ntb
 nub
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -67103,6 +67285,12 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 neb
 lKb
 neb
@@ -67125,12 +67313,6 @@ nsb
 ntb
 nFb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -67360,6 +67542,12 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 neb
 msb
 neb
@@ -67382,12 +67570,6 @@ nlb
 nlb
 nGb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -67617,6 +67799,12 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 neb
 lKb
 neb
@@ -67639,12 +67827,6 @@ neb
 tAz
 neb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -67874,6 +68056,12 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 neb
 lKb
 mtb
@@ -67895,12 +68083,6 @@ neb
 mqb
 lKb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -68131,6 +68313,12 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 neb
 neb
 neb
@@ -68152,12 +68340,6 @@ neb
 lKb
 neb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -68392,6 +68574,12 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 neb
 lKb
 neb
@@ -68408,12 +68596,6 @@ aZi
 neb
 lKb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -68649,6 +68831,12 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 neb
 msb
 neb
@@ -68665,12 +68853,6 @@ aZi
 neb
 mqb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -68906,6 +69088,12 @@ aaM
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 neb
 lKb
 neb
@@ -68922,12 +69110,6 @@ aZi
 neb
 lKb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -69163,6 +69345,12 @@ aAm
 aAm
 aAm
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 neb
 lKb
 neb
@@ -69179,12 +69367,6 @@ neb
 neb
 aXv
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -69420,6 +69602,12 @@ aTr
 aSN
 aAm
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 neb
 lKb
 lKb
@@ -69436,12 +69624,6 @@ aZj
 aXv
 aXv
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -69677,6 +69859,12 @@ aTs
 aVe
 aAm
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 neb
 neb
 neb
@@ -69693,12 +69881,6 @@ aZk
 neb
 neb
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -69936,6 +70118,12 @@ aAm
 aaM
 aaM
 aaM
+aaM
+aaM
+aaM
+aaM
+aaM
+aaM
 neb
 aUc
 aXy
@@ -69948,12 +70136,6 @@ aXy
 aUc
 aUq
 neb
-aaM
-aaM
-aaM
-aaM
-aaM
-aaM
 aaM
 aaM
 aaM
@@ -70193,24 +70375,24 @@ aAm
 aaM
 aaM
 aaM
-neb
-neb
-neb
-neb
-neb
-neb
-neb
-neb
-neb
-neb
-neb
-neb
 aaM
 aaM
 aaM
 aaM
 aaM
 aaM
+neb
+neb
+neb
+neb
+neb
+neb
+neb
+neb
+neb
+neb
+neb
+neb
 aaM
 aaM
 aaM
