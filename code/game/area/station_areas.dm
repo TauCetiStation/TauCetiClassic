@@ -807,6 +807,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/rnd/lab
 	name = "Research and Development"
+	cases = list("лаборатория НИОКР", "лаборатории НИОКР", "лаборатории НИОКР", "лабораторию НИОКР", "лабораторией НИОКР", "лаборатории НИОКР")
 	icon_state = "scilab"
 
 /area/station/rnd/hallway
