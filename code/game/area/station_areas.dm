@@ -267,7 +267,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/bridge/captain_quarters
 	name = "Captain's Office"
-	cases = list("капитанская рубка", "капитанской рубки", "капитанской рубке", "капитанскую рубку", "капитанской рубкой", "капитанской рубке")
+	cases = list("кабинет капитана", "кабинета капитана", "кабинету капитана", "кабинет капитана", "кабинетом капитана", "кабинете капитана")
 	icon_state = "captain"
 
 /area/station/bridge/hop_office
