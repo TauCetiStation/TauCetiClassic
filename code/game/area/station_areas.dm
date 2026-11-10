@@ -785,7 +785,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/cargo/recycleroffice
 	name = "Recycleroffice"
-	cases = list("кабинет переработчиков", "кабинета переработчиков", "кабинету переработчиков", "кабинет переработчиков", "окабинетом переработчиков", "кабинете переработчиков")
+	cases = list("кабинет переработчиков", "кабинета переработчиков", "кабинету переработчиков", "кабинет переработчиков", "кабинетом переработчиков", "кабинете переработчиков")
 	icon_state = "recycleroffice"
 	sound_environment = SOUND_AREA_STATION_HALLWAY
 
