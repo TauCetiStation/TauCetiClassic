@@ -10,6 +10,8 @@
 	var/icon_state_detached
 	required_skills = list(/datum/skill/medical = SKILL_LEVEL_TRAINED)
 
+	var/cord_pixel_x = 0
+	var/cord_pixel_y = 0
 	var/datum/beam/cord = null
 
 /obj/effect/ebeam/life_assist_cord
@@ -34,7 +36,7 @@
 /obj/machinery/life_assist/proc/attach(mob/living/carbon/human/H)
 	attached = H
 	AddComponent(/datum/component/bounded, H, 0, 1, CALLBACK(src, PROC_REF(resolve_stranded)))
-	cord = Beam(H, icon_state = "life_assist_cord", time = INFINITY, maxdistance = 2, beam_type = /obj/effect/ebeam/life_assist_cord)
+	cord = Beam(H, icon_state = "life_assist_cord", time = INFINITY, maxdistance = 2, beam_type = /obj/effect/ebeam/life_assist_cord, origin_additional_pixel_x = cord_pixel_x, origin_additional_pixel_y = cord_pixel_y)
 	visible_message("<span class='notice'>[usr] attaches \the [src] to \the [H].</span>")
 	assist(H)
 	update_icon()
@@ -109,6 +111,9 @@
 
 	assist_trait = TRAIT_EXTERNAL_VENTILATION
 
+	cord_pixel_x = -7
+	cord_pixel_y = 4
+
 	var/obj/item/weapon/tank/holding
 
 /obj/machinery/life_assist/artificial_ventilation/attackby(obj/item/weapon/W, mob/user)
@@ -170,6 +175,9 @@
 
 	assist_trait = TRAIT_EXTERNAL_HEART
 
+	cord_pixel_x = -9
+	cord_pixel_y = 10
+
 /obj/machinery/life_assist/cardiopulmonary_bypass/assist(mob/living/carbon/human/H)
 	..()
 	var/obj/item/organ/internal/heart/mob_heart = H.organs_by_name[O_HEART]
@@ -195,3 +203,6 @@
 	icon_state_detached = "cooler_idle"
 
 	assist_trait = TRAIT_EXTERNAL_COOLING
+
+	cord_pixel_x = -9
+	cord_pixel_y = 10

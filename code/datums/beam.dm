@@ -19,7 +19,10 @@
 
 	var/obj/effect/ebeam/visuals //what we add to the ebeam's visual contents. never gets deleted on redrawing.
 
-/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam, beam_sleep_time=3, beam_plane)
+	var/origin_additional_pixel_x = 0
+	var/origin_additional_pixel_y = 0
+
+/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam, beam_sleep_time=3, beam_plane, origin_additional_pixel_x = 0, origin_additional_pixel_y = 0)
 	origin = beam_origin
 	origin_oldloc =	get_turf(origin)
 	target = beam_target
@@ -36,6 +39,9 @@
 		plane = beam_plane
 	if(time < INFINITY)
 		addtimer(CALLBACK(src,PROC_REF(End)), time)
+
+	src.origin_additional_pixel_x = origin_additional_pixel_x
+	src.origin_additional_pixel_y = origin_additional_pixel_y
 
 /datum/beam/proc/Start()
 	visuals = new beam_type()
@@ -102,8 +108,8 @@
 	rot_matrix.Turn(Angle)
 
 	//Translation vector for origin and target
-	var/DX = (32*target.x+target.pixel_x)-(32*origin.x+origin.pixel_x)
-	var/DY = (32*target.y+target.pixel_y)-(32*origin.y+origin.pixel_y)
+	var/DX = (32*target.x+target.pixel_x)-(32*origin.x + origin.pixel_x + origin_additional_pixel_x)
+	var/DY = (32*target.y+target.pixel_y)-(32*origin.y + origin.pixel_y + origin_additional_pixel_y)
 	var/N = 0
 	var/length = round(sqrt((DX)**2+(DY)**2)) //hypotenuse of the triangle formed by target and origin's displacement
 
@@ -149,8 +155,8 @@
 			X.y += a
 			Pixel_y %= 32
 
-		X.pixel_x = Pixel_x
-		X.pixel_y = Pixel_y
+		X.pixel_x = Pixel_x + origin.pixel_x + origin_additional_pixel_x
+		X.pixel_y = Pixel_y + origin.pixel_y + origin_additional_pixel_y
 		CHECK_TICK
 	afterDraw()
 
@@ -169,7 +175,7 @@
 /obj/effect/ebeam/singularity_act()
 	return
 
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3,beam_plane)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time,beam_plane)
+/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3,beam_plane, origin_additional_pixel_x = 0, origin_additional_pixel_y = 0)
+	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time,beam_plane, origin_additional_pixel_x, origin_additional_pixel_y)
 	INVOKE_ASYNC(newbeam, TYPE_PROC_REF(/datum/beam, Start))
 	return newbeam

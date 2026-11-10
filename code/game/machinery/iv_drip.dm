@@ -70,9 +70,9 @@
 	if(!(Adjacent(usr) && Adjacent(over_object) && usr.Adjacent(over_object)))
 		return
 
-	if(ishuman(over_object))
+	if(ishuman(over_object) && beaker)
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
-		cord = Beam(over_object, icon_state = "life_assist_cord", time = INFINITY, maxdistance = 2, beam_type = /obj/effect/ebeam/life_assist_cord)
+		cord = Beam(over_object, icon_state = "life_assist_cord", time = INFINITY, maxdistance = 2, beam_type = /obj/effect/ebeam/life_assist_cord, origin_additional_pixel_x = -3, origin_additional_pixel_y = -1)
 		src.attached = over_object
 		update_icon()
 
@@ -100,18 +100,19 @@
 /obj/machinery/iv_drip/process()
 	//set background = 1
 
-	if(src.attached)
+	if(!attached)
+		return
 
-		if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
-			visible_message("The needle is ripped out of [src.attached], doesn't that hurt?")
-			attached:apply_damage(3, BRUTE, pick(BP_R_ARM , BP_L_ARM))
-			if(cord)
-				cord.End()
-			src.attached = null
-			update_icon()
-			return
+	if(!(get_dist(src, src.attached) <= 1 && isturf(src.attached.loc)))
+		visible_message("The needle is ripped out of [src.attached], doesn't that hurt?")
+		attached:apply_damage(3, BRUTE, pick(BP_R_ARM , BP_L_ARM))
+		if(cord)
+			cord.End()
+		src.attached = null
+		update_icon()
+		return
 
-	if(src.attached && src.beaker)
+	if(beaker)
 		// Give blood
 		if(mode)
 			if(src.beaker.volume > 0)
@@ -157,10 +158,20 @@
 	if(.)
 		return
 
-	if(beaker)
-		beaker.loc = get_turf(src)
-		beaker = null
+	if(!beaker)
+		return
+
+	beaker.loc = get_turf(src)
+	beaker = null
+	update_icon()
+
+	if(attached)
+		visible_message("[src.attached] is detached from \the [src]")
+		if(cord)
+			cord.End()
+		src.attached = null
 		update_icon()
+		return
 
 /obj/machinery/iv_drip/verb/toggle_mode()
 	set name = "Toggle Mode"
