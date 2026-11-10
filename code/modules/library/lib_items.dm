@@ -24,25 +24,117 @@
 
 	hit_particle_type = /particles/tool/digging/wood
 
+	var/max_books = 5
+
 /obj/structure/bookcase/atom_init()
 	. = ..()
 	for(var/obj/item/I in loc)
+		if(!can_place_a_book())
+			break
+
 		if(istype(I, /obj/item/weapon/book))
 			I.loc = src
+
 	update_icon()
 
+	var/area/A = get_area(get_turf(src))
+	if(!istype(A, /area/station/civilian/library))
+		return
+
+	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/objects/library_bookcases/[SSmapping.config.map_name]", list(
+		"bookcase_name" = new /datum/primitive_field/text(
+			can_be_null = TRUE,
+			max_length = 100
+		),
+		"book_types" = new /datum/primitive_field/listfield(
+			can_be_null = TRUE,
+			entry_config = new /datum/primitive_field/type(
+				can_be_null = TRUE,
+				in_list = subtypesof(/obj/item/weapon/book)
+			)
+		),
+		"book_ids" = new /datum/primitive_field/listfield(
+			can_be_null = TRUE,
+			entry_config = new /datum/primitive_field/num(
+				can_be_null = TRUE
+			)
+		)
+	))
+
+/obj/structure/bookcase/proc/Read_Memory(list/save_data)
+	var/new_name = save_data["bookcase_name"]
+	var/list/book_types = save_data["book_types"]
+	var/list/book_ids = save_data["book_ids"]
+
+	if(new_name)
+		name = new_name
+
+	for(var/book_type in book_types)
+		new book_type(src)
+
+	if(!book_ids.len)
+		return
+
+	if(!establish_db_connection("erro_library"))
+		return
+
+	var/ids_list = "(" + list2text(book_ids) + ")"
+
+	var/DBQuery/query = dbcon.NewQuery("SELECT * FROM erro_library WHERE id IN [ids_list] AND deletereason IS NULL")
+	query.Execute()
+
+	while(query.NextRow())
+		var/author = query.item[2]
+		var/title = query.item[3]
+		var/content = query.item[4]
+		var/obj/item/weapon/book/B = new(src.loc)
+		B.db_id = query.item[1]
+		B.name = "Book: [title]"
+		B.title = title
+		B.author = author
+		B.dat = content
+		B.icon_state = "book[rand(1,10)]"
+		B.item_state_world = "[B.icon_state]_world"
+		B.item_state_inventory = B.icon_state
+		B.update_world_icon()
+
+/obj/structure/bookcase/proc/Write_Memory()
+	var/list/book_types = list()
+	var/list/book_ids = list()
+
+	for(var/obj/item/weapon/book/B in contents)
+		if(B.carved)
+			continue
+
+		if(B.db_id)
+			book_ids += B.db_id
+		else
+			book_types += B.type
+
+	var/list/data = list(
+		"bookcase_name" = sanitize(name, max_length = 100),
+		"book_types" = book_types,
+		"book_ids" = book_ids
+	)
+
+	return data
+
 /obj/structure/bookcase/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/weapon/book))
+	if(istype(O, /obj/item/weapon/book) && can_place_a_book())
 		user.drop_from_inventory(O, src)
 		update_icon()
+
 	else if(istype(O, /obj/item/weapon/pen))
 		var/newname = sanitize_safe(input(usr, "What would you like to title this bookshelf?"))
 		if(!newname)
 			return
 		else
-			name = ("[initial(name)] ([sanitize(newname)])")
+			name = ("[initial(name)] ([sanitize(newname, max_length = 89)])")
 	else
 		..()
+
+/obj/structure/bookcase/proc/can_place_a_book()
+	return contents.len < max_books
 
 /obj/structure/bookcase/deconstruct(disassembled)
 	for(var/obj/item/I as anything in contents)
@@ -128,6 +220,9 @@
 		update_icon()
 	else
 		..()
+
+/obj/structure/bookcase/shelf/can_place_a_book()
+	return placedItem ? contents.len - 1 < max_books : ..()
 
 /obj/structure/bookcase/shelf/attack_hand(mob/user)
 	if(contents.len)
@@ -255,6 +350,7 @@
 	var/window_width
 	var/window_height
 	var/obj/item/store	//What's in the book?
+	var/db_id
 
 	var/free_space = MAX_BOOK_MESSAGE_LEN
 
