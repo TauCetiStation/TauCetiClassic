@@ -322,7 +322,7 @@ ADD_TO_GLOBAL_LIST(/area/station, the_station_areas)
 
 /area/station/civilian/dormitories
 	name = "Dormitories"
-	cases = list("дормиторий", "дормитория", "дормиторию", "дормиторий", "дормиторием", "дормитории")
+	cases = list("жилой отсек", "жилого отсека", "жилому отсеку", "жилой отсек", "жилым отсеком", "жилом отсеке")
 	icon_state = "Sleep"
 
 /area/station/civilian/toilet
