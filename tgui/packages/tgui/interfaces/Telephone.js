@@ -67,7 +67,7 @@ export const Telephone = (props, context) => {
             <li>3Х - СБ</li>
             <li>4Х - НИОКР</li>
             <li>5Х - Ком.</li>
-            <li>6Х - Груз.</li>
+            <li>6Х - Снаб.</li>
           </ul>
         </Box>
 
