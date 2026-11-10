@@ -64,10 +64,10 @@ export const Telephone = (props, context) => {
             <li>{phone_frequency} - Мой</li>
             <li>1X - Инж.</li>
             <li>2Х - Мед.</li>
-            <li>3Х - Бриг</li>
+            <li>3Х - СБ</li>
             <li>4Х - Ком.</li>
             <li>5Х - НИОКР</li>
-            <li>6Х - Карго</li>
+            <li>6Х - Груз.</li>
           </ul>
         </Box>
 
@@ -104,6 +104,22 @@ export const Telephone = (props, context) => {
               </Box>
             }
             onClick={() => act('approveprice')}
+          />
+        </Box>
+        <Box
+          position="absolute"
+          top="15px"
+          left="240px"
+          textColor="#333344"
+          fontSize={0.85}
+          bold={1}>
+          рингтон
+          <Button
+            position="absolute"
+            top="15px"
+            left="15px"
+            className="cardpay_resethole"
+            onClick={() => act('change_ringtone')}
           />
         </Box>
         <Button

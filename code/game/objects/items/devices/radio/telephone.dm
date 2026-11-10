@@ -21,6 +21,11 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 
 	var/datum/beam/phone_cord = null
 
+	var/datum/music_player/chiptune_player
+
+	var/static/list/telephone_ringtones = list("Ring 1", "Ring 2", "Ring 3", "Ring 4", "Ring 5")
+	var/selected_ringtone = 1
+
 	var/phone_frequency = 0
 
 /*
@@ -64,6 +69,9 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 		phone_frequency = 69 + global.new_private_phone_number
 		global.new_private_phone_number++
 
+	chiptune_player = new(src, "sound/musical_instruments/pda")
+	change_ringtone(selected_ringtone)
+
 	handset = new(src)
 	handset.telephone = src
 	handset.set_frequency(BASIC_PHONE_FREQUENCY + phone_frequency)
@@ -76,6 +84,8 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 			user.drop_from_inventory(handset, src)
 		else
 			handset.forceMove(src)
+
+		playsound(src, 'sound/weapons/guns/reload_mag_in.ogg', VOL_EFFECTS_MASTER, 5)
 
 	icon_state = "telephone_full"
 
@@ -106,6 +116,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 		handset.add_fingerprint(user)
 		icon_state = "telephone_empty"
 		visible_message("<span class='notice'>[user] берёт [CASE(handset, ACCUSATIVE_CASE)].</span>")
+		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER, 5)
 
 		phone_cord = Beam(user, icon_state = "telephone_cord", time = INFINITY, maxdistance = 4, beam_type = /obj/effect/ebeam/phone_cord)
 
@@ -184,6 +195,15 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 			playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER)
 			return TRUE
 
+		if("change_ringtone")
+			selected_ringtone++
+			if(selected_ringtone > telephone_ringtones.len)
+				selected_ringtone = 1
+
+			change_ringtone(selected_ringtone)
+			play_ringtone()
+			return TRUE
+
 /obj/item/device/telephone/proc/press_number(num)
 	num = clamp(num, 0, 9)
 	display_numbers *= 10
@@ -224,7 +244,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 			handset.listening = TRUE
 			handset.broadcasting = TRUE
 
-		break
+		return
 
 	visible_message("<span class='warning'>Номер не существует.</span>")
 
@@ -246,10 +266,11 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 			return
 
 		flick("telephone_ring", src)
-		playsound(src, 'sound/weapons/ring.ogg', VOL_EFFECTS_MASTER, 50, vary = FALSE)
+		stop_ringtone()
+		play_ringtone()
 	else if(ismob(handset.loc))
 		var/mob/user = handset.loc
-		user.playsound_local(null, 'sound/misc/notice2.ogg', VOL_EFFECTS_MASTER, 30, vary = FALSE)
+		user.playsound_local(null, 'sound/machines/roboboop.ogg', VOL_EFFECTS_MASTER, 30, vary = FALSE)
 
 	if(istalking)
 		return
@@ -282,6 +303,9 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 
 /obj/item/device/telephone/proc/start_recording()
 	visible_message("<span class='warning'>Абонент не отвечает. Оставьте своё сообщение.</span>")
+	if(ismob(handset.loc))
+		var/mob/user = handset.loc
+		user.playsound_local(null, 'sound/machines/quite_beep.ogg', VOL_EFFECTS_MASTER, 30, vary = FALSE)
 	handset.recording_call = TRUE
 	call_timer = addtimer(CALLBACK(src, PROC_REF(reject_call)), 15 SECONDS, TIMER_STOPPABLE)
 
@@ -295,6 +319,35 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 	visible_message("[bicon(src)]<font color=Maroon><B>[CASE(src, NOMINATIVE_CASE)]</B>: [recording]</font>")
 
 	call_timer = addtimer(CALLBACK(src, PROC_REF(play_recordings)), 1 SECONDS, TIMER_STOPPABLE)
+
+/obj/item/device/telephone/proc/play_ringtone()
+	if(chiptune_player.playing)
+		return
+
+	chiptune_player.playing = TRUE
+	INVOKE_ASYNC(chiptune_player, TYPE_PROC_REF(/datum/music_player, playsong), null)
+
+/obj/item/device/telephone/proc/stop_ringtone()
+	chiptune_player.playing = FALSE
+
+/obj/item/device/telephone/proc/change_ringtone(ringtone)
+	if(!ringtone)
+		return
+	stop_ringtone()
+
+	var/ringtone_name = telephone_ringtones[ringtone]
+
+	var/datum/ringtone/Ring = global.ringtones_by_names[ringtone_name]
+	if(!Ring)
+		return
+
+	visible_message("<span class='warning'>Рингтон изменён на: [ringtone_name].</span>")
+
+	chiptune_player.basic_repeats = Ring.replays
+	chiptune_player.parse_song_text(Ring.melody)
+
+/obj/item/device/telephone/unable_to_play(mob/living/user)
+	return FALSE
 
 
 /obj/item/device/radio/telephone_handset
