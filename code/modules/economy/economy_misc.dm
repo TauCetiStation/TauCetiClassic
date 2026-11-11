@@ -172,7 +172,7 @@ var/global/initial_station_money = 7500
 	station_account.account_number = rand(111111, 999999)
 	station_account.remote_access_pin = rand(1111, 9999)
 	station_account.security_level = 1
-	station_account.money = global.initial_station_money
+	station_account.money = SSeconomy.departments_starting_funds["Station"]
 	// Station gets a slight rebound on all cargo activity from stock ownership. In theory HoP or Captain can also sell this.
 	SSeconomy.issue_founding_stock(station_account.account_number, "Cargo", 10)
 	SSeconomy.issue_founding_stock(station_account.account_number, "Medical", 10)
@@ -196,7 +196,7 @@ var/global/initial_station_money = 7500
 	department_account.account_number = rand(111111, 999999)
 	department_account.remote_access_pin = rand(1111, 9999)
 	department_account.security_level = 1
-	department_account.money = 500
+	department_account.money = SSeconomy.departments_starting_funds[department]
 
 	//create an entry in the account transaction log for when it was created
 	var/datum/transaction/T = new()

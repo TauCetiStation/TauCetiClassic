@@ -2,7 +2,6 @@ SUBSYSTEM_DEF(economy)
 	name = "Economy"
 	wait = 15 MINUTES
 	init_order = SS_INIT_DEFAULT
-	flags = SS_NO_INIT
 
 	var/endtime = 0 //this variable holds the sum of ticks until the next call to fire(). This is necessary to display the remaining time before salary in the PDA
 //------------TAXES------------
@@ -17,6 +16,62 @@ SUBSYSTEM_DEF(economy)
 	var/list/insurance_quality_decreasing = list(INSURANCE_PREMIUM, INSURANCE_STANDARD, INSURANCE_NONE)
 
 	var/list/subsidion_priority = list("Science" = 1000, "Security" = 1000, "Medical" = 1000, "Engineering" = 1000, "Civilian" = 1000)
+
+	var/list/departments_starting_funds = list("Station" = 0, "Science" = 500, "Security" = 500, "Medical" = 500, "Engineering" = 500, "Civilian" = 500, "Cargo" = 500)
+	var/list/continuity_tax_percent = list("Station" = 5, "Science" = 0, "Security" = 0, "Medical" = 10, "Engineering" = 0, "Civilian" = 0, "Cargo" = 25)
+
+/datum/controller/subsystem/economy/Initialize()
+	AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(Write_Memory)), CALLBACK(src, PROC_REF(Read_Memory)), "/subsystems/economy/[SSmapping.config.map_name]", list(
+		"department_funds" = new /datum/primitive_field/alistfield(
+			can_be_null = TRUE,
+			key_config = new /datum/primitive_field/text(
+				max_length = 15
+			),
+			entry_config = new /datum/primitive_field/num(
+				min_num = MIN_CONTINUITY_DEPARTMENT_FUNDS,
+				max_num = MAX_CONTINUITY_DEPARTMENT_FUNDS
+			)
+		)
+	))
+
+	departments_starting_funds["Station"] = global.initial_station_money
+
+	return ..()
+
+/datum/controller/subsystem/economy/proc/Read_Memory(save_data)
+	var/continued_department_funds = save_data["department_funds"]
+
+	for(var/department in continued_department_funds)
+		departments_starting_funds[department] = continued_department_funds[department]
+
+/datum/controller/subsystem/economy/proc/Write_Memory()
+	var/list/continued_department_funds = list()
+	for(var/department_name in departments_starting_funds)
+		if(!department_accounts[department_name])
+			continue
+
+		var/datum/money_account/department_account = department_accounts[department_name]
+		if(!department_account)
+			continue
+
+		var/tax_percent = round(continuity_tax_percent[department_name] / 100, 0.01)
+		var/money_saved = round(min(MAX_CONTINUITY_DEPARTMENT_FUNDS, max(MIN_CONTINUITY_DEPARTMENT_FUNDS, department_account.money)) * (tax_percent ? 1 - tax_percent : 1))
+		if(!money_saved)
+			continue
+
+		continued_department_funds[department_name] = money_saved
+
+	if(station_account)
+		var/tax_percent = round(continuity_tax_percent["Station"] / 100, 0.01)
+		var/money_saved = round(min(MAX_CONTINUITY_DEPARTMENT_FUNDS, max(MIN_CONTINUITY_DEPARTMENT_FUNDS, station_account.money)) * (tax_percent ? 1 - tax_percent : 1))
+		if(money_saved)
+			continued_department_funds["Station"] = money_saved
+
+	var/list/data = list(
+		"department_funds" = continued_department_funds
+	)
+
+	return data
 
 
 /datum/controller/subsystem/economy/proc/set_dividend_rate(department, rate)

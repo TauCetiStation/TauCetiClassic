@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(continuity)
 	name = "Continuity"
-	init_order = SS_INIT_DEFAULT
+	init_order = SS_INIT_CONTINUITY
 	flags = SS_NO_FIRE
 
 	var/list/continuity_objects = list()
