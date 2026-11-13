@@ -72,7 +72,7 @@
 
 	if(ishuman(over_object) && beaker)
 		visible_message("[usr] attaches \the [src] to \the [over_object].")
-		cord = Beam(over_object, icon_state = "life_assist_cord", time = INFINITY, maxdistance = 2, beam_type = /obj/effect/ebeam/life_assist_cord, origin_additional_pixel_x = -3, origin_additional_pixel_y = -1)
+		cord = Beam(over_object, icon_state = "life_assist_cord", time = INFINITY, maxdistance = 2, beam_type = /obj/effect/ebeam/life_assist_cord, origin_additional_pixel_x = -4, origin_additional_pixel_y = 1, loose = TRUE)
 		src.attached = over_object
 		update_icon()
 
