@@ -548,6 +548,8 @@
 	var/charges = 10
 	w_class = SIZE_SMALL
 
+	plug = /datum/plug/energy
+
 /obj/item/weapon/shockpaddles/standalone/set_prototype_qualities(rel_val=100, mark=0)
 	..()
 	while(!prob(reliability))

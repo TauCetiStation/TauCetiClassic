@@ -28,6 +28,8 @@
 	var/spray_cloud_react_delay = 2
 	item_action_types = list(/datum/action/item_action/hands_free/switch_spray)
 
+	plug = /datum/plug
+
 /datum/action/item_action/hands_free/switch_spray
 	name = "Switch Spray"
 
@@ -88,7 +90,7 @@
 	var/turf/T = get_turf(target) // BS12 edit, with the wall spraying.
 	var/turf/T_start = get_turf(src)
 
-	if(triple_shot && reagents.total_volume >= amount_per_transfer_from_this * 3) // If it doesn't have triple the amount of reagents, but it passed the previous check, make it shoot just one tiny spray.
+	if(triple_shot && plug && reagents.total_volume >= amount_per_transfer_from_this * 3) // If it doesn't have triple the amount of reagents, but it passed the previous check, make it shoot just one tiny spray.
 		var/direction = get_dir(T_start, T)
 
 		var/turf/T1_start = get_step(T_start, turn(direction, 90))
@@ -149,9 +151,17 @@
 	else
 		user.newtonian_move(movementdirection)
 
+/obj/item/weapon/reagent_containers/spray/try_connect_plug(datum/source, atom/dropping, mob/living/user)
+	. = ..()
+
+	if(.)
+		plug.transfer_resource(amount = reagents.maximum_volume - reagents.total_volume)
+
 /obj/item/weapon/reagent_containers/spray/proc/Spray_at(turf/start, turf/target)
 	var/spray_size_current = spray_size // This ensures, that a player doesn't switch to another mode mid-fly.
 	var/obj/effect/decal/chempuff/D = reagents.create_chempuff(amount_per_transfer_from_this, 1/spray_size, name_from_reagents = FALSE)
+	if(plug && plug.connected)
+		plug.transfer_resource(amount = amount_per_transfer_from_this)
 
 	if(!chempuff_dense)
 		D.pass_flags |= PASSBLOB | PASSMOB | PASSCRAWL

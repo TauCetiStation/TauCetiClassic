@@ -86,6 +86,8 @@
 
 	var/hit_particle_type = null
 
+	var/datum/plug/plug = null
+
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
@@ -145,6 +147,9 @@
 			armor = list()
 		atom_integrity = max_integrity
 
+	if(ispath(plug))
+		add_plug()
+
 	return INITIALIZE_HINT_NORMAL
 
 //called if atom_init returns INITIALIZE_HINT_LATELOAD
@@ -167,6 +172,8 @@
 	LAZYCLEARLIST(overlays)
 
 	QDEL_NULL(light)
+
+	QDEL_NULL(plug)
 
 	var/area/A = get_area(src)
 	A?.Exited(src, null)
@@ -742,4 +749,32 @@
 
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
+	return TRUE
+
+/atom/proc/add_plug()
+	plug = new plug(src)
+	RegisterSignal(src, list(COMSIG_MOUSEDROPPED_ONTO), PROC_REF(try_connect_plug))
+
+/atom/proc/try_connect_plug(datum/source, atom/dropping, mob/living/user)
+	if(!isatom(dropping))
+		return
+
+	var/atom/A = dropping
+
+	if(!A.plug)
+		return
+
+	if(A.plug.connected)
+		if(A.plug.connected == plug)
+			plug.disconnect()
+			return
+
+		to_chat(user, "<span class='danger'>[C_CASE(A, NOMINATIVE_CASE)] уже подключен к чему-то!</span>")
+		return
+
+	visible_message("<span class='rose'>[user] возится с [CASE(A, ABLATIVE_CASE)], пытаясь подключиться к [CASE(src, DATIVE_CASE)].</span>")
+	if(!do_after(user, 2 SECONDS, TRUE, src, progress=TRUE))
+		return
+
+	plug.try_connect(A)
 	return TRUE
