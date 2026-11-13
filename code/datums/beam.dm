@@ -139,7 +139,7 @@
 
 	var/length = round(sqrt((Bx-Ax)**2+(By-Ay)**2))
 
-	var/segments = min(8, round(length / 8))
+	var/segments = max(1, min(8, round(length / 8)))
 
 	var/Px = Ax + round((Bx - Ax) / 2)
 	var/Py = Ay + round((By - Ay) / 2 - min(16, (length * 1.5 - length) / 2))
