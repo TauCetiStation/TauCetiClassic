@@ -99,6 +99,11 @@
 	else
 		return ..()
 
+/obj/structure/window/thin/AltClick(mob/user)
+	if(!user || !Adjacent(user))
+		return
+	rotate()
+
 /obj/structure/window/thin/verb/rotate()
 	set name = "Rotate Window Counter-Clockwise"
 	set category = "Object"

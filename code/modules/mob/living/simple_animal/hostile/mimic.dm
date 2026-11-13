@@ -37,6 +37,10 @@
 	animalistic = FALSE
 	has_head = TRUE
 
+// Wears the name of whatever it copied, so a hug landing on it would give the disguise away.
+/mob/living/simple_animal/hostile/mimic/can_be_interacted_with()
+	return FALSE
+
 /mob/living/simple_animal/hostile/mimic/proc/target_found(datum/target)
 	me_emote("growls at [target]")
 

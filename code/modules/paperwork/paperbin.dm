@@ -13,6 +13,9 @@
 
 /obj/item/weapon/paper_bin/atom_init()
 	. = ..()
+
+	AddComponent(/datum/component/wrench_to_table)
+
 	paper_types = list(
 		"paper" = image(icon = 'icons/obj/bureaucracy.dmi', icon_state = "paper"),
 		"carbon copy paper" = image(icon = 'icons/obj/bureaucracy.dmi', icon_state = "cpaper"),

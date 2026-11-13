@@ -118,6 +118,7 @@
 	var/robolimb_count = 0 // Number of robot limbs.
 	var/sightglassesmod = null
 	var/datum/personal_crafting/handcrafting
+	var/datum/interaction_panel/interaction_panel
 
 	var/shoving_fingers = FALSE // For force_vomit mechanic.
 

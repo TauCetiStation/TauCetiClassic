@@ -782,6 +782,12 @@
 		return TRUE
 	return
 
+/mob/living/carbon/is_mouth_covered()
+	if(head && (head.flags & HEADCOVERSMOUTH))
+		return TRUE
+
+	return ..()
+
 /mob/living/carbon/u_equip(obj/item/W)
 	if(!W)
 		return

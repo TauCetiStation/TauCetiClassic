@@ -82,6 +82,7 @@
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(organs)
 	QDEL_NULL(vessel)
+	QDEL_NULL(interaction_panel)
 	return ..()
 
 

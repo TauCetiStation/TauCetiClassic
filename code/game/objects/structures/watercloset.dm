@@ -20,6 +20,14 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	update_icon()
 	AddComponent(/datum/component/fishing, list(/obj/item/weapon/reagent_containers/food/snacks/badrecipe = 10, /mob/living/simple_animal/mouse = 3, /mob/living/simple_animal/mouse/rat = 2, /mob/living/simple_animal/hostile/giant_spider = 1), 10 SECONDS, rand(1, 3) , 20)
 
+/obj/structure/toilet/AltClick(mob/user)
+	if(!user || user.incapacitated() || !Adjacent(user))
+		return
+	if(anchored)
+		to_chat(user, "You must unfasten the toilet before rotating it.")
+		return
+	set_dir(turn(dir, 90))
+
 /obj/structure/toilet/attack_hand(mob/living/user)
 	user.SetNextMove(CLICK_CD_MELEE * 1.5)
 	if(swirlie)

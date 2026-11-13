@@ -54,6 +54,7 @@
 	var/obj/item/parent_item = parent
 	parent_item.anchored = TRUE
 	RegisterSignal(wrenched_to, list(COMSIG_PARENT_QDELETING), PROC_REF(unwrench))
+	RegisterSignal(wrenched_to, list(COMSIG_MOVABLE_MOVED), PROC_REF(parent_moved))
 
 	if(on_wrenched)
 		on_wrenched.Invoke()
@@ -62,8 +63,12 @@
 	var/obj/item/parent_item = parent
 	parent_item.anchored = FALSE
 	if(wrenched_to)
-		UnregisterSignal(wrenched_to, list(COMSIG_PARENT_QDELETING))
+		UnregisterSignal(wrenched_to, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 		wrenched_to = null
 
 	if(on_unwrenched)
 		on_unwrenched.Invoke()
+
+/datum/component/wrench_to_table/proc/parent_moved()
+	var/obj/item/parent_item = parent
+	parent_item.forceMove(wrenched_to.loc)

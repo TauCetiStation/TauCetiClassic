@@ -866,6 +866,10 @@
 				to_chat(src, "Hack attempt detected.")
 		return TRUE
 
+// A chassis still has a head to bop and to pat. Arms and legs stay FALSE: they carry combo checks and the stomping gib.
+/mob/living/silicon/robot/is_usable_head(targetzone = null)
+	return TRUE
+
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/attacker)
 	add_fingerprint(attacker)
 	if(opened && !wiresexposed && (!issilicon(attacker)))

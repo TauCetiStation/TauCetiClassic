@@ -50,6 +50,11 @@
 	minimum_fire_delay = min_firedelay
 	fire_delay = firedelay
 
+/obj/machinery/power/emitter/AltClick(mob/user)
+	if(!user || !Adjacent(user))
+		return
+	rotate()
+
 /obj/machinery/power/emitter/verb/rotate()
 	set name = "Rotate"
 	set category = "Object"

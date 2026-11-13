@@ -39,6 +39,11 @@ var/global/list/fuel_injectors = list()
 		else
 			Inject()
 
+/obj/machinery/fusion_fuel_injector/AltClick(mob/user)
+	if(!user || !Adjacent(user))
+		return
+	rotate()
+
 /obj/machinery/fusion_fuel_injector/verb/rotate()
 	set name = "Rotate"
 	set category = "Object"

@@ -132,6 +132,8 @@
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
+	if(istype(mover, /obj/structure/table))
+		return 0
 	// todo: we should not change mover properties here, this method is only for attempt to pass
 	// part of future mob layer / crawl refactoring
 	if(buckled_mob != mover && iscarbon(mover) && mover.checkpass(PASSCRAWL))
@@ -530,6 +532,8 @@
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
+	if(istype(mover, /obj/structure/table))
+		return 0
 	if(istype(mover) && HAS_TRAIT(mover, TRAIT_ARIBORN))
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
@@ -600,7 +604,9 @@
 
 	table_attached_to = Table
 	RegisterSignal(table_attached_to, list(COMSIG_PARENT_QDELETING), PROC_REF(destroy_lot_holder))
+	RegisterSignal(table_attached_to, list(COMSIG_MOVABLE_MOVED), PROC_REF(table_moved))
 	RegisterSignal(held_Item, list(COMSIG_PARENT_QDELETING), PROC_REF(destroy_lot_holder))
+
 
 	held_Item = Item
 	Item.forceMove(src)
@@ -614,6 +620,9 @@
 	var/old_invisibility = invisibility
 	invisibility = INVISIBILITY_ABSTRACT
 	VARSET_IN(src, invisibility, old_invisibility, PUTDOWN_ANIMATION_DURATION)
+
+/obj/lot_holder/proc/table_moved()
+	forceMove(table_attached_to.loc)
 
 /obj/lot_holder/examine(mob/user)
 	held_Item.examine(user)
@@ -756,6 +765,30 @@
 
 	LH.pixel_x = p_x
 	LH.pixel_y = p_y
+
+/obj/structure/table/reinforced/stall/movable
+	name = "stall cart"
+	cases = list("магнитная тележка", "магнитной тележки", "магнитной тележке", "магнитную тележку", "магнитной тележкой", "магнитной тележке")
+	desc = "Тележка, оснащенная магнитным захватом."
+	gender = FEMALE
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "stall_cart"
+	max_integrity = 250
+	parts = null
+	flipable = FALSE
+	canconnect = FALSE
+	smooth = FALSE
+
+	anchored = FALSE
+
+/obj/structure/table/reinforced/stall/movable/deconstruct(disassembled)
+	if(flags & NODECONSTRUCT)
+		return ..()
+
+	new /obj/item/stack/sheet/plasteel(loc, 8)
+
+	..()
+
 
 /*
  * reinforced glass table
@@ -1069,11 +1102,6 @@
 	parts = null
 	flipable = FALSE
 	canconnect = FALSE
-
-/obj/structure/table/park_table/atom_init(mapload)
-	. = ..()
-
-	AddComponent(/datum/component/clickplace)
 
 /obj/structure/table/park_table/airlock_crush_act()
 	deconstruct(TRUE)

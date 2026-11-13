@@ -116,6 +116,9 @@
 
 /obj/item/folder_holder/atom_init(mapload)
 	. = ..()
+
+	AddComponent(/datum/component/wrench_to_table)
+
 	if(mapload)
 		var/atom/A = get_turf(src)
 		for(var/obj/item/weapon/folder/Folder in A.contents)

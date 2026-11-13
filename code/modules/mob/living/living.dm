@@ -81,6 +81,8 @@
 	if(istype(mover, /obj/item/projectile) && lying && stat != DEAD)
 		var/obj/item/projectile/P = mover
 		if(get_turf(P.original) == loc)
+			P.pass_laying_mobs = FALSE
+		if(P.pass_laying_mobs == FALSE)
 			return FALSE
 	return ..()
 
