@@ -1,6 +1,6 @@
 /datum/plug
-	var/name = "шланг"
-	cases = list("шланг", "шланга", "шлангу", "шланг", "шлангом", "шланге")
+	var/name = "С€Р»Р°РЅРі"
+	cases = list("С€Р»Р°РЅРі", "С€Р»Р°РЅРіР°", "С€Р»Р°РЅРіСѓ", "С€Р»Р°РЅРі", "С€Р»Р°РЅРіРѕРј", "С€Р»Р°РЅРіРµ")
 	var/male = FALSE //in - TRUE; out - FALSE;
 	var/plug_type = "reagent"
 
@@ -54,7 +54,7 @@
 /datum/plug/proc/add_bounds()
 	master.AddComponent(/datum/component/bounded, connected.master, 0, 3, CALLBACK(src, PROC_REF(resolve_stranded)), null, TRUE, TRUE, beam_type, beam_x, beam_y)
 
-	master.visible_message("<span class='rose'>[CASE(master, NOMINATIVE_CASE)] присоединяется [CASE(src, ABLATIVE_CASE)] к [CASE(connected.master, DATIVE_CASE)].</span>")
+	master.visible_message("<span class='rose'>[CASE(master, NOMINATIVE_CASE)] РїСЂРёСЃРѕРµРґРёРЅСЏРµС‚СЃСЏ [CASE(src, ABLATIVE_CASE)] Рє [CASE(connected.master, DATIVE_CASE)].</span>")
 
 /datum/plug/proc/resolve_stranded(datum/component/bounded/bounds)
 	disconnect()
@@ -63,7 +63,7 @@
 /datum/plug/proc/remove_bounds()
 	qdel(master.GetComponent(/datum/component/bounded))
 
-	master.visible_message("<span class='rose'>[C_CASE(src, NOMINATIVE_CASE)] отсоединяется.</span>")
+	master.visible_message("<span class='rose'>[C_CASE(src, NOMINATIVE_CASE)] РѕС‚СЃРѕРµРґРёРЅСЏРµС‚СЃСЏ.</span>")
 
 /datum/plug/proc/disconnect()
 	if(male)
@@ -112,8 +112,8 @@
 
 
 /datum/plug/energy
-	name = "кабель"
-	cases = list("кабель", "кабеля", "кабелю", "кабель", "кабелем", "кабеле")
+	name = "РєР°Р±РµР»СЊ"
+	cases = list("РєР°Р±РµР»СЊ", "РєР°Р±РµР»СЏ", "РєР°Р±РµР»СЋ", "РєР°Р±РµР»СЊ", "РєР°Р±РµР»РµРј", "РєР°Р±РµР»Рµ")
 	male = FALSE //in - TRUE; out - FALSE;
 	plug_type = "energy"
 
