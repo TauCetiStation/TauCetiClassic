@@ -168,31 +168,38 @@
 	var/active = FALSE          // Welding tool is off or on
 	var/welding = FALSE         // While welding something - TRUE
 	var/secured = TRUE          // Welder is secured or unsecured (able to attach rods to it to make a flamethrower)
-	var/max_fuel = 20           // The max amount of fuel the welder can hold
+	var/max_fuel = 0           // The max amount of fuel the welder can hold
 	var/image/welding_sparks    // Welding overlay for targets
 
 	required_skills = list(/datum/skill/engineering = SKILL_LEVEL_TRAINED)
 	item_action_types = list(/datum/action/item_action/hands_free/switch_welding_tool)
+
+	plug = /datum/plug
 
 /datum/action/item_action/hands_free/switch_welding_tool
 	name = "Switch Welding tool"
 
 /obj/item/weapon/weldingtool/atom_init()
 	. = ..()
+
 	var/datum/reagents/R = new/datum/reagents(max_fuel)
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
+
 	welding_sparks = image('icons/effects/effects.dmi', "welding_sparks", layer = ABOVE_LIGHTING_LAYER)
 	welding_sparks.plane = LIGHTING_LAMPS_PLANE
+
+/obj/item/weapon/weldingtool/Destroy()
+	. = ..()
 
 /obj/item/weapon/weldingtool/examine(mob/user)
 	..()
 	if(src in user)
 		if (rigged)
-			to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of mixture!")
+			to_chat(user, "[src] contains [get_fuel()]/[get_max_fuel()] units of mixture!")
 		else
-			to_chat(user, "[src] contains [get_fuel()]/[max_fuel] units of fuel!")
+			to_chat(user, "[src] contains [get_fuel()]/[get_max_fuel()] units of fuel!")
 
 /obj/item/weapon/weldingtool/attackby(obj/item/I, mob/user, params)
 	if(isscrewing(I))
@@ -282,6 +289,9 @@
 	if(istype(target, /obj/structure/reagent_dispensers) && target.reagents.has_reagent("fuel"))
 		var/obj/structure/reagent_dispensers/tank = target
 		if (!active)
+			if(!max_fuel)
+				return
+
 			var/datum/reagent/R = tank.reagents.has_reagent("fuel")
 			if(tank.reagents.trans_id_to(src, R.id, max_fuel))
 				to_chat(user, "<span class='notice'>[src] refueled by [tank].</span>")
@@ -319,7 +329,36 @@
 
 // Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()
-	return reagents.get_reagent_amount("fuel") + reagents.get_reagent_amount("phoron")
+	var/tool_fuel = reagents.get_reagent_amount("fuel") + reagents.get_reagent_amount("phoron")
+
+
+	if(plug)
+		var/plug_amount = plug.get_resource_amount("fuel")
+		tool_fuel += plug_amount ? plug_amount : 0
+
+	if(iscarbon(loc))
+		var/mob/living/carbon/M = loc
+		var/obj/item/B = M.get_slot_ref(SLOT_BACK)
+		if(istype(B, /obj/item/weapon/weldpack))
+			var/obj/item/weapon/weldpack/W = B
+			tool_fuel += W.reagents.get_reagent_amount("fuel")
+
+	return tool_fuel
+
+/obj/item/weapon/weldingtool/proc/get_max_fuel()
+	var/tool_max_fuel = max_fuel
+	if(plug)
+		var/plug_amount = plug.get_max_resource_amount()
+		tool_max_fuel += plug_amount ? plug_amount : 0
+
+	if(iscarbon(loc))
+		var/mob/living/carbon/M = loc
+		var/obj/item/B = M.get_slot_ref(SLOT_BACK)
+		if(istype(B, /obj/item/weapon/weldpack))
+			var/obj/item/weapon/weldpack/W = B
+			tool_max_fuel += W.reagents.maximum_volume
+
+	return tool_max_fuel
 
 /obj/item/weapon/weldingtool/use_tool(atom/target, mob/living/user, delay, amount = 0, volume = 0, quality = null, datum/callback/extra_checks, required_skills_override, skills_speed_bonus = -0.4, can_move = FALSE, particle_type = null)
 	target.add_overlay(welding_sparks)
@@ -360,7 +399,26 @@
 	if(!active || !check_fuel())
 		return 0
 	if(get_fuel() >= used)
-		reagents.remove_reagent("fuel", used)
+		var/removed_reagents = 0
+		if(plug && plug.connected)
+			removed_reagents = used > plug.get_resource_amount("fuel") ? plug.get_resource_amount("fuel") : used
+			plug.use_resource(removed_reagents, "fuel")
+
+		used = used - removed_reagents
+		removed_reagents = 0
+		if(used && iscarbon(loc))
+			var/mob/living/carbon/C = loc
+			var/obj/item/B = C.get_slot_ref(SLOT_BACK)
+			if(istype(B, /obj/item/weapon/weldpack))
+				var/obj/item/weapon/weldpack/W = B
+				removed_reagents = used > W.reagents.get_reagent_amount("fuel") ? W.reagents.get_reagent_amount("fuel"): used
+				W.reagents.remove_reagent("fuel", removed_reagents)
+
+		used = used - removed_reagents
+
+		if(used)
+			reagents.remove_reagent("fuel", used)
+
 		check_fuel()
 		if(M)
 			eyecheck(M)
@@ -483,6 +541,8 @@
 	g_amt = 60
 	origin_tech = "engineering=2"
 
+	plug = null
+
 /obj/item/weapon/weldingtool/hugetank
 	name = "upgraded welding tool"
 	icon = 'icons/obj/tools.dmi'
@@ -492,6 +552,8 @@
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "engineering=3"
+
+	plug = null
 
 /obj/item/weapon/weldingtool/experimental
 	name = "experimental welding tool"
@@ -504,6 +566,8 @@
 	toolspeed = 0.5
 	origin_tech = "materials=4;engineering=4;bluespace=2;phorontech=3"
 	var/next_refuel_tick = 0
+
+	plug = null
 
 /obj/item/weapon/weldingtool/experimental/atom_init()
 	.=..()

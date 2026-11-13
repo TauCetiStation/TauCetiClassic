@@ -15,6 +15,8 @@
 	max_integrity = 300
 	resistance_flags = CAN_BE_HIT
 
+	plug = /datum/plug/male
+
 /obj/structure/reagent_dispensers/AltClick(mob/user)
 	if(!Adjacent(user))
 		return
@@ -166,6 +168,9 @@
 /obj/structure/reagent_dispensers/ex_act()
 	explode()
 
+/obj/structure/reagent_dispensers/Destroy()
+	. = ..()
+
 /obj/structure/reagent_dispensers/proc/explode(mob/user)
 	if(QDELETED(src)) // prevent double explosion
 		return
@@ -210,6 +215,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/watertank, watertank_list)
 	. = ..()
 	reagents.add_reagent("water", 1000)
 
+	plug.beam_x = -7
+	plug.beam_y = 8
+
+
 /obj/structure/reagent_dispensers/aqueous_foam_tank
 	name = "AFFF tank"
 	desc = "A tank containing Aqueous Film Forming Foam(AFFF)."
@@ -218,6 +227,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/watertank, watertank_list)
 /obj/structure/reagent_dispensers/aqueous_foam_tank/atom_init()
 	. = ..()
 	reagents.add_reagent("aqueous_foam", 1000)
+
+	plug.beam_x = -7
+	plug.beam_y = 8
 
 
 ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
@@ -230,6 +242,10 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 /obj/structure/reagent_dispensers/fueltank/atom_init()
 	. = ..()
 	reagents.add_reagent("fuel",300)
+
+	plug.beam_x = -7
+	plug.beam_y = 8
+
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
@@ -386,4 +402,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 	reagents.add_reagent("fuel", 200)
 	reagents.add_reagent("condensedcapsaicin", 200)
 	reagents.add_reagent("stoxin", 200)
+
+	plug.beam_x = -7
+	plug.beam_y = 8
 

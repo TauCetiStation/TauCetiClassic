@@ -71,6 +71,8 @@
 	cell_type = /obj/item/weapon/stock_parts/cell/crap
 	var/charge_tick = 0
 
+	plug = null
+
 
 /obj/item/weapon/gun/energy/crossbow/atom_init()
 	. = ..()

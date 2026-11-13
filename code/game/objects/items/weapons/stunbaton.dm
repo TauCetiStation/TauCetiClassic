@@ -16,6 +16,8 @@
 
 	origin_tech = "combat=2"
 
+	plug = /datum/plug/energy
+
 /obj/item/weapon/melee/baton/atom_init()
 	. = ..()
 	var/datum/swipe_component_builder/SCB = new
