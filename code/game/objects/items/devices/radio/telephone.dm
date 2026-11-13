@@ -118,7 +118,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 		visible_message("<span class='notice'>[user] берёт [CASE(handset, ACCUSATIVE_CASE)].</span>")
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER, 5)
 
-		phone_cord = Beam(user, icon_state = "telephone_cord", time = INFINITY, maxdistance = 4, beam_type = /obj/effect/ebeam/phone_cord)
+		phone_cord = Beam(user, icon_state = "telephone_cord", time = INFINITY, maxdistance = 4, beam_type = /obj/effect/ebeam/phone_cord, origin_additional_pixel_x = -5, origin_additional_pixel_y = -4, loose = TRUE)
 
 		AddComponent(/datum/component/bounded, user, 0, 2, CALLBACK(src, PROC_REF(resolve_stranded)))
 
