@@ -1,6 +1,7 @@
 //Define all tape types in policetape.dm
 /obj/item/taperoll
 	name = "tape roll"
+	cases = list("рулон оградительной ленты", "рулона оградительной ленты", "рулону оградительной ленты", "рулон оградительной ленты", "рулоном оградительной ленты", "рулоне оградительной ленты")
 	icon = 'icons/obj/tape.dmi'
 	icon_state = "rollstart"
 	w_class = SIZE_TINY
@@ -53,7 +54,7 @@
 
 	start = null
 	icon_state = "[icon_base]_start"
-	to_chat(user, "<span class='notice'>Вы стагиваете ленту.</span>")
+	to_chat(user, "<span class='notice'>Вы стягиваете [CASE(src, ACCUSATIVE_CASE)].</span>")
 
 /obj/item/taperoll/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
@@ -66,19 +67,24 @@
 			to_chat(user, "<span class='warning'>Слишком большое расстояние!</span>")
 			return
 
-		var/datum/beam/beam = start.Beam(target, tape_type::icon_state, time=INFINITY, maxdistance=10, beam_type=tape_type, loose_factor = 0.7, dense_beam = TRUE)
-		if(!beam)
-			return
-
-		var/obj/effect/ebeam/tape/tape = pick(beam.elements)
-		user.visible_message("<span class='notice'>[user] натягивает [CASE(tape, ACCUSATIVE_CASE)].</span>")
-		start = null
-		icon_state = "[icon_base]_start"
+		create_beam(user, start, T)
 		return
 
-	to_chat(user, "<span class='notice'>Вы начинаете натягивать ленту.</span>")
+	to_chat(user, "<span class='notice'>Вы начинаете натягивать [CASE(src, ACCUSATIVE_CASE)].</span>")
 	icon_state = "[icon_base]_stop"
 	start = T
+
+/obj/item/taperoll/proc/create_beam(mob/user, turf/From, turf/To)
+	var/datum/beam/beam = From.Beam(To, tape_type::icon_state, tape_type::icon, time=INFINITY, maxdistance=10, beam_type=tape_type, loose_factor = 0.7, dense_beam = TRUE)
+
+	if(!beam)
+		return
+
+	var/obj/effect/ebeam/tape/tape = pick(beam.elements)
+	user.visible_message("<span class='notice'>[user] натягивает [CASE(tape, ACCUSATIVE_CASE)].</span>")
+
+	start = null
+	icon_state = "[icon_base]_start"
 
 
 /obj/effect/ebeam/tape
@@ -175,14 +181,14 @@
 		if(T == L)
 			continue
 
-		var/obj/effect/spawner/tape/tape = locate(type) in T.contents
-		if(!tape)
-			continue
-		if(tape.dir != global.reverse_dir[dir])
-			continue
+		for(var/obj/effect/spawner/tape/tape in T.contents)
+			if(!tape)
+				continue
+			if(tape.dir != global.reverse_dir[dir])
+				continue
 
-		spawn_tape(L, T)
-		qdel(tape)
+			spawn_tape(L, T)
+			qdel(tape)
 
 	return INITIALIZE_HINT_QDEL
 

@@ -175,11 +175,21 @@
 	var/Angle = round(arctan(DY, DX))
 	var/matrix/rot_matrix = matrix()
 	rot_matrix.Turn(Angle)
+	var/matrix/decoration_matrix
+	if((Angle > 0) && (Angle < 180))
+		decoration_matrix = rot_matrix
+	else
+		decoration_matrix = matrix()
+		decoration_matrix.Turn(Angle + 180)
+
 	var/N = 0
 	var/length = CEILING(sqrt((DX)**2+(DY)**2), 1) //hypotenuse of the triangle formed by target and origin's displacement
 
 	var/offsetX = Ax - origin.x * 32
 	var/offsetY = Ay - origin.y * 32
+
+	var/previous_length = CEILING(sqrt(offsetX**2 + offsetY**2), 1)
+	var/previous_position = 0 - previous_length % 12
 
 	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
 		if(QDELETED(src) || finished)
@@ -200,6 +210,26 @@
 		else
 			X.vis_contents += visuals
 		X.transform = rot_matrix
+
+		if(X.decoration_icon)
+			for(var/i in previous_position + N to min(N + 32, length - 1) step 12)
+				if(i < 0)
+					continue
+
+				if(i > (length - 1))
+					break
+
+				var/mutable_appearance/decoration = mutable_appearance(X.decoration_icon, pick(icon_states(X.decoration_icon)))
+				decoration.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+				if(X.decoration_follow)
+					decoration.transform = decoration_matrix
+
+				decoration.pixel_x = round(sin(Angle)*(i-16))
+				decoration.pixel_y = round(cos(Angle)*(i-16))
+				decoration.plane = X.plane
+				decoration.layer = X.layer - 0.01
+
+				X.add_overlay(decoration)
 
 		//Calculate pixel offsets (If necessary)
 		var/Pixel_x
@@ -234,6 +264,9 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	var/datum/beam/owner
+
+	var/decoration_icon
+	var/decoration_follow = FALSE
 
 /obj/effect/ebeam/Destroy()
 	owner = null

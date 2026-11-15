@@ -86,44 +86,111 @@
 	update_garland()
 
 // Tinsels
-/obj/item/decoration/tinsel
-	name = "tinsel"
-	desc = "What's this? What's this? There's color everywhere!"
-	icon = 'icons/holidays/new_year/tinsel.dmi'
-	icon_state = "1"
-	var/variations = 20
-	var/random = TRUE
+/obj/item/taperoll/tinsel
+	name = "new year tinsel"
+	cases = list("моток новогодней гирлянды", "мотка новогодней гирлянды", "мотку новогодней гирлянды", "моток новогодней гирлянды", "мотком новогодней гирлянды", "мотке новогодней гирлянды")
+	desc = "Смотри! Смотри! Кругом белым-бело. Гляди, как ясно и светло!"
+	icon = 'icons/holidays/new_year/decorations.dmi'
+	icon_state = "tinsel_start"
+	tape_type = /obj/effect/ebeam/tinsel
+	icon_base = "tinsel"
 
-/obj/item/decoration/tinsel/atom_init()
-	. = ..()
-	if(random)
-		icon_state = "[rand(1, variations)]"
-
-/obj/item/decoration/tinsel/attack_self(mob/user)
-	. = ..()
-	if(user.is_busy())
+/obj/item/taperoll/tinsel/create_beam(mob/user, turf/From, turf/To)
+	var/datum/beam/beam = From.Beam(To, tape_type::icon_state, tape_type::icon, time=INFINITY, maxdistance=10, beam_type=tape_type, loose_factor = 0.7, dense_beam = FALSE)
+	if(!beam)
 		return
-	set_dir(turn(dir,-90))
 
-/obj/item/decoration/tinsel/socks
-	icon_state = "1"
-	random = FALSE
+	var/obj/effect/ebeam/tape/tape = pick(beam.elements)
+	if(tape)
+		user.visible_message("<span class='notice'>[user] натягивает [CASE(tape, ACCUSATIVE_CASE)].</span>")
 
-/obj/item/decoration/tinsel/snowmen
-	icon_state = "2"
-	random = FALSE
+	qdel(src)
 
-/obj/item/decoration/tinsel/pines
-	icon_state = "3"
-	random = FALSE
+/obj/effect/ebeam/tinsel
+	name = "new year tinsel"
+	icon_state = "tinsel"
+	cases = list("новогодняя гирлянда", "новогодней гирлянды", "новогодней гирлянде", "новогоднюю гирлянду", "новогодней гирляндой", "новогодней гирлянде")
+	mouse_opacity = MOUSE_OPACITY_ICON
+	layer = INFRONT_MOB_LAYER
 
-/obj/item/decoration/tinsel/stars
-	icon_state = "4"
-	random = FALSE
+	var/taperoll = /obj/item/taperoll/tinsel
 
-/obj/item/decoration/tinsel/balls
-	icon_state = "5"
-	random = FALSE
+	decoration_icon = 'icons/holidays/new_year/tinsel.dmi'
+
+/obj/effect/ebeam/tinsel/attack_hand(mob/user)
+	. = ..()
+	user.visible_message("<span class='notice'>[user] сматывает [CASE(src, ACCUSATIVE_CASE)]!</span>")
+	user.SetNextMove(CLICK_CD_INTERACT)
+
+	var/obj/item/I = new taperoll(get_turf(src))
+	user.put_in_hands(I)
+	owner.End()
+
+
+/obj/item/taperoll/tinsel/fluffy
+	name = "new year fluffy tinsel"
+	cases = list("моток мишуры", "мотка мишуры", "мотку мишуры", "моток мишуры", "мотком мишуры", "мотке мишуры")
+	desc = "С новым годом! С новым счастьем"
+	icon = 'icons/holidays/new_year/decorations.dmi'
+	icon_state = "tinsel_green_start"
+	tape_type = /obj/effect/ebeam/tinsel/fluffy
+
+	icon_base = "tinsel_green"
+
+/obj/effect/ebeam/tinsel/fluffy
+	name = "new year fluffy tinsel"
+	icon = 'icons/holidays/new_year/decorations.dmi'
+	icon_state = "tinsel_green"
+	cases = list("мишура", "мишуры", "мишуре", "мишуру", "мишурой", "мишуре")
+
+	taperoll = /obj/item/taperoll/tinsel/fluffy
+	decoration_icon = null
+
+/obj/item/taperoll/tinsel/fluffy/red
+	tape_type = /obj/effect/ebeam/tinsel/fluffy/red
+	icon_state = "tinsel_red_start"
+	icon_base = "tinsel_red"
+
+/obj/effect/ebeam/tinsel/fluffy/red
+	icon_state = "tinsel_red"
+	taperoll = /obj/item/taperoll/tinsel/fluffy/red
+
+/obj/item/taperoll/tinsel/fluffy/blue
+	tape_type = /obj/effect/ebeam/tinsel/fluffy/blue
+	icon_state = "tinsel_blue_start"
+	icon_base = "tinsel_blue"
+
+/obj/effect/ebeam/tinsel/fluffy/blue
+	icon_state = "tinsel_blue"
+	taperoll = /obj/item/taperoll/tinsel/fluffy/blue
+
+/obj/item/taperoll/tinsel/fluffy/yellow
+	tape_type = /obj/effect/ebeam/tinsel/fluffy/yellow
+	icon_state = "tinsel_yellow_start"
+	icon_base = "tinsel_yellow"
+
+/obj/effect/ebeam/tinsel/fluffy/yellow
+	icon_state = "tinsel_yellow"
+	taperoll = /obj/item/taperoll/tinsel/fluffy/yellow
+
+
+/obj/effect/spawner/tape/tinsel
+	name = "new year tinsel spawner"
+	icon = 'icons/holidays/new_year/decorations.dmi'
+	icon_state = "tinselspawn"
+
+	tape_type = /obj/effect/ebeam/tinsel
+	dense_tape = FALSE
+
+/obj/effect/spawner/tape/tinsel/fluffy
+	name = "new year fluffy tinsel spawner"
+	icon_state = "fluffytinselspawn"
+
+	tape_type = /obj/effect/ebeam/tinsel/fluffy
+
+/obj/effect/spawner/tape/tinsel/fluffy/atom_init()
+	tape_type = pick(typesof(/obj/effect/ebeam/tinsel/fluffy))
+	..()
 
 // Snowflakes
 /obj/item/decoration/snowflake
