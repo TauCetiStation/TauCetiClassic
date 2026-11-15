@@ -8503,9 +8503,6 @@
 /area/station/maintenance/science)
 "aqf" = (
 /obj/structure/inflatable/door,
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/structure/barricade/wooden,
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -19226,9 +19223,6 @@
 /area/station/civilian/hydroponics)
 "jvz" = (
 /obj/item/weapon/scrap_lump,
-/obj/item/tape/engineering{
-	icon_state = "engineering_h"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
@@ -21374,9 +21368,6 @@
 /area/station/hallway/primary/central)
 "lhB" = (
 /obj/structure/inflatable/door,
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -26378,9 +26369,6 @@
 "pCp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/inflatable/door,
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/barricade/wooden,
 /turf/simulated/floor/plating,
@@ -29537,9 +29525,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "stx" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_h"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -33721,9 +33706,6 @@
 /turf/simulated/floor/engine/nitrogen,
 /area/station/engineering/atmos)
 "wnk" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_h"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
@@ -34709,15 +34691,6 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/reception)
-"xjf" = (
-/obj/random/foods/food_trash,
-/obj/item/tape/engineering{
-	icon_state = "engineering_h"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal/set_burned,
-/turf/simulated/floor/plating,
-/area/station/maintenance/science)
 "xjt" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -73118,7 +73091,7 @@ hdp
 lUt
 tFy
 agj
-xjf
+fQc
 afb
 afd
 wyg

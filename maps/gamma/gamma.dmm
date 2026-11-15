@@ -5124,9 +5124,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn_corner"
@@ -6650,9 +6647,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "aKL" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	dir = 4;
@@ -14793,9 +14787,6 @@
 	},
 /area/station/aisat/ai_chamber)
 "ckL" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -17680,9 +17671,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -18701,9 +18689,6 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "cUI" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	dir = 4;
@@ -21592,9 +21577,6 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "dyU" = (
@@ -26010,9 +25992,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "etU" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -62597,9 +62576,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "lAJ" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -68156,9 +68132,6 @@
 	},
 /area/station/maintenance/brig)
 "mFz" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -80615,9 +80588,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
 	},
 /obj/machinery/door/airlock/research{
 	dir = 4;
@@ -111962,9 +111932,6 @@
 	},
 /area/station/rnd/mixing)
 "vjs" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
