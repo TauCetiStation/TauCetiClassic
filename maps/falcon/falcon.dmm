@@ -14344,6 +14344,12 @@
 	icon_state = "wood_stairs"
 	},
 /area/station/civilian/bar)
+"eDl" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/station/rnd/lab)
 "eDN" = (
 /obj/structure/plasticflaps{
 	opacity = 1
@@ -14524,6 +14530,10 @@
 	icon_state = "red"
 	},
 /area/station/engineering/atmos)
+"eMH" = (
+/obj/effect/spawner/tape/engineering,
+/turf/simulated/wall,
+/area/station/maintenance/science)
 "eMX" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 4
@@ -15501,6 +15511,12 @@
 	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
+"fPs" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/station/rnd/telesci)
 "fPZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
@@ -23060,6 +23076,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint)
+"mQT" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 10
+	},
+/turf/simulated/wall,
+/area/station/maintenance/science)
 "mRd" = (
 /obj/structure/stool/bed/chair/wheelchair,
 /turf/simulated/floor{
@@ -23891,6 +23913,12 @@
 	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
+"ntz" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 5
+	},
+/turf/simulated/wall/r_wall,
+/area/station/rnd/telesci)
 "nue" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
@@ -24465,6 +24493,12 @@
 	icon_state = "grass1"
 	},
 /area/station/hallway/secondary/arrival)
+"nUG" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 8
+	},
+/turf/simulated/wall,
+/area/station/maintenance/science)
 "nVq" = (
 /obj/structure/lattice,
 /obj/machinery/camera{
@@ -27704,6 +27738,12 @@
 	icon_state = "4,3"
 	},
 /area/shuttle/supply/station)
+"qFF" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 1
+	},
+/turf/simulated/wall,
+/area/station/maintenance/science)
 "qFP" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard{
@@ -72317,7 +72357,7 @@ hgW
 fdT
 yiI
 dsj
-woA
+eDl
 woA
 woA
 ekG
@@ -72577,7 +72617,7 @@ qtz
 stx
 uyq
 woA
-woA
+eDl
 woA
 woA
 wyg
@@ -73088,15 +73128,15 @@ hgW
 ajZ
 akk
 hdp
-lUt
+nUG
 tFy
 agj
 fQc
 afb
 afd
+ntz
 wyg
-wyg
-wyg
+fPs
 wyg
 wyg
 uIN
@@ -73348,7 +73388,7 @@ akM
 lUt
 lUt
 lUt
-lUt
+nUG
 hbg
 hes
 lhB
@@ -73606,11 +73646,11 @@ lUt
 afZ
 agk
 lUt
+mQT
 lUt
 lUt
 lUt
-lUt
-lUt
+nUG
 ftf
 jNU
 wWt
@@ -74640,9 +74680,9 @@ bRr
 rtz
 lUt
 lUt
-lUt
+eMH
 aqf
-lUt
+qFF
 lUt
 acL
 agV

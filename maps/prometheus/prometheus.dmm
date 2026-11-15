@@ -23656,6 +23656,12 @@
 	icon_state = "white"
 	},
 /area/station/rnd/brainstorm_center)
+"fiD" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 1
+	},
+/turf/simulated/wall,
+/area/station/maintenance/chapel)
 "fiF" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -43709,6 +43715,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/rnd/test_area)
+"jZy" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 4
+	},
+/turf/simulated/wall,
+/area/station/maintenance/chapel)
 "jZC" = (
 /obj/machinery/atmospherics/pipe/simple/visible/yellow,
 /turf/simulated/floor{
@@ -81161,6 +81173,10 @@
 	},
 /turf/simulated/floor,
 /area/station/engineering/engine)
+"tsL" = (
+/obj/effect/spawner/tape/engineering,
+/turf/simulated/wall,
+/area/station/maintenance/chapel)
 "tsP" = (
 /turf/simulated/wall,
 /area/station/security/range)
@@ -94188,6 +94204,12 @@
 "wEk" = (
 /turf/simulated/wall/r_wall,
 /area/station/rnd/lab)
+"wEl" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 8
+	},
+/turf/simulated/wall,
+/area/station/maintenance/chapel)
 "wEv" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -139386,9 +139408,9 @@ iRy
 cJy
 tyD
 cfr
-oPI
+tsL
 jtS
-oPI
+fiD
 oPI
 cpC
 wvi
@@ -140419,7 +140441,7 @@ xHD
 xHD
 oUt
 oPI
-oPI
+jZy
 rvx
 dmo
 vgZ
@@ -140933,7 +140955,7 @@ tTr
 mIM
 aBJ
 oYv
-oPI
+wEl
 uyf
 jhr
 opB
@@ -141187,9 +141209,9 @@ hUW
 hUW
 oPI
 oPI
-oPI
+tsL
 hJt
-oPI
+fiD
 oPI
 oPI
 oPI

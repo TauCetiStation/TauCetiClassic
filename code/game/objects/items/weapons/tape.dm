@@ -154,3 +154,51 @@
 
 
 	owner.End()
+
+
+
+/obj/effect/spawner/tape
+	name = "police tape spawner"
+	icon = 'icons/obj/tape.dmi'
+	icon_state = "tapespawn_pol"
+
+	var/range = 5
+	var/obj/effect/ebeam/tape_type = /obj/effect/ebeam/tape/police
+	var/dense_tape = TRUE
+
+/obj/effect/spawner/tape/atom_init()
+	..()
+
+	var/turf/L = get_turf(src)
+
+	for(var/turf/T in getline(L, get_ranged_target_turf(src, dir, range)))
+		if(T == L)
+			continue
+
+		var/obj/effect/spawner/tape/tape = locate(type) in T.contents
+		if(!tape)
+			continue
+		if(tape.dir != global.reverse_dir[dir])
+			continue
+
+		spawn_tape(L, T)
+		qdel(tape)
+
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/spawner/tape/proc/spawn_tape(turf/L, turf/T)
+	L.Beam(T, tape_type::icon_state, time=INFINITY, maxdistance=10, beam_type=tape_type, loose_factor = 0.7, dense_beam = dense_tape)
+
+/obj/effect/spawner/tape/engineering
+	name = "engineering tape spawner"
+	icon = 'icons/obj/tape.dmi'
+	icon_state = "tapespawn_eng"
+
+	tape_type = /obj/effect/ebeam/tape/engineering
+
+/obj/effect/spawner/tape/science
+	name = "science tape spawner"
+	icon = 'icons/obj/tape.dmi'
+	icon_state = "tapespawn_sci"
+
+	tape_type = /obj/effect/ebeam/tape/science
