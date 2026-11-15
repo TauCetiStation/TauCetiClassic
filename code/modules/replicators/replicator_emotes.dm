@@ -24,9 +24,9 @@
 			continue
 		if(get_dist(user, R) > emote_range)
 			continue
-		 if(R.is_controlled())
-		 	to_chat(R, "<span class='notice'>[HELP_LINK(R, user)]</span>")
-		 	continue
+		if(R.is_controlled())
+			to_chat(R, "<span class='notice'>[HELP_LINK(R, user)]</span>")
+			continue
 
 		R.state = REPLICATOR_STATE_GOING_TO_HELP
 		R.target_coordinates = list("x" = user.x, "y" = user.y, "z" = user.z)
