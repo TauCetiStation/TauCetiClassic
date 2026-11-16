@@ -11,7 +11,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/simulated/floor/T = pick(turfs)
-		if(prob(75))
+		if(prob(50))
 			var/obj/effect/spacevine_controller/SC = new(T)
 			var/mutable_appearance/vine_overlay = mutable_appearance('icons/obj/flora/spacevines/vines.dmi', "Light1")
 			notify_ghosts("Spacevines spawned at [get_area(T)]", source=SC, alert_overlay=vine_overlay, action=NOTIFY_ORBIT, header="Spacevines")
