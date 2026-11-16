@@ -22,6 +22,8 @@
 	icon_state = "policetape"
 	req_one_access = list(access_security, access_forensics_lockers)
 
+	destroy_particle = /particles/package_wrap/policetape
+
 /obj/item/taperoll/engineering
 	name = "engineering tape"
 	desc = "Рулон инженерной оградительной ленты для оцепления мест проведения работ."
@@ -35,6 +37,8 @@
 	icon_state = "engineeringtape"
 	req_one_access = list(access_engine,access_atmospherics)
 
+	destroy_particle = /particles/package_wrap/engitape
+
 /obj/item/taperoll/science
 	name = "science tape"
 	desc = "Рулон белой оградительной ленты для оцепления опасных мест."
@@ -47,6 +51,8 @@
 	desc = "Белая оградительная лента. Не пересекать."
 	icon_state = "sciencetape"
 	req_one_access = list(access_research)
+
+	destroy_particle = /particles/package_wrap/scitape
 
 /obj/item/taperoll/attack_self(mob/user)
 	if(!start)

@@ -15,7 +15,7 @@ var/global/list/beam_decorations_cache = list()
 	var/turf/target_oldloc = null
 	var/turf/origin_oldloc = null
 	var/static_beam = 0
-	var/beam_type = /obj/effect/ebeam //must be subtype
+	var/obj/effect/ebeam/beam_type = /obj/effect/ebeam //must be subtype
 	var/plane = null
 	var/timing_id = null
 	var/recalculating = FALSE
@@ -117,6 +117,10 @@ var/global/list/beam_decorations_cache = list()
 	if(!isnull(timing_id))
 		deltimer(timing_id)
 	if(!QDELETED(src) && destroy_self)
+		if(beam_type::destroy_particle)
+			for(var/obj/effect/ebeam/B in elements)
+				B.play_destroy_particle()
+
 		qdel(src)
 
 /datum/beam/proc/Reset()
@@ -210,8 +214,11 @@ var/global/list/beam_decorations_cache = list()
 			var/icon/II = new(icon, icon_state) //the way to keep this the same as the vis_contents is unreasonable right now, maybe in the far future.
 			II.DrawBox(null,1,length-N,32,32)//anyway we cut the icon on the ebeam to end at the target instead of overshooting
 			X.icon = II
+			X.end_pos = list(round(sin(Angle)*(length-N)), round(cos(Angle)*(length-N)))
 		else
 			X.vis_contents += visuals
+			X.end_pos = list(round(sin(Angle)*(N + 32)), round(cos(Angle)*(N + 32)))
+
 		X.transform = rot_matrix
 
 		if(X.decoration_icon)
@@ -265,6 +272,10 @@ var/global/list/beam_decorations_cache = list()
 
 		X.pixel_x = Pixel_x
 		X.pixel_y = Pixel_y
+
+		if(X.idle_particle)
+			X.play_idle_particle()
+
 		CHECK_TICK
 	afterDraw()
 
@@ -277,8 +288,25 @@ var/global/list/beam_decorations_cache = list()
 	var/decoration_icon
 	var/decoration_follow = FALSE
 
+	var/idle_particle
+	var/obj/effect/abstract/particle_holder/idle_particle_holder
+	var/destroy_particle
+
+	var/end_pos = list()
+
+/obj/effect/ebeam/proc/play_idle_particle()
+	idle_particle_holder = new /obj/effect/abstract/particle_holder(get_turf(src), idle_particle, PARTICLE_FADEOUT)
+	idle_particle_holder.modify_particles_value("position", generator("vector", list(pixel_x, pixel_y, 0), list(pixel_x - end_pos[1], pixel_y - end_pos[2], 0)))
+
+/obj/effect/ebeam/proc/play_destroy_particle()
+	var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(get_turf(src), destroy_particle, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	Holder.modify_particles_value("position", generator("vector", list(pixel_x, pixel_y, 0), list(pixel_x - end_pos[1], pixel_y - end_pos[2], 0)))
+
 /obj/effect/ebeam/Destroy()
 	owner = null
+	if(idle_particle_holder)
+		idle_particle_holder.delete_particle()
+		idle_particle_holder = null
 	return ..()
 
 /obj/effect/ebeam/singularity_pull()
