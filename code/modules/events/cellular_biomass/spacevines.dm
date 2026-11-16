@@ -189,11 +189,17 @@
 /obj/structure/spacevine/proc/throw_vine()
 	if(connected || vine)
 		return
+
+	if(!isturf(loc))
+		return
+
 	var/turf/L = get_turf(src)
-	var/list/impossible_dirs = (dir in list(NORTH, SOUTH)) ? list(EAST, WEST, dir) : list(NORTH, SOUTH, dir)
-	for(var/turf/T in getline(L, get_ranged_target_turf(src, pick(global.alldirs - impossible_dirs), 4)))
+	for(var/turf/T in getline(L, get_ranged_target_turf(L, pick(global.opposite_dirs[dir]), 4)))
 		for(var/obj/structure/spacevine/check_vine in T.contents)
 			if(!check_vine)
+				continue
+
+			if(check_vine == src)
 				continue
 
 			if(check_vine.connected)
@@ -222,6 +228,10 @@
 	if(!master)
 		return
 
+	if(!isturf(loc))
+		return
+
+	var/turf/T = get_turf(src)
 	var/list/possible_dirs = (dir in list(NORTH, SOUTH)) ? list(EAST, WEST) : list(NORTH, SOUTH)
 	var/direction = pick(possible_dirs)
 	var/turf/step = get_step(src,direction)
@@ -229,9 +239,8 @@
 		return
 
 	if(!can_enter_turf(src, step))
-		var/turf/T = get_turf(src)
 		for(var/obj/structure/spacevine/vine in T.contents)
-			if(vine.dir == get_dir(step, T))
+			if(vine.dir == get_dir(T, step))
 				return
 
 		master.spawn_spacevine_piece(T, direction)
