@@ -33,3 +33,16 @@
 	spawning = 50
 
 	position = generator("box", list(-32, 80, 0), list(64, 32, 0), "SQUARE_RAND")
+
+/particles/leaves/spacevine
+	lifespan = 50
+	count = 2
+
+/particles/leaves/spacevine/New()
+	..()
+	spawning = rand(100, 400) / 10000
+
+/particles/leaves/spacevine_destroy
+	lifespan = 50
+	count = 3
+	spawning = 25

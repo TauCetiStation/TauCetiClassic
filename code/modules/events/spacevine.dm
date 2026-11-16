@@ -13,7 +13,7 @@
 		var/turf/simulated/floor/T = pick(turfs)
 		if(prob(50))
 			var/obj/effect/spacevine_controller/SC = new(T)
-			var/mutable_appearance/vine_overlay = mutable_appearance('icons/effects/spacevines.dmi', "Light1")
+			var/mutable_appearance/vine_overlay = mutable_appearance('icons/obj/flora/spacevines/vines.dmi', "Light1")
 			notify_ghosts("Spacevines spawned at [get_area(T)]", source=SC, alert_overlay=vine_overlay, action=NOTIFY_ORBIT, header="Spacevines")
 			message_admins("<span class='notice'>Event: Spacevines spawned at [T.loc] [COORD(T)] [ADMIN_JMP(T)]</span>")
 		else
