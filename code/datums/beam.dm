@@ -1,3 +1,6 @@
+var/global/mutable_appearance/list/beam_decorations_cache = list()
+
+
 //Beam Datum and effect
 /datum/beam
 	var/atom/origin = null
@@ -219,8 +222,14 @@
 				if(i > (length - 1))
 					break
 
-				var/mutable_appearance/decoration = mutable_appearance(X.decoration_icon, pick(icon_states(X.decoration_icon)))
-				decoration.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+				var/decoration_state = pick(icon_states(X.decoration_icon))
+				var/mutable_appearance/decoration
+				if(!global.beam_decorations_cache["[X.decoration_icon]_[decoration_state]"])
+					decoration = mutable_appearance(X.decoration_icon, decoration_state)
+					decoration.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+				else
+					decoration = global.beam_decorations_cache["[X.decoration_icon]_[decoration_state]"]
+
 				if(X.decoration_follow)
 					decoration.transform = decoration_matrix
 

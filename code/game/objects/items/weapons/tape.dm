@@ -168,6 +168,8 @@
 	icon = 'icons/obj/tape.dmi'
 	icon_state = "tapespawn_pol"
 
+	layer = TALL_STRUCTURE
+
 	var/range = 5
 	var/obj/effect/ebeam/tape_type = /obj/effect/ebeam/tape/police
 	var/dense_tape = TRUE

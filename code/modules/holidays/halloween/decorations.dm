@@ -96,11 +96,12 @@
 /obj/effect/ebeam/tinsel/halloween
 	name = "halloween tinsel"
 	icon_state = "tinsel"
-	cases = list("новогодняя гирлянда", "новогодней гирлянды", "новогодней гирлянде", "новогоднюю гирлянду", "новогодней гирляндой", "новогодней гирлянде")
+	cases = list("хеллоуинская гирлянда", "хеллоуинской гирлянды", "хеллоуинской гирлянде", "хеллоуинскую гирлянду", "хеллоуинской гирляндой", "хеллоуинской гирлянде")
 
 	taperoll = /obj/item/taperoll/tinsel/halloween
 	decoration_icon = 'icons/holidays/halloween/tinsel.dmi'
 
 /obj/effect/spawner/tape/tinsel/halloween
 	name = "halloween tinsel spawner"
+	icon = 'icons/holidays/halloween/decorations.dmi'
 	tape_type = /obj/effect/ebeam/tinsel/halloween

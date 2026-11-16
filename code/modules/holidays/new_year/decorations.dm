@@ -111,7 +111,7 @@
 	icon_state = "tinsel"
 	cases = list("новогодняя гирлянда", "новогодней гирлянды", "новогодней гирлянде", "новогоднюю гирлянду", "новогодней гирляндой", "новогодней гирлянде")
 	mouse_opacity = MOUSE_OPACITY_ICON
-	layer = INFRONT_MOB_LAYER
+	layer = TALL_STRUCTURE
 
 	var/taperoll = /obj/item/taperoll/tinsel
 
@@ -188,9 +188,9 @@
 
 	tape_type = /obj/effect/ebeam/tinsel/fluffy
 
-/obj/effect/spawner/tape/tinsel/fluffy/atom_init()
-	tape_type = pick(typesof(/obj/effect/ebeam/tinsel/fluffy))
-	..()
+/obj/effect/spawner/tape/tinsel/fluffy/spawn_tape(turf/L, turf/T)
+	var/obj/effect/ebeam/tinsel_type = pick(typesof(/obj/effect/ebeam/tinsel/fluffy))
+	L.Beam(T, tinsel_type::icon_state, tinsel_type::icon, time=INFINITY, maxdistance=10, beam_type=tinsel_type, loose_factor = 0.7, dense_beam = dense_tape)
 
 // Snowflakes
 /obj/item/decoration/snowflake

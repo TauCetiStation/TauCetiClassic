@@ -17,4 +17,5 @@
 
 /obj/effect/spawner/tape/tinsel/maslenitsa
 	name = "maslenitsa tinsel spawner"
+	icon = 'icons/holidays/maslenitsa/decorations.dmi'
 	tape_type = /obj/effect/ebeam/tinsel/maslenitsa
