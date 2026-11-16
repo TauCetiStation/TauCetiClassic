@@ -6,7 +6,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 	name = "telephone"
 	cases = list("телефон", "телефона", "телефону", "телефон", "телефоном", "телефоне")
 	desc = "Используется для общения между отделами."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "telephone_full"
 	w_class = SIZE_NORMAL
 
@@ -70,6 +70,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 		global.new_private_phone_number++
 
 	chiptune_player = new(src, "sound/musical_instruments/pda")
+	selected_ringtone = rand(1, 5)
 	change_ringtone(selected_ringtone)
 
 	handset = new(src)
@@ -92,10 +93,12 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 	if(phone_cord)
 		phone_cord.End()
 
+	qdel(GetComponent(/datum/component/bounded))
+
 	SStgui.close_uis(src)
-	reject_call()
 	if(phone_caller)
 		phone_caller.reject_call()
+	reject_call()
 
 /obj/item/device/telephone/Destroy()
 	retract_handset()
@@ -118,7 +121,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 		visible_message("<span class='notice'>[user] берёт [CASE(handset, ACCUSATIVE_CASE)].</span>")
 		playsound(src, 'sound/weapons/guns/reload_mag_out.ogg', VOL_EFFECTS_MASTER, 5)
 
-		phone_cord = Beam(user, icon_state = "telephone_cord", time = INFINITY, maxdistance = 4, beam_type = /obj/effect/ebeam/phone_cord, origin_additional_pixel_x = -5, origin_additional_pixel_y = -4, loose = TRUE)
+		phone_cord = Beam(user, icon_state = "telephone_cord", time = INFINITY, maxdistance = 5, beam_type = /obj/effect/ebeam/phone_cord, origin_additional_pixel_x = -5, origin_additional_pixel_y = -4, loose = TRUE)
 
 		AddComponent(/datum/component/bounded, user, 0, 2, CALLBACK(src, PROC_REF(resolve_stranded)))
 
@@ -201,6 +204,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 				selected_ringtone = 1
 
 			change_ringtone(selected_ringtone)
+			visible_message("<span class='warning'>Рингтон изменён на: [telephone_ringtones[selected_ringtone]].</span>")
 			play_ringtone()
 			return TRUE
 
@@ -248,7 +252,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 
 	visible_message("<span class='warning'>Номер не существует.</span>")
 
-/obj/item/device/telephone/proc/wait_for(obj/item/device/telephone/T, amount = 5, i_am_caller = FALSE)
+/obj/item/device/telephone/proc/wait_for(obj/item/device/telephone/T, amount = 7, i_am_caller = FALSE)
 	if(!istalking && (amount <= 0))
 		if(i_am_caller)
 			start_recording()
@@ -341,8 +345,6 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 	if(!Ring)
 		return
 
-	visible_message("<span class='warning'>Рингтон изменён на: [ringtone_name].</span>")
-
 	chiptune_player.basic_repeats = Ring.replays
 	chiptune_player.parse_song_text(Ring.melody)
 
@@ -354,23 +356,33 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 	name = "telephone handset"
 	cases = list("телефонная трубка", "телефонной трубки", "телефонной трубке", "телефонную трубку", "телефонной трубкой", "телефонной трубке")
 	desc = "Хлипкая и дешёвая на ощупь телефонная трубка. Воняет пластиком."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/radio.dmi'
 	icon_state = "telephone_handset"
 	item_state = "telephone_handset"
-	w_class = SIZE_SMALL
+	w_class = SIZE_LARGE //Its large because of the cable
+	resistance_flags = FULL_INDESTRUCTIBLE
 
 	listening = FALSE
 	broadcasting = FALSE
 
 	slot_flags = null
 
-	canhear_range = 0
+	canhear_range = 1
 	grid = TRUE
 	freerange = TRUE
+
+	subspace_transmission = FALSE
+
+	allow_settings = FALSE
 
 	var/recording_call = FALSE
 
 	var/obj/item/device/telephone/telephone
+
+/obj/item/device/radio/telephone_handset/atom_init()
+	. = ..()
+
+	flags |= ABSTRACT
 
 /obj/item/device/radio/telephone_handset/Destroy()
 	if(telephone)
@@ -399,4 +411,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/device/telephone, telephones)
 	if(recording_call && telephone && telephone.phone_caller)
 		telephone.phone_caller.recordings += "\[[worldtime2text()]\] [M.name] [verb], \"[msg]\""
 	else
-		..()
+		..(M, msg, verb, speaking)
+
+/obj/item/device/radio/telephone_handset/try_wrap_up(wrap_type)
+	return
