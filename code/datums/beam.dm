@@ -1,4 +1,4 @@
-var/global/mutable_appearance/list/beam_decorations_cache = list()
+var/global/list/beam_decorations_cache = list()
 
 
 //Beam Datum and effect
