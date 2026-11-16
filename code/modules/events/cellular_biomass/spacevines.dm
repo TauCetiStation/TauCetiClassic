@@ -305,6 +305,9 @@
 	owner.recalculate(force_redraw = TRUE)
 
 /obj/effect/ebeam/spacevine/ex_act(severity)
+	if(!owner)
+		return
+
 	switch(severity)
 		if(EXPLODE_HEAVY)
 			if(prob(10))
@@ -315,11 +318,11 @@
 	owner.End()
 
 /obj/effect/ebeam/spacevine/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume) //hotspots kill vines
-	if(exposed_temperature > T0C+100)
+	if(owner && (exposed_temperature > T0C+100))
 		owner.End()
 
 /obj/effect/ebeam/spacevine/attackby(obj/item/weapon/W, mob/user)
-	if (!W || !user || !W.type) return
+	if (!W || !user || !W.type || !owner) return
 	var/temperature = W.get_current_temperature()
 	if(W.sharp || iscutter(W) > 0 || temperature > 3000)
 		owner.End()
