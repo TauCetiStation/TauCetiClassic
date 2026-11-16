@@ -190,7 +190,8 @@
 	if(connected || vine)
 		return
 	var/turf/L = get_turf(src)
-	for(var/turf/T in getline(L, get_ranged_target_turf(src, pick(global.alldirs - dir), 4)))
+	var/list/impossible_dirs = (dir in list(NORTH, SOUTH)) ? list(EAST, WEST, dir) : list(NORTH, SOUTH, dir)
+	for(var/turf/T in getline(L, get_ranged_target_turf(src, pick(global.alldirs - impossible_dirs), 4)))
 		for(var/obj/structure/spacevine/check_vine in T.contents)
 			if(!check_vine)
 				continue
