@@ -7,6 +7,7 @@
 		"field3" = "главрыба",
 		"field4" = 30,
 		"field5" = /atom/movable,
+		"field6" = list("A" = 5, "B" = list(1, 2, 3), "C" = /atom/movable)
 	)
 
 	var/list/bad_entries = list(
@@ -15,6 +16,7 @@
 		"field3" = "череповец",
 		"field4" = 42,
 		"field5" = /datum,
+		"field6" = list("A" = 5, "B" = list(1, 2, 3), "D" = /atom)
 	)
 
 /datum/unit_test/continuity/proc/testproc()
@@ -50,6 +52,25 @@
 		"field5" = new /datum/primitive_field/type(
 			in_list = list(/atom, /atom/movable)
 		),
+		"field6" = new /datum/primitive_field/objectlistfield(
+			fields_config = list(
+				"A" = new /datum/primitive_field/num(
+					max_num = 999,
+					min_num = -999,
+					can_be_null = TRUE
+				),
+				"B" = new /datum/primitive_field/listfield(
+					entry_config = new /datum/primitive_field/num(
+						max_num = 999,
+						min_num = -999,
+						can_be_null = TRUE
+					)
+				),
+				"C" = new /datum/primitive_field/type(
+					in_list = list(/atom, /atom/movable)
+				),
+			)
+		),
 	)
 
 	var/datum/component/continuity_object/Object = A.AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(testproc)), CALLBACK(src, PROC_REF(testproc)), "atom", continuity_fields)
@@ -66,6 +87,7 @@
 
 		test_list()
 		test_alist()
+		test_objectlist()
 		test_text()
 		test_num()
 		test_type()
@@ -159,6 +181,64 @@
 	catch(var/exception/e4)
 		if(e4.name != "Not a number")
 			throw EXCEPTION("Not a number expected : [e4.name] was thrown instead.")
+
+	try
+		Object.sanitize_data(list("field" = null))
+		throw EXCEPTION("No exception")
+	catch(var/exception/e5)
+		if(e5.name != "Is null")
+			throw EXCEPTION("Is null expected : [e5.name] was thrown instead.")
+
+	Object.sanitize_data(list("field" = testlist))
+
+	return TRUE
+
+/datum/unit_test/continuity/proc/test_objectlist()
+	var/list/testlist = list("A" = 1, "B" = list(1, 2), "C" = /atom/movable)
+	var/atom/movable/A = new
+	var/list/paramslist = list(
+		"field" = new /datum/primitive_field/objectlistfield(
+			fields_config = list(
+				"A" = new /datum/primitive_field/num,
+				"B" = new /datum/primitive_field/listfield(
+					entry_config = new /datum/primitive_field/num
+				),
+				"C" = new /datum/primitive_field/type(
+					in_list = list(/atom, /atom/movable)
+				)
+			)
+		)
+	)
+
+	var/datum/component/continuity_object/Object = A.AddComponent(/datum/component/continuity_object, CALLBACK(src, PROC_REF(testproc)), CALLBACK(src, PROC_REF(testproc)), "atom", paramslist)
+
+	try
+		Object.sanitize_data(list("notfield" = testlist))
+		throw EXCEPTION("No exception")
+	catch(var/exception/e1)
+		if(e1.name != "Missing field")
+			throw EXCEPTION("Missing field expected : [e1.name] was thrown instead.")
+
+	try
+		Object.sanitize_data(list("field" = testlist, "notfield" = testlist))
+		throw EXCEPTION("No exception")
+	catch(var/exception/e2)
+		if(e2.name != "Invalid field")
+			throw EXCEPTION("Invalid field expected : [e2.name] was thrown instead.")
+
+	try
+		Object.sanitize_data(list("field" = list(/atom = 1, "B" = list(1, 2), "C" = /atom/movable)))
+		throw EXCEPTION("No exception")
+	catch(var/exception/e3)
+		if(e3.name != "Not enough field entries")
+			throw EXCEPTION("Not enough field entries expected : [e3.name] was thrown instead.")
+
+	try
+		Object.sanitize_data(list("field" = list("A" = 1, "B" = list(1, 2))))
+		throw EXCEPTION("No exception")
+	catch(var/exception/e4)
+		if(e4.name != "Wrong entries amount")
+			throw EXCEPTION("Wrong entries amount : [e4.name] was thrown instead.")
 
 	try
 		Object.sanitize_data(list("field" = null))

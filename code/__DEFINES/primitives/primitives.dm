@@ -8,6 +8,9 @@ fields = alist(...)
 //alist
 "varname" = list("field_type" = "alist", "can_be_null" = TRUE, "key_config" = list(...), "entry_config" = list(...))
 
+//objectlist
+"varname" = list("field_type" = "objectlist", "can_be_null" = TRUE, "fields_config" = list(...))
+
 //text
 "varname" = list("field_type" = "text", "max_length" = 999, "can_be_null" = TRUE, "in_list" = list(), "regex" = @"text")
 
@@ -110,6 +113,79 @@ fields = alist(...)
 	for(var/entry_name in field)
 		var/valid_name = key_config.sanitize_field(entry_name)
 		var/newdata = entry_config.sanitize_field(field[entry_name])
+
+		sanitized_list[valid_name] = newdata
+
+	return sanitized_list
+
+
+/datum/primitive_field/objectlistfield
+	name = "alist"
+	var/can_be_null = FALSE
+	var/list/fields_config = list()
+	var/datum/primitive_field/text/entry_check
+
+/datum/primitive_field/objectlistfield/New(list/fields_config = null, can_be_null = FALSE)
+	if(!fields_config)
+		stack_trace("Tried creating continuity field. No fields config")
+		return
+
+	if(!islist(fields_config))
+		stack_trace("Tried creating continuity field. No fields config")
+		return
+
+	entry_check = new /datum/primitive_field/text(max_length = 50)
+
+	for(var/entry in fields_config)
+		try
+			entry = entry_check.sanitize_field(entry)
+		catch(var/exception/e)
+			stack_trace("Tried creating continuity field. [e.name]")
+			return
+
+		var/entry_field = fields_config[entry]
+
+		if(!istype(entry_field, /datum/primitive_field))
+			stack_trace("Tried creating continuity field. Invalid fields entry type")
+			return
+
+		src.fields_config[entry] = entry_field
+
+	src.can_be_null = can_be_null
+
+/datum/primitive_field/objectlistfield/Destroy()
+	for(var/entry in fields_config)
+		var/thing = fields_config[entry]
+		QDEL_NULL(entry)
+		QDEL_NULL(thing)
+
+	fields_config = null
+	QDEL_NULL(entry_check)
+
+	..()
+
+/datum/primitive_field/objectlistfield/sanitize_field(list/field)
+	if(isnull(field))
+		if(can_be_null)
+			return field
+
+		throw EXCEPTION("Is null")
+
+	if(field.len != fields_config.len)
+		throw EXCEPTION("Wrong entries amount")
+
+	var/list/sanitized_list = list()
+	for(var/i in 1 to fields_config.len)
+		var/config_key = fields_config[i]
+		var/datum/primitive_field/config_entry = fields_config[config_key]
+
+		if(!field[config_key])
+			throw EXCEPTION("Not enough field entries")
+
+		var/field_data = field[config_key]
+
+		var/valid_name = entry_check.sanitize_field(config_key)
+		var/newdata = config_entry.sanitize_field(field_data)
 
 		sanitized_list[valid_name] = newdata
 
