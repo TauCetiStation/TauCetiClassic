@@ -8,7 +8,7 @@ fields = alist(...)
 //alist
 "varname" = list("field_type" = "alist", "can_be_null" = TRUE, "key_config" = list(...), "entry_config" = list(...))
 
-//objectlist
+//object
 "varname" = list("field_type" = "objectlist", "can_be_null" = TRUE, "fields_config" = list(...))
 
 //text
@@ -119,13 +119,13 @@ fields = alist(...)
 	return sanitized_list
 
 
-/datum/primitive_field/objectlistfield
+/datum/primitive_field/objectfield
 	name = "alist"
 	var/can_be_null = FALSE
 	var/list/fields_config = list()
 	var/datum/primitive_field/text/entry_check
 
-/datum/primitive_field/objectlistfield/New(list/fields_config = null, can_be_null = FALSE)
+/datum/primitive_field/objectfield/New(list/fields_config = null, can_be_null = FALSE)
 	if(!fields_config)
 		stack_trace("Tried creating continuity field. No fields config")
 		return
@@ -153,7 +153,7 @@ fields = alist(...)
 
 	src.can_be_null = can_be_null
 
-/datum/primitive_field/objectlistfield/Destroy()
+/datum/primitive_field/objectfield/Destroy()
 	for(var/entry in fields_config)
 		var/thing = fields_config[entry]
 		QDEL_NULL(entry)
@@ -164,7 +164,7 @@ fields = alist(...)
 
 	..()
 
-/datum/primitive_field/objectlistfield/sanitize_field(list/field)
+/datum/primitive_field/objectfield/sanitize_field(list/field)
 	if(isnull(field))
 		if(can_be_null)
 			return field

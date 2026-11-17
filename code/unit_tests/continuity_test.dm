@@ -52,7 +52,7 @@
 		"field5" = new /datum/primitive_field/type(
 			in_list = list(/atom, /atom/movable)
 		),
-		"field6" = new /datum/primitive_field/objectlistfield(
+		"field6" = new /datum/primitive_field/objectfield(
 			fields_config = list(
 				"A" = new /datum/primitive_field/num(
 					max_num = 999,
@@ -197,7 +197,7 @@
 	var/list/testlist = list("A" = 1, "B" = list(1, 2), "C" = /atom/movable)
 	var/atom/movable/A = new
 	var/list/paramslist = list(
-		"field" = new /datum/primitive_field/objectlistfield(
+		"field" = new /datum/primitive_field/objectfield(
 			fields_config = list(
 				"A" = new /datum/primitive_field/num,
 				"B" = new /datum/primitive_field/listfield(
