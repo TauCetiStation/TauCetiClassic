@@ -102,6 +102,21 @@
 			playsound(src, pick(P.proj_act_sound), VOL_EFFECTS_MASTER, null, FALSE, null, -5)
 	P.on_hit(src, def_zone, absorb)
 
+	if(P.damage_type == BRUTE)
+		var/hit_dir = get_dir(P, src)
+		var/travel_x = round(sin(dir2angle(hit_dir)) * (24 + impact_force * 4))
+		var/travel_y = round(cos(dir2angle(hit_dir)) * (24 + impact_force * 4))
+
+		var/dispersion_y = round(sin(dir2angle(hit_dir)) * 4)
+		var/dispersion_x = round(sin(dir2angle(hit_dir)) * 4)
+
+		var/datum/dirt_cover/blood_datum = get_blood_datum()
+
+		var/obj/effect/abstract/particle_holder/Holder = new(src, /particles/blood_hit, PARTICLE_FADEOUT|PARTICLE_FLICK|PARTICLE_NO_TRANSFORM)
+		Holder.modify_particles_value("count", damage)
+		Holder.modify_particles_value("color", "[blood_datum::color]")
+		Holder.modify_particles_value("velocity", generator("vector", list(travel_x + dispersion_x, travel_y + dispersion_y), list(travel_x - dispersion_x, travel_y - dispersion_y), "NORMAL_RAND"))
+
 	return absorb
 
 /mob/living/proc/mob_bullet_act(obj/item/projectile/P, def_zone) // this one can be used to help with the order of code things to run.
