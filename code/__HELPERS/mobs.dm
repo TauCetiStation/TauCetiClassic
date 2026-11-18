@@ -204,7 +204,7 @@
 //helper for inverting armor blocked values into a multiplier
 #define blocked_mult(blocked) max(1 - (blocked / 100), 0)
 
-/proc/do_mob(mob/user , mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE, datum/callback/extra_checks = null, particle_type = null)
+/proc/do_mob(mob/user , mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE, datum/callback/extra_checks = null, particle_type = null, list/particle_params = null)
 	if(!user || !target)
 		return FALSE
 
@@ -233,6 +233,10 @@
 		var/is_in_user = (get_turf(target) == get_turf(user))
 
 		Particle = new(is_in_user ? user : target, particle_type, PARTICLE_FADEOUT | PARTICLE_NO_TRANSFORM)
+
+		if(particle_params && particle_params.len)
+			for(var/particle_param_name in particle_params)
+				Particle.modify_particles_value(particle_param_name, particle_params[particle_param_name])
 
 		var/particles/particle_datum = Particle.get_particle()
 		particle_datum.change_dir(is_in_user ? user.dir : get_dir(get_turf(target), get_turf(user)))
@@ -284,7 +288,7 @@
 	if(target)
 		target.in_use_action = FALSE
 
-/proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks, particle_type = null)
+/proc/do_after(mob/user, delay, needhand = TRUE, atom/target, can_move = FALSE, progress = TRUE, datum/callback/extra_checks, particle_type = null, list/particle_params = null)
 	if(!user || target && QDELING(target))
 		return FALSE
 
@@ -321,6 +325,10 @@
 		var/is_in_user = (get_turf(target) == get_turf(user))
 
 		Particle = new(is_in_user ? user : target, particle_type, PARTICLE_FADEOUT | PARTICLE_NO_TRANSFORM)
+
+		if(particle_params && particle_params.len)
+			for(var/particle_param_name in particle_params)
+				Particle.modify_particles_value(particle_param_name, particle_params[particle_param_name])
 
 		var/particles/particle_datum = Particle.get_particle()
 		particle_datum.change_dir(is_in_user ? user.dir : get_dir(get_turf(target), get_turf(user)))
