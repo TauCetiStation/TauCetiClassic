@@ -19,7 +19,7 @@
 		if(O_EYES)
 		// Retract Eyes
 			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-			if(!(eyes.status & ORGAN_ROBOT) && eyes.surgery_stage == BP_SCALPEL_OS)
+			if(eyes?.surgery_stage <= BP_SCALPEL_OS)
 				msg = "<span class='notice'>[user] begin to lifting corneas from [surgery_victim]'s eyes with \the [tool].</span>"
 				self_msg = "<span class='notice'>You start to lifting corneas from [surgery_victim]'s eyes with \the [tool].</span>"
 				user.visible_message(msg, self_msg)
@@ -27,7 +27,7 @@
 		if(O_MOUTH)
 		// Retract Face
 			var/obj/item/organ/external/head/head = bodypart
-			if(!(bodypart.controller.bodypart_type == BODYPART_ROBOTIC) && head.ps_status >= BP_SCALPEL_OS)
+			if(head.ps_status == BP_DEFAULT_OS || head.ps_status == BP_RETRACT_OS)
 				msg = "<span class='notice'>[user] begin [head.ps_status == BP_INTERNALS_OS ? "adjust": "pull"] the skin on [surgery_victim]'s face back in place with \the [tool].</span>"
 				self_msg = "<span class='notice'>You start [head.ps_status == BP_INTERNALS_OS ? "adjust": "pull"] the skin on [surgery_victim]'s face back in place with \the [tool].</span>"
 				user.visible_message(msg, self_msg)

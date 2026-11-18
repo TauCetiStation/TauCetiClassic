@@ -1,11 +1,3 @@
-#define SAW_SURGERY       (bodypart.open == BP_RETRACT_OS)
-#define DIONA_SAW_SURGERY (bodypart.open == BP_DEFAULT_OS && target_zone == BP_CHEST && surgery_victim.get_species() == DIONA)
-
-
-#define SAW_LIMB_ACTION  "cut off [surgery_victim]'s [bodypart.name] with \the [tool]"
-#define SAW_BONE_ACTION  "cut through [surgery_victim]'s ribcage with \the [tool]"
-#define DIONA_SAW_ACTION "separating [surgery_victim]'s brain from \his spine with \the [tool]"
-#define SLIME_SAW_ACTION "cut out one of [target]'s cores with \the [tool]"
 /datum/surgery_step/surgery_saw
 	name = "Saw"
 	allowed_qualities = list(
@@ -22,8 +14,8 @@
 /datum/surgery_step/surgery_saw/can_use(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
-		msg = "[user] begin to [SLIME_SAW_ACTION]."
-		self_msg = "You begin to [SLIME_SAW_ACTION]."
+		msg = "[user] begin to cut out one of [target]'s cores with \the [tool]."
+		self_msg = "You begin to cut out one of [target]'s cores with \the [tool]."
 		if(slime.surgery_status == SLIME_SKIN_PREPARED)
 			user.visible_message(msg, self_msg)
 			return TRUE
@@ -36,20 +28,20 @@
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
 
 	//exeption for diona
-	if(DIONA_SAW_SURGERY)
-		msg = "[user] begin to [DIONA_SAW_ACTION]."
-		self_msg = "You begin to [DIONA_SAW_ACTION]."
+	if(bodypart.open == BP_DEFAULT_OS && target_zone == BP_CHEST && surgery_victim.get_species() == DIONA)
+		msg = "[user] begin to separating [surgery_victim]'s brain from \his spine with \the [tool]."
+		self_msg = "You begin to separating [surgery_victim]'s brain from \his spine with \the [tool]."
 		user.visible_message(msg, self_msg)
 		return TRUE
-	if(SAW_SURGERY)
+	if(bodypart.open == BP_RETRACT_OS)
 		switch(target_zone)
 			if(O_MOUTH, BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)
-				msg = "[user] begin to [SAW_LIMB_ACTION]."
-				self_msg = "You begin to [SAW_LIMB_ACTION]."
+				msg = "[user] begin to cut off [surgery_victim]'s [bodypart.name] with \the [tool]."
+				self_msg = "You begin to cut off [surgery_victim]'s [bodypart.name] with \the [tool]."
 				cp_msg = "Your [bodypart.name] is being ripped apart!"
 			if(BP_CHEST, BP_HEAD)
-				msg = "[user] begin to [SAW_BONE_ACTION]."
-				self_msg = "You begin to [SAW_BONE_ACTION]."
+				msg = "[user] begin to cut through [surgery_victim]'s ribcage with \the [tool]."
+				self_msg = "You begin to cut through [surgery_victim]'s ribcage with \the [tool]."
 				cp_msg = "Something hurts horribly in your [bodypart.name]!"
 		user.visible_message(msg, self_msg)
 		surgery_victim.custom_pain(cp_msg, 1)
@@ -59,8 +51,8 @@
 /datum/surgery_step/surgery_saw/end_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool)
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
-		msg = "[user] finish to [SLIME_SAW_ACTION]."
-		self_msg = "You finish to [SLIME_SAW_ACTION]."
+		msg = "[user] finish to cut out one of [target]'s cores with \the [tool]."
+		self_msg = "You finish to cut out one of [target]'s cores with \the [tool]."
 		if(slime.surgery_status == SLIME_SKIN_PREPARED)
 			if(slime.cores >= 0)
 				new slime.coretype(slime.loc)
@@ -71,17 +63,17 @@
 
 	var/mob/living/carbon/human/surgery_victim = target
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
-	if(DIONA_SAW_SURGERY)
+	if(bodypart.open == BP_DEFAULT_OS && target_zone == BP_CHEST && surgery_victim.get_species() == DIONA)
 		prepare_to_detach_brain() // it kill diona and relise nymph
 	else
 		switch(target_zone)
 			if(O_MOUTH, BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)
-				msg = "[user] finish [SAW_LIMB_ACTION]."
-				self_msg = "You finish [SAW_LIMB_ACTION]."
+				msg = "[user] finish cut off [surgery_victim]'s [bodypart.name] with \the [tool]."
+				self_msg = "You finish cut off [surgery_victim]'s [bodypart.name] with \the [tool]."
 				bodypart.droplimb(null, TRUE)
 			if(BP_CHEST, BP_HEAD)
-				msg = "[user] finish [SAW_BONE_ACTION]."
-				self_msg = "You finish [SAW_BONE_ACTION]."
+				msg = "[user] finish cut through [surgery_victim]'s ribcage with \the [tool]."
+				self_msg = "You finish cut through [surgery_victim]'s ribcage with \the [tool]."
 				bodypart.open = BP_INTERNALS_OS
 
 	user.visible_message(msg, self_msg)

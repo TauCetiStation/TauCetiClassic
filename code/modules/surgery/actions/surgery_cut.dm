@@ -1,40 +1,3 @@
-// Condition content
-#define CUT_SCREW                 (bodypart.open == BP_DEFAULT_OS || (bodypart.controller.bodypart_type == BODYPART_ROBOTIC && bodypart.open == BP_SCALPEL_OS))
-#define CUT_ORGAN                 (bodypart.open == BP_RIBCAGE_OS)
-#define EYES_SURGERY              (eyes?.surgery_stage <= BP_SCALPEL_OS)
-#define MOUTH_SURGERY             (head.ps_status == BP_DEFAULT_OS || head.ps_status == BP_RETRACT_OS)
-#define PLASTIC_SURGERY           (target_zone == O_MOUTH && ishuman(target) && !ismachine(target))
-#define GENDER_SURGERY            (target_zone == BP_GROIN && bodypart.open >= BP_SCALPEL_OS && !surgery_victim.species.flags[TRAIT_NO_BLOOD] && surgery_victim.get_species() != VOX)
-
-// Output Sortcut Defines
-// Slime action
-#define SLIME_CUT_ACTION          "cut through [slime]'s [slime.surgery_status == SLIME_SKIN_CUTTED ? "silky innards" : "flesh"] with \the [I]"
-
-// Default cut|screw action
-#define SCREWING_ACTION            isstump(bodypart) ? "reposition wires where [surgery_victim]'s [bodypart] used to be with \the [I]" : "[bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s maintenance hatch with \the [I]"
-#define CUT_ACTION                 isstump(bodypart) ? "cut away flesh on [surgery_victim]'s [bodypart.name] used to be with \the [I]." : "make a [bodypart.status & ORGAN_BLEEDING ? null : "bloodless "]incision on [surgery_victim]'s [bodypart.name] with \the [I]"
-#define SIMPLE_CUT_SCREW_ACTION    bodypart.controller.bodypart_type == BODYPART_ROBOTIC ? SCREWING_ACTION : CUT_ACTION
-
-// Eyes action
-#define MACHINE_EYES_SCREW_ACTION "[eyes.surgery_stage == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [eyes.name] panels with \the [I]]"
-#define ORGANIC_EYES_CUT_ACTION   "[eyes.surgery_stage == BP_DEFAULT_OS ? "separate" : "extract"] eyes from [surgery_victim]'s eyelid with \the [I]"
-#define SIMPLE_EYES_ACTION        "[eyes.status & ORGAN_ROBOT ? MACHINE_EYES_SCREW_ACTION : ORGANIC_EYES_CUT_ACTION]"
-
-// Mouth Action
-#define MACHINE_MOUTH_CUT_ACTION  "[bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s screen with \the [I]"
-#define ORGANIC_MOUTH_CUT_ACTION  "[head.ps_status == BP_DEFAULT_OS ? "cut open [surgery_victim]'s face and neck with \the [I]" : "to alter [surgery_victim]'s appearance with \the [I]"]"
-#define SIMPLE_MOUTH_ACTION       "[bodypart.controller.bodypart_type == BODYPART_ROBOTIC ? MACHINE_MOUTH_CUT_ACTION : ORGANIC_MOUTH_CUT_ACTION]"
-
-// Detach brain on organic IPC and plant
-#define DETACH_BRAIN_ACTION       "separates [surgery_victim]'s brain from \his spine with \the [I]"
-#define NYMPH_EXTRACT_ACTION      "separating connections roots to [surgery_victim]'s nymph with \the [I]"
-#define DETACH_POSITRON_ACTION    "detach wires on [surgery_victim]'s [bodypart.name] connected to positron brain unit with \the [I]"
-#define SIMPLE_DETACH_ACTION      surgery_victim.get_species() == DIONA ? NYMPH_EXTRACT_ACTION : (surgery_victim.species.flags[IS_SYNTHETIC] ? DETACH_POSITRON_ACTION : DETACH_BRAIN_ACTION)
-
-// Organics gender bender
-#define GENDER_BENDER_ACTION      "reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [I]"
-
-// Action
 /datum/surgery_step/cut
 	name = "Cut"
 	allowed_qualities = list(
@@ -48,7 +11,7 @@
 	max_duration = 11 SECONDS
 
 /datum/surgery_step/cut/prepare_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/I)
-	if(PLASTIC_SURGERY)
+	if(head.ps_status == target_zone == O_MOUTH && ishuman(target) && !ismachine(target) || head.ps_status == BP_RETRACT_OS)
 	//plastic surgery
 		var/mob/living/carbon/human/surgery_victim = target
 		var/obj/item/organ/external/head/head = surgery_victim.get_bodypart(target_zone)
@@ -62,8 +25,8 @@
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
 		if(slime.stat == DEAD && slime.surgery_status != SLIME_SKIN_PREPARED)
-			msg = "<span class='notice'>[user] begin [SLIME_CUT_ACTION].</span>"
-			self_msg = "<span class='notice'>You start [SLIME_CUT_ACTION].</span>"
+			msg = "<span class='notice'>[user] begin cut through [slime]'s [slime.surgery_status == SLIME_SKIN_CUTTED ? "silky innards" : "flesh"] with \the [I].</span>"
+			self_msg = "<span class='notice'>You start cut through [slime]'s [slime.surgery_status == SLIME_SKIN_CUTTED ? "silky innards" : "flesh"] with \the [I].</span>"
 			user.visible_message(msg, self_msg)
 			return TRUE
 
@@ -77,29 +40,38 @@
 		if(O_EYES)
 		// Cut|Screw Eyes
 			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-			if(!(eyes.status & ORGAN_ROBOT) && eyes.surgery_stage == BP_SCALPEL_OS)
-				msg = "<span class='notice'>[user] are beginning to [SIMPLE_EYES_ACTION].</span>"
-				self_msg = "<span class='notice'>You are starting to [SIMPLE_EYES_ACTION].</span>"
+			if(eyes?.surgery_stage <= BP_SCALPEL_OS)
+				if(eyes.status & ORGAN_ROBOT)
+					msg = "<span class='notice'>[user] are beginning to [eyes.surgery_stage == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [eyes.name] panels with \the [I]].</span>"
+					self_msg = "<span class='notice'>You are starting to [eyes.surgery_stage == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [eyes.name] panels with \the [I]].</span>"
+				else
+					msg = "<span class='notice'>[user] are beginning to [eyes.surgery_stage == BP_DEFAULT_OS ? "separate" : "extract"] eyes from [surgery_victim]'s eyelid with \the [I].</span>"
+					self_msg = "<span class='notice'>You are starting to [eyes.surgery_stage == BP_DEFAULT_OS ? "separate" : "extract"] eyes from [surgery_victim]'s eyelid with \the [I].</span>"
 				user.visible_message(msg, self_msg)
 				return TRUE
 		if(O_MOUTH)
 		// Cut|Screw Face
 			var/obj/item/organ/external/head/head = bodypart
-			if(!(bodypart.controller.bodypart_type == BODYPART_ROBOTIC) && head.ps_status >= BP_SCALPEL_OS)
+			if(head.ps_status == BP_DEFAULT_OS || head.ps_status == BP_RETRACT_OS)
 			//start operate face|plastic surgery
-				msg = "<span class='notice'>[user] begin to [SIMPLE_MOUTH_ACTION].</span>"
-				self_msg = "<span class='notice'>You start to [SIMPLE_MOUTH_ACTION].</span>"
+				if(bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
+					msg = "<span class='notice'>[user] begin to [bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s screen with \the [I].</span>"
+					self_msg = "<span class='notice'>You start to [bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s screen with \the [I].</span>"
+				else
+					msg = "<span class='notice'>[user] begin to [head.ps_status == BP_DEFAULT_OS ? "cut open [surgery_victim]'s face and neck with \the [I]" : "to alter [surgery_victim]'s appearance with \the [I]"].</span>"
+					self_msg = "<span class='notice'>You start to [head.ps_status == BP_DEFAULT_OS ? "cut open [surgery_victim]'s face and neck with \the [I]" : "to alter [surgery_victim]'s appearance with \the [I]"].</span>"
+
 				user.visible_message(msg, self_msg)
 				return TRUE
 		else
 		// Head, Chest, Groin, L|R Arm, L|R Leg
-			if(GENDER_SURGERY)
+			if(target_zone == BP_GROIN && bodypart.open >= BP_SCALPEL_OS && !surgery_victim.species.flags[TRAIT_NO_BLOOD] && surgery_victim.get_species() != VOX)
 			//gender surgery, in this stage we need check only VOX
-				msg = "<span class='notice'>[user] begin to [GENDER_BENDER_ACTION].</span>"
-				self_msg = "<span class='notice'>You start to [GENDER_BENDER_ACTION].</span>"
+				msg = "<span class='notice'>[user] begin to reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [I].</span>"
+				self_msg = "<span class='notice'>You start to reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [I].</span>"
 				user.visible_message(msg, self_msg)
 				return TRUE
-			if(CUT_ORGAN)
+			if(bodypart.open == BP_RIBCAGE_OS)
 				msg = "<span class='notice'>[user] begin poking around inside the [surgery_victim]'s [bodypart.name] with \the [I].</span>"
 				self_msg = "<span class='notice'>You start poking around inside the [surgery_victim]'s [bodypart.name] with \the [I].</span>"
 				user.visible_message(msg, self_msg)
@@ -109,8 +81,14 @@
 				var/datum/reagents/R = surgery_victim.reagents
 				if(!R.has_reagent("metatrombine") || I.damtype != BURN || !surgery_victim.species.flags[TRAIT_NO_BLOOD])
 					bodypart.status |= ORGAN_BLEEDING
-				msg = "<span class='notice'>[user] begin to [SIMPLE_CUT_SCREW_ACTION].</span>"
-				self_msg = "<span class='notice'>You start to [SIMPLE_CUT_SCREW_ACTION].</span>"
+				if(bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
+
+					msg = "<span class='notice'>[user] begin to [isstump(bodypart) ? "reposition wires where [surgery_victim]'s [bodypart] used to be with \the [I]" : "[bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s maintenance hatch with \the [I]"].</span>"
+					self_msg = "<span class='notice'>You start to [isstump(bodypart) ? "reposition wires where [surgery_victim]'s [bodypart] used to be with \the [I]" : "[bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s maintenance hatch with \the [I]"].</span>"
+				else
+					msg = "<span class='notice'>[user] begin to [isstump(bodypart) ? "cut away flesh on [surgery_victim]'s [bodypart.name] used to be with \the [I]." : "make a [bodypart.status & ORGAN_BLEEDING ? null : "bloodless "]incision on [surgery_victim]'s [bodypart.name] with \the [I]"].</span>"
+					self_msg = "<span class='notice'>You start to [isstump(bodypart) ? "cut away flesh on [surgery_victim]'s [bodypart.name] used to be with \the [I]." : "make a [bodypart.status & ORGAN_BLEEDING ? null : "bloodless "]incision on [surgery_victim]'s [bodypart.name] with \the [I]"].</span>"
+
 				user.visible_message(msg, self_msg)
 				return TRUE
 
@@ -119,8 +97,8 @@
 /datum/surgery_step/cut/end_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/I)
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
-		msg = "<span class='notice'>[user] finish [SLIME_CUT_ACTION].</span>"
-		self_msg = "<span class='notice'>You finish [SLIME_CUT_ACTION], exposing the cores.</span>"
+		msg = "<span class='notice'>[user] finish cut through [slime]'s [slime.surgery_status == SLIME_SKIN_CUTTED ? "silky innards" : "flesh"] with \the [I].</span>"
+		self_msg = "<span class='notice'>You finish cut through [slime]'s [slime.surgery_status == SLIME_SKIN_CUTTED ? "silky innards" : "flesh"] with \the [I], exposing the cores.</span>"
 		switch(slime.surgery_status)
 			if(SLIME_SKIN_NORMAL_STATE)
 			// cut flesh
@@ -138,8 +116,12 @@
 		if(O_EYES)
 		// Cut|Screw Eyes
 			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-			msg = "<span class='notice'>[user] are finish to [SIMPLE_EYES_ACTION].</span>"
-			self_msg = "<span class='notice'>You are finish to [SIMPLE_EYES_ACTION].</span>"
+			if()
+				msg = "<span class='notice'>[user] are finish to [eyes.surgery_stage == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [eyes.name] panels with \the [I]].</span>"
+				self_msg = "<span class='notice'>You are finish to [eyes.surgery_stage == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [eyes.name] panels with \the [I]].</span>"
+			else
+				msg = "<span class='notice'>[user] are finish to [eyes.surgery_stage == BP_DEFAULT_OS ? "separate" : "extract"] eyes from [surgery_victim]'s eyelid with \the [I].</span>"
+				self_msg = "<span class='notice'>You are finish to [eyes.surgery_stage == BP_DEFAULT_OS ? "separate" : "extract"] eyes from [surgery_victim]'s eyelid with \the [I].</span>"
 			cp_msg = "The pain in your head is living hell!"
 			if(eyes)
 				switch(eyes.surgery_stage)
@@ -163,8 +145,12 @@
 		if(O_MOUTH)
 		// Cut|Screw Face
 			var/obj/item/organ/external/head/head = bodypart
-			msg = "<span class='notice'>[user] finish to [SIMPLE_MOUTH_ACTION].</span>"
-			self_msg = "<span class='notice'>You finish to [SIMPLE_MOUTH_ACTION].</span>"
+			if(bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
+				msg = "<span class='notice'>[user] finish to [bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s screen with \the [I].</span>"
+				self_msg = "<span class='notice'>You finish to [bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s screen with \the [I].</span>"
+			else
+				msg = "<span class='notice'>[user] finish to [head.ps_status == BP_DEFAULT_OS ? "cut open [surgery_victim]'s face and neck with \the [I]" : "to alter [surgery_victim]'s appearance with \the [I]"].</span>"
+				self_msg = "<span class='notice'>You finish to [head.ps_status == BP_DEFAULT_OS ? "cut open [surgery_victim]'s face and neck with \the [I]" : "to alter [surgery_victim]'s appearance with \the [I]"].</span>"
 
 			switch(head.ps_status)
 				if(BP_DEFAULT_OS)
@@ -177,13 +163,13 @@
 					plastic_new_name = null
 
 		else // Head, Chest, Groin, L|R Arm, L|R Leg
-			if(GENDER_SURGERY)
+			if(target_zone == BP_GROIN && bodypart.open >= BP_SCALPEL_OS && !surgery_victim.species.flags[TRAIT_NO_BLOOD] && surgery_victim.get_species() != VOX)
 			// Gender surgery, in this stage we need check only VOX
-				msg = "<span class='notice'>[user] finish to [GENDER_BENDER_ACTION].</span>"
-				self_msg = "<span class='notice'>You finish to [GENDER_BENDER_ACTION].</span>"
+				msg = "<span class='notice'>[user] finish to reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [I].</span>"
+				self_msg = "<span class='notice'>You finish to reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [I].</span>"
 				target.gender = target.gender == MALE ? FEMALE : MALE
 				surgery_victim.regenerate_icons()
-			if(CUT_ORGAN)
+			if(bodypart.open == BP_RIBCAGE_OS)
 			// Detach organ or brain
 				if(!length(bodypart.bodypart_organs))
 					msg = "<span class='notice'>[user] could not find anything inside [surgery_victim]'s [bodypart.name], and pulls \the [I] out.</span>"
@@ -205,8 +191,17 @@
 					var/obj/item/organ/internal/IO = choosen_organ
 					if(isbrain(IO))
 						prepare_to_detach_brain(user, surgery_victim, bodypart, I)
-						msg = "<span class='notice'>You finish to [SIMPLE_DETACH_ACTION].</span>"
-						self_msg = "<span class='notice'>You finish to [SIMPLE_DETACH_ACTION].</span>"
+						switch(surgery_victim.get_species())
+							if(DIONA)
+								msg = "<span class='notice'>You finish to separating connections roots to [surgery_victim]'s nymph with \the [I].</span>"
+								self_msg = "<span class='notice'>You finish to separating connections roots to [surgery_victim]'s nymph with \the [I].</span>"
+							if(MACHINE)
+								msg = "<span class='notice'>You finish to detach wires on [surgery_victim]'s [bodypart.name] connected to positron brain unit with \the [I].</span>"
+								self_msg = "<span class='notice'>You finish to detach wires on [surgery_victim]'s [bodypart.name] connected to positron brain unit with \the [I].</span>"
+							else // human, skrell, tajaran, unathi, vox, etc
+								msg = "<span class='notice'>You finish to separates [surgery_victim]'s brain from \his spine with \the [I].</span>"
+								self_msg = "<span class='notice'>You finish to separates [surgery_victim]'s brain from \his spine with \the [I].</span>"
+
 					IO.status |= ORGAN_CUT_AWAY
 					IO.remove(surgery_victim)
 					IO.loc = get_turf(surgery_victim)
@@ -214,8 +209,13 @@
 					playsound(surgery_victim, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
 			if(CUT_SCREW)
 			// Cut|Screw Default
-				msg = "<span class='notice'>[user] finish to [SIMPLE_CUT_SCREW_ACTION].</span>"
-				self_msg = "<span class='notice'>You finish to [SIMPLE_CUT_SCREW_ACTION].</span>"
+				if(bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
+					msg = "<span class='notice'>[user] finish to [isstump(bodypart) ? "reposition wires where [surgery_victim]'s [bodypart] used to be with \the [I]" : "[bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s maintenance hatch with \the [I]"].</span>"
+					self_msg = "<span class='notice'>You finish to [isstump(bodypart) ? "reposition wires where [surgery_victim]'s [bodypart] used to be with \the [I]" : "[bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s maintenance hatch with \the [I]"].</span>"
+				else
+					msg = "<span class='notice'>[user] finish to [isstump(bodypart) ? "cut away flesh on [surgery_victim]'s [bodypart.name] used to be with \the [I]." : "make a [bodypart.status & ORGAN_BLEEDING ? null : "bloodless "]incision on [surgery_victim]'s [bodypart.name] with \the [I]"].</span>"
+					self_msg = "<span class='notice'>You finish to [isstump(bodypart) ? "cut away flesh on [surgery_victim]'s [bodypart.name] used to be with \the [I]." : "make a [bodypart.status & ORGAN_BLEEDING ? null : "bloodless "]incision on [surgery_victim]'s [bodypart.name] with \the [I]"].</span>"
+
 				cp_msg = "You feel a horrible pain as if from a sharp knife in your [bodypart.name]!"
 
 				bodypart.open = (bodypart.open == BP_SCALPEL_OS && bodypart.controller.bodypart_type == BODYPART_ROBOTIC) ? BP_DEFAULT_OS : BP_SCALPEL_OS
@@ -225,26 +225,3 @@
 
 	user.visible_message(msg, self_msg)
 	surgery_victim.custom_pain(cp_msg, 1)
-
-// Condition content
-#undef CUT_SCREW
-#undef CUT_ORGAN
-#undef EYES_SURGERY
-#undef MOUTH_SURGERY
-#undef PLASTIC_SURGERY
-#undef GENDER_SURGERY
-#undef SLIME_CUT_ACTION
-#undef SCREWING_ACTION
-#undef CUT_ACTION
-#undef SIMPLE_CUT_SCREW_ACTION
-#undef MACHINE_EYES_SCREW_ACTION
-#undef ORGANIC_EYES_CUT_ACTION
-#undef SIMPLE_EYES_ACTION
-#undef MACHINE_MOUTH_CUT_ACTION
-#undef ORGANIC_MOUTH_CUT_ACTION
-#undef SIMPLE_MOUTH_ACTION
-#undef DETACH_BRAIN_ACTION
-#undef NYMPH_EXTRACT_ACTION
-#undef DETACH_POSITRON_ACTION
-#undef SIMPLE_DETACH_ACTION
-#undef GENDER_BENDER_ACTION
