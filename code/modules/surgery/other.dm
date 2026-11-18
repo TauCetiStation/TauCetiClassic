@@ -277,7 +277,7 @@
 	min_duration = 8 SECONDS
 	max_duration = 10 SECONDS
 
-/datum/surgery_step/ribcage/fix_chest_internal/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
+/datum/surgery_step/ribcage/fix_chest_internal/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I, silent = FALSE)
 	if(!..())
 		return FALSE
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
@@ -293,7 +293,8 @@
 				has_treatable = TRUE
 	if(has_treatable)
 		return TRUE
-	necrotic_organs_warning(user, target, dead_organs)
+	if(!silent)
+		necrotic_organs_warning(user, target, dead_organs)
 	return FALSE
 
 /datum/surgery_step/ribcage/fix_chest_internal/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/I)
@@ -318,6 +319,7 @@
 			else
 				user.visible_message("<span class='notice'>[user] attempts to repair [target]'s mechanical [IO.name] with [tool_name]...</span>", \
 				"<span class='notice'>You attempt to repair [target]'s mechanical [IO.name] with [tool_name]...</span>")
+
 	necrotic_organs_warning(user, target, dead_organs)
 
 	target.custom_pain("The pain in your chest is living hell!",1)

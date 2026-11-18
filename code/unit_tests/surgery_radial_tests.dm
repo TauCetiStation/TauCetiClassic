@@ -84,6 +84,9 @@
 	SSticker.is_lowpop = TRUE
 	var/result = do_surgery(target, user, tool, from_radial = TRUE, forced_zone = BP_CHEST, selected_step = low_step)
 	SSticker.is_lowpop = old_lowpop
+	world.log << result
+	world.log << low_step.executions //may be 1 but 0
+	world.log << high_step.executions
 
 	if(!result || low_step.executions != 1 || high_step.executions)
 		fail("Selected low-priority step did not execute exclusively.")
@@ -158,9 +161,8 @@
 	if(target_zone == BP_CHEST)
 		BP.open = BP_RIBCAGE_OS
 	else if(target_zone == BP_GROIN)
-		BP.open = 1
+		BP.open = BP_SCALPEL_OS
 
-	step.vars["warning_calls"] = 0
 	if(step.can_use(user, target, target_zone, null, TRUE) || step.vars["warning_calls"])
 		qdel(user)
 		qdel(target)

@@ -65,7 +65,7 @@
 	return TRUE
 
 // checks whether this step can be applied with the given user and target
-/datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
+/datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I, silent = FALSE)
 	if(!ishuman(target))
 		return FALSE
 	var/obj/item/organ/external/bodypart = target.get_bodypart(target_zone)
