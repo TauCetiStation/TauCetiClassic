@@ -234,9 +234,3 @@
 					ae.detach()
 				remove_from_cavity(user, surgery_victim, choosen_object, bodypart, I)
 	playsound(surgery_victim, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
-
-#undef TISSUE_ACTION
-#undef CLAMP_ACTION
-#undef PULL_FROM_ACTION
-#undef FACE_MENDING_ACTION
-#undef BONE_CHIPS_ACTION
