@@ -829,6 +829,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 	set hidden = 1
 	return facedir(SOUTH)
 
+/mob/proc/handle_mob_step()
+	return
+
 
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
