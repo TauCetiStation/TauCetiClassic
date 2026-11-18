@@ -163,14 +163,16 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 
 	var/turf/old_sprayloc = sprayloc
 
-	var/travel_x = round(sin(dir2angle(spraydir)) * BLOOD_SPRAY_DISTANCE * 32)
-	var/travel_y = round(cos(dir2angle(spraydir)) * BLOOD_SPRAY_DISTANCE * 32)
+	var/turf/target = get_ranged_target_turf(sprayloc, spraydir, BLOOD_SPRAY_DISTANCE)
+
+	var/travel_x = (target.x - sprayloc.x) * 32
+	var/travel_y = (target.y - sprayloc.y) * 32
 
 	var/datum/dirt_cover/blood_datum = get_blood_datum()
 
 	var/obj/effect/abstract/particle_holder/Holder = new(src, /particles/blood_squirt, PARTICLE_FADEOUT|PARTICLE_FLICK|PARTICLE_NO_TRANSFORM)
 	Holder.modify_particles_value("color", blood_datum::color)
-	Holder.modify_particles_value("velocity", generator("vector", list(travel_x + 4, travel_y + 32 - 4), list(travel_x - 4, travel_y + 32 + 4), "UNIFORM_RAND"))
+	Holder.modify_particles_value("velocity", generator("vector", list(travel_x - 4, travel_y + 32), list(travel_x + 4, travel_y + 32), "UNIFORM_RAND"))
 
 	for(var/i = 1 to BLOOD_SPRAY_DISTANCE)
 		sprayloc = get_step(sprayloc, spraydir)
