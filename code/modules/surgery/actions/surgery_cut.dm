@@ -11,7 +11,7 @@
 	max_duration = 11 SECONDS
 
 /datum/surgery_step/cut/prepare_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/I)
-	if(head.ps_status == target_zone == O_MOUTH && ishuman(target) && !ismachine(target) || head.ps_status == BP_RETRACT_OS)
+	if(target_zone == O_MOUTH && ishuman(target) && !ismachine(target))
 	//plastic surgery
 		var/mob/living/carbon/human/surgery_victim = target
 		var/obj/item/organ/external/head/head = surgery_victim.get_bodypart(target_zone)
@@ -76,7 +76,7 @@
 				self_msg = "<span class='notice'>You start poking around inside the [surgery_victim]'s [bodypart.name] with \the [I].</span>"
 				user.visible_message(msg, self_msg)
 				return TRUE
-			if(CUT_SCREW)
+			if(bodypart.open == BP_DEFAULT_OS || (bodypart.controller.bodypart_type == BODYPART_ROBOTIC && bodypart.open == BP_SCALPEL_OS))
 			// Cut|Screw Default|Limb cut replace stump to health part
 				var/datum/reagents/R = surgery_victim.reagents
 				if(!R.has_reagent("metatrombine") || I.damtype != BURN || !surgery_victim.species.flags[TRAIT_NO_BLOOD])
@@ -116,7 +116,7 @@
 		if(O_EYES)
 		// Cut|Screw Eyes
 			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-			if()
+			if(eyes.status & ORGAN_ROBOT)
 				msg = "<span class='notice'>[user] are finish to [eyes.surgery_stage == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [eyes.name] panels with \the [I]].</span>"
 				self_msg = "<span class='notice'>You are finish to [eyes.surgery_stage == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [eyes.name] panels with \the [I]].</span>"
 			else
@@ -195,7 +195,7 @@
 							if(DIONA)
 								msg = "<span class='notice'>You finish to separating connections roots to [surgery_victim]'s nymph with \the [I].</span>"
 								self_msg = "<span class='notice'>You finish to separating connections roots to [surgery_victim]'s nymph with \the [I].</span>"
-							if(MACHINE)
+							if(IPC)
 								msg = "<span class='notice'>You finish to detach wires on [surgery_victim]'s [bodypart.name] connected to positron brain unit with \the [I].</span>"
 								self_msg = "<span class='notice'>You finish to detach wires on [surgery_victim]'s [bodypart.name] connected to positron brain unit with \the [I].</span>"
 							else // human, skrell, tajaran, unathi, vox, etc
@@ -207,7 +207,7 @@
 					IO.loc = get_turf(surgery_victim)
 					bodypart.bodypart_organs  -= IO
 					playsound(surgery_victim, 'sound/effects/squelch1.ogg', VOL_EFFECTS_MASTER)
-			if(CUT_SCREW)
+			if(bodypart.open == BP_DEFAULT_OS || (bodypart.controller.bodypart_type == BODYPART_ROBOTIC && bodypart.open == BP_SCALPEL_OS))
 			// Cut|Screw Default
 				if(bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
 					msg = "<span class='notice'>[user] finish to [isstump(bodypart) ? "reposition wires where [surgery_victim]'s [bodypart] used to be with \the [I]" : "[bodypart.open == BP_DEFAULT_OS ? "un" : null]screw [surgery_victim]'s [bodypart.name]'s maintenance hatch with \the [I]"].</span>"
