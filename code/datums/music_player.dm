@@ -64,6 +64,8 @@ var/global/datum/notes_storage/note_cache_storage = new
 	var/repeat    = 0
 	var/volume    = DEFAULT_VOLUME
 
+	var/obj/effect/abstract/particle_holder/Particle
+
 /datum/music_player/New(instrument, sound_path)
 	..()
 	src.instrument = instrument
@@ -223,6 +225,9 @@ var/global/datum/notes_storage/note_cache_storage = new
 		usr.unset_machine(instrument)
 
 /datum/music_player/proc/playsong(mob/living/musician)
+	var/is_in_user = (musician ? (get_turf(instrument) == get_turf(musician)) : FALSE)
+	Particle = new /obj/effect/abstract/particle_holder(is_in_user ? musician : instrument, /particles/tool/signal/music, PARTICLE_FADEOUT)
+
 	do
 		var/cur_oct[7]
 		var/cur_acc[7]
@@ -248,6 +253,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 					if(!playing || instrument.unable_to_play(musician))
 						playing = FALSE
 						SEND_SIGNAL(instrument, COMSIG_INSTRUMENT_END, FALSE)
+						Particle.delete_particle()
 						return
 
 					if(length(note) == 0)
@@ -293,6 +299,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 	repeat = 0
 	playing = FALSE
 	SEND_SIGNAL(instrument, COMSIG_INSTRUMENT_END, TRUE)
+	Particle.delete_particle()
 	interact(musician)
 
 /datum/music_player/proc/parse_song_text(song_text)

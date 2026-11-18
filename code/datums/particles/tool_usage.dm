@@ -128,3 +128,14 @@
 
 /particles/tool/digging/glass/phoron
 	icon_state = list("phoronglass1", "phoronglass2", "phoronglass3")
+
+/particles/tool/signal/music
+	icon = 'icons/effects/particles/music.dmi'
+	icon_state = list("1", "2", "3", "4")
+
+	fade = 3
+	lifespan = 7
+
+	color = generator("color", "#ff0000", "#0080ee", UNIFORM_RAND)
+
+	position = generator("box", list(-4, -4, 0), list(4, 4, 0))
