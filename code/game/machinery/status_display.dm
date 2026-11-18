@@ -5,6 +5,9 @@
 #define SCROLL_SPEED 2
 #define LINE_HEIGHT 0.75
 
+#define AD_LENGTH 100
+#define AD_DELAY 60
+
 // Status display
 // (formerly Countdown timer display)
 
@@ -45,6 +48,8 @@
 	maptext_width = 32
 	maptext_y = 3
 
+	var/ad_item_name
+
 	// new display
 	// register for radio system
 
@@ -53,6 +58,8 @@
 	status_display_list += src
 	radio_controller.add_object(src, frequency)
 	update()
+
+	addtimer(CALLBACK(src, PROC_REF(show_ad_1)), rand(1, AD_DELAY) * AD_LENGTH)
 
 
 /obj/machinery/status_display/Destroy()
@@ -77,7 +84,7 @@
 // set what is displayed
 
 /obj/machinery/status_display/proc/update()
-	if(friendc && mode != 4)	//Makes all status displays except supply shuttle timer display the eye -- Urist
+	if(friendc && mode != 4 && mode != 7)	//Makes all status displays except supply shuttle timer display the eye -- Urist
 		set_picture("ai_friend")
 		return
 
@@ -144,13 +151,49 @@
 			var/line1 = "Ticket:"
 			var/line2 = "-[queue_number]-"
 			update_display(line1, line2)
+		if(7)
+			return
 
 /obj/machinery/status_display/examine(mob/user)
 	..()
 	switch(mode)
 		if(1,2,4)
 			to_chat(user, "The display says:<br>&emsp;<xmp>[message1]</xmp><br>&emsp;<xmp>[message2]</xmp>")
+		if(7)
+			to_chat(user, "Успейте купить [ad_item_name] в магазине <a href='byond://?src=\ref[src];pda_onlineshop=1;referrer_account=[null]'>'[CARGOSHOPNAME]' в КПК</a>!")
 
+/obj/machinery/status_display/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+
+	if(href_list["pda_onlineshop"])
+		if(mode != 7)
+			return
+
+		if(!usr)
+			return
+
+		if(issilicon(usr))
+			return
+
+		if(isobserver(usr))
+			return
+
+		if(usr.incapacitated())
+			return
+
+		if(!Adjacent(usr))
+			return
+
+		if(!usr.client)
+			return
+
+		var/obj/item/device/pda/PDA = locate() in usr
+		if(!PDA)
+			return
+
+		PDA.open_shop_page(usr)
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
 	if(m1)
@@ -241,6 +284,88 @@
 	// new /obj/item/wallframe/status_display(loc) // TODO add?
 	..()
 
+/obj/effect/ad_part
+	name = "item ad"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+
+	var/atom/owner
+
+/obj/effect/ad_part/atom_init(mapload, atom/status_display)
+	. = ..()
+
+	owner = status_display
+	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_qdel))
+
+/obj/effect/ad_part/proc/on_parent_qdel()
+	qdel(src)
+
+/obj/effect/ad_part/Destroy()
+	UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
+	owner = null
+	return ..()
+
+
+/obj/machinery/status_display/proc/show_ad_1(ads_in_a_row = 1)
+	if(!global.online_shop_ads || !check_active_cargonauts())
+		addtimer(CALLBACK(src, PROC_REF(show_ad_1)), AD_DELAY * AD_LENGTH)
+		return
+
+	if(ads_in_a_row < 5) //Show 5 ads in a row
+		addtimer(CALLBACK(src, PROC_REF(show_ad_1), ads_in_a_row + 1), AD_LENGTH)
+	else
+		addtimer(CALLBACK(src, PROC_REF(show_ad_1)), AD_DELAY * AD_LENGTH)
+
+	var/datum/shop_lot/lot = SScargoshop.get_advertisement_lot()
+	if(!lot)
+		return
+
+	ad_item_name = lot.name
+
+	VARSET_IN(src, mode, mode, AD_LENGTH - 1)
+	mode = 7
+
+	var/obj/effect/ad_part/ad_part = new(get_turf(src), src)
+	ad_part.icon = 'icons/obj/status_display.dmi'
+	ad_part.icon_state = "outline"
+	ad_part.layer = layer
+	ad_part.pixel_x = pixel_x
+	ad_part.pixel_y = pixel_y
+
+	ad_part.maptext_y = 8
+	ad_part.maptext_x = -2
+	flick("ad", ad_part)
+	addtimer(CALLBACK(src, PROC_REF(show_ad_2), ad_part), 26)
+	QDEL_IN(ad_part, AD_LENGTH)
+
+/obj/machinery/status_display/proc/show_ad_2(obj/effect/ad_part/background_part)
+	var/datum/shop_lot/lot = SScargoshop.get_advertisement_lot()
+	if(!lot)
+		qdel(background_part)
+		return
+
+	ad_item_name = lot.name
+
+	var/atom/L = locate(lot.lot_item_ref)
+	var/atom/A = L.contents[1]
+
+	var/price = lot.get_discounted_price() + lot.get_delivery_cost()
+	price = sanitize("[price]", max_length = 5, trim = TRUE)
+	price = {"<div style="font-size:[FONT_SIZE];color:#ebebeb;line-height:[LINE_HEIGHT];font-family:'[FONT_STYLE]';text-align:right;" valign="bottom"> [price]$</div>"}
+	background_part.maptext = price
+	VARSET_IN(background_part, maptext, "", 60)
+
+	var/obj/effect/ad_part/ad_part = new(get_turf(src), src)
+	ad_part.icon = A.icon
+	ad_part.icon_state = A.icon_state
+	ad_part.layer = layer + 0.01
+
+	ad_part.pixel_x = pixel_x
+	ad_part.pixel_y = pixel_y + 32
+	animate(ad_part, pixel_y = pixel_y + 4, time = 5, flags = ANIMATION_PARALLEL)
+	ad_part.add_filter("monitor", 1, alpha_mask_filter(y = -32, icon = icon('icons/obj/status_display.dmi', "ad_item_mask")))
+	animate(ad_part.filters[1], y = -4, time = 5, flags = ANIMATION_PARALLEL)
+	QDEL_IN(ad_part, 60)
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
