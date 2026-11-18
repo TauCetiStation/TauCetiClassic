@@ -77,7 +77,7 @@
 		if(O_EYES)
 		// Cut|Screw Eyes
 			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
-			if(EYES_SURGERY)
+			if(!(eyes.status & ORGAN_ROBOT) && eyes.surgery_stage == BP_SCALPEL_OS)
 				msg = "<span class='notice'>[user] are beginning to [SIMPLE_EYES_ACTION].</span>"
 				self_msg = "<span class='notice'>You are starting to [SIMPLE_EYES_ACTION].</span>"
 				user.visible_message(msg, self_msg)
@@ -85,7 +85,7 @@
 		if(O_MOUTH)
 		// Cut|Screw Face
 			var/obj/item/organ/external/head/head = bodypart
-			if(MOUTH_SURGERY)
+			if(!(bodypart.controller.bodypart_type == BODYPART_ROBOTIC) && head.ps_status >= BP_SCALPEL_OS)
 			//start operate face|plastic surgery
 				msg = "<span class='notice'>[user] begin to [SIMPLE_MOUTH_ACTION].</span>"
 				self_msg = "<span class='notice'>You start to [SIMPLE_MOUTH_ACTION].</span>"

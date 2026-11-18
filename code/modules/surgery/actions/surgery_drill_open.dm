@@ -1,9 +1,3 @@
-//Procedures in this file: Putting items in body cavity. Implant removal. Items removal.
-
-//////////////////////////////////////////////////////////////////
-//					ITEM PLACEMENT SURGERY						//
-//////////////////////////////////////////////////////////////////
-
 /datum/surgery_step/surgery_drill
 	name = "Check cavity in target"
 	name = "Drill"

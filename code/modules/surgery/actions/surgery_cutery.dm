@@ -1,6 +1,3 @@
-#define CUTERIZE_SURGERY (bodypart.open > BP_DEFAULT_OS && bodypart.controller.bodypart_type != BODYPART_ROBOTIC)
-#define CUTERIZE_ACTION  "cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [tool]."
-
 /datum/surgery_step/cutery
 	name = "Cauterize"
 	allowed_qualities = list(
@@ -19,29 +16,29 @@
 		if(O_MOUTH)
 			var/obj/item/organ/external/head/head = bodypart
 			if(head.ps_status > BP_DEFAULT_OS)
-				msg = "<span class='notice'>[user] begin to [CUTERIZE_ACTION].</span>"
-				self_msg = "<span class='notice'>You start to [CUTERIZE_ACTION].</span>"
+				msg = "<span class='notice'>[user] begin to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [tool]..</span>"
+				self_msg = "<span class='notice'>You start to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [tool]..</span>"
 				user.visible_message(msg, self_msg)
 				return TRUE
 		if(O_EYES)
 			var/obj/item/organ/internal/eyes/eyes = bodypart.bodypart_organs[O_EYES]
 			if(eyes.surgery_stage > BP_DEFAULT_OS)
-				msg = "<span class='notice'>[user] begin to [CUTERIZE_ACTION].</span>"
-				self_msg = "<span class='notice'>You start to [CUTERIZE_ACTION].</span>"
+				msg = "<span class='notice'>[user] begin to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [tool]..</span>"
+				self_msg = "<span class='notice'>You start to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [tool]..</span>"
 				user.visible_message(msg, self_msg)
 				return TRUE
 		else
-			if(CUTERIZE_SURGERY)
-				msg = "<span class='notice'>[user] begin to [CUTERIZE_ACTION].</span>"
-				self_msg = "<span class='notice'>You start to [CUTERIZE_ACTION].</span>"
+			if(bodypart.open > BP_DEFAULT_OS && bodypart.controller.bodypart_type != BODYPART_ROBOTIC)
+				msg = "<span class='notice'>[user] begin to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [tool]..</span>"
+				self_msg = "<span class='notice'>You start to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [tool]..</span>"
 				user.visible_message(msg, self_msg)
 				return TRUE
 	return FALSE
 
 /datum/surgery_step/cutery/end_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
-	msg = "<span class='notice'>[user] finish to [CUTERIZE_ACTION].</span>"
-	self_msg = "<span class='notice'>You finish to [CUTERIZE_ACTION].</span>"
+	msg = "<span class='notice'>[user] finish to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [tool]..</span>"
+	self_msg = "<span class='notice'>You finish to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [tool]..</span>"
 	cp_msg = "Your [bodypart.name] is begin burned!"
 
 	switch(target_zone)

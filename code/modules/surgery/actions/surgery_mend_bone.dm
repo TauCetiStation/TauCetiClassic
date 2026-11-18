@@ -1,10 +1,3 @@
-#define BONE_GEL_SURGERY ((bodypart.stage & BONESET_STAGE || !(bodypart.stage & BONEGEL_STAGE)) && bodypart.open >= BP_RETRACT_OS)
-#define BONE_GEL_ACTION  "[bodypart.stage & BONESET_STAGE ? "mending" : "applying medication"] to the damaged bones in [surgery_victim]'s [bodypart.name] with \the [I] "
-
-#define MEND_IPC_EYES_SURGERY (target_zone == O_EYES && bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
-#define MEND_IPC_FACE_SURGERY (target_zone == O_MOUTH && bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
-#define MEND_IPC_FACE_ACTION  "repair [surgery_victim]'s screen with \the [I]"
-
 /datum/surgery_step/mend_bones
 	name = "Glue bone"
 	allowed_qualities = list(
@@ -20,7 +13,7 @@
 	if(!..())
 		return FALSE
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
-	if(MEND_IPC_EYES_SURGERY)
+	if(target_zone == O_EYES && bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
 		var/obj/item/organ/internal/eyes/eyes = bodypart.bodypart_organs[O_EYES]
 		if(!eyes)
 			return FALSE
@@ -29,34 +22,34 @@
 			self_msg = "<span class='notice'>You start to mending the nerves and lenses in [surgery_victim]'s eyes with \the [I].</span>"
 			user.visible_message(msg, self_msg)
 			return TRUE
-	if(MEND_IPC_FACE_SURGERY)
+	if(target_zone == O_MOUTH && bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
 		var/obj/item/organ/external/head/head = bodypart
 		if(head.ps_status == BP_RETRACT_OS)
-			msg = "<span class='notice'>[user] begin to [MEND_IPC_FACE_ACTION].</span>"
-			self_msg = "<span class='notice'>You start to [MEND_IPC_FACE_ACTION].</span>"
+			msg = "<span class='notice'>[user] begin to repair [surgery_victim]'s screen with \the [I].</span>"
+			self_msg = "<span class='notice'>You start to repair [surgery_victim]'s screen with \the [I].</span>"
 			user.visible_message(msg, self_msg)
 			return TRUE
 
-	if(BONE_GEL_SURGERY)
-		msg = "<span class='notice'>[user] beging to [BONE_GEL_ACTION].</span>"
-		self_msg = "<span class='notice'>You start to [BONE_GEL_ACTION].</span>"
+	if((bodypart.stage & BONESET_STAGE || !(bodypart.stage & BONEGEL_STAGE)) && bodypart.open >= BP_RETRACT_OS)
+		msg = "<span class='notice'>[user] beging to [bodypart.stage & BONESET_STAGE ? "mending" : "applying medication"] to the damaged bones in [surgery_victim]'s [bodypart.name] with \the [I].</span>"
+		self_msg = "<span class='notice'>You start to [bodypart.stage & BONESET_STAGE ? "mending" : "applying medication"] to the damaged bones in [surgery_victim]'s [bodypart.name] with \the [I].</span>"
 		user.visible_message(msg, self_msg)
 		return TRUE
 
 /datum/surgery_step/mend_bones/end_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/I)
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
 
-	if(MEND_IPC_EYES_SURGERY)
+	if(target_zone == O_EYES && bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
 		fix_eyes()
-	if(MEND_IPC_FACE_SURGERY)
+	if(target_zone == O_MOUTH && bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
 		var/obj/item/organ/external/head/head = bodypart
 		head.disfigured = FALSE
-		msg = "<span class='notice'>[user] finish to [MEND_IPC_FACE_ACTION].</span>"
-		self_msg = "<span class='notice'>You finish to [MEND_IPC_FACE_ACTION].</span>"
+		msg = "<span class='notice'>[user] finish to repair [surgery_victim]'s screen with \the [I].</span>"
+		self_msg = "<span class='notice'>You finish to repair [surgery_victim]'s screen with \the [I].</span>"
 		user.visible_message(msg, self_msg)
-	else if(BONE_GEL_SURGERY)
-		msg = "<span class='notice'>[user] finish to [BONE_GEL_ACTION].</span>"
-		self_msg = "<span class='notice'>You finish to [BONE_GEL_ACTION].</span>"
+	else if((bodypart.stage & BONESET_STAGE || !(bodypart.stage & BONEGEL_STAGE)) && bodypart.open >= BP_RETRACT_OS)
+		msg = "<span class='notice'>[user] finish to [bodypart.stage & BONESET_STAGE ? "mending" : "applying medication"] to the damaged bones in [surgery_victim]'s [bodypart.name] with \the [I].</span>"
+		self_msg = "<span class='notice'>You finish to [bodypart.stage & BONESET_STAGE ? "mending" : "applying medication"] to the damaged bones in [surgery_victim]'s [bodypart.name] with \the [I].</span>"
 		user.visible_message(msg, self_msg)
 		if(bodypart.stage & BONESET_STAGE)
 			bodypart.status &= ~(ORGAN_BROKEN | ORGAN_SPLINTED)
