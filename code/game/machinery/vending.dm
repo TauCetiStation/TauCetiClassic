@@ -69,6 +69,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	var/load = 0
 	var/max_load = 0
 
+	hidden_cache = /obj/item/weapon/storage/hidden_cache/vending
+
 	var/seller_account_number = MAP_VENDOR_ACCOUNT_NUMBER_PLACEHOLDER
 
 
@@ -729,6 +731,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		unstable_product = null
 	updateUsrDialog()
 	update_unstable_product()
+
+	if(hidden_cache && !ispath(hidden_cache))
+		hidden_cache.spill()
 	return new VP.product_path(src.loc)
 
 /obj/machinery/vending/proc/update_unstable_product()
