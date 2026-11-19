@@ -211,6 +211,7 @@
 	/obj/item/clothing/mask/breath/gas/swat = 3,
 	/obj/item/borg/upgrade/syndicate = 5,
 	/obj/item/weapon/grenade/syndieminibomb = 3,
+	/obj/item/weapon/grenade/frag = 5,
 	/obj/item/weapon/grenade/chem_grenade/acid = 3,
 	/obj/item/weapon/grenade/clusterbuster/soap = 3,
 	/obj/item/weapon/implanter/freedom = 5,

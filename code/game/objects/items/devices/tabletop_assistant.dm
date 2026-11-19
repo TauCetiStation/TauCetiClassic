@@ -42,6 +42,8 @@
 	. = ..()
 	update_icon()
 
+	AddComponent(/datum/component/wrench_to_table)
+
 /obj/item/device/tabletop_assistant/update_icon()
 	var/icon_temp = initial(icon_state)
 	switch(mode)

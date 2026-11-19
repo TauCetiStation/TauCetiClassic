@@ -9,6 +9,8 @@
 /obj/item/pen_holder/atom_init(mapload)
 	. = ..()
 
+	AddComponent(/datum/component/wrench_to_table)
+
 	if(mapload)
 		var/turf/T = get_turf(src)
 		var/obj/item/weapon/pen/Pen = locate() in T.contents
@@ -56,6 +58,8 @@
 
 /obj/item/pens_bin/atom_init(mapload)
 	. = ..()
+
+	AddComponent(/datum/component/wrench_to_table)
 
 	if(mapload)
 		var/turf/T = get_turf(src)
@@ -111,6 +115,11 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "globe_mars"
 
+/obj/item/globe/atom_init()
+	. = ..()
+
+	AddComponent(/datum/component/wrench_to_table)
+
 /obj/item/globe/venus
 	name = "venus globe"
 	cases = list("глобус Венеры", "глобуса Венеры", "глобусу Венеры", "глобус Венеры", "глобусом Венеры", "глобусе Венеры")
@@ -159,6 +168,11 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "newtons_pendulum"
 
+/obj/item/newtons_pendulum/atom_init()
+	. = ..()
+
+	AddComponent(/datum/component/wrench_to_table)
+
 /obj/item/tableclock
 	name = "table clock"
 	desc = "Точное время в любое время."
@@ -170,6 +184,7 @@
 
 /obj/item/tableclock/atom_init()
 	. = ..()
+	AddComponent(/datum/component/wrench_to_table)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/tableclock/process()
@@ -193,6 +208,8 @@
 
 /obj/item/woodenclock/atom_init()
 	. = ..()
+
+	AddComponent(/datum/component/wrench_to_table)
 
 	hours_hand = image('icons/obj/stationobjs.dmi', "clock_h_0")
 	hours_hand.pixel_y = -7
@@ -348,6 +365,8 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 
 /obj/item/bust/atom_init(mapload)
 	. = ..()
+
+	AddComponent(/datum/component/wrench_to_table)
 	var/bust_number = rand(1, 3)
 	icon_state = "bust_[bust_number]"
 	switch(bust_number)
@@ -372,6 +391,8 @@ ADD_TO_GLOBAL_LIST(/obj/item/portrait/captain, station_head_portraits)
 
 /obj/item/jar/atom_init(mapload)
 	. = ..()
+
+	AddComponent(/datum/component/wrench_to_table)
 
 	if(spawn_paths)
 		for(var/i in 1 to rand(7, itemsMax))
