@@ -703,7 +703,7 @@
 	},
 /area/space_structures/abandoned_ship)
 "bU" = (
-/obj/machinery/suit_storage_unit/syndicate_unit{
+/obj/machinery/storage_unit/suit_storage/syndicate_unit{
 	filled = 1
 	},
 /turf/simulated/floor{

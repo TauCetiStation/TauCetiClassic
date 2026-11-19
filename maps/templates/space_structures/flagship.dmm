@@ -1134,7 +1134,7 @@
 	},
 /area/space_structures/flagship)
 "Wv" = (
-/obj/machinery/suit_storage_unit/globose{
+/obj/machinery/storage_unit/suit_storage/globose{
 	filled = 1
 	},
 /turf/simulated/floor{

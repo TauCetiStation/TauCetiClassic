@@ -2316,7 +2316,7 @@
 	name = "AI Satellite Antechamber";
 	pixel_x = -28
 	},
-/obj/machinery/suit_storage_unit/nasa{
+/obj/machinery/storage_unit/suit_storage/nasa{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -3261,7 +3261,7 @@
 	dir = 5;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/science{
+/obj/machinery/storage_unit/suit_storage/science{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -4049,7 +4049,7 @@
 	},
 /area/station/hallway/secondary/arrival)
 "ahv" = (
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
+/obj/machinery/storage_unit/suit_storage/globose/science/xenoarchaeologist{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -9321,7 +9321,7 @@
 	dir = 8;
 	pixel_x = 21
 	},
-/obj/machinery/suit_storage_unit/globose/mining{
+/obj/machinery/storage_unit/suit_storage/globose/mining{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -9359,7 +9359,7 @@
 	name = "Station Intercom (General)";
 	pixel_x = 22
 	},
-/obj/machinery/suit_storage_unit/globose/mining{
+/obj/machinery/storage_unit/suit_storage/globose/mining{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -13006,7 +13006,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
 "dss" = (
-/obj/machinery/suit_storage_unit/medical/cmo{
+/obj/machinery/storage_unit/suit_storage/medical/cmo{
 	filled = 1;
 	pixel_y = 2
 	},
@@ -13149,7 +13149,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "dws" = (
-/obj/machinery/suit_storage_unit/medical{
+/obj/machinery/storage_unit/suit_storage/medical{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -13255,7 +13255,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/engine/atmos{
+/obj/machinery/storage_unit/suit_storage/engine/atmos{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -20783,7 +20783,7 @@
 	pixel_x = 4;
 	pixel_y = -28
 	},
-/obj/machinery/suit_storage_unit/engine/chief{
+/obj/machinery/storage_unit/suit_storage/engine/chief{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -24119,7 +24119,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/suit_storage_unit/wizard{
+/obj/machinery/storage_unit/suit_storage/wizard{
 	filled = 1
 	},
 /turf/simulated/floor/plating,
@@ -24343,7 +24343,7 @@
 	},
 /area/station/hallway/primary/central)
 "nPD" = (
-/obj/machinery/suit_storage_unit/security{
+/obj/machinery/storage_unit/suit_storage/security{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -25892,7 +25892,7 @@
 /turf/environment/space,
 /area/shuttle/supply/station)
 "pjl" = (
-/obj/machinery/suit_storage_unit/science/rd{
+/obj/machinery/storage_unit/suit_storage/science/rd{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -27671,7 +27671,7 @@
 	pixel_x = 28;
 	pixel_y = 5
 	},
-/obj/machinery/suit_storage_unit/captain{
+/obj/machinery/storage_unit/suit_storage/captain{
 	filled = 1
 	},
 /turf/simulated/floor/wood,
@@ -33337,7 +33337,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/engine{
+/obj/machinery/storage_unit/suit_storage/engine{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -34602,7 +34602,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_x = 32
 	},
-/obj/machinery/suit_storage_unit/security/hos{
+/obj/machinery/storage_unit/suit_storage/security/hos{
 	filled = 1
 	},
 /turf/simulated/floor{

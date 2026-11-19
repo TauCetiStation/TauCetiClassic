@@ -8198,7 +8198,7 @@
 	dir = 5;
 	network = list("SS13","Research")
 	},
-/obj/machinery/suit_storage_unit/science/rd{
+/obj/machinery/storage_unit/suit_storage/science/rd{
 	filled = 1
 	},
 /turf/simulated/floor/carpet/purple,
@@ -13741,7 +13741,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/machinery/suit_storage_unit/medical/paramedic{
+/obj/machinery/storage_unit/suit_storage/medical/paramedic{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -14606,7 +14606,7 @@
 	},
 /area/station/maintenance/science)
 "cjA" = (
-/obj/machinery/suit_storage_unit/security{
+/obj/machinery/storage_unit/suit_storage/security{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -17221,7 +17221,7 @@
 	},
 /area/station/civilian/garden)
 "cHW" = (
-/obj/machinery/suit_storage_unit/medical/paramedic{
+/obj/machinery/storage_unit/suit_storage/medical/paramedic{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -17775,7 +17775,7 @@
 	name = "RnD right APC";
 	pixel_x = 27
 	},
-/obj/machinery/suit_storage_unit/globose/science{
+/obj/machinery/storage_unit/suit_storage/globose/science{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -20803,7 +20803,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/globose/skrell/black{
+/obj/machinery/storage_unit/suit_storage/globose/skrell/black{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -21839,7 +21839,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "dBS" = (
-/obj/machinery/suit_storage_unit/medical{
+/obj/machinery/storage_unit/suit_storage/medical{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -36114,7 +36114,7 @@
 /area/station/maintenance/brigright)
 "gqz" = (
 /obj/structure/window/thin/reinforced,
-/obj/machinery/suit_storage_unit/engine{
+/obj/machinery/storage_unit/suit_storage/engine{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -45936,7 +45936,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/science{
+/obj/machinery/storage_unit/suit_storage/science{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -54589,7 +54589,7 @@
 	},
 /area/station/rnd/chargebay)
 "jTu" = (
-/obj/machinery/suit_storage_unit/engine/chief{
+/obj/machinery/storage_unit/suit_storage/engine/chief{
 	filled = 1
 	},
 /turf/simulated/floor/carpet/orange,
@@ -55951,7 +55951,7 @@
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
 "khz" = (
-/obj/machinery/suit_storage_unit/engine{
+/obj/machinery/storage_unit/suit_storage/engine{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -59978,7 +59978,7 @@
 	pixel_x = -28;
 	pixel_y = -6
 	},
-/obj/machinery/suit_storage_unit/medical/cmo{
+/obj/machinery/storage_unit/suit_storage/medical/cmo{
 	filled = 1
 	},
 /turf/simulated/floor/wood{
@@ -60451,7 +60451,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/globose/skrell/white{
+/obj/machinery/storage_unit/suit_storage/globose/skrell/white{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -63341,7 +63341,7 @@
 	pixel_x = 29;
 	pixel_y = -6
 	},
-/obj/machinery/suit_storage_unit/security/hos{
+/obj/machinery/storage_unit/suit_storage/security/hos{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -65365,7 +65365,7 @@
 	},
 /area/station/cargo/office)
 "mbx" = (
-/obj/machinery/suit_storage_unit/captain{
+/obj/machinery/storage_unit/suit_storage/captain{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -70467,7 +70467,7 @@
 	},
 /area/station/rnd/mixing)
 "nde" = (
-/obj/machinery/suit_storage_unit/engine/atmos{
+/obj/machinery/storage_unit/suit_storage/engine/atmos{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -85230,7 +85230,7 @@
 /turf/simulated/floor,
 /area/station/rnd/misc_lab)
 "qaQ" = (
-/obj/machinery/suit_storage_unit/engine/atmos{
+/obj/machinery/storage_unit/suit_storage/engine/atmos{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -91447,7 +91447,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/unathi{
+/obj/machinery/storage_unit/suit_storage/unathi{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -112161,7 +112161,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "vkV" = (
-/obj/machinery/suit_storage_unit/engine{
+/obj/machinery/storage_unit/suit_storage/engine{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -114165,7 +114165,7 @@
 	},
 /area/station/hallway/primary/bridgehall)
 "vHC" = (
-/obj/machinery/suit_storage_unit/nasa{
+/obj/machinery/storage_unit/suit_storage/nasa{
 	filled = 1;
 	pixel_y = 22
 	},
@@ -121291,7 +121291,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/security{
+/obj/machinery/storage_unit/suit_storage/security{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -125411,7 +125411,7 @@
 	name = "General Listening Channel";
 	pixel_x = -28
 	},
-/obj/machinery/suit_storage_unit/nasa{
+/obj/machinery/storage_unit/suit_storage/nasa{
 	filled = 1;
 	pixel_y = 22
 	},
