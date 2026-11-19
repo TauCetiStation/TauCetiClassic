@@ -26792,7 +26792,9 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/storage_unit/personal,
+/obj/machinery/storage_unit/personal{
+	filled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -33010,7 +33012,9 @@
 	},
 /area/station/medical/surgery2)
 "bfR" = (
-/obj/machinery/storage_unit/surgery,
+/obj/machinery/storage_unit/surgery{
+	filled = 1
+	},
 /turf/simulated/floor,
 /area/station/medical/surgery2)
 "bfS" = (
@@ -37492,7 +37496,9 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "bol" = (
-/obj/machinery/storage_unit/surgery,
+/obj/machinery/storage_unit/surgery{
+	filled = 1
+	},
 /turf/simulated/floor,
 /area/station/medical/surgery)
 "bom" = (
@@ -45325,7 +45331,9 @@
 	},
 /area/station/medical/patient_a)
 "bCf" = (
-/obj/machinery/storage_unit/personal/patient,
+/obj/machinery/storage_unit/personal/patient{
+	filled = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -46940,7 +46948,9 @@
 /obj/structure/fence/metal{
 	dir = 1
 	},
-/obj/machinery/storage_unit/personal,
+/obj/machinery/storage_unit/personal{
+	filled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -47660,7 +47670,9 @@
 	name = "Medbay left APC";
 	pixel_x = -27
 	},
-/obj/machinery/storage_unit/personal/patient,
+/obj/machinery/storage_unit/personal/patient{
+	filled = 1
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -51037,7 +51049,9 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "bMm" = (
-/obj/machinery/storage_unit/personal/patient,
+/obj/machinery/storage_unit/personal/patient{
+	filled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -51983,7 +51997,9 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/obj/machinery/storage_unit/personal/patient,
+/obj/machinery/storage_unit/personal/patient{
+	filled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -85985,7 +86001,9 @@
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
 "sFb" = (
-/obj/structure/closet/secure_closet/personal/patient,
+/obj/machinery/storage_unit/personal/patient{
+	filled = 1
+	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},

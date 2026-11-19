@@ -736,7 +736,7 @@
 	dir = 9;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/syndicate_unit/elite/comander{
+/obj/machinery/storage_unit/suit_storage/syndicate_unit/elite/comander{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -7662,7 +7662,7 @@
 	},
 /area/space_structures/carp_space)
 "Tt" = (
-/obj/machinery/suit_storage_unit/engine{
+/obj/machinery/storage_unit/suit_storage/engine{
 	filled = 1
 	},
 /turf/simulated/floor{

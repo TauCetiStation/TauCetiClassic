@@ -190,12 +190,9 @@
 		target.decontaminate()
 
 /obj/machinery/storage_unit/suit_storage/proc/super_ultra_violet_cleaning()
-	for(var/slot_name in contents_by_slot)
-		if(!contents_by_slot[slot_name])
-			continue
-
-		var/obj/item/target = contents_by_slot[slot_name]
+	for(var/atom/target as anything in contents)
 		QDEL_NULL(target)
+	for(var/slot_name in contents_by_slot)
 		contents_by_slot[slot_name] = null
 
 	if(occupant)
