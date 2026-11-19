@@ -2,7 +2,7 @@
 	name = "fittingroom"
 	cases = list("раздевалка", "раздевалки", "раздевалке", "раздевалку", "раздевалкой", "раздевалке")
 	desc = "Переодевайся вдали от любопытных глаз."
-	icon = 'icons/obj/fittingroom.dmi'
+	icon = 'icons/obj/dressers/fittingroom.dmi'
 	icon_state = "mapicon"
 	density = FALSE
 	anchored = TRUE

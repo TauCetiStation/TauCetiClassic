@@ -103,6 +103,52 @@ var/global/list/undress_sequence = list(
 		SLOT_SHOES
 	)
 
+/proc/slot_flags_to_possible_slots_list(slot_flags)
+	var/list/possible_slots = list()
+	if(slot_flags & SLOT_FLAGS_MASK)
+		possible_slots += SLOT_WEAR_MASK
+
+	if(slot_flags & SLOT_FLAGS_NECK)
+		possible_slots += SLOT_NECK
+
+	if(slot_flags & SLOT_FLAGS_BACK)
+		possible_slots += SLOT_BACK
+
+	if(slot_flags & SLOT_FLAGS_OCLOTHING)
+		possible_slots += SLOT_WEAR_SUIT
+
+	if(slot_flags & SLOT_FLAGS_GLOVES)
+		possible_slots += SLOT_GLOVES
+
+	if(slot_flags & SLOT_FLAGS_FEET)
+		possible_slots += SLOT_SHOES
+
+	if(slot_flags & SLOT_FLAGS_BELT)
+		possible_slots += SLOT_BELT
+
+	if(slot_flags & SLOT_FLAGS_EYES)
+		possible_slots += SLOT_GLASSES
+
+	if(slot_flags & SLOT_FLAGS_HEAD)
+		possible_slots += SLOT_HEAD
+
+	if(slot_flags & SLOT_FLAGS_TWOEARS || slot_flags & SLOT_FLAGS_EARS)
+		possible_slots += list(SLOT_L_EAR, SLOT_R_EAR)
+
+	if(slot_flags & SLOT_FLAGS_ICLOTHING)
+		possible_slots += SLOT_W_UNIFORM
+
+	if(slot_flags & SLOT_FLAGS_ID)
+		possible_slots += SLOT_WEAR_ID
+
+	if(slot_flags & SLOT_FLAGS_DENYPOCKET)
+		possible_slots += list(SLOT_L_STORE, SLOT_R_STORE)
+
+	if(slot_flags & SLOT_FLAGS_TIE)
+		possible_slots += SLOT_TIE
+
+	return possible_slots
+
 //puts the item "W" into an appropriate slot in a human's inventory
 //returns 0 if it cannot, 1 if successful
 /mob/proc/equip_to_appropriate_slot(obj/item/W, check_obscured = FALSE)

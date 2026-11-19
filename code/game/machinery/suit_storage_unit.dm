@@ -14,8 +14,8 @@
 /obj/machinery/suit_storage_unit
 	name = "Suit Storage Unit"
 	desc = "An industrial U-Stor-It Storage unit designed to accomodate all kinds of space suits. Its on-board equipment also allows the user to decontaminate the contents through a ultra_violet-ray purging cycle. There's a warning label dangling from the control pad, reading \"STRICTLY NO BIOLOGICALS IN THE CONFINES OF THE UNIT\"."
-	icon = 'icons/obj/suit_storage/civilian.dmi'
-	var/overlays_file = 'icons/obj/suit_storage/overlays.dmi'
+	icon = 'icons/obj/dressers/suit_storage.dmi'
+	var/overlays_file = 'icons/obj/dressers/suit_storage_overlays.dmi'
 	icon_state = "civilian"
 	damage_deflection = 25
 	idle_power_usage = 10
@@ -557,7 +557,6 @@
 	req_access = list(access_syndicate)
 	build_type =  SUIT_STORAGE_BUILD_NONE
 	icon_state = "syndicate"
-	icon = 'icons/obj/suit_storage/syndicate.dmi'
 
 //Abandoned
 /obj/machinery/suit_storage_unit/syndicate_unit/abandoned
@@ -631,7 +630,6 @@
 
 	req_access = list(access_research)
 	icon_state = "science"
-	icon = 'icons/obj/suit_storage/science.dmi'
 
 /obj/machinery/suit_storage_unit/science/rd
 	name = "Research Director Hardsuit Storage Unit"
@@ -640,7 +638,6 @@
 
 	req_access = list(access_rd)
 	icon_state = "RD"
-	icon = 'icons/obj/suit_storage/rd.dmi'
 
 //Engine
 /obj/machinery/suit_storage_unit/engine
@@ -650,7 +647,6 @@
 
 	req_access = list(access_engine)
 	icon_state = "engineer"
-	icon = 'icons/obj/suit_storage/engine.dmi'
 
 /obj/machinery/suit_storage_unit/engine/atmos
 	name = "Atmospheric Hardsuit Storage Unit"
@@ -659,7 +655,6 @@
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
 	icon_state = "atmos"
-	icon = 'icons/obj/suit_storage/atmos.dmi'
 
 /obj/machinery/suit_storage_unit/engine/chief
 	name = "Chief Engineer Hardsuit Storage Unit"
@@ -668,7 +663,6 @@
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
 	icon_state = "CE"
-	icon = 'icons/obj/suit_storage/chief.dmi'
 
 //Security
 /obj/machinery/suit_storage_unit/security
@@ -678,7 +672,6 @@
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 
 	icon_state = "security"
-	icon = 'icons/obj/suit_storage/security.dmi'
 
 /obj/machinery/suit_storage_unit/security/hos
 	name = "Head of Security Hardsuit Storage Unit"
@@ -686,7 +679,6 @@
 	suit_type = /obj/item/clothing/suit/space/rig/security/hos
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 	icon_state = "HOS"
-	icon = 'icons/obj/suit_storage/hos.dmi'
 
 //Medical
 /obj/machinery/suit_storage_unit/medical
@@ -696,7 +688,6 @@
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
 	icon_state = "med"
-	icon = 'icons/obj/suit_storage/medical.dmi'
 
 /obj/machinery/suit_storage_unit/medical/paramedic
 	name = "Paremedic Hardsuit Storage Unit"
@@ -711,7 +702,6 @@
 	mask_type = /obj/item/clothing/mask/gas/coloured
 
 	icon_state = "CMO"
-	icon = 'icons/obj/suit_storage/cmo.dmi'
 
 //Other
 /obj/machinery/suit_storage_unit/globose
@@ -740,7 +730,6 @@
 	tank_type = /obj/item/weapon/tank/oxygen
 
 	icon_state = "miner"
-	icon = 'icons/obj/suit_storage/mining.dmi'
 
 /obj/machinery/suit_storage_unit/globose/skrell
 	build_type =  SUIT_STORAGE_BUILD_NONE
@@ -767,7 +756,6 @@
 	tank_type = /obj/item/weapon/tank/oxygen
 
 	icon_state = "unathi"
-	icon = 'icons/obj/suit_storage/unathi.dmi'
 
 /obj/machinery/suit_storage_unit/unathi/breacher
 	name = "Breacher Unathi Suit Storage Unit"
@@ -787,7 +775,6 @@
 
 	req_access = list(access_captain)
 	icon_state = "captain"
-	icon = 'icons/obj/suit_storage/captain.dmi'
 
 /obj/machinery/suit_storage_unit/nasa
 	name = "NASA Suit Storage Unit"
@@ -800,7 +787,6 @@
 
 	req_access = list(access_minisat)
 	icon_state = "NASA"
-	icon = 'icons/obj/suit_storage/nasa.dmi'
 
 /obj/machinery/suit_storage_unit/wizard
 	build_type =  SUIT_STORAGE_BUILD_NONE
@@ -811,7 +797,6 @@
 	req_access = list(access_syndicate)
 
 	icon_state = "mage"
-	icon = 'icons/obj/suit_storage/wizard.dmi'
 
 /obj/machinery/suit_storage_unit/vox
 	build_type =  SUIT_STORAGE_BUILD_NONE

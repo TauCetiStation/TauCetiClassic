@@ -14026,7 +14026,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "axF" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/machinery/storage_unit/personal,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -14731,10 +14731,10 @@
 /turf/simulated/floor,
 /area/station/engineering/break_room)
 "ayZ" = (
-/obj/structure/closet/secure_closet/personal,
 /obj/machinery/light/smart{
 	dir = 4
 	},
+/obj/machinery/storage_unit/personal,
 /turf/simulated/floor{
 	icon_state = "wooden-2"
 	},
@@ -16063,8 +16063,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aBw" = (
-/obj/structure/stool/bed/chair/metal,
 /obj/effect/decal/cleanable/cobweb2,
+/obj/machinery/storage_unit/surgery,
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "aBx" = (
@@ -17502,7 +17502,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/personal,
+/obj/machinery/storage_unit/personal,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -18420,7 +18420,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/personal,
+/obj/machinery/storage_unit/personal,
 /turf/simulated/floor{
 	icon_state = "freezerfloor"
 	},
@@ -26769,17 +26769,17 @@
 	},
 /area/station/storage/primary)
 "aVs" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/machinery/storage_unit/personal,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "neutral"
 	},
 /area/station/civilian/playroom)
 "aVt" = (
-/obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
+/obj/machinery/storage_unit/personal,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -27726,7 +27726,7 @@
 	},
 /area/station/storage/primary)
 "aWR" = (
-/obj/structure/closet/secure_closet/personal,
+/obj/machinery/storage_unit/personal,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "neutral"
@@ -32962,7 +32962,7 @@
 	},
 /area/station/medical/surgery2)
 "bfR" = (
-/obj/machinery/suit_storage_unit/surgery,
+/obj/machinery/storage_unit/surgery,
 /turf/simulated/floor,
 /area/station/medical/surgery2)
 "bfS" = (
@@ -33000,7 +33000,6 @@
 /obj/machinery/light/smart{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/personal/patient,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "blue"
@@ -37442,7 +37441,7 @@
 /turf/simulated/floor/plating,
 /area/station/rnd/lab)
 "bol" = (
-/obj/machinery/suit_storage_unit/surgery,
+/obj/machinery/storage_unit/surgery,
 /turf/simulated/floor,
 /area/station/medical/surgery)
 "bom" = (
@@ -41001,9 +41000,6 @@
 	icon_state = "left";
 	name = "Cloning Cell";
 	req_access = list(5)
-	},
-/obj/machinery/suit_storage_unit/surgery{
-	filled = 0
 	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
@@ -45276,8 +45272,7 @@
 	},
 /area/station/medical/patient_a)
 "bCf" = (
-/obj/structure/closet/secure_closet/personal/patient,
-/obj/item/clothing/under/patient_gown,
+/obj/machinery/storage_unit/personal/patient,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -45491,7 +45486,8 @@
 	dir = 5
 	},
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -46901,13 +46897,13 @@
 	},
 /area/station/medical/medbreak)
 "bES" = (
-/obj/structure/closet/secure_closet/personal,
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
 /obj/structure/fence/metal{
 	dir = 1
 	},
+/obj/machinery/storage_unit/personal,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -47617,8 +47613,6 @@
 	},
 /area/station/medical/medbreak)
 "bGi" = (
-/obj/structure/closet/secure_closet/personal/patient,
-/obj/item/clothing/under/patient_gown,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -47629,6 +47623,7 @@
 	name = "Medbay left APC";
 	pixel_x = -27
 	},
+/obj/machinery/storage_unit/personal/patient,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whiteblue"
@@ -47730,7 +47725,6 @@
 	},
 /area/station/civilian/barbershop)
 "bGp" = (
-/obj/structure/disposalpipe/segment,
 /obj/effect/decal/turf_decal{
 	dir = 10;
 	icon_state = "warn"
@@ -47925,6 +47919,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
+/obj/structure/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "bGF" = (
@@ -49082,16 +49077,13 @@
 	},
 /area/station/medical/hallway)
 "bIE" = (
-/obj/machinery/disposal,
 /obj/structure/sign/warning/morgue_disposal{
 	pixel_y = -32
-	},
-/obj/structure/disposalpipe/trunk{
-	dir = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
+/obj/machinery/storage_unit/surgery,
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "bIF" = (
@@ -49160,10 +49152,13 @@
 	},
 /area/station/civilian/cold_room)
 "bIL" = (
-/obj/machinery/vending/robotics,
 /obj/machinery/light/smart,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
+	},
+/obj/machinery/disposal,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/rnd/robotics)
@@ -49344,7 +49339,6 @@
 /turf/simulated/wall,
 /area/station/civilian/janitor)
 "bJf" = (
-/obj/structure/closet/wardrobe/robotics_black,
 /obj/structure/cable,
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
@@ -49354,6 +49348,7 @@
 	name = "RnD down APC";
 	pixel_y = -27
 	},
+/obj/machinery/vending/robotics,
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "bJg" = (
@@ -51000,8 +50995,7 @@
 /turf/simulated/floor/plating,
 /area/station/engineering/atmos)
 "bMm" = (
-/obj/structure/closet/secure_closet/personal/patient,
-/obj/item/clothing/under/patient_gown,
+/obj/machinery/storage_unit/personal/patient,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -51943,12 +51937,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "bNN" = (
-/obj/structure/closet/secure_closet/personal/patient,
-/obj/item/clothing/under/patient_gown,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
 	},
+/obj/machinery/storage_unit/personal/patient,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -62859,14 +62852,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/engineering)
 "crE" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
+/obj/effect/decal/turf_decal/alpha/yellow{
+	icon_state = "bot"
 	},
-/obj/effect/decal/turf_decal{
-	dir = 8;
-	icon_state = "warn"
-	},
+/obj/structure/closet/wardrobe/robotics_black,
 /turf/simulated/floor,
 /area/station/rnd/robotics)
 "crF" = (
@@ -80326,7 +80315,6 @@
 	},
 /area/station/aisat/ai_chamber)
 "nsb" = (
-/obj/structure/closet/secure_closet/personal/patient,
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
@@ -80340,6 +80328,7 @@
 	name = "Medbay right APC";
 	pixel_x = 27
 	},
+/obj/machinery/storage_unit/surgery,
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -127941,12 +127930,12 @@ aZB
 bbY
 cqW
 biD
-blu
+crE
 boM
 bqT
 bqT
 bqT
-crE
+bqT
 bGp
 bIE
 bjt
