@@ -11085,8 +11085,8 @@
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "asn" = (
-/obj/structure/bookcase/manuals/medical,
 /obj/effect/decal/turf_decal/set_damaged,
+/obj/structure/bookcase,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "aso" = (
@@ -26696,9 +26696,7 @@
 	},
 /area/station/medical/sleeper)
 "aVj" = (
-/obj/structure/bookcase{
-	name = "bookcase (Fiction)"
-	},
+/obj/structure/bookcase,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "aVk" = (
@@ -56190,13 +56188,11 @@
 	},
 /area/station/hallway/secondary/entry)
 "bXV" = (
-/obj/structure/bookcase{
-	name = "bookcase (Adult)"
-	},
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -27
 	},
 /obj/effect/decal/cleanable/cobweb,
+/obj/structure/bookcase,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "bXW" = (
@@ -56491,7 +56487,7 @@
 	},
 /area/station/civilian/library)
 "bYM" = (
-/obj/structure/bookcase/skills,
+/obj/structure/bookcase,
 /turf/simulated/floor{
 	icon_state = "cult"
 	},
@@ -66347,9 +66343,6 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/structure/bookcase{
-	name = "bookcase (Non-Fiction)"
-	},
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -66358,6 +66351,7 @@
 	name = "apc left";
 	pixel_x = -28
 	},
+/obj/structure/bookcase,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "cBl" = (
@@ -68649,20 +68643,18 @@
 /turf/simulated/floor/wood,
 /area/station/maintenance/engineering)
 "cID" = (
-/obj/structure/bookcase{
-	name = "bookcase (Reference)"
-	},
 /obj/machinery/light/smart,
 /obj/machinery/ai_status_display{
 	pixel_y = -32
 	},
+/obj/structure/bookcase,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "cIE" = (
-/obj/structure/bookcase/manuals/security,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
+/obj/structure/bookcase,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "cIF" = (
@@ -72864,10 +72856,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "fPM" = (
-/obj/structure/bookcase/manuals/engineering,
 /obj/structure/sign/poster/random{
 	pixel_x = -32
 	},
+/obj/structure/bookcase,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "fQb" = (
@@ -75857,7 +75849,6 @@
 	},
 /area/shuttle/supply/station)
 "iGb" = (
-/obj/structure/bookcase/manuals/research_and_development,
 /obj/effect/decal/cleanable/cobweb2,
 /obj/machinery/firealarm{
 	dir = 4;
@@ -75866,6 +75857,7 @@
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
+/obj/structure/bookcase,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "iGu" = (
@@ -79878,10 +79870,8 @@
 	},
 /area/station/civilian/locker)
 "mtb" = (
-/obj/structure/bookcase{
-	name = "bookcase (Religious)"
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/bookcase,
 /turf/simulated/floor/wood,
 /area/station/civilian/library)
 "mty" = (
