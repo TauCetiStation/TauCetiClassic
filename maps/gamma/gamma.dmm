@@ -5124,9 +5124,6 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/effect/decal/turf_decal{
 	dir = 4;
 	icon_state = "warn_corner"
@@ -6650,9 +6647,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "aKL" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	dir = 4;
@@ -14793,9 +14787,6 @@
 	},
 /area/station/aisat/ai_chamber)
 "ckL" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -17680,9 +17671,6 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -18701,9 +18689,6 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "cUI" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	dir = 4;
@@ -21592,9 +21577,6 @@
 	icon_state = "1-2"
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/brig)
 "dyU" = (
@@ -26010,9 +25992,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/medbay)
 "etU" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -30023,6 +30002,12 @@
 	icon_state = "neutral"
 	},
 /area/station/civilian/dormitories)
+"fku" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 8
+	},
+/turf/simulated/wall,
+/area/station/maintenance/outerlabs)
 "fkz" = (
 /obj/effect/decal/turf_decal/wood/dark{
 	dir = 8;
@@ -31780,6 +31765,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"fAj" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 8
+	},
+/turf/simulated/wall,
+/area/station/maintenance/brig)
 "fAG" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "QMLoad2"
@@ -47279,6 +47270,12 @@
 	icon_state = "dark"
 	},
 /area/station/hallway/primary/bridgehall)
+"ixo" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 1
+	},
+/turf/simulated/wall,
+/area/station/rnd/sppodconstr)
 "ixu" = (
 /obj/machinery/status_display{
 	pixel_y = 32;
@@ -47497,6 +47494,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/rnd/mixing)
+"iyQ" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 1
+	},
+/turf/simulated/wall,
+/area/station/maintenance/brig)
 "iyZ" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/item/toy/figure/iaa{
@@ -48875,6 +48878,10 @@
 /obj/item/weapon/flora/deskfern,
 /turf/simulated/floor/carpet/blue2,
 /area/station/bridge/meeting_room)
+"iNc" = (
+/obj/effect/spawner/tape/engineering,
+/turf/simulated/wall,
+/area/station/maintenance/brig)
 "iNh" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -54813,6 +54820,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
+"jWe" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 4
+	},
+/turf/simulated/wall,
+/area/station/maintenance/outerlabs)
 "jWs" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -55963,6 +55976,10 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"khN" = (
+/obj/effect/spawner/tape/engineering,
+/turf/simulated/wall,
+/area/station/maintenance/outerlabs)
 "khY" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -62597,9 +62614,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "lAJ" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -67568,6 +67582,12 @@
 	icon_state = "bluecorner"
 	},
 /area/station/hallway/primary/central)
+"myI" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 10
+	},
+/turf/simulated/wall,
+/area/station/maintenance/brig)
 "myQ" = (
 /obj/machinery/hologram/holopad,
 /obj/effect/decal/turf_decal/alpha/gray{
@@ -68156,9 +68176,6 @@
 	},
 /area/station/maintenance/brig)
 "mFz" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -80615,9 +80632,6 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
-	},
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
 	},
 /obj/machinery/door/airlock/research{
 	dir = 4;
@@ -93707,6 +93721,12 @@
 	},
 /turf/simulated/floor,
 /area/station/cargo/office)
+"rJa" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 4
+	},
+/turf/simulated/wall,
+/area/station/maintenance/brig)
 "rJd" = (
 /obj/structure/cable{
 	d1 = 2;
@@ -106673,6 +106693,12 @@
 	icon_state = "blue"
 	},
 /area/station/hallway/primary/bridgehall)
+"uhg" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 1
+	},
+/turf/simulated/wall,
+/area/station/maintenance/outerlabs)
 "uhi" = (
 /obj/item/weapon/flora/pottedplant{
 	icon_state = "plant-21"
@@ -107539,6 +107565,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engineering/singularity)
+"uoO" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 5
+	},
+/turf/simulated/wall,
+/area/station/maintenance/brig)
 "uoP" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -111962,9 +111994,6 @@
 	},
 /area/station/rnd/mixing)
 "vjs" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -120227,6 +120256,10 @@
 	icon_state = "whitebluefull"
 	},
 /area/station/medical/sleeper)
+"wQq" = (
+/obj/effect/spawner/tape/engineering,
+/turf/simulated/wall,
+/area/station/rnd/sppodconstr)
 "wQC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable{
@@ -140749,7 +140782,7 @@ gbs
 bwz
 nlh
 jcE
-mRW
+rJa
 icu
 lfR
 uwP
@@ -141263,7 +141296,7 @@ eWZ
 mRW
 bsW
 gNi
-mRW
+fAj
 cfN
 cof
 qzS
@@ -141496,10 +141529,10 @@ dHn
 xCT
 rjc
 rjc
-bdp
+jWe
 oeQ
 kDf
-bdp
+jWe
 dUW
 dUW
 wnK
@@ -141511,7 +141544,7 @@ cip
 dUW
 dUW
 rPp
-mRW
+rJa
 pgk
 eUs
 mRW
@@ -142010,10 +142043,10 @@ fVo
 lQC
 fVo
 fVo
+fku
 bdp
 bdp
-bdp
-bdp
+fku
 bdp
 jJw
 xEy
@@ -142025,7 +142058,7 @@ jJw
 xEy
 xEy
 bdp
-mRW
+fAj
 mRW
 mRW
 mRW
@@ -142546,9 +142579,9 @@ aNz
 mRW
 rNu
 fhD
-mRW
+iNc
 cMD
-mRW
+iyQ
 weU
 obD
 mRW
@@ -143800,9 +143833,9 @@ qdg
 pyp
 hlb
 bdp
-bdp
+khN
 lAJ
-bdp
+uhg
 bdp
 qdg
 qdg
@@ -144571,9 +144604,9 @@ plf
 plf
 plf
 plf
-bdp
+khN
 cUI
-bdp
+uhg
 bdp
 pyp
 pyp
@@ -146627,9 +146660,9 @@ kHU
 kHU
 pka
 pka
-mRW
+iNc
 aKL
-mRW
+iyQ
 mRW
 mRW
 uLe
@@ -147398,9 +147431,9 @@ plf
 plf
 kHU
 kHU
-mRW
+iNc
 ckL
-mRW
+iyQ
 mRW
 gZB
 wEi
@@ -148429,10 +148462,10 @@ rVT
 sCx
 mbU
 mCA
+rJa
 mRW
 mRW
-mRW
-mRW
+uoO
 mRW
 vhC
 mRW
@@ -148943,7 +148976,7 @@ qJl
 hNh
 dJC
 ldH
-mRW
+fAj
 fPg
 lVb
 jBP
@@ -149200,7 +149233,7 @@ mRW
 uLe
 mRW
 mRW
-mRW
+myI
 mRW
 mRW
 mRW
@@ -173212,9 +173245,9 @@ eha
 bIx
 bIx
 bIx
-bIx
+wQq
 pdh
-bIx
+ixo
 bIx
 xeB
 ayM

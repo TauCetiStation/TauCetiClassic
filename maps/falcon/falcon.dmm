@@ -8503,9 +8503,6 @@
 /area/station/maintenance/science)
 "aqf" = (
 /obj/structure/inflatable/door,
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/structure/barricade/wooden,
 /obj/machinery/door/firedoor{
 	dir = 4
@@ -14347,6 +14344,12 @@
 	icon_state = "wood_stairs"
 	},
 /area/station/civilian/bar)
+"eDl" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/station/rnd/lab)
 "eDN" = (
 /obj/structure/plasticflaps{
 	opacity = 1
@@ -14527,6 +14530,10 @@
 	icon_state = "red"
 	},
 /area/station/engineering/atmos)
+"eMH" = (
+/obj/effect/spawner/tape/engineering,
+/turf/simulated/wall,
+/area/station/maintenance/science)
 "eMX" = (
 /obj/machinery/atmospherics/pipe/simple/visible/green{
 	dir = 4
@@ -15504,6 +15511,12 @@
 	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
+"fPs" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 4
+	},
+/turf/simulated/wall/r_wall,
+/area/station/rnd/telesci)
 "fPZ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/simulated/floor{
@@ -19226,9 +19239,6 @@
 /area/station/civilian/hydroponics)
 "jvz" = (
 /obj/item/weapon/scrap_lump,
-/obj/item/tape/engineering{
-	icon_state = "engineering_h"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/turf_decal/set_burned,
 /turf/simulated/floor/plating,
@@ -21374,9 +21384,6 @@
 /area/station/hallway/primary/central)
 "lhB" = (
 /obj/structure/inflatable/door,
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/science)
@@ -23069,6 +23076,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint)
+"mQT" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 10
+	},
+/turf/simulated/wall,
+/area/station/maintenance/science)
 "mRd" = (
 /obj/structure/stool/bed/chair/wheelchair,
 /turf/simulated/floor{
@@ -23900,6 +23913,12 @@
 	icon_state = "black"
 	},
 /area/station/hallway/primary/central)
+"ntz" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 5
+	},
+/turf/simulated/wall/r_wall,
+/area/station/rnd/telesci)
 "nue" = (
 /obj/machinery/door/airlock/external{
 	frequency = 1379;
@@ -24474,6 +24493,12 @@
 	icon_state = "grass1"
 	},
 /area/station/hallway/secondary/arrival)
+"nUG" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 8
+	},
+/turf/simulated/wall,
+/area/station/maintenance/science)
 "nVq" = (
 /obj/structure/lattice,
 /obj/machinery/camera{
@@ -26378,9 +26403,6 @@
 "pCp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/inflatable/door,
-/obj/item/tape/engineering{
-	icon_state = "engineering_door"
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/barricade/wooden,
 /turf/simulated/floor/plating,
@@ -27716,6 +27738,12 @@
 	icon_state = "4,3"
 	},
 /area/shuttle/supply/station)
+"qFF" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 1
+	},
+/turf/simulated/wall,
+/area/station/maintenance/science)
 "qFP" = (
 /obj/structure/table,
 /obj/item/weapon/clipboard{
@@ -29537,9 +29565,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "stx" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_h"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
@@ -33721,9 +33746,6 @@
 /turf/simulated/floor/engine/nitrogen,
 /area/station/engineering/atmos)
 "wnk" = (
-/obj/item/tape/engineering{
-	icon_state = "engineering_h"
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/cable{
@@ -34709,15 +34731,6 @@
 	},
 /turf/simulated/floor,
 /area/station/medical/reception)
-"xjf" = (
-/obj/random/foods/food_trash,
-/obj/item/tape/engineering{
-	icon_state = "engineering_h"
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/turf_decal/set_burned,
-/turf/simulated/floor/plating,
-/area/station/maintenance/science)
 "xjt" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -72344,7 +72357,7 @@ hgW
 fdT
 yiI
 dsj
-woA
+eDl
 woA
 woA
 ekG
@@ -72604,7 +72617,7 @@ qtz
 stx
 uyq
 woA
-woA
+eDl
 woA
 woA
 wyg
@@ -73115,15 +73128,15 @@ hgW
 ajZ
 akk
 hdp
-lUt
+nUG
 tFy
 agj
-xjf
+fQc
 afb
 afd
+ntz
 wyg
-wyg
-wyg
+fPs
 wyg
 wyg
 uIN
@@ -73375,7 +73388,7 @@ akM
 lUt
 lUt
 lUt
-lUt
+nUG
 hbg
 hes
 lhB
@@ -73633,11 +73646,11 @@ lUt
 afZ
 agk
 lUt
+mQT
 lUt
 lUt
 lUt
-lUt
-lUt
+nUG
 ftf
 jNU
 wWt
@@ -74667,9 +74680,9 @@ bRr
 rtz
 lUt
 lUt
-lUt
+eMH
 aqf
-lUt
+qFF
 lUt
 acL
 agV

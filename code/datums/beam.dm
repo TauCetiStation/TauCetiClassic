@@ -1,3 +1,6 @@
+var/global/list/beam_decorations_cache = list()
+
+
 //Beam Datum and effect
 /datum/beam
 	var/atom/origin = null
@@ -9,17 +12,23 @@
 	var/max_distance = 0
 	var/sleep_time = 3
 	var/finished = 0
-	var/target_oldloc = null
-	var/origin_oldloc = null
+	var/turf/target_oldloc = null
+	var/turf/origin_oldloc = null
 	var/static_beam = 0
-	var/beam_type = /obj/effect/ebeam //must be subtype
+	var/obj/effect/ebeam/beam_type = /obj/effect/ebeam //must be subtype
 	var/plane = null
 	var/timing_id = null
 	var/recalculating = FALSE
+	var/dense_beam = FALSE
 
 	var/obj/effect/ebeam/visuals //what we add to the ebeam's visual contents. never gets deleted on redrawing.
 
-/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam, beam_sleep_time=3, beam_plane)
+	var/origin_additional_pixel_x = 0
+	var/origin_additional_pixel_y = 0
+
+	var/loose_factor = 0 // is a curve factor of the beam, 1 is a strong downward curve, -1 is a strong upward curve.
+
+/datum/beam/New(beam_origin,beam_target,beam_icon='icons/effects/beam.dmi',beam_icon_state="b_beam",time=50,maxdistance=10,btype = /obj/effect/ebeam, beam_sleep_time=3, beam_plane, origin_additional_pixel_x = 0, origin_additional_pixel_y = 0, loose_factor = 0, dense_beam = FALSE)
 	origin = beam_origin
 	origin_oldloc =	get_turf(origin)
 	target = beam_target
@@ -37,6 +46,16 @@
 	if(time < INFINITY)
 		addtimer(CALLBACK(src,PROC_REF(End)), time)
 
+	src.origin_additional_pixel_x = origin_additional_pixel_x
+	src.origin_additional_pixel_y = origin_additional_pixel_y
+
+	src.loose_factor = loose_factor
+
+	src.dense_beam = dense_beam
+
+	if(ismovable(origin) && ismovable(target))
+		RegisterSignal(origin, list(COMSIG_MOVABLE_MOVED), PROC_REF(recalculate))
+
 /datum/beam/proc/Start()
 	visuals = new beam_type()
 	visuals.icon = icon
@@ -44,20 +63,36 @@
 	Draw()
 	recalculate_in(sleep_time)
 
-/datum/beam/proc/recalculate()
+/datum/beam/proc/recalculate(force_redraw = FALSE)
 	if(recalculating)
-		recalculate_in(sleep_time)
+		recalculate_in(sleep_time, force_redraw)
 		return
 	recalculating = TRUE
 	timing_id = null
 	if(origin && target && get_dist(origin,target)<max_distance && origin.z == target.z)
-		var/origin_turf = get_turf(origin)
-		var/target_turf = get_turf(target)
+		var/turf/origin_turf = get_turf(origin)
+		var/turf/target_turf = get_turf(target)
+
+		var/redraw = FALSE
 		if(!static_beam && (origin_turf != origin_oldloc || target_turf != target_oldloc))
+			redraw = TRUE
+			if((origin_oldloc.x - target_oldloc.x == origin_turf.x - target_turf.x) && (origin_oldloc.y - target_oldloc.y == origin_turf.y - target_turf.y))
+				redraw = FALSE
+
+				var/shiftX = origin_turf.x - origin_oldloc.x
+				var/shiftY = origin_turf.y - origin_oldloc.y
+
+				for(var/obj/effect/ebeam/B in elements)
+					B.x += shiftX
+					B.y += shiftY
+
 			origin_oldloc = origin_turf //so we don't keep checking against their initial positions, leading to endless Reset()+Draw() calls
 			target_oldloc = target_turf
+
+		if(redraw || force_redraw)
 			Reset()
 			Draw()
+
 		after_calculate()
 		recalculating = FALSE
 	else
@@ -66,10 +101,10 @@
 /datum/beam/proc/afterDraw()
 	return
 
-/datum/beam/proc/recalculate_in(time)
+/datum/beam/proc/recalculate_in(time, force_redraw = FALSE)
 	if(timing_id)
 		deltimer(timing_id)
-	timing_id = addtimer(CALLBACK(src, PROC_REF(recalculate)), time, TIMER_STOPPABLE)
+	timing_id = addtimer(CALLBACK(src, PROC_REF(recalculate), force_redraw), time, TIMER_STOPPABLE)
 
 /datum/beam/proc/after_calculate()
 	if((sleep_time == null) || finished)	//Does not automatically recalculate.
@@ -82,6 +117,10 @@
 	if(!isnull(timing_id))
 		deltimer(timing_id)
 	if(!QDELETED(src) && destroy_self)
+		if(beam_type::destroy_particle)
+			for(var/obj/effect/ebeam/B in elements)
+				B.play_destroy_particle()
+
 		qdel(src)
 
 /datum/beam/proc/Reset()
@@ -92,26 +131,79 @@
 /datum/beam/Destroy()
 	Reset()
 	qdel(visuals)
+
+	UnregisterSignal(origin, list(COMSIG_MOVABLE_MOVED))
 	target = null
 	origin = null
 	return ..()
 
+/datum/beam/proc/get_bezier_point(Ax, Ay, Px, Py, Bx, By, f)
+	var/f2 = 1 - f
+
+	var/pointX = round(f2**2 * Ax + 2 * f2 * f * Px + f**2 * Bx)
+	var/pointY = round(f2**2 * Ay + 2 * f2 * f * Py + f**2 * By)
+
+	return list(pointX, pointY)
+
+/datum/beam/proc/get_points(Ax, Ay, Bx, By)
+	if(loose_factor == 0)
+		return list(list(Ax, Ay), list(Bx, By))
+
+	var/length = round(sqrt((Bx-Ax)**2+(By-Ay)**2))
+
+	var/segments = max(1, min(8, round(length / 8)))
+
+	var/Px = Ax + round((Bx - Ax) / 2)
+	var/Py = Ay + round((By - Ay) / 2 - min(32, (length * 1.8 - length) / 2) * loose_factor)
+	var/list/points = list()
+	for(var/i in 0 to segments)
+		points += list(get_bezier_point(Ax, Ay, Px, Py, Bx, By, i / segments))
+
+	return points
+
 /datum/beam/proc/Draw()
-	var/Angle = round(Get_Angle(origin,target))
-	var/matrix/rot_matrix = matrix()
-	rot_matrix.Turn(Angle)
+	var/Ax = 32 * origin.x + origin.pixel_x + origin_additional_pixel_x
+	var/Ay = 32 * origin.y + origin.pixel_y + origin_additional_pixel_y
+
+	var/Bx = 32 * target.x + target.pixel_x
+	var/By = 32 * target.y + target.pixel_y
+
+	var/list/points = get_points(Ax, Ay, Bx, By)
+	for(var/i in 1 to points.len - 1)
+		var/list/pointA = points[i]
+		var/list/pointB = points[i + 1]
+		DrawSegment(pointA[1], pointA[2], pointB[1], pointB[2])
+
+/datum/beam/proc/DrawSegment(Ax, Ay, Bx, By)
 
 	//Translation vector for origin and target
-	var/DX = (32*target.x+target.pixel_x)-(32*origin.x+origin.pixel_x)
-	var/DY = (32*target.y+target.pixel_y)-(32*origin.y+origin.pixel_y)
+	var/DX = Bx - Ax
+	var/DY = By - Ay
+	var/Angle = round(arctan(DY, DX))
+	var/matrix/rot_matrix = matrix()
+	rot_matrix.Turn(Angle)
+	var/matrix/decoration_matrix
+	if((Angle > 0) && (Angle < 180))
+		decoration_matrix = rot_matrix
+	else
+		decoration_matrix = matrix()
+		decoration_matrix.Turn(Angle + 180)
+
 	var/N = 0
-	var/length = round(sqrt((DX)**2+(DY)**2)) //hypotenuse of the triangle formed by target and origin's displacement
+	var/length = CEILING(sqrt((DX)**2+(DY)**2), 1) //hypotenuse of the triangle formed by target and origin's displacement
+
+	var/offsetX = Ax - origin.x * 32
+	var/offsetY = Ay - origin.y * 32
+
+	var/previous_length = CEILING(sqrt(offsetX**2 + offsetY**2), 1)
+	var/previous_position = 0 - previous_length % 12
 
 	for(N in 0 to length-1 step 32)//-1 as we want < not <=, but we want the speed of X in Y to Z and step X
 		if(QDELETED(src) || finished)
 			break
 		var/obj/effect/ebeam/X = new beam_type(origin_oldloc)
 		X.owner = src
+		X.density = dense_beam
 		if(plane)
 			X.plane = plane
 		elements += X
@@ -120,23 +212,52 @@
 		//ends are cropped by a transparent box icon of length-N pixel size laid over the visuals obj
 		if(N+32>length) //went past the target, needs to be cut short
 			var/icon/II = new(icon, icon_state) //the way to keep this the same as the vis_contents is unreasonable right now, maybe in the far future.
-			II.DrawBox(null,1,(length-N),32,32)//anyway we cut the icon on the ebeam to end at the target instead of overshooting
+			II.DrawBox(null,1,length-N,32,32)//anyway we cut the icon on the ebeam to end at the target instead of overshooting
 			X.icon = II
+			X.end_pos = list(round(sin(Angle)*(length-N)), round(cos(Angle)*(length-N)))
 		else
 			X.vis_contents += visuals
+			X.end_pos = list(round(sin(Angle)*(N + 32)), round(cos(Angle)*(N + 32)))
+
 		X.transform = rot_matrix
+
+		if(X.decoration_icon)
+			for(var/i in previous_position + N to min(N + 32, length - 1) step 12)
+				if(i < 0)
+					continue
+
+				if(i > (length - 1))
+					break
+
+				var/decoration_state = pick(icon_states(X.decoration_icon))
+				var/mutable_appearance/decoration
+				if(!global.beam_decorations_cache["[X.decoration_icon]_[decoration_state]"])
+					decoration = mutable_appearance(X.decoration_icon, decoration_state)
+					decoration.appearance_flags = RESET_COLOR|RESET_TRANSFORM
+				else
+					decoration = global.beam_decorations_cache["[X.decoration_icon]_[decoration_state]"]
+
+				if(X.decoration_follow)
+					decoration.transform = decoration_matrix
+
+				decoration.pixel_x = round(sin(Angle)*(i-16))
+				decoration.pixel_y = round(cos(Angle)*(i-16))
+				decoration.plane = X.plane
+				decoration.layer = X.layer - 0.01
+
+				X.add_overlay(decoration)
 
 		//Calculate pixel offsets (If necessary)
 		var/Pixel_x
 		var/Pixel_y
 		if(DX == 0)
-			Pixel_x = 0
+			Pixel_x = offsetX
 		else
-			Pixel_x = round(sin(Angle)+32*sin(Angle)*(N+16)/32)
+			Pixel_x = round(sin(Angle)+32*sin(Angle)*(N+16)/32) + offsetX
 		if(DY == 0)
-			Pixel_y = 0
+			Pixel_y = offsetY
 		else
-			Pixel_y = round(cos(Angle)+32*cos(Angle)*(N+16)/32)
+			Pixel_y = round(cos(Angle)+32*cos(Angle)*(N+16)/32) + offsetY
 
 		//Position the effect so the beam is one continous line
 		var/a
@@ -151,16 +272,41 @@
 
 		X.pixel_x = Pixel_x
 		X.pixel_y = Pixel_y
+
+		if(X.idle_particle)
+			X.play_idle_particle()
+
 		CHECK_TICK
 	afterDraw()
 
 /obj/effect/ebeam
+	icon = 'icons/effects/beam.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	var/datum/beam/owner
 
+	var/decoration_icon
+	var/decoration_follow = FALSE
+
+	var/idle_particle
+	var/obj/effect/abstract/particle_holder/idle_particle_holder
+	var/destroy_particle
+
+	var/end_pos = list()
+
+/obj/effect/ebeam/proc/play_idle_particle()
+	idle_particle_holder = new /obj/effect/abstract/particle_holder(get_turf(src), idle_particle, PARTICLE_FADEOUT)
+	idle_particle_holder.modify_particles_value("position", generator("vector", list(pixel_x, pixel_y, 0), list(pixel_x - end_pos[1], pixel_y - end_pos[2], 0)))
+
+/obj/effect/ebeam/proc/play_destroy_particle()
+	var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(get_turf(src), destroy_particle, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	Holder.modify_particles_value("position", generator("vector", list(pixel_x, pixel_y, 0), list(pixel_x - end_pos[1], pixel_y - end_pos[2], 0)))
+
 /obj/effect/ebeam/Destroy()
 	owner = null
+	if(idle_particle_holder)
+		idle_particle_holder.delete_particle()
+		idle_particle_holder = null
 	return ..()
 
 /obj/effect/ebeam/singularity_pull()
@@ -169,7 +315,7 @@
 /obj/effect/ebeam/singularity_act()
 	return
 
-/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3,beam_plane)
-	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time,beam_plane)
+/atom/proc/Beam(atom/BeamTarget,icon_state="b_beam",icon='icons/effects/beam.dmi',time=50, maxdistance=10,beam_type=/obj/effect/ebeam,beam_sleep_time = 3,beam_plane, origin_additional_pixel_x = 0, origin_additional_pixel_y = 0, loose_factor = 0, dense_beam = FALSE)
+	var/datum/beam/newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type,beam_sleep_time,beam_plane, origin_additional_pixel_x, origin_additional_pixel_y, loose_factor, dense_beam)
 	INVOKE_ASYNC(newbeam, TYPE_PROC_REF(/datum/beam, Start))
 	return newbeam

@@ -242,7 +242,7 @@
 	var/static/list/allowed_types = list(/obj/structure/window, /obj/machinery/door,
 										 /obj/structure/table,  /obj/structure/grille,
 										 /obj/structure/cult,   /obj/structure/mineral_door,
-										 /obj/item/tape,        /obj/structure/rack,
+										 /obj/effect/ebeam/tape,        /obj/structure/rack,
 										 /obj/structure/closet,)
 	for(var/atom/movable/on_turf in contents)
 		if(on_turf == M)

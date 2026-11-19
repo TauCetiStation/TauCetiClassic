@@ -86,21 +86,22 @@
 	random = FALSE
 
 // Tinsels
-/obj/item/decoration/tinsel/halloween
-	desc = "Everybody scream! Everybody scream! In our town of Halloween!"
-	icon = 'icons/holidays/halloween/tinsel.dmi'
-	icon_state = "1"
-	variations = 20
-	random = TRUE
+/obj/item/taperoll/tinsel/halloween
+	name = "halloween tinsel"
+	cases = list("моток хеллоуинской гирлянды", "мотка хеллоуинской гирлянды", "мотку хеллоуинской гирлянды", "моток хеллоуинской гирлянды", "мотком хеллоуинской гирлянды", "мотке хеллоуинской гирлянды")
+	desc = "Покричим, порычим! В королевстве Хеллоуин!"
+	icon = 'icons/holidays/halloween/decorations.dmi'
+	tape_type = /obj/effect/ebeam/tinsel/halloween
 
-/obj/item/decoration/tinsel/halloween/pumkings
-	icon_state = "1"
-	random = FALSE
+/obj/effect/ebeam/tinsel/halloween
+	name = "halloween tinsel"
+	icon_state = "tinsel"
+	cases = list("хеллоуинская гирлянда", "хеллоуинской гирлянды", "хеллоуинской гирлянде", "хеллоуинскую гирлянду", "хеллоуинской гирляндой", "хеллоуинской гирлянде")
 
-/obj/item/decoration/tinsel/halloween/ghosts
-	icon_state = "2"
-	random = FALSE
+	taperoll = /obj/item/taperoll/tinsel/halloween
+	decoration_icon = 'icons/holidays/halloween/tinsel.dmi'
 
-/obj/item/decoration/tinsel/halloween/bats
-	icon_state = "14"
-	random = FALSE
+/obj/effect/spawner/tape/tinsel/halloween
+	name = "halloween tinsel spawner"
+	icon = 'icons/holidays/halloween/decorations.dmi'
+	tape_type = /obj/effect/ebeam/tinsel/halloween
