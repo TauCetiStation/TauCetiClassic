@@ -372,7 +372,7 @@
 				return
 
 			if(to_dispense == occupant)
-				eject_occupant(user)
+				eject_occupant(to_dispense)
 				return
 
 			for(var/slot_name in contents_by_slot)

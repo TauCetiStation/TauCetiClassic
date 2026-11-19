@@ -52,9 +52,10 @@
 
 /datum/unit_test/suit_storage_unit_test_fast_equip_drop/start_test()
 	var/obj/machinery/storage_unit/suit_storage/test_unit/ssu = new
-	ssu.filled = TRUE
 	ssu.make_full()
+
 	var/mob/living/carbon/human/H = new (ssu)
+	ssu.occupant = H
 
 	ssu.fast_dress(H, testrun = TRUE)
 

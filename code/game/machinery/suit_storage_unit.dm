@@ -47,20 +47,12 @@
 	)
 
 /obj/machinery/storage_unit/suit_storage/place_occupant(mob/living/target, mob/user, obj/grab = null)
-	if(user != target)
-		if(do_after(user, 3 SECOND, target = src))
-			..()
-	else
-		..()
+	..()
 
-	if(target.loc != src)
-		return
-
-	if(emagged)
+	if((occupant == target) && emagged)
 		to_chat(target, "<span class ='danger'>You feel like a terrible manipulators pulls you into [name].</span>")
 		start_ultra_violet(user)
-
-	update_icon()
+		update_icon()
 
 
 /obj/machinery/storage_unit/suit_storage/proc/update_connectors()
@@ -285,6 +277,8 @@
 		SLOT_WEAR_MASK = /obj/item/clothing/mask/breath/gas,
 		SLOT_SHOES = /obj/item/clothing/shoes/magboots
 	)
+
+	filled = TRUE
 
 	can_build = FALSE
 
