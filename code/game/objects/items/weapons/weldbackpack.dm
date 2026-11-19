@@ -5,7 +5,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "welderpack"
 	w_class = SIZE_NORMAL
-	var/max_fuel = 350
+	var/max_fuel = 100
 
 /obj/item/weapon/weldpack/atom_init()
 	. = ..()
@@ -13,27 +13,6 @@
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
-
-/obj/item/weapon/weldpack/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
-		var/obj/item/weapon/weldingtool/T = I
-		if(T.isOn() & prob(50))
-			message_admins("[key_name_admin(user)] triggered a welding kit explosion. [ADMIN_JMP(user)]")
-			log_game("[key_name(user)] triggered a fueltank explosion.")
-			to_chat(user, "<span class='warning'>That was stupid of you.</span>")
-			explosion(get_turf(src),-1,0,2)
-			if(src)
-				qdel(src)
-			return
-		else
-			if(T.isOn())
-				to_chat(user, "<span class='warning'>That was close!</span>")
-			reagents.trans_to(I, T.max_fuel)
-			to_chat(user, "<span class='notice'>Welder refilled!</span>")
-			playsound(src, 'sound/effects/refill.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
-			return
-
-	to_chat(user, "<span class='notice'>The tank scoffs at your insolence.  It only provides services to welders.</span>")
 
 /obj/item/weapon/weldpack/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)

@@ -35,7 +35,9 @@
 	// Time to hide visible raduis
 	var/hide_radius_timer
 
-/datum/component/bounded/Initialize(atom/_bound_to, _min_dist, _max_dist, datum/callback/_resolve_callback, datum/callback/_master_destroyed_callback, tips = TRUE, _vis_radius = TRUE)
+	var/datum/beam/beam
+
+/datum/component/bounded/Initialize(atom/_bound_to, _min_dist, _max_dist, datum/callback/_resolve_callback, datum/callback/_master_destroyed_callback, tips = TRUE, _vis_radius = TRUE, obj/effect/ebeam/beam_type = null, beam_origin_x = 0, beam_origin_y = 0)
 	master = _bound_to
 	min_dist = _min_dist
 	max_dist = _max_dist
@@ -60,6 +62,10 @@
 	if(vis_radius && ismob(parent))
 		master.AddComponent(/datum/component/vis_radius, _max_dist)
 
+	if(beam_type)
+		var/atom/P = parent
+		beam = P.Beam(master, icon_state = beam_type::icon_state, time = INFINITY, maxdistance = max_dist + 1, beam_type = beam_type, origin_additional_pixel_x = beam_origin_x, origin_additional_pixel_y = beam_origin_y, loose = TRUE)
+
 	// First bounds update.
 	check_bounds()
 
@@ -72,6 +78,9 @@
 	if(vis_radius)
 		qdel(master.GetComponent(/datum/component/vis_radius))
 		deltimer(hide_radius_timer)
+
+	if(beam)
+		beam.End()
 
 	master = null
 	return ..()
@@ -166,6 +175,9 @@
 		deltimer(hide_radius_timer)
 		// Create new
 		master.AddComponent(/datum/component/vis_radius, max_dist)
+
+	if(beam)
+		beam.max_distance = max_dist
 
 /datum/component/bounded/proc/try_show_radius()
 	if(!ismob(parent))

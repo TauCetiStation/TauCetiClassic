@@ -135,6 +135,9 @@
 		var/datum/action/B = new path (src)
 		item_actions += B
 
+	if(ispath(plug))
+		add_plug()
+
 	return INITIALIZE_HINT_NORMAL
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)

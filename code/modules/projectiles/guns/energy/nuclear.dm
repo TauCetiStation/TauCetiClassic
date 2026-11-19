@@ -43,6 +43,8 @@
 	modifystate = 0
 	can_be_holstered = FALSE
 
+	plug = null
+
 /obj/item/weapon/gun/energy/gun/nuclear/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)

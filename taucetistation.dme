@@ -318,6 +318,7 @@
 #include "code\datums\music_player.dm"
 #include "code\datums\mutable_appearance.dm"
 #include "code\datums\particool.dm"
+#include "code\datums\plug_in_out.dm"
 #include "code\datums\progressbar.dm"
 #include "code\datums\proximity_monitor.dm"
 #include "code\datums\recipe.dm"

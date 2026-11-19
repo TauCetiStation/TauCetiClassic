@@ -518,6 +518,8 @@
 	caliber = "plasma"
 	max_ammo = 0 // not used with this magazine.
 
+	plug = /datum/plug/energy
+
 	var/obj/item/weapon/stock_parts/cell/power_supply
 	var/cell_type = /obj/item/weapon/stock_parts/cell/super // we balance ammo consumption and amount over this type of battery, because even this battery still requires basic materials to craft.
 
