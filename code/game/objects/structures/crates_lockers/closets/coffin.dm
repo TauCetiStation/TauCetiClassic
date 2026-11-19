@@ -14,7 +14,7 @@
 	buckle_lying = TRUE
 	buckle_delay = 0
 
-	storage_capacity = 1
+	storage_capacity = 10
 
 	hit_particle_type = /particles/tool/digging/wood
 
@@ -69,9 +69,14 @@
 		buckle_mob(M)
 		M.instant_vision_update(0)
 
+	for(var/obj/item/I in src)
+		I.forceMove(src.loc)
+
 	..()
 
 /obj/structure/closet/coffin/collect_contents()
+	var/itemcount = 0
+
 	for(var/mob/M in loc)
 		if(M == buckled_mob)
 			unbuckle_mob(M)
@@ -79,7 +84,16 @@
 			M.lying = TRUE
 			M.update_transform()
 			M.instant_vision_update(1, src)
-			return
+			itemcount++
+			break
+
+	for(var/obj/item/I in loc)
+		if(itemcount >= storage_capacity)
+			break
+		if(!I.anchored && !istype(I, /obj/item/weapon/paper/sticker))
+			I.forceMove(src)
+			itemcount++
+
 
 /obj/structure/closet/coffin/open()
 	. = ..()
@@ -89,10 +103,14 @@
 		cut_overlay(coffin_side)
 		add_overlay(coffin_side)
 
+		AddComponent(/datum/component/clickplace)
+
 /obj/structure/closet/coffin/close()
 	. = ..()
 	if(.)
 		cut_overlay(coffin_side)
+
+		qdel(GetComponent(/datum/component/clickplace))
 
 /obj/structure/closet/coffin/tools_interact(obj/item/I, mob/user)
 	if(opened && isprying(I))
