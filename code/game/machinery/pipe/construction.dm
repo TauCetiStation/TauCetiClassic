@@ -417,10 +417,10 @@ Buildable meters
 	return rotate()
 
 /obj/item/pipe/attackby(obj/item/I, mob/user, params)
-	if (isscrewing(I))
+	if (I.get_quality(QUALITY_SCREWING))
 		mirror()
 		return
-	if (!iswrenching(I))
+	if (!I.get_quality(QUALITY_WRENCHING))
 		return ..()
 	if (!isturf(loc))
 		return TRUE
@@ -812,7 +812,7 @@ Buildable meters
 	w_class = SIZE_NORMAL
 
 /obj/item/pipe_meter/attackby(obj/item/I, mob/user, params)
-	if (!iswrenching(I))
+	if (!I.get_quality(QUALITY_WRENCHING))
 		return ..()
 	if(!locate(/obj/machinery/atmospherics/pipe, src.loc))
 		to_chat(user, "<span class='warning'>You need to fasten it to a pipe</span>")

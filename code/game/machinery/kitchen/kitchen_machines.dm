@@ -74,26 +74,26 @@
 *   Item Adding
 ********************/
 
-/obj/machinery/kitchen_machine/attackby(obj/item/O, mob/user)
+/obj/machinery/kitchen_machine/attackby(obj/item/I, mob/user)
 	if(operating)
 		return
 	if(!broken && dirty < MAX_DIRTY)
-		if(default_deconstruction_screwdriver(user, open_icon, off_icon, O))
+		if(default_deconstruction_screwdriver(user, open_icon, off_icon, I))
 			return
-		if(default_unfasten_wrench(user, O))
+		if(default_unfasten_wrench(user, I))
 			return
-		if(exchange_parts(user, O))
+		if(exchange_parts(user, I))
 			return
 
-	default_deconstruction_crowbar(O)
+	default_deconstruction_crowbar(I)
 
 	if(broken)
-		if(broken == FULL_BROKEN && iscutter(O)) // If it's broken and they're using a wirecutters.
+		if(broken == FULL_BROKEN && I.get_quality(QUALITY_CUTTING)) // If it's broken and they're using a wirecutters.
 			user.visible_message( \
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if(O.use_tool(src, user, 10 SECONDS, volume = 100, quality = QUALITY_CUTTING))
+			if(I.use_tool(src, user, 10 SECONDS, volume = 100, quality = QUALITY_CUTTING))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes part of the [src].</span>", \
 					"<span class='notice'>You have fixed part of the [src].</span>" \
@@ -102,12 +102,12 @@
 				update_icon()
 				return TRUE
 
-		else if(broken == HALF_BROKEN && iswelding(O) && !user.is_busy(src)) // If it's broken and they're doing the weldingtool.
+		else if(broken == HALF_BROKEN && I.get_quality(QUALITY_WELDING) && !user.is_busy(src)) // If it's broken and they're doing the weldingtool.
 			user.visible_message( \
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if(O.use_tool(src, user, 10 SECONDS, volume = 100, quality = QUALITY_WELDING))
+			if(I.use_tool(src, user, 10 SECONDS, volume = 100, quality = QUALITY_WELDING))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes the [src].</span>", \
 					"<span class='notice'>You have fixed the [src].</span>" \
@@ -119,8 +119,8 @@
 			to_chat(user, "<span class='warning'>It doesn't react. Examine to find out the reason.</span>")
 			return TRUE
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/spray))
-		var/obj/item/weapon/reagent_containers/spray/clean_spray = O
+	else if(istype(I, /obj/item/weapon/reagent_containers/spray))
+		var/obj/item/weapon/reagent_containers/spray/clean_spray = I
 		if(clean_spray.reagents.has_reagent("cleaner", clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent("cleaner", clean_spray.amount_per_transfer_from_this, TRUE)
 			playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
@@ -136,12 +136,12 @@
 			to_chat(user, "<span class='danger'>You need more space cleaner!</span>")
 			return TRUE
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/soap)) // If they're trying to clean it then let them
+	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/soap)) // If they're trying to clean it then let them
 		user.visible_message( \
 			"<span class='notice'>[user] starts to clean [src].</span>", \
 			"<span class='notice'>You start to clean [src].</span>" \
 		)
-		if(O.use_tool(src, user, 2 SECONDS, volume = 100))
+		if(I.use_tool(src, user, 2 SECONDS, volume = 100))
 			user.visible_message( \
 				"<span class='notice'>[user] has cleaned [src].</span>", \
 				"<span class='notice'>You have cleaned [src].</span>" \
@@ -154,27 +154,27 @@
 		to_chat(user, "<span class='warning'>It doesn't react. Examine to find out the reason.</span>")
 		return TRUE
 
-	else if(is_type_in_list(O, acceptable_items))
+	else if(is_type_in_list(I, acceptable_items))
 		if(contents.len >= max_n_of_items)
 			to_chat(user, "<span class='danger'>\The [src] is full of ingredients, you cannot put more.</span>")
 			return TRUE
 
-		var/obj/item/stack/S = O
+		var/obj/item/stack/S = I
 		if(istype(S) && S.get_amount() > 1)
-			new O.type (src)
+			new I.type (src)
 			S.use(1)
 			user.visible_message( \
-				"<span class='notice'>[user] has added one of [O] to \the [src].</span>", \
-				"<span class='notice'>You add one of [O] to \the [src].</span>")
+				"<span class='notice'>[user] has added one of [I] to \the [src].</span>", \
+				"<span class='notice'>You add one of [I] to \the [src].</span>")
 		else
-			user.drop_from_inventory(O, src)
+			user.drop_from_inventory(I, src)
 			user.visible_message( \
-				"<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
-				"<span class='notice'>You add \the [O] to \the [src].</span>")
+				"<span class='notice'>[user] has added \the [I] to \the [src].</span>", \
+				"<span class='notice'>You add \the [I] to \the [src].</span>")
 		return TRUE
 
-	else if(istype(O, /obj/item/weapon/reagent_containers))
-		var/obj/item/weapon/reagent_containers/RC = O
+	else if(istype(I, /obj/item/weapon/reagent_containers))
+		var/obj/item/weapon/reagent_containers/RC = I
 		if(!RC.reagents)
 			return TRUE
 		for(var/datum/reagent/R in RC.reagents.reagent_list)
@@ -184,12 +184,12 @@
 		var/trans = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [src].</span>")
 
-	else if(istype(O, /obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = O
+	else if(istype(I, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = I
 		to_chat(user, "<span class='danger'>You can not fit \the [G.affecting] in this [src].</span>")
 		return TRUE
 	else
-		to_chat(user, "<span class='danger'>You have no idea what you can cook with this [O].</span>")
+		to_chat(user, "<span class='danger'>You have no idea what you can cook with this [I].</span>")
 		return TRUE
 
 /obj/machinery/kitchen_machine/attack_ai(mob/user)

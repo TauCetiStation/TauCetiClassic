@@ -17,15 +17,15 @@ ADD_TO_GLOBAL_LIST(/obj/structure/chicken_feeder, chicken_feeder_list)
 
 var/global/list/chicken_feeder_list = list()
 
-/obj/structure/chicken_feeder/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat))
+/obj/structure/chicken_feeder/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat))
 		if(food != maxFood)
-			qdel(O)
+			qdel(I)
 			food += 1
 			update_icon()
 		else
 			to_chat(user, "<span class='notice'>Already full</span>")
-	if(iswrenching(O))
+	if(I.get_quality(QUALITY_WRENCHING))
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		if(!user.is_busy() && do_after(user, 4 SECONDS, target = src))

@@ -103,11 +103,11 @@
 	playsound(src, 'sound/items/buttonswitch.ogg', VOL_EFFECTS_MASTER, 20)
 	flick("doorctrl-denied",src)
 
-/obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/door_control/attackby(obj/item/I, mob/user)
 	switch(buildstage)
 		if(DOOR_CONTROL_COMPLETE)
 			if(!wiresexposed)
-				if(isscrewing(W))
+				if(I.get_quality(QUALITY_SCREWING))
 					if(panel_locked && !issilicon(user) && !(stat & NOPOWER) && !emagged)
 						to_chat(user, "<span class='warning'>The panel is locked</span>")
 						return
@@ -116,8 +116,8 @@
 					modes_showed = FALSE
 					update_icon()
 					return
-				else if(istype(W, /obj/item/weapon/card/id) && !(stat & NOPOWER) && !emagged)
-					var/obj/item/weapon/card/id/card = W
+				else if(istype(I, /obj/item/weapon/card/id) && !(stat & NOPOWER) && !emagged)
+					var/obj/item/weapon/card/id/card = I
 					if(access_engine in card.access)
 						panel_locked = !panel_locked
 						to_chat(user, "<span class='notice'>You [panel_locked ? "lock" : "unlock"] the pannel</span>")
@@ -128,14 +128,14 @@
 				else
 					return attack_hand(user)
 			else
-				if(isscrewing(W))
+				if(I.get_quality(QUALITY_SCREWING))
 					wiresexposed = FALSE
 					panel_locked = TRUE
 					controls_locked = TRUE
 					update_icon()
 					return
-				else if(istype(W, /obj/item/weapon/card/id) && !(stat & NOPOWER) && !emagged)
-					var/obj/item/weapon/card/id/card = W
+				else if(istype(I, /obj/item/weapon/card/id) && !(stat & NOPOWER) && !emagged)
+					var/obj/item/weapon/card/id/card = I
 					if(access_engine in card.access)
 						controls_locked = !controls_locked
 						to_chat(user, "<span class='notice'>You [controls_locked ? "lock" : "unlock"] controls</span>")
@@ -143,7 +143,7 @@
 					else
 						to_chat(user, "<span class='warning'>Access Denied.</span>")
 						return
-				else if(ispulsing(W) && !(stat & NOPOWER))
+				else if(I.get_quality(QUALITY_PULSING) && !(stat & NOPOWER))
 					if(!controls_locked || emagged || issilicon(user))
 						set_up_door_control(user)
 						update_icon()
@@ -151,7 +151,7 @@
 					else
 						to_chat(usr, "<span class='warning'>Controls are locked!</span>")
 						return
-				else if(iscutter(W))
+				else if(I.get_quality(QUALITY_CUTTING))
 					to_chat(user, "You remove wires from the door control frame.")
 					playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 					new /obj/item/stack/cable_coil/random(loc, 1)
@@ -166,20 +166,20 @@
 					return
 				return
 		if(DOOR_CONTROL_WITHOUT_WIRES)
-			if(iscoil(W))
-				var/obj/item/stack/cable_coil/coil = W
+			if(istype(I, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/coil = I
 				coil.use(1)
 				to_chat(user, "You wire the door control frame.")
 				buildstage = DOOR_CONTROL_COMPLETE
 				update_icon()
 				return
-			else if(istype(W, /obj/item/weapon/pen))
+			else if(istype(I, /obj/item/weapon/pen))
 				var/t = sanitize_safe(input(user, "Enter the name for the Door Control.", name, name), MAX_LNAME_LEN)
 				if(!Adjacent(user))
 					return
 				name = t
 				return
-			else if(iswrenching(W))
+			else if(I.get_quality(QUALITY_WRENCHING))
 				to_chat(user, "You remove the door control assembly from the wall!")
 				deconstruct(TRUE)
 				playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
@@ -270,7 +270,7 @@
 		return
 	var/obj/item/I = usr.get_active_hand()
 
-	if(I && !ispulsing(I))
+	if(I && !I.get_quality(QUALITY_PULSING))
 		to_chat(usr, "<span class='warning'>You need a multitool!</span>")
 		return
 	if(href_list["show_accesses"])
@@ -288,24 +288,24 @@
 	if(href_list["mode"])
 		specialfunctions = text2num(href_list["mode"])
 	if(href_list["load"])
-		var/obj/item/device/multitool/M = usr.get_active_hand()
-		if(!M.doors_buffer.len)
+		var/obj/item/device/multitool/MT = usr.get_active_hand()
+		if(!MT.doors_buffer.len)
 			to_chat(usr, "<span class='warning'>The multitool's buffer is empty.</span>")
 			return
 		var/loaded_doors = FALSE
 		var/doors_out_of_range = FALSE
 
-		if((M.doors_buffer.len > (max_connections - connected_doors.len)) && M.doors_buffer.len)
+		if((MT.doors_buffer.len > (max_connections - connected_doors.len)) && MT.doors_buffer.len)
 			to_chat(usr, "<span class='warning'>This device can't control this number of <i>doors</i>!</span>")
 		else
-			for(var/A in M.doors_buffer)
+			for(var/A in MT.doors_buffer)
 				if(!(A in connected_doors))
 					if(get_dist(src, A) > range)
 						doors_out_of_range = TRUE
 					else
 						connected_doors += A
 						loaded_doors = TRUE
-			M.doors_buffer.Cut()
+			MT.doors_buffer.Cut()
 
 		if(loaded_doors)
 			to_chat(usr, "<span class='notice'>You load <i>doors'</i> data.</span>")
@@ -317,8 +317,8 @@
 		if(!connected_doors.len)
 			to_chat(usr, "<span class='warning'>There's no door data recorded.</span>")
 		else
-			var/obj/item/device/multitool/M = usr.get_active_hand()
-			M.doors_buffer = connected_doors.Copy()
+			var/obj/item/device/multitool/MT = usr.get_active_hand()
+			MT.doors_buffer = connected_doors.Copy()
 			to_chat(usr, "<span class='notice'>You copy data.</span>")
 	if(href_list["clear"])
 		if(!connected_doors.len)
@@ -435,7 +435,7 @@
 	icon_state = "doorctrl_assembly0"
 
 /obj/item/door_control_frame/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		new /obj/item/stack/sheet/metal(get_turf(src.loc), 1)
 		qdel(src)
 		return

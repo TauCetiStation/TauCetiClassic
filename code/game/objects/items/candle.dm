@@ -55,7 +55,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	update_inv_mob()
 
 /obj/item/candle/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I))
+	if(I.get_quality(QUALITY_WELDING))
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.isOn()) // Badasses dont get blinded by lighting their candle with a welding tool
 			light("<span class='warning'>[user] casually lights the [name] with [I].</span>")

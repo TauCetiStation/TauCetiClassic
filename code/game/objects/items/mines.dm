@@ -65,7 +65,7 @@
 	explosion(loc, 0, 1, 3)
 
 /obj/item/mine/proc/try_disarm(obj/item/I, mob/user)
-	if((I && !ispulsing(I)) || !anchored)
+	if((I && !I.get_quality(QUALITY_PULSING)) || !anchored)
 		return
 
 	user.visible_message("<span class='notice'>[user] starts disarming [src].</span>", "<span class='notice'>You start disarming [src].</span>")

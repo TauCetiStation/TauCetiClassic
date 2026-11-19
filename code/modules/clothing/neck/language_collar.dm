@@ -24,7 +24,7 @@
 		user.drop_from_inventory(I, src)
 		lang_disk = I
 		to_chat(user, "<span class='notice'>You insert the [lang_disk] into [src]</span>")
-	else if(isscrewing(I))
+	else if(I.get_quality(QUALITY_SCREWING))
 		if(!lang_disk)
 			to_chat(user, "<span class='notice'>There's no language disk to remove from the [src]</span>")
 			return

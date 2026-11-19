@@ -191,15 +191,15 @@
 				to_chat(user, "[desc] The [fitting] has been smashed.")
 
 // attack with item - insert light (if right type), otherwise try to break the light
-/obj/machinery/light/attackby(obj/item/W, mob/user)
+/obj/machinery/light/attackby(obj/item/I, mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 
 	// Light replacer code
-	if(istype(W, /obj/item/device/lightreplacer))
+	if(istype(I, /obj/item/device/lightreplacer))
 		if(status == LIGHT_OK)
 			to_chat(user, "There is a working [fitting] already inserted.")
 			return
-		var/obj/item/device/lightreplacer/LR = W
+		var/obj/item/device/lightreplacer/LR = I
 		if(LR.use_tool(src, user, 10, 1))
 			if(status != LIGHT_EMPTY) // drop old bulb first
 				drop_light_bulb(user)
@@ -212,12 +212,12 @@
 		return
 
 	// attempt to insert light
-	if(istype(W, /obj/item/weapon/light)) // todo: doafter
+	if(istype(I, /obj/item/weapon/light)) // todo: doafter
 		if(status != LIGHT_EMPTY)
 			to_chat(user, "There is a [fitting] already inserted.")
 			return
 
-		var/obj/item/weapon/light/L = W
+		var/obj/item/weapon/light/L = I
 		if(L.fitting != fitting)
 			to_chat(user, "This type of light requires a [fitting].")
 			return
@@ -243,9 +243,9 @@
 	// if xenos decide they want to smash a light bulb with a toolbox, who am I to stop them? /N
 	else if(status != LIGHT_BROKEN && status != LIGHT_EMPTY)
 		user.do_attack_animation(src)
-		if(prob(1+W.force * 5))
+		if(prob(1+I.force * 5))
 			user.visible_message("[user.name] smashed the light!", blind_message = "You hear a tinkle of breaking glass", self_message = "You hit the light, and it smashes!")
-			if(on && ((W.flags & CONDUCT) || HAS_TRAIT(user, TRAIT_CONDUCT)))
+			if(on && ((I.flags & CONDUCT) || HAS_TRAIT(user, TRAIT_CONDUCT)))
 				//if(!user.mutations & COLD_RESISTANCE)
 				if (prob(12))
 					electrocute_mob(user, get_area(src), src, 0.3)
@@ -255,16 +255,16 @@
 
 	// attempt to stick weapon into light socket
 	else if(status == LIGHT_EMPTY)
-		if(isscrewing(W))
-			if(W.use_tool(src, user, 5, quality = QUALITY_SCREWING))
+		if(I.get_quality(QUALITY_SCREWING))
+			if(I.use_tool(src, user, 5, quality = QUALITY_SCREWING))
 				user.visible_message("[user.name] opens [src]'s casing.", \
 				"You open [src]'s casing.", "You hear a noise.")
 				deconstruct(TRUE)
 				qdel(src)
 			return
 
-		to_chat(user, "You stick [W] into the light socket!")
-		if(has_power() && ((W.flags & CONDUCT) || HAS_TRAIT(user, TRAIT_CONDUCT)))
+		to_chat(user, "You stick [I] into the light socket!")
+		if(has_power() && ((I.flags & CONDUCT) || HAS_TRAIT(user, TRAIT_CONDUCT)))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
 			s.start()

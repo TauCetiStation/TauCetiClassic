@@ -35,7 +35,7 @@
 	update_world_icon()
 
 /obj/item/weapon/grenade/cancasing/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		return
 
 /obj/item/weapon/grenade/cancasing/activate(mob/user)
@@ -82,9 +82,9 @@
 		var/obj/item/weapon/lighter/O = I
 		if(O.lit)
 			is_W_lit = TRUE
-	else if(iswelding(I))
-		var/obj/item/weapon/weldingtool/O = I
-		if(O.isOn())
+	else if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(WT.isOn())
 			is_W_lit = TRUE
 
 	if(!is_W_lit)

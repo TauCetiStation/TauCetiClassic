@@ -386,15 +386,15 @@
 		reactions += "[FR.convertable_id] to [FR.result_id]"
 	return reactions
 
-/obj/structure/altar_of_gods/attackby(obj/item/C, mob/user, params)
-	if(iswrenching(C))
-		if(!user.is_busy(src) && C.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
+/obj/structure/altar_of_gods/attackby(obj/item/I, mob/user, params)
+	if(I.get_quality(QUALITY_WRENCHING))
+		if(!user.is_busy(src) && I.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 			anchored = !anchored
 			visible_message("<span class='warning'>[src] has been [anchored ? "secured to the floor" : "unsecured from the floor"] by [user].</span>")
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			return
 
-	if(anchored && use_religion_tools(C, user))
+	if(anchored && use_religion_tools(I, user))
 		return
 
 	return ..()

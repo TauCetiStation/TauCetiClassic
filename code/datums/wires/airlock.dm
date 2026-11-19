@@ -52,14 +52,14 @@ var/global/const/AIRLOCK_WIRE_UNRES_SIDE    = 4096
 		return
 	if(action == "buffer")
 		var/obj/item/I = usr.get_active_hand()
-		if(ispulsing(I))
-			var/obj/item/device/multitool/M = I
-			if(holder in M.doors_buffer)
+		if(I.get_quality(QUALITY_PULSING))
+			var/obj/item/device/multitool/MT = I
+			if(holder in MT.doors_buffer)
 				to_chat(usr, "<span class='warning'>This <i>door</i> is already in the buffer!</span>")
-			else if(M.doors_buffer.len >= M.buffer_limit)
+			else if(MT.doors_buffer.len >= MT.buffer_limit)
 				to_chat(usr, "<span class='warning'>The multitool's buffer is full!</span>")
 			else
-				M.doors_buffer += holder
+				MT.doors_buffer += holder
 				to_chat(usr, "<span class='notice'>You save this airlock to the buffer of your multitool.</span>")
 			. = TRUE
 		else

@@ -77,8 +77,8 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/atmospherics/components/omni/attackby(obj/item/weapon/W, mob/user)
-	if(!iswrenching(W))
+/obj/machinery/atmospherics/components/omni/attackby(obj/item/I, mob/user)
+	if(!I.get_quality(QUALITY_WRENCHING))
 		return ..()
 
 	var/int_pressure = 0
@@ -94,7 +94,7 @@
 		return TRUE
 	if(user.is_busy()) return
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-	if(W.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
+	if(I.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 		user.visible_message(
 			"<span class='notice'>\The [user] unfastens \the [src].</span>",
 			"<span class='notice'>You have unfastened \the [src].</span>",

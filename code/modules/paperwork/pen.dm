@@ -226,14 +226,15 @@
 		playsound(user, 'sound/weapons/saberon.ogg', VOL_EFFECTS_MASTER, 5)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
 		qualities = list(
-			QUALITY_CUTTING = 1
+			QUALITY_CUTTING = 100,
+			QUALITY_SURGERY_CUTTING = 75
 			)
 		set_light(1)
 	update_icon()
 
 /obj/item/weapon/pen/edagger/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	if(ispulsing(I))
+	if(I.get_quality(QUALITY_PULSING))
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")

@@ -78,7 +78,7 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	if(isprying(I))
+	if(I.get_quality(QUALITY_PRYING))
 		if(anchored == 2)
 			to_chat(user, "Unscrew the hoses first!")
 			return
@@ -406,20 +406,20 @@
 		to_chat(usr, "The pests seem to behave oddly, but quickly settle down...")
 
 
-/obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/nutrient))
-		var/obj/item/nutrient/myNut = O
-		user.remove_from_mob(O)
+/obj/machinery/hydroponics/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/nutrient))
+		var/obj/item/nutrient/myNut = I
+		user.remove_from_mob(I)
 		nutrilevel = min(nutrilevel + 10, maxnutri)
 		yieldmod = myNut.yieldmod
 		mutmod = myNut.mutmod
 		to_chat(user, "You adding the nutrient solution in [src].")
 		playsound(src, 'sound/items/cork_and_liquid.ogg', VOL_EFFECTS_MASTER, 90)
-		qdel(O)
+		qdel(I)
 		update_icon()
 
-	else if(istype(O, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
-		var/obj/item/weapon/reagent_containers/reagent_source = O
+	else if(istype(I, /obj/item/weapon/reagent_containers) )  // Syringe stuff (and other reagent containers now too)
+		var/obj/item/weapon/reagent_containers/reagent_source = I
 		var/datum/reagents/S = new /datum/reagents()
 
 		S.my_atom = src
@@ -635,26 +635,26 @@
 		update_icon()
 		return TRUE
 
-	else if ( istype(O, /obj/item/seeds) )
+	else if(istype(I, /obj/item/seeds))
 		if(!planted)
-			user.remove_from_mob(O)
-			to_chat(user, "You plant the [O.name]")
+			user.remove_from_mob(I)
+			to_chat(user, "You plant the [I.name]")
 			dead = FALSE
-			myseed = O
+			myseed = I
 			planted = TRUE
 			age = 1
 			health = myseed.endurance
 			lastcycle = world.time
-			O.loc = src
+			I.loc = src
 			if((user.client  && user.s_active != src))
-				user.client.screen -= O
-			O.dropped(user)
+				user.client.screen -= I
+			I.dropped(user)
 			update_icon()
 
 		else
 			to_chat(user, "<span class='warning'>[src] already has seeds in it!</span>")
 
-	else if (istype(O, /obj/item/device/plant_analyzer))
+	else if (istype(I, /obj/item/device/plant_analyzer))
 		var/msg
 
 		if(planted && myseed)
@@ -679,7 +679,7 @@
 
 		to_chat(user, msg)
 
-	else if (istype(O, /obj/item/weapon/minihoe))
+	else if(istype(I, /obj/item/weapon/minihoe))
 		if(weedlevel > 0)
 			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
@@ -688,26 +688,26 @@
 		else
 			to_chat(user, "<span class='notice'>This plot is completely devoid of weeds. It doesn't need uprooting.</span>")
 
-	else if ( istype(O, /obj/item/weapon/weedspray) )
-		var/obj/item/weedkiller/myWKiller = O
-		user.remove_from_mob(O)
+	else if(istype(I, /obj/item/weapon/weedspray))
+		var/obj/item/weedkiller/myWKiller = I
+		user.remove_from_mob(I)
 		adjustToxic(myWKiller.toxicity)
 		adjustWeeds(-myWKiller.WeedKillStr)
 		to_chat(user, "You apply the weedkiller solution into [src].")
 		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
-		qdel(O)
+		qdel(I)
 		update_icon()
 
-	else if (istype(O, /obj/item/weapon/storage/bag/plants))
+	else if(istype(I, /obj/item/weapon/storage/bag/plants))
 		attack_hand(user)
-		var/obj/item/weapon/storage/bag/plants/S = O
+		var/obj/item/weapon/storage/bag/plants/S = I
 		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
 			if(!S.can_be_inserted(G))
 				return
 			S.handle_item_insertion(G, 1)
 			SSStatistics.score.stuffharvested++
 
-	else if(iswrenching(O) && unwrenchable)
+	else if(I.get_quality(QUALITY_WRENCHING) && unwrenchable)
 		if(anchored == 2)
 			to_chat(user, "Unscrew the hoses first!")
 			return
@@ -723,7 +723,7 @@
 
 		wrenched_change()
 
-	else if(iscutter(O) && unwrenchable)
+	else if(I.get_quality(QUALITY_CUTTING) && unwrenchable)
 
 		if(anchored)
 			if(anchored == 2)
@@ -739,21 +739,21 @@
 			wrenched_change()
 			update_icon()
 
-	else if ( istype(O, /obj/item/weapon/pestspray) )
-		var/obj/item/pestkiller/myPKiller = O
-		user.remove_from_mob(O)
+	else if(istype(I, /obj/item/weapon/pestspray))
+		var/obj/item/pestkiller/myPKiller = I
+		user.remove_from_mob(I)
 		adjustToxic(myPKiller.toxicity)
 		adjustPests(-myPKiller.PestKillStr)
 		to_chat(user, "You apply the pestkiller solution into [src].")
 		playsound(src, 'sound/effects/spray3.ogg', VOL_EFFECTS_MASTER, null, FALSE, null, -6)
-		qdel(O)
+		qdel(I)
 		update_icon()
-	else if(istype(O, /obj/item/apiary))
+	else if(istype(I, /obj/item/apiary))
 		if(planted)
 			to_chat(user, "<span class='warning'>The hydroponics tray is already occupied!</span>")
 		else
 			user.remove_from_mob()
-			qdel(O)
+			qdel(I)
 
 			var/obj/machinery/apiary/A = new(src.loc)
 			A.icon = src.icon
@@ -1008,9 +1008,9 @@
 		set_light(0)
 	return
 
-/obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user)
+/obj/machinery/hydroponics/soil/attackby(obj/item/I, mob/user)
 	..()
-	if(istype(O, /obj/item/weapon/shovel))
+	if(istype(I, /obj/item/weapon/shovel))
 		to_chat(user, "You clear up [src]!")
 		qdel(src)
 

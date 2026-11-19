@@ -117,13 +117,13 @@ By design, d1 is the smallest direction and d2 is the highest
 //   - Cable coil : merge cables
 //   - Multitool : get the power currently passing through the cable
 //
-/obj/structure/cable/attackby(obj/item/W, mob/user)
+/obj/structure/cable/attackby(obj/item/I, mob/user)
 
 	var/turf/T = src.loc
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return
 
-	if(iscutter(W))
+	if(I.get_quality(QUALITY_CUTTING))
 
 		if (shock(user, 50))
 			return
@@ -133,16 +133,16 @@ By design, d1 is the smallest direction and d2 is the highest
 		return	// not needed, but for clarity
 
 
-	else if(iscoil(W))
-		var/obj/item/stack/cable_coil/coil = W
+	else if(istype(I, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = I
 		coil.cable_join(src, user)
 
-	else if(ispulsing(W))
+	else if(I.get_quality(QUALITY_PULSING))
 		to_chat(user, get_power_info())
 		shock(user, 5, 0.2)
 
 	else
-		if((W.flags & CONDUCT) || HAS_TRAIT(user, TRAIT_CONDUCT))
+		if((I.flags & CONDUCT) || HAS_TRAIT(user, TRAIT_CONDUCT))
 			shock(user, 50, 0.7)
 
 	add_fingerprint(user)
@@ -434,6 +434,11 @@ By design, d1 is the smallest direction and d2 is the highest
 	singular_name = "cable piece"
 	full_w_class = SIZE_TINY
 	merge_type = /obj/item/stack/cable_coil
+
+	qualities = list(
+		QUALITY_SURGERY_FIXVEIN = 75,
+		QUALITY_SURGERY_CLAMP = 75
+	)
 
 /obj/item/stack/cable_coil/cyborg
 	max_amount = 90

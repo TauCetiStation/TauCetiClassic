@@ -26,18 +26,18 @@
                 "It seems to draw you inward as you look it at.", "Something twinkles faintly as you look at it.",
                 "It's mesmerizing to behold.")
 
-/obj/machinery/power/crystal/attackby(obj/item/W, mob/user)
-	if(default_unfasten_wrench(user,W))
+/obj/machinery/power/crystal/attackby(obj/item/I, mob/user)
+	if(default_unfasten_wrench(user, I))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		anchored ? connect_to_network() : disconnect_from_network()
 		update_crystal()
 		return
 
-	if(iscutter(W)) // If we want to remove the wiring
+	if(I.get_quality(QUALITY_CUTTING)) // If we want to remove the wiring
 		if(wired)
 			user.visible_message("<span class='notice'>[user] starts cutting off the wiring of the [src].</span>",
                                  "<span class='notice'>You start cutting off the wiring of the [src].</span>")
-			if(!user.is_busy(src) && W.use_tool(src, user, 20, volume = 50, quality = QUALITY_CUTTING))
+			if(!user.is_busy(src) && I.use_tool(src, user, 20, volume = 50, quality = QUALITY_CUTTING))
 				user.visible_message("<span class='notice'>[user] cuts off the wiring of the [src].</span>",
                                      "<span class='notice'>You cut off the wiring of the [src].</span>")
 				wired = FALSE
@@ -46,15 +46,15 @@
 		else
 			to_chat(user, "<span class='red'>There is currently no wiring on the [src].</span>")
 			return
-	if(iscoil(W)) // If we want to put the wiring
+	if(istype(I, /obj/item/stack/cable_coil)) // If we want to put the wiring
 		if(!wired)
-			var/obj/item/stack/cable_coil/CC = W
+			var/obj/item/stack/cable_coil/CC = I
 			if(!CC.use(2))
 				to_chat(user, "<span class='red'>There's not enough wire to finish the task.</span>")
 				return
 			user.visible_message("<span class='notice'>[user] starts putting the wiring all over the [src].</span>",
                                  "<span class='notice'>You start putting the wiring all over the [src].</span>")
-			if(!user.is_busy(src) && W.use_tool(src, user, 20, volume = 50))
+			if(!user.is_busy(src) && I.use_tool(src, user, 20, volume = 50))
 				user.visible_message("<span class='notice'>[user] puts the wiring all over the [src].</span>",
                                      "<span class='notice'>You put the wiring all over the [src].</span>")
 				wired = TRUE

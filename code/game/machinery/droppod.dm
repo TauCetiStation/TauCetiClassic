@@ -268,8 +268,8 @@
 	for(var/turf/T in get_area_turfs(area_to_deploy.type))
 		if(!T.density && !isenvironmentturf(T) && !T.obscured)
 			var/clear = TRUE
-			for(var/obj/O in T)
-				if(O.density)
+			for(var/obj/I in T)
+				if(I.density)
 					clear = FALSE
 					break
 			if(clear)
@@ -414,12 +414,12 @@
 
 /********Actions with objects********/
 
-/obj/structure/droppod/attackby(obj/item/O, mob/living/carbon/user)
+/obj/structure/droppod/attackby(obj/item/I, mob/living/carbon/user)
 	if(stat_flags & IS_LOCKED)
 		to_chat(user, "<span class ='userdanger'>[src] is lock down!</span>")
 		return
 
-	if(isscrewing(O))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(stat_flags & ADVANCED_AIMING_INSTALLED)
 			if(stat_flags & STATE_AIMING)
 				CancelAdvancedAiming()
@@ -430,42 +430,42 @@
 		else
 			to_chat(user, "<span class ='notice'>Advanced aiming system does not installed in [src]!</span>")
 
-	else if(iswelding(O))
-		var/obj/item/weapon/weldingtool/WT = O
+	else if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_MELEE)
 		if(get_integrity() < max_integrity && WT.use(0, user))
 			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 			repair_damage(10)
 			visible_message("<span class='notice'>[user] has repaired some dents on [src]!</span>")
 
-	else if(O.flags & ABSTRACT)
+	else if(I.flags & ABSTRACT)
 		return ..()
 	else
-		if(istype(O, /obj/item/weapon/simple_drop_system))
+		if(istype(I, /obj/item/weapon/simple_drop_system))
 			if(!(stat_flags & POOR_AIMING))
 				to_chat(user, "<span class ='notice'>The [src] already has simple aiming system installed!</span>")
 				return
 			stat_flags &= ~POOR_AIMING
-			to_chat(user, "<span class ='notice'>You upgrade [src]'s Guidance system with [O]!</span>")
-			qdel(O)
-		else if(istype(O, /obj/item/device/camera_bug))
+			to_chat(user, "<span class ='notice'>You upgrade [src]'s Guidance system with [I]!</span>")
+			qdel(I)
+		else if(istype(I, /obj/item/device/camera_bug))
 			if(stat_flags & ADVANCED_AIMING_INSTALLED)
 				to_chat(user, "<span class ='notice'>The [src] already has advanced aiming system installed!</span>")
 				return
 			stat_flags |= ADVANCED_AIMING_INSTALLED
-			to_chat(user, "<span class ='notice'>You upgrade [src]'s Guidance system with [O], Now it has astonishing accuracy!</span>")
-			qdel(O)
+			to_chat(user, "<span class ='notice'>You upgrade [src]'s Guidance system with [I], Now it has astonishing accuracy!</span>")
+			qdel(I)
 		else if(length(stored_items) < 7)
 			if(issilicon(user))
 				return
 			if(stored_items.len == 1)
 				verbs += /obj/structure/droppod/proc/Eject_items_cmd
-			user.drop_from_inventory(O)
-			O.forceMove(src)
-			stored_items += O
-			to_chat(user, "<span class ='notice'>You put [O] at [src]</span>")
+			user.drop_from_inventory(I)
+			I.forceMove(src)
+			stored_items += I
+			to_chat(user, "<span class ='notice'>You put [I] at [src]</span>")
 		else
-			to_chat(user, "<span class ='danger'>When you tried to shove an [O], the [src] spat it out!</span>")
+			to_chat(user, "<span class ='danger'>When you tried to shove an [I], the [src] spat it out!</span>")
 
 /obj/structure/droppod/proc/Eject_items_cmd()
 	set category = "Drop Pod"
@@ -745,7 +745,7 @@
 	..()
 	droped = TRUE
 
-/obj/structure/droppod/Syndi/attackby(obj/item/O, mob/living/carbon/user)
+/obj/structure/droppod/Syndi/attackby(obj/item/I, mob/living/carbon/user)
 	. = ..()
 	if(stat_flags & ADVANCED_AIMING_INSTALLED)
 		if(uses == 1 && !droped)

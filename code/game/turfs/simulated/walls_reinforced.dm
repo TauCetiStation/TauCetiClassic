@@ -80,7 +80,7 @@
 	return
 
 
-/turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user)
+/turf/simulated/wall/r_wall/attackby(obj/item/I, mob/user)
 	//get the user's location
 	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
@@ -88,8 +88,8 @@
 	if(user.is_busy()) return
 
 	if(rotting)
-		if(iswelding(W))
-			var/obj/item/weapon/weldingtool/WT = W
+		if(I.get_quality(QUALITY_WELDING))
+			var/obj/item/weapon/weldingtool/WT = I
 			if(WT.use(0,user))
 				to_chat(user, "<span class='notice'>Вы сжигаете грибок сваркой.</span>")
 				playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER, 10)
@@ -97,21 +97,21 @@
 					qdel(E)
 				rotting = 0
 				return
-		else if(!W.is_sharp() && W.force >= 10 || W.force >= 20)
-			to_chat(user, "<span class='notice'>Укрепленная стена рассыпется от удара [W.name].</span>")
+		else if(!I.is_sharp() && I.force >= 10 || I.force >= 20)
+			to_chat(user, "<span class='notice'>Укрепленная стена рассыпется от удара [I.name].</span>")
 			dismantle_wall()
 			return
 
 	//THERMITE related stuff. Calls thermitemelt() which handles melting simulated walls and the relevant effects
 	if(thermite)
-		if(iswelding(W))
-			var/obj/item/weapon/weldingtool/WT = W
+		if(I.get_quality(QUALITY_WELDING))
+			var/obj/item/weapon/weldingtool/WT = I
 			if(WT.use(0,user))
 				thermitemelt(user, seconds_to_melt)
 				return
 
-		else if(istype(W, /obj/item/weapon/melee/energy/blade))
-			var/obj/item/weapon/melee/energy/blade/EB = W
+		else if(istype(I, /obj/item/weapon/melee/energy/blade))
+			var/obj/item/weapon/melee/energy/blade/EB = I
 
 			EB.spark_system.start()
 			to_chat(user, "<span class='notice'>Вы бьете укрепленную стену энергетическим мечом; термит вспыхивает!</span>")
@@ -121,15 +121,15 @@
 			thermitemelt(user, seconds_to_melt)
 			return
 
-	else if(istype(W, /obj/item/weapon/melee/energy/blade))
+	else if(istype(I, /obj/item/weapon/melee/energy/blade))
 		to_chat(user, "<span class='notice'>Эта стена слишком толстая. Лучше найти другой способ.</span>")
 		return
 
-	if(damage && iswelding(W))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(damage && I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0,user))
 			to_chat(user, "<span class='notice'>Вы начинаете ремонтировать укрепленную стену.</span>")
-			if(W.use_tool(src, user, max(5, damage / 5), volume = 100, quality = QUALITY_WELDING))
+			if(I.use_tool(src, user, max(5, damage / 5), volume = 100, quality = QUALITY_WELDING))
 				to_chat(user, "<span class='notice'>Вы закончили ремонтировать укрепленную стену.</span>")
 				take_damage(-damage)
 			return
@@ -137,8 +137,8 @@
 			to_chat(user, "<span class='warning'>Нужно больше топлива.</span>")
 			return
 
-	if(istype(W, /obj/item/weapon/airlock_painter))
-		var/obj/item/weapon/airlock_painter/A = W
+	if(istype(I, /obj/item/weapon/airlock_painter))
+		var/obj/item/weapon/airlock_painter/A = I
 		if(!A.can_use(user, 1))
 			return
 		var/new_color = tgui_input_list(user, "Выберите цвет", "Цвет", WALLS_COLORS)
@@ -153,7 +153,7 @@
 	//DECONSTRUCTION
 	switch(d_state)
 		if(INTACT)
-			if (iscutter(W))
+			if (I.get_quality(QUALITY_CUTTING))
 				if(!handle_fumbling(user, src, SKILL_TASK_TOUGH, list(/datum/skill/engineering = SKILL_LEVEL_PRO),"<span class='notice'>You fumble around figuring out how to cut the outer grille.</span>"))
 					return
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
@@ -164,23 +164,23 @@
 				return
 
 		if(SUPPORT_LINES)
-			if (isscrewing(W))
+			if (I.get_quality(QUALITY_SCREWING))
 				to_chat(user, "<span class='notice'>Вы начинаете удалять поддерживающие ряды.</span>")
 				playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
-				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_SCREWING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+				if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_SCREWING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
-					if(d_state == SUPPORT_LINES && user.loc == T && user.get_active_hand() == W)
+					if(d_state == SUPPORT_LINES && user.loc == T && user.get_active_hand() == I)
 						d_state = COVER
 						update_icon()
 						to_chat(user, "<span class='notice'>Вы удаляете поддерживающие ряды.</span>")
 				return
 
 			//REPAIRING (replacing the outer grille for cosmetic damage)
-			else if(istype(W, /obj/item/stack/rods))
-				var/obj/item/stack/O = W
+			else if(istype(I, /obj/item/stack/rods))
+				var/obj/item/stack/O = I
 				if(!O.use(1))
 					return
 				if(!handle_fumbling(user, src, SKILL_TASK_AVERAGE, list(/datum/skill/engineering = SKILL_LEVEL_PRO),"<span class='notice'>You fumble around figuring out how to replace the outer grille.</span>"))
@@ -191,8 +191,8 @@
 				return
 
 		if(COVER)
-			if(iswelding(W))
-				var/obj/item/weapon/weldingtool/WT = W
+			if(I.get_quality(QUALITY_WELDING))
+				var/obj/item/weapon/weldingtool/WT = I
 				if(WT.use(0,user))
 
 					to_chat(user, "<span class='notice'>Вы начинаете разрезать металлическое покрытие.</span>")
@@ -208,52 +208,52 @@
 					to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 				return
 
-			if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
+			if(istype(I, /obj/item/weapon/gun/energy/laser/cutter))
 				to_chat(user, "<span class='notice'>Вы начинаете разрезать металлическое покрытие.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+				if(I.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
-					if(d_state == COVER && user.loc == T && user.get_active_hand() == W)
+					if(d_state == COVER && user.loc == T && user.get_active_hand() == I)
 						d_state = CUT_COVER
 						update_icon()
 						to_chat(user, "<span class='notice'>Вы сильно давите на покрытие, смещая его.</span>")
 				return
 
 		if(CUT_COVER)
-			if (isprying(W))
+			if (I.get_quality(QUALITY_PRYING))
 				to_chat(user, "<span class='notice'>Вы пытаетесь отделить покрытие.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100, quality = QUALITY_PRYING,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+				if(I.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100, quality = QUALITY_PRYING,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
-					if(d_state == CUT_COVER && user.loc == T && user.get_active_hand() == W)
+					if(d_state == CUT_COVER && user.loc == T && user.get_active_hand() == I)
 						d_state = ANCHOR_BOLTS
 						update_icon()
 						to_chat(user, "<span class='notice'>Вы отделили покрытие.</span>")
 				return
 
 		if(ANCHOR_BOLTS)
-			if (iswrenching(W))
+			if (I.get_quality(QUALITY_WRENCHING))
 
 				to_chat(user, "<span class='notice'>Вы ослабляете болты, закрепляющие поддерживающие балки.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_WRENCHING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+				if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_WRENCHING, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
-					if(d_state == ANCHOR_BOLTS && user.loc == T && user.get_active_hand() == W)
+					if(d_state == ANCHOR_BOLTS && user.loc == T && user.get_active_hand() == I)
 						d_state = SUPPORT_RODS
 						update_icon()
 						to_chat(user, "<span class='notice'>Вы ослабили болты, закрепляющие поддерживающие балки.</span>")
 				return
 
 		if(SUPPORT_RODS)
-			if(iswelding(W))
-				var/obj/item/weapon/weldingtool/WT = W
-				if(WT.use(0,user))
+			if(I.get_quality(QUALITY_WELDING))
+				var/obj/item/weapon/weldingtool/WT = I
+				if(WT.use(0, user))
 
 					to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки.</span>")
-					if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100, quality = QUALITY_WELDING,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+					if(I.use_tool(src, user, SKILL_TASK_DIFFICULT, volume = 100, quality = QUALITY_WELDING,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 						if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 							return
 
@@ -266,14 +266,14 @@
 					to_chat(user, "<span class='notice'>Нужно больше топлива.</span>")
 				return
 
-			if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
+			if(istype(I, /obj/item/weapon/gun/energy/laser/cutter))
 
 				to_chat(user, "<span class='notice'>Вы разрезаете поддерживающие балки.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+				if(I.use_tool(src, user, SKILL_TASK_TOUGH, volume = 100, required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
-					if(d_state == SUPPORT_RODS && user.loc == T && user.get_active_hand() == W)
+					if(d_state == SUPPORT_RODS && user.loc == T && user.get_active_hand() == I)
 						d_state = SHEATH
 						update_icon()
 						new /obj/item/stack/rods(src)
@@ -281,14 +281,14 @@
 				return
 
 		if(SHEATH)
-			if(isprying(W))
+			if(I.get_quality(QUALITY_PRYING))
 
 				to_chat(user, "<span class='notice'>Вы отделяете внешнюю обшивку.</span>")
-				if(W.use_tool(src, user, SKILL_TASK_DIFFICULT, volume  = 100, quality = QUALITY_PRYING,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
+				if(I.use_tool(src, user, SKILL_TASK_DIFFICULT, volume  = 100, quality = QUALITY_PRYING,  required_skills_override = list(/datum/skill/engineering = SKILL_LEVEL_PRO)))
 					if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 						return
 
-					if(d_state == SHEATH && user.loc == T && user.get_active_hand() == W)
+					if(d_state == SHEATH && user.loc == T && user.get_active_hand() == I)
 						to_chat(user, "<span class='notice'>Вы отделили внешнюю обшивку.</span>")
 						dismantle_wall()
 				return
@@ -297,8 +297,8 @@
 
 	//DRILLING
 	//fulldestruct to walls when
-	if(istype(W,/obj/item/weapon/melee/changeling_hammer) && !rotting)
-		var/obj/item/weapon/melee/changeling_hammer/hammer = W
+	if(istype(I,/obj/item/weapon/melee/changeling_hammer) && !rotting)
+		var/obj/item/weapon/melee/changeling_hammer/hammer = I
 		//slowdown, user. No need destruct all walls without debuff
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -311,25 +311,25 @@
 		take_damage(hammer.get_object_damage())
 		return
 
-	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+	else if (istype(I, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
 		to_chat(user, "<span class='notice'>Вы бурите сквозь укрепленную стену.</span>")
 
-		if(W.use_tool(src, user, SKILL_TASK_FORMIDABLE, volume = 50))
+		if(I.use_tool(src, user, SKILL_TASK_FORMIDABLE, volume = 50))
 			if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 				return
 
-			if(user.loc == T && user.get_active_hand() == W)
+			if(user.loc == T && user.get_active_hand() == I)
 				to_chat(user, "<span class='notice'>Вы пробурили последнюю укрепленную пластину.</span>")
 				dismantle_wall()
 
 	//REPAIRING
-	else if(istype(W, /obj/item/stack/sheet/metal) && d_state)
-		var/obj/item/stack/sheet/metal/MS = W
+	else if(istype(I, /obj/item/stack/sheet/metal) && d_state)
+		var/obj/item/stack/sheet/metal/MS = I
 
 		to_chat(user, "<span class='notice'>Вы ремонтируете укрепленную стену металлом.</span>")
 
-		if(W.use_tool(src, user, (max(20*d_state,100)), volume = 100))	//time taken to repair is proportional to the damage! (max 10 seconds)
+		if(I.use_tool(src, user, (max(20*d_state,100)), volume = 100))	//time taken to repair is proportional to the damage! (max 10 seconds)
 			if(!istype(src, /turf/simulated/wall/r_wall) || !T)
 				return
 
@@ -342,67 +342,67 @@
 				to_chat(user, "<span class='notice'>Вы отремонтировали укрепленную стену.</span>")
 
 	//APC
-	else if(istype(W,/obj/item/apc_frame))
-		var/obj/item/apc_frame/AH = W
+	else if(istype(I,/obj/item/apc_frame))
+		var/obj/item/apc_frame/AH = I
 		AH.try_build(src)
 
-	else if(istype(W,/obj/item/newscaster_frame))     //Be damned the man who thought only mobs need attack() and walls dont need inheritance, hitler incarnate
-		var/obj/item/newscaster_frame/AH = W
-		AH.try_build(src)
-		return
-
-	else if(istype(W,/obj/item/alarm_frame))
-		var/obj/item/alarm_frame/AH = W
-		AH.try_build(src)
-
-	else if(istype(W,/obj/item/firealarm_frame))
-		var/obj/item/firealarm_frame/AH = W
+	else if(istype(I,/obj/item/newscaster_frame))     //Be damned the man who thought only mobs need attack() and walls dont need inheritance, hitler incarnate
+		var/obj/item/newscaster_frame/AH = I
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame))
-		var/obj/item/light_fixture_frame/AH = W
+	else if(istype(I,/obj/item/alarm_frame))
+		var/obj/item/alarm_frame/AH = I
+		AH.try_build(src)
+
+	else if(istype(I,/obj/item/firealarm_frame))
+		var/obj/item/firealarm_frame/AH = I
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/light_fixture_frame/small))
-		var/obj/item/light_fixture_frame/small/AH = W
+	else if(istype(I,/obj/item/light_fixture_frame))
+		var/obj/item/light_fixture_frame/AH = I
 		AH.try_build(src)
 		return
 
-	else if(istype(W,/obj/item/door_control_frame))
-		var/obj/item/door_control_frame/AH = W
+	else if(istype(I,/obj/item/light_fixture_frame/small))
+		var/obj/item/light_fixture_frame/small/AH = I
+		AH.try_build(src)
+		return
+
+	else if(istype(I,/obj/item/door_control_frame))
+		var/obj/item/door_control_frame/AH = I
 		AH.try_build(src)
 		return
 
 	// why is all of this here help me
-	else if(istype(W, /obj/item/noticeboard_frame))
-		var/obj/item/noticeboard_frame/NF = W
+	else if(istype(I, /obj/item/noticeboard_frame))
+		var/obj/item/noticeboard_frame/NF = I
 		NF.try_build(user, src)
 
-	else if(istype(W,/obj/item/weapon/picture_frame))
-		var/obj/item/weapon/picture_frame/AH = W
+	else if(istype(I,/obj/item/weapon/picture_frame))
+		var/obj/item/weapon/picture_frame/AH = I
 		AH.try_build(src)
 		return
 
 	//Poster stuff
-	else if(istype(W,/obj/item/weapon/poster))
-		place_poster(W,user)
+	else if(istype(I,/obj/item/weapon/poster))
+		place_poster(I,user)
 		return
-	else if((istype(W, /obj/item/weapon/paper) || istype(W, /obj/item/weapon/paper_bundle) || istype(W, /obj/item/weapon/photo)) && (get_dir(user,src) in global.cardinal))
-		user.drop_from_inventory(W)
-		W.pixel_x = X_OFFSET(24, get_dir(user, src))
-		W.pixel_y = Y_OFFSET(24, get_dir(user, src))
-		RegisterSignal(W, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W))
-		RegisterSignal(W, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W))
+	else if((istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/paper_bundle) || istype(I, /obj/item/weapon/photo)) && (get_dir(user,src) in global.cardinal))
+		user.drop_from_inventory(I)
+		I.pixel_x = X_OFFSET(24, get_dir(user, src))
+		I.pixel_y = Y_OFFSET(24, get_dir(user, src))
+		RegisterSignal(I, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), I))
+		RegisterSignal(I, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), I))
 		return
-	else if((istype(W, /obj/item/wallclock) || istype(W, /obj/item/portrait)) && (get_dir(user,src) in global.cardinal))
-		user.drop_from_inventory(W)
-		W.pixel_x = X_OFFSET(32, get_dir(user, src))
-		W.pixel_y = Y_OFFSET(32, get_dir(user, src))
-		W.anchored = TRUE
-		RegisterSignal(W, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W, TRUE))
-		RegisterSignal(W, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), W, TRUE))
+	else if((istype(I, /obj/item/wallclock) || istype(I, /obj/item/portrait)) && (get_dir(user,src) in global.cardinal))
+		user.drop_from_inventory(I)
+		I.pixel_x = X_OFFSET(32, get_dir(user, src))
+		I.pixel_y = Y_OFFSET(32, get_dir(user, src))
+		I.anchored = TRUE
+		RegisterSignal(I, COMSIG_MOVABLE_MOVED, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), I, TRUE))
+		RegisterSignal(I, COMSIG_PARENT_QDELETING, CALLBACK(src, PROC_REF(tied_object_reset_pixel_offset), I, TRUE))
 
 	//Finally, CHECKING FOR FALSE WALLS if it isn't damaged
 	else if(!d_state)

@@ -42,7 +42,7 @@
 		return
 
 	if(panel_open)
-		if(ispulsing(I))
+		if(I.get_quality(QUALITY_PULSING))
 			var/obj/item/device/multitool/M = I
 			M.buffer = src
 			to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
@@ -65,8 +65,8 @@
 	active_power_usage = 500
 	var/stage = 0
 
-/obj/machinery/telepad_cargo/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
+/obj/machinery/telepad_cargo/attackby(obj/item/weapon/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		if(anchored)
 			anchored = FALSE
@@ -75,7 +75,7 @@
 			anchored = TRUE
 			to_chat(user, "<span class='notice'>The [src] is now secured.</span>")
 		return
-	else if(isscrewing(W))
+	else if(I.get_quality(QUALITY_SCREWING))
 		if(stage == 0)
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			to_chat(user, "<span class='notice'>You unscrew the telepad's tracking beacon.</span>")
@@ -85,7 +85,7 @@
 			to_chat(user, "<span class='notice'>You screw in the telepad's tracking beacon.</span>")
 			stage = 0
 		return
-	else if(iswelding(W) && stage == 1)
+	else if(I.get_quality(QUALITY_WELDING) && stage == 1)
 		playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You disassemble the telepad.</span>")
 		new /obj/item/stack/sheet/metal(get_turf(src))

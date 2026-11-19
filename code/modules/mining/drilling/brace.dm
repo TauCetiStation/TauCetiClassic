@@ -16,17 +16,17 @@
 	return ..()
 
 
-/obj/machinery/mining/brace/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/mining/brace/attackby(obj/item/I, mob/user)
 	if(connected && connected.active && !connected.wires_protector_disable)
 		to_chat(user, "<span class='notice'>You can't work with the brace of a running drill!</span>")
 		return
 
-	if(default_deconstruction_screwdriver(user,"mining_brace","mining_brace", W))
+	if(default_deconstruction_screwdriver(user,"mining_brace","mining_brace", I))
 		return
-	if(default_deconstruction_crowbar(W, 1))
+	if(default_deconstruction_crowbar(I, 1))
 		return
 
-	if(iswrenching(W))
+	if(I.get_quality(QUALITY_WRENCHING))
 
 		if(isspaceturf(get_turf(src)))
 			to_chat(user, "<span class='notice'>You can't anchor something to empty space. Idiot.</span>")

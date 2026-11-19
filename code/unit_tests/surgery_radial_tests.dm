@@ -4,6 +4,7 @@
 	name = "surgery radial test tool"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "scalpel"
+	qualities = list(QUALITY_SURGERY_CUTTING = 100)
 
 /obj/item/surgery_radial_test_tool/immobilizing_pickup/pickup(mob/user)
 	. = ..()
@@ -30,6 +31,21 @@
 	max_duration = 0
 	allowed_tools = list(/obj/item/surgery_radial_test_tool = 100)
 	var/executions = 0
+
+/datum/surgery_step/surgery_radial_test/allowed_tool
+	name = "Surery Allowerd Tool Test"
+	allowed_tools = list(/obj/item/surgery_radial_test_tool = 100)
+
+/datum/surgery_step/surgery_radial_test/allowed_tool/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	executions++
+
+/datum/surgery_step/surgery_radial_test/quality
+	name = "Surgery Quality Tool Test"
+	allowed_tools = null
+	allowed_qualities = list(QUALITY_SURGERY_CUTTING)
+
+/datum/surgery_step/surgery_radial_test/quality/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	executions++
 
 /datum/surgery_step/surgery_radial_test/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, silent = FALSE)
 	return TRUE
@@ -62,6 +78,62 @@
 /datum/surgery_step/groin_organs/fixing/surgery_radial_silent_test/necrotic_organs_warning(mob/living/user, mob/living/carbon/human/target, list/dead_organs)
 	warning_calls++
 
+/datum/unit_test/surgery_alowed_tool_test
+	name = "SURGERY: ALLOWED TOOL TEST"
+
+/datum/unit_test/surgery_alowed_tool_test/start_test()
+	var/datum/surgery_step/surgery_radial_test/allowed_tool/srt = locate(/datum/surgery_step/surgery_radial_test/allowed_tool) in surgery_steps
+	var/turf/test_turf = locate(1, 1, 1)
+	var/mob/living/carbon/human/surgery_radial_test/user = new(test_turf)
+	var/mob/living/carbon/human/surgery_radial_test/target = new(test_turf)
+	var/obj/item/surgery_radial_test_tool/tool = new(user)
+	user.put_in_active_hand(tool)
+	srt.executions = 0
+
+	var/old_lowpop = SSticker.is_lowpop
+	SSticker.is_lowpop = TRUE
+	var/result = do_surgery(target, user, tool, from_radial = TRUE, forced_zone = BP_CHEST, selected_step = srt)
+	SSticker.is_lowpop = old_lowpop
+
+	if(!result || !srt.executions)
+		fail("SOME TOOL NOT ALLOWED TO USE HERE, IT`s : [tool::name] BUT STEP MAY ALLOW : [srt.allowed_tools[1]]")
+	else
+		pass("SOME TOOL ALLOWED TO USE HERE")
+
+	qdel(user)
+	qdel(target)
+	qdel(test_turf)
+	return TRUE
+
+/datum/unit_test/surgery_alowed_qualiti_test
+	name = "SURGERY: ALLOWED QUALITY TEST"
+
+/datum/unit_test/surgery_alowed_qualiti_test/start_test()
+	var/datum/surgery_step/surgery_radial_test/quality/quality_srt = locate(/datum/surgery_step/surgery_radial_test/quality) in surgery_steps
+	var/turf/test_turf = locate(1, 1, 1)
+	var/mob/living/carbon/human/surgery_radial_test/user = new(test_turf)
+	var/mob/living/carbon/human/surgery_radial_test/target = new(test_turf)
+	var/obj/item/surgery_radial_test_tool/tool = new(user)
+	user.put_in_active_hand(tool)
+	quality_srt.executions = 0
+
+	var/old_lowpop = SSticker.is_lowpop
+	SSticker.is_lowpop = TRUE
+	var/result = do_surgery(target, user, tool, from_radial = TRUE, forced_zone = BP_CHEST, selected_step = quality_srt)
+	SSticker.is_lowpop = old_lowpop
+
+
+	if(!result || !quality_srt.executions)
+		fail("SOME QUALITY NOT ALLOWED TO USE HERE, IT`s [tool::name] : [tool.qualities[1]] BUT STEP MAY ALLOW : [quality_srt.allowed_qualities[1]]")
+	else
+		pass("SOME QUALITY ALLOWED TO USE HERE")
+
+	qdel(tool)
+	qdel(user)
+	qdel(target)
+	qdel(test_turf)
+	return TRUE
+
 /datum/unit_test/surgery_radial_selected_step
 	name = "SURGERY RADIAL: selected step overrides surgery priority."
 
@@ -90,8 +162,10 @@
 	else
 		pass("Selected low-priority step executed without falling back to the priority list.")
 
+	qdel(tool)
 	qdel(user)
 	qdel(target)
+	qdel(test_turf)
 	return TRUE
 
 /datum/unit_test/surgery_radial_duplicate_labels
@@ -156,11 +230,10 @@
 	IO.damage = 1
 	IO.status |= ORGAN_DEAD
 	if(target_zone == BP_CHEST)
-		target.op_stage.ribcage = 2
+		BP.open = BP_RIBCAGE_OS
 	else if(target_zone == BP_GROIN)
-		BP.open = 1
+		BP.open = BP_SCALPEL_OS
 
-	step.vars["warning_calls"] = 0
 	if(step.can_use(user, target, target_zone, null, TRUE) || step.vars["warning_calls"])
 		qdel(user)
 		qdel(target)

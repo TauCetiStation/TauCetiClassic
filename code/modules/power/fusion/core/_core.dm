@@ -105,19 +105,19 @@ var/global/list/fusion_cores = list()
 	if(owned_field)
 		Shutdown()
 
-/obj/machinery/power/fusion_core/attackby(obj/item/W, mob/user)
+/obj/machinery/power/fusion_core/attackby(obj/item/I, mob/user)
 
 	if(owned_field)
 		to_chat(user,"<span class='warning'>Shut \the [src] off first!</span>")
 		return
 
-	if(ispulsing(W))
+	if(I.get_quality(QUALITY_PULSING))
 		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Fusion Core", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident
 		return
 
-	else if(iswrenching(W))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		user.SetNextMove(CLICK_CD_INTERACT)

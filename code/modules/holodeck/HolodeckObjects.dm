@@ -89,8 +89,8 @@
 /obj/structure/stool/bed/chair/holochair
 	icon_state = "chair_gray"
 
-/obj/structure/stool/bed/chair/holochair/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
+/obj/structure/stool/bed/chair/holochair/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		to_chat(user, ("<span class='notice'>It's a holochair, you can't dismantle it!</span>"))
 	return
 
@@ -287,8 +287,8 @@
 /obj/structure/rack/holorack/attack_hand(mob/user)
 	return
 
-/obj/structure/rack/holorack/attackby(obj/item/weapon/W, mob/user)
-	if (iswrenching(W))
+/obj/structure/rack/holorack/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		to_chat(user, "It's a holorack!  You can't unwrench it!")
 		return
 

@@ -17,7 +17,7 @@
 			if(BP.status & ORGAN_BROKEN)
 				already_completed = 1
 				return OBJECTIVE_WIN
-			if(BP.is_stump)
+			if(isstump(BP))
 				already_completed = 1
 				return OBJECTIVE_WIN
 

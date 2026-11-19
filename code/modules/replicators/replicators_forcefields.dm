@@ -42,24 +42,24 @@
 
 	return ..()
 
-/turf/simulated/floor/plating/airless/catwalk/forcefield/attackby(obj/item/C, mob/user, params)
+/turf/simulated/floor/plating/airless/catwalk/forcefield/attackby(obj/item/I, mob/user, params)
 	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
-	if(istype(C, /obj/item/stack/tile) && !user.is_busy())
+	if(istype(I, /obj/item/stack/tile) && !user.is_busy())
 		user.visible_message("<span class='notice'>[user] begins replacing [src].</span>", "<span class='notice'>You begins replacing [src].</span>")
 		if(do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), -0.2))
 			visible_message("<span class='notice'>[user] finishes replacing [src].</span>", "<span class='notice'>You finish replacing [src].</span>")
 			ChangeTurf(/turf/simulated/floor/plating)
 			return
 
-	if(isscrewing(C))
+	if(I.get_quality(QUALITY_SCREWING))
 		// Parent also has screwdriver disassembly so we ought to stop here...
 		to_chat(user, "<span class='warning'>What would that do to a forcefield?</span>")
 		return
 
-	if(ispulsing(C) && !user.is_busy())
+	if(I.get_quality(QUALITY_PULSING) && !user.is_busy())
 		var/obj/structure/bluespace_corridor/BR = locate() in src
 		if(BR)
-			BR.attackby(C, user, params)
+			BR.attackby(I, user, params)
 			return
 		user.visible_message("<span class='notice'>[user] starts DESTROYING [src].</span>", "<span class='notice'>You start DESTROYING [src].</span>")
 		if(do_skilled(user, src, SKILL_TASK_DIFFICULT, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
@@ -103,9 +103,9 @@
 		new /obj/structure/stabilization_field(loc)
 	return ..()
 
-/obj/structure/replicator_forcefield/attackby(obj/item/C, mob/user)
+/obj/structure/replicator_forcefield/attackby(obj/item/I, mob/user)
 	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
-	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
+	if(I.get_quality(QUALITY_PULSING) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
 		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 		qdel(src)
 		return
@@ -158,9 +158,9 @@
 
 	to_chat(user, "<span class='notice'>Ah, the trickster's greatest achivement. A wall that allows everything to pass through but the most tiny of things.</span>")
 
-/obj/structure/stabilization_field/attackby(obj/item/C, mob/user)
+/obj/structure/stabilization_field/attackby(obj/item/I, mob/user)
 	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
-	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
+	if(I.get_quality(QUALITY_PULSING) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
 		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 		qdel(src)
 		return
@@ -192,9 +192,9 @@
 	. = ..()
 	AddComponent(/datum/component/replicator_regeneration)
 
-/obj/structure/replicator_barricade/attackby(obj/item/C, mob/user)
+/obj/structure/replicator_barricade/attackby(obj/item/I, mob/user)
 	var/erase_time = length(global.alive_replicators) > 0 ? SKILL_TASK_DIFFICULT : SKILL_TASK_TRIVIAL
-	if(ispulsing(C) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
+	if(I.get_quality(QUALITY_PULSING) && !user.is_busy() && do_skilled(user, src, erase_time, list(/datum/skill/construction = SKILL_LEVEL_PRO), -0.2))
 		playsound(loc, pick('sound/machines/arcade/gethit1.ogg', 'sound/machines/arcade/gethit2.ogg', 'sound/machines/arcade/-mana1.ogg', 'sound/machines/arcade/-mana2.ogg'), VOL_EFFECTS_MASTER)
 		qdel(src)
 		return
@@ -240,11 +240,11 @@ ADD_TO_GLOBAL_LIST(/obj/structure/forcefield_node, forcefield_nodes)
 	anchored = TRUE
 	opacity = 0
 
-/obj/structure/forcefield_node/attackby(obj/item/C, mob/user, params)
-	if(istype(C, /obj/item/stack/tile) || istype(C, /obj/item/device/multitool))
+/obj/structure/forcefield_node/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/stack/tile) || istype(I, /obj/item/device/multitool))
 		var/turf/simulated/floor/plating/airless/catwalk/forcefield/RB = loc
 		if(istype(RB))
-			RB.attackby(C, user, params)
+			RB.attackby(I, user, params)
 			return
 	return ..()
 

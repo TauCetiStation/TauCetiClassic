@@ -49,8 +49,8 @@
 
 	broadcast() // Bzzt
 /*
-/obj/machinery/media/transmitter/broadcast/attackby(obj/item/W, mob/user, params)
-	if(ispulsing(W))
+/obj/machinery/media/transmitter/broadcast/attackby(obj/item/I, mob/user, params) // idk what is this but we use item/i too
+	if(I.get_quality(QUALITY_PULSING))
 		attack_hand(user)
 		return 1
 

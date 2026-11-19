@@ -18,13 +18,13 @@
 /obj/item/weapon/table_parts
 	var/build_time = 0
 
-/obj/item/weapon/table_parts/proc/attack_tools(obj/item/W, mob/user)
-	if(iswrenching(W))
+/obj/item/weapon/table_parts/proc/attack_tools(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		deconstruct(TRUE, user)
 		return TRUE
 
-	else if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = W
+	else if(istype(I, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = I
 		if (R.use(4))
 			new /obj/item/weapon/table_parts/reinforced( user.loc )
 			to_chat(user, "<span class='notice'>You reinforce the [name].</span>")
@@ -79,8 +79,8 @@
 /obj/item/weapon/table_parts/reinforced
 	build_time = SKILL_TASK_AVERAGE
 
-/obj/item/weapon/table_parts/reinforced/attack_tools(obj/item/W, mob/user)
-	if(iswrenching(W))
+/obj/item/weapon/table_parts/reinforced/attack_tools(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
@@ -92,8 +92,8 @@
 /obj/item/weapon/table_parts/rglass
 	build_time = SKILL_TASK_AVERAGE
 
-/obj/item/weapon/table_parts/rglass/attack_tools(obj/item/W, mob/user)
-	if(iswrenching(W))
+/obj/item/weapon/table_parts/rglass/attack_tools(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
@@ -102,13 +102,13 @@
  * Glass Table Parts
  */
 
-/obj/item/weapon/table_parts/glass/attack_tools(obj/item/W, mob/user)
-	if(iswrenching(W))
+/obj/item/weapon/table_parts/glass/attack_tools(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		deconstruct(TRUE, user)
 		return TRUE
 
-	else if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = W
+	else if(istype(I, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = I
 		if (R.use(2))
 			new /obj/item/weapon/table_parts/rglass( user.loc )
 			to_chat(user, "<span class='notice'>You reinforce the [name].</span>")
@@ -121,13 +121,13 @@
 /*
  * Wooden Table Parts
  */
-/obj/item/weapon/table_parts/wood/attack_tools(obj/item/W, mob/user)
-	if(iswrenching(W))
+/obj/item/weapon/table_parts/wood/attack_tools(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		deconstruct(TRUE, user)
 		return TRUE
 
-	else if(istype(W, /obj/item/stack/tile/grass))
-		var/obj/item/stack/tile/grass/Grass = W
+	else if(istype(I, /obj/item/stack/tile/grass))
+		var/obj/item/stack/tile/grass/Grass = I
 		Grass.use(1)
 		new /obj/item/weapon/table_parts/wood/poker(loc)
 		visible_message("<span class='notice'>[user] adds grass to the wooden table parts</span>")
@@ -139,8 +139,8 @@
 /*
  * Fancy Wooden Table Parts
  */
-/obj/item/weapon/table_parts/wood/fancy/attack_tools(obj/item/W, mob/user)
-	if(iswrenching(W))
+/obj/item/weapon/table_parts/wood/fancy/attack_tools(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
@@ -149,8 +149,8 @@
  * Poker Table Parts
  */
 
-/obj/item/weapon/table_parts/wood/poker/attack_tools(obj/item/W, mob/user)
-	if(iswrenching(W))
+/obj/item/weapon/table_parts/wood/poker/attack_tools(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		deconstruct(TRUE, user)
 		return TRUE
 	return FALSE
@@ -159,7 +159,7 @@
  * Rack Parts
  */
 /obj/item/weapon/rack_parts/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		deconstruct(TRUE, user)
 		return
 	return ..()
@@ -182,7 +182,7 @@
 
 
 /obj/item/weapon/mangal_parts/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		deconstruct(TRUE, user)
 		return
 	return ..()

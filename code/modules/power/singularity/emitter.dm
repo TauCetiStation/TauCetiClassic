@@ -168,8 +168,8 @@
 		A.process()
 
 
-/obj/machinery/power/emitter/attackby(obj/item/W, mob/user)
-	if(iswrenching(W))
+/obj/machinery/power/emitter/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
 			return
@@ -192,8 +192,8 @@
 				to_chat(user, "<span class='warning'>The [src.name] needs to be unwelded from the floor.</span>")
 		return
 
-	if(iswelding(W))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
 			return
@@ -226,7 +226,7 @@
 					to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 		return
 
-	if(istype(W, /obj/item/weapon/card/id) || istype(W, /obj/item/device/pda))
+	if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		if(emagged)
 			to_chat(user, "<span class='warning'>The lock seems to be broken</span>")
 			return
@@ -241,20 +241,20 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 
-	if(isscrewing(W))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(active)
 			to_chat(user, "Turn off the [src] first.")
 			return
-		if(default_deconstruction_screwdriver(user, "emitter-open", "emitter-off", W))
+		if(default_deconstruction_screwdriver(user, "emitter-open", "emitter-off", I))
 			return
 
-	if(exchange_parts(user, W))
+	if(exchange_parts(user, I))
 		return
 
-	if(default_pry_open(W))
+	if(default_pry_open(I))
 		return
 
-	default_deconstruction_crowbar(W)
+	default_deconstruction_crowbar(I)
 
 	..()
 	return

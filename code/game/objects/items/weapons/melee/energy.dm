@@ -67,6 +67,7 @@
 	origin_tech = "magnets=3;syndicate=4"
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	edge = 1
+
 	var/hacked
 
 	var/can_combine = TRUE
@@ -89,7 +90,7 @@
 		qdel(src)
 		user.put_in_hands(newSaber)
 
-	else if(ispulsing(I))
+	else if(I.get_quality(QUALITY_PULSING))
 		if(!hacked)
 			hacked = TRUE
 			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")

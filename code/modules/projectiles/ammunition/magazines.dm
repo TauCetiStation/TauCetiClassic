@@ -534,7 +534,7 @@
 	return ..()
 
 /obj/item/ammo_box/magazine/plasma/attackby(obj/item/I, mob/user, params)
-	if(power_supply && isscrewing(I))
+	if(power_supply && I.get_quality(QUALITY_SCREWING))
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		user.put_in_hands(power_supply)
 		power_supply = null

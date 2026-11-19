@@ -593,17 +593,17 @@
 		check_for_internal_damage(list(MECHA_INT_FIRE, MECHA_INT_TEMP_CONTROL))
 	return
 
-/obj/mecha/proc/dynattackby(obj/item/weapon/W, mob/user)
+/obj/mecha/proc/dynattackby(obj/item/weapon/I, mob/user)
 	user.do_attack_animation(src)
-	log_message("Attacked by [W]. Attacker - [user]")
+	log_message("Attacked by [I]. Attacker - [user]")
 	if(prob(deflect_chance))
-		to_chat(user, "<span class='warning'>\The [W] bounces off [name].</span>")
+		to_chat(user, "<span class='warning'>\The [I] bounces off [name].</span>")
 		log_append_to_last("Armor saved.")
 	else
-		occupant_message("<font color='red'><b>[user] hits [src] with [W].</b></font>")
-		user.visible_message("<font color='red'><b>[user] hits [src] with [W].</b></font>", "<font color='red'><b>You hit [src] with [W].</b></font>")
+		occupant_message("<font color='red'><b>[user] hits [src] with [I].</b></font>")
+		user.visible_message("<font color='red'><b>[user] hits [src] with [I].</b></font>", "<font color='red'><b>You hit [src] with [I].</b></font>")
 		playsound(src, 'sound/mecha/mecha_attacked.ogg', VOL_EFFECTS_MASTER, 100, FALSE)
-		take_damage(W.force,W.damtype)
+		take_damage(I.force,I.damtype)
 		check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
 	return
 
@@ -635,34 +635,34 @@
 						 "<span class='notice'>Системы безопасности [src] успешно взломаны. Любой может зайти внутрь.</span>")
 	return TRUE
 
-/obj/mecha/attackby(obj/item/weapon/W, mob/user)
+/obj/mecha/attackby(obj/item/I, mob/user)
 
-	if(isMMI(W))
-		if(mmi_move_inside(W,user))
+	if(isMMI(I))
+		if(mmi_move_inside(I,user))
 			to_chat(user, "[src]-MMI interface initialized successfuly")
 		else
 			to_chat(user, "[src]-MMI interface initialization failed.")
 		return
 
-	if(istype(W, /obj/item/mecha_parts/mecha_equipment))
-		var/obj/item/mecha_parts/mecha_equipment/E = W
+	if(istype(I, /obj/item/mecha_parts/mecha_equipment))
+		var/obj/item/mecha_parts/mecha_equipment/E = I
 		spawn()
 			if(E.can_attach(src))
 				user.drop_from_inventory(E, src)
 				E.attach(src)
-				user.visible_message("[user] attaches [W] to [src]", "You attach [W] to [src]")
+				user.visible_message("[user] attaches [I] to [src]", "You attach [I] to [src]")
 			else
-				to_chat(user, "You were unable to attach [W] to [src]")
+				to_chat(user, "You were unable to attach [I] to [src]")
 		return
-	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
+	if(istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
 		if(add_req_access || maint_access)
 			if(internals_access_allowed(usr))
 				var/obj/item/weapon/card/id/id_card
-				if(istype(W, /obj/item/weapon/card/id))
-					id_card = W
+				if(istype(I, /obj/item/weapon/card/id))
+					id_card = I
 					playsound(src, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_complite.ogg', VOL_EFFECTS_MASTER)
 				else
-					var/obj/item/device/pda/pda = W
+					var/obj/item/device/pda/pda = I
 					id_card = pda.id
 				output_maintenance_dialog(id_card, user)
 				playsound(src, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_complite.ogg', VOL_EFFECTS_MASTER)
@@ -672,7 +672,7 @@
 				playsound(src, 'sound/mecha/UI_SCI-FI_Tone_Deep_Wet_15_error.ogg',  VOL_EFFECTS_MASTER)
 		else
 			to_chat(user, "<span class='warning'>Maintenance protocols disabled by operator.</span>")
-	else if(iswrenching(W))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		if(state==1)
 			state = 2
 			to_chat(user, "You undo the securing bolts.")
@@ -682,7 +682,7 @@
 			to_chat(user, "You tighten the securing bolts.")
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		return
-	else if(isprying(W))
+	else if(I.get_quality(QUALITY_PRYING))
 		if(state==2)
 			state = 3
 			to_chat(user, "You open the hatch to the power unit")
@@ -692,17 +692,17 @@
 			to_chat(user, "You close the hatch to the power unit")
 			playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 		return
-	else if(iscoil(W))
+	else if(istype(I, /obj/item/stack/cable_coil))
 		if(state == 3 && hasInternalDamage(MECHA_INT_SHORT_CIRCUIT))
-			var/obj/item/stack/cable_coil/CC = W
-			if(!CC.use(2))
+			var/obj/item/stack/cable_coil/coil = I
+			if(!coil.use(2))
 				to_chat(user, "There's not enough wire to finish the task.")
 				return
 			clearInternalDamage(MECHA_INT_SHORT_CIRCUIT)
 			to_chat(user, "You replace the fused wires.")
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 		return
-	else if(isscrewing(W))
+	else if(I.get_quality(QUALITY_SCREWING))
 		if(hasInternalDamage(MECHA_INT_TEMP_CONTROL))
 			clearInternalDamage(MECHA_INT_TEMP_CONTROL)
 			to_chat(user, "You repair the damaged temperature controller.")
@@ -747,12 +747,12 @@
 		diag_hud_set_mechcell()
 		return
 
-	else if(istype(W, /obj/item/weapon/stock_parts/cell))
+	else if(istype(I, /obj/item/weapon/stock_parts/cell))
 		if(state==4)
 			if(!cell)
 				to_chat(user, "You install the powercell")
-				user.drop_from_inventory(W, src)
-				cell = W
+				user.drop_from_inventory(I, src)
+				cell = I
 				log_message("Powercell installed")
 				playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER, 25)
 			else
@@ -760,8 +760,8 @@
 			diag_hud_set_mechcell()
 		return
 
-	else if(iswelding(W) && user.a_intent != INTENT_HARM)
-		var/obj/item/weapon/weldingtool/WT = W
+	else if(I.get_quality(QUALITY_WELDING) && user.a_intent != INTENT_HARM)
+		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_MELEE)
 		if (WT.use(0,user))
 			if (hasInternalDamage(MECHA_INT_TANK_BREACH))
@@ -779,29 +779,29 @@
 			playsound(src, 'sound/mecha/UI_SCI-FI_Tone_10.ogg',  VOL_EFFECTS_MASTER)
 		return
 
-	else if(istype(W, /obj/item/mecha_parts/mecha_tracking))
-		user.drop_from_inventory(W)
-		W.forceMove(src)
-		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
+	else if(istype(I, /obj/item/mecha_parts/mecha_tracking))
+		user.drop_from_inventory(I)
+		I.forceMove(src)
+		user.visible_message("[user] attaches [I] to [src].", "You attach [I] to [src]")
 		return
-	else if(istype(W, /obj/item/mecha_parts/dna_scanner))
+	else if(istype(I, /obj/item/mecha_parts/dna_scanner))
 		if(dna_lockable)
 			to_chat(user, "The [name] already has DNA scanner installed.")
 			return
 
 		dna_lockable = TRUE
-		qdel(W)
-		user.visible_message("[user] attaches [W] to [src].", "You attach [W] to [src]")
+		qdel(I)
+		user.visible_message("[user] attaches [I] to [src].", "You attach [I] to [src]")
 
-	else if(istype(W, /obj/item/weapon/melee/changeling_hammer))
-		var/obj/item/weapon/melee/changeling_hammer/hammer = W
+	else if(istype(I, /obj/item/weapon/melee/changeling_hammer))
+		var/obj/item/weapon/melee/changeling_hammer/hammer = I
 		user.SetNextMove(CLICK_CD_MELEE)
 		playsound(src, pick(hammer.hitsound), VOL_EFFECTS_MASTER)
 		dynattackby(hammer, user)
 
 	else
 		user.SetNextMove(CLICK_CD_MELEE)
-		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
+		call((proc_res["dynattackby"]||src), "dynattackby")(I,user)
 
 	return
 

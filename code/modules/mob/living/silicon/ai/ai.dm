@@ -829,12 +829,12 @@ var/global/list/ai_verbs_default = list(
 		camera_light_on = world.timeofday + 1 * 20 // Update the light every 2 seconds.
 
 
-/mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
+/mob/living/silicon/ai/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(user.is_busy()) return
 		if(anchored)
 			user.visible_message("<span class='notice'>\The [user] starts to unbolt \the [src] from the plating...</span>")
-			if(!W.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
+			if(!I.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 				user.visible_message("<span class='notice'>\The [user] decides not to unbolt \the [src].</span>")
 				return
 			user.visible_message("<span class='notice'>\The [user] finishes unfastening \the [src]!</span>")
@@ -842,7 +842,7 @@ var/global/list/ai_verbs_default = list(
 			return
 		else
 			user.visible_message("<span class='notice'>\The [user] starts to bolt \the [src] to the plating...</span>")
-			if(!W.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
+			if(!I.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 				user.visible_message("<span class='notice'>\The [user] decides not to bolt \the [src].</span>")
 				return
 			user.visible_message("<span class='notice'>\The [user] finishes fastening down \the [src]!</span>")

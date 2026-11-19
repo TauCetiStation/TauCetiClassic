@@ -34,7 +34,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	var/datum/orbit_menu/orbit_menu
 
-	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
+	var/obj/item/device/multitool/admin_mulitool = null //Wew, personal multiotool for ghosts!
 
 	var/image/body_icon
 
@@ -115,7 +115,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	if(mind && mind.current && isliving(mind.current))
 		var/mob/living/M = mind.current
 		M.med_hud_set_status()
-	QDEL_NULL(adminMulti)
+	QDEL_NULL(admin_mulitool)
 	return ..()
 
 /mob/dead/observer/Life()

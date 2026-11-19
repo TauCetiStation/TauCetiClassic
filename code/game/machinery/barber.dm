@@ -266,7 +266,7 @@ A proc that does all the animations before mix()-ing.
 			return
 		..()
 
-/obj/machinery/color_mixer/attackby(obj/item/O, mob/user)
+/obj/machinery/color_mixer/attackby(obj/item/I, mob/user)
 	if(processing)
 		. = ..()
 		if(!.)
@@ -281,7 +281,7 @@ A proc that does all the animations before mix()-ing.
 					var/list/turf_base = list()
 					for(var/turf/T in view(src, 2))
 						turf_base += T
-					var/obj/item/I = user.get_active_hand()
+					I = user.get_active_hand()
 					user.throw_item(pick(turf_base), I)
 					var/mob/living/carbon/human/H = user
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
@@ -295,35 +295,35 @@ A proc that does all the animations before mix()-ing.
 			return
 
 	if(!beakers["output"])
-		if(istype(O, /obj/item/weapon/reagent_containers/glass/beaker) && !filling_tank_id)
-			user.drop_from_inventory(O, src)
-			beakers["output"] = O
+		if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker) && !filling_tank_id)
+			user.drop_from_inventory(I, src)
+			beakers["output"] = I
 			err_log("\[[worldtime2text()]\]<span class='blue'>NOT #103:</span> Output Tank was loaded.", type = "NOT")
-			to_chat(user, "<span class='notice'>You put [O] inside [src].</span>")
+			to_chat(user, "<span class='notice'>You put [I] inside [src].</span>")
 			updateUsrDialog()
 			update_icon()
 			return
-		else if(isscrewing(O))
+		else if(I.get_quality(QUALITY_SCREWING))
 			panel_open = !panel_open
 			update_icon(beaker_update = FALSE)
 			updateUsrDialog()
 			return
-	else if(isscrewing(O))
+	else if(I.get_quality(QUALITY_SCREWING))
 		to_chat(user, "<span class='notice'>You try to open up the panel, but [beakers["output"]] is in the way.</span>")
 		return
 
 	if(panel_open)
-		if(iscutter(O))
+		if(I.get_quality(QUALITY_CUTTING))
 			return attack_hand(user)
-		else if(ispulsing(O))
+		else if(I.get_quality(QUALITY_PULSING))
 			return attack_hand(user)
-		else if(issignaler(O))
+		else if(issignaler(I))
 			return attack_hand(user)
 
-	if(exchange_parts(user, O))
+	if(exchange_parts(user, I))
 		return
 
-	default_deconstruction_crowbar(O)
+	default_deconstruction_crowbar(I)
 
 /obj/machinery/color_mixer/emag_act(mob/user)
 	if(emagged)

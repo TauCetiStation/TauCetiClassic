@@ -278,11 +278,11 @@ update_flag
 	new /obj/item/stack/sheet/metal(loc, disassembled ? 10 : 5)
 	qdel(src)
 
-/obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user)
-	if(iswelding(W))
+/obj/machinery/portable_atmospherics/canister/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WELDING))
 		if(user.is_busy(src))
 			return
-		var/obj/item/weapon/weldingtool/WT = W
+		var/obj/item/weapon/weldingtool/WT = I
 		if(stat & BROKEN)
 			if(!WT.use(0, user))
 				return
@@ -293,8 +293,8 @@ update_flag
 			to_chat(user, "<span class='notice'>You cannot slice [src] apart when it isn't broken.</span>")
 		return 1
 
-	if(isrobot(user) && istype(W, /obj/item/weapon/tank/jetpack))
-		var/obj/item/weapon/tank/jetpack/J = W
+	if(isrobot(user) && istype(I, /obj/item/weapon/tank/jetpack))
+		var/obj/item/weapon/tank/jetpack/J = I
 		var/datum/gas_mixture/thejetpack = J.air_contents
 		var/env_pressure = thejetpack.return_pressure()
 		var/pressure_delta = min(10 * ONE_ATMOSPHERE - env_pressure, (air_contents.return_pressure() - env_pressure) / 2)

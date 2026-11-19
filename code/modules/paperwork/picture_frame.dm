@@ -47,7 +47,7 @@
 		update_icon()
 		return
 
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		if(frame_type == /obj/structure/picture_frame/wooden)
 			new /obj/item/stack/sheet/wood(src.loc)
@@ -175,27 +175,27 @@
 	else
 		..()
 
-/obj/structure/picture_frame/attackby(obj/item/weapon/O, mob/user, params)
-	if(istype(O, /obj/item/weapon/photo) || istype(O, /obj/item/canvas))
+/obj/structure/picture_frame/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/weapon/photo) || istype(I, /obj/item/canvas))
 		if(framed_weakref)
 			to_chat(user, "<span class='notice'>[C_CASE(src, NOMINATIVE_CASE)] не пуста.</span>")
 			return
 
-		if(istype(O, /obj/item/canvas))
-			var/obj/item/canvas/target_canvas = O
+		if(istype(I, /obj/item/canvas))
+			var/obj/item/canvas/target_canvas = I
 			if(!target_canvas.finalized)
 				to_chat(user, "<span class='notice'>[C_CASE(target_canvas, NOMINATIVE_CASE)] не завершён.</span>")
 				return
 
-		if(!user.drop_from_inventory(O, src))
+		if(!user.drop_from_inventory(I, src))
 			return
 
-		framed_weakref = WEAKREF(O)
+		framed_weakref = WEAKREF(I)
 		update_icon()
 		update_name()
 		return
 
-	if(iswrenching(O))
+	if(I.get_quality(QUALITY_WRENCHING))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		deconstruct(TRUE, user)
 		return

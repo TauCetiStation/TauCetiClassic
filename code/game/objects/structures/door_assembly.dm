@@ -33,8 +33,8 @@
 		electronics = null
 	return ..()
 
-/obj/structure/door_assembly/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/pen))
+/obj/structure/door_assembly/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/pen))
 		var/t = sanitize_safe(input(user, "Enter the name for the door.", name, input_default(created_name)), MAX_LNAME_LEN)
 		if(!t)
 			return
@@ -43,8 +43,8 @@
 		created_name = t
 		return
 
-	if(iswelding(W) && ((glass_material && !glass_only) || mineral || !anchored))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(I.get_quality(QUALITY_WELDING) && ((glass_material && !glass_only) || mineral || !anchored))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(!WT.tool_start_check(user, amount=0))
 			return
 		if(glass_material)
@@ -68,51 +68,51 @@
 				to_chat(user, "<span class='notice'>You dissasembled the airlock assembly!</span>")
 				deconstruct(TRUE)
 
-	else if(iswrenching(W) && state == ASSEMBLY_SECURED)
+	else if(I.get_quality(QUALITY_WRENCHING) && state == ASSEMBLY_SECURED)
 		if(user.is_busy()) return
 		if(anchored)
 			user.visible_message("[user] unsecures the airlock assembly from the floor.", "You start to unsecure the airlock assembly from the floor.")
 		else
 			user.visible_message("[user] secures the airlock assembly to the floor.", "You start to secure the airlock assembly to the floor.")
 
-		if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50, quality = QUALITY_WRENCHING))
+		if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50, quality = QUALITY_WRENCHING))
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secured the airlock assembly!</span>")
 			anchored = !anchored
 
-	else if(iscoil(W) && state == ASSEMBLY_SECURED && anchored )
+	else if(istype(I, /obj/item/stack/cable_coil) && state == ASSEMBLY_SECURED && anchored )
 		if(user.is_busy(src))
 			return
-		var/obj/item/stack/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/coil = I
 		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
 		if(coil.use_tool(src, user, SKILL_TASK_AVERAGE, amount = 1, volume = 50))
 			state = ASSEMBLY_WIRED
 			to_chat(user, "<span class='notice'>You wire the airlock!</span>")
 
-	else if(iscutter(W) && state == ASSEMBLY_WIRED)
+	else if(I.get_quality(QUALITY_CUTTING) && state == ASSEMBLY_WIRED)
 		if(user.is_busy()) return
 		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
 
-		if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50, quality = QUALITY_CUTTING))
+		if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50, quality = QUALITY_CUTTING))
 			to_chat(user, "<span class='notice'>You cut the airlock wires!</span>")
 			new /obj/item/stack/cable_coil/random(loc, 1)
 			state = ASSEMBLY_SECURED
 
-	else if(istype(W, /obj/item/weapon/airlock_electronics) && state == ASSEMBLY_WIRED)
-		var/obj/item/weapon/airlock_electronics/AE = W
+	else if(istype(I, /obj/item/weapon/airlock_electronics) && state == ASSEMBLY_WIRED)
+		var/obj/item/weapon/airlock_electronics/AE = I
 		if(!AE.broken && !user.is_busy())
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("[user] installs the electronics into the airlock assembly.", "You start to install electronics into the airlock assembly.")
 
-			if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
+			if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50))
 				user.drop_from_inventory(AE, src)
 				to_chat(user, "<span class='notice'>You installed the airlock electronics!</span>")
 				state = ASSEMBLY_NEAR_FINISHED
 				electronics = AE
 
-	else if(isprying(W) && state == ASSEMBLY_NEAR_FINISHED)
+	else if(I.get_quality(QUALITY_PRYING) && state == ASSEMBLY_NEAR_FINISHED)
 		user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove the electronics from the airlock assembly.")
-		if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_PRYING))
+		if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_PRYING))
 			to_chat(user, "<span class='notice'>You removed the airlock electronics!</span>")
 			state = ASSEMBLY_WIRED
 			var/obj/item/weapon/airlock_electronics/AE
@@ -123,8 +123,8 @@
 				electronics = null
 				AE.loc = loc
 
-	else if(istype(W, /obj/item/stack/sheet))
-		var/obj/item/stack/sheet/S = W
+	else if(istype(I, /obj/item/stack/sheet))
+		var/obj/item/stack/sheet/S = I
 		if(S.get_amount() >= 1)
 			if(istype(S, /obj/item/stack/sheet/rglass))
 				if(glass_material)
@@ -133,7 +133,7 @@
 					if(user.is_busy()) return
 					playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 					user.visible_message("[user] adds [S.name] to the [src].", "You start to install [S.name] into the [src].")
-					if(W.use_tool(src, user, SKILL_TASK_AVERAGE, amount = 1, volume = 100))
+					if(I.use_tool(src, user, SKILL_TASK_AVERAGE, amount = 1, volume = 100))
 						to_chat(user, "<span class='notice'>You installed reinforced glass windows into the [src]!</span>")
 						set_glass(TRUE)
 				else
@@ -155,12 +155,12 @@
 				else
 					to_chat(user, "<span class='notice'>You can't add [S] to the [src].</span>")
 
-	else if(isscrewing(W) && state == ASSEMBLY_NEAR_FINISHED )
+	else if(I.get_quality(QUALITY_SCREWING) && state == ASSEMBLY_NEAR_FINISHED )
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>Now finishing the airlock.</span>")
 
-		if(W.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_SCREWING))
+		if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 100, quality = QUALITY_SCREWING))
 			to_chat(user, "<span class='notice'>You finish the airlock!</span>")
 			var/obj/machinery/door/airlock/door = null
 			if(glass_material && !glass_only)

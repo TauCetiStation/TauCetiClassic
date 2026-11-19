@@ -128,27 +128,27 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 		linked_destroy = null
 	return ..()
 
-/obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user)
-	if(istype(D, /obj/item/weapon/disk/research_points))
-		var/obj/item/weapon/disk/research_points/disk = D
+/obj/machinery/computer/rdconsole/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/disk/research_points))
+		var/obj/item/weapon/disk/research_points/disk = I
 		to_chat(user, "<span class='notice'>[name] received [disk.stored_points] research points from [disk.name]</span>")
 		playsound(src, 'sound/machines/disk-upload.ogg', VOL_EFFECTS_MASTER)
 		files.research_points += disk.stored_points
 		user.remove_from_mob(disk)
 		qdel(disk)
-	else if(ispulsing(D))
-		var/obj/item/device/multitool/M = D
-		M.buffer = src
-		to_chat(user, "<span class='notice'>You save the data in the [D.name]'s buffer.</span>")
-	else if(istype(D, /obj/item/device/science_tool))
-		var/research_points = files.experiments.read_science_tool(D)
+	else if(I.get_quality(QUALITY_PULSING))
+		var/obj/item/device/multitool/MT = I
+		MT.buffer = src
+		to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
+	else if(istype(I, /obj/item/device/science_tool))
+		var/research_points = files.experiments.read_science_tool(I)
 		if(research_points > 0)
 			to_chat(user, "<span class='notice'>[name] received [research_points] research points from uploaded data.</span>")
 			files.research_points += research_points
 		else
-			to_chat(user, "<span class='notice'>There was no usefull data inside [D.name]'s buffer.</span>")
-	else if(istype(D, /obj/item/weapon/disk/tech_disk))
-		var/obj/item/weapon/disk/tech_disk/disk = D
+			to_chat(user, "<span class='notice'>There was no usefull data inside [I.name]'s buffer.</span>")
+	else if(istype(I, /obj/item/weapon/disk/tech_disk))
+		var/obj/item/weapon/disk/tech_disk/disk = I
 		if(disk.stored_technology)
 			to_chat(user, "<span class='notice'>You succesfully uploaded '[disk.stored_technology.name]' in the console</span>")
 			playsound(src, 'sound/machines/disk-upload.ogg', VOL_EFFECTS_MASTER)

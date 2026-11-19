@@ -30,13 +30,13 @@
 		return
 	MP.interact(user)
 
-/obj/structure/device/piano/attackby(obj/item/O, mob/user)
-	if(iswrenching(O))
+/obj/structure/device/piano/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(user.is_busy(src))
 			return
 		if (anchored)
 			to_chat(user, "<span class='notice'>You begin to loosen \the [src]'s casters...</span>")
-			if (O.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
+			if (I.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 				anchored = !anchored
 				user.visible_message(
 					"<span class='notice'>[user] loosens \the [src]'s casters.</span>",
@@ -45,7 +45,7 @@
 				)
 		else
 			to_chat(user, "<span class='notice'>You begin to tighten \the [src] to the floor...</span>")
-			if(O.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 				anchored = !anchored
 				user.visible_message(
 					"<span class='notice'>[user] tightens \the [src]'s casters.</span>",

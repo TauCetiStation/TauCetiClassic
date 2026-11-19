@@ -65,25 +65,25 @@
 	LAZYCLEARLIST(components)
 	..()
 
-/obj/machinery/constructable_frame/machine_frame/attackby(obj/item/P, mob/user)
-	if(P.crit_fail)
+/obj/machinery/constructable_frame/machine_frame/attackby(obj/item/I, mob/user)
+	if(I.crit_fail)
 		to_chat(user, "<span class='danger'>This part is faulty, you cannot add this to the machine!</span>")
 		return
 	switch(state)
 		if(1)
-			if(istype(P, /obj/item/weapon/circuitboard))
+			if(istype(I, /obj/item/weapon/circuitboard))
 				to_chat(user, "<span class='warning'>The frame needs wiring first!</span>")
 				return
 
-			else if(iscoil(P))
-				var/obj/item/stack/cable_coil/C = P
+			else if(istype(I, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/C = I
 				if(C.get_amount() < 5)
 					to_chat(user, "<span class='warning'>You need five length of cable to wire the frame!</span>")
 					return
 				if(user.is_busy(src))
 					return
 				to_chat(user, "<span class='notice'>You start to add cables to the frame.</span>")
-				if(P.use_tool(src, user, SKILL_TASK_EASY, target = src, volume = 50, required_skills_override = list(/datum/skill/construction = SKILL_LEVEL_PRO)))
+				if(I.use_tool(src, user, SKILL_TASK_EASY, target = src, volume = 50, required_skills_override = list(/datum/skill/construction = SKILL_LEVEL_PRO)))
 					if(state == 1)
 						if(!C.use(5))
 							return
@@ -92,44 +92,44 @@
 						state = 2
 						icon_state = "box_1"
 
-			else if(isscrewing(P) && !anchored)
+			else if(I.get_quality(QUALITY_SCREWING) && !anchored)
 				if(user.is_busy(src))
 					return
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
-				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50, quality = QUALITY_SCREWING))
+				if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 50, quality = QUALITY_SCREWING))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You disassemble the frame.</span>")
 						deconstruct(TRUE)
 
-			else if(iswrenching(P))
+			else if(I.get_quality(QUALITY_WRENCHING))
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 75, quality = QUALITY_WRENCHING))
+				if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 75, quality = QUALITY_WRENCHING))
 					if(state == 1)
 						to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 						anchored = !anchored
 		if(2)
-			if(iswrenching(P))
+			if(I.get_quality(QUALITY_WRENCHING))
 				if(user.is_busy())
 					return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
-				if(P.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 75, quality = QUALITY_WRENCHING))
+				if(I.use_tool(src, user, SKILL_TASK_AVERAGE, volume = 75, quality = QUALITY_WRENCHING))
 					to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
 					anchored = !anchored
 
-			if(istype(P, /obj/item/weapon/circuitboard))
+			if(istype(I, /obj/item/weapon/circuitboard))
 				if(!anchored)
 					to_chat(user, "<span class='warning'>The frame needs to be secured first!</span>")
 					return
-				var/obj/item/weapon/circuitboard/B = P
-				if(B.board_type == "machine")
-					if(!user.drop_from_inventory(P, src))
+				var/obj/item/weapon/circuitboard/circuitboard = I
+				if(circuitboard.board_type == "machine")
+					if(!user.drop_from_inventory(I, src))
 						return
 					playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 					to_chat(user, "<span class='notice'>You add the circuit board to the frame.</span>")
-					circuit = P
+					circuit = I
 					icon_state = "box_2"
 					state = 3
 					components = list()
@@ -138,7 +138,7 @@
 					update_req_desc()
 				else
 					to_chat(user, "<span class='warning'>This frame does not accept circuit boards of this type!</span>")
-			if(iscutter(P))
+			if(I.get_quality(QUALITY_CUTTING))
 				playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
@@ -146,7 +146,7 @@
 				new /obj/item/stack/cable_coil/red(loc, 5)
 
 		if(3)
-			if(isprying(P))
+			if(I.get_quality(QUALITY_PRYING))
 				playsound(src, 'sound/items/Crowbar.ogg', VOL_EFFECTS_MASTER)
 				state = 2
 				circuit.loc = src.loc
@@ -163,7 +163,7 @@
 				components = null
 				icon_state = "box_1"
 
-			if(isscrewing(P))
+			if(I.get_quality(QUALITY_SCREWING))
 				var/component_check = 1
 				for(var/R in req_components)
 					if(req_components[R] > 0)
@@ -186,8 +186,8 @@
 					new_machine.RefreshParts()
 					qdel(src)
 
-			if(istype(P, /obj/item/weapon/storage/part_replacer) && P.contents.len && get_req_components_amt())
-				var/obj/item/weapon/storage/part_replacer/replacer = P
+			if(istype(I, /obj/item/weapon/storage/part_replacer) && I.contents.len && get_req_components_amt())
+				var/obj/item/weapon/storage/part_replacer/replacer = I
 				var/list/added_components = list()
 				var/list/part_list = list()
 
@@ -214,11 +214,11 @@
 				update_req_desc()
 				return
 
-			if(isitem(P) && get_req_components_amt())
-				for(var/I in req_components)
-					if(istype(P, I) && (req_components[I] > 0))
-						if(iscoil(P))
-							var/obj/item/stack/cable_coil/CP = P
+			if(isitem(I) && get_req_components_amt())
+				for(var/components in req_components)
+					if(istype(I, components) && (req_components[I] > 0))
+						if(istype(I, /obj/item/stack/cable_coil))
+							var/obj/item/stack/cable_coil/CP = I
 							if(CP.use(1))
 								var/obj/item/stack/cable_coil/CC = new(src, 1, CP.color)
 								components += CC
@@ -227,9 +227,9 @@
 							else
 								to_chat(user, "<span class='warning'>You need more cable!</span>")
 							return
-						if(!user.drop_from_inventory(P, src))
+						if(!user.drop_from_inventory(I, src))
 							break
-						components += P
+						components += I
 						req_components[I]--
 						update_req_desc()
 						return 1
@@ -253,7 +253,7 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/vending_refill/boozeomat = 3)
 
 /obj/item/weapon/circuitboard/vendor/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		var/static/list/names_of_vendings = list()
 		var/static/list/radial_icons = list()
 
@@ -553,7 +553,7 @@ to destroy them and players will be able to make replacements.
 							/obj/item/weapon/stock_parts/matter_bin = 1)
 
 /obj/item/weapon/circuitboard/smartfridge/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		var/static/list/names_of_smartfridges
 		var/static/list/radial_icons
 
@@ -1006,7 +1006,7 @@ to destroy them and players will be able to make replacements.
 	return TRUE
 
 /obj/item/weapon/circuitboard/suit_storage/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		var/suit_storage_name = show_radial_menu(user, src, radial_icons, require_near = TRUE, tooltips = TRUE)
 		if(isnull(suit_storage_name))
 			return

@@ -41,31 +41,31 @@
 		return
 	..()
 
-/obj/machinery/door/poddoor/attackby(obj/item/weapon/C, mob/user)
+/obj/machinery/door/poddoor/attackby(obj/item/I, mob/user)
 	add_fingerprint(user)
 
 	if(!hasPower())
 		var/can_wedge = FALSE
-		if(isprying(C))
+		if(I.get_quality(QUALITY_PRYING))
 			can_wedge = TRUE
-		else if(istype(C, /obj/item/weapon/fireaxe))
-			var/obj/item/weapon/fireaxe/F = C
-			can_wedge = HAS_TRAIT(F, TRAIT_DOUBLE_WIELDED)
+		else if(istype(I, /obj/item/weapon/fireaxe))
+			var/obj/item/weapon/fireaxe/Fire_Axe = I
+			can_wedge = HAS_TRAIT(Fire_Axe, TRAIT_DOUBLE_WIELDED)
 
 		if(can_wedge)
 			open(TRUE)
 
-	else if(ispulsing(C) && !density)
-		var/obj/item/device/multitool/M = C
+	else if(I.get_quality(QUALITY_PULSING) && !density)
+		var/obj/item/device/multitool/MT = I
 		var/turf/turf = get_turf(src)
 		if(!is_station_level(turf.z) && !is_mining_level(turf.z))
 			to_chat(user, "<span class='warning'>This poddoor cannot be connected!</span>")
-		else if(src in M.doors_buffer)
+		else if(src in MT.doors_buffer)
 			to_chat(user, "<span class='warning'>This poddoor is already in the buffer!</span>")
-		else if(M.doors_buffer.len >= M.buffer_limit)
+		else if(MT.doors_buffer.len >= MT.buffer_limit)
 			to_chat(user, "<span class='warning'>The multitool's buffer is full!</span>")
 		else
-			M.doors_buffer += src
+			MT.doors_buffer += src
 			to_chat(user, "<span class='notice'>You add this poddoor to the buffer of your multitool.</span>")
 
 

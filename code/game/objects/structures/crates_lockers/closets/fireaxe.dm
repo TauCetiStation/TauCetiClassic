@@ -25,21 +25,21 @@
 /obj/structure/closet/fireaxecabinet/PopulateContents()
 	fireaxe = new /obj/item/weapon/fireaxe(src)
 
-/obj/structure/closet/fireaxecabinet/attackby(obj/item/O, mob/living/user)  //Marker -Agouri
+/obj/structure/closet/fireaxecabinet/attackby(obj/item/I, mob/living/user)  //Marker -Agouri
 	//..() //That's very useful, Erro
 
 	if (user.is_busy(src))
 		return
 
 	if (isrobot(usr) || locked)
-		if(ispulsing(O))
+		if(I.get_quality(QUALITY_PULSING))
 			to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
 			playsound(user, 'sound/machines/lockreset.ogg', VOL_EFFECTS_MASTER)
-			if(O.use_tool(src, user, 50, volume = 50, quality = QUALITY_PULSING))
+			if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_PULSING))
 				locked = FALSE
 				to_chat(user, "<span class='notice'>You disable the locking modules.</span>")
 				update_icon()
-		else if(istype(O, /obj/item/weapon))
+		else if(istype(I, /obj/item/weapon))
 			user.SetNextMove(CLICK_CD_MELEE)
 			if(smashed || localopened)
 				if(localopened)
@@ -49,10 +49,10 @@
 				return
 			..()
 
-	else if (istype(O, /obj/item/weapon/fireaxe) && localopened)
+	else if (istype(I, /obj/item/weapon/fireaxe) && localopened)
 		if(!fireaxe)
-			user.drop_from_inventory(O, src)
-			fireaxe = O
+			user.drop_from_inventory(I, src)
+			fireaxe = I
 			to_chat(user, "<span class='notice'>You place the fire axe back in the [src.name].</span>")
 			update_icon()
 		else
@@ -69,14 +69,14 @@
 	else
 		if(smashed)
 			return
-		if(ispulsing(O))
+		if(I.get_quality(QUALITY_PULSING))
 			if(localopened)
 				localopened = FALSE
 				icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
 				addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_icon)), 10)
 			else
 				to_chat(user, "<span class='warning'>Resetting circuitry...</span>")
-				if(O.use_tool(src, user, 50, volume = 50, quality = QUALITY_PULSING))
+				if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_PULSING))
 					locked = TRUE
 					to_chat(user, "<span class='notice'>You re-enable the locking modules.</span>")
 					playsound(user, 'sound/machines/lockenable.ogg', VOL_EFFECTS_MASTER)

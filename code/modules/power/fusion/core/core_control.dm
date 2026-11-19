@@ -9,8 +9,8 @@
 	var/list/connected_devices = list()
 	var/obj/machinery/power/fusion_core/cur_viewed_device
 
-/obj/machinery/computer/fusion_core_control/attackby(obj/item/thing, mob/user)
-	if(ispulsing(thing))
+/obj/machinery/computer/fusion_core_control/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_PULSING))
 		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Core Control", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident

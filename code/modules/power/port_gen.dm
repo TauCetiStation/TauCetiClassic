@@ -342,16 +342,16 @@
 	addstack.use(amount)
 	playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 
-/obj/machinery/power/port_gen/pacman/attackby(obj/item/O, mob/user, params)
-	if(istype(O, sheet_path))
-		add_sheets(O, user, params)
+/obj/machinery/power/port_gen/pacman/attackby(obj/item/I, mob/user, params)
+	if(istype(I, sheet_path))
+		add_sheets(I, user, params)
 		updateUsrDialog()
 	else if(!active)
 
-		if(exchange_parts(user, O))
+		if(exchange_parts(user, I))
 			return
 
-		if(iswrenching(O))
+		if(I.get_quality(QUALITY_WRENCHING))
 			if(!anchored && !isinspace())
 				connect_to_network()
 				to_chat(user, "<span class='notice'>You secure the generator to the floor.</span>")
@@ -362,17 +362,17 @@
 				anchored = FALSE
 
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
-		else if(isscrewing(O))
+		else if(I.get_quality(QUALITY_SCREWING))
 			panel_open = !panel_open
 			playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 			if(panel_open)
 				to_chat(user, "<span class='notice'>You open the access panel.</span>")
 			else
 				to_chat(user, "<span class='notice'>You close the access panel.</span>")
-		else if(isprying(O) && panel_open)
-			default_deconstruction_crowbar(O)
-		else if(ispulsing(O) && panel_open)
-			try_repair_malfunctions_loop(user, O)
+		else if(I.get_quality(QUALITY_PRYING) && panel_open)
+			default_deconstruction_crowbar(I)
+		else if(I.get_quality(QUALITY_PULSING) && panel_open)
+			try_repair_malfunctions_loop(user, I)
 
 /obj/machinery/power/port_gen/pacman/emag_act(mob/user)
 	if(emagged)

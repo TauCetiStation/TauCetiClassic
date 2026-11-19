@@ -10,20 +10,20 @@
 	var/datum/disease2/disease/virus2 = null
 	required_skills = list(/datum/skill/chemistry = SKILL_LEVEL_TRAINED, /datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/medical = SKILL_LEVEL_PRO)
 
-/obj/machinery/computer/centrifuge/attackby(obj/item/weapon/O, mob/user)
-	if(isscrewing(O))
+/obj/machinery/computer/centrifuge/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_SCREWING))
 		return ..()
 
-	else if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial))
+	else if(istype(I, /obj/item/weapon/reagent_containers/glass/beaker/vial))
 		if(sample)
 			to_chat(user, "\The [src] is already loaded.")
 			return
 		if(!do_skill_checks(user))
 			return
-		sample = O
-		user.drop_from_inventory(O, src)
+		sample = I
+		user.drop_from_inventory(I, src)
 
-		user.visible_message("[user] adds \a [O] to \the [src]!", "You add \a [O] to \the [src]!")
+		user.visible_message("[user] adds \a [I] to \the [src]!", "You add \a [I] to \the [src]!")
 		SStgui.update_uis(src)
 		return
 
@@ -31,7 +31,7 @@
 
 /obj/machinery/computer/centrifuge/update_icon()
 	..()
-	if(! (stat & (BROKEN|NOPOWER)) && (isolating || curing))
+	if(!(stat & (BROKEN|NOPOWER)) && (isolating || curing))
 		icon_state = "centrifuge_moving"
 
 /obj/machinery/computer/centrifuge/ui_interact(mob/user)

@@ -42,7 +42,7 @@
 	return
 
 /obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(BB)
 			if(initial(BB.name) == "bullet")
 				var/label_text = sanitize_safe(input(user, "Нанести надпись на [initial(BB.name)]","Надпись"), MAX_NAME_LEN)

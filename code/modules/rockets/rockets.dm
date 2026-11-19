@@ -74,8 +74,8 @@
 			if(prob(accident_prob*2))
 				qdel(src)
 
-/obj/item/rocket/attackby(obj/item/C, mob/user)
-	if(ispulsing(C))
+/obj/item/rocket/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_PULSING))
 		var/list/choices = list("Tune to Glasses", "Change Angle", "Change Distance")
 		var/useroption = tgui_input_list(user, "Choise option", "Options", choices)
 

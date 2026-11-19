@@ -183,22 +183,22 @@
 				nextstate = CLOSED
 				close()
 
-/obj/machinery/door/firedoor/attackby(obj/item/weapon/C, mob/user)
+/obj/machinery/door/firedoor/attackby(obj/item/I, mob/user)
 	add_fingerprint(user)
 	if(operating)
 		return//Already doing something.
-	if(iswelding(C))
-		var/obj/item/weapon/weldingtool/W = C
-		if(W.use(0, user))
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
+		if(WT.use(0, user))
 			blocked = !blocked
-			user.visible_message("<span class='warning'>\The [user] [blocked ? "welds" : "unwelds"] \the [src] with \a [W].</span>",\
-			"You [blocked ? "weld" : "unweld"] \the [src] with \the [W].",\
+			user.visible_message("<span class='warning'>\The [user] [blocked ? "welds" : "unwelds"] \the [src] with \a [WT].</span>",\
+			"You [blocked ? "weld" : "unweld"] \the [src] with \the [WT].",\
 			"You hear something being welded.")
 			playsound(src, 'sound/items/Welder.ogg', VOL_EFFECTS_MASTER)
 			update_icon()
 			return
 
-	if(density && isscrewing(C))
+	if(density && I.get_quality(QUALITY_SCREWING))
 		hatch_open = !hatch_open
 		user.visible_message("<span class='danger'>[user] has [hatch_open ? "opened" : "closed"] \the [src] maintenance hatch.</span>",
 									"You have [hatch_open ? "opened" : "closed"] the [src] maintenance hatch.")
@@ -206,13 +206,13 @@
 		update_icon()
 		return
 
-	if(blocked && isprying(C))
+	if(blocked && I.get_quality(QUALITY_PRYING))
 		if(!hatch_open)
 			to_chat(user, "<span class='danger'>You must open the maintenance hatch first!</span>")
 		else if(!user.is_busy(src))
 			user.visible_message("<span class='danger'>[user] is removing the electronics from \the [src].</span>",
 									"You start to remove the electronics from [src].")
-			if(C.use_tool(src, user, 30, volume = 100, quality = QUALITY_PRYING))
+			if(I.use_tool(src, user, 30, volume = 100, quality = QUALITY_PRYING))
 				if(blocked && density && hatch_open)
 					user.visible_message("<span class='danger'>[user] has removed the electronics from \the [src].</span>",
 										"You have removed the electronics from [src].")
@@ -224,28 +224,28 @@
 		to_chat(user, "<span class='warning'>\The [src] is welded solid!</span>")
 		return
 
-	if(isprying(C) || ( istype(C,/obj/item/weapon/fireaxe) && HAS_TRAIT(C, TRAIT_DOUBLE_WIELDED)))
+	if(I.get_quality(QUALITY_PRYING) || ( istype(I,/obj/item/weapon/fireaxe) && HAS_TRAIT(I, TRAIT_DOUBLE_WIELDED)))
 		if(operating)
 			return
 
-		if( blocked && isprying(C) )
-			user.visible_message("<span class='warning'>\The [user] pries at \the [src] with \a [C], but \the [src] is welded in place!</span>",\
+		if(blocked && I.get_quality(QUALITY_PRYING))
+			user.visible_message("<span class='warning'>\The [user] pries at \the [src] with \a [I], but \the [src] is welded in place!</span>",\
 			"You try to pry \the [src] [density ? "open" : "closed"], but it is welded in place!",\
 			"You hear someone struggle and metal straining.")
 			return
 		if(user.is_busy(src)) return
-		user.visible_message("<span class='warning'>\The [user] starts to force \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\
-				"You start forcing \the [src] [density ? "open" : "closed"] with \the [C]!",\
+		user.visible_message("<span class='warning'>\The [user] starts to force \the [src] [density ? "open" : "closed"] with \a [I]!</span>",\
+				"You start forcing \the [src] [density ? "open" : "closed"] with \the [I]!",\
 				"You hear metal strain.")
-		if(C.use_tool(src, user, 30, volume = 50, quality = QUALITY_PRYING))
-			if( isprying(C) )
-				if( stat & (BROKEN|NOPOWER) || !density)
-					user.visible_message("<span class='warning'>\The [user] forces \the [src] [density ? "open" : "closed"] with \a [C]!</span>",\
-					"You force \the [src] [density ? "open" : "closed"] with \the [C]!",\
+		if(I.use_tool(src, user, 30, volume = 50, quality = QUALITY_PRYING))
+			if(I.get_quality(QUALITY_PRYING))
+				if(stat & (BROKEN|NOPOWER) || !density)
+					user.visible_message("<span class='warning'>\The [user] forces \the [src] [density ? "open" : "closed"] with \a [I]!</span>",\
+					"You force \the [src] [density ? "open" : "closed"] with \the [I]!",\
 					"You hear metal strain, and a door [density ? "open" : "close"].")
 			else
-				user.visible_message("<span class='warning'>\The [user] forces \the [ blocked ? "welded" : "" ] [src] [density ? "open" : "closed"] with \a [C]!</span>",\
-					"You force \the [ blocked ? "welded" : "" ] [src] [density ? "open" : "closed"] with \the [C]!",\
+				user.visible_message("<span class='warning'>\The [user] forces \the [ blocked ? "welded" : "" ] [src] [density ? "open" : "closed"] with \a [I]!</span>",\
+					"You force \the [ blocked ? "welded" : "" ] [src] [density ? "open" : "closed"] with \the [I]!",\
 					"You hear metal strain and groan, and a door [density ? "open" : "close"].")
 			if(density)
 				spawn(0)
