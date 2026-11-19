@@ -197,6 +197,8 @@
 			continue
 
 		var/obj/item/I = contents_by_slot[slot_name]
+		if(!I)
+			continue
 
 		if(!target?.equip_to_slot_if_possible(I, slot_name, disable_warning = TRUE))
 			if(isturf(target?.loc))

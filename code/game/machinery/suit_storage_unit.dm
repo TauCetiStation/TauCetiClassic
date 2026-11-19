@@ -32,6 +32,7 @@
 /obj/machinery/storage_unit/suit_storage/atom_init()
 	. = ..()
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	RefreshParts()
 
 	ssu_left = locate(/obj/machinery/storage_unit/suit_storage) in get_step(src, WEST)

@@ -954,3 +954,27 @@ to destroy them and players will be able to make replacements.
 	req_components = list(
 		/obj/item/weapon/stock_parts/micro_laser = 1,
 		/obj/item/weapon/stock_parts/manipulator = 1)
+
+/obj/item/weapon/circuitboard/storage_unit
+	name = "circut board (Storage Unit)"
+	build_path = /obj/machinery/storage_unit
+	board_type = "machine"
+	origin_tech = "engineering = 2"
+	req_components = list(
+		/obj/item/weapon/stock_parts/manipulator = 4,
+		/obj/item/weapon/stock_parts/matter_bin = 2,
+		/obj/item/stack/cable_coil = 3
+	)
+
+/obj/item/weapon/circuitboard/suit_storage
+	name = "circut board (Suit Storage Unit)"
+	build_path = /obj/machinery/storage_unit/suit_storage
+	board_type = "machine"
+	origin_tech = "programming = 3; engineering = 3"
+	req_components = list(
+		/obj/item/weapon/stock_parts/manipulator = 4,
+		/obj/item/weapon/stock_parts/matter_bin = 2,
+		/obj/item/stack/cable_coil = 3,
+		/obj/item/weapon/stock_parts/console_screen = 1,
+		/obj/item/weapon/stock_parts/micro_laser
+	)
