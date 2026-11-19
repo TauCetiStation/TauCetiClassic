@@ -179,6 +179,9 @@
 			S = H.species
 		set_species(S) // species should always be set, we use previous one if we surgically installed
 		set_preferences(H) // cache owner preferences, can be freely updated if needed
+	else if(!species) // surgically installed but species wasn't set (e.g., new from robot_parts)
+		set_species(H.species)
+		set_preferences(H)
 
 	owner.bodyparts += src
 	owner.bodyparts_by_name[body_zone] = src
