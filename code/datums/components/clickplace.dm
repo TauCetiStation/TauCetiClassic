@@ -72,6 +72,13 @@
 		return FALSE
 	return TRUE
 
+/datum/component/clickplace/proc/can_animate_clickplace_drop(obj/item/I, mob/living/user, atom/target)
+	if(user.get_active_hand() != I && user.get_inactive_hand() != I)
+		return FALSE
+	if(target == user || target.loc == user)
+		return FALSE
+	return I.can_do_putdown_animation(target, user)
+
 /datum/component/clickplace/proc/try_place_click(datum/source, obj/item/I,  mob/living/user, params)
 	if(istype(I, /obj/item/weapon/grab))
 		try_slam(I)
@@ -80,23 +87,26 @@
 		return NONE
 
 	var/list/click_params = params2list(params)
-	//Center the icon where the user clicked.
 	if(!click_params || !click_params[ICON_X] || !click_params[ICON_Y])
 		return
-
+	var/atom/A = parent
+	var/atom/drop_target = A.loc
 	var/icon_size = world.icon_size
 	var/half_icon_size = icon_size * 0.5
+	var/final_pixel_x = clamp(text2num(click_params[ICON_X]) + A.pixel_x, 0, icon_size) - half_icon_size
+	var/final_pixel_y = clamp(text2num(click_params[ICON_Y]) + A.pixel_y, 0, icon_size) - half_icon_size
 
-	var/atom/A = parent
+	var/old_pixel_x = I.pixel_x
+	var/old_pixel_y = I.pixel_y
+	var/pixel_delta_x = final_pixel_x - old_pixel_x
+	var/pixel_delta_y = final_pixel_y - old_pixel_y
+	var/animate_drop = can_animate_clickplace_drop(I, user, drop_target)
 
-	var/p_x = text2num(click_params[ICON_X]) + A.pixel_x
-	var/p_y = text2num(click_params[ICON_Y]) + A.pixel_y
-
-	p_x = clamp(p_x, 0, icon_size) - half_icon_size - I.pixel_x
-	p_y = clamp(p_y, 0, icon_size) - half_icon_size - I.pixel_y
-
-	if(!user.drop_from_inventory(I, A.loc, additional_pixel_x=p_x, additional_pixel_y=p_y))
+	if(!user.drop_from_inventory(I, drop_target, additional_pixel_x = pixel_delta_x, additional_pixel_y = pixel_delta_y, putdown_anim = animate_drop))
 		return FALSE
+	if(!animate_drop && !QDELETED(I) && I.loc)
+		I.pixel_x = final_pixel_x
+		I.pixel_y = final_pixel_y
 
 	if(on_place)
 		on_place.Invoke(A, I, user, params)
