@@ -28,6 +28,7 @@
 #define JOB_CHAPLAIN "Chaplain"
 #define JOB_QM "Quartermaster"
 #define JOB_CARGO_TECH "Cargo Technician"
+#define JOB_CARGO_PSC "Cargo Guard"
 #define JOB_RECYCLER "Recycler"
 #define JOB_CLOWN "Clown"
 #define JOB_MIME "Mime"

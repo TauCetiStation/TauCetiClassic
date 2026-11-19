@@ -194,6 +194,9 @@
 /datum/job/proc/map_check()
 	return TRUE
 
+/datum/job/proc/get_roundstart_spawn_turf(mob/living/carbon/human/H)
+	return
+
 /datum/job/proc/get_skillset(mob/living/carbon/human/H)
 	if(alt_titles && H.mind.role_alt_title)
 		return skillsets[H.mind.role_alt_title] || skillsets[title]
