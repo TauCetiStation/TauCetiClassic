@@ -162,6 +162,18 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 	var/bled = 0
 
 	var/turf/old_sprayloc = sprayloc
+
+	var/turf/target = get_ranged_target_turf(sprayloc, spraydir, BLOOD_SPRAY_DISTANCE)
+
+	var/travel_x = (target.x - sprayloc.x) * 32
+	var/travel_y = (target.y - sprayloc.y) * 32
+
+	var/datum/dirt_cover/blood_datum = get_blood_datum()
+
+	var/obj/effect/abstract/particle_holder/Holder = new(src, /particles/blood_squirt, PARTICLE_FADEOUT|PARTICLE_FLICK|PARTICLE_NO_TRANSFORM)
+	Holder.modify_particles_value("color", blood_datum::color)
+	Holder.modify_particles_value("velocity", generator("vector", list(travel_x - 4, travel_y + 32), list(travel_x + 4, travel_y + 32), "UNIFORM_RAND"))
+
 	for(var/i = 1 to BLOOD_SPRAY_DISTANCE)
 		sprayloc = get_step(sprayloc, spraydir)
 		if(!istype(sprayloc) || sprayloc.density)
@@ -198,10 +210,10 @@ var/global/const/BLOOD_VOLUME_SURVIVE = 122
 				break
 
 		if(CantPass || !old_sprayloc.Adjacent(sprayloc, src)) // so we don't spray blood thru windows or something similar, because CanPass() above fails with that task and i don't know why.
-			drip(amt, old_sprayloc) // current realization removes old one which looks awful, so lets drop normal drips instead (that doesn't fully fix this issue, but sometimes looks right).
+			addtimer(CALLBACK(src, PROC_REF(drip), amt, old_sprayloc), 2) // current realization removes old one which looks awful, so lets drop normal drips instead (that doesn't fully fix this issue, but sometimes looks right).
 			sprayloc = old_sprayloc // pass check failed, need to reset current spray loc to a previous state and try again (because we want to spray all blood that for() is going to squirt anyway).
 		else
-			drip(amt, sprayloc, spraydir)
+			addtimer(CALLBACK(src, PROC_REF(drip), amt, sprayloc, spraydir), 2)
 		bled += amt
 		if(hit_mob) // came from bay12 and i'l leave that "as is" for now. (this is actually makes us loose less blood than we should because of earlier break that could happen)
 			break
