@@ -2318,6 +2318,9 @@
 
 /mob/living/carbon/human/try_wrap_up(wrap_type, wrap_icon_state = "deliveryhuman")
 	var/obj/structure/bigDelivery/P = ..()
+	if(!P)
+		return
+
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = P
