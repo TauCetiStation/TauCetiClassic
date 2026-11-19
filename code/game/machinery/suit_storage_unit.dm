@@ -16,6 +16,9 @@
 		SLOT_SHOES = null
 	)
 
+	paint_type = /obj/machinery/storage_unit/suit_storage
+	prohibited_paint_types = list()
+
 	var/list/connectors_overlays = list()
 
 //ultra violet stat
@@ -30,11 +33,16 @@
 	. = ..()
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
-	ssu_left?.update_connectors() 			//to add connector sprites for neardy staying Suit Storage Units
-	ssu_right?.update_connectors()
+
+	ssu_left = locate(/obj/machinery/storage_unit/suit_storage) in get_step(src, WEST)
+	if(!QDELETED(ssu_left))
+		ssu_left?.update_connectors() 			//to add connector sprites for neardy staying Suit Storage Units
+	ssu_right = locate(/obj/machinery/storage_unit/suit_storage) in get_step(src, WEST)
+	if(!QDELETED(ssu_right))
+		ssu_right?.update_connectors()
 
 	options += list(
-		list("Process UV" = mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_start")) = PROC_REF(start_ultra_violet)
+		list("Process UV", mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_start"), PROC_REF(start_ultra_violet))
 	)
 
 /obj/machinery/storage_unit/suit_storage/place_occupant(mob/living/target, mob/user, obj/grab = null)
@@ -69,6 +77,7 @@
 				I = mutable_appearance(icon = overlays_file, icon_state = "left_connect_[icon_state]")
 			else
 				I = mutable_appearance(icon = overlays_file, icon_state = "left_connect_civilian")
+			I.layer = layer
 			connectors_overlays += I
 
 	ssu_right = locate(/obj/machinery/storage_unit/suit_storage) in get_step(src, EAST)
@@ -78,6 +87,7 @@
 				I = mutable_appearance(icon = overlays_file, icon_state = "right_connect_[icon_state]")
 			else
 				I = mutable_appearance(icon = overlays_file, icon_state = "right_connect_civilian")
+			I.layer = layer
 			connectors_overlays += I
 
 	add_overlay(connectors_overlays)
@@ -158,11 +168,12 @@
 		cycletime_left = 1
 	else
 		cycletime_left = 5
-	update_icon()
-	ultra_violet_cleaning()
+	addtimer(CALLBACK(src, PROC_REF(ultra_violet_cleaning)), 10)
 	set_power_use(ACTIVE_POWER_USE)
 
+
 /obj/machinery/storage_unit/suit_storage/proc/ultra_violet_cleaning()
+	update_icon()
 	if(cycletime_left)
 		cycletime_left--
 		if(occupant && emagged)
@@ -192,11 +203,9 @@
 /obj/machinery/storage_unit/suit_storage/proc/super_ultra_violet_cleaning()
 	for(var/atom/target as anything in contents)
 		QDEL_NULL(target)
+
 	for(var/slot_name in contents_by_slot)
 		contents_by_slot[slot_name] = null
-
-	if(occupant)
-		QDEL_NULL(occupant)
 
 	playsound(src, 'sound/weapons/sear.ogg', VOL_EFFECTS_MASTER)
 	stat |= BROKEN
@@ -208,7 +217,7 @@
 
 	..()
 
-/obj/machinery/storage_unit/suit_storage/AltClick(mob/user, proximity)
+/obj/machinery/storage_unit/suit_storage/MiddleShiftClick(mob/user)
 	if(ultra_violet || !Adjacent(user))
 		return
 	start_ultra_violet(user)
@@ -245,6 +254,23 @@
 	locked = FALSE
 	update_icon()
 	return TRUE
+
+/obj/machinery/storage_unit/suit_storage/toggle_door(opening = TRUE)
+	if(door_animated)
+		return
+
+	door_animated = TRUE
+	cut_overlay(door)
+	vis_contents += door
+	if(opening)
+		new /obj/effect/abstract/particle_holder(get_turf(src), /particles/suit_storage_mist, PARTICLE_FADEOUT|PARTICLE_FLICK)
+		animate(door, pixel_y = -1, time = 10, easing = JUMP_EASING|EASE_OUT, flags = ANIMATION_PARALLEL, tag="door_animation")
+		animate(pixel_x = 10, time = 10, easing = CUBIC_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+	else
+		animate(door, pixel_y = 0, time = 10, easing = JUMP_EASING|EASE_IN, flags = ANIMATION_PARALLEL, tag="door_animation")
+		animate(pixel_x = 0, time = 10, easing = CUBIC_EASING|EASE_OUT, flags = ANIMATION_PARALLEL)
+
+	addtimer(CALLBACK(src, PROC_REF(toggle_door_end)), 10)
 
 //The units themselves
 //unit for unit tests

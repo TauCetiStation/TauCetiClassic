@@ -38,7 +38,7 @@
 	new /mob/living/carbon/human (ssu)
 
 	ssu.super_ultra_violet_cleaning()
-	if(length(ssu.contents))
+	if(ssu.contents.len)
 		fail("SSU didnt destroy all in contents")
 		return FALSE
 

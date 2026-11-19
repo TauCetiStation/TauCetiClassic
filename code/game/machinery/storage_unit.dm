@@ -5,6 +5,12 @@
 	vis_flags = VIS_INHERIT_ID
 	appearance_flags = KEEP_TOGETHER | LONG_GLIDE | PIXEL_SCALE
 
+/obj/effect/object_door/singularity_act()
+	return
+
+/obj/effect/object_door/singularity_pull()
+	return
+
 /obj/machinery/storage_unit
 	name = "Storage Unit"
 	cases = list("личный шкафчик", "личного шкафчика", "личному шкафчику", "личный шкафчик", "личным шкафчиком", "личном шкафчике")
@@ -46,6 +52,8 @@
 	var/list/options = list()
 
 	var/can_build = TRUE
+	var/paint_type = /obj/machinery/storage_unit
+	var/list/prohibited_paint_types = list(/obj/machinery/storage_unit/suit_storage, /obj/machinery/storage_unit/personal)
 	var/filled = FALSE
 
 /obj/machinery/storage_unit/atom_init(mapload)
@@ -65,7 +73,7 @@
 		make_full()
 
 	options += list(
-		list("Переодеться" = mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_swap")) = PROC_REF(fast_dress)
+		list("Переодеться", mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_swap"), PROC_REF(fast_dress))
 	)
 
 	set_power_use(IDLE_POWER_USE)
@@ -168,6 +176,9 @@
 
 	//fast undress
 	for(var/slot_name in global.undress_sequence)
+		if(!(slot_name in contents_by_slot))
+			continue
+
 		var/obj/item/I = target.get_equipped_item(slot_name)
 		if(!I || !I.canremove)
 			continue
@@ -189,9 +200,9 @@
 
 		if(!target?.equip_to_slot_if_possible(I, slot_name, disable_warning = TRUE))
 			if(isturf(target?.loc))
-				I.forceMove(target.loc)
+				I.forceMove(get_turf(target))
 			else
-				I.forceMove(loc)
+				I.forceMove(get_turf(src))
 
 		contents_by_slot[slot_name] = null
 
@@ -210,6 +221,7 @@
 		door = new
 		door.icon = overlays_file
 		door.icon_state = "door_[icon_state]"
+		door.layer = layer + 0.01
 
 	door.cut_overlays()
 	door.add_overlay(mutable_appearance(door.icon, "lock_[locked]"))
@@ -230,18 +242,23 @@
 		add_overlay(mutable_appearance(overlays_file, "uniform"))
 
 /obj/machinery/storage_unit/proc/toggle_door(opening = TRUE)
+	if(door_animated)
+		return
+
+	door_animated = TRUE
 	cut_overlay(door)
 	vis_contents += door
 	if(opening)
-		animate(door, pixel_x = 10, time = 10, easing = CUBIC_EASING|EASE_IN)
+		animate(door, pixel_x = 10, time = 10, easing = SINE_EASING|EASE_IN, tag="door_animation")
 	else
-		animate(door, pixel_x = 0, time = 10, easing = CUBIC_EASING|EASE_OUT)
+		animate(door, pixel_x = 0, time = 10, easing = CUBIC_EASING|EASE_OUT, tag="door_animation")
 
-	addtimer(CALLBACK(src, PROC_REF(toggle_door_end)), 10)
+	addtimer(CALLBACK(src, PROC_REF(toggle_door_end)), 10, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /obj/machinery/storage_unit/proc/toggle_door_end()
 	vis_contents -= door
 	add_overlay(door)
+	door_animated = FALSE
 
 /obj/machinery/storage_unit/container_resist()
 	var/mob/living/user = usr
@@ -265,6 +282,10 @@
 	if(stat & BROKEN)
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return FALSE
+
+	if(door_animated)
+		return FALSE
+
 	if(opened)
 		if(!ishuman(something))
 			load_something(something, user)
@@ -279,7 +300,20 @@
 		return
 	if(!Adjacent(user))
 		return
+
+	if(door_animated)
+		return
+
 	opened ? close() : open(user)
+
+/obj/machinery/storage_unit/suit_storage/AltClick(mob/user, proximity)
+	add_fingerprint(user)
+	if(stat & BROKEN)
+		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
+		return
+	if(!Adjacent(user))
+		return
+	toggle_lock(user)
 
 /obj/machinery/storage_unit/interact(mob/user)
 	..()
@@ -287,17 +321,23 @@
 		to_chat(user, "<span class ='danger'>The unit is not operational.</span>")
 		return
 
+	if(door_animated)
+		return
+
 	if(opened)
 		if(ishuman(user))
-			var/list/options_ui
-			var/list/options_back
+			var/list/options_ui = list()
+			var/list/options_back = list()
 			for(var/list/option in options)
-				options_ui += option
-				options_back[option[1]] = options[option]
+				var/option_name = option[1]
+				var/mutable_appearance/option_appearance = option[2]
+				options_ui[option_name] = option_appearance
+				options_back[option_name] = option[3]
 			var/chosen_option = show_radial_menu(user, src, options_ui, require_near = TRUE, tooltips = TRUE)
 
 			if(options_back[chosen_option])
 				INVOKE_ASYNC(src, options_back[chosen_option], user)
+				return
 
 			if(emagged)
 				place_occupant(usr, usr)
@@ -305,16 +345,24 @@
 
 		if(length(contents))
 			var/list/suit_storage = list()
-			for(var/atom/movable/target in contents_by_slot)
+			for(var/slot_name in contents_by_slot)
+				if(!slot_name || !contents_by_slot[slot_name])
+					continue
+				var/atom/movable/target = contents_by_slot[slot_name]
+				if(!target)
+					continue
 				suit_storage[target] = target.appearance
 			var/atom/movable/to_dispense = show_radial_menu(user, src, suit_storage, require_near = TRUE, tooltips = TRUE)
 
 			if(!to_dispense)
 				return
 
-			to_dispense.forceMove(loc)
-			user.put_in_hands(to_dispense)
-
+			for(var/slot_name in contents_by_slot)
+				if(contents_by_slot[slot_name] == to_dispense)
+					contents_by_slot[slot_name] = null
+					to_dispense.forceMove(loc)
+					user.put_in_hands(to_dispense)
+					return
 		return
 
 	if(!locked && !(stat & BROKEN))
@@ -330,7 +378,11 @@
 	if(stat & BROKEN)
 		to_chat(usr, "<span class ='danger'>The unit is not operational.</span>")
 		return FALSE
+
 	if(!opened)
+		if(istype(I, /obj/item/weapon/airlock_painter))
+			change_paintjob(I, user)
+			return
 		toggle_lock(user)
 		return
 
@@ -344,10 +396,6 @@
 	if(isprying(I))
 		if(default_deconstruction_crowbar(I))
 			return TRUE
-
-	if(istype(I, /obj/item/weapon/airlock_painter))
-		change_paintjob(I, user)
-		return
 
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/grab = I
@@ -399,31 +447,37 @@
 
 	var/list/optionslist = list()
 	var/list/name_to_type = list()
-	for(var/obj/machinery/storage_unit/unit_type in subtypesof(type))
-		if(unit_type::icon != icon)
-			continue
+	make_options:
+		for(var/unit_type in typesof(paint_type))
+			if(unit_type == type)
+				continue
+			for(var/prohibited_type in prohibited_paint_types)
+				if(ispath(unit_type, prohibited_type))
+					continue make_options
 
-		if(!unit_type::can_build)
-			continue
+			var/obj/machinery/storage_unit/unit = unit_type
+			if(!unit::can_build)
+				continue
 
-		optionslist += list(unit_type::name = mutable_appearance(icon = unit_type::icon, icon_state = unit_type::icon_state))
-		name_to_type[unit_type::name] = unit_type
+			optionslist[unit::name] = mutable_appearance(icon = unit::icon, icon_state = unit::icon_state)
+			name_to_type[unit::name] = unit
 
 	var/chosen_option = show_radial_menu(user, src, optionslist, require_near = TRUE, tooltips = TRUE)
 	if(!chosen_option || !name_to_type[chosen_option])
 		return
 
-	var/chosen_type = name_to_type[chosen_option]
-	var/obj/machinery/storage_unit/unit = new chosen_type()
-
 	if(!W.use_tool(src, user, 50, 1))
 		return
+
+	var/chosen_type = name_to_type[chosen_option]
+	var/obj/machinery/storage_unit/unit = new chosen_type()
 
 	name = unit.name
 	cases = unit.cases
 	desc = unit.desc
 	icon_state = unit.icon_state
 	overlays_file = unit.overlays_file
+	door.icon_state = "door_[icon_state]"
 
 	qdel(unit)
 	update_icon()
@@ -497,6 +551,8 @@
 		SLOT_SHOES = null
 	)
 
+	paint_type = /obj/machinery/storage_unit
+
 	req_access = list(access_all_personal_lockers)
 
 	var/personal_name
@@ -505,8 +561,16 @@
 	. = ..()
 
 	options += list(
-		list("Сброс замка" = mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_delet")) = PROC_REF(reset_lock)
+		list("Сброс замка", mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_delet"), PROC_REF(reset_lock))
 	)
+
+/obj/machinery/storage_unit/personal/examine(mob/user)
+	..()
+	if(personal_name)
+		to_chat(user, "Принадлежит [personal_name].")
+
+/obj/machinery/storage_unit/personal/toggle_lock(mob/user)
+	return
 
 /obj/machinery/storage_unit/personal/proc/reset_lock(mob/user)
 	personal_name = null
@@ -518,9 +582,6 @@
 	if(opened)
 		return ..()
 
-	if(personal_name)
-		return
-
 	var/obj/item/weapon/card/id/card
 
 	if(istype(I, /obj/item/device/pda))
@@ -531,14 +592,18 @@
 	else
 		card = I
 
-	personal_name = card.registered_name
+	if(!personal_name)
+		personal_name = card.registered_name
+		to_chat(user, "<span class='warning'>Замок успешно настроен на [personal_name]</span>")
+		return
 
-/obj/machinery/storage_unit/personal/allowed(atom/movable/AM)
-	for(var/obj/item/weapon/card/id/card in AM.contents)
-		if(card.registered_name != personal_name)
-			continue
-		return TRUE
-	return ..()
+	if(!allowed(user) && (personal_name != card.registered_name))
+		to_chat(user, "<span class='warning'>Доступ запрещён</span>")
+		return
+
+	locked = !locked
+	update_icon()
+	return
 
 /obj/machinery/storage_unit/personal/patient
 	name = "Personal Patient Storage Unit"
