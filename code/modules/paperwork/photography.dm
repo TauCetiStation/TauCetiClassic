@@ -122,6 +122,9 @@
 	img = inimg
 	desc = indesc
 
+/obj/item/weapon/photo/try_wrap_up(wrap_type, wrap_icon_state = "deliveryenvelope")
+	. = ..()
+
 
 // Camera filters
 /obj/item/device/lens

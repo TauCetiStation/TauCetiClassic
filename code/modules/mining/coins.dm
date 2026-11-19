@@ -21,6 +21,9 @@
 		create_reagents(4)
 		reagents.add_reagent(reagent, 4)
 
+/obj/item/weapon/coin/try_wrap_up(wrap_type, wrap_icon_state = "deliveryenvelope")
+	. = ..()
+
 /obj/item/weapon/coin/gold
 	name = COIN_GOLD
 	cmineral = "gold"
