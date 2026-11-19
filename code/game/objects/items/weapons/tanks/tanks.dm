@@ -157,7 +157,14 @@
 		if("internal")
 			if(usr?.wear_mask && isbreathmask(usr.wear_mask))
 				var/obj/item/clothing/mask/breath/breath_mask = usr.wear_mask
-				breath_mask.toggle_breath()
+				breath_mask.active = !breath_mask.active
+				if(breath_mask.active)
+					breath_mask.attached_tank = src
+					breath_mask.open_internals()
+				else
+					breath_mask.detach_tank()
+				if(breath_mask.adjustible)
+					breath_mask.update_hanging()
 
 /obj/item/weapon/tank/remove_air(amount)
 	return air_contents.remove(amount)
