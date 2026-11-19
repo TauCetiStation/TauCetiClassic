@@ -21,6 +21,7 @@
 	idle_power_usage = 10
 	active_power_usage = 100
 	anchored = TRUE
+	interact_offline = TRUE
 
 	var/build_type = SUIT_STORAGE_BUILD_DEFAULT
 	var/opened = FALSE
@@ -102,6 +103,10 @@
 	update_icon()
 
 /obj/machinery/suit_storage_unit/proc/fast_equip(mob/living/target)
+	if(stat & NOPOWER)
+		to_chat(usr, "<span class ='danger'>The unit is not powered.</span>")
+		return FALSE
+
 	for(var/obj/item/something in contents)
 		if(do_after(target, 0.1 SECONDS, FALSE, src))
 			switch(something.slot_flags)
@@ -128,6 +133,9 @@
 	update_icon()
 
 /obj/machinery/suit_storage_unit/proc/fast_unequip(mob/living/target)
+	if(stat & NOPOWER)
+		to_chat(target, "<span class ='danger'>The unit is not powered.</span>")
+		return FALSE
 	for(var/obj/item/something in target.contents)
 		if(POSSIBLE_TO_LOAD(something))
 			load_something(something, target)
@@ -394,23 +402,25 @@
 		return
 
 	if(opened)
-		if(ishuman(user))
-			var/list/options = list("Procces UV" = mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_start"),
+		if(ishuman(user) && !(stat & NOPOWER))
+			var/list/options = list("Process UV" = mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_start"),
 									"Fast Uneqip" = mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_use"),
 									"Fast Eqip" = mutable_appearance(icon = "icons/hud/radial.dmi", icon_state = "radial_pickup")
 									)
 			var/choosen_option = show_radial_menu(user, src, options, require_near = TRUE, tooltips = TRUE)
 			switch(choosen_option)
-				if("Procces UV")
+				if("Process UV")
 					start_ultra_violet(user)
 					return
 				if("Fast Uneqip")
 					fast_unequip(user)
-				if("Fast Eqip")
+				if("Fast Equip")
 					fast_equip(user)
 			if(emagged)
 				place_occupant(usr, usr)
 				return
+		else to_chat(usr, "<span class ='danger'>The unit is not powered. All quick actions are disabled.</span>")
+
 
 		if(length(contents))
 			var/list/suit_storage = list()
@@ -515,7 +525,7 @@
 
 /obj/machinery/suit_storage_unit/verb/toggle_ultra_violet_cylce()
 	set category = "Object"
-	set name = "Toggle SSU Ultra violet Cylce"
+	set name = "Toggle SSU Ultra Violet Cycle"
 	set src in view(1)
 
 	if(isliving(usr))
@@ -525,6 +535,10 @@
 	set category = "Object"
 	set name = "Fast Equip/Unequip"
 	set src in view(1)
+
+	if(stat & NOPOWER)
+		to_chat(usr, "<span class ='danger'>The unit is not powered.</span>")
+		return FALSE
 
 	if(ishuman(usr) && opened && !ultra_violet)
 		length(contents) ? fast_equip(usr) : fast_unequip(usr)
