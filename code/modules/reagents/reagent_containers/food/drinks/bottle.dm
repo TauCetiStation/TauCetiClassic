@@ -259,6 +259,9 @@
 		flags |= OPENCONTAINER
 		update_icon()
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/try_wrap_up(wrap_type, wrap_icon_state = "deliverybottle")
+	. = ..()
+
 //Keeping this here for now, I'll ask if I should keep it here.
 /obj/item/weapon/broken_bottle
 	name = "Broken Bottle"
