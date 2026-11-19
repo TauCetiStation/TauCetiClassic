@@ -51,8 +51,30 @@
 /turf/simulated/floor/plating,
 /area/station/security/range)
 "aal" = (
-/obj/item/device/radio/intercom{
-	pixel_x = 27
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/ld50_syringe/choral{
+	pixel_x = 3;
+	pixel_y = 10
+	},
+/obj/item/weapon/reagent_containers/ld50_syringe/choral{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/weapon/reagent_containers/ld50_syringe/choral{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/glasses/sunglasses/blindfold,
+/obj/item/weapon/storage/box/bodybags{
+	pixel_x = -1;
+	pixel_y = -2
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -286,8 +308,12 @@
 	},
 /area/station/security/main)
 "aaD" = (
-/obj/structure/morgue,
-/obj/effect/decal/cleanable/cobweb,
+/obj/machinery/light/smart{
+	dir = 8
+	},
+/obj/structure/stool/bed/chair/e_chair{
+	dir = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -699,28 +725,27 @@
 	},
 /area/station/security/interrogation)
 "abs" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/bodybags{
-	pixel_x = -1;
-	pixel_y = -2
+/obj/structure/closet{
+	name = "Evidence Closet"
 	},
-/obj/machinery/light/smart{
-	dir = 8
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/execution)
+/area/station/security/brig)
 "abt" = (
 /obj/machinery/camera/motion{
-	c_tag = "Brig Execution Chamber";
+	c_tag = "Brig Execution Chamber Observation";
 	dir = 1;
 	network = list("SS13","Security")
 	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -926,12 +951,16 @@
 	},
 /area/station/security/armoury)
 "abL" = (
-/obj/structure/table,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/glasses/sunglasses/blindfold,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -22
+/obj/item/device/radio/intercom{
+	pixel_x = 27;
+	frequency = 1448;
+	broadcasting = 1;
+	listening = 0
+	},
+/obj/machinery/camera/motion{
+	c_tag = "Brig Execution Chamber";
+	dir = 9;
+	network = list("SS13","Security", "Brig Execution Chamber")
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1405,18 +1434,24 @@
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "act" = (
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -22
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 1
 	},
-/obj/machinery/flasher/portable,
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
+/obj/machinery/computer/security/telescreen{
+	layer = 4;
+	name = "Observation Screen";
+	network = list("Brig Execution Chamber");
+	pixel_x = -16;
+	pixel_y = 32
+	},
+/obj/item/device/radio/intercom{
+	pixel_x = 27;
+	frequency = 1448
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/armoury)
+/area/station/security/execution)
 "acu" = (
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
@@ -14602,10 +14637,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "ayK" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
 	},
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
+	},
+/obj/structure/stool/bed,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -17571,11 +17609,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/dormitory)
 "aEB" = (
-/obj/structure/sign/warning/secure_area{
-	pixel_y = -32
+/obj/structure/closet/secure_closet/injection,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
 	},
-/turf/environment/space,
-/area/space)
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/execution)
 "aEC" = (
 /obj/effect/spawner/lootdrop/maintenance/four,
 /obj/structure/closet,
@@ -18529,26 +18570,18 @@
 	},
 /area/station/hallway/primary/central)
 "aGr" = (
-/obj/structure/table,
-/obj/item/weapon/reagent_containers/ld50_syringe/choral{
-	pixel_x = 3;
-	pixel_y = 2
+/obj/machinery/flasher/portable,
+/obj/effect/decal/turf_decal/alpha/gray{
+	icon_state = "bot"
 	},
-/obj/item/weapon/reagent_containers/ld50_syringe/choral{
-	pixel_x = 3;
-	pixel_y = 6
-	},
-/obj/item/weapon/reagent_containers/ld50_syringe/choral{
-	pixel_x = 3;
-	pixel_y = 10
-	},
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -22
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
-/area/station/security/execution)
+/area/station/security/armoury)
 "aGs" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -67489,6 +67522,20 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/tcommsat/computer)
+"cEv" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/machinery/light/smart{
+	dir = 4
+	},
+/obj/structure/morgue{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/execution)
 "cEy" = (
 /obj/structure/stool,
 /obj/effect/decal/cleanable/dirt,
@@ -73279,6 +73326,12 @@
 	icon_state = "red"
 	},
 /area/station/security/main)
+"gpM" = (
+/obj/effect/decal/cleanable/cobweb,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/execution)
 "gqb" = (
 /obj/machinery/computer/shop{
 	department = "Engineering";
@@ -80591,11 +80644,8 @@
 	},
 /area/station/medical/cmo)
 "njb" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
+/obj/structure/stool/bed/chair/metal/red{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -82200,7 +82250,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "oRb" = (
-/obj/structure/closet/secure_closet/injection,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 5
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -83783,13 +83835,12 @@
 /turf/simulated/wall,
 /area/station/civilian/chapel/crematorium)
 "qGb" = (
-/obj/structure/stool/bed,
-/obj/effect/decal/turf_decal/alpha/gray{
-	icon_state = "bot"
+/obj/machinery/door/firedoor,
+/obj/structure/window/fulltile/reinforced/tinted{
+	grilled = 1;
+	icon_state = "gr_window_reinforced_tinted"
 	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
+/turf/simulated/floor/plating,
 /area/station/security/execution)
 "qGz" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -85332,6 +85383,22 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engineering/singularity)
+"scJ" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 8
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/execution)
 "sdb" = (
 /obj/machinery/disease2/diseaseanalyser,
 /obj/machinery/alarm{
@@ -88352,6 +88419,18 @@
 	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
+"wkg" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/execution)
 "wld" = (
 /obj/machinery/biogenerator,
 /turf/simulated/floor{
@@ -88721,6 +88800,16 @@
 	icon_state = "bluecorner"
 	},
 /area/station/ai_monitored/eva)
+"wJU" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/station/security/execution)
 "wLi" = (
 /turf/simulated/wall,
 /area/station/civilian/chapel/mass_driver)
@@ -116810,11 +116899,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aah
+aah
+aah
+aah
+aah
 aah
 aah
 aaa
@@ -117066,12 +117155,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
 aah
-aah
+bEP
+bEP
+bEP
+bEP
+bEP
 bEP
 bEP
 bEP
@@ -117323,16 +117412,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
 aah
-aaa
 bEP
+aal
+aaY
+bEP
+gpM
 aaD
-abL
-abs
+aaY
+aaZ
+apO
 oRb
 aaZ
 aci
@@ -117579,18 +117668,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aah
+aah
+bEP
 aEB
-bEP
-bEP
-bEP
 aaY
+aNs
 apO
 acD
 acR
+acn
+wkg
+scJ
 acn
 adc
 aeR
@@ -117838,13 +117927,13 @@ cAd
 cAd
 cAd
 cAd
-cAd
-cAd
-cAd
 bEP
-aGr
-aNs
+bEP
+bEP
+rQH
 aaY
+ayK
+wJU
 qGb
 njb
 abt
@@ -118096,17 +118185,17 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-bEP
-bEP
-rQH
-ayK
-aal
-abf
-acU
+aaj
+amB
 aaZ
-adV
+abL
+cEv
+acU
+qGb
+act
+abf
+aaZ
+abs
 aeK
 afc
 afO
@@ -118353,10 +118442,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aaj
-amB
+aaj
+aaZ
+aaZ
 abl
 abl
 abl
@@ -118611,14 +118700,14 @@ aaa
 aaa
 aaa
 aaj
-aaj
-aaj
-aaj
+aao
+uia
+aao
 abl
 abJ
 abP
-act
 aba
+aGr
 abl
 adV
 adV
@@ -118869,7 +118958,7 @@ aaa
 aaa
 aaj
 aao
-uia
+aam
 aao
 abl
 sCX
@@ -119126,8 +119215,8 @@ aaa
 aah
 aaj
 aao
-aam
-aao
+aaE
+aaT
 abl
 abH
 abJ
@@ -119383,8 +119472,8 @@ aah
 aah
 aaj
 aao
-aaE
-aaT
+aaG
+aaU
 abl
 abM
 ceU
@@ -119640,8 +119729,8 @@ rtF
 aaj
 aaj
 aao
-aaG
-aaU
+aaF
+aao
 abl
 abK
 dFb
