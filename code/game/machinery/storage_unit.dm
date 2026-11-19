@@ -355,7 +355,7 @@
 				place_occupant(usr, usr)
 				return
 
-		if(length(contents))
+		if(length(contents) || occupant)
 			var/list/suit_storage = list()
 			for(var/slot_name in contents_by_slot)
 				if(!slot_name || !contents_by_slot[slot_name])
@@ -404,9 +404,6 @@
 		toggle_lock(user)
 		return
 
-	if(occupant)
-		return
-
 	if(isscrewing(I))
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 			update_icon()
@@ -415,7 +412,7 @@
 		if(default_deconstruction_crowbar(I))
 			return TRUE
 
-	if(istype(I, /obj/item/weapon/grab))
+	if(!occupant && istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/grab = I
 		if(!ismob(grab.affecting) || grab.state < GRAB_AGGRESSIVE)
 			return
