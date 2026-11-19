@@ -182,7 +182,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	contains = list(/obj/item/weapon/gun/projectile/automatic/l13,
 					/obj/item/weapon/gun/projectile/automatic/l13,
 					/obj/item/weapon/gun/projectile/automatic/l13)
-	additional_costs = 2300
+	additional_costs = 1400
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = ".38 SMG crate"
 	access = access_brig
@@ -799,9 +799,9 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 
 /datum/supply_pack/internals
 	name = "Internals crate"
-	contains = list(/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured,
+	contains = list(/obj/item/clothing/mask/breath/gas/coloured,
+					/obj/item/clothing/mask/breath/gas/coloured,
+					/obj/item/clothing/mask/breath/gas/coloured,
 					/obj/item/weapon/tank/air,
 					/obj/item/weapon/tank/air,
 					/obj/item/weapon/tank/air)
@@ -852,11 +852,11 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/tank/emergency_oxygen,
 					/obj/item/weapon/tank/emergency_oxygen,
 					/obj/item/weapon/tank/emergency_oxygen,
-					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured,
-					/obj/item/clothing/mask/gas/coloured)
+					/obj/item/clothing/mask/breath/gas/coloured,
+					/obj/item/clothing/mask/breath/gas/coloured,
+					/obj/item/clothing/mask/breath/gas/coloured,
+					/obj/item/clothing/mask/breath/gas/coloured,
+					/obj/item/clothing/mask/breath/gas/coloured)
 	crate_type = /obj/structure/closet/crate/internals
 	crate_name = "Emergency crate"
 	group = "Engineering"
@@ -1560,7 +1560,7 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 /datum/supply_pack/weedcontrol
 	name = "Weed control crate"
 	contains = list(/obj/item/weapon/scythe,
-					/obj/item/clothing/mask/gas/coloured,
+					/obj/item/clothing/mask/breath/gas/coloured,
 					/obj/item/weapon/grenade/chem_grenade/antiweed,
 					/obj/item/weapon/grenade/chem_grenade/antiweed)
 	crate_type = /obj/structure/closet/crate/secure/hydrosec
@@ -1887,6 +1887,13 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 					/obj/item/weapon/storage/pill_bottle/dice,
 					/obj/item/weapon/storage/pill_bottle/dice,
 					/obj/item/weapon/cane)
+	group = "Miscellaneous"
+
+/datum/supply_pack/stallcart
+	name = "Stall Cart"
+	contains = list(/obj/structure/table/reinforced/stall/movable)
+	additional_costs = 350
+	crate_type = /obj/structure/largecrate
 	group = "Miscellaneous"
 
 //----------------------------------------------

@@ -349,6 +349,10 @@
 /mob/living/proc/is_usable_leg(targetzone = null)
 	return FALSE
 
+// Whether worn gear is in the way of the mouth right now. Rig faceplates flip the flag while worn.
+/mob/living/proc/is_mouth_covered()
+	return wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)
+
 /mob/living/proc/can_hit_zone(mob/living/attacker, targetzone)
 	switch(targetzone)
 		if(O_EYES)

@@ -472,7 +472,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	else if (href_list["vend"] && vend_ready && !currently_vending)
 
 		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
-			to_chat(usr, "<span class='warning'>Access denied.</span>")//Unless emagged of course
+			access_denied_feedback()
 			flick(src.icon_deny, src)
 			return FALSE
 
@@ -539,9 +539,14 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 
 	updateUsrDialog()
 
+/obj/machinery/vending/proc/access_denied_feedback()
+	for(var/mob/viewer in get_hearers_in_view(world.view, src))
+		viewer.show_runechat_message(src, null, "отказано в доступе", null, SHOWMSG_VISUAL, 2 SECONDS)
+	playsound(src, 'sound/misc/compiler-failure.ogg', VOL_EFFECTS_MASTER, vary = FALSE)
+
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
 	if (!allowed(user) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
-		to_chat(user, "<span class='warning'>Access denied.</span>")//Unless emagged of course
+		access_denied_feedback()
 		flick(src.icon_deny,src)
 		return
 	src.vend_ready = 0 //One thing at a time!!

@@ -79,7 +79,7 @@
 
 	uniform = /obj/item/clothing/under/rank/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
-	mask = /obj/item/clothing/mask/gas/clown_hat
+	mask = /obj/item/clothing/mask/breath/gas/clown_hat
 
 	belt = /obj/item/device/pda/clown
 
@@ -106,7 +106,7 @@
 	uniform = /obj/item/clothing/under/mime
 	shoes = /obj/item/clothing/shoes/black
 	gloves = /obj/item/clothing/gloves/white
-	mask = /obj/item/clothing/mask/gas/mime
+	mask = /obj/item/clothing/mask/breath/gas/mime
 	head = /obj/item/clothing/head/beret/red
 	suit = /obj/item/clothing/suit/suspenders
 

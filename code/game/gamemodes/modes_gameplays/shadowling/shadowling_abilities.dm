@@ -226,7 +226,7 @@
 		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling, SLOT_WEAR_SUIT)
 		user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling, SLOT_HEAD)
 		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling, SLOT_GLOVES)
-		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling, SLOT_WEAR_MASK)
+		user.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/gas/shadowling, SLOT_WEAR_MASK)
 		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, SLOT_GLASSES)
 		var/mob/living/carbon/human/H = usr
 		H.set_species(SHADOWLING)

@@ -15,6 +15,8 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 
 	// First person message ('You laugh!')
 	var/message_1p
+	// Second person message, sent to the target only ('hugs you.') -> ('James Morgan hugs you.')
+	var/message_2p
 	// Third person message ('laughs!') -> ('James Morgan laughs!')
 	var/message_3p
 	// From mute message ('laughs silently.') -> ('James Morgan laughs silently.')
@@ -63,13 +65,16 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 	// If the mob doesn't have all bodyparts in the list, the emote can't be performed.
 	var/list/required_bodyparts = null
 
-/datum/emote/proc/get_emote_message_1p(mob/user)
+/datum/emote/proc/get_emote_message_1p(mob/user, mob/living/target)
 	return "<i>[message_1p]</i>"
 
-/datum/emote/proc/get_impaired_msg(mob/user)
+/datum/emote/proc/get_emote_message_2p(mob/user, mob/living/target)
+	return message_2p
+
+/datum/emote/proc/get_impaired_msg(mob/user, mob/living/target)
 	return message_impaired_reception
 
-/datum/emote/proc/get_emote_message_3p(mob/user)
+/datum/emote/proc/get_emote_message_3p(mob/user, mob/living/target)
 	var/msg = message_3p
 	if(message_miming && HAS_TRAIT(user, TRAIT_MIMING))
 		msg = message_miming
@@ -132,41 +137,34 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 
 	playsound(user, emote_sound, VOL_EFFECTS_MASTER, volume, FALSE, sound_frequency)
 
-/datum/emote/proc/can_emote(mob/user, intentional)
+// Returns the reason why user can't perform this emote, or null when he can.
+// Pure: never prints anything, so the interaction panel may call it every tick.
+/datum/emote/proc/get_block_reason(mob/user, intentional)
 	if(!check_cooldown(user.next_emote_use, intentional))
-		if(intentional)
-			to_chat(user, "<span class='notice'>Вы не можете использовать эмоуты так часто, передохните.</span>")
-		return FALSE
+		return "Вы не можете делать это так часто, передохните."
 
 	if(user.status_flags & FAKEDEATH)
-		if(intentional)
-			to_chat(user, "<span class='notice'>You can't emote in this state.</span>")
-		return FALSE
+		return "Вы не можете сделать это в текущем состоянии."
 
 	if(!isnull(required_stat) && user.stat > required_stat)
-		if(intentional)
-			to_chat(user, "<span class='notice'>Вы не можете использовать эмоуты в текущем состоянии.</span>")
-		return FALSE
+		return "Вы не можете сделать это в текущем состоянии."
 
 	if(!isnull(required_intentional_stat) && intentional && user.stat > required_stat)
-		to_chat(user, "<span class='notice'>Вы не можете использовать эмоуты в текущем состоянии.</span>")
-		return FALSE
+		return "Вы не можете сделать это в текущем состоянии."
 
 	if(blocklist_traits)
 		for(var/trait in blocklist_traits)
 			if(HAS_TRAIT(user, trait))
-				return FALSE
+				return "Вы не можете сделать это в текущей форме."
 
 	if(blocklist_unintentional_traits && !intentional)
 		for(var/trait in blocklist_unintentional_traits)
 			if(HAS_TRAIT(user, trait))
-				return FALSE
+				return "Вы не можете сделать это в текущей форме."
 
 	if(require_usable_hand)
 		if(user.restrained())
-			if(intentional)
-				to_chat(user, "<span class='notice'>Вы не можете использовать этот эмоут, пока связаны.</span>")
-			return FALSE
+			return "Вы не можете сделать это, пока связаны."
 
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -178,7 +176,7 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 			var/r_arm_usable = r_arm && r_arm.is_usable()
 
 			if(!l_arm_usable && !r_arm_usable)
-				return FALSE
+				return "Ваши руки не слушаются."
 
 	if(required_bodyparts && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -186,20 +184,27 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 		for(var/zone in required_bodyparts)
 			var/obj/item/organ/external/BP = H.get_bodypart(zone)
 			if(!BP)
-				if(intentional)
-					to_chat(H, "<span class='notice'>Вы не можете использовать этот эмоут без [parse_zone_ru_genitive(zone)]</span>")
-				return FALSE
+				return "Вы не можете сделать это без [parse_zone_ru_genitive(zone)]"
+
+	return null
+
+/datum/emote/proc/can_emote(mob/user, intentional)
+	var/reason = get_block_reason(user, intentional)
+	if(reason)
+		if(intentional)
+			to_chat(user, "<span class='notice'>[reason]</span>")
+		return FALSE
 
 	return TRUE
 
-/datum/emote/proc/do_emote(mob/user, emote_key, intentional)
+/datum/emote/proc/do_emote(mob/user, emote_key, intentional, mob/living/target)
 	LAZYINITLIST(user.next_emote_use)
 	set_cooldown(user.next_emote_use, cooldown, intentional)
 
-	var/msg_1p = get_emote_message_1p(user)
-	var/msg_3p = "<b>[user]</b> <i>[get_emote_message_3p(user)]</i>"
+	var/msg_1p = get_emote_message_1p(user, target)
+	var/msg_3p = "<b>[user]</b> <i>[get_emote_message_3p(user, target)]</i>"
 	var/range = !isnull(emote_range) ? emote_range : world.view
-	var/deaf_impaired_msg = "<b>[user]</b> [get_impaired_msg(user)]"
+	var/deaf_impaired_msg = "<b>[user]</b> [get_impaired_msg(user, target)]"
 
 	if(!msg_1p)
 		msg_1p = msg_3p
@@ -207,10 +212,7 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 	log_emote("[key_name(user)] : [msg_3p]")
 
 	if(msg_3p)
-		if(message_type & SHOWMSG_VISUAL)
-			user.visible_message(msg_3p, msg_1p, message_impaired_reception, viewing_distance = range, ignored_mobs = observer_list, runechat_msg = get_emote_message_3p(user))
-		else if(message_type & SHOWMSG_AUDIO)
-			user.audible_message(msg_3p, msg_1p, deaf_impaired_msg, hearing_distance = range, ignored_mobs = observer_list, runechat_msg = get_emote_message_3p(user), deaf_runechat_msg = get_impaired_msg(user))
+		send_emote_messages(user, target, msg_1p, msg_3p, deaf_impaired_msg, range)
 
 	else
 		to_chat(user, msg_1p)
@@ -226,7 +228,7 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 			continue
 
 		if(M in viewers(get_turf(user), world.view))
-			M.show_runechat_message(user, null, get_emote_message_3p(user), null, SHOWMSG_VISUAL)
+			M.show_runechat_message(user, null, get_emote_message_3p(user, target), null, SHOWMSG_VISUAL)
 
 		switch(M.client.prefs.chat_ghostsight)
 			if(CHAT_GHOSTSIGHT_ALL)
@@ -238,6 +240,12 @@ var/global/list/emotes_for_emote_panel // for custom emote panel
 
 	if(cloud)
 		add_cloud(user)
+
+/datum/emote/proc/send_emote_messages(mob/user, mob/living/target, msg_1p, msg_3p, deaf_impaired_msg, range, list/ignored_mobs = observer_list)
+	if(message_type & SHOWMSG_VISUAL)
+		user.visible_message(msg_3p, msg_1p, message_impaired_reception, viewing_distance = range, ignored_mobs = ignored_mobs, runechat_msg = get_emote_message_3p(user, target))
+	else if(message_type & SHOWMSG_AUDIO)
+		user.audible_message(msg_3p, msg_1p, deaf_impaired_msg, hearing_distance = range, ignored_mobs = ignored_mobs, runechat_msg = get_emote_message_3p(user, target), deaf_runechat_msg = get_impaired_msg(user, target))
 
 /datum/emote/proc/add_cloud(mob/user)
 	var/image/emote_bubble = image('icons/mob/emote.dmi', user, cloud, EMOTE_LAYER)

@@ -1,7 +1,8 @@
 name: "Сообщить о проблеме на карте"
 title: "[Название карты или локации] "
 description: "Если что-то не так с картой"
-labels: ["Bug", "Map Issue"]
+labels: ["Map Issue"]
+type: Bug
 body:
   - type: dropdown
     id: location

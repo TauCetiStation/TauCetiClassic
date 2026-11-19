@@ -145,6 +145,13 @@
 	proj_act_sound = SOUNDIN_WEAKBULLETACT
 
 
+/obj/item/projectile/bullet/fragment
+	damage = 25
+	flag = BOMB
+
+/obj/item/projectile/bullet/fragment/small
+	damage = 15
+
 /obj/item/projectile/bullet/grenade/explosive
 	name = "grenade"
 	damage = 10
@@ -152,12 +159,16 @@
 	sharp = 0
 
 /obj/item/projectile/bullet/grenade/explosive/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	explosion(target, 0, 1, 2)
-	return 1
+	explosion(target, 0, 0, 2)
+	var/turf/epicenter = get_turf(get_step(src, turn(dir, 180))) //so that fragments do not appear inside dense objects (such as walls)
+	create_blast_of_frags(14, epicenter, /obj/item/projectile/bullet/fragment)
+	return TRUE
 
 /obj/item/projectile/bullet/grenade/explosive/light/on_hit(atom/target, def_zone = BP_CHEST, blocked = 0)
-	explosion(target, 0, 0, 5)
-	return 1
+	explosion(target, 0, 0, 1)
+	var/turf/epicenter = get_turf(get_step(src, turn(dir, 180))) //so that fragments do not appear inside dense objects (such as walls)
+	create_blast_of_frags(7, epicenter, /obj/item/projectile/bullet/fragment/small)
+	return TRUE
 
 /obj/item/projectile/bullet/chem
 	damage = 5

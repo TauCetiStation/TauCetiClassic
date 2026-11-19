@@ -361,10 +361,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/med_data, med_record_consoles_list)
 						src.temp = "<B>Blood Type:</B><BR>\n\t<A href='byond://?src=\ref[src];temp=1;b_type=an'>[BLOOD_A_MINUS]</A> <A href='byond://?src=\ref[src];temp=1;b_type=ap'>[BLOOD_A_PLUS]</A><BR>\n\t<A href='byond://?src=\ref[src];temp=1;b_type=bn'>[BLOOD_B_MINUS]</A> <A href='byond://?src=\ref[src];temp=1;b_type=bp'>[BLOOD_B_PLUS]</A><BR>\n\t<A href='byond://?src=\ref[src];temp=1;b_type=abn'>[BLOOD_AB_MINUS]</A> <A href='byond://?src=\ref[src];temp=1;b_type=abp'>[BLOOD_AB_PLUS]</A><BR>\n\t<A href='byond://?src=\ref[src];temp=1;b_type=on'>[BLOOD_O_MINUS]</A> <A href='byond://?src=\ref[src];temp=1;b_type=op'>[BLOOD_O_PLUS]</A><BR>"
 				if("b_dna")
 					if (istype(src.active1, /datum/data/record))
-						var/t1 = sanitize(input("Please input DNA hash:", "Med. records", input_default(src.active1.fields["dna"]), null)  as text)
+						var/t1 = sanitize(input("Please input DNA hash:", "Med. records", input_default(src.active1.fields["b_dna"]), null)  as text)
 						if ((!( t1 ) || !( src.authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1))
 							return
-						src.active1.fields["dna"] = t1
+						src.active1.fields["b_dna"] = t1
 				if("vir_name")
 					var/datum/data/record/v = locate(href_list["edit_vir"])
 					if (v)

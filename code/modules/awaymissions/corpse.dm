@@ -94,7 +94,7 @@
 	corpseshoes = /obj/item/clothing/shoes/boots/swat
 	corpsegloves = /obj/item/clothing/gloves/swat
 	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas/coloured
+	corpsemask = /obj/item/clothing/mask/breath/gas/coloured
 	corpsehelmet = /obj/item/clothing/head/helmet/swat
 	corpseback = /obj/item/weapon/storage/backpack
 	corpseid = 1
@@ -110,7 +110,7 @@
 	corpseshoes = /obj/item/clothing/shoes/boots/swat
 	corpsegloves = /obj/item/clothing/gloves/swat
 	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas/syndicate
+	corpsemask = /obj/item/clothing/mask/breath/gas/syndicate
 	corpsehelmet = /obj/item/clothing/head/helmet/space/rig/syndi
 	corpseback = /obj/item/weapon/tank/jetpack/oxygen
 	corpsepocket1 = /obj/item/weapon/tank/emergency_oxygen
@@ -124,7 +124,7 @@
 	corpseuniform = /obj/item/clothing/under/tactical
 	corpseshoes = /obj/item/clothing/shoes/boots/combat
 	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas/coloured
+	corpsemask = /obj/item/clothing/mask/breath/gas/coloured
 	corpsehelmet = /obj/item/clothing/head/helmet/swat
 	corpsesuit = /obj/item/clothing/suit/armor/bulletproof
 	corpseid = 0
@@ -136,7 +136,7 @@
 	corpseuniform = /obj/item/clothing/under/syndicate/tacticool
 	corpseshoes = /obj/item/clothing/shoes/boots/combat
 	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas/coloured
+	corpsemask = /obj/item/clothing/mask/breath/gas/coloured
 	corpsehelmet = /obj/item/clothing/head/helmet/space/unathi/breacher
 	corpsesuit = /obj/item/clothing/suit/space/unathi/breacher
 	corpseid = 1
@@ -193,7 +193,7 @@
 	corpseuniform = /obj/item/clothing/under/rank/clown
 	corpseshoes = /obj/item/clothing/shoes/clown_shoes
 	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas/clown_hat
+	corpsemask = /obj/item/clothing/mask/breath/gas/clown_hat
 	corpsepocket1 = /obj/item/weapon/bikehorn
 	corpseback = /obj/item/weapon/storage/backpack/clown
 	corpseid = 1

@@ -18,6 +18,7 @@
 
 
 /datum/surgery_step/limb/cut
+	name = "Cut limb stump"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
 	/obj/item/weapon/kitchenknife = 75,	\
@@ -50,6 +51,7 @@
 
 
 /datum/surgery_step/limb/mend
+	name = "Reposition tissue"
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,           \
 	/obj/item/weapon/kitchen/utensil/fork = 75,	\
@@ -82,6 +84,7 @@
 
 
 /datum/surgery_step/limb/prepare
+	name = "Cauterize stump"
 	allowed_tools = list(
 	/obj/item/weapon/cautery = 100,			\
 	/obj/item/clothing/mask/cigarette = 75,	\
@@ -115,6 +118,7 @@
 
 
 /datum/surgery_step/limb/attach
+	name = "Attach limb"
 	allowed_tools = list(
 	/obj/item/organ/external = 100,
 	/obj/item/robot_parts = 100,
@@ -124,24 +128,28 @@
 	min_duration = 80
 	max_duration = 100
 
-/datum/surgery_step/limb/attach/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/limb/attach/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, silent = FALSE)
 	if(..())
 		if(istype(tool, /obj/item/robot_parts))
 			var/obj/item/robot_parts/p = tool
 			if (target_zone != p.part)
-				to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
+				if(!silent)
+					to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
 				return FALSE
 			if(!p.can_attach())
-				to_chat(user, "<span class='userdanger'>You need to attach a flash to [p] first!</span>")
+				if(!silent)
+					to_chat(user, "<span class='userdanger'>You need to attach a flash to [p] first!</span>")
 				return FALSE
 			return target.op_stage.bodyparts[target_zone] == ORGAN_ATTACHABLE
 		if(isbodypart(tool))
 			var/obj/item/organ/external/p = tool
 			if (target_zone != p.body_zone)
-				to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
+				if(!silent)
+					to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
 				return FALSE
 			if(!p.is_compatible(target))
-				to_chat(user, "<span class='userdanger'>This does not fit!</span>")
+				if(!silent)
+					to_chat(user, "<span class='userdanger'>This does not fit!</span>")
 				return FALSE
 			return target.op_stage.bodyparts[target_zone] == ORGAN_ATTACHABLE
 
@@ -236,6 +244,7 @@
 
 
 /datum/surgery_step/ipc/limb/cut_wires
+	name = "Cut wires"
 	allowed_tools = list(
 	/obj/item/weapon/wirecutters = 100,
 	/obj/item/weapon/kitchenknife = 75,
@@ -267,6 +276,7 @@
 		target.apply_damage(10, BRUTE, BP, damage_flags = DAM_SHARP|DAM_EDGE)
 
 /datum/surgery_step/ipc/limb/ipc_prepare
+	name = "Prepare robotic limb"
 	allowed_tools = list(
 	/obj/item/weapon/wrench = 100,
 	/obj/item/weapon/bonesetter = 75

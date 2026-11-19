@@ -103,8 +103,8 @@
 	return null
 
 /mob/living/carbon/proc/handle_external_pre_breathing(datum/gas_mixture/breath)
-	if(istype(wear_mask, /obj/item/clothing/mask/gas) && breath)
-		var/obj/item/clothing/mask/gas/G = wear_mask
+	if(istype(wear_mask, /obj/item/clothing/mask/breath/gas) && breath)
+		var/obj/item/clothing/mask/breath/gas/G = wear_mask
 		for(var/g in  G.filter)
 			if(breath.gas[g])
 				breath.gas[g] -= breath.gas[g] * G.gas_filter_strength
@@ -782,6 +782,12 @@
 		return TRUE
 	return
 
+/mob/living/carbon/is_mouth_covered()
+	if(head && (head.flags & HEADCOVERSMOUTH))
+		return TRUE
+
+	return ..()
+
 /mob/living/carbon/u_equip(obj/item/W)
 	if(!W)
 		return
@@ -814,6 +820,8 @@
 	dat += "</td></tr>"
 
 	dat += "<tr><td><B>Mask:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_WEAR_MASK]'>[(wear_mask && !(wear_mask.flags & ABSTRACT)) ? wear_mask : "<font color=grey>Empty</font>"]</A></td></tr>"
+
+	dat += "<tr><td><B>Neck:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_NECK]'>[(neck && !(neck.flags & ABSTRACT)) ? neck : "<font color=grey>Empty</font>"]</A></td></tr>"
 
 	if(handcuffed)
 		dat += "<tr><td><B>Handcuffed:</B></td><td><A href='byond://?src=\ref[src];item=[SLOT_HANDCUFFED]'>Remove</A></td></tr>"
@@ -1210,8 +1218,8 @@
 		if(!druggy)
 			see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
-	if(istype(wear_mask, /obj/item/clothing/mask/gas/voice/space_ninja))
-		var/obj/item/clothing/mask/gas/voice/space_ninja/O = wear_mask
+	if(istype(wear_mask, /obj/item/clothing/mask/breath/gas/voice/space_ninja))
+		var/obj/item/clothing/mask/breath/gas/voice/space_ninja/O = wear_mask
 		switch(O.mode)
 			if(0)
 				O.togge_huds()

@@ -123,6 +123,10 @@ SUBSYSTEM_DEF(shuttle)
 					for(var/obj/effect/starspawner/S in not_world)
 						S.spawning = 0
 					*/
+					pod_docking(/area/shuttle/escape_pod1/transit, /area/shuttle/escape_pod1/centcom, "pod1")
+					pod_docking(/area/shuttle/escape_pod2/transit, /area/shuttle/escape_pod2/centcom, "pod2")
+					pod_docking(/area/shuttle/escape_pod3/transit, /area/shuttle/escape_pod3/centcom, "pod3")
+					pod_docking(/area/shuttle/escape_pod4/transit, /area/shuttle/escape_pod4/centcom, "pod4")
 
 					location = SHUTTLE_AT_CENTCOM
 
@@ -138,12 +142,6 @@ SUBSYSTEM_DEF(shuttle)
 
 					dock_act(end_location, "escape_shuttle")
 
-
-							//pods
-					pod_docking(/area/shuttle/escape_pod1/transit, /area/shuttle/escape_pod1/centcom, "pod1")
-					pod_docking(/area/shuttle/escape_pod2/transit, /area/shuttle/escape_pod2/centcom, "pod2")
-					pod_docking(/area/shuttle/escape_pod3/transit, /area/shuttle/escape_pod3/centcom, "pod3")
-					pod_docking(/area/shuttle/escape_pod4/transit, /area/shuttle/escape_pod4/centcom, "pod4")
 					online = 0
 
 					return TRUE

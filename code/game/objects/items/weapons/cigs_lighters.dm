@@ -12,6 +12,9 @@ ZIPPO
 CIGARETTE PACKETS ARE IN FANCY.DM
 */
 
+// Companion state with the glowing pixels of a lit sprite, e.g. "cigon_ember".
+#define EMBER_STATE_SUFFIX "_ember"
+
 ///////////
 //MATCHES//
 ///////////
@@ -81,6 +84,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/smoketime = 300
 	var/chem_volume = 15
 	var/nicotine_per_smoketime = 0.006
+	light_color = LIGHT_COLOR_FIRE
+	var/ember_light_range = 1.4
+	var/ember_light_power = 0.4
+	var/image/ember_world_overlay
 
 /obj/item/clothing/mask/cigarette/atom_init()
 	. = ..()
@@ -146,10 +153,43 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.handle_reactions()
 		icon_state = icon_on
 		item_state = icon_on
+		update_world_icon()
 		update_inv_mob()
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
 		START_PROCESSING(SSobj, src)
+
+// What glows, in what colour, and how it breathes is all painted into the
+// companion "_ember" state. No such state, no glow.
+/obj/item/clothing/mask/cigarette/proc/build_ember_overlay(_icon, _state)
+	var/ember_state = "[_state][EMBER_STATE_SUFFIX]"
+	if(!icon_exists(_icon, ember_state))
+		return null
+
+	var/image/ember = image(_icon, icon_state = ember_state)
+	ember.plane = LIGHTING_LAMPS_PLANE
+	ember.appearance_flags = RESET_COLOR | KEEP_APART
+	return ember
+
+/obj/item/clothing/mask/cigarette/update_world_icon()
+	. = ..()
+	set_light(lit ? ember_light_range : 0, ember_light_power)
+	if(ember_world_overlay)
+		cut_overlay(ember_world_overlay)
+		ember_world_overlay = null
+	if(lit && isturf(loc))
+		ember_world_overlay = build_ember_overlay(icon, icon_state)
+		if(ember_world_overlay)
+			add_overlay(ember_world_overlay)
+
+/obj/item/clothing/mask/cigarette/get_standing_overlay(mob/living/carbon/human/H, def_icon_path, sprite_sheet_slot, layer, bloodied_icon_state = null, icon_state_appendix = null, spare_icon_path = FALSE)
+	var/mutable_appearance/standing = ..()
+	if(!lit)
+		return standing
+	var/image/ember = build_ember_overlay(standing.icon, standing.icon_state)
+	if(ember)
+		standing.add_overlay(ember)
+	return standing
 
 
 /obj/item/clothing/mask/cigarette/process()
@@ -159,7 +199,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		M.IgniteMob()	//Cigs can ignite mobs splashed with fuel
 	smoketime--
 	smoking_reagents()
-	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "smoking", /datum/mood_event/smoked)
 	if(smoketime < 1)
 		die()
 		return
@@ -279,6 +318,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		damtype = BURN
 		icon_state = icon_on
 		item_state = icon_on
+		update_world_icon()
 		update_inv_mob()
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
@@ -293,10 +333,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(ismob(loc))
 			var/mob/living/M = loc
 			to_chat(M, "<span class='notice'>Your [name] goes out, and you empty the ash.</span>")
-			lit = 0
-			icon_state = icon_off
-			item_state = icon_off
-			update_inv_mob()
+		lit = 0
+		icon_state = icon_off
+		item_state = icon_off
+		update_world_icon()
+		update_inv_mob()
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(location)
@@ -309,6 +350,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
+		update_world_icon()
+		update_inv_mob()
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(smoketime <= 0)
@@ -445,3 +488,5 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "syndizippoon"
 	icon_off = "syndizippo"
 	light_color = LIGHT_COLOR_NUKE_OPS
+
+#undef EMBER_STATE_SUFFIX

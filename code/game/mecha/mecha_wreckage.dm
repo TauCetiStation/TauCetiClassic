@@ -216,7 +216,7 @@
 			),
 		"crowbar" = list(
 			/obj/item/mecha_parts/chassis/honker,
-			/obj/item/clothing/mask/gas/clown_hat,
+			/obj/item/clothing/mask/breath/gas/clown_hat,
 			/obj/item/clothing/shoes/clown_shoes,
 			/obj/item/weapon/bikehorn,
 			/obj/item/stack/sheet/metal,

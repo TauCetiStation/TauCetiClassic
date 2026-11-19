@@ -58,7 +58,7 @@
 	name = "galoshes"
 	icon_state = "galoshes"
 	permeability_coefficient = 0.05
-	flags = NOSLIP
+	clothing_traits = list(TRAIT_NOSLIP)
 	can_get_wet = FALSE
 	slowdown = SHOES_SLOWDOWN + 0.5
 	species_restricted = null
@@ -73,14 +73,14 @@
 	name = "SWAT shoes"
 	desc = "When you want to turn up the heat."
 	icon_state = "swat"
-	flags = NOSLIP
+	clothing_traits = list(TRAIT_NOSLIP)
 	siemens_coefficient = 0.6
 
 /obj/item/clothing/shoes/boots/combat //Basically SWAT shoes combined with galoshes.
 	name = "combat boots"
 	desc = "When you REALLY want to turn up the heat"
 	icon_state = "swat"
-	flags = NOSLIP
+	clothing_traits = list(TRAIT_NOSLIP)
 	siemens_coefficient = 0.6
 
 	cold_protection = LEGS

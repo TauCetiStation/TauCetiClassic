@@ -109,6 +109,28 @@
 		else
 			message += "<span class='notice'>&emsp; Components are OK.</span><br>"
 
+		var/list/damaged_organs = list()
+		for(var/obj/item/organ/internal/IO in H.organs)
+			if(IO.damage > 0 || IO.status & ORGAN_DEAD)
+				damaged_organs += IO
+
+		message += "<span class='notice'>Internal Components:</span><br>"
+		if(length(damaged_organs) > 0)
+			for(var/obj/item/organ/internal/IO in damaged_organs)
+				var/status_text = ""
+				if(IO.status & ORGAN_DEAD)
+					status_text = "<font color='red'><b>DESTROYED</b></font>"
+				else if(IO.is_broken())
+					status_text = "<span class='warning'>BROKEN</span>"
+				else if(IO.is_bruised())
+					status_text = "<span class='warning'>BRUISED</span>"
+
+				message += "<span class='notice'>&emsp; [capitalize(IO.name)]: \
+					[IO.damage > 0 ? "<span class='warning'>[round(IO.damage, 0.1)]</span>" : 0] \
+					[status_text]</span><br>"
+		else
+			message += "<span class='notice'>&emsp; Internal components are OK.</span><br>"
+
 	message += "<span class='notice'>Operating Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
 
 	if(!output_to_chat)

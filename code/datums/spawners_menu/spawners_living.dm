@@ -221,6 +221,6 @@
 /datum/spawner/living/zombie
 	name = "Зомби"
 	desc = "Тебя ведет голод. Распространяй смерть, хаос и болезнь. Убивай живых и помогай своим не-живым собратьям."
-	time_for_registration = null
-	register_only = FALSE
 	cooldown = 10 SECONDS
+	ranks = list(ROLE_GHOSTLY)
+	time_for_registration = 10 SECONDS

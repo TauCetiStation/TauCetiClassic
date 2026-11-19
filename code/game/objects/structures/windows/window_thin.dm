@@ -99,6 +99,11 @@
 	else
 		return ..()
 
+/obj/structure/window/thin/AltClick(mob/user)
+	if(!user || !Adjacent(user))
+		return
+	rotate()
+
 /obj/structure/window/thin/verb/rotate()
 	set name = "Rotate Window Counter-Clockwise"
 	set category = "Object"
@@ -167,6 +172,10 @@
 
 	hit_particle_type = /particles/tool/digging/glass/phoron
 
+/obj/structure/window/thin/phoron/weld_react(mob/user, obj/item/weapon/weldingtool/WT)
+	weld_explode(0, 0, 2)
+	return TRUE
+
 /obj/structure/window/thin/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > T0C + 32000)
 		take_damage(round(exposed_volume / 1000), BURN, FIRE, FALSE)
@@ -185,6 +194,8 @@
 
 	max_integrity = 100
 
+	repair_time = 22 SECONDS
+
 /**
  * Fulltile reinforced phoron
  */
@@ -198,6 +209,10 @@
 	drops = list(/obj/item/stack/rods, /obj/item/weapon/shard/phoron)
 
 	max_integrity = 160
+
+/obj/structure/window/thin/reinforced/phoron/weld_react(mob/user, obj/item/weapon/weldingtool/WT)
+	weld_explode(0, 1, 2)
+	return TRUE
 
 /obj/structure/window/fulltile/reinforced/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return

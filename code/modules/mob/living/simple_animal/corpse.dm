@@ -91,7 +91,7 @@
 	corpseshoes = /obj/item/clothing/shoes/boots/swat
 	corpsegloves = /obj/item/clothing/gloves/swat
 	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas
+	corpsemask = /obj/item/clothing/mask/breath/gas
 	corpsehelmet = /obj/item/clothing/head/helmet/swat
 	corpseback = /obj/item/weapon/storage/backpack
 	corpseid = 1
@@ -107,7 +107,7 @@
 	corpseshoes = /obj/item/clothing/shoes/boots/swat
 	corpsegloves = /obj/item/clothing/gloves/swat
 	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas/syndicate
+	corpsemask = /obj/item/clothing/mask/breath/gas/syndicate
 	corpsehelmet = /obj/item/clothing/head/helmet/space/rig/syndi
 	corpseback = /obj/item/weapon/tank/jetpack/oxygen
 	corpsepocket1 = /obj/item/weapon/tank/emergency_oxygen
@@ -122,7 +122,7 @@
 	corpseuniform = /obj/item/clothing/under/rank/clown
 	corpseshoes = /obj/item/clothing/shoes/clown_shoes
 	corpseradio = /obj/item/device/radio/headset
-	corpsemask = /obj/item/clothing/mask/gas/clown_hat
+	corpsemask = /obj/item/clothing/mask/breath/gas/clown_hat
 	corpsepocket1 = /obj/item/weapon/bikehorn
 	corpseback = /obj/item/weapon/storage/backpack/clown
 	corpseid = 1

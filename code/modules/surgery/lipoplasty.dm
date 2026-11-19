@@ -14,6 +14,7 @@
 	return target_zone == BP_CHEST
 
 /datum/surgery_step/lipoplasty/cut_fat
+	name = "Cut fat"
 	allowed_tools = list(
 	/obj/item/weapon/circular_saw = 100, \
 	/obj/item/weapon/hatchet = 75,       \
@@ -60,6 +61,7 @@
 	BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/lipoplasty/remove_fat
+	name = "Remove fat"
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,           \
 	/obj/item/weapon/kitchen/utensil/fork = 75,	\

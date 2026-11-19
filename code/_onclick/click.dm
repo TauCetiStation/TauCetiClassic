@@ -331,6 +331,8 @@
 	return
 
 /atom/proc/AltClick(mob/user)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ALTCLICK, user) & COMPONENT_CANCEL_ALTCLICK)
+		return
 	var/turf/T = get_turf(src)
 	if(T && user.TurfAdjacent(T))
 		if(user.listed_turf == T)

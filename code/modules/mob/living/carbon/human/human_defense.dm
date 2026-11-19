@@ -475,8 +475,8 @@
 /mob/living/carbon/human/is_usable_head(targetzone = null)
 	if(isnull(targetzone))
 		var/obj/item/organ/external/head = get_bodypart(BP_HEAD)
-		if(head && head.is_usable())
-			return TRUE
+		return head && head.is_usable()
+
 	var/obj/item/organ/external/BP = get_bodypart(targetzone)
 	if(BP)
 		return BP.is_usable()
@@ -490,6 +490,8 @@
 		for(var/obj/item/organ/external/arm in pos_arms)
 			if(arm && arm.is_usable())
 				return TRUE
+		return FALSE
+
 	var/obj/item/organ/external/BP = get_bodypart(targetzone)
 	if(BP)
 		return BP.is_usable()
@@ -503,6 +505,8 @@
 		for(var/obj/item/organ/external/leg in pos_legs)
 			if(leg && leg.is_usable())
 				return TRUE
+		return FALSE
+
 	var/obj/item/organ/external/BP = get_bodypart(targetzone)
 	if(BP)
 		return BP.is_usable()

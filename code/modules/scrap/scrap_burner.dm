@@ -25,8 +25,10 @@
 	sheet_name = "refined scrap"
 	sheet_path = /obj/item/stack/sheet/refined_scrap
 	power_gen = 5000
-	time_per_sheet = 80
+	seconds_per_sheet = 160
 	board_path = /obj/item/weapon/circuitboard/pacman/scrap
+	emitted_gas = "carbon_dioxide"
+	consumed_gas = "oxygen"
 
 /obj/machinery/power/port_gen/pacman/scrap/overheat()
 	explosion(src.loc, 1, 5, 2, -1)

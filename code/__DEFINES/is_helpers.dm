@@ -181,7 +181,7 @@
 
 #define ishardhelmet(A)  istype(A,/obj/item/clothing/head/helmet/space/rig)
 
-#define isbreathmask(A)  istype(A,/obj/item/clothing/mask)
+#define isbreathmask(A)  istype(A,/obj/item/clothing/mask/breath)
 
 #define ismagboots(A)	 istype(A, /obj/item/clothing/shoes/magboots)
 
@@ -194,6 +194,8 @@
 #define iscanister(A)	 istype(A, /obj/machinery/portable_atmospherics/canister)
 
 #define issuitstorage(A) istype(A, /obj/machinery/suit_storage_unit)
+
+#define ismecha(M)       istype(M, /obj/mecha)
 
 // ROLES / ANTAG
 

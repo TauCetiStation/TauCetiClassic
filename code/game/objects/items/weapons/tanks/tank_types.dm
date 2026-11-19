@@ -12,7 +12,8 @@
  */
 /obj/item/weapon/tank/oxygen
 	name = "oxygen tank"
-	desc = "A tank of oxygen."
+	cases = list("баллон с кислородом", "баллона с кислородом", "баллону с кислородом","баллон с кислородом", "баллоном с кислородом", "баллоне с кислородом")
+	desc = "Баллон с кислородом, ничего необычного."
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 	icon_state = "oxygen"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
@@ -35,7 +36,8 @@
  */
 /obj/item/weapon/tank/anesthetic
 	name = "anesthetic tank"
-	desc = "A tank with an N2O/O2 gas mix."
+	cases = list("баллон с анестетиком", "баллона с анестетиком", "баллону с анестетиком","баллон с анестетиком", "баллоном с анестетиком", "баллоне с анестетиком")
+	desc = "Баллон с кислородно-закисноазотной смесью."
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 	icon_state = "anesthetic"
 	item_state = "an_tank"
@@ -49,7 +51,8 @@
 
 /obj/item/weapon/tank/anesthetic/small
 	name = "small anesthetic tank"
-	desc = "A small tank with an N2O/O2 gas mix."
+	cases = list("маленький баллон с анестетиком", "маленького баллона с анестетиком", "маленькому баллону с анестетиком", "маленький баллон с анестетиком", "маленьким баллоном с анестетиком", "маленьком баллоне с анестетиком")
+	desc = "Небольшой баллон с кислородно-закисноазотной смесью."
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 	icon_state = "smallanesthetic"
 	item_state = "an_tank"
@@ -76,7 +79,8 @@
  */
 /obj/item/weapon/tank/phoron
 	name = "phoron tank"
-	desc = "Contains dangerous phoron. Do not inhale. Warning: extremely flammable."
+	cases = list("баллон с фороном", "баллона с фороном", "баллону с фороном", "баллон с фороном", "баллоном с фороном", "баллоне с фороном")
+	desc = "Содержит форон. Не вдыхать! Огнеопасно!"
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 	icon_state = "phoron"
 	item_state = "plasma"
@@ -106,7 +110,8 @@
  */
 /obj/item/weapon/tank/emergency_oxygen
 	name = "emergency oxygen tank"
-	desc = "Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it."
+	cases = list("экстренный баллон с кислородом", "экстренного баллона с кислородом", "экстренному баллону с кислородом", "экстренный баллон с кислородом", "экстренным баллоном с кислородом", "экстренном баллоне с кислородом")
+	desc = "Используется в экстренных ситуациях. Запас кислорода крайне мал, так что берегите его до самого крайнего случая."
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 	icon_state = "emergency"
 	flags = CONDUCT
@@ -138,7 +143,8 @@
  */
 /obj/item/weapon/tank/emergency_nitrogen
 	name = "emergency nitrogen tank"
-	desc = "Used for Vox-related emergencies. Contains very little nitrogen, so try to conserve it until you actually need it."
+	cases = list("экстренный баллон с азотом", "экстренного баллона с азотом", "экстренному баллону с азотом", "экстренный баллон с азотом", "экстренным баллоном с азотом", "экстренном баллоне с азотом")
+	desc = "Используется в экстренных ситуациях для воксов. Запас азота крайне мал, так что берегите его до самого крайнего случая."
 	hitsound = list('sound/items/misc/balloon_small-hit.ogg')
 	icon_state = "ni_emergency"
 	flags = CONDUCT
@@ -163,7 +169,8 @@
  */
 /obj/item/weapon/tank/nitrogen
 	name = "nitrogen tank"
-	desc = "A tank of nitrogen."
+	cases = list("баллон с азотом", "баллона с азотом", "баллону с азотом", "баллон с азотом", "баллоном с азотом", "баллоне с азотом")
+	desc = "Баллон с азотом, ничего необычного."
 	hitsound = list('sound/items/misc/balloon_big-hit.ogg')
 	icon_state = "oxygen_fr"
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD

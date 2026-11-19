@@ -89,7 +89,7 @@
 		/obj/item/clothing/head/tacticool_hat = 4,
 		/obj/item/clothing/head/ushanka = 2,
 		/obj/item/clothing/under/soviet = 2,
-		/obj/item/clothing/mask/gas/fawkes = 6,
+		/obj/item/clothing/mask/breath/gas/fawkes = 6,
 	)
 
 	premium = list(
@@ -206,8 +206,8 @@
 		/obj/item/clothing/head/santahat = 5,
 		/obj/item/clothing/suit/santa = 5,
 		/obj/item/weapon/storage/backpack/santabag = 5,
-		/obj/item/clothing/mask/gas/sexyclown = 5,
-		/obj/item/clothing/mask/gas/sexymime = 5,
+		/obj/item/clothing/mask/breath/gas/sexyclown = 5,
+		/obj/item/clothing/mask/breath/gas/sexymime = 5,
 		/obj/item/clothing/mask/horsehead = 5,
 		/obj/item/clothing/suit/apron = 5,
 		/obj/item/clothing/suit/apron/overalls = 5,
@@ -236,7 +236,7 @@
 		/obj/item/clothing/suit/hooded/carp_costume = 100,
 	)
 	contraband = list(
-		/obj/item/clothing/mask/gas/fawkes = 2,
+		/obj/item/clothing/mask/breath/gas/fawkes = 2,
 	)
 	private = TRUE
 

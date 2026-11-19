@@ -114,7 +114,7 @@
 /area/space_structures/agrospheregarden)
 "an" = (
 /obj/structure/flora/ausbushes/sparsegrass,
-/obj/item/clothing/mask/gas/poltergeist,
+/obj/item/clothing/mask/breath/gas/poltergeist,
 /obj/item/weapon/spacecash/c500{
 	pixel_x = -12;
 	pixel_y = 6
@@ -919,7 +919,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/item/clothing/mask/gas/poltergeist,
+/obj/item/clothing/mask/breath/gas/poltergeist,
 /turf/simulated/floor/grass,
 /area/space_structures/agrospheregarden)
 "cd" = (

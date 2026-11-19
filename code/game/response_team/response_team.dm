@@ -155,6 +155,7 @@ var/global/can_call_ert
 			H.gender = MALE
 		else
 			H.gender = FEMALE
+		H.set_bodytype_for_gender()
 
 	//hair
 	var/new_hstyle = input(src, "Выберите прическу", "Внешность")  as null|anything in get_valid_styles_from_cache(hairs_cache, H.get_species(), H.gender)

@@ -149,6 +149,8 @@
 	..()
 	var/list/jumpsuits = list()
 	for(var/color in typesof(/obj/item/clothing/under/color))
+		if(ispath(color, /obj/item/clothing/under/color/polychromic))
+			continue
 		var/obj/item/clothing/under/color/color_type = color
 		jumpsuits[initial(color_type.name)] = color_type
 	gear_tweaks += new/datum/gear_tweak/path(sortAssoc(jumpsuits))

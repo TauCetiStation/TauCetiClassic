@@ -4,6 +4,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/add_tissue
+	name = "Apply tissue"
 	allowed_tools = list(
 	/obj/item/stack/medical/advanced/bruise_pack = 100,
 	/obj/item/stack/medical/advanced/ointment = 100
@@ -24,10 +25,13 @@
 
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 
+	if(!BP)
+		return FALSE
+
 	if(!(BP.brute_dam > 20 || BP.burn_dam > 20))
 		return FALSE
 
-	return BP && BP.open >= 2 && BP.stage == 0
+	return BP.open >= 2 && BP.stage == 0
 
 /datum/surgery_step/add_tissue/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/stack/medical/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -57,6 +61,7 @@
 	tool.update_icon()
 
 /datum/surgery_step/set_tissue
+	name = "Set tissue"
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,
 	/obj/item/weapon/wirecutters = 75,

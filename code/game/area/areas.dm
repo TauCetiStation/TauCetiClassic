@@ -491,9 +491,7 @@ var/global/list/ghostteleportlocs = list()
 
 	if(ishuman(mob))  // Only humans can wear magboots, so we give them a chance to.
 		var/mob/living/carbon/human/H = mob
-		if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
-			return
-		if((istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))) //Humans in rig with turn on magboots
+		if(H.mob_negates_gravity())
 			return
 
 		if(H.m_intent == "run")

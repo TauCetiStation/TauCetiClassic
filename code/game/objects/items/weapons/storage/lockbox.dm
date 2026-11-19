@@ -74,13 +74,13 @@
 	user.visible_message("<span class='warning'>The locker has been broken by [] with an electromagnetic card!</span>", blind_message = "<span class='warning'>You hear a faint electrical spark.</span>", viewing_distance = 3)
 	return TRUE
 
-/obj/item/weapon/storage/lockbox/try_open(mob/user)
+/obj/item/weapon/storage/lockbox/try_open(mob/user, check_only = FALSE)
 	if(locked && !broken)
-		if(user.in_interaction_vicinity(src))
+		if(!check_only && user.in_interaction_vicinity(src))
 			to_chat(user, "<span class='warning'>[src] is locked and cannot be opened!</span>")
 		return FALSE
 	else
-		return ..()
+		return ..(user, check_only)
 
 /obj/item/weapon/storage/lockbox/mind_shields
 	name = "lockbox of Mind Shields implants"

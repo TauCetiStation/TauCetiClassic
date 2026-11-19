@@ -17,6 +17,9 @@
 
 	var/list/files = list(  )
 
+/obj/item/weapon/card/try_wrap_up(wrap_type, wrap_icon_state = "deliveryenvelope")
+	. = ..()
+
 /obj/item/weapon/card/ticket // tickets for ticket machine
 	name = "ticket"
 	desc = "Билет"
@@ -144,6 +147,7 @@
 	//alt titles are handled a bit weirdly in order to unobtrusively integrate into existing ID system
 	var/assignment = null	//can be alt title or the actual job
 	var/rank = null			//actual job
+	var/custom_department = null	// department chosen when assigning a custom job via ID consol
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
 	// by default hud looks for icon by assignment/rank, this allows to override it with custom icon

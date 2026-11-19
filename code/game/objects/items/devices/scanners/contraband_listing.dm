@@ -251,7 +251,7 @@ var/global/list/contraband_listings
 			/obj/item/weapon/storage/box/syndie_kit/fake,
 			/obj/item/weapon/storage/backpack/satchel/flat,
 			/obj/item/clothing/shoes/syndigaloshes,
-			/obj/item/clothing/mask/gas/voice,
+			/obj/item/clothing/mask/breath/gas/voice,
 			/obj/item/device/chameleon,
 			/obj/item/device/camera_bug,
 			/obj/item/weapon/silencer,

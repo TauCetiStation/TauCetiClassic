@@ -71,6 +71,11 @@
 		playsound(src, 'sound/machines/floodlight.ogg', VOL_EFFECTS_MASTER, 40)
 		playsound(src, 'sound/machines/lightson.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 
+/obj/machinery/floodlight/AltClick(mob/user)
+	if(!user || !Adjacent(user))
+		return
+	rotate()
+
 /obj/machinery/floodlight/verb/rotate()
 	set name = "Rotate Floodlight"
 	set category = "Object"

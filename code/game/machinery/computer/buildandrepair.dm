@@ -605,6 +605,9 @@
 		new /obj/item/stack/cable_coil(loc, 5)
 	..()
 
+/obj/structure/computerframe/AltClick(mob/user)
+	rotate()
+
 /obj/structure/computerframe/verb/rotate()
 	set category = "Object"
 	set name = "Rotate"

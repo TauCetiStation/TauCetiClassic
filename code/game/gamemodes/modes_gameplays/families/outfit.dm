@@ -13,7 +13,7 @@
 	glasses = /obj/item/clothing/glasses/sunglasses/hud/sechud
 	l_ear = /obj/item/device/radio/headset/headset_sec/alt
 	head = /obj/item/clothing/head/spacepolice
-	mask = /obj/item/clothing/mask/gas/sechailer/police
+	mask = /obj/item/clothing/mask/breath/gas/sechailer/police
 	belt = /obj/item/weapon/storage/belt/security/cops
 	r_pocket = /obj/item/device/flashlight/seclite
 	l_pocket = /obj/item/weapon/storage/firstaid/small_firstaid_kit/civilian
@@ -57,7 +57,7 @@
 	name = "Families: Боец Тактической Группы"
 	suit = /obj/item/clothing/suit/storage/flak/police/fullbody
 	head = /obj/item/clothing/head/helmet/police/heavy
-	mask = /obj/item/clothing/mask/gas/sechailer/police
+	mask = /obj/item/clothing/mask/breath/gas/sechailer/police
 	gloves = /obj/item/clothing/gloves/combat/police
 	suit_store = /obj/item/weapon/gun/projectile/shotgun/combat
 	backpack_contents = list(
@@ -104,7 +104,7 @@
 	uniform = /obj/item/clothing/under/syndicate
 	head = /obj/item/clothing/head/helmet/space/syndicate
 	suit = /obj/item/clothing/suit/space/syndicate
-	mask = /obj/item/clothing/mask/gas/voice
+	mask = /obj/item/clothing/mask/breath/gas/voice
 	shoes = /obj/item/clothing/shoes/boots/combat
 	l_hand = /obj/item/weapon/tank/jetpack/oxygen/harness
 	suit_store = /obj/item/weapon/tank/emergency_oxygen/engi

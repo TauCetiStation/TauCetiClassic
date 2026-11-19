@@ -74,6 +74,7 @@
 		/obj/item/weapon/tank,
 		/obj/item/device/suit_cooling_unit,
 		/obj/item/weapon/storage/bag/ore,
+		/obj/item/weapon/storage/bag/holding,
 		/obj/item/device/t_scanner,
 		/obj/item/weapon/rcd
 	)
@@ -488,21 +489,23 @@
 	H.update_gravity(H.mob_has_gravity())
 
 /obj/item/clothing/suit/space/rig/proc/enable_magpulse(mob/user)
-		flags |= NOSLIP | AIR_FLOW_PROTECT
+		attach_clothing_traits(TRAIT_NOSLIP)
+		flags |= AIR_FLOW_PROTECT
 		slowdown += boots.slowdown_off
 		magpulse = TRUE
 		to_chat(user, "You enable \the [src] the mag-pulse traction system.")
 		playsound(src, pick(SOUNDIN_MAGBOOTS_TOGGLE), VOL_EFFECTS_MASTER, 100)
 
 /obj/item/clothing/suit/space/rig/proc/disable_magpulse(mob/user)
-		flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
+		detach_clothing_traits(TRAIT_NOSLIP)
+		flags &= ~AIR_FLOW_PROTECT
 		slowdown = initial(slowdown)
 		magpulse = FALSE
 		to_chat(user, "You disable \the [src] the mag-pulse traction system.")
 		playsound(src, 'sound/effects/magb4.ogg', VOL_EFFECTS_MASTER, 100)
 
 /obj/item/clothing/suit/space/rig/negates_gravity()
-	return flags & NOSLIP
+	return magpulse
 
 /obj/item/clothing/suit/space/rig/examine(mob/user)
 	..()
@@ -666,7 +669,7 @@
 	item_state = "eng_hardsuit"
 	slowdown = 1.5
 	armor = list(melee = 50, bullet = 5, laser = 10,energy = 5, bomb = 65, bio = 100, rad = 80)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/holding,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	siemens_coefficient = 0
 	max_mounted_devices = 4
 	initial_modules = list(/obj/item/rig_module/simple_ai, /obj/item/rig_module/device/extinguisher, /obj/item/rig_module/cooling_unit, /obj/item/rig_module/metalfoam_spray)
@@ -731,7 +734,7 @@
 	item_state = "RedMiner"
 	rig_variant = "RedMiner"
 	armor = list(melee = 40, bullet = 11, laser = 10,energy = 5, bomb = 50, bio = 100, rad = 50)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/pickaxe)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/holding,/obj/item/weapon/pickaxe)
 	helmet_type = /obj/item/clothing/head/helmet/space/rig/RF_mining
 
 //Syndicate rig
@@ -939,7 +942,8 @@
 		update_item_actions()
 
 /obj/item/clothing/suit/space/rig/syndi/disable_magpulse(mob/user)
-	flags &= ~(NOSLIP | AIR_FLOW_PROTECT)
+	detach_clothing_traits(TRAIT_NOSLIP)
+	flags &= ~AIR_FLOW_PROTECT
 	if(combat_mode)
 		slowdown = combat_slowdown
 	else

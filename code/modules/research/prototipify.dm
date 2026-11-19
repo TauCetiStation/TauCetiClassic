@@ -141,7 +141,7 @@
 		max_fuel /= 2
 		toolspeed = max(toolspeed + 0.5, 3)
 
-/obj/item/clothing/mask/gas/welding/set_prototype_qualities(rel_val=100, mark=0)
+/obj/item/clothing/mask/breath/gas/welding/set_prototype_qualities(rel_val=100, mark=0)
 	if(!prob(reliability))
 		flash_protection = FALSE
 

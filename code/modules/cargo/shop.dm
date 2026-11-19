@@ -260,6 +260,8 @@ var/global/online_shop_referrer_revenue = 0.50
 		return "Еда"
 	else if(istype(target, /obj/item/weapon/storage/food))
 		return "Еда"
+	else if(istype(target, /obj/item/pizzabox))
+		return "Еда"
 	else if(istype(target, /obj/item/weapon/storage))
 		return "Наборы"
 	else if(istype(target, /obj/item/weapon))

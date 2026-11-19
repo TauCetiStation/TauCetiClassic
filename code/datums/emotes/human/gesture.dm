@@ -93,32 +93,3 @@
 
 /datum/emote/human/clap/get_sound(mob/living/carbon/human/user, intentional)
  	return pick(sound)
-
-
-/datum/emote/human/wave
-	key = "wave"
-
-	message_1p = "Вы машете рукой."
-	message_3p = "машет рукой."
-
-	message_type = SHOWMSG_VISUAL
-
-	required_stat = CONSCIOUS
-	require_usable_hand = TRUE
-	blocklist_traits = list(ELEMENT_TRAIT_ZOMBIE)
-
-
-/datum/emote/human/salute
-	key = "salute"
-
-	message_1p = "Вы салютуете."
-	message_3p = "салютует."
-
-	message_type = SHOWMSG_VISUAL
-
-	sound = 'sound/misc/salute.ogg'
-	soundless_for_mute = FALSE
-
-	required_stat = CONSCIOUS
-	require_usable_hand = TRUE
-	blocklist_traits = list(ELEMENT_TRAIT_ZOMBIE)

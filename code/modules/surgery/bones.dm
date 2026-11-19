@@ -4,6 +4,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/glue_bone
+	name = "Glue bone"
 	allowed_tools = list(
 	/obj/item/weapon/bonegel = 100,	\
 	/obj/item/stack/rods = 50
@@ -39,6 +40,7 @@
 	"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [BP.name]!</span>")
 
 /datum/surgery_step/set_bone
+	name = "Set bone"
 	allowed_tools = list(
 	/obj/item/weapon/bonesetter = 100,	\
 	/obj/item/weapon/wrench = 75		\
@@ -77,6 +79,7 @@
 	BP.take_damage(5, 0, used_weapon = tool)
 
 /datum/surgery_step/mend_skull
+	name = "Mend skull"
 	allowed_tools = list(
 	/obj/item/weapon/bonesetter = 100,	\
 	/obj/item/weapon/wrench = 75		\
@@ -110,6 +113,7 @@
 	H.disfigured = 1
 
 /datum/surgery_step/finish_bone
+	name = "Finish bone" // finnish bone :DDD
 	allowed_tools = list(
 	/obj/item/weapon/bonegel = 100,	\
 	/obj/item/stack/rods = 50

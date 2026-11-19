@@ -19,6 +19,7 @@
 	return target_zone == O_EYES
 
 /datum/surgery_step/eye/cut_open
+	name = "Cut open eyes"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
 	/obj/item/weapon/kitchenknife = 75,	\
@@ -51,6 +52,7 @@
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/eye/lift_eyes
+	name = "Lift corneas"
 	allowed_tools = list(
 	/obj/item/weapon/retractor = 100,	        \
 	/obj/item/weapon/kitchen/utensil/fork = 75,	\
@@ -82,6 +84,7 @@
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/eye/mend_eyes
+	name = "Mend eyes"
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,             \
 	/obj/item/stack/cable_coil = 75,            \
@@ -122,6 +125,7 @@
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/eye/cauterize
+	name = "Cauterize eyes"
 	allowed_tools = list(
 	/obj/item/weapon/cautery = 100,			\
 	/obj/item/clothing/mask/cigarette = 75,	\
@@ -155,6 +159,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/organ_manipulation/place_eye
+	name = "Place eyes"
 	priority = 2
 	allowed_tools = list(/obj/item/organ/internal/eyes = 100)
 
@@ -163,7 +168,7 @@
 	min_duration = 110
 	max_duration = 150
 
-/datum/surgery_step/organ_manipulation/place_eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/organ_manipulation/place_eye/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, silent = FALSE)
     if(!ishuman(target))
         return FALSE
 
@@ -173,15 +178,18 @@
 
     var/obj/item/organ/internal/I = tool
     if(I.requires_robotic_bodypart)
-        user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
+        if(!silent)
+            user.visible_message ("<span class='warning'>[I] is an organ that requires a robotic interface! [target]'s [parse_zone(target_zone)] does not have one.</span>")
         return FALSE
 
     if(I.damage > (I.max_damage * 0.75))
-        user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
+        if(!silent)
+            user.visible_message ( "<span class='notice'> \The [I] is in no state to be transplanted.</span>")
         return FALSE
 
     if(target.get_int_organ(I))
-        user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
+        if(!silent)
+            user.visible_message ( "<span class='warning'> \The [target] already has [I].</span>")
         return FALSE
 
     return TRUE
@@ -208,6 +216,7 @@
 	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
 
 /datum/surgery_step/eye/manipulation/remove
+	name = "Remove eyes"
 	allowed_tools = list(
 	/obj/item/weapon/scalpel = 100,		\
 	/obj/item/weapon/kitchenknife = 75,	\
@@ -261,6 +270,7 @@
 //////////////////////////////////////////////////////////////////
 
 /datum/surgery_step/ipc/eye
+	name = "IPC eye repair"
 	clothless = FALSE
 	priority = 2
 	can_infect = FALSE
@@ -276,6 +286,7 @@
 	return target_zone == O_EYES
 
 /datum/surgery_step/ipc/eye/screw_open
+	name = "Unscrew camera panels"
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,
@@ -311,6 +322,7 @@
 	IO.take_damage(5, 0)
 
 /datum/surgery_step/ipc/eye/mend_cameras
+	name = "Mend cameras"
 	allowed_tools = list(
 	/obj/item/stack/nanopaste = 100,
 	/obj/item/weapon/bonegel = 30,
@@ -352,6 +364,7 @@
 	target.blinded += 3.0
 
 /datum/surgery_step/ipc/eye/close_shut
+	name = "Lock camera panels"
 	allowed_tools = list(
 	/obj/item/weapon/screwdriver = 100,
 	/obj/item/weapon/scalpel = 75,

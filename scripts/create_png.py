@@ -11,10 +11,10 @@ import os, sys
 from PIL import Image
 
 def main():
-	path = sys.argv[1]
-	width = int(sys.argv[2])
-	height = int(sys.argv[3])
-	data = sys.argv[4]
+	path = sys.argv[1].strip("'")
+	width = int(sys.argv[2].strip("'"))
+	height = int(sys.argv[3].strip("'"))
+	data = sys.argv[4].strip("'")
 
 	if(len(data) % 7 != 0):
 		print('Wrong image data format', file=sys.stderr)

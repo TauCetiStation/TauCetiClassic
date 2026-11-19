@@ -61,7 +61,7 @@
 	breach_threshold = 18
 	slowdown = 1
 	armor = list(melee = 50, bullet = 5, laser = 10,energy = 5, bomb = 55, bio = 100, rad = 20)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore)
+	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/weapon/storage/bag/holding)
 
 /obj/item/clothing/head/helmet/space/globose/mining
 	name = "mining space helmet"

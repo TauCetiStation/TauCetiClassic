@@ -85,6 +85,7 @@
 	var/can_be_shortened = TRUE
 	fire_sound = 'sound/weapons/guns/gunshot_shotgun.ogg'
 	dispersion_multiplier = 0.5
+	has_cylinder = FALSE
 
 /obj/item/weapon/gun/projectile/revolver/doublebarrel/update_icon()
 	if(short)

@@ -859,6 +859,7 @@ var/global/list/admin_verbs_hideable = list(
 			M.gender = MALE
 		else
 			M.gender = FEMALE
+		M.set_bodytype_for_gender()
 
 	// hair
 	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in get_valid_styles_from_cache(hairs_cache, M.get_species(), M.gender)

@@ -59,7 +59,7 @@
 	flags = MASKCOVERSMOUTH
 	w_class = SIZE_TINY
 	gas_transfer_coefficient = 0.90
-	var/hanging = 0
+	var/hanging = FALSE
 	item_action_types = list(/datum/action/item_action/hands_free/adjust_scarf)
 
 /obj/item/clothing/mask/scarf/proc/pull_up()

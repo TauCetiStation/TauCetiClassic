@@ -73,12 +73,10 @@
 
 	required_stat = CONSCIOUS
 
-/datum/emote/robot/law/can_emote(mob/user, intentional)
+/datum/emote/robot/law/get_block_reason(mob/user, intentional)
 	var/mob/living/silicon/robot/R = user
 	if(!istype(R.module, /obj/item/weapon/robot_module/security))
-		if(intentional)
-			to_chat(R, "<span class='notice'>У вас неподходящий модуль для этого эмоута.</span>")
-		return FALSE
+		return "Для этого у вас неподходящий модуль."
 
 	return ..()
 

@@ -77,7 +77,7 @@
 /obj/structure/rack,
 /obj/item/clothing/shoes/magboots/syndie,
 /obj/item/clothing/suit/space/syndicate/jailbreaker,
-/obj/item/clothing/mask/gas/syndicate,
+/obj/item/clothing/mask/breath/gas/syndicate,
 /obj/item/clothing/head/helmet/space/syndicate/jailbreaker,
 /obj/machinery/alarm{
 	dir = 4;

@@ -65,7 +65,12 @@
 	qdel(src)
 
 /obj/item/weapon/table_parts/proc/can_place(turf/T)
-	return T && T.CanPass(null, T)
+	if(!T)
+		return FALSE
+	// You can climb over a table, but that does not mean you can build another one on top.
+	if(locate(/obj/structure/table) in T)
+		return FALSE
+	return T.CanPass(null, T)
 
 /*
  * Reinforced Table Parts

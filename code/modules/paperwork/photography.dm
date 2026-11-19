@@ -97,6 +97,9 @@
 
 	return
 
+/obj/item/weapon/photo/proc/get_framed_picture()
+	return mutable_appearance(icon)
+
 /obj/item/weapon/photo/verb/rename()
 	set name = "Rename photo"
 	set category = "Object"
@@ -118,6 +121,9 @@
 	icon = inicon
 	img = inimg
 	desc = indesc
+
+/obj/item/weapon/photo/try_wrap_up(wrap_type, wrap_icon_state = "deliveryenvelope")
+	. = ..()
 
 
 // Camera filters

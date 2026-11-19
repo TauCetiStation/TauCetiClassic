@@ -264,7 +264,7 @@
 /area/space_structures/iss)
 "aU" = (
 /obj/structure/table,
-/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/breath/gas/coloured,
 /obj/machinery/light_construct/small{
 	dir = 1
 	},

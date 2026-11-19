@@ -44,4 +44,4 @@
 		emote_choice[E.key] = image(icon = emote_icons, icon_state = E.key)
 
 	var/act = show_radial_menu(usr, src, emote_choice, radius = 54, min_angle = 36)
-	emote(act)
+	emote(act, intentional = TRUE) // picking one off the wheel is as manual as typing '*[key]'

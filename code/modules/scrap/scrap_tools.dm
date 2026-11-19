@@ -6,7 +6,7 @@
 	item_state = "trashbag"
 	color = "red"
 
-	max_storage_space = 120
+	max_storage_space = 30
 	max_w_class = SIZE_NORMAL
 	can_hold = list(/obj/item/weapon/scrap_lump)
 	cant_hold = list()

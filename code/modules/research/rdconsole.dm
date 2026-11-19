@@ -89,7 +89,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/computer/rdconsole, RDcomputer_list)
 	return return_name
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
-	for(var/obj/machinery/r_n_d/D in oview(3,src))
+	for(var/obj/machinery/r_n_d/D in orange(3,src))
 		if(D.linked_console != null || D.disabled || D.panel_open)
 			continue
 		if(istype(D, /obj/machinery/r_n_d/destructive_analyzer))

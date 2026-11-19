@@ -50,6 +50,8 @@
 /mob/proc/load_default_emotes()
 	for(var/emote in default_emotes)
 		var/datum/emote/E = global.all_emotes[emote]
+		if(!E.key) // branch roots carry shared fields only and have nothing to call them by
+			continue
 		set_emote(E.key, E)
 	default_emotes = null
 
@@ -64,7 +66,23 @@
 
 /mob/proc/emote(act, intentional = FALSE)
 	var/datum/emote/emo = get_emote(act)
+	var/target_name
+
+	// '*hug Иванов': only the interaction branch is allowed to eat the rest of the line.
 	if(!emo)
+		var/space = findtext(act, " ")
+		if(!space)
+			return
+
+		emo = get_emote(copytext(act, 1, space))
+		if(!istype(emo, /datum/emote/human/interaction))
+			return
+
+		target_name = trim(copytext(act, space + 1))
+
+	if(istype(emo, /datum/emote/human/interaction))
+		var/datum/emote/human/interaction/interaction = emo
+		interaction.try_interact_by_name(src, target_name, intentional)
 		return
 
 	if(!emo.can_emote(src, intentional))

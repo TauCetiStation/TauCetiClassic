@@ -247,6 +247,7 @@
 			module_sprites["Drone"] = "drone-miner"
 			module_sprites["Acheron"] = "mechoid-Miner"
 			module_sprites["Kodiak"] = "kodiak-miner"
+			module_sprites["Kerfus"] = "kerfusCargo"
 			give_hud(DATA_HUD_MINER)
 
 		if("Medical")
@@ -261,6 +262,7 @@
 			module_sprites["Drone Red"] = "drone-surgery"
 			module_sprites["Drone Green"] = "drone-medical"
 			module_sprites["Acheron"] = "mechoid-Medical"
+			module_sprites["NanoMed"] = "kerfusMed"
 
 		if("Security")
 			if(can_be_security)
@@ -863,6 +865,10 @@
 				to_chat(src, "Hack attempt detected.")
 		return TRUE
 
+// A chassis still has a head to bop and to pat. Arms and legs stay FALSE: they carry combo checks and the stomping gib.
+/mob/living/silicon/robot/is_usable_head(targetzone = null)
+	return TRUE
+
 /mob/living/silicon/robot/attack_hand(mob/living/carbon/human/attacker)
 	add_fingerprint(attacker)
 	if(opened && !wiresexposed && (!issilicon(attacker)))
@@ -1199,18 +1205,6 @@
 /mob/living/silicon/robot/crawl()
 	toggle_all_components()
 	to_chat(src, "<span class='notice'>You toggle all your components.</span>")
-
-/mob/living/silicon/robot/pickup_ore()
-	var/turf/simulated/floor/F = get_turf(src)
-	var/obj/item/weapon/storage/bag/ore/B
-	if(istype(module, /obj/item/weapon/robot_module/miner))
-		for(var/bag in module.modules)
-			if(istype(bag, /obj/item/weapon/storage/bag/ore))
-				B = bag
-				if(B.max_storage_space == B.storage_space_used())
-					return
-				F.attackby(B, src)
-				break
 
 /mob/living/silicon/robot/is_antag()
 	return emagged || laws?.zeroth

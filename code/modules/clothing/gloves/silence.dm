@@ -34,13 +34,19 @@
 /obj/item/weapon/storage/internal/furioso
 	var/list/storaged_types = list()
 
-/obj/item/weapon/storage/internal/furioso/attackby(obj/item/I, mob/user, params)
-	if (I.type in storaged_types)
-		to_chat(user, "<span class='red'>There is already one [I] in storage!</span>")
+/obj/item/weapon/storage/internal/furioso/can_be_inserted(obj/item/I, stop_messages = FALSE)
+	. = ..()
+	if(!.)
 		return FALSE
+	if (I.type in storaged_types)
+		if(!stop_messages)
+			to_chat(usr, "<span class='red'>There is already one [I] in storage!</span>")
+		return FALSE
+
+/obj/item/weapon/storage/internal/furioso/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
 	. = ..()
 	if(.)
-		storaged_types += I.type
+		storaged_types |= W.type
 
 /obj/item/weapon/storage/internal/furioso/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
 	. = ..()

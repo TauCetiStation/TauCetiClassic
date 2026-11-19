@@ -50,7 +50,8 @@
 	/obj/item/clothing/head/wizard,                 /obj/item/clothing/head/collectable/wizard,
 	/obj/item/clothing/head/hardhat/yellow,         /obj/item/clothing/head/collectable/hardhat,
 	/obj/item/clothing/head/hardhat/white,          /obj/item/clothing/head/helmet/space/santahat,
-	/obj/item/clothing/head/collectable/paper,      /obj/item/clothing/head/soft)
+	/obj/item/clothing/head/collectable/paper,      /obj/item/clothing/head/soft,
+	/obj/item/clothing/head/western/cowboy)
 
 	var/image/body_icon
 	if(facehugger)

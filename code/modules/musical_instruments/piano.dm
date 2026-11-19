@@ -25,6 +25,11 @@
 		return
 	MP.interact(user)
 
+/obj/structure/device/piano/attack_robot(mob/living/silicon/robot/user)
+	if(!anchored)
+		return
+	MP.interact(user)
+
 /obj/structure/device/piano/attackby(obj/item/O, mob/user)
 	if(iswrenching(O))
 		if(user.is_busy(src))

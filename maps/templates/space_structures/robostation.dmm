@@ -194,7 +194,7 @@
 /area/space_structures/robostatoin)
 "aM" = (
 /obj/structure/table/reinforced,
-/obj/item/clothing/mask/gas/sexyclown,
+/obj/item/clothing/mask/breath/gas/sexyclown,
 /obj/item/weapon/storage/pill_bottle/dermaline,
 /turf/simulated/floor/greengrid,
 /area/space_structures/robostatoin)

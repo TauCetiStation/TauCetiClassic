@@ -377,7 +377,6 @@ var/global/list/tourette_bad_words= list(
 		return null
 
 	if(!(HAS_TRAIT(src, TRAIT_EXTERNAL_VENTILATION) || (contents.Find(internal) && wear_mask && (wear_mask.flags & MASKINTERNALS))))
-		internal.update_actions_icons(src, TRUE)
 		internal = null
 		return null
 
@@ -388,7 +387,7 @@ var/global/list/tourette_bad_words= list(
 		if(alpha >= 50) // leave the quietest breath for stealth
 			if(istype(head, /obj/item/clothing/head/helmet/space) && istype(wear_suit, /obj/item/clothing/suit/space))
 				breathsound = pick(SOUNDIN_RIGBREATH)
-			else if(istype(wear_mask, /obj/item/clothing/mask/gas))
+			else if(istype(wear_mask, /obj/item/clothing/mask/breath/gas))
 				breathsound = 'sound/misc/gasmaskbreath.ogg'
 
 		playsound(src, breathsound, VOL_EFFECTS_MASTER, null, FALSE, null, -6)
@@ -654,6 +653,7 @@ var/global/list/tourette_bad_words= list(
 			to_chat(src, "<span class='notice'>You feel fit again!</span>")
 			REMOVE_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 			mob_metabolism_mod.RemoveMods("Fatness")
+			restore_bodytype_after_fat()
 			update_body()
 			update_underwear()
 			update_mutations()
@@ -665,6 +665,7 @@ var/global/list/tourette_bad_words= list(
 			if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !HAS_TRAIT(src, TRAIT_NEVER_FAT))
 				ADD_TRAIT(src, TRAIT_FAT, OBESITY_TRAIT)
 				mob_metabolism_mod.ModAdditive(-0.3, "Fatness") // -30%
+				set_bodytype_fat()
 				update_body()
 				update_underwear()
 				update_mutations()
@@ -1000,8 +1001,8 @@ var/global/list/tourette_bad_words= list(
 		var/obj/item/clothing/head/welding/O = head
 		if(!O.up && tinted_weldhelh)
 			impaired = 2
-	if(istype(wear_mask, /obj/item/clothing/mask/gas/welding) )
-		var/obj/item/clothing/mask/gas/welding/O = wear_mask
+	if(istype(wear_mask, /obj/item/clothing/mask/breath/gas/welding) )
+		var/obj/item/clothing/mask/breath/gas/welding/O = wear_mask
 		if(!O.up && tinted_weldhelh)
 			impaired = 2
 	if(istype(glasses, /obj/item/clothing/glasses/welding) && !istype(glasses, /obj/item/clothing/glasses/welding/superior))

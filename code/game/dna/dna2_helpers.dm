@@ -168,6 +168,7 @@
 			H.gender = FEMALE
 		else
 			H.gender = MALE
+		H.set_bodytype_for_gender()
 
 		//Hair
 		var/hair = dna.GetUIValueRange(DNA_UI_HAIR_STYLE,hair_styles_list.len)

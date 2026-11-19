@@ -69,6 +69,8 @@
 	name = "accumulator"
 	cases = list("аккумулятор", "аккумулятора", "аккумулятору", "аккумулятор", "аккумулятором", "аккумуляторе")
 	var/accumulator_warning = 0
+	var/idle_drain = 10
+	var/damage_charge_penalty = 100
 	requires_robotic_bodypart = TRUE
 	status = ORGAN_ROBOT
 	durability = 0.8
@@ -78,7 +80,9 @@
 
 /obj/item/organ/internal/liver/ipc/set_owner(mob/living/carbon/human/H, datum/species/S)
 	..()
-	new/obj/item/weapon/stock_parts/cell/crap(src)
+	var/obj/item/weapon/stock_parts/cell/C = new /obj/item/weapon/stock_parts/cell/high(src)
+	H.nutrition = rand(C.maxcharge * 0.66, C.maxcharge * 0.88)
+	C.charge = H.nutrition
 	RegisterSignal(owner, COMSIG_ATOM_ELECTROCUTE_ACT, PROC_REF(ipc_cell_explode))
 
 /obj/item/organ/internal/liver/proc/handle_liver_infection()
@@ -194,10 +198,11 @@
 		owner.blurEyes(2)
 		owner.silent = 2
 		return
+	owner.nutrition = max(0, owner.nutrition - idle_drain)
 	if(damage)
-		C.charge = owner.nutrition
-		if(owner.nutrition > (C.maxcharge - damage * 5))
-			owner.nutrition = C.maxcharge - damage * 5
+		if(owner.nutrition > (C.maxcharge - damage * damage_charge_penalty))
+			owner.nutrition = C.maxcharge - damage * damage_charge_penalty
+	C.charge = owner.nutrition
 	if(owner.nutrition < 1)
 		owner.SetParalysis(2)
 		if(accumulator_warning < world.time)

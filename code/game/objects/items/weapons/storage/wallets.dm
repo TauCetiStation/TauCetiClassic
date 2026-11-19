@@ -31,7 +31,7 @@
 
 
 /obj/item/weapon/storage/wallet/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
-	. = ..(W, new_location)
+	. = ..(W, new_location, NoUpdate)
 	if(.)
 		if(W == front_id)
 			front_id = null
@@ -39,7 +39,7 @@
 			update_icon()
 
 /obj/item/weapon/storage/wallet/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
-	. = ..(W, prevent_warning)
+	. = ..(W, prevent_warning, NoUpdate)
 	if(.)
 		if(!front_id && istype(W, /obj/item/weapon/card/id))
 			front_id = W

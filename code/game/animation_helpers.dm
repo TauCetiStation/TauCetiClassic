@@ -3,6 +3,11 @@
 	var/is_invis_anim = FALSE
 	//For handling persistent filters
 
+// A small squish to telegraph that something opened or shuffled its contents.
+/atom/movable/proc/do_squish_animation()
+	animate(src, time = 1.5, transform = matrix(transform).Scale(1.07, 0.9))
+	animate(time = 2, transform = matrix(transform).Scale(1/1.07, 1/0.9))
+
 /atom/proc/before_shake_animation(intensity, time, intensity_dropoff, list/viewers)
 	return
 
