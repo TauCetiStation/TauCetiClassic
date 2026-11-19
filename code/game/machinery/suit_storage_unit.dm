@@ -91,7 +91,9 @@
 	update_connectors()
 
 	if(ultra_violet)
-		add_overlay(mutable_appearance(icon = overlays_file, icon_state = "[emagged ? "termalclean_emag" : "termalclean"]"))
+		var/mutable_appearamce/I = mutable_appearance(icon = overlays_file, icon_state = "[emagged ? "termalclean_emag" : "termalclean"]")
+		I.layer = layer + 0.02
+		add_overlay(I)
 
 /obj/machinery/storage_unit/suit_storage/update_insides()
 	if(contents_by_slot[SLOT_SHOES])
