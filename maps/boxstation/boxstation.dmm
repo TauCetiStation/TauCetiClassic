@@ -5000,6 +5000,11 @@
 "air" = (
 /obj/structure/table,
 /obj/machinery/recharger,
+/obj/item/weapon/crowbar,
+/obj/item/device/radio/off{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5179,14 +5184,14 @@
 	id = "Secure Gate";
 	name = "Brig Lockdown";
 	pixel_x = 6;
-	pixel_y = -28;
+	pixel_y = -22;
 	req_access = list(2)
 	},
 /obj/machinery/door_control{
 	id = "Prison Gate";
 	name = "Prison Wing Lockdown";
 	pixel_x = -6;
-	pixel_y = -28;
+	pixel_y = -22;
 	req_access = list(2)
 	},
 /turf/simulated/floor{
@@ -5402,6 +5407,10 @@
 /obj/item/device/radio/intercom{
 	pixel_y = -28
 	},
+/obj/item/device/telephone{
+	pixel_y = 5;
+	phone_frequency = 31
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -5483,11 +5492,10 @@
 /area/station/security/brig)
 "ajh" = (
 /obj/structure/table,
-/obj/item/device/radio/off{
-	pixel_x = 4;
-	pixel_y = 4
+/obj/item/device/telephone{
+	pixel_y = -2;
+	phone_frequency = 32
 	},
-/obj/item/weapon/crowbar,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -8194,6 +8202,11 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
+/obj/item/device/telephone{
+	pixel_y = 10;
+	pixel_x = 5;
+	phone_frequency = 30
+	},
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -9121,6 +9134,11 @@
 	pixel_x = -9;
 	pixel_y = 12
 	},
+/obj/item/device/telephone{
+	pixel_y = 12;
+	phone_frequency = 33;
+	pixel_x = 3
+	},
 /turf/simulated/floor/carpet/red,
 /area/station/security/detectives_office)
 "aoQ" = (
@@ -9533,6 +9551,11 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
+	},
+/obj/item/device/telephone{
+	pixel_y = 11;
+	pixel_x = -6;
+	phone_frequency = 10
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -18603,6 +18626,11 @@
 	pixel_x = -28;
 	pixel_y = 5
 	},
+/obj/item/device/telephone{
+	pixel_y = 17;
+	phone_frequency = 53;
+	pixel_x = 4
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "darkblue"
@@ -21579,6 +21607,11 @@
 /obj/item/weapon/flora/deskleaf{
 	pixel_x = 7;
 	pixel_y = 10
+	},
+/obj/item/device/telephone{
+	pixel_y = 11;
+	phone_frequency = 61;
+	pixel_x = -6
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -31290,6 +31323,11 @@
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/item/device/telephone{
+	pixel_y = 10;
+	phone_frequency = 43;
+	pixel_x = 3
+	},
 /turf/simulated/floor,
 /area/station/rnd/xenobiology)
 "bdb" = (
@@ -31777,6 +31815,11 @@
 	on = 0;
 	pixel_x = -7;
 	pixel_y = 16
+	},
+/obj/item/device/telephone{
+	pixel_y = 10;
+	phone_frequency = 51;
+	pixel_x = 3
 	},
 /turf/simulated/floor/wood,
 /area/station/bridge/captain_quarters)
@@ -34602,7 +34645,13 @@
 	pixel_x = -32
 	},
 /obj/item/weapon/stickers{
-	pixel_y = 16
+	pixel_y = 16;
+	pixel_x = -9
+	},
+/obj/item/device/telephone{
+	pixel_y = 17;
+	phone_frequency = 60;
+	pixel_x = 4
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -38045,6 +38094,11 @@
 /obj/structure/table,
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
+/obj/item/device/telephone{
+	pixel_y = 10;
+	phone_frequency = 42;
+	pixel_x = 3
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "whitepurple"
@@ -38387,6 +38441,11 @@
 	department = "Medical";
 	dir = 4;
 	pixel_x = -24
+	},
+/obj/item/device/telephone{
+	pixel_y = 20;
+	pixel_x = 5;
+	phone_frequency = 22
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wood14"
@@ -40224,6 +40283,11 @@
 	pixel_y = 28
 	},
 /obj/structure/table/glass,
+/obj/item/device/telephone{
+	pixel_y = 10;
+	phone_frequency = 50;
+	pixel_x = 3
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -45479,6 +45543,11 @@
 	dir = 8;
 	icon_state = "warn"
 	},
+/obj/item/device/telephone{
+	pixel_y = 12;
+	phone_frequency = 40;
+	pixel_x = 3
+	},
 /turf/simulated/floor,
 /area/station/rnd/lab)
 "bCr" = (
@@ -47333,6 +47402,11 @@
 /obj/item/device/microphone/rd{
 	pixel_x = -16;
 	pixel_y = 4
+	},
+/obj/item/device/telephone{
+	pixel_y = 10;
+	phone_frequency = 41;
+	pixel_x = 3
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -64356,7 +64430,7 @@
 	id = "HoP_private";
 	name = "Security Shutters";
 	pixel_x = -7;
-	pixel_y = 6;
+	pixel_y = -1;
 	req_access = list(57)
 	},
 /obj/machinery/requests_console/hop{
@@ -64388,6 +64462,11 @@
 /obj/item/station_map/box{
 	pixel_x = 4;
 	pixel_y = -2
+	},
+/obj/item/device/telephone{
+	pixel_y = 10;
+	phone_frequency = 52;
+	pixel_x = -6
 	},
 /turf/simulated/floor{
 	dir = 0;
@@ -71315,7 +71394,11 @@
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/storage/firstaid/regular,
+/obj/item/device/telephone{
+	pixel_y = -1;
+	pixel_x = -5;
+	phone_frequency = 20
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -73252,6 +73335,11 @@
 /obj/item/weapon/rcd_ammo/small,
 /obj/item/weapon/rcd_ammo/small,
 /obj/item/weapon/rcd_ammo/small,
+/obj/item/device/telephone{
+	pixel_y = 11;
+	pixel_x = -6;
+	phone_frequency = 11
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "darkyellow"
@@ -77678,6 +77766,11 @@
 /obj/item/weapon/paper_bin,
 /obj/item/weapon/pen,
 /obj/structure/table/glass,
+/obj/item/device/telephone{
+	pixel_y = 14;
+	pixel_x = 5;
+	phone_frequency = 23
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -80584,7 +80677,14 @@
 	network = list("Medical");
 	pixel_y = -28
 	},
-/obj/machinery/computer/skills,
+/obj/machinery/computer/skills{
+	pixel_x = 3
+	},
+/obj/item/device/telephone{
+	pixel_y = 10;
+	pixel_x = -15;
+	phone_frequency = 21
+	},
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "barber"
@@ -85226,6 +85326,11 @@
 	},
 /obj/item/weapon/reagent_containers/glass/bottle/synaptizine,
 /obj/item/weapon/reagent_containers/glass/bottle/phoron,
+/obj/item/device/telephone{
+	pixel_y = 14;
+	pixel_x = 5;
+	phone_frequency = 24
+	},
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitegreen"

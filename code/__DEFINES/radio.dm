@@ -7,6 +7,6 @@
 #define BROADCAST_MODE_NO_TRACK_AI 4 // default fallback
 
 /* Frequencies */
-
+#define BASIC_PHONE_FREQUENCY 1500
 #define FREQ_TEAM_RED 1501
 #define FREQ_TEAM_BLUE 1502

@@ -1,0 +1,73 @@
+.telephone_monitor {
+  width: 208px;
+  height: 50px;
+  background: hsl(0, 0%, 6.7%);
+  border-bottom: 2px solid hsl(209, 28%, 64%);
+  border-top: 3px solid hsl(228, 45%, 19%);
+  padding: 0px;
+  padding-top: 4px;
+  padding-left: -20px;
+  margin-bottom: 5px;
+}
+
+.cardpay_window-contents--black {
+  background: hsl(217, 15%, 33%) !important;
+  border-radius: 0px 0px 15px 15px;
+}
+
+.cardpay_button--black {
+  background: hsl(228, 45%, 19%);
+  border-color: hsl(228, 45%, 19%);
+  border-top-color: hsl(217, 15%, 33%);
+
+  &:hover {
+    border-top-width: 4px;
+    background: hsl(228, 45%, 19%) !important;
+  }
+}
+
+.cardpay_button--black.Button--selected {
+  height: 48px;
+  width: 48px;
+  background: hsl(228, 45%, 19%);
+  outline: hsl(232.5, 12.9%, 12.2%) solid 3px;
+  border: 4px solid hsl(228, 45%, 19%);
+  border-top: 6px solid hsl(217, 15%, 33%);
+  padding: 0px;
+  margin-left: 2.5px;
+  &:hover {
+    border-top-width: 8px;
+    background: hsl(228, 45%, 19%) !important;
+  }
+}
+
+.cardpay_button-inside--black {
+  background: hsl(216, 20%, 46%);
+  border-bottom-color: hsl(209, 28%, 64%);
+  color: hsl(240, 14.3%, 23.3%);
+}
+
+.telephone_label {
+  width: 110px;
+  background-color: hsl(41, 58%, 84%);
+
+  border-top: 2px solid hsl(40, 100%, 91%);
+  border-left: 2px solid hsl(40, 100%, 91%);
+  border-bottom: 3px solid hsl(68, 9%, 64%);
+  border-right: 3px solid hsl(68, 9%, 64%);
+
+  ul {
+    color: black;
+    font-weight: bold;
+    padding: 0px;
+    margin: 0px;
+    list-style-type: none;
+
+    li {
+      width: 100%;
+      height: 20px;
+      padding-left: 15px;
+      border-bottom: 2px solid hsl(68, 13%, 78%);
+    }
+  }
+}

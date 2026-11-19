@@ -2065,7 +2065,7 @@
 		var/datum/ringtone/Ring = global.ringtones_by_names[ringtone]
 		if(!Ring)
 			return
-		chiptune_player.repeat = Ring.replays
+		chiptune_player.basic_repeats = Ring.replays
 		chiptune_player.parse_song_text(Ring.melody)
 
 /obj/item/device/pda/proc/open_shop_page(mob/user, referrer_account_number = null)

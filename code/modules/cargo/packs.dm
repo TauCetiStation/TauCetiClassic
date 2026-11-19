@@ -1896,6 +1896,12 @@ var/global/list/all_supply_groups = list("Operations","Security","Hospitality","
 	crate_type = /obj/structure/largecrate
 	group = "Miscellaneous"
 
+/datum/supply_pack/telephone
+	name = "Telephone"
+	contains = list(/obj/item/device/telephone)
+	additional_costs = 1500
+	group = "Miscellaneous"
+
 //----------------------------------------------
 //-----------------RANDOMISED-------------------
 //----------------------------------------------

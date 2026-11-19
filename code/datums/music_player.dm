@@ -62,6 +62,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 	var/show_help = FALSE
 	var/show_edit = TRUE
 	var/repeat    = 0
+	var/basic_repeats = 0
 	var/volume    = DEFAULT_VOLUME
 
 /datum/music_player/New(instrument, sound_path)
@@ -223,6 +224,9 @@ var/global/datum/notes_storage/note_cache_storage = new
 		usr.unset_machine(instrument)
 
 /datum/music_player/proc/playsong(mob/living/musician)
+	if(basic_repeats && !repeat)
+		repeat = basic_repeats
+
 	do
 		var/cur_oct[7]
 		var/cur_acc[7]
