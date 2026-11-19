@@ -16,6 +16,7 @@
 
 	var/state_broken_preset = null // used if we want to choose icon_state that is going to be used
 	var/state_nopower_preset = null
+	var/mutable_appearance/emissive_overlay
 
 /obj/machinery/computer/atom_init(mapload, obj/item/weapon/circuitboard/C)
 	. = ..()
@@ -41,6 +42,11 @@
 /obj/machinery/computer/Destroy()
 	computer_list -= src
 	return ..()
+
+/obj/machinery/computer/set_dir(new_dir)
+	. = ..()
+	if(.)
+		update_emissive()
 
 /obj/machinery/computer/process()
 	if(stat & (NOPOWER|BROKEN))
@@ -137,6 +143,15 @@
 			icon_state = state_nopower_preset
 		else
 			icon_state = "[initial(icon_state)]0"
+	update_emissive()
+
+/obj/machinery/computer/proc/update_emissive()
+	cut_overlay(emissive_overlay)
+	emissive_overlay = null
+	if((stat & (NOPOWER|BROKEN)) || icon != 'icons/obj/computer.dmi' || !icon_exists('icons/obj/computer_emissive.dmi', icon_state))
+		return
+	emissive_overlay = get_emissive_overlay('icons/obj/computer_emissive.dmi', icon_state, dir, mask_only = TRUE)
+	add_overlay(emissive_overlay)
 
 /obj/machinery/computer/power_change()
 	..()

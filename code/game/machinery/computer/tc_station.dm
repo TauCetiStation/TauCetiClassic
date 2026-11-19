@@ -49,6 +49,7 @@ var/global/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","E
 	cut_overlays()
 	if(uplinkholder)
 		add_overlay("[initial(icon_state)]-closed")
+	update_emissive()
 
 
 /obj/machinery/computer/telecrystals/uplinker/proc/ejectuplink()

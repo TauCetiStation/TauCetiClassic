@@ -154,6 +154,7 @@
 		icon_state = "recharge_comp"
 	else
 		icon_state = "recharge_comp_on"
+	update_emissive()
 
 /obj/machinery/computer/mech_bay_power_console/atom_init()
 	. = ..()

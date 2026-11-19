@@ -226,9 +226,13 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	for(var/index in bodypart_overlays_standing)
 		for(var/mutable_appearance/overlay in bodypart_overlays_standing[index])
-			if(!grouped_by_layer["[overlay.layer]"])
-				grouped_by_layer["[overlay.layer]"] = list()
-			grouped_by_layer["[overlay.layer]"] += overlay
+			var/group_layer = "[overlay.layer]"
+			if(!grouped_by_layer[group_layer])
+				grouped_by_layer[group_layer] = list()
+			if(overlay.layer == ABOVE_LIGHTING_LAYER)
+				overlay = new /mutable_appearance(overlay)
+				overlay.layer = FLOAT_LAYER
+			grouped_by_layer[group_layer] += overlay
 
 	for(var/layer in grouped_by_layer)
 		var/mutable_appearance/MA = new()
@@ -239,9 +243,13 @@ Please contact me on #coderbus IRC. ~Carn x
 		// update height offsets and filters
 		switch(MA.layer)
 			if(-HAIR_LAYER) // shift hair instead of filter
+				for(var/mutable_appearance/hair_appearance as anything in MA.overlays)
+					MA.appearance_flags |= hair_appearance.appearance_flags & KEEP_APART
 				MA = human_update_offset(MA, TRUE)
-			if(ABOVE_LIGHTING_LAYER) // glowing eyes. Fuck, this looks so bad.
+			if(ABOVE_LIGHTING_LAYER)
 				MA = human_update_offset(MA, TRUE)
+				MA.appearance_flags |= KEEP_APART
+				MA.layer = -EYES_LAYER
 			//if(BODY_INFRONT_LAYER, BODY_BEHIND_LAYER) // todo: need to choice between filter and offset
 			//	MA = human_update_offset(MA)
 			else

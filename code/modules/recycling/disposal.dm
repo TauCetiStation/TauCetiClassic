@@ -400,25 +400,24 @@
 	var/list/status_overlay = list()
 	// 	check for items in disposal - occupied light
 	if(contents.len > 0)
-		status_overlay.Add(image(icon = 'icons/obj/pipes/disposal.dmi',\
+		status_overlay.Add(emissive_appearance(icon = 'icons/obj/pipes/disposal.dmi',\
 							     icon_state = "dispover-full-light"))
 		set_light(1, 1, "#006381")
 
 	// charging and ready light
 	if(mode == 1)
-		status_overlay.Add(image(icon = 'icons/obj/pipes/disposal.dmi',\
+		status_overlay.Add(emissive_appearance(icon = 'icons/obj/pipes/disposal.dmi',\
 							     icon_state = "dispover-charge-light"))
 		add_overlay("dispover-charge")
 		set_light(1, 1, "#940101")
 
 	else if(mode == 2)
-		status_overlay.Add(image(icon = 'icons/obj/pipes/disposal.dmi',\
+		status_overlay.Add(emissive_appearance(icon = 'icons/obj/pipes/disposal.dmi',\
 							     icon_state = "dispover-ready-light"))
 		add_overlay("dispover-ready")
 		set_light(1, 1, "#0c8801")
 
 	for(var/image/I in status_overlay)
-		I.plane = LIGHTING_LAMPS_PLANE
 		add_overlay(I)
 
 // timed process

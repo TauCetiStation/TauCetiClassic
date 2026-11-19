@@ -1365,6 +1365,7 @@
 /datum/species/machine/handle_death(mob/living/carbon/human/H, gibbed)
 	var/obj/item/organ/external/head/robot/ipc/BP = H.bodyparts_by_name[BP_HEAD]
 	if(BP && BP.screen_toggle)
+		BP.screen_toggle = FALSE
 		H.r_hair = 15
 		H.g_hair = 15
 		H.b_hair = 15

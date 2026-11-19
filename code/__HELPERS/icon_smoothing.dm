@@ -181,7 +181,7 @@
 	adjacencies = reverse_ndir(..())
 	if(adjacencies)
 		var/mutable_appearance/underlay_appearance = mutable_appearance(layer = TURF_LAYER, plane = FLOOR_PLANE)
-		var/list/U = list(underlay_appearance)
+		var/list/U = list(underlay_appearance, global.emissive_visibility_mask)
 		if(fixed_underlay)
 			if(fixed_underlay["space"])
 				underlay_appearance.icon = 'icons/turf/space.dmi'
