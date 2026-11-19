@@ -92,11 +92,11 @@
 			H.bloody_hands(target, 0)
 		if(blood_level == FULLBBODY_BLOOD_STEP)
 			H.bloody_body(target, 0)
-	return
+	return TRUE
 
 // does stuff to end the step, which is normally print a message + do whatever this step changes
 /datum/surgery_step/proc/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
-	return
+	return TRUE
 
 // stuff that happens when the step fails
 /datum/surgery_step/proc/fail_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/I)
@@ -577,7 +577,7 @@
 				if(prob(H.traumatic_shock) && !H.incapacitated(NONE))
 					to_chat(user, "<span class='warning'>The patient is writhing in pain, this interferes with the operation!</span>")
 					S.fail_step(user, H, target_zone, I) //patient movements due to pain interfere with surgery
-			if(user.mood_prob(S.tool_quality(I, M, target_zone)) && I.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus, particle_type = /particles/tool/surgery) && user.get_targetzone() && target_zone == user.get_targetzone())
+			if((user.mood_prob(S.tool_quality(I, M, target_zone)) || user.mood_prob(S.tool_allowed(I))) && I.use_tool(M,user, step_duration, volume=100, required_skills_override = S.required_skills, skills_speed_bonus = S.skills_speed_bonus, particle_type = /particles/tool/surgery) && user.get_targetzone() && target_zone == user.get_targetzone())
 				S.end_step(user, M, target_zone, I)		//finish successfully
 			else if(I.loc == user && user.Adjacent(M))		//or (also check for I in hands and being near the target)
 				S.fail_step(user, M, target_zone, I)		//malpractice~
@@ -591,7 +591,7 @@
 				// When called from radial, it re-opens itself after the step (via INVOKE_ASYNC).
 				if(!from_radial)
 					try_show_surgery_radial_menu(user, H, target_zone)
-			return	TRUE	  												//don't want to do weapony things after surgery
+			return	TRUE	  		//don't want to do weapony things after surgery
 	return FALSE
 
 /proc/sort_surgeries()

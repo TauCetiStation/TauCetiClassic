@@ -175,6 +175,7 @@
 /obj/structure/table,
 /obj/item/device/healthanalyzer,
 /obj/item/clothing/glasses/hud/health,
+/obj/item/device/robotanalyzer,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -217,6 +218,10 @@
 /area/centcom/test)
 "aE" = (
 /obj/machinery/optable,
+/mob/living/carbon/human{
+	name = "Surgery Victim";
+	real_name = "Surgery Victim"
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -339,6 +344,11 @@
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/item/weapon/tank/anesthetic,
+/obj/item/weapon/tank/anesthetic,
+/obj/item/weapon/tank/anesthetic,
+/obj/item/weapon/tank/anesthetic,
+/obj/item/weapon/tank/anesthetic,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -385,6 +395,13 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/test)
+"MO" = (
+/obj/machinery/life_assist/artificial_ventilation,
+/obj/item/weapon/tank/anesthetic,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -3484,7 +3501,7 @@ aa
 ac
 au
 ay
-ay
+MO
 ay
 ay
 ay
