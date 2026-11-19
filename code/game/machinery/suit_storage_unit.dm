@@ -91,7 +91,7 @@
 	update_connectors()
 
 	if(ultra_violet)
-		var/mutable_appearamce/I = mutable_appearance(icon = overlays_file, icon_state = "[emagged ? "termalclean_emag" : "termalclean"]")
+		var/mutable_appearance/I = mutable_appearance(icon = overlays_file, icon_state = "[emagged ? "termalclean_emag" : "termalclean"]")
 		I.layer = layer + 0.02
 		add_overlay(I)
 
