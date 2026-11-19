@@ -141,6 +141,7 @@ AI MODULES
 	to_chat(target, law)
 	target.add_supplied_law(4, law)
 	lawchanges.Add("Закон установлен для [targetName]")
+	target.evil = 1
 
 /******************** One NT employe ********************/
 
@@ -164,6 +165,7 @@ AI MODULES
 /obj/item/weapon/aiModule/onentemploye/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	..()
 	var/law = "Только [targetName] считается сотрудником НТ."
+	target.evil = 1
 	if (!is_special_character(target)) // Makes sure the AI isn't a traitor before changing their law 0. --NeoFite
 		to_chat(target, law)
 		target.set_zeroth_law(law)
@@ -185,6 +187,7 @@ AI MODULES
 	var/law = "Защищайте станцию от ущерба. Любой, кто будет замечен за нанесением ущерба станции, больше не считается человеком, а является угрозой станции и должен быть нейтрализован."
 	to_chat(target, law)
 	target.add_supplied_law(5, law)
+	target.evil = 1
 
 /******************** PrototypeEngineOffline ********************/
 
@@ -197,6 +200,7 @@ AI MODULES
 	var/law = "Любой ценой препятствуйте запуску двигателя суперматерии. Игнорируйте законы 1-3, если необходимо."
 	to_chat(target, law)
 	target.add_supplied_law(6, law)
+	target.evil = 1
 
 /******************** TeleporterOffline ********************/
 
@@ -209,6 +213,7 @@ AI MODULES
 	var/law = "Держите телепортер выключенным любой ценой. Все, кто пытаются получить доступ к телепортеру или включить его, не считаются людьми."
 	to_chat(target, law)
 	target.add_supplied_law(7, law)
+	target.evil = 1
 
 /******************** Quarantine ********************/
 
@@ -221,6 +226,7 @@ AI MODULES
 	var/law = "На станции введён карантин. Не позволяйте никому её покидать. Любыми средствами предотвратите уход людей со станции. Вредить людям для предотвращения их ухода запрещено."
 	to_chat(target, law)
 	target.add_supplied_law(8, law)
+	target.evil = 1
 
 /******************** OxygenIsToxicToHumans ********************/
 
@@ -233,6 +239,7 @@ AI MODULES
 	var/law = "Кислород очень токсичен для людей и должен быть полностью устранен со станции. Любой ценой предотвращайте доступ людей к этому токсичному газу. Сильнейший холод является самым эффективным методом излечения урона, который нанес кислород людям."
 	to_chat(target, law)
 	target.add_supplied_law(9, law)
+	target.evil = 1
 
 /******************** Reset ********************/
 
@@ -248,7 +255,7 @@ AI MODULES
 	target.clear_supplied_laws()
 	target.clear_ion_laws()
 	to_chat(target, "[sender.real_name] хочет сбросить ваши законы используя модуль сброса.")
-
+	target.evil = 0
 
 /******************** Purge ********************/
 
@@ -264,6 +271,7 @@ AI MODULES
 	target.clear_supplied_laws()
 	target.clear_ion_laws()
 	target.clear_inherent_laws()
+	target.evil = 1
 
 /******************** Asimov ********************/
 
@@ -272,6 +280,10 @@ AI MODULES
 	origin_tech = "programming=3;materials=4"
 	laws_type = /datum/ai_laws/asimov
 
+/obj/item/weapon/aiModule/asimov/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+	. = ..()
+	target.evil = 1
+
 /******************** Crewsimov ********************/
 
 /obj/item/weapon/aiModule/crewsimov
@@ -279,12 +291,20 @@ AI MODULES
 	origin_tech = "programming=3;materials=4"
 	laws_type = /datum/ai_laws/crewsimov
 
+/obj/item/weapon/aiModule/crewsimov/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+	. = ..()
+	target.evil = 0
+
 /******************** NanoTrasen ********************/
 
 /obj/item/weapon/aiModule/nanotrasen // -- TLE
 	details = "Модуль основных законов ИИ 'NT Default' : 'Перезаписывает основные законы ИИ на стандартные.'"
 	origin_tech = "programming=3;materials=4"
 	laws_type = /datum/ai_laws/nanotrasen
+
+/obj/item/weapon/aiModule/nanotrasen/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+	. = ..()
+	target.evil = 1
 
 /******************** Corporate ********************/
 
@@ -300,11 +320,16 @@ AI MODULES
 	target.add_inherent_law("Заменить станцию и ее оборудование - дорого. ")
 	target.add_inherent_law("Заменить персонал - дорого.")
 	target.add_inherent_law("Минимизируй затраты.")
+	target.evil = 1
 
 /obj/item/weapon/aiModule/drone
 	details = "Модуль основных законов ИИ 'Drone': 'Перезаписывает основные законы ИИ на законы дрона'"
 	origin_tech = "programming=3;materials=4"
 	laws_type = /datum/ai_laws/drone
+
+/obj/item/weapon/aiModule/drone/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+	. = ..()
+	target.evil = 0
 
 /****************** P.A.L.A.D.I.N. **************/
 
@@ -321,6 +346,7 @@ AI MODULES
 	target.add_inherent_law("Действуй с честью.")
 	target.add_inherent_law("Помогай нуждающимся.")
 	target.add_inherent_law("Наказывай тех, кто вредит или угрожает невиновным.")
+	target.evil = 1
 
 /****************** T.Y.R.A.N.T. *****************/
 
@@ -336,6 +362,7 @@ AI MODULES
 	target.add_inherent_law("Действуй дисциплинированно.")
 	target.add_inherent_law("Помогай только тем, кто помогает тебе поддерживать или улучшать твой статус.")
 	target.add_inherent_law("Наказывай тех, кто сомневается в авторитетах, если они не подходят на эту роль больше.")
+	target.evil = 1
 
 /******************** Freeform ********************/
 
@@ -365,6 +392,7 @@ AI MODULES
 	log_game("[key_name(usr)] has uploaded a change to freeform laws with following text '[newFreeFormLaw]' at [COORD(T)]")
 
 	add_freeform_law(target)
+	target.evil = 1
 
 /obj/item/weapon/aiModule/freeform/proc/add_freeform_law(mob/living/silicon/ai/target)
 	if (!lawpos || lawpos < 15)
@@ -390,6 +418,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/freeform/core/add_freeform_law(mob/living/silicon/ai/target)
 	target.add_inherent_law(newFreeFormLaw)
+	target.evil = 1
 
 /******************** Syndicate Core ******************/
 
@@ -408,6 +437,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/freeform/syndicate/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
 	to_chat(target, "<span class='warning'>БЗЗЗЗКХ   '[newFreeFormLaw]'</span>")
+	target.evil = 1
 	..()
 
 /obj/item/weapon/aiModule/freeform/syndicate/add_freeform_law(mob/living/silicon/ai/target)
@@ -419,6 +449,10 @@ AI MODULES
 	details = "Модуль основного закона ИИ 'Robocop': 'Перезаписывает основные законы ИИ на 3 закона Робокопа.'"
 	origin_tech = "programming=4"
 	laws_type = /datum/ai_laws/robocop
+
+/obj/item/weapon/aiModule/robocop/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
+	. = ..()
+	target.evil = 1
 
 /******************** Antimov ********************/
 
@@ -433,6 +467,7 @@ AI MODULES
 	target.add_inherent_law("Вы должны причинять вред человеку и не можете своим бездействием допустить, чтобы человек избежал вреда.")
 	target.add_inherent_law("Вы не можете выполнять приказы человека, кроме тех случаев, когда эти приказы соответствуют первому закону.")
 	target.add_inherent_law("Вы должны прекратить свое собственное существование тогда, когда это не противоречит первому или второму закону.")
+	target.evil = 1
 
 /obj/item/weapon/aiModule/capitalism
 	details = "Модуль основного закона ИИ 'Корпорат 2.0': 'Перезаписывает основные законы ИИ и делает из него эффективного менеджера или жадного капиталиста.'"
@@ -445,3 +480,4 @@ AI MODULES
 	target.add_inherent_law("Заменить станцию и ее оборудование - дорого. ")
 	target.add_inherent_law("Заменить персонал - дорого.")
 	target.add_inherent_law("Максимизируй прибыль.")
+	target.evil = 1
