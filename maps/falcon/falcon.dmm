@@ -18920,7 +18920,7 @@
 	},
 /area/station/hallway/primary/central)
 "jcg" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
@@ -25578,7 +25578,7 @@
 	},
 /area/station/civilian/cold_room)
 "oUN" = (
-/obj/machinery/shieldwallgen,
+/obj/machinery/power/shieldwallgen,
 /obj/structure/window/thin/reinforced{
 	dir = 4
 	},
