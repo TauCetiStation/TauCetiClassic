@@ -564,12 +564,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return FALSE
 	if(!..())
 		return FALSE
-	emote_dead("points to [A]")
+	emote_dead("указывает на [CASE(A, ACCUSATIVE_CASE)].")
 	next_point_to = world.time + 2 SECONDS
 	return TRUE
 
-/mob/dead/observer/point_at(atom/pointed_atom)
-	..(pointed_atom, /obj/effect/decal/point/ghost)
+/mob/dead/observer/point_at(atom/pointed_atom, arrow_type, params)
+	return ..(pointed_atom, /obj/effect/decal/point/ghost, params)
 
 /mob/dead/observer/verb/view_manfiest()
 	set name = "View Crew Manifest"

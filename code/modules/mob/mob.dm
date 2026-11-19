@@ -374,27 +374,43 @@
 
 	visible_message("<span class='small'><b>[src]</b> looks at <b>[A]</b>.</span>")
 
-/mob/verb/pointed(atom/A as mob|obj|turf in view())
-	set name = "Point To"
-	set category = "Object"
-
+/mob/proc/can_point_at(atom/A)
 	if(istype(A, /obj/effect/decal/point))
 		return FALSE
 
 	if(!can_point)
 		return FALSE
-	// Removes an ability to point to the object which is out of our sight.
-	// Mostly for cases when we have mesons, thermals etc. equipped.
-	if(client && !(A in view(client.view, src)))
+
+	// Handcuffed mobs cannot point at items in their own inventory, except for pointing at themselves.
+	if(restrained(ARMS) && contains(A) && A != src)
 		return FALSE
 
-	point_at(A)
+	// Prevent pointing at objects that are out of sight, unless they are in our inventory.
+	// Also prevents pointing at objects inside closed containers or external storages.
+	if(client)
+		var/in_inventory = FALSE
+		if(ismovable(A))
+			var/atom/movable/AM = A
+			in_inventory = contains(AM)
+			if(!in_inventory && AM.loc && !isturf(AM.loc))
+				return FALSE
 
-	// TODO: replace with a "COMSIG_MOB_POINTED" signal
-	if (isliving(A))
-		for (var/mob/living/carbon/slime/S in oview())
-			if (usr in S.Friends)
-				S.last_pointed = A
+		if(!in_inventory && !(A in view(client.view, src)))
+			return FALSE
+
+	return TRUE
+
+/mob/verb/pointed(atom/A as mob|obj|turf in view(), params as text)
+	set name = "Point To"
+	set category = "Object"
+
+	if(!can_point_at(A))
+		return FALSE
+
+	if(!point_at(A, params = params))
+		return FALSE
+
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_POINTED, src, A)
 
 	return TRUE
 

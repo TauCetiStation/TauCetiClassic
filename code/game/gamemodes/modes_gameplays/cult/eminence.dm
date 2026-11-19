@@ -169,7 +169,7 @@
 		if(modifiers[MIDDLE_CLICK])
 			if(!COOLDOWN_FINISHED(src, point_to))
 				return
-			point_at(A)
+			point_at(A, params = params)
 			COOLDOWN_START(src, point_to, 3 SECONDS)
 			return
 		A.examine(src)
@@ -253,8 +253,8 @@
 		for(var/mob/M in servants_and_ghosts())
 			M.playsound_local(M, 'sound/antag/eminence_command.ogg', VOL_EFFECTS_MASTER)
 
-/mob/camera/eminence/point_at(atom/pointed_atom)
-	..(pointed_atom, /obj/effect/decal/point/eminence)
+/mob/camera/eminence/point_at(atom/pointed_atom, arrow_type, params)
+	return ..(pointed_atom, /obj/effect/decal/point/eminence, params)
 
 //Used by the Eminence to coordinate the cult
 /obj/effect/temp_visual/command_point
