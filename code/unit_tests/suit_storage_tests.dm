@@ -56,7 +56,7 @@
 	ssu.make_full()
 	var/mob/living/carbon/human/H = new (ssu)
 
-	ssu.fast_dress(H)
+	ssu.fast_dress(H, testrun = TRUE)
 
 	for(var/atom/target in ssu.contents)
 		if(!ishuman(target))

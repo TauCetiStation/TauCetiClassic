@@ -159,7 +159,7 @@
 /obj/machinery/storage_unit/proc/can_fast_dress(mob/living/operator, mob/living/target)
 	return TRUE
 
-/obj/machinery/storage_unit/proc/fast_dress(mob/living/operator)
+/obj/machinery/storage_unit/proc/fast_dress(mob/living/operator, testrun = FALSE)
 	if(!ishuman(operator))
 		return
 
@@ -183,6 +183,9 @@
 		if(!I || !I.canremove)
 			continue
 
+		if(!testrun && !do_after(operator, 0.1 SECONDS, FALSE, src))
+			continue
+
 		if(!target.drop_from_inventory(I, src))
 			continue
 		contents_holder[slot_name] = I
@@ -193,11 +196,11 @@
 		if(!slot_name || !contents_by_slot[slot_name])
 			continue
 
-		if(!do_after(operator, 0.1 SECONDS, FALSE, src))
-			continue
-
 		var/obj/item/I = contents_by_slot[slot_name]
 		if(!I)
+			continue
+
+		if(!testrun && !do_after(operator, 0.1 SECONDS, FALSE, src))
 			continue
 
 		if(!target?.equip_to_slot_if_possible(I, slot_name, disable_warning = TRUE))
@@ -279,6 +282,13 @@
 	add_fingerprint(user)
 	return
 
+
+/obj/machinery/storage_unit/relaymove(mob/user)
+	if(!opened)
+		return
+
+	eject_occupant(user)
+
 /obj/machinery/storage_unit/MouseDrop_T(atom/something, mob/user)
 	add_fingerprint(user)
 	if(stat & BROKEN)
@@ -354,9 +364,15 @@
 				if(!target)
 					continue
 				suit_storage[target] = target.appearance
+				if(occupant)
+					suit_storage[occupant] = occupant.appearance
 			var/atom/movable/to_dispense = show_radial_menu(user, src, suit_storage, require_near = TRUE, tooltips = TRUE)
 
 			if(!to_dispense)
+				return
+
+			if(to_dispense == occupant)
+				eject_occupant(user)
 				return
 
 			for(var/slot_name in contents_by_slot)
@@ -416,7 +432,10 @@
 
 	var/obj/item/I = something
 	for(var/slot_name in slot_flags_to_possible_slots_list(I.slot_flags))
-		if(contents_by_slot[slot_name])
+		if(!(slot_name in contents_by_slot))
+			continue
+
+		if(!isnull(contents_by_slot[slot_name]))
 			continue
 
 		if(do_after(user, 0.1 SECONDS, FALSE, src))
