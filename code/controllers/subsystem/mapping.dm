@@ -27,6 +27,9 @@ SUBSYSTEM_DEF(mapping)
 	var/mine_image = "" // What image file to use for mine
 	var/list/cached_nanomap_payload
 
+	var/alist/cave_maps = alist()
+	var/alist/geode_maps = alist()
+
 /datum/controller/subsystem/mapping/proc/LoadMapConfig()
 	if(!config)
 		config = load_map_config(error_if_missing = FALSE)
@@ -49,6 +52,8 @@ SUBSYSTEM_DEF(mapping)
 	process_ghost_teleport_locs()	//Sets up ghost teleport locations.
 
 	// Generate mining.
+	generate_cave_maps()
+	generate_geode_maps()
 	make_mining_asteroid_secrets()
 	populate_distribution_map()
 	// Load templates
@@ -342,6 +347,24 @@ SUBSYSTEM_DEF(mapping)
 	cached_nanomap_payload = data
 
 	return data.Copy()
+
+/datum/controller/subsystem/mapping/proc/generate_cave_maps()
+	for(var/mining_layer in SSmapping.levels_by_trait(ZTRAIT_MINING))
+		cave_maps[mining_layer] = get_voronoi_noise(rand(), world.maxx, world.maxy, 12, 12, 17)
+
+/datum/controller/subsystem/mapping/proc/generate_geode_maps()
+	var/list/mining_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
+	if(!mining_levels.len)
+		return
+
+	for(var/geode_type in global.geode_by_type)
+		var/datum/geode/geode_datum = global.geode_by_type[geode_type]
+		var/mining_layer = pick(mining_levels)
+		if(!geode_maps[mining_layer])
+			geode_maps[mining_layer] = alist()
+
+		geode_maps[mining_layer][geode_datum] = get_perlin_noise(rand(), world.maxx, world.maxy, geode_datum.persistance, geode_datum.amplitude, geode_datum.octaves)
+
 
 #undef SPACE_STRUCTURES_AMOUNT
 #undef MAX_MINING_SECRET_ROOM
