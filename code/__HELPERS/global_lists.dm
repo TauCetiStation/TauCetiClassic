@@ -311,6 +311,17 @@
 	for(var/package_wrap_type as anything in typesof(/datum/package_wrap))
 		global.package_wrap_by_type[package_wrap_type] = new package_wrap_type
 
+	for(var/parent_recipe_type as anything in global.cooking_recipe_types)
+		for(var/recipe_type as anything in subtypesof(parent_recipe_type))
+			if(!global.cooking_recipes[parent_recipe_type])
+				global.cooking_recipes[parent_recipe_type] = list()
+
+			var/datum/recipe/recipe = new recipe_type
+			if(!recipe.result)
+				qdel(recipe)
+				continue
+			global.cooking_recipes[parent_recipe_type] += recipe
+
 	init_washing_items_list()
 
 /proc/init_washing_items_list()

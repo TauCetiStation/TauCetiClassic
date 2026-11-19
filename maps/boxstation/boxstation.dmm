@@ -12261,18 +12261,17 @@
 /turf/simulated/wall,
 /area/station/maintenance/chapel)
 "auq" = (
-/obj/machinery/kitchen_machine/grill,
-/obj/structure/condiment_shelf{
-	pixel_y = 32
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
-/obj/item/weapon/reagent_containers/food/condiment/ketchup,
-/obj/item/weapon/reagent_containers/food/condiment/rice,
-/obj/item/weapon/reagent_containers/food/condiment/peppermill,
-/obj/item/weapon/reagent_containers/food/condiment/sugar,
-/obj/item/weapon/reagent_containers/food/condiment/enzyme{
-	pixel_x = 10
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
 	},
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -12430,7 +12429,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "auK" = (
-/obj/machinery/kitchen_machine/oven,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -12454,14 +12453,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/eva)
 "auN" = (
-/obj/structure/table,
-/obj/machinery/kitchen_machine/microwave{
-	pixel_x = -3;
-	pixel_y = 6
-	},
-/obj/machinery/light/smart{
-	dir = 1
-	},
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/obj/machinery/portable_atmospherics/tile_atmos/oven,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -12474,7 +12467,6 @@
 	},
 /area/station/cargo/storage)
 "auP" = (
-/obj/structure/table,
 /obj/machinery/windowtint{
 	id = "kitchen";
 	pixel_x = 24
@@ -12487,6 +12479,7 @@
 /obj/item/weapon/book/manual/wiki/barman_recipes{
 	pixel_y = 10
 	},
+/obj/structure/table,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -12632,7 +12625,6 @@
 	dir = 8
 	},
 /obj/structure/table/reinforced,
-/obj/item/weapon/reagent_containers/food/snacks/pie,
 /turf/simulated/floor{
 	icon_state = "cafeteria"
 	},
@@ -15670,6 +15662,9 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 5
+	},
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aAH" = (
@@ -15730,6 +15725,7 @@
 "aAN" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -15933,9 +15929,20 @@
 /turf/simulated/floor/beach/water/waterpool,
 /area/station/civilian/gym)
 "aBi" = (
+/obj/structure/condiment_shelf{
+	pixel_y = 32
+	},
+/obj/item/weapon/reagent_containers/food/condiment/enzyme{
+	pixel_x = 10
+	},
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
+/obj/item/weapon/reagent_containers/food/condiment/sugar,
+/obj/item/weapon/reagent_containers/food/condiment/peppermill,
+/obj/item/weapon/reagent_containers/food/condiment/rice,
+/obj/item/weapon/reagent_containers/food/condiment/ketchup,
 /obj/structure/table,
 /obj/machinery/chem_dispenser/soda{
-	pixel_y = 4
+	pixel_y = 12
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -17985,6 +17992,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/structure/flora/ausbushes/lavendergrass,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aFo" = (
@@ -22280,13 +22288,16 @@
 	},
 /area/station/civilian/bar)
 "aNl" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 9
-	},
 /obj/structure/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 9
 	},
 /turf/simulated/floor{
 	dir = 5;
@@ -28650,6 +28661,7 @@
 /mob/living/simple_animal/chicken{
 	name = "Commander Clucky"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor/grass,
 /area/station/civilian/hydroponics)
 "aYw" = (
@@ -30282,14 +30294,15 @@
 	},
 /area/station/hallway/primary/central)
 "bbq" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 5
 	},
 /turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+	icon_state = "showroomfloor"
 	},
-/area/station/civilian/kitchen)
+/area/station/civilian/cold_room)
 "bbr" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -36565,6 +36578,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -46628,10 +46642,13 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
-/obj/machinery/icecream_vat,
 /obj/machinery/camera{
 	c_tag = "Kitchen Cold Room"
 	},
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/hydrogen,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -46970,6 +46987,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -48632,6 +48650,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/machinery/icecream_vat,
 /turf/simulated/floor{
 	icon_state = "showroomfloor"
 	},
@@ -70615,6 +70634,7 @@
 /area/station/civilian/garden)
 "dyy" = (
 /obj/structure/table/reinforced,
+/obj/item/weapon/reagent_containers/food/snacks/pie,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -74268,6 +74288,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/manifold/hidden/fuel,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -75550,6 +75571,20 @@
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/wood,
 /area/station/maintenance/cargo)
+"itM" = (
+/obj/machinery/light/smart{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/machinery/kitchen_machine/microwave{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/station/civilian/kitchen)
 "iuc" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
@@ -80954,6 +80989,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/hologram/holopad,
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -83175,6 +83213,9 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
 	dir = 10
 	},
 /turf/simulated/floor/grass,
@@ -88454,6 +88495,9 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
+/obj/machinery/atmospherics/pipe/simple/hidden/fuel{
+	dir = 6
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -89120,6 +89164,14 @@
 	icon_state = "vaultfull"
 	},
 /area/station/civilian/chapel/mass_driver)
+"xHs" = (
+/obj/machinery/portable_atmospherics/tile_atmos/oven,
+/obj/machinery/atmospherics/components/unary/portables_connector,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/station/civilian/kitchen)
 "xHP" = (
 /obj/structure/grille{
 	destroyed = 1
@@ -89437,6 +89489,15 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/cargo/recycler)
+"xZn" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 9
+	},
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/station/civilian/kitchen)
 "xZt" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "4,1"
@@ -110702,9 +110763,9 @@ akt
 cpL
 bns
 aMZ
+auw
+xiQ
 auq
-bbq
-hho
 aWw
 slc
 aWw
@@ -110713,7 +110774,7 @@ qab
 aFn
 aYv
 bEV
-bIK
+bbq
 bHI
 bIY
 bKh
@@ -110959,8 +111020,8 @@ bKb
 bdZ
 cjM
 cox
-auw
-xiQ
+xHs
+auK
 hho
 aAR
 lup
@@ -111216,7 +111277,7 @@ bdK
 bdZ
 cjM
 cox
-auK
+auL
 aWw
 nAY
 aAX
@@ -111473,9 +111534,9 @@ bbP
 cpb
 cjM
 cox
-auL
+itM
 slc
-hho
+auq
 azA
 aMZ
 aFO
@@ -111731,7 +111792,7 @@ bet
 bnt
 cox
 auN
-gQi
+auK
 aNl
 aBN
 aMZ
@@ -111986,10 +112047,10 @@ npb
 bdv
 bdZ
 cjM
-cox
+aMZ
 aBi
-aWw
-aWw
+gQi
+xZn
 aBY
 aMZ
 blK
