@@ -3,6 +3,7 @@
 
 /datum/unit_test/suit_storage_unit_test_duv/start_test()
 	var/obj/machinery/storage_unit/suit_storage/test_unit/ssu = new
+	ssu.filled = TRUE
 	ssu.make_full()
 	for(var/obj/item/target in ssu.contents)
 		target.contaminate()

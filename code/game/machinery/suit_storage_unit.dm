@@ -611,7 +611,7 @@
 	name = "Breacher Unathi Suit Storage Unit"
 
 	contents_by_slot = alist(
-		SLOT_S_STORE = /obj/item/weapon/tank/oxygen,,
+		SLOT_S_STORE = /obj/item/weapon/tank/oxygen,
 		SLOT_WEAR_SUIT = /obj/item/clothing/suit/space/unathi/breacher,
 		SLOT_HEAD = /obj/item/clothing/head/helmet/space/unathi/breacher,
 		SLOT_WEAR_MASK = /obj/item/clothing/mask/breath/gas/coloured,

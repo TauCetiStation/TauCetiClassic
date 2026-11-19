@@ -46,6 +46,7 @@
 	var/list/options = list()
 
 	var/can_build = TRUE
+	var/filled = FALSE
 
 /obj/machinery/storage_unit/atom_init(mapload)
 	. = ..()
@@ -60,7 +61,7 @@
 	component_parts += new /obj/item/stack/cable_coil/red(null, 3)
 
 	RefreshParts()
-	if(mapload)
+	if(mapload && filled)
 		make_full()
 
 	options += list(
