@@ -45,6 +45,8 @@
 
 	var/list/options = list()
 
+	var/can_build = TRUE
+
 /obj/machinery/storage_unit/atom_init(mapload)
 	. = ..()
 
@@ -145,6 +147,9 @@
 	update_icon()
 	return
 
+/obj/machinery/storage_unit/proc/can_fast_dress(mob/living/operator, mob/living/target)
+	return TRUE
+
 /obj/machinery/storage_unit/proc/fast_dress(mob/living/operator)
 	if(!ishuman(operator))
 		return
@@ -152,6 +157,9 @@
 	var/mob/living/target = operator
 	if(occupant && ishuman(occupant))
 		target = occupant
+
+	if(!can_fast_dress(operator, target))
+		return
 
 	var/alist/contents_holder = alist()
 	for(var/slot_name in contents_by_slot)
@@ -211,11 +219,14 @@
 		door.transform = matrix().Turn(-20)
 		door.pixel_x = 10
 
-	if(contents_by_slot[SLOT_WEAR_SUIT] || contents_by_slot[SLOT_W_UNIFORM])
-		add_overlay(mutable_appearance(overlays_file, "uniform"))
+	update_insides()
 
 	if(!door_animated)
 		add_overlay(door)
+
+/obj/machinery/storage_unit/proc/update_insides()
+	if(contents_by_slot[SLOT_WEAR_SUIT] || contents_by_slot[SLOT_W_UNIFORM])
+		add_overlay(mutable_appearance(overlays_file, "uniform"))
 
 /obj/machinery/storage_unit/proc/toggle_door(opening = TRUE)
 	cut_overlay(door)
@@ -333,6 +344,10 @@
 		if(default_deconstruction_crowbar(I))
 			return TRUE
 
+	if(istype(I, /obj/item/weapon/airlock_painter))
+		change_paintjob(I, user)
+		return
+
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/grab = I
 		if(!ismob(grab.affecting) || grab.state < GRAB_AGGRESSIVE)
@@ -377,6 +392,41 @@
 
 	update_icon()
 
+/obj/machinery/storage_unit/proc/change_paintjob(obj/item/weapon/airlock_painter/W, mob/user)
+	if(!W.can_use(user, 1))
+		return
+
+	var/list/optionslist = list()
+	var/list/name_to_type = list()
+	for(var/obj/machinery/storage_unit/unit_type in subtypesof(type))
+		if(unit_type::icon != icon)
+			continue
+
+		if(!unit_type::can_build)
+			continue
+
+		optionslist += list(unit_type::name = mutable_appearance(icon = unit_type::icon, icon_state = unit_type::icon_state))
+		name_to_type[unit_type::name] = unit_type
+
+	var/chosen_option = show_radial_menu(user, src, optionslist, require_near = TRUE, tooltips = TRUE)
+	if(!chosen_option || !name_to_type[chosen_option])
+		return
+
+	var/chosen_type = name_to_type[chosen_option]
+	var/obj/machinery/storage_unit/unit = new chosen_type()
+
+	if(!W.use_tool(src, user, 50, 1))
+		return
+
+	name = unit.name
+	cases = unit.cases
+	desc = unit.desc
+	icon_state = unit.icon_state
+	overlays_file = unit.overlays_file
+
+	qdel(unit)
+	update_icon()
+
 /obj/machinery/storage_unit/deconstruct(disassembled = TRUE)
 	drop_from_contents()
 	..()
@@ -410,6 +460,13 @@
 
 /obj/machinery/storage_unit/surgery/toggle_lock(mob/user)
 	return
+
+
+/obj/machinery/storage_unit/surgery/can_fast_dress(mob/living/operator, mob/living/target)
+	if(get_insurance_type(target) == INSURANCE_NONE)
+		to_chat(operator, "<span class='userdanger'>У [target] отсутствует страховка!</span>")
+		return FALSE
+	return TRUE
 
 
 /obj/machinery/storage_unit/personal
@@ -506,3 +563,9 @@
 		SLOT_W_UNIFORM = /obj/item/clothing/under/patient_gown,
 		SLOT_SHOES = /obj/item/clothing/shoes/white
 	)
+
+/obj/machinery/storage_unit/personal/patient/can_fast_dress(mob/living/operator, mob/living/target)
+	if(get_insurance_type(target) == INSURANCE_NONE)
+		to_chat(operator, "<span class='userdanger'>У [target] отсутствует страховка!</span>")
+		return FALSE
+	return TRUE

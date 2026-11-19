@@ -5331,7 +5331,7 @@
 /turf/simulated/shuttle/floor/vox,
 /area/shuttle/vox/arkship_hold)
 "ang" = (
-/obj/machinery/suit_storage_unit/vox/stealth{
+/obj/machinery/storage_unit/suit_storage/vox/stealth{
 	filled = 1
 	},
 /turf/simulated/shuttle/floor/vox{
@@ -5536,7 +5536,7 @@
 /turf/environment/space,
 /area/shuttle/vox/arkship)
 "anB" = (
-/obj/machinery/suit_storage_unit/vox/engine{
+/obj/machinery/storage_unit/suit_storage/vox/engine{
 	filled = 1
 	},
 /turf/simulated/shuttle/floor/vox{
@@ -6223,7 +6223,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/vox/carapace{
+/obj/machinery/storage_unit/suit_storage/vox/carapace{
 	filled = 1
 	},
 /turf/simulated/shuttle/floor/vox{
@@ -7582,7 +7582,7 @@
 	},
 /area/shuttle/vox/arkship)
 "arW" = (
-/obj/machinery/suit_storage_unit/vox/medic{
+/obj/machinery/storage_unit/suit_storage/vox/medic{
 	filled = 1
 	},
 /turf/simulated/shuttle/floor/vox{

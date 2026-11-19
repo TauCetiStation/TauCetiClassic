@@ -2,8 +2,7 @@
 	name = "SUIT STORAGE: TEST DEFAULT UV CLEAR"
 
 /datum/unit_test/suit_storage_unit_test_duv/start_test()
-	var/obj/machinery/suit_storage_unit/test_unit/ssu = new
-	ssu.filled = TRUE
+	var/obj/machinery/storage_unit/suit_storage/test_unit/ssu = new
 	ssu.make_full()
 	for(var/obj/item/target in ssu.contents)
 		target.contaminate()
@@ -14,7 +13,7 @@
 	var/list/error_list = list()
 	for(var/obj/item/target in ssu.contents)
 		if(target.contaminated)
-			error_list += "SSU didn`t contaminate: [target]"
+			error_list += "SSU didn`t decontaminate: [target]"
 		else if(target.blood_overlay)
 			error_list += "SSU didn`t clear blood_overlay: [target]"
 
@@ -31,7 +30,7 @@
 	name = "SUIT STORAGE: TEST SUPER UV CLEAR"
 
 /datum/unit_test/suit_storage_unit_test_suv_dell/start_test()
-	var/obj/machinery/suit_storage_unit/test_unit/ssu = new
+	var/obj/machinery/storage_unit/suit_storage/test_unit/ssu = new
 	ssu.emagged = TRUE
 
 // Test unit have alredy contents insade, give them human to check kill it
@@ -49,12 +48,10 @@
 	name = "SUIT STORAGE: TEST FAST EUIP"
 
 /datum/unit_test/suit_storage_unit_test_fast_equip_drop/start_test()
-	var/obj/machinery/suit_storage_unit/test_unit/ssu = new
+	var/obj/machinery/storage_unit/suit_storage/test_unit/ssu = new
 	var/mob/living/carbon/human/H = new (ssu)
 
-	if(!ssu.fast_equip(H))
-		for(var/obj/item/something in ssu.contents)
-			ssu.dispense(something)
+	ssu.fast_dress(H)
 
 	for(var/atom/target in ssu.contents)
 		if(!ishuman(target))

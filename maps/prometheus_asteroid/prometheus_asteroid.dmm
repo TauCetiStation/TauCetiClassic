@@ -141,7 +141,7 @@
 /area/asteroid/mine/abandoned)
 "as" = (
 /obj/structure/alien/weeds,
-/obj/machinery/suit_storage_unit/syndicate_unit/abandoned{
+/obj/machinery/storage_unit/suit_storage/syndicate_unit/abandoned{
 	filled = 1;
 	pixel_y = 2
 	},
@@ -4359,7 +4359,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/suit_storage_unit/wizard{
+/obj/machinery/storage_unit/suit_storage/wizard{
 	filled = 1;
 	pixel_y = 2
 	},
@@ -6916,7 +6916,7 @@
 	name = "Cargo largecell apc right";
 	pixel_x = 27
 	},
-/obj/machinery/suit_storage_unit/globose/mining{
+/obj/machinery/storage_unit/suit_storage/globose/mining{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -10106,7 +10106,7 @@
 /obj/machinery/light_switch{
 	pixel_x = -28
 	},
-/obj/machinery/suit_storage_unit/science{
+/obj/machinery/storage_unit/suit_storage/science{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -10218,7 +10218,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
+/obj/machinery/storage_unit/suit_storage/globose/science/xenoarchaeologist{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -11258,7 +11258,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/globose/mining{
+/obj/machinery/storage_unit/suit_storage/globose/mining{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -11507,7 +11507,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
+/obj/machinery/storage_unit/suit_storage/globose/science/xenoarchaeologist{
 	filled = 1
 	},
 /turf/simulated/floor{

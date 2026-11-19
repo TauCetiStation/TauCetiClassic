@@ -1650,7 +1650,7 @@
 	},
 /area/asteroid/mine/eva)
 "do" = (
-/obj/machinery/suit_storage_unit/wizard{
+/obj/machinery/storage_unit/suit_storage/wizard{
 	filled = 1
 	},
 /turf/simulated/floor/plating,
@@ -3687,7 +3687,7 @@
 /turf/simulated/floor/grid_floor,
 /area/asteroid/mine/abandoned)
 "jL" = (
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
+/obj/machinery/storage_unit/suit_storage/globose/science/xenoarchaeologist{
 	filled = 1
 	},
 /obj/machinery/light/smart,
@@ -4227,7 +4227,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/globose/mining{
+/obj/machinery/storage_unit/suit_storage/globose/mining{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -6180,7 +6180,7 @@
 /area/asteroid/mine/explored)
 "rA" = (
 /obj/structure/alien/weeds/node,
-/obj/machinery/suit_storage_unit/syndicate_unit/abandoned{
+/obj/machinery/storage_unit/suit_storage/syndicate_unit/abandoned{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -8257,7 +8257,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/globose/mining{
+/obj/machinery/storage_unit/suit_storage/globose/mining{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -11275,7 +11275,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
+/obj/machinery/storage_unit/suit_storage/globose/science/xenoarchaeologist{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -12246,7 +12246,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
+/obj/machinery/storage_unit/suit_storage/globose/science/xenoarchaeologist{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -12595,7 +12595,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/science{
+/obj/machinery/storage_unit/suit_storage/science{
 	filled = 1
 	},
 /turf/simulated/floor,

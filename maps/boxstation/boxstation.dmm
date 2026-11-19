@@ -2415,7 +2415,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/security{
+/obj/machinery/storage_unit/suit_storage/security{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -7949,7 +7949,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/suit_storage_unit/engine{
+/obj/machinery/storage_unit/suit_storage/engine{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -8147,7 +8147,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
 	dir = 10
 	},
-/obj/machinery/suit_storage_unit/nasa{
+/obj/machinery/storage_unit/suit_storage/nasa{
 	filled = 1;
 	pixel_y = 2
 	},
@@ -9069,7 +9069,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 6
 	},
-/obj/machinery/suit_storage_unit/nasa{
+/obj/machinery/storage_unit/suit_storage/nasa{
 	filled = 1;
 	pixel_y = 2
 	},
@@ -13870,7 +13870,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/suit_storage_unit/engine{
+/obj/machinery/storage_unit/suit_storage/engine{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -14033,7 +14033,7 @@
 /obj/item/device/radio/intercom{
 	pixel_x = 27
 	},
-/obj/machinery/suit_storage_unit/science{
+/obj/machinery/storage_unit/suit_storage/science{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -15864,7 +15864,7 @@
 /obj/machinery/requests_console/cmo{
 	pixel_x = 32
 	},
-/obj/machinery/suit_storage_unit/medical/cmo{
+/obj/machinery/storage_unit/suit_storage/medical/cmo{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -16615,7 +16615,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/globose{
+/obj/machinery/storage_unit/suit_storage/globose{
 	filled = 1
 	},
 /turf/simulated/floor/engine,
@@ -16632,7 +16632,7 @@
 	color = "#b79044";
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/globose{
+/obj/machinery/storage_unit/suit_storage/globose{
 	filled = 1
 	},
 /turf/simulated/floor/engine,
@@ -16658,7 +16658,7 @@
 	},
 /area/station/civilian/fitness)
 "aCB" = (
-/obj/machinery/suit_storage_unit/medical{
+/obj/machinery/storage_unit/suit_storage/medical{
 	filled = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -16678,7 +16678,7 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/eva)
 "aCC" = (
-/obj/machinery/suit_storage_unit/medical{
+/obj/machinery/storage_unit/suit_storage/medical{
 	filled = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -17171,7 +17171,7 @@
 /obj/effect/decal/turf_decal{
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/globose/skrell/black{
+/obj/machinery/storage_unit/suit_storage/globose/skrell/black{
 	filled = 1
 	},
 /turf/simulated/floor/engine,
@@ -18002,7 +18002,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/unathi{
+/obj/machinery/storage_unit/suit_storage/unathi{
 	filled = 1
 	},
 /obj/effect/decal/turf_decal{
@@ -23962,7 +23962,7 @@
 	},
 /area/station/rnd/hor)
 "aQu" = (
-/obj/machinery/suit_storage_unit/science/rd{
+/obj/machinery/storage_unit/suit_storage/science/rd{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -28893,7 +28893,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "aYV" = (
-/obj/machinery/suit_storage_unit/engine/chief{
+/obj/machinery/storage_unit/suit_storage/engine/chief{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -37377,7 +37377,7 @@
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -32
 	},
-/obj/machinery/suit_storage_unit/captain{
+/obj/machinery/storage_unit/suit_storage/captain{
 	filled = 1
 	},
 /turf/simulated/floor/wood,
@@ -38073,7 +38073,7 @@
 	},
 /area/station/rnd/telesci)
 "bpm" = (
-/obj/machinery/suit_storage_unit/globose/science{
+/obj/machinery/storage_unit/suit_storage/globose/science{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -40129,7 +40129,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "bsY" = (
-/obj/machinery/suit_storage_unit/medical/paramedic{
+/obj/machinery/storage_unit/suit_storage/medical/paramedic{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -40843,7 +40843,7 @@
 	},
 /area/station/security/checkpoint)
 "bul" = (
-/obj/machinery/suit_storage_unit/medical/paramedic{
+/obj/machinery/storage_unit/suit_storage/medical/paramedic{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -50532,7 +50532,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/security/hos{
+/obj/machinery/storage_unit/suit_storage/security/hos{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -57790,7 +57790,7 @@
 	dir = 9;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/security{
+/obj/machinery/storage_unit/suit_storage/security{
 	filled = 1
 	},
 /turf/simulated/floor/engine,
@@ -58938,7 +58938,7 @@
 	dir = 1;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/security{
+/obj/machinery/storage_unit/suit_storage/security{
 	filled = 1
 	},
 /turf/simulated/floor/engine,
@@ -59974,7 +59974,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/escape)
 "ckw" = (
-/obj/machinery/suit_storage_unit/engine/atmos{
+/obj/machinery/storage_unit/suit_storage/engine/atmos{
 	filled = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{
@@ -66122,7 +66122,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/engine/atmos{
+/obj/machinery/storage_unit/suit_storage/engine/atmos{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -70859,7 +70859,7 @@
 	dir = 6;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/unathi{
+/obj/machinery/storage_unit/suit_storage/unathi{
 	filled = 1
 	},
 /obj/structure/fence/metal{
@@ -74910,7 +74910,7 @@
 	dir = 10;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/globose/skrell/white{
+/obj/machinery/storage_unit/suit_storage/globose/skrell/white{
 	filled = 1
 	},
 /turf/simulated/floor/engine,
@@ -89273,7 +89273,7 @@
 /turf/simulated/floor/wood,
 /area/station/security/vacantoffice)
 "xOo" = (
-/obj/machinery/suit_storage_unit/engine/atmos{
+/obj/machinery/storage_unit/suit_storage/engine/atmos{
 	filled = 1
 	},
 /obj/effect/decal/turf_decal/alpha/yellow{

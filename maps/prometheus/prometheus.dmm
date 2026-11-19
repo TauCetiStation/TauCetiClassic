@@ -165,7 +165,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/suit_storage_unit/nasa{
+/obj/machinery/storage_unit/suit_storage/nasa{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -2761,7 +2761,7 @@
 	},
 /area/station/engineering/atmos)
 "aeA" = (
-/obj/machinery/suit_storage_unit/medical/paramedic{
+/obj/machinery/storage_unit/suit_storage/medical/paramedic{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -17868,7 +17868,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/cargo)
 "dNZ" = (
-/obj/machinery/suit_storage_unit/globose/skrell/black{
+/obj/machinery/storage_unit/suit_storage/globose/skrell/black{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -21394,7 +21394,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/engine/atmos{
+/obj/machinery/storage_unit/suit_storage/engine/atmos{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -23002,7 +23002,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 28
 	},
-/obj/machinery/suit_storage_unit/medical/paramedic{
+/obj/machinery/storage_unit/suit_storage/medical/paramedic{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -29379,7 +29379,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/chapel)
 "gxk" = (
-/obj/machinery/suit_storage_unit/engine/atmos{
+/obj/machinery/storage_unit/suit_storage/engine/atmos{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -33793,7 +33793,7 @@
 /turf/simulated/floor/carpet/green,
 /area/station/civilian/cafeteria)
 "hyp" = (
-/obj/machinery/suit_storage_unit/medical{
+/obj/machinery/storage_unit/suit_storage/medical{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -33890,7 +33890,7 @@
 	name = "Operating Theatre"
 	})
 "hAh" = (
-/obj/machinery/suit_storage_unit/security{
+/obj/machinery/storage_unit/suit_storage/security{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -34288,7 +34288,7 @@
 	},
 /area/station/rnd/mixing)
 "hEx" = (
-/obj/machinery/suit_storage_unit/globose/skrell/white{
+/obj/machinery/storage_unit/suit_storage/globose/skrell/white{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -46247,7 +46247,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 22
 	},
-/obj/machinery/suit_storage_unit/nasa{
+/obj/machinery/storage_unit/suit_storage/nasa{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -52295,7 +52295,7 @@
 	},
 /area/station/rnd/scibreak)
 "mfd" = (
-/obj/machinery/suit_storage_unit/engine/atmos{
+/obj/machinery/storage_unit/suit_storage/engine/atmos{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -57074,7 +57074,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/suit_storage_unit/engine{
+/obj/machinery/storage_unit/suit_storage/engine{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -63809,7 +63809,7 @@
 /obj/item/weapon/storage/secure/safe{
 	pixel_y = -22
 	},
-/obj/machinery/suit_storage_unit/medical/cmo{
+/obj/machinery/storage_unit/suit_storage/medical/cmo{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -64526,7 +64526,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/medical{
+/obj/machinery/storage_unit/suit_storage/medical{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -73074,7 +73074,7 @@
 	pixel_x = 28;
 	pixel_y = 5
 	},
-/obj/machinery/suit_storage_unit/captain{
+/obj/machinery/storage_unit/suit_storage/captain{
 	filled = 1
 	},
 /turf/simulated/floor/wood,
@@ -75083,7 +75083,7 @@
 	},
 /area/station/rnd/mixing)
 "rRV" = (
-/obj/machinery/suit_storage_unit/engine/chief{
+/obj/machinery/storage_unit/suit_storage/engine/chief{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -75235,7 +75235,7 @@
 	dir = 10;
 	network = list("SS13","Research")
 	},
-/obj/machinery/suit_storage_unit/science{
+/obj/machinery/storage_unit/suit_storage/science{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -81184,7 +81184,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/machinery/suit_storage_unit/globose/science{
+/obj/machinery/storage_unit/suit_storage/globose/science{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -83972,7 +83972,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/machinery/suit_storage_unit/security{
+/obj/machinery/storage_unit/suit_storage/security{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -86013,7 +86013,7 @@
 	name = "Tribunal"
 	})
 "uEG" = (
-/obj/machinery/suit_storage_unit/engine/atmos{
+/obj/machinery/storage_unit/suit_storage/engine/atmos{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -86885,7 +86885,7 @@
 /obj/effect/decal/turf_decal/alpha/gray{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/security{
+/obj/machinery/storage_unit/suit_storage/security{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -96573,7 +96573,7 @@
 /turf/simulated/floor,
 /area/station/engineering/atmos)
 "xgC" = (
-/obj/machinery/suit_storage_unit/security/hos{
+/obj/machinery/storage_unit/suit_storage/security/hos{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -98220,7 +98220,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/suit_storage_unit/engine{
+/obj/machinery/storage_unit/suit_storage/engine{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -99581,7 +99581,7 @@
 	},
 /area/station/medical/morgue)
 "xXi" = (
-/obj/machinery/suit_storage_unit/unathi{
+/obj/machinery/storage_unit/suit_storage/unathi{
 	filled = 1
 	},
 /turf/simulated/floor{
@@ -100598,7 +100598,7 @@
 	name = "RnD left APC";
 	pixel_x = -27
 	},
-/obj/machinery/suit_storage_unit/science/rd{
+/obj/machinery/storage_unit/suit_storage/science/rd{
 	filled = 1
 	},
 /turf/simulated/floor{
