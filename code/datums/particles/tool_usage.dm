@@ -139,3 +139,7 @@
 	color = generator("color", "#ff0000", "#0080ee", UNIFORM_RAND)
 
 	position = generator("box", list(-4, -4, 0), list(4, 4, 0))
+
+/particles/tool/signal/music/New(usageDir)
+	..()
+	color = generator("color", "#000000", "#0000ff", LINEAR_RAND) + generator("color", "#000000", "#00ff00", LINEAR_RAND) + generator("color", "#000000", "#ff0000", LINEAR_RAND)

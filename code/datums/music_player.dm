@@ -225,8 +225,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 		usr.unset_machine(instrument)
 
 /datum/music_player/proc/playsong(mob/living/musician)
-	var/is_in_user = (musician ? (get_turf(instrument) == get_turf(musician)) : FALSE)
-	Particle = new /obj/effect/abstract/particle_holder(is_in_user ? musician : instrument, /particles/tool/signal/music, PARTICLE_FADEOUT)
+	Particle = new /obj/effect/abstract/particle_holder(instrument, /particles/tool/signal/music, PARTICLE_FADEOUT|PARTICLE_NO_TRANSFORM|PARTICLE_ATTACH_MOB)
 
 	do
 		var/cur_oct[7]
