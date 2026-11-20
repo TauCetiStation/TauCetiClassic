@@ -6,7 +6,7 @@
 #define LINE_HEIGHT 0.75
 
 #define AD_LENGTH 100
-#define AD_DELAY 60
+#define AD_DELAY 2
 
 // Status display
 // (formerly Countdown timer display)
@@ -49,6 +49,8 @@
 	maptext_y = 3
 
 	var/ad_item_name
+	var/obj/effect/ad_part/ad_background
+	var/obj/effect/ad_part/ad_item
 
 	// new display
 	// register for radio system
@@ -61,11 +63,21 @@
 
 	addtimer(CALLBACK(src, PROC_REF(show_ad_1)), rand(1, AD_DELAY) * AD_LENGTH)
 
+	ad_background = new
+	ad_background.layer = layer
+	ad_background.maptext_y = 8
+	ad_background.maptext_x = -2
+	ad_item = new
+	ad_item.layer = layer + 0.01
+
 
 /obj/machinery/status_display/Destroy()
 	status_display_list -= src
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
+
+	qdel(ad_background)
+	qdel(ad_item)
 	return ..()
 
 /obj/machinery/status_display/process()
@@ -90,6 +102,10 @@
 
 	if(mode == 3 && overlays.len)	//Why we must update diplay if picture is already set?
 		return
+
+	if(mode != 7)
+		vis_contents -= ad_background
+		vis_contents -= ad_item
 
 	if(overlays.len && !friendc || mode == 4)
 		cut_overlays()
@@ -289,21 +305,16 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 
-	var/atom/owner
+	icon = 'icons/obj/status_display.dmi'
+	icon_state = "ad_middle"
 
-/obj/effect/ad_part/atom_init(mapload, atom/status_display)
-	. = ..()
+	vis_flags = VIS_INHERIT_ID
 
-	owner = status_display
-	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_qdel))
+/obj/effect/ad_part/singularity_act()
+	return
 
-/obj/effect/ad_part/proc/on_parent_qdel()
-	qdel(src)
-
-/obj/effect/ad_part/Destroy()
-	UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
-	owner = null
-	return ..()
+/obj/effect/ad_part/singularity_pull()
+	return
 
 
 /obj/machinery/status_display/proc/show_ad_1(ads_in_a_row = 1)
@@ -320,28 +331,17 @@
 	if(!lot)
 		return
 
-	ad_item_name = lot.name
-
 	VARSET_IN(src, mode, mode, AD_LENGTH - 1)
 	mode = 7
 
-	var/obj/effect/ad_part/ad_part = new(get_turf(src), src)
-	ad_part.icon = 'icons/obj/status_display.dmi'
-	ad_part.icon_state = "outline"
-	ad_part.layer = layer
-	ad_part.pixel_x = pixel_x
-	ad_part.pixel_y = pixel_y
+	vis_contents += ad_background
+	flick("ad_start", ad_background)
+	addtimer(CALLBACK(src, PROC_REF(show_ad_2)), 26)
 
-	ad_part.maptext_y = 8
-	ad_part.maptext_x = -2
-	flick("ad", ad_part)
-	addtimer(CALLBACK(src, PROC_REF(show_ad_2), ad_part), 26)
-	QDEL_IN(ad_part, AD_LENGTH)
-
-/obj/machinery/status_display/proc/show_ad_2(obj/effect/ad_part/background_part)
+/obj/machinery/status_display/proc/show_ad_2()
 	var/datum/shop_lot/lot = SScargoshop.get_advertisement_lot()
 	if(!lot)
-		qdel(background_part)
+		vis_contents -= ad_background
 		return
 
 	ad_item_name = lot.name
@@ -352,20 +352,23 @@
 	var/price = lot.get_discounted_price() + lot.get_delivery_cost()
 	price = sanitize("[price]", max_length = 5, trim = TRUE)
 	price = {"<div style="font-size:[FONT_SIZE];color:#ebebeb;line-height:[LINE_HEIGHT];font-family:'[FONT_STYLE]';text-align:right;" valign="bottom"> [price]$</div>"}
-	background_part.maptext = price
-	VARSET_IN(background_part, maptext, "", 60)
+	ad_background.maptext = price
 
-	var/obj/effect/ad_part/ad_part = new(get_turf(src), src)
-	ad_part.icon = A.icon
-	ad_part.icon_state = A.icon_state
-	ad_part.layer = layer + 0.01
+	ad_item.icon = A.icon
+	ad_item.icon_state = A.icon_state
+	ad_item.alpha = 255
+	ad_item.pixel_y = 32
+	ad_item.add_filter("monitor", 1, alpha_mask_filter(y = -32, icon = icon('icons/obj/status_display.dmi', "ad_item_mask")))
+	vis_contents += ad_item
+	animate(ad_item, pixel_y = 4, time = 5, flags = ANIMATION_PARALLEL)
+	animate(ad_item.filters[1], y = -4, time = 5, flags = ANIMATION_PARALLEL)
 
-	ad_part.pixel_x = pixel_x
-	ad_part.pixel_y = pixel_y + 32
-	animate(ad_part, pixel_y = pixel_y + 4, time = 5, flags = ANIMATION_PARALLEL)
-	ad_part.add_filter("monitor", 1, alpha_mask_filter(y = -32, icon = icon('icons/obj/status_display.dmi', "ad_item_mask")))
-	animate(ad_part.filters[1], y = -4, time = 5, flags = ANIMATION_PARALLEL)
-	QDEL_IN(ad_part, 60)
+	addtimer(CALLBACK(src, PROC_REF(show_ad_3)), 60)
+
+/obj/machinery/status_display/proc/show_ad_3()
+	ad_background.maptext = ""
+	flick("ad_end", ad_background)
+	ad_item.alpha = 0
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
