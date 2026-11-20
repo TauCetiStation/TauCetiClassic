@@ -6,7 +6,7 @@
 #define LINE_HEIGHT 0.75
 
 #define AD_LENGTH 100
-#define AD_DELAY 2
+#define AD_DELAY 60
 
 // Status display
 // (formerly Countdown timer display)
