@@ -24,3 +24,45 @@
 
 	gradient = list("grey", "black")
 	color_change = 0.1
+
+/particles/sparkler_inner
+	icon = 'icons/effects/particles/fire.dmi'
+	icon_state = "fire4"
+
+	width = 32
+	height = 32
+
+	lifespan = 1
+
+	count = 100
+	spawning = 30
+
+	gradient = list(0, "#ffffff", 1, "#ffcc66")
+	color_change = 0.5
+
+	velocity = generator("circle", 8, 12, "UNIFORM_RAND")
+
+/particles/sparkler_outer
+	icon = 'icons/effects/particles/fire.dmi'
+	icon_state = "fire4"
+
+	width = 32
+	height = 32
+
+	lifespan = 5
+	fade = 4
+
+	count = 100
+	spawning = 10
+
+	gradient = list(0, "#ffcc66", 1, "#333333")
+	color_change = 0.2
+
+	position = generator("circle", 8, 12, "UNIFORM_RAND")
+
+	drift = generator("circle", 3, 3, "UNIFORM_RAND")
+
+	rotation = generator("num", -45, 45, "UNIFORM_RAND")
+	spin = generator("num", -15, 15, "UNIFORM_RAND")
+
+	grow = generator("num", 0.05, 0.1, "UNIFORM_RAND")

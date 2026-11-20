@@ -27,6 +27,10 @@
 	parent = loc
 	loc = null
 
+	if(particle_flags & PARTICLE_LIGHT)
+		plane = LIGHTING_LAMPS_PLANE
+		vis_flags &= ~VIS_INHERIT_PLANE
+
 	// Mouse opacity can get set to opaque by some objects when placed into the object's contents (storage containers).
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	src.particle_flags = particle_flags
