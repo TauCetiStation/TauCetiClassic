@@ -347,6 +347,7 @@
 
 	chiptune_player.playing = TRUE
 	INVOKE_ASYNC(chiptune_player, TYPE_PROC_REF(/datum/music_player, playsong), null)
+	ad_background.icon_state = "ad_middle"
 
 	vis_contents += ad_background
 	flick("ad_start", ad_background)
@@ -382,6 +383,7 @@
 
 /obj/machinery/status_display/proc/show_ad_3()
 	ad_background.maptext = ""
+	ad_background.icon_state = "outline"
 	flick("ad_end", ad_background)
 	ad_item.alpha = 0
 
