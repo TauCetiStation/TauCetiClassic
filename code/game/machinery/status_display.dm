@@ -379,7 +379,7 @@
 	animate(ad_item, pixel_y = 4, time = 5, flags = ANIMATION_PARALLEL)
 	animate(ad_item.filters[1], y = -4, time = 5, flags = ANIMATION_PARALLEL)
 
-	addtimer(CALLBACK(src, PROC_REF(show_ad_3)), 60)
+	addtimer(CALLBACK(src, PROC_REF(show_ad_3)), 50)
 
 /obj/machinery/status_display/proc/show_ad_3()
 	ad_background.maptext = ""
