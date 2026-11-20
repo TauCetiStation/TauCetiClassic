@@ -52,6 +52,8 @@
 	var/obj/effect/ad_part/ad_background
 	var/obj/effect/ad_part/ad_item
 
+	var/datum/music_player/chiptune_player
+
 	// new display
 	// register for radio system
 
@@ -70,6 +72,13 @@
 	ad_item = new
 	ad_item.layer = layer + 0.01
 
+	chiptune_player = new(src, "sound/musical_instruments/synth/space")
+	chiptune_player.parse_song_text(/datum/music_composition::melody)
+	chiptune_player.volume = 20
+
+/obj/machinery/status_display/unable_to_play(mob/living/user)
+	return FALSE
+
 
 /obj/machinery/status_display/Destroy()
 	status_display_list -= src
@@ -78,6 +87,8 @@
 
 	qdel(ad_background)
 	qdel(ad_item)
+
+	qdel(chiptune_player)
 	return ..()
 
 /obj/machinery/status_display/process()
@@ -322,7 +333,7 @@
 		addtimer(CALLBACK(src, PROC_REF(show_ad_1)), AD_DELAY * AD_LENGTH)
 		return
 
-	if(ads_in_a_row < 5) //Show 5 ads in a row
+	if(ads_in_a_row < 3) //Show 5 ads in a row
 		addtimer(CALLBACK(src, PROC_REF(show_ad_1), ads_in_a_row + 1), AD_LENGTH)
 	else
 		addtimer(CALLBACK(src, PROC_REF(show_ad_1)), AD_DELAY * AD_LENGTH)
@@ -334,6 +345,9 @@
 	VARSET_IN(src, mode, mode, AD_LENGTH - 1)
 	mode = 7
 
+	chiptune_player.playing = TRUE
+	INVOKE_ASYNC(chiptune_player, TYPE_PROC_REF(/datum/music_player, playsong), null)
+
 	vis_contents += ad_background
 	flick("ad_start", ad_background)
 	addtimer(CALLBACK(src, PROC_REF(show_ad_2)), 26)
@@ -342,6 +356,7 @@
 	var/datum/shop_lot/lot = SScargoshop.get_advertisement_lot()
 	if(!lot)
 		vis_contents -= ad_background
+		chiptune_player.playing = FALSE
 		return
 
 	ad_item_name = lot.name
