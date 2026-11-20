@@ -336,5 +336,81 @@
 	desc = "Merry Christmas!"
 	icon_state = "wreath"
 
+/obj/item/weapon/cracker
+	name = "cracker"
+	cases = list("хлопушка", "хлопушки", "хлопушке", "хлопушку", "хлопушкой", "хлопушке")
+	desc = "Трубка с пружинкой на дне, наполненная конфетти."
+
+	icon = 'icons/holidays/new_year/decorations.dmi'
+	icon_state = "cracker_0"
+	item_state_world= "cracker_0_world"
+
+	w_class = SIZE_TINY
+
+	var/used = FALSE
+
+/obj/item/weapon/cracker/afterattack(atom/target, mob/user, proximity, params)
+	if(used)
+		return
+
+	var/turf/L = get_turf(src)
+	var/shot_angle = Get_Angle(L,get_turf(target))
+	var/travel_x = round(sin(shot_angle) * 96)
+	var/travel_y = round(cos(shot_angle) * 96) + 16
+
+	var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(L, /particles/cracker, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	Holder.modify_particles_value("velocity", generator("vector", list(travel_x, travel_y), list(travel_x, travel_y), UNIFORM_RAND) + generator("circle", 16, 16, UNIFORM_RAND))
+
+	playsound(src, 'sound/effects/snap.ogg', VOL_EFFECTS_MASTER)
+
+	used = TRUE
+
+	update_icon()
+
+/obj/item/weapon/cracker/update_world_icon()
+	update_icon()
+
+/obj/item/weapon/cracker/update_icon()
+	if(item_state_world && (flags_2 & IN_INVENTORY || flags_2 & IN_STORAGE)) // big inventory icon, if we have it
+		icon_state = "cracker_[used]"
+	else // default or small icon
+		icon_state = "cracker_[used]_world"
+
+/obj/item/weapon/sparkler
+	name = "sparkler"
+	cases = list("бенгальский огонь", "бенгальского огня", "бенгальскому огню", "бенгальский огонь", "бенгальский огнём", "бенгальском огне")
+	desc = "Новый-новый-новый-новый год. Все мечты исполнит."
+
+	icon = 'icons/holidays/new_year/decorations.dmi'
+	icon_state = "sparkler_0"
+
+	w_class = SIZE_TINY
+
+	var/used = FALSE
+	var/obj/effect/abstract/particle_holder/Holder_1
+	var/obj/effect/abstract/particle_holder/Holder_2
+
+/obj/item/weapon/sparkler/Destroy()
+	Holder_1.delete_particle()
+	Holder_2.delete_particle()
+	return ..()
+
+/obj/item/weapon/sparkler/attack_self(mob/user)
+	if(used)
+		return
+
+	Holder_1 = new /obj/effect/abstract/particle_holder(src, /particles/sparkler_inner, PARTICLE_FADEOUT|PARTICLE_NO_TRANSFORM|PARTICLE_ATTACH_MOB|PARTICLE_LIGHT)
+	Holder_2 = new /obj/effect/abstract/particle_holder(src, /particles/sparkler_outer, PARTICLE_FADEOUT|PARTICLE_NO_TRANSFORM|PARTICLE_ATTACH_MOB|PARTICLE_LIGHT)
+	addtimer(CALLBACK(src, PROC_REF(stop_sparkler)), 30 SECONDS)
+
+	playsound(src, 'sound/items/matchstick_light.ogg', VOL_EFFECTS_MASTER)
+
+	used = TRUE
+
+/obj/item/weapon/sparkler/proc/stop_sparkler()
+	icon_state = "sparkler_1"
+	Holder_1.delete_particle()
+	Holder_2.delete_particle()
+
 #undef FLICKER_CD_MAX
 #undef FLICKER_CD_MIN

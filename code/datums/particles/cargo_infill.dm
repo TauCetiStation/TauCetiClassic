@@ -24,3 +24,31 @@
 /particles/cargo_infill/New()
 	..()
 	color = pick("#ffffff", "#ffccff", "#ffcccc", "#ffffcc", "#ccffcc", "#ccffff", "#ccecff")
+
+
+/particles/cracker
+	icon = 'icons/effects/particles/cargo_infill.dmi'
+	icon_state = list("infill1", "infill2", "infill3", "infill4")
+
+	width = 300
+	height = 300
+
+	count = 50
+	spawning = 100
+
+	lifespan = 30
+	fade = 15
+
+	gravity = list(0, -1, 0)
+	friction = generator("num", 0.6, 0.9, "UNIFORM_RAND")
+
+	rotation = generator("num", -45, 45, "UNIFORM_RAND")
+	spin = generator("num", -15, 15, "UNIFORM_RAND")
+	scale = generator("num", 0.5, 0.75, "UNIFORM_RAND")
+
+	drift = generator("circle", 3, 5, "UNIFORM_RAND")
+
+/particles/cracker/New()
+	..()
+
+	color = generator("color", "#000000", "#0000ff", LINEAR_RAND) + generator("color", "#000000", "#00ff00", LINEAR_RAND) + generator("color", "#000000", "#ff0000", LINEAR_RAND)
