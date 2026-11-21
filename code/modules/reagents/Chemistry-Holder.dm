@@ -604,7 +604,7 @@ var/global/const/INGEST = 2
 	D.icon = 'icons/obj/chempuff.dmi'
 	trans_to(D, amount, multiplier, preserve_data)
 	if(icon_from_reagents)
-		D.icon += mix_color_from_reagents(D.reagents.reagent_list)
+		D.color = mix_color_from_reagents(D.reagents.reagent_list)
 	return D
 
 /datum/reagents/proc/standard_splash(atom/target, amount=null, mob/living/user=null)

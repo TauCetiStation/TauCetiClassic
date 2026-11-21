@@ -19,6 +19,8 @@
 	icon_state = "coolanttank"
 	amount_per_transfer_from_this = 10
 
+	leak_particle_type = /particles/droplet/coolant
+
 /obj/structure/reagent_dispensers/coolanttank/atom_init()
 	. = ..()
 	reagents.add_reagent("coolant",1000)
