@@ -340,7 +340,7 @@
 			beaker.loc = src
 		var/datum/gas_mixture/air1 = AIR1
 		var/datum/gas_mixture/environment = loc.return_air()
-		if(environment.get_pressure() && air1.get_pressure() && (air1.temperature < T0C))
+		if(environment.return_pressure() && air1.return_pressure() && (air1.temperature < T0C))
 			var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(src, /particles/mist/cryotube, PARTICLE_FADEOUT|PARTICLE_FLICK)
 			Holder.layer = 5.01
 
