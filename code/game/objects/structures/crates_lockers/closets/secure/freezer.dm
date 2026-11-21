@@ -9,7 +9,9 @@
 /obj/structure/closet/secure_closet/freezer/open()
 	. = ..()
 	if(.)
-		new /obj/effect/abstract/particle_holder(get_turf(src), /particles/mist/fridge, PARTICLE_FADEOUT|PARTICLE_FLICK)
+		var/datum/gas_mixture/environment = loc.return_air()
+		if(environment.return_pressure())
+			new /obj/effect/abstract/particle_holder(get_turf(src), /particles/mist/fridge, PARTICLE_FADEOUT|PARTICLE_FLICK)
 
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "Kitchen Cabinet"
