@@ -191,6 +191,14 @@ update_flag
 	else
 		update_flag |= DANGER
 
+	if(loc)
+		var/datum/gas_mixture/environment = loc.return_air()
+
+		if(air_contents.return_pressure() && environment.return_pressure() && (air_contents.temperature < T0C))
+			add_shared_particles(/particles/mist/canister)
+		else
+			remove_shared_particles(/particles/mist/canister, delete_on_empty = FALSE)
+
 	if(update_flag == last_update)
 		return
 

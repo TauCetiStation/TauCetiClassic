@@ -363,6 +363,13 @@
 		newgas.temperature = target_temp
 	return newgas
 
+/obj/structure/closet/crate/freezer/open()
+	. = ..()
+	if(.)
+		var/datum/gas_mixture/environment = loc.return_air()
+		if(environment.return_pressure())
+			new /obj/effect/abstract/particle_holder(get_turf(src), /particles/mist/freezer, PARTICLE_FADEOUT|PARTICLE_FLICK)
+
 /obj/structure/closet/crate/freezer/rations //Fpr use in the escape shuttle
 	desc = "A crate of emergency rations."
 	name = "Emergency Rations"
