@@ -338,6 +338,10 @@
 		..()
 		if(beaker)
 			beaker.loc = src
+		var/datum/gas_mixture/air1 = AIR1
+		if(air1.temperature < T0C)
+			var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(src, /particles/mist/cryotube, PARTICLE_FADEOUT|PARTICLE_FLICK)
+			Holder.layer = 5.01
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	if((isnull(user) || istype(user)) && state_open && !panel_open)

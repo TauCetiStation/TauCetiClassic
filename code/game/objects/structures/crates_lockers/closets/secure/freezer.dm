@@ -6,6 +6,11 @@
 	overlay_unlocked = "fridge_unlocked"
 	overlay_welded = "fridge_welded"
 
+/obj/structure/closet/secure_closet/freezer/open()
+	. = ..()
+	if(.)
+		new /obj/effect/abstract/particle_holder(get_turf(src), /particles/mist/fridge, PARTICLE_FADEOUT|PARTICLE_FLICK)
+
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "Kitchen Cabinet"
 	req_access = list(access_kitchen)
