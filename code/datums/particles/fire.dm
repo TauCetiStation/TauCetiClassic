@@ -37,6 +37,7 @@
 
 	lifespan = 10
 	fade = 25
+	fadein = 3
 
 	velocity = generator("box", list(100, 100, 0), list(-100, -100, 0), "SQUARE_RAND")
 	drift = generator("box", list(50, 50, 0), list(-50, -50, 0), "UNIFORM_RAND")
