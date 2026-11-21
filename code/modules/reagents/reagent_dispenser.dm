@@ -15,6 +15,9 @@
 	max_integrity = 300
 	resistance_flags = CAN_BE_HIT
 
+	var/obj/effect/abstract/particle_holder/Leak_Particle
+	var/leak_particle_type = /particles/droplet/tank
+
 /obj/structure/reagent_dispensers/AltClick(mob/user)
 	if(!Adjacent(user))
 		return
@@ -64,11 +67,19 @@
 
 /obj/structure/reagent_dispensers/proc/leak(amount)
 	if(reagents.total_volume == 0)
+		Leak_Particle?.delete_particle()
+		Leak_Particle = null
 		return
 	var/obj/effect/decal/chempuff/D = reagents.create_chempuff(amount)
 	D.reagents.reaction(get_turf(D))
 	for(var/atom/A in get_turf(D))
 		D.reagents.reaction(A)
+
+	if(!Leak_Particle)
+		Leak_Particle = new /obj/effect/abstract/particle_holder(src, leak_particle_type, PARTICLE_FADEOUT)
+
+	Leak_Particle?.modify_particles_value("color", D.color)
+
 	QDEL_IN(D, 1 SECOND)
 
 /obj/structure/reagent_dispensers/process()
@@ -76,6 +87,8 @@
 	if(modded)
 		leak(amount_per_transfer_from_this * 0.1)
 	else
+		Leak_Particle?.delete_particle()
+		Leak_Particle = null
 		STOP_PROCESSING(SSobj, src)
 
 /obj/structure/reagent_dispensers/examine(mob/user)
@@ -325,6 +338,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "beertankTEMP"
 
+	leak_particle_type = /particles/droplet
+
 /obj/structure/reagent_dispensers/beerkeg/atom_init()
 	. = ..()
 	reagents.add_reagent("beer",1000)
@@ -365,6 +380,8 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 	icon_state = "kvasstank"
 	possible_transfer_amounts = list(25,60,100)
 	amount_per_transfer_from_this = 25
+
+	leak_particle_type = /particles/droplet
 
 /obj/structure/reagent_dispensers/kvasstank/atom_init()
 	. = ..()
