@@ -840,6 +840,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["faction"]             >> faction
 	S["religion"]            >> religion
 	S["vox_rank"]            >> vox_rank
+	S["relatives"]           >> relatives
 
 	S["uplinklocation"]      >> uplinklocation
 
@@ -923,6 +924,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!faction)     faction =     "None"
 	if(!religion)    religion =    "None"
 	if(!vox_rank)    vox_rank =    "Larva"
+	if(!relatives)   relatives = FALSE
 
 /datum/preferences/proc/random_character()
 	if(!path)
@@ -1053,6 +1055,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["faction"]             << faction
 	S["religion"]            << religion
 	S["vox_rank"]            << vox_rank
+	S["relatives"]           << relatives
 	S["uplinklocation"]      << uplinklocation
 
 	return 1

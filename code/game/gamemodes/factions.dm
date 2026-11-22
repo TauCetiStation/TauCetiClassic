@@ -42,6 +42,8 @@
 	// Whether the faction should be printed to the scoreboard even if it has 0 members.
 	var/always_print = FALSE
 
+	var/hide_from_memories = FALSE
+
 /datum/faction/New()
 	SHOULD_CALL_PARENT(TRUE)
 	..()

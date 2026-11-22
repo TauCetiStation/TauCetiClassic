@@ -350,6 +350,9 @@ SUBSYSTEM_DEF(ticker)
 
 		create_default_spawners()
 
+		if(prob(30))
+			create_relatives()
+
 	return TRUE
 
 /datum/controller/subsystem/ticker/proc/show_blurbs()
@@ -724,3 +727,60 @@ SUBSYSTEM_DEF(ticker)
 
 /world/proc/is_round_preparing()
 	return (SSticker && SSticker.current_state == GAME_STATE_PREGAME)
+
+/datum/controller/subsystem/ticker/proc/create_relatives()
+	var/list/specie_lists = list()
+	var/restricted_types[] = list(/mob/living/silicon/ai, /mob/living/silicon/pai, /mob/living/silicon/robot)
+	var/restricted_jobs[] = list(JOB_CAPTAIN, JOB_HOS, JOB_AI, JOB_CYBORG, JOB_BLUESHIELD, JOB_LAWYER)
+	for(var/mob/living/carbon/human/H in player_list)
+		if(!H.mind || !H.mind.current || !H.client)
+			continue
+		if(H.type in restricted_types)
+			continue
+		if(H.mind.assigned_role in restricted_jobs)
+			continue
+
+		var/datum/preferences/pref = H.client.prefs
+		if(!pref.relatives)
+			continue
+
+		if(!specie_lists[H.get_species()])
+			specie_lists[H.get_species()] = list()
+
+		specie_lists[H.get_species()] += H
+
+	var/list/candidates = list()
+	for(var/specie_name in specie_lists)
+		var/list/specie_list = specie_lists[specie_name]
+		if(specie_list.len < 2)
+			continue
+		candidates += list(specie_list)
+
+	if(!candidates.len)
+		return
+
+	var/relatives_number = 1
+	if(prob(30))
+		relatives_number++
+		if(prob(30))
+			relatives_number++
+
+	for(var/i in 1 to relatives_number)//3 relative groups max
+		if(!candidates.len)
+			return
+		var/list/candidates_list = pick(candidates)
+		if(!candidates_list || !candidates_list.len)
+			continue
+
+		var/number_of_relatives = 2
+		if(prob(25) && (candidates_list.len > 2))
+			number_of_relatives++
+
+		var/datum/faction/familia = create_faction(/datum/faction/relatives)
+
+		for(var/j in 1 to number_of_relatives)
+			var/mob/living/carbon/human/H = pick_n_take(candidates_list)
+			add_faction_member(familia, H, recruit = FALSE, post_setup = FALSE, laterole = FALSE)
+
+		if(candidates_list.len < 2)
+			candidates -= list(candidates_list)
