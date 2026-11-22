@@ -55,13 +55,16 @@
 	var/citizenship = record.fields["citizenship"]
 	var/receiver_rank = record.fields["rank"]
 	var/receiver_account = record.fields["acc_number"]
+	var/has_family = record.fields["relatives"]
 
 	var/item_type
 	var/sender_info
 
-	var/list/variants = list("FromHome", "NTSocial", "WrongMail", "WannaKnowMore?", "Love", "Prank")
+	var/list/variants = list("NTSocial", "WrongMail", "WannaKnowMore?", "Love", "Prank")
 	if(receiver_rank in job_to_mail_type)
 		variants += "JobItem"
+	if(has_family)
+		variants += "FromHome"
 
 	switch(pick(variants))
 		if("FromHome") //From Home with Love

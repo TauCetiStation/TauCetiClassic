@@ -98,6 +98,7 @@
 							Citizenship: [active1.fields["citizenship"]]<br>
 							Faction: [active1.fields["faction"]]<br>
 							Religion: [active1.fields["religion"]]<br>
+							Family Status: [active1.fields["relatives"] ? "Семейный" : "Бессемейный"]<br>
 							Rank: <a href='byond://?src=\ref[src];choice=Edit Field;field=rank'>[active1.fields["rank"]]</a><br>
 							Fingerprint: [active1.fields["fingerprint"]]<br>
 							Insurance Account Number: [active1.fields["insurance_account_number"]]<br>
@@ -370,6 +371,8 @@ What a mess.*/
 						if ((!( t1 ) || !( authenticated ) || usr.incapacitated() || (!Adjacent(usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
 							return FALSE
 						active1.fields["species"] = t1
+				if("relatives")
+					active1.fields["relatives"] = !active1.fields["relatives"]
 
 		// TEMPORARY MENU FUNCTIONS
 		else // To properly clear as per clear screen.
