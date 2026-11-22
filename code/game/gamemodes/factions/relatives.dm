@@ -1,7 +1,7 @@
 var/global/relatives_id_number = 1
 
 /datum/faction/relatives
-	name = "Семья"
+	name = "РЎРµРјСЊСЏ"
 	ID = F_RELATIVES
 
 	initroletype = /datum/role/relative
@@ -30,9 +30,9 @@ var/global/relatives_id_number = 1
 			continue
 		var/mob/living/carbon/human/H = R.antag.current
 		if(H.stat != CONSCIOUS)
-			return "<span class='red'>Родственник не выжил</span>"
+			return "<span class='red'>Р РѕРґСЃС‚РІРµРЅРЅРёРє РЅРµ РІС‹Р¶РёР»</span>"
 
-	return "<span class='green'>Родственники живы</span>"
+	return "<span class='green'>Р РѕРґСЃС‚РІРµРЅРЅРёРєРё Р¶РёРІС‹</span>"
 
 /datum/faction/relatives/GetScoreboard()
 	var/score_results = custom_result()
