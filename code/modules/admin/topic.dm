@@ -1573,6 +1573,18 @@
 
 		check_antagonists()
 
+	else if(href_list["force_observe"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["force_observe"])
+
+		if(!isnewplayer(M))
+			return
+
+		var/mob/dead/new_player/new_player = M
+		new_player.spawn_as_observer()
+
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
 			return
