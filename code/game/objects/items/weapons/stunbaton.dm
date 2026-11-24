@@ -108,6 +108,8 @@
 	. = ..()
 	if(!istype(user))
 		return
+	add_fingerprint(user)
+	add_hiddenprint(user)
 	if(slot == SLOT_L_HAND || slot == SLOT_R_HAND)
 		set_status(user.a_intent, status)
 		RegisterSignal(user, COMSIG_LIVING_INTENT_CHANGE, PROC_REF(attempt_change_work), override = TRUE)
@@ -139,8 +141,9 @@
 			if(status)
 				H.apply_effect(agony,AGONY,0)
 				discharge()
-				for(var/mob/M in player_list) if(M.key == src.fingerprintslast)
-					foundmob = M
+				for(var/mob/M in player_list)
+					if(M.key == fingerprintslast)
+						foundmob = M
 					break
 
 				H.visible_message("<span class='danger'>[src], thrown by [foundmob.name], strikes [H]!</span>")
