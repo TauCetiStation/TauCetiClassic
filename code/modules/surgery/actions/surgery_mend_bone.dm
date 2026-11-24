@@ -27,7 +27,7 @@
 	if((bodypart.stage & BONESET_STAGE || !(bodypart.stage & BONEGEL_STAGE)) && bodypart.open >= BP_RETRACT_OS)
 		return TRUE
 
-/datum/surgery_step/mend_bones/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
+/datum/surgery_step/mend_bones/begin_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/I)
 	. = ..()
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
 	if(target_zone == O_EYES && bodypart.controller.bodypart_type == BODYPART_ROBOTIC)

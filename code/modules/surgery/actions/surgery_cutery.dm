@@ -26,7 +26,7 @@
 				return TRUE
 	return FALSE
 
-/datum/surgery_step/cutery/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
+/datum/surgery_step/cutery/begin_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/I)
 	. = ..()
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
 	switch(target_zone)

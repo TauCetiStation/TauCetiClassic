@@ -28,9 +28,6 @@
 	if(bodypart.open == BP_DEFAULT_OS && target_zone == BP_CHEST && surgery_victim.get_species() == DIONA)
 		return TRUE
 	if(bodypart.open == BP_RETRACT_OS)
-		switch(target_zone)
-			if(O_MOUTH, BP_R_ARM, BP_L_ARM, BP_R_LEG, BP_L_LEG)
-			if(BP_CHEST, BP_HEAD)
 		return TRUE
 	return FALSE
 
