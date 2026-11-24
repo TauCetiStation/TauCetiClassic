@@ -21,12 +21,55 @@
 
 	if(bodypart.status & ORGAN_BLEEDING)
 	// clamp bleedin if exist
+		return TRUE
+	else if(bodypart.trauma_kit || bodypart.burn_kit)
+	 // tissue, if salvaged
+		return TRUE
+	else if(check_inside(bodypart))
+		switch(target_zone)
+			if(BP_GROIN, BP_L_ARM, BP_L_LEG, BP_R_ARM, BP_R_LEG)
+				if(bodypart.open >= BP_RETRACT_OS)
+					return TRUE
+			if(BP_HEAD, BP_CHEST)
+			// implant or embreo remove
+				if(bodypart.open == BP_RIBCAGE_OS)
+					return TRUE
+	else if(bodypart.controller.bodypart_type == BODYPART_ROBOTIC && (bodypart.open == BP_RETRACT_OS || bodypart.open == BP_INTERNALS_OS))
+		return TRUE
+	else
+	// operate organs
+		switch(target_zone)
+		//exclude operations
+			if(O_EYES)
+			//eyes
+				var/obj/item/organ/internal/eyes/eyes = bodypart.bodypart_organs[O_EYES]
+				if(!eyes)
+					return FALSE
+				if(eyes.surgery_stage == BP_RETRACT_OS)
+					return TRUE
+			if(O_MOUTH)
+			//face reconstruction & plastic surgery
+				var/obj/item/organ/external/head/head = bodypart
+				if(BP_DEFAULT_OS < head.ps_status && head.ps_status <= BP_INTERNALS_OS) // 0 < x <= 3
+					return TRUE
+			if(BP_HEAD)
+			//brain chips
+				var/obj/item/organ/internal/brain/brain = surgery_victim:organs_by_name[O_BRAIN]
+				if(bodypart.open == BP_INTERNALS_OS && brain?.status & ORGAN_BLEEDING)
+					//brain chips
+					return TRUE
+	return FALSE
+
+/datum/surgery_step/clamp/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
+	. = ..()
+	if(bodypart.status & ORGAN_BLEEDING)
+	// clamp bleedin if exist
 		msg = "<span class='notice'>[user] begin to clamping bleeders in [surgery_victim]'s [bodypart.name] with \the [I].</span>"
 		self_msg = "<span class='notice'>You start to clamping bleeders in [surgery_victim]'s [bodypart.name] with \the [I].</span>"
 		cp_msg = "The pain in your [bodypart.name] is maddening!"
 		user.visible_message(msg, self_msg)
 		surgery_victim.custom_pain(cp_msg, 1)
-		return TRUE
+
 	else if(bodypart.trauma_kit || bodypart.burn_kit)
 	 // tissue, if salvaged
 		msg = "<span class='notice'>[user] begin to connecting regenerative membrane with damaged tissue inside of [surgery_victim]'s [bodypart.name].</span>"
@@ -34,7 +77,7 @@
 		cp_msg = "The pain in your [bodypart.name] is going to make you pass out!"
 		surgery_victim.custom_pain(cp_msg, 1)
 		user.visible_message(msg, self_msg)
-		return TRUE
+
 	else if(check_inside(bodypart))
 	// remove something inside
 		if(!(locate(/obj/item/alien_embryo) in bodypart))
@@ -53,18 +96,17 @@
 				if(bodypart.open >= BP_RETRACT_OS)
 					surgery_victim.custom_pain(cp_msg, 1)
 					user.visible_message(msg, self_msg)
-					return TRUE
 			if(BP_HEAD, BP_CHEST)
 			// implant or embreo remove
 				if(bodypart.open == BP_RIBCAGE_OS)
 					surgery_victim.custom_pain(cp_msg, 1)
 					user.visible_message(msg, self_msg)
-					return TRUE
+
 	else if(bodypart.controller.bodypart_type == BODYPART_ROBOTIC && (bodypart.open == BP_RETRACT_OS || bodypart.open == BP_INTERNALS_OS))
 		msg = "<span class='notice'>[user] begin to [bodypart.open == BP_RETRACT_OS ? "loose" : "tighten" ] bolts on [surgery_victim]'s security panel with \the [I].</span>"
 		self_msg = "<span class='notice'>You start to [bodypart.open == BP_RETRACT_OS ? "loose" : "tighten" ] bolts on [surgery_victim]'s security panel with \the [I].</span>"
 		user.visible_message(msg, self_msg)
-		return TRUE
+
 	else
 	// operate organs
 		switch(target_zone)
@@ -72,13 +114,11 @@
 			if(O_EYES)
 			//eyes
 				var/obj/item/organ/internal/eyes/eyes = bodypart.bodypart_organs[O_EYES]
-				if(!eyes)
-					return FALSE
 				if(eyes.surgery_stage == BP_RETRACT_OS)
 					msg = "<span class='notice'>[user] begin to mending the nerves and lenses in [surgery_victim]'s eyes with \the [I].</span>"
 					self_msg = "<span class='notice'>You start to mending the nerves and lenses in [surgery_victim]'s eyes with \the [I].</span>"
 					user.visible_message(msg, self_msg)
-					return TRUE
+
 			if(O_MOUTH)
 			//face reconstruction & plastic surgery
 				var/obj/item/organ/external/head/head = bodypart
@@ -86,7 +126,7 @@
 					msg = "<span class='notice'>[user] begin to [head.disfigured ? "mending" : "adjusting"] [surgery_victim]'s vocal cords with \the [I].</span>"
 					self_msg = "<span class='notice'>You start to [head.disfigured ? "mending" : "adjusting"] [surgery_victim]'s vocal cords with \the [I].</span>"
 					user.visible_message(msg, self_msg)
-					return TRUE
+
 			if(BP_HEAD)
 			//brain chips
 				var/obj/item/organ/internal/brain/brain = surgery_victim:organs_by_name[O_BRAIN]
@@ -95,8 +135,7 @@
 					msg = "<span class='notice'>[user] begin to taking bone chips out of [surgery_victim]'s brain with \the [I].</span>"
 					self_msg = "<span class='notice'>You start to taking bone chips out of [surgery_victim]'s brain with \the [I].</span>"
 					user.visible_message(msg, self_msg)
-					return TRUE
-	return FALSE
+
 
 /datum/surgery_step/clamp/end_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/I)
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)

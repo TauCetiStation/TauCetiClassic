@@ -20,10 +20,33 @@
 		// Retract Eyes
 			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
 			if(eyes?.surgery_stage <= BP_SCALPEL_OS)
+				return TRUE
+		if(O_MOUTH)
+		// Retract Face
+			var/obj/item/organ/external/head/head = bodypart
+			if(head.ps_status == BP_DEFAULT_OS || head.ps_status == BP_RETRACT_OS)
+		else // Head, Chest, Groin, L|R Arm, L|R Leg
+			if(!(bodypart.controller.bodypart_type == BODYPART_ROBOTIC) && HAS_TRAIT(surgery_victim, TRAIT_FAT) && bodypart.open == BP_INTERNALS_OS)
+				return TRUE
+			//ribcage & retract skin & remove fat
+			if(bodypart.open > BP_DEFAULT_OS)
+				return TRUE
+	return FALSE
+
+/datum/surgery_step/retract/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
+	. = ..()
+
+	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
+
+	//human, unathi, tajaran, skrell, ipc and etc
+	switch(target_zone)
+		if(O_EYES)
+		// Retract Eyes
+			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
+			if(eyes?.surgery_stage <= BP_SCALPEL_OS)
 				msg = "<span class='notice'>[user] begin to lifting corneas from [surgery_victim]'s eyes with \the [tool].</span>"
 				self_msg = "<span class='notice'>You start to lifting corneas from [surgery_victim]'s eyes with \the [tool].</span>"
 				user.visible_message(msg, self_msg)
-				return TRUE
 		if(O_MOUTH)
 		// Retract Face
 			var/obj/item/organ/external/head/head = bodypart
@@ -36,7 +59,6 @@
 				msg = "<span class='notice'>[user] begin to extract [surgery_victim]'s loose fat with \the [tool].</span>"
 				self_msg = "<span class='notice'>You start to extract [surgery_victim]'s loose fat with \the [tool].</span>"
 				user.visible_message(msg, self_msg)
-				return TRUE
 			//ribcage & retract skin & remove fat
 			if(bodypart.open > BP_DEFAULT_OS)
 				if(bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
@@ -46,8 +68,7 @@
 					msg = "<span class='notice'>[user] begin to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "security" : "maintance"] panel on [surgery_victim]' with \the [tool].</span>"
 					self_msg = "<span class='notice'>You start to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "security" : "maintance"] panel on [surgery_victim]' with \the [tool].</span>"
 				user.visible_message(msg, self_msg)
-				return TRUE
-	return FALSE
+
 
 /datum/surgery_step/retract/end_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)

@@ -25,13 +25,47 @@
 	if(isslime(target))
 		var/mob/living/carbon/slime/slime = target
 		if(slime.stat == DEAD && slime.surgery_status != SLIME_SKIN_PREPARED)
-			msg = "<span class='notice'>[user] begin cut through [slime]'s [slime.surgery_status == SLIME_SKIN_CUTTED ? "silky innards" : "flesh"] with \the [I].</span>"
-			self_msg = "<span class='notice'>You start cut through [slime]'s [slime.surgery_status == SLIME_SKIN_CUTTED ? "silky innards" : "flesh"] with \the [I].</span>"
-			user.visible_message(msg, self_msg)
 			return TRUE
 
 	if(!..())
 		return FALSE
+
+	var/mob/living/carbon/human/surgery_victim = target
+	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
+
+	switch(target_zone)
+		if(O_EYES)
+		// Cut|Screw Eyes
+			var/obj/item/organ/internal/eyes/eyes = surgery_victim:organs_by_name[O_EYES]
+			if(eyes?.surgery_stage <= BP_SCALPEL_OS)
+				return TRUE
+		if(O_MOUTH)
+		// Cut|Screw Face
+			var/obj/item/organ/external/head/head = bodypart
+			if(head.ps_status == BP_DEFAULT_OS || head.ps_status == BP_RETRACT_OS)
+			//start operate face|plastic surgery
+				return TRUE
+		else
+		// Head, Chest, Groin, L|R Arm, L|R Leg
+			if(target_zone == BP_GROIN && bodypart.open >= BP_SCALPEL_OS && !surgery_victim.species.flags[TRAIT_NO_BLOOD] && surgery_victim.get_species() != VOX)
+			//gender surgery, in this stage we need check only VOX
+				return TRUE
+			if(bodypart.open == BP_RIBCAGE_OS)
+				return TRUE
+			if(bodypart.open == BP_DEFAULT_OS || (bodypart.controller.bodypart_type == BODYPART_ROBOTIC && bodypart.open == BP_SCALPEL_OS))
+			// Cut|Screw Default|Limb cut replace stump to health part
+				return TRUE
+
+	return FALSE // if we can`t do this operation
+
+/datum/surgery_step/cut/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
+	. = ..()
+	if(isslime(target))
+		var/mob/living/carbon/slime/slime = target
+		if(slime.stat == DEAD && slime.surgery_status != SLIME_SKIN_PREPARED)
+			msg = "<span class='notice'>[user] begin cut through [slime]'s [slime.surgery_status == SLIME_SKIN_CUTTED ? "silky innards" : "flesh"] with \the [I].</span>"
+			self_msg = "<span class='notice'>You start cut through [slime]'s [slime.surgery_status == SLIME_SKIN_CUTTED ? "silky innards" : "flesh"] with \the [I].</span>"
+			user.visible_message(msg, self_msg)
 
 	var/mob/living/carbon/human/surgery_victim = target
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
@@ -48,7 +82,7 @@
 					msg = "<span class='notice'>[user] are beginning to [eyes.surgery_stage == BP_DEFAULT_OS ? "separate" : "extract"] eyes from [surgery_victim]'s eyelid with \the [I].</span>"
 					self_msg = "<span class='notice'>You are starting to [eyes.surgery_stage == BP_DEFAULT_OS ? "separate" : "extract"] eyes from [surgery_victim]'s eyelid with \the [I].</span>"
 				user.visible_message(msg, self_msg)
-				return TRUE
+
 		if(O_MOUTH)
 		// Cut|Screw Face
 			var/obj/item/organ/external/head/head = bodypart
@@ -62,7 +96,7 @@
 					self_msg = "<span class='notice'>You start to [head.ps_status == BP_DEFAULT_OS ? "cut open [surgery_victim]'s face and neck with \the [I]" : "to alter [surgery_victim]'s appearance with \the [I]"].</span>"
 
 				user.visible_message(msg, self_msg)
-				return TRUE
+
 		else
 		// Head, Chest, Groin, L|R Arm, L|R Leg
 			if(target_zone == BP_GROIN && bodypart.open >= BP_SCALPEL_OS && !surgery_victim.species.flags[TRAIT_NO_BLOOD] && surgery_victim.get_species() != VOX)
@@ -70,12 +104,12 @@
 				msg = "<span class='notice'>[user] begin to reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [I].</span>"
 				self_msg = "<span class='notice'>You start to reshape [surgery_victim]'s genitals to look more [surgery_victim.gender == FEMALE ? "masculine" : "feminine" ] with \the [I].</span>"
 				user.visible_message(msg, self_msg)
-				return TRUE
+
 			if(bodypart.open == BP_RIBCAGE_OS)
 				msg = "<span class='notice'>[user] begin poking around inside the [surgery_victim]'s [bodypart.name] with \the [I].</span>"
 				self_msg = "<span class='notice'>You start poking around inside the [surgery_victim]'s [bodypart.name] with \the [I].</span>"
 				user.visible_message(msg, self_msg)
-				return TRUE
+
 			if(bodypart.open == BP_DEFAULT_OS || (bodypart.controller.bodypart_type == BODYPART_ROBOTIC && bodypart.open == BP_SCALPEL_OS))
 			// Cut|Screw Default|Limb cut replace stump to health part
 				var/datum/reagents/R = surgery_victim.reagents
@@ -90,9 +124,7 @@
 					self_msg = "<span class='notice'>You start to [isstump(bodypart) ? "cut away flesh on [surgery_victim]'s [bodypart.name] used to be with \the [I]." : "make a [bodypart.status & ORGAN_BLEEDING ? null : "bloodless "]incision on [surgery_victim]'s [bodypart.name] with \the [I]"].</span>"
 
 				user.visible_message(msg, self_msg)
-				return TRUE
 
-	return FALSE // if we can`t do this operation
 
 /datum/surgery_step/cut/end_step(mob/living/user, mob/living/carbon/target, target_zone, obj/item/I)
 	if(isslime(target))

@@ -4,7 +4,7 @@
 	priority = 1
 	allowed_species = null
 
-/datum/surgery_step/surgery_drill/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/surgery_drill/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	if(!..())
 		return FALSE
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -41,7 +41,7 @@
 	min_duration = 6 SECONDS
 	max_duration = 8 SECONDS
 
-/datum/surgery_step/surgery_drill/make_space/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/surgery_drill/make_space/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	if(!..())
 		return FALSE
 
@@ -50,24 +50,28 @@
 		return TRUE
 	return FALSE
 
-/datum/surgery_step/surgery_drill/make_space/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/surgery_drill/make_space/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] starts making some space inside [target]'s [get_cavity(BP)] cavity with \the [tool].", \
-	"You start making some space inside [target]'s [get_cavity(BP)] cavity with \the [tool]." )
+	msg = "<span class='notice'>[user] starts making some space inside [target]'s [get_cavity(BP)] cavity with \the [I].</span>"
+	self_msg = "<span class='notice'>You start making some space inside [target]'s [get_cavity(BP)] cavity with \the [I].</span>"
+	user.visible_message(msg, self_msg)
+
 	target.custom_pain("The pain in your chest is living hell!",1)
 	BP.cavity = TRUE
 	..()
 
-/datum/surgery_step/surgery_drill/make_space/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/surgery_drill/make_space/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='notice'>[user] makes some space inside [target]'s [get_cavity(BP)] cavity with \the [tool].</span>", \
-	"<span class='notice'>You make some space inside [target]'s [get_cavity(BP)] cavity with \the [tool].</span>" )
+	msg = "<span class='notice'>[user] makes some space inside [target]'s [get_cavity(BP)] cavity with \the [I].</span>"
+	self_msg = "<span class='notice'>You make some space inside [target]'s [get_cavity(BP)] cavity with \the [I].</span>"
+	user.visible_message(msg, self_msg)
 
-/datum/surgery_step/surgery_drill/make_space/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/surgery_drill/make_space/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
-	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
-	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
+	msg = "<span class='notice'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [I]!</span>"
+	self_msg = "<span class='notice'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [I]!</span>"
+	user.visible_message(msg, self_msg)
+	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, I)
 
 /datum/surgery_step/surgery_drill/place_item
 	name = "Place item into cavern"
@@ -79,48 +83,50 @@
 	min_duration = 8 SECONDS
 	max_duration = 10 SECONDS
 
-/datum/surgery_step/surgery_drill/place_item/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/surgery_drill/place_item/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	if(!..())
 		return FALSE
 
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	if(!BP.hidden && BP.cavity && tool.w_class <= get_max_wclass(BP))
+	if(!BP.hidden && BP.cavity && I.w_class <= get_max_wclass(BP))
 		return TRUE
 
 	return FALSE
 
-/datum/surgery_step/surgery_drill/place_item/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/surgery_drill/place_item/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] starts putting \the [tool] inside [target]'s [get_cavity(BP)] cavity.", \
-	"You start putting \the [tool] inside [target]'s [get_cavity(BP)] cavity." )
+	msg = "<span class='notice'>[user] starts putting \the [I] inside [target]'s [get_cavity(BP)] cavity.</span>"
+	self_msg = "<span class='notice'>You start putting \the [I] inside [target]'s [get_cavity(BP)] cavity.</span>"
+	user.visible_message(msg, self_msg)
 	target.custom_pain("The pain in your chest is living hell!",1)
 	..()
 
-/datum/surgery_step/surgery_drill/place_item/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/surgery_drill/place_item/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-
-	user.visible_message("<span class='notice'>[user] puts \the [tool] inside [target]'s [get_cavity(BP)] cavity.</span>", \
-	"<span class='notice'>You put \the [tool] inside [target]'s [get_cavity(BP)] cavity.</span>" )
-	if (tool.w_class > get_max_wclass(BP)/2 && prob(50) && BP.sever_artery())
+	msg = "<span class='notice'>[user] puts \the [I] inside [target]'s [get_cavity(BP)] cavity.</span>"
+	self_msg = "<span class='notice'>You put \the [I] inside [target]'s [get_cavity(BP)] cavity.</span>"
+	user.visible_message(msg, self_msg)
+	if (I.w_class > get_max_wclass(BP)/2 && prob(50) && BP.sever_artery())
 		to_chat(user, "<span class='warning'>You tear some blood vessels trying to fit such a big object in this cavity.</span>")
 		BP.owner.custom_pain("You feel something rip in your [BP.name]!", 1)
-	if(istype(tool, /obj/item/gland))	//Abductor surgery integration
+	if(istype(I, /obj/item/gland))	//Abductor surgery integration
 		if(target_zone != BP_CHEST)
 			return
 		else
-			var/obj/item/gland/gland = tool
+			var/obj/item/gland/gland = I
 			user.drop_from_inventory(gland, target)
 			gland.Inject(target)
 			BP.cavity = FALSE
 			return
-	user.drop_from_inventory(tool, target)
-	BP.hidden = tool
+	user.drop_from_inventory(I, target)
+	BP.hidden = I
 	BP.cavity = FALSE
-	tool.item_actions_special = TRUE
-	tool.add_item_actions(target)
+	I.item_actions_special = TRUE
+	I.add_item_actions(target)
 
-/datum/surgery_step/surgery_drill/place_item/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+/datum/surgery_step/surgery_drill/place_item/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class='warning'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>", \
-	"<span class='warning'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!</span>")
-	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, tool)
+	msg = "<span class='notice'>[user]'s hand slips, scraping tissue inside [target]'s [BP.name] with \the [I]!</span>"
+	self_msg = "<span class='notice'>Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [I]!</span>"
+	user.visible_message(msg, self_msg)
+	BP.take_damage(20, 0, DAM_SHARP|DAM_EDGE, I)

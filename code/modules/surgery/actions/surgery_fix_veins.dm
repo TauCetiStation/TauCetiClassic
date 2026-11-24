@@ -15,10 +15,21 @@
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
 
 	if(bodypart.open >= BP_RETRACT_OS && bodypart.status & ORGAN_ARTERY_CUT)
+		return TRUE
+
+	else if(bodypart.open == BP_RIBCAGE_OS && target_zone == BP_HEAD && surgery_victim.has_brain())
+		var/obj/item/organ/internal/brain/brain = surgery_victim.organs_by_name[O_BRAIN]
+		if(brain.damage > 0)
+			return TRUE
+
+/datum/surgery_step/fix_veins/begin_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/I)
+	. = ..()
+	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
+
+	if(bodypart.open >= BP_RETRACT_OS && bodypart.status & ORGAN_ARTERY_CUT)
 		msg = "<span class='notice'>[user] begin patching the damaged vein in [surgery_victim]'s [bodypart.name] with \the [tool].</span>"
 		self_msg = "<span class='notice'>You start patching the damaged vein in [surgery_victim]'s [bodypart.name] with \the [tool].</span>"
 		user.visible_message(msg, self_msg)
-		return TRUE
 
 	else if(bodypart.open == BP_RIBCAGE_OS && target_zone == BP_HEAD && surgery_victim.has_brain())
 		var/obj/item/organ/internal/brain/brain = surgery_victim.organs_by_name[O_BRAIN]
@@ -26,7 +37,7 @@
 			msg = "<span class='notice'>[user] begin to mend hematoma in [surgery_victim]'s brain with \the [tool].</span>"
 			self_msg = "<span class='notice'>You start to mend hematoma in [surgery_victim]'s brain with \the [tool].</span>"
 			user.visible_message(msg, self_msg)
-			return TRUE
+
 
 /datum/surgery_step/fix_veins/end_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/tool)
 	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
