@@ -1,7 +1,7 @@
-/datum/unit_test/areas_apc_uniqueness
+/datum/unit_test/areas_air_alarm
 	name = "ATMOSPHERE ALARM: check area on alarm"
 
-/datum/unit_test/areas_apc_uniqueness/start_test()
+/datum/unit_test/areas_air_alarm/start_test()
 	var/failure = ""
 	for(var/obj/machinery/alarm/found_alarm in alarm_list)
 		found_alarm.first_run()
