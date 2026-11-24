@@ -52,7 +52,7 @@ var/global/const/AIRLOCK_WIRE_UNRES_SIDE    = 4096
 		return
 	if(action == "buffer")
 		var/obj/item/I = usr.get_active_hand()
-		if(!isitem(I) || I = null)
+		if(!isitem(I) || I == null)
 			to_chat(usr, "<span class='warning'>You need a multitool!</span>")
 		else
 			if(!ispulsing(I))
