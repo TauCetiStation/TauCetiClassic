@@ -112,8 +112,8 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 /obj/machinery/alarm/proc/first_run()
 	alarm_area = get_area(src)
 	if(!alarm_area)
-		fail("Some atmos alarm not in area!")
-		qdel(src)
+		warning("Some atmos alarm not in area!")
+		QDEL_IN(src, 0)
 	area_uid = alarm_area.uid
 	if(name == "alarm")
 		name = "[alarm_area.name] Air Alarm"
