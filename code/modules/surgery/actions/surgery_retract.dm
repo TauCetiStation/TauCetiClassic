@@ -63,11 +63,11 @@
 			//ribcage & retract skin & remove fat
 			if(bodypart.open > BP_DEFAULT_OS)
 				if(bodypart.controller.bodypart_type == BODYPART_ROBOTIC)
-					msg = "<span class='notice'>[user] begin to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] the [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "incision" : "ribcage"] on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
-					self_msg = "<span class='notice'>You start to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] the [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "incision" : "ribcage"] on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
-				else
 					msg = "<span class='notice'>[user] begin to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "security" : "maintance"] panel on [surgery_victim]' with \the [I].</span>"
 					self_msg = "<span class='notice'>You start to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "security" : "maintance"] panel on [surgery_victim]' with \the [I].</span>"
+				else
+					msg = "<span class='notice'>[user] begin to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] the [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "incision" : "ribcage"] on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
+					self_msg = "<span class='notice'>You start to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] the [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "incision" : "ribcage"] on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
 				user.visible_message(msg, self_msg)
 
 
@@ -101,8 +101,8 @@
 					msg = "<span class='notice'>[user] finish to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] the [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "incision" : "ribcage"] on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
 					self_msg = "<span class='notice'>You finish to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] the [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "incision" : "ribcage"] on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
 				else
-					msg = "<span class='notice'>[user] finish to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "security" : "maintance"] panel on [surgery_victim]' with \the [I].</span>"
-					self_msg = "<span class='notice'>You finish to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "security" : "maintance"] panel on [surgery_victim]' with \the [I].</span>"
+					msg = "<span class='notice'>[user] finish to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] the [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "incision" : "ribcage"] on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
+					self_msg = "<span class='notice'>You finish to pry [(bodypart.open == BP_RIBCAGE_OS || bodypart.open == BP_RETRACT_OS) ? "close" : "open"] the [(bodypart.open == BP_SCALPEL_OS || bodypart.open == BP_RETRACT_OS) ? "incision" : "ribcage"] on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
 				switch(bodypart.open)
 					if(BP_SCALPEL_OS, BP_RETRACT_OS)
 					//retract skin
