@@ -115,7 +115,7 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/alarm, air_alarms)
 		fail("Some atmos alarm not in area!")
 		qdel(src)
 	area_uid = alarm_area.uid
-	if (name == "alarm")
+	if(name == "alarm")
 		name = "[alarm_area.name] Air Alarm"
 	if(!wires)
 		wires = new(src)
