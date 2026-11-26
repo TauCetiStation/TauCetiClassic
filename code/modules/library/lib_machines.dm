@@ -418,6 +418,7 @@
 				var/title = query.item[3]
 				var/content = query.item[4]
 				var/obj/item/weapon/book/B = new(src.loc)
+				B.db_id = query.item[1]
 				B.name = "Book: [title]"
 				B.title = title
 				B.author = author
