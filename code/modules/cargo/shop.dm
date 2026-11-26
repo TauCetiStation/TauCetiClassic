@@ -275,11 +275,11 @@ var/global/online_shop_referrer_revenue = 0.50
 	else
 		return "Разное"
 
-/proc/shop_object2package(obj/Item)
+/proc/shop_object2package(obj/Item, wrap_type = /datum/package_wrap)
 	var/itemPixelX = Item.pixel_x
 	var/itemPixelY = Item.pixel_y
 
-	var/obj/Package = Item.try_wrap_up(/datum/package_wrap)
+	var/obj/Package = Item.try_wrap_up(wrap_type)
 	if(!Package)
 		return
 
@@ -317,7 +317,17 @@ var/global/online_shop_referrer_revenue = 0.50
 	if(!hide_info)
 		item_icon = bicon(Item)
 
-	Item = shop_object2package(Item)
+	var/package_wrap_type = /datum/package_wrap
+	if(NEW_YEAR in SSholiday.holidays)
+		package_wrap_type = /datum/package_wrap/present
+
+	if(CHINESE_NEW_YEAR in SSholiday.holidays)
+		package_wrap_type = /datum/package_wrap/chinese
+
+	if(HALLOWEEN in SSholiday.holidays)
+		package_wrap_type = /datum/package_wrap/halloween
+
+	Item = shop_object2package(Item, package_wrap_type)
 
 	if(force_color)
 		Item.color = force_color

@@ -304,6 +304,25 @@
 
 	package_wrap_type = /datum/package_wrap/present
 
+/obj/item/weapon/packageWrap/present/atom_init()
+	. = ..()
+
+	if(CHINESE_NEW_YEAR in SSholiday.holidays)
+		icon_state = "chinese_wrap_paper"
+		package_wrap_type = /datum/package_wrap/chinese
+
+	if(HALLOWEEN in SSholiday.holidays)
+		icon_state = "halloween_wrap_paper"
+		package_wrap_type = /datum/package_wrap/halloween
+
+/obj/item/weapon/packageWrap/present/chinese
+	icon_state = "chinese_wrap_paper"
+	package_wrap_type = /datum/package_wrap/chinese
+
+/obj/item/weapon/packageWrap/present/halloween
+	icon_state = "halloween_wrap_paper"
+	package_wrap_type = /datum/package_wrap/halloween
+
 
 /obj/item/device/tagger
 	name = "tagger"

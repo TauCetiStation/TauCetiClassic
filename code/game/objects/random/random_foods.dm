@@ -205,3 +205,48 @@
 		/obj/item/weapon/reagent_containers/food/snacks/boiledegg/red,
 		/obj/item/weapon/reagent_containers/food/snacks/boiledegg/yellow,
 	)
+
+/obj/random/foods/fortunecookie
+	name = "Random Fortune Cookie"
+	desc = "This is a random fortune cookie."
+	icon = 'icons/obj/food.dmi'
+	icon_state = "egg-rainbow"
+
+/obj/random/foods/fortunecookie/atom_init(mapload, no_spawn = FALSE)
+	no_spawn = TRUE
+	. = ..()
+
+	var/list/fortunes = list("Скоро случится что-то хорошее. Просто подожди немного.",
+		"Твой следующий шаг — это не ошибка, а приключение.",
+		"Где-то там кто-то ждёт твоего сообщения. Напиши ему.",
+		"Сегодня всё получится, даже если сначала кажется сложным.",
+		"Секрет в том, чтобы просто начать. Остальное приложится.",
+		"Ты сильнее, чем думаешь. Один маленький шаг уже всё меняет.",
+		"Что-то интересное ждёт за следующим поворотом.",
+		"Не спеши. Иногда лучший путь — сделать паузу и вдохнуть.",
+		"Этот день принесёт маленькую, но приятную находку.",
+		"Всё идёт так, как должно. Просто продолжай.")
+
+	var/obj/item/weapon/reagent_containers/food/snacks/fortunecookie/cookie = new /obj/item/weapon/reagent_containers/food/snacks/fortunecookie(loc)
+	var/obj/item/weapon/paper/sticker/red/fortune = new
+	fortune.name = "Предсказание"
+	fortune.info += "[pick(fortunes)]<br>"
+	fortune.info += "Счастливые номера: [rand(1, 99)], [rand(1, 99)], [rand(1, 99)]<br>"
+
+	var/obj/item/weapon/pen/Pen = new
+
+	fortune.parsepencode(fortune.info, Pen)
+	fortune.updateinfolinks()
+	qdel(Pen)
+
+	fortune.update_icon()
+
+	fortune.loc = cookie
+	cookie.trash = fortune
+
+
+	return INITIALIZE_HINT_QDEL
+
+
+/obj/random/foods/fortunecookie/item_to_spawn()
+	return /obj/item/weapon/reagent_containers/food/snacks/fortunecookie
