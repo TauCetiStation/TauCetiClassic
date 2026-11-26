@@ -7,7 +7,7 @@
 	title = JOB_BLUESHIELD
 	departments = list(DEP_SPECIAL)
 	order = CREW_INTEND_EMPLOYEE(1)
-	total_positions = 1
+	baseline_positions = 1
 	spawn_positions = 1
 	supervisors = "The Central Command"
 	selection_color = "#6c7391"
@@ -33,7 +33,7 @@
 	departments = list(DEP_SPECIAL)
 	order = CREW_INTEND_EMPLOYEE(2)
 	title = "Internal Affairs Agent"
-	total_positions = 2
+	baseline_positions = 2
 	spawn_positions = 2
 	supervisors = "The Central Command"
 	selection_color = "#6c7391"
