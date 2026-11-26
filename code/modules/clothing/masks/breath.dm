@@ -103,7 +103,6 @@
 
 	attached_tank = choose
 	open_internals()
-	RegisterSignals(attached_tank, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(drop_detach_tank), override = TRUE) //override = true, to prevert stuck trace error
 	return TRUE
 
 /obj/item/clothing/mask/breath/proc/drop_detach_tank(obj/source)
@@ -152,6 +151,7 @@
 		if(istype(H.head, /obj/item/clothing/head/helmet/space) && istype(H.wear_suit, /obj/item/clothing/suit/space))
 			internalsound = 'sound/misc/riginternalon.ogg'
 	playsound(src, internalsound, VOL_EFFECTS_MASTER, null, FALSE, null, -5)
+	RegisterSignals(attached_tank, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(drop_detach_tank), override = TRUE) //override = true, to prevert stuck trace error
 
 /obj/item/clothing/mask/breath/proc/update_action_icons(mob/user, status)
 	for(var/datum/action/item_action/hands_free/connect_tank/CT in user.actions)
