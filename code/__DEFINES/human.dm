@@ -25,6 +25,10 @@
 
 #define HUMAN_DEFAULT_SKIN_TONE /datum/skin_tone/albino::name
 
+#define CRAWL_INTENT_STANDING 0
+#define CRAWL_INTENT_CRAWLING 1
+
 #define AVERAGE_BODYTYPE "average_bodytype"
 #define SLIM_BODYTYPE    "slim_bodytype"
 #define FAT_BODYTYPE     "fat_bodytype"
+
