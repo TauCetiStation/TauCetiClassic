@@ -176,7 +176,6 @@
 	to_chat(user, "<span class='notice'><b>Захват удался!</b>:</span> Душа [captured_shade.name] была снова захвачен в камень душ.")
 
 /obj/item/device/soulstone/proc/create_construct(atom/target, mob/user)
-	captured_shade = locate() in src
 	if(!captured_shade)
 		to_chat(user, "<span class='warning'><b>Создание не удалось!</b>:</span> Камень душ пуст! Самое время убить кого-нибудь.")
 		return
