@@ -197,8 +197,6 @@
 		return
 
 	if(href_list["pda_onlineshop"])
-		if(mode != 7)
-			return
 
 		if(!usr)
 			return
