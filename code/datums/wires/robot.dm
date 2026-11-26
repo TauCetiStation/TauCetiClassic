@@ -27,7 +27,7 @@ var/global/const/BORG_WIRE_CAMERA      = 16
 	switch(index)
 		if(BORG_WIRE_LAWCHECK)
 			if(mended)
-				if(R.lawupdate == 0 && !R.emagged)
+				if(R.lawupdate == 0 && !R.emagged && !R.scrambledcodes)
 					R.lawupdate = 1
 			else
 				if(R.lawupdate == 1)
