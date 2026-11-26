@@ -62,6 +62,7 @@ var/global/datum/notes_storage/note_cache_storage = new
 	var/show_help = FALSE
 	var/show_edit = TRUE
 	var/repeat    = 0
+	var/basic_repeats = 0
 	var/volume    = DEFAULT_VOLUME
 
 	var/obj/effect/abstract/particle_holder/Particle
@@ -225,6 +226,9 @@ var/global/datum/notes_storage/note_cache_storage = new
 		usr.unset_machine(instrument)
 
 /datum/music_player/proc/playsong(mob/living/musician)
+	if(basic_repeats && !repeat)
+		repeat = basic_repeats
+
 	Particle = new /obj/effect/abstract/particle_holder(instrument, /particles/tool/signal/music, PARTICLE_FADEOUT|PARTICLE_NO_TRANSFORM|PARTICLE_ATTACH_MOB)
 
 	do

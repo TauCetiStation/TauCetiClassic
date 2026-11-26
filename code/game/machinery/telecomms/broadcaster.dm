@@ -378,6 +378,8 @@ var/global/message_delay = 0 // To make sure restarting the recentmessages list 
 				freq_text = "Response Team"
 			if(1447)
 				freq_text = "AI Private"
+			if(1510 to 1599)
+				freq_text = "Telephone Line"
 		//There's probably a way to use the list var of channels in code\game\communications.dm to make the dept channels non-hardcoded, but I wasn't in an experimentive mood. --NEO
 
 
