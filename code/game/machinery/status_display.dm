@@ -73,7 +73,7 @@
 	ad_item.layer = layer + 0.01
 
 	chiptune_player = new(src, "sound/musical_instruments/synth/space")
-	chiptune_player.parse_song_text(/datum/music_composition::melody)
+	chiptune_player.parse_song_text(/datum/music_composition/cargo_ad::melody)
 	chiptune_player.volume = 20
 
 /obj/machinery/status_display/unable_to_play(mob/living/user)
