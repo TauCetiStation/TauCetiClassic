@@ -124,6 +124,8 @@
 		/// Held variable to better calculate when certain holidays may fall on, like easter.
 		var/current_year = text2num(time2text(world.timeofday, "YYYY"))
 		var/list/results = year_to_date[current_year]
+		if(!results || !results.len)
+			results = list(01, 21)
 
 		begin_day = results[2]
 		begin_month = results[1]
