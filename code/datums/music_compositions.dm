@@ -1,4 +1,4 @@
- //Не забудьте заменить отступы на новую строку на \n при вставке своих мелодий!
+ //Don't forget to swap new line breaks to \n!
 
 /datum/music_composition
 	var/name = "Cargo AD"

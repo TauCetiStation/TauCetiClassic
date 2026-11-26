@@ -85,10 +85,10 @@
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 
-	qdel(ad_background)
-	qdel(ad_item)
+	QDEL_NULL(ad_background)
+	QDEL_NULL(ad_item)
 
-	qdel(chiptune_player)
+	QDEL_NULL(chiptune_player)
 	return ..()
 
 /obj/machinery/status_display/process()
@@ -117,6 +117,7 @@
 	if(mode != 7)
 		vis_contents -= ad_background
 		vis_contents -= ad_item
+		chiptune_player.playing = FALSE
 
 	if(overlays.len && !friendc || mode == 4)
 		cut_overlays()
@@ -201,6 +202,9 @@
 		if(!usr)
 			return
 
+		if(!ishuman(usr))
+			return
+
 		if(issilicon(usr))
 			return
 
@@ -210,13 +214,12 @@
 		if(usr.incapacitated())
 			return
 
-		if(!Adjacent(usr))
-			return
-
 		if(!usr.client)
 			return
 
-		var/obj/item/device/pda/PDA = locate() in usr
+		var/mob/living/carbon/human/H = usr
+
+		var/obj/item/device/pda/PDA = H.get_pda_or_null()
 		if(!PDA)
 			return
 
