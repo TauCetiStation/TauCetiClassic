@@ -64,9 +64,6 @@
 	var/coretype = /obj/item/slime_extract/grey
 	var/mob/living/last_pointed = null
 
-/mob/living/carbon/slime/atom_init()
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NO_PAIN, INNATE_TRAIT)
 
 /mob/living/carbon/slime/adult
 	name = "adult slime"
@@ -95,6 +92,7 @@
 	ADD_TRAIT(src, ELEMENT_TRAIT_SLIME, INNATE_TRAIT) // i think it's not used for non-humans and useless here, but maybe someday
 
 	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_POINTED, PROC_REF(on_friend_pointed))
 
 	var/datum/action/innate/slime/E
 	for(var/V in subtypesof(/datum/action/innate/slime))
@@ -104,6 +102,7 @@
 	regenerate_icons()
 
 /mob/living/carbon/slime/Destroy()
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_POINTED)
 	Victim = null
 	Target = null
 	ATarget = null
