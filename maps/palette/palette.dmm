@@ -333,7 +333,7 @@
 	},
 /area/space)
 "bF" = (
-/obj/machinery/suit_storage_unit/captain{
+/obj/machinery/storage_unit/suit_storage/captain{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -342,7 +342,7 @@
 	},
 /area/space)
 "bG" = (
-/obj/machinery/suit_storage_unit/nasa{
+/obj/machinery/storage_unit/suit_storage/nasa{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -351,7 +351,7 @@
 	},
 /area/space)
 "bH" = (
-/obj/machinery/suit_storage_unit/unathi/breacher{
+/obj/machinery/storage_unit/suit_storage/unathi/breacher{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -366,7 +366,7 @@
 	},
 /area/space)
 "bJ" = (
-/obj/machinery/suit_storage_unit/security{
+/obj/machinery/storage_unit/suit_storage/security{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -375,7 +375,7 @@
 	},
 /area/space)
 "bK" = (
-/obj/machinery/suit_storage_unit/security/hos{
+/obj/machinery/storage_unit/suit_storage/security/hos{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -384,7 +384,7 @@
 	},
 /area/space)
 "bL" = (
-/obj/machinery/suit_storage_unit/medical{
+/obj/machinery/storage_unit/suit_storage/medical{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -392,7 +392,7 @@
 	},
 /area/space)
 "bM" = (
-/obj/machinery/suit_storage_unit/medical/paramedic{
+/obj/machinery/storage_unit/suit_storage/medical/paramedic{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -414,7 +414,7 @@
 	},
 /area/space)
 "bP" = (
-/obj/machinery/suit_storage_unit/medical/cmo{
+/obj/machinery/storage_unit/suit_storage/medical/cmo{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -422,7 +422,7 @@
 	},
 /area/space)
 "bQ" = (
-/obj/machinery/suit_storage_unit/globose/science{
+/obj/machinery/storage_unit/suit_storage/globose/science{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -436,7 +436,7 @@
 	},
 /area/space)
 "bS" = (
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
+/obj/machinery/storage_unit/suit_storage/globose/science/xenoarchaeologist{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -444,7 +444,7 @@
 	},
 /area/space)
 "bT" = (
-/obj/machinery/suit_storage_unit/science{
+/obj/machinery/storage_unit/suit_storage/science{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -452,7 +452,7 @@
 	},
 /area/space)
 "bU" = (
-/obj/machinery/suit_storage_unit/science/rd{
+/obj/machinery/storage_unit/suit_storage/science/rd{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -466,7 +466,7 @@
 	},
 /area/space)
 "bW" = (
-/obj/machinery/suit_storage_unit/engine{
+/obj/machinery/storage_unit/suit_storage/engine{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -488,7 +488,7 @@
 	},
 /area/space)
 "bZ" = (
-/obj/machinery/suit_storage_unit/engine/atmos{
+/obj/machinery/storage_unit/suit_storage/engine/atmos{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -535,7 +535,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "cg" = (
-/obj/machinery/suit_storage_unit/engine/chief{
+/obj/machinery/storage_unit/suit_storage/engine/chief{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -544,7 +544,7 @@
 	},
 /area/space)
 "ch" = (
-/obj/machinery/suit_storage_unit/globose{
+/obj/machinery/storage_unit/suit_storage/globose{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -565,7 +565,7 @@
 	},
 /area/space)
 "ck" = (
-/obj/machinery/suit_storage_unit/globose/mining{
+/obj/machinery/storage_unit/suit_storage/globose/mining{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -573,7 +573,7 @@
 	},
 /area/space)
 "cl" = (
-/obj/machinery/suit_storage_unit/globose/skrell/white{
+/obj/machinery/storage_unit/suit_storage/globose/skrell/white{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -581,7 +581,7 @@
 	},
 /area/space)
 "cm" = (
-/obj/machinery/suit_storage_unit/globose/skrell/black{
+/obj/machinery/storage_unit/suit_storage/globose/skrell/black{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -631,7 +631,7 @@
 	},
 /area/space)
 "cq" = (
-/obj/machinery/suit_storage_unit/unathi{
+/obj/machinery/storage_unit/suit_storage/unathi{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -639,7 +639,7 @@
 	},
 /area/space)
 "cr" = (
-/obj/machinery/suit_storage_unit/vox/carapace{
+/obj/machinery/storage_unit/suit_storage/vox/carapace{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -653,7 +653,7 @@
 	},
 /area/space)
 "ct" = (
-/obj/machinery/suit_storage_unit/vox/engine{
+/obj/machinery/storage_unit/suit_storage/vox/engine{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -661,7 +661,7 @@
 	},
 /area/space)
 "cu" = (
-/obj/machinery/suit_storage_unit/vox/medic{
+/obj/machinery/storage_unit/suit_storage/vox/medic{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -669,7 +669,7 @@
 	},
 /area/space)
 "cv" = (
-/obj/machinery/suit_storage_unit/vox/stealth{
+/obj/machinery/storage_unit/suit_storage/vox/stealth{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -677,7 +677,7 @@
 	},
 /area/space)
 "cw" = (
-/obj/machinery/suit_storage_unit/wizard{
+/obj/machinery/storage_unit/suit_storage/wizard{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -693,7 +693,7 @@
 /turf/simulated/floor,
 /area/space)
 "cy" = (
-/obj/machinery/suit_storage_unit/syndicate_unit{
+/obj/machinery/storage_unit/suit_storage/syndicate_unit{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -701,7 +701,7 @@
 	},
 /area/space)
 "cz" = (
-/obj/machinery/suit_storage_unit/syndicate_unit/elite{
+/obj/machinery/storage_unit/suit_storage/syndicate_unit/elite{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -709,7 +709,7 @@
 	},
 /area/space)
 "cA" = (
-/obj/machinery/suit_storage_unit/syndicate_unit/elite/comander{
+/obj/machinery/storage_unit/suit_storage/syndicate_unit/elite/comander{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -734,7 +734,7 @@
 	},
 /area/space)
 "cE" = (
-/obj/machinery/suit_storage_unit/syndicate_unit/light{
+/obj/machinery/storage_unit/suit_storage/syndicate_unit/light{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -754,7 +754,7 @@
 	},
 /area/space)
 "cH" = (
-/obj/machinery/suit_storage_unit/syndicate_unit/light/chem{
+/obj/machinery/storage_unit/suit_storage/syndicate_unit/light/chem{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -791,7 +791,7 @@
 	},
 /area/space)
 "cN" = (
-/obj/machinery/suit_storage_unit/syndicate_unit/light/heavy{
+/obj/machinery/storage_unit/suit_storage/syndicate_unit/light/heavy{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -799,7 +799,7 @@
 	},
 /area/space)
 "cO" = (
-/obj/machinery/suit_storage_unit/syndicate_unit/striker{
+/obj/machinery/storage_unit/suit_storage/syndicate_unit/striker{
 	filled = 1
 	},
 /turf/simulated/floor/airless{

@@ -5743,7 +5743,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
+/obj/machinery/storage_unit/suit_storage/globose/science/xenoarchaeologist{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -6011,7 +6011,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/science{
+/obj/machinery/storage_unit/suit_storage/science{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -7315,7 +7315,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "bot"
 	},
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
+/obj/machinery/storage_unit/suit_storage/globose/science/xenoarchaeologist{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -8377,7 +8377,7 @@
 /area/asteroid/mine/unexplored)
 "rA" = (
 /obj/structure/alien/weeds/node,
-/obj/machinery/suit_storage_unit/syndicate_unit/abandoned{
+/obj/machinery/storage_unit/suit_storage/syndicate_unit/abandoned{
 	filled = 1
 	},
 /turf/simulated/floor/airless{
@@ -8860,7 +8860,7 @@
 /turf/simulated/floor/plating,
 /area/asteroid/mine/dwarf)
 "sW" = (
-/obj/machinery/suit_storage_unit/wizard{
+/obj/machinery/storage_unit/suit_storage/wizard{
 	filled = 1
 	},
 /turf/simulated/floor/plating,
@@ -11474,7 +11474,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/globose/mining{
+/obj/machinery/storage_unit/suit_storage/globose/mining{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -11488,7 +11488,7 @@
 /obj/effect/decal/turf_decal/alpha/yellow{
 	icon_state = "delivery"
 	},
-/obj/machinery/suit_storage_unit/globose/mining{
+/obj/machinery/storage_unit/suit_storage/globose/mining{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -12481,7 +12481,7 @@
 /turf/simulated/floor/engine,
 /area/asteroid/research_outpost/longtermstorage)
 "Dh" = (
-/obj/machinery/suit_storage_unit/globose/science/xenoarchaeologist{
+/obj/machinery/storage_unit/suit_storage/globose/science/xenoarchaeologist{
 	filled = 1
 	},
 /obj/machinery/light/smart,

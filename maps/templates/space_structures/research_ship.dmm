@@ -263,7 +263,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/machinery/suit_storage_unit/science{
+/obj/machinery/storage_unit/suit_storage/science{
 	filled = 1
 	},
 /turf/simulated/shuttle/floor/vox,
@@ -467,7 +467,7 @@
 	name = "Station Intercom (General)";
 	pixel_y = -32
 	},
-/obj/machinery/suit_storage_unit/science{
+/obj/machinery/storage_unit/suit_storage/science{
 	filled = 1
 	},
 /turf/simulated/shuttle/floor/vox,

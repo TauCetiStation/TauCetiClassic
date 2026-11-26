@@ -51,6 +51,9 @@
 	scale = 0.25
 	grow = 0.1
 
+/particles/mist/suit_storage
+	position = generator("square", 8, 8, "UNIFORM_RAND")
+
 /particles/mist/vent
 	spawning = 2
 	lifespan = 15

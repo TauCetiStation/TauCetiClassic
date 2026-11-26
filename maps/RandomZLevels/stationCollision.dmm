@@ -30,7 +30,7 @@
 	dir = 10;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/medical{
+/obj/machinery/storage_unit/suit_storage/medical{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -3845,7 +3845,7 @@
 	},
 /area/awaymission/stationcollision/southblock)
 "le" = (
-/obj/machinery/suit_storage_unit/syndicate_unit/abandoned{
+/obj/machinery/storage_unit/suit_storage/syndicate_unit/abandoned{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -3872,7 +3872,7 @@
 	dir = 5;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/security{
+/obj/machinery/storage_unit/suit_storage/security{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -3909,7 +3909,7 @@
 	dir = 9;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/engine{
+/obj/machinery/storage_unit/suit_storage/engine{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -3919,7 +3919,7 @@
 	dir = 4;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/security{
+/obj/machinery/storage_unit/suit_storage/security{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -3974,7 +3974,7 @@
 	dir = 8;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/engine/atmos{
+/obj/machinery/storage_unit/suit_storage/engine/atmos{
 	filled = 1
 	},
 /turf/simulated/floor,
@@ -3984,7 +3984,7 @@
 	dir = 6;
 	icon_state = "warn"
 	},
-/obj/machinery/suit_storage_unit/medical{
+/obj/machinery/storage_unit/suit_storage/medical{
 	filled = 1
 	},
 /turf/simulated/floor,
