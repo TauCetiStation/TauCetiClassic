@@ -198,9 +198,14 @@
 
 	if((environment.temperature || air_contents.temperature) && pressure_delta > 0.5)
 		if(pump_direction) //internal -> external
+			if(air_contents.temperature < T0C)
+				add_shared_particles(/particles/mist/vent)
+			else
+				remove_shared_particles(/particles/mist/vent, delete_on_empty = FALSE)
 			var/transfer_moles = calculate_transfer_moles(air_contents, environment, pressure_delta)
 			power_draw = pump_gas(src, air_contents, environment, transfer_moles, power_rating)
 		else //external -> internal
+			remove_shared_particles(/particles/mist/vent, delete_on_empty = FALSE)
 			var/datum/pipeline/parent1 = PARENT1
 			var/transfer_moles = calculate_transfer_moles(environment, air_contents, pressure_delta, (parent1) ? parent1.air.volume : 0)
 
@@ -209,6 +214,7 @@
 			power_draw = pump_gas(src, environment, air_contents, transfer_moles, power_rating)
 
 	else
+		remove_shared_particles(/particles/mist/vent, delete_on_empty = FALSE)
 		//If we're in an area that is fucking ideal, and we don't have to do anything, chances are we won't next tick either so why redo these calculations?
 		//JESUS FUCK.  THERE ARE LITERALLY 250 OF YOU MOTHERFUCKERS ON ZLEVEL ONE AND YOU DO THIS SHIT EVERY TICK WHEN VERY OFTEN THERE IS NO REASON TO
 		if(pump_direction && pressure_checks == PRESSURE_CHECK_EXTERNAL) //99% of all vents
