@@ -2062,7 +2062,7 @@
 		chiptune_player.repeat = 1
 		chiptune_player.parse_song_text(melody)
 	else
-		var/datum/ringtone/Ring = global.ringtones_by_names[ringtone]
+		var/datum/music_composition/ringtone/Ring = global.ringtones_by_names[ringtone]
 		if(!Ring)
 			return
 		chiptune_player.repeat = Ring.replays

@@ -5,6 +5,9 @@
 #define SCROLL_SPEED 2
 #define LINE_HEIGHT 0.75
 
+#define AD_LENGTH 100
+#define AD_DELAY 120
+
 // Status display
 // (formerly Countdown timer display)
 
@@ -45,6 +48,12 @@
 	maptext_width = 32
 	maptext_y = 3
 
+	var/ad_item_name
+	var/obj/effect/ad_part/ad_background
+	var/obj/effect/ad_part/ad_item
+
+	var/datum/music_player/chiptune_player
+
 	// new display
 	// register for radio system
 
@@ -54,11 +63,32 @@
 	radio_controller.add_object(src, frequency)
 	update()
 
+	addtimer(CALLBACK(src, PROC_REF(show_ad_1)), rand(1, AD_DELAY) * AD_LENGTH)
+
+	ad_background = new
+	ad_background.layer = layer
+	ad_background.maptext_y = 8
+	ad_background.maptext_x = -2
+	ad_item = new
+	ad_item.layer = layer + 0.01
+
+	chiptune_player = new(src, "sound/musical_instruments/synth/space")
+	chiptune_player.parse_song_text(/datum/music_composition/cargo_ad::melody)
+	chiptune_player.volume = 20
+
+/obj/machinery/status_display/unable_to_play(mob/living/user)
+	return FALSE
+
 
 /obj/machinery/status_display/Destroy()
 	status_display_list -= src
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
+
+	QDEL_NULL(ad_background)
+	QDEL_NULL(ad_item)
+
+	QDEL_NULL(chiptune_player)
 	return ..()
 
 /obj/machinery/status_display/process()
@@ -77,12 +107,18 @@
 // set what is displayed
 
 /obj/machinery/status_display/proc/update()
-	if(friendc && mode != 4)	//Makes all status displays except supply shuttle timer display the eye -- Urist
+	if(friendc && mode != 4 && mode != 7)	//Makes all status displays except supply shuttle timer display the eye -- Urist
 		set_picture("ai_friend")
 		return
 
 	if(mode == 3 && overlays.len)	//Why we must update diplay if picture is already set?
 		return
+
+	if(mode != 7)
+		vis_contents -= ad_background
+		vis_contents -= ad_item
+		if(chiptune_player)
+			chiptune_player.playing = FALSE
 
 	if(overlays.len && !friendc || mode == 4)
 		cut_overlays()
@@ -144,13 +180,32 @@
 			var/line1 = "Ticket:"
 			var/line2 = "-[queue_number]-"
 			update_display(line1, line2)
+		if(7)
+			return
 
 /obj/machinery/status_display/examine(mob/user)
 	..()
 	switch(mode)
 		if(1,2,4)
 			to_chat(user, "The display says:<br>&emsp;<xmp>[message1]</xmp><br>&emsp;<xmp>[message2]</xmp>")
+		if(7)
+			to_chat(user, "Успейте купить [ad_item_name] в магазине <a href='byond://?src=\ref[src];pda_onlineshop=1;referrer_account=[null]'>'[CARGOSHOPNAME]' в КПК</a>!")
 
+/obj/machinery/status_display/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+
+	if(href_list["pda_onlineshop"])
+
+		if(usr.incapacitated())
+			return
+
+		var/obj/item/device/pda/PDA = astype(usr, /mob/living/carbon/human)?.get_pda_or_null()
+		if(!PDA)
+			return
+
+		PDA.open_shop_page(usr)
 
 /obj/machinery/status_display/proc/set_message(m1, m2)
 	if(m1)
@@ -241,6 +296,81 @@
 	// new /obj/item/wallframe/status_display(loc) // TODO add?
 	..()
 
+/obj/effect/ad_part
+	name = "item ad"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+
+	icon = 'icons/obj/status_display.dmi'
+	icon_state = "ad_middle"
+
+	vis_flags = VIS_INHERIT_ID
+
+/obj/effect/ad_part/singularity_act()
+	return
+
+/obj/effect/ad_part/singularity_pull()
+	return
+
+
+/obj/machinery/status_display/proc/show_ad_1(ads_in_a_row = 1)
+	if(!global.online_shop_ads || !check_active_cargonauts())
+		addtimer(CALLBACK(src, PROC_REF(show_ad_1)), AD_DELAY * AD_LENGTH)
+		return
+
+	if(ads_in_a_row < 3) //Show 5 ads in a row
+		addtimer(CALLBACK(src, PROC_REF(show_ad_1), ads_in_a_row + 1), AD_LENGTH)
+	else
+		addtimer(CALLBACK(src, PROC_REF(show_ad_1)), AD_DELAY * AD_LENGTH)
+
+	var/datum/shop_lot/lot = SScargoshop.get_advertisement_lot()
+	if(!lot)
+		return
+
+	VARSET_IN(src, mode, mode, AD_LENGTH - 1)
+	mode = 7
+
+	chiptune_player.playing = TRUE
+	INVOKE_ASYNC(chiptune_player, TYPE_PROC_REF(/datum/music_player, playsong), null)
+	ad_background.icon_state = "ad_middle"
+
+	vis_contents += ad_background
+	flick("ad_start", ad_background)
+	addtimer(CALLBACK(src, PROC_REF(show_ad_2)), 26)
+
+/obj/machinery/status_display/proc/show_ad_2()
+	var/datum/shop_lot/lot = SScargoshop.get_advertisement_lot()
+	if(!lot || (mode != 7))
+		vis_contents -= ad_background
+		chiptune_player.playing = FALSE
+		return
+
+	ad_item_name = lot.name
+
+	var/atom/package = locate(lot.lot_item_ref)
+	var/atom/lot_item = package.contents[1]
+
+	var/price = lot.get_discounted_price() + lot.get_delivery_cost()
+	price = sanitize("[price]", max_length = 5, trim = TRUE)
+	price = {"<div style="font-size:[FONT_SIZE];color:#ebebeb;line-height:[LINE_HEIGHT];font-family:'[FONT_STYLE]';text-align:right;" valign="bottom"> [price]$</div>"}
+	ad_background.maptext = price
+
+	ad_item.icon = lot_item.icon
+	ad_item.icon_state = lot_item.icon_state
+	ad_item.alpha = 255
+	ad_item.pixel_y = 32
+	ad_item.add_filter("monitor", 1, alpha_mask_filter(y = -32, icon = icon('icons/obj/status_display.dmi', "ad_item_mask")))
+	vis_contents += ad_item
+	animate(ad_item, pixel_y = 4, time = 5, flags = ANIMATION_PARALLEL)
+	animate(ad_item.filters[1], y = -4, time = 5, flags = ANIMATION_PARALLEL)
+
+	addtimer(CALLBACK(src, PROC_REF(show_ad_3)), 50)
+
+/obj/machinery/status_display/proc/show_ad_3()
+	ad_background.maptext = ""
+	ad_background.icon_state = "outline"
+	flick("ad_end", ad_background)
+	ad_item.alpha = 0
 
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'

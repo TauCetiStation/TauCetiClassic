@@ -304,7 +304,7 @@
 			LAZYADD(virus_types_by_pool[pool], e)
 
 	global.ringtones_by_names = list()
-	for(var/datum/ringtone/Ring as anything in subtypesof(/datum/ringtone))
+	for(var/datum/music_composition/ringtone/Ring as anything in subtypesof(/datum/music_composition/ringtone))
 		global.ringtones_by_names["[initial(Ring.name)]"] = new Ring
 
 	global.package_wrap_by_type = list()

@@ -513,6 +513,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		if(!usr)
 			return
 
+		if(!ishuman(usr))
+			return
+
 		if(issilicon(usr))
 			return
 
@@ -531,7 +534,9 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		if(!LAZYACCESS(usr.client.browsers, VENDING_WINDOW_ID))
 			return
 
-		var/obj/item/device/pda/PDA = locate() in usr
+		var/mob/living/carbon/human/H = usr
+
+		var/obj/item/device/pda/PDA = H.get_pda_or_null()
 		if(!PDA)
 			return
 
