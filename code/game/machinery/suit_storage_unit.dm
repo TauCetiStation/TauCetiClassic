@@ -258,7 +258,7 @@
 	cut_overlay(door)
 	vis_contents += door
 	if(opening)
-		new /obj/effect/abstract/particle_holder(get_turf(src), /particles/suit_storage_mist, PARTICLE_FADEOUT|PARTICLE_FLICK)
+		new /obj/effect/abstract/particle_holder(get_turf(src), /particles/mist/suit_storage, PARTICLE_FADEOUT|PARTICLE_FLICK)
 		animate(door, pixel_y = -1, time = 10, easing = JUMP_EASING|EASE_OUT, flags = ANIMATION_PARALLEL, tag="door_animation")
 		animate(pixel_x = 10, time = 10, easing = CUBIC_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	else
