@@ -391,11 +391,15 @@
 /atom/proc/hitby(atom/movable/AM, datum/thrownthing/throwingdatum)
 	return
 
-/atom/proc/add_hiddenprint(mob/living/M)
+/atom/proc/add_hiddenprint(mob/living/M, full_print = null)
 	if(!M || !M.key)
 		return
+	//He has no prints!
 	if(fingerprintslast != M.key)
-		LAZYADD(fingerprintshidden, "\[[time_stamp()]\] Real name: [M.real_name], Key: [M.key]")
+		if(length(full_print) != 32 || (FINGERPRINTS in M.mutations) || HAS_TRAIT(M, TRAIT_NO_FINGERPRINT))
+			LAZYADD(fingerprintshidden, "(Has no fingerprints) Real name: [M.real_name], Key: [M.key]")
+		else
+			LAZYADD(fingerprintshidden, "\[[time_stamp()]\] Real name: [M.real_name], Key: [M.key]")
 		fingerprintslast = M.key
 	return
 
@@ -411,12 +415,8 @@
 		//Hash this shit.
 		var/full_print = H.get_full_print()
 
-		//He has no prints!
-		if (length(full_print) != 32 || (FINGERPRINTS in H.mutations) || HAS_TRAIT(H, TRAIT_NO_FINGERPRINT))
-			if(fingerprintslast != H.key) //Admins still gotta know
-				LAZYADD(fingerprintshidden, "(Has no fingerprints) Real name: [H.real_name], Key: [H.key]")
-				fingerprintslast = H.key
-			return FALSE
+		//Always add hidenprints for admin abuse
+		add_hiddenprint(H, full_print)
 
 		//First, make sure their DNA makes sense.
 		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 3*DNA_UI_LENGTH))

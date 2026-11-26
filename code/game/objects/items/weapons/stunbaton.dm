@@ -103,9 +103,6 @@
 	else
 		STOP_PROCESSING(SSobj, src)
 	status = value
-/obj/item/weapon/melee/baton/pickup(mob/user)
-	. = ..()
-	add_hiddenprint(user)
 
 /obj/item/weapon/melee/baton/equipped(mob/living/user, slot)
 	. = ..()
