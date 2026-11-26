@@ -342,7 +342,7 @@ var/global/list/slime_colors = list(
 	adulttype = /mob/living/carbon/slime/adult/oil
 	coretype = /obj/item/slime_extract/oil
 
-/mob/living/carbon/slime/oil/handle_mob_step()
+/mob/living/carbon/slime/oil/handle_slime_step()
 	..()
 	new /obj/effect/decal/cleanable/blood/oil(src.loc)
 
@@ -357,7 +357,7 @@ var/global/list/slime_colors = list(
 	adulttype = /mob/living/carbon/slime/adult/oil
 	coretype = /obj/item/slime_extract/oil
 
-/mob/living/carbon/slime/adult/oil/handle_mob_step()
+/mob/living/carbon/slime/adult/oil/handle_slime_step()
 	..()
 	new /obj/effect/decal/cleanable/blood/oil(src.loc)
 
@@ -417,7 +417,7 @@ var/global/list/slime_colors = list(
 	adulttype = /mob/living/carbon/slime/adult/bluespace
 	coretype = /obj/item/slime_extract/bluespace
 
-/mob/living/carbon/slime/bluespace/handle_mob_step()
+/mob/living/carbon/slime/bluespace/handle_slime_step()
 	var/matrix/M = matrix()
 	M.Scale(0.25, 0.25)
 
@@ -435,7 +435,7 @@ var/global/list/slime_colors = list(
 	adulttype = /mob/living/carbon/slime/adult/bluespace
 	coretype = /obj/item/slime_extract/bluespace
 
-/mob/living/carbon/slime/adult/bluespace/handle_mob_step()
+/mob/living/carbon/slime/adult/bluespace/handle_slime_step()
 	var/matrix/M = matrix()
 	M.Scale(0.25, 0.25)
 

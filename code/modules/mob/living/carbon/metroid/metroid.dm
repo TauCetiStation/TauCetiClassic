@@ -155,7 +155,7 @@
 
 	return tally + config.slime_delay
 
-/mob/living/carbon/slime/handle_mob_step()
+/mob/living/carbon/slime/handle_slime_step()
 	var/matrix/M = matrix()
 	M.Scale(1, 1.5)
 
@@ -354,6 +354,9 @@
 
 /mob/living/carbon/slime/can_pickup(obj/O)
 	return FALSE
+
+/mob/living/carbon/slime/proc/handle_slime_step()
+	return
 
 /obj/item/slime_extract
 	name = "slime extract"
