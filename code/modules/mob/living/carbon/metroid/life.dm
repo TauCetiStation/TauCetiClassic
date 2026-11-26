@@ -62,6 +62,7 @@
 	else if(ATarget in view(7, src))
 		if(!ATarget.Adjacent(src))
 			step_to(src, ATarget)
+			handle_slime_step()
 	else
 		ATarget = null
 	return
@@ -133,6 +134,7 @@
 				if(Target in view(7, src))
 					if(!Target.Adjacent(src)) // Bug of the month candidate: slimes were attempting to move to target only if it was directly next to them, which caused them to target things, but not approach them
 						step_to(src, Target)
+						handle_slime_step()
 
 				else
 					Target = null
@@ -295,7 +297,9 @@
 						M.tame = tame
 						M.rabid = rabid
 						M.Discipline = Discipline
-						if(i != 1) step_away(M,src)
+						if(i != 1)
+							step_away(M,src)
+							handle_slime_step()
 					else
 						var/mutations = pick("one","two","three","four")
 						switch(mutations)
@@ -306,7 +310,9 @@
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
+								if(i != 1)
+									step_away(M,src)
+									handle_slime_step()
 							if("two")
 								var/mob/living/carbon/slime/M = new mutationtwo(loc)
 								M.powerlevel = round(powerlevel/4)
@@ -314,7 +320,9 @@
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
+								if(i != 1)
+									step_away(M,src)
+									handle_slime_step()
 							if("three")
 								var/mob/living/carbon/slime/M = new mutationthree(loc)
 								M.powerlevel = round(powerlevel/4)
@@ -322,7 +330,9 @@
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
+								if(i != 1)
+									step_away(M,src)
+									handle_slime_step()
 							if("four")
 								var/mob/living/carbon/slime/M = new mutationfour(loc)
 								M.powerlevel = round(powerlevel/4)
@@ -330,7 +340,9 @@
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
+								if(i != 1)
+									step_away(M,src)
+									handle_slime_step()
 
 				qdel(src)
 
@@ -452,18 +464,21 @@
 					holding_still = max(holding_still - 1, 0)
 				else if(canmove && isturf(loc))
 					step_to(src, Leader)
+					handle_slime_step()
 
 			else if(hungry)
 				if (holding_still)
 					holding_still = max(holding_still - hungry, 0)
 				else if(canmove && isturf(loc) && prob(50))
 					step(src, pick(cardinal))
+					handle_slime_step()
 
 			else
 				if(holding_still)
 					holding_still = max(holding_still - 1, 0)
 				else if(canmove && isturf(loc) && prob(33))
 					step(src, pick(cardinal))
+					handle_slime_step()
 		else if(!AIproc)
 			spawn()
 				AIprocess()
