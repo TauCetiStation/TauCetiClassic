@@ -64,6 +64,8 @@
 	var/coretype = /obj/item/slime_extract/grey
 	var/mob/living/last_pointed = null
 
+	var/jump_height = 18
+
 /mob/living/carbon/slime/atom_init()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_PAIN, INNATE_TRAIT)
@@ -79,6 +81,8 @@
 
 	nutrition = 800 // 1200 = max
 	w_class = SIZE_HUMAN
+
+	jump_height = 12
 
 
 /mob/living/carbon/slime/atom_init()
@@ -111,6 +115,8 @@
 	Leader = null
 	if(Friends.len)
 		Friends.Cut()
+
+	UnregisterSignal(src, list(COMSIG_CLIENTMOB_MOVING))
 	return ..()
 
 /mob/living/carbon/slime/regenerate_icons()
@@ -148,6 +154,16 @@
 	tally += count_pull_debuff()
 
 	return tally + config.slime_delay
+
+/mob/living/carbon/slime/handle_slime_step()
+	var/matrix/M = matrix()
+	M.Scale(1, 1.5)
+
+	animate(src, time = 2, pixel_y = jump_height, transform = M, easing = BACK_EASING|EASE_IN)
+	animate(time = 3, pixel_y = 0, transform = null, easing = BACK_EASING|EASE_OUT)
+
+	var/obj/effect/abstract/particle_holder/Holder = new /obj/effect/abstract/particle_holder(loc, /particles/splash/slime, PARTICLE_FADEOUT|PARTICLE_FLICK)
+	Holder.modify_particles_value("color", global.slime_colors[colour])
 
 /mob/living/carbon/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)
@@ -338,6 +354,9 @@
 
 /mob/living/carbon/slime/can_pickup(obj/O)
 	return FALSE
+
+/mob/living/carbon/slime/proc/handle_slime_step()
+	return
 
 /obj/item/slime_extract
 	name = "slime extract"

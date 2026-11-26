@@ -642,6 +642,21 @@
 	if(wear_id)
 		return wear_id.GetID()
 
+/mob/living/carbon/human/proc/get_pda_or_null()
+	if(istype(wear_id, /obj/item/device/pda))
+		return wear_id
+
+	if(istype(belt, /obj/item/device/pda))
+		return belt
+
+	if(istype(r_store, /obj/item/device/pda))
+		return r_store
+
+	if(istype(l_store, /obj/item/device/pda))
+		return l_store
+
+	return null
+
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
 /mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)

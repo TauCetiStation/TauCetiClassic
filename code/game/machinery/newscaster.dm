@@ -983,6 +983,9 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		if(!usr)
 			return
 
+		if(!ishuman(usr))
+			return
+
 		if(issilicon(usr))
 			return
 
@@ -1008,7 +1011,9 @@ var/global/list/obj/machinery/newscaster/allCasters = list() //Global list that 
 		if(!(text2num(referrer_account) in viewing_channel.get_authors_account_numbers()))
 			return
 
-		var/obj/item/device/pda/PDA = locate() in usr
+		var/mob/living/carbon/human/H = usr
+
+		var/obj/item/device/pda/PDA = H.get_pda_or_null()
 		if(!PDA)
 			return
 

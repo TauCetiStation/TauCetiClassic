@@ -646,10 +646,10 @@
 
 	contents_by_slot = alist(
 		SLOT_S_STORE = /obj/item/weapon/tank/jetpack/oxygen,
-		SLOT_WEAR_SUIT = /obj/item/clothing/suit/armor/captain,
-		SLOT_HEAD = /obj/item/clothing/head/helmet/space/capspace,
+		SLOT_WEAR_SUIT = /obj/item/clothing/suit/space/rig/captain,
+		SLOT_HEAD = null,
 		SLOT_WEAR_MASK = /obj/item/clothing/mask/breath/gas/coloured,
-		SLOT_SHOES = /obj/item/clothing/shoes/magboots
+		SLOT_SHOES = null
 	)
 
 	req_access = list(access_captain)
