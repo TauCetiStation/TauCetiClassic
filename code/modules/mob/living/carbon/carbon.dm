@@ -744,7 +744,7 @@
 			return
 
 	//actually throw it!
-	if (item)
+	if(item)
 		visible_message("<span class='rose'>[src] has thrown [item].</span>")
 
 		if(isitem(item))
