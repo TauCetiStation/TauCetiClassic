@@ -21,6 +21,7 @@
 #define CHRISTMAS        "Christmas"
 #define GARBAGEDAY       "Garbage Day"
 #define MONKEYDAY        "Monkey Day"
+#define CHINESE_NEW_YEAR "Chinese New Year"
 
 
 #define MONDAY    "Mon"

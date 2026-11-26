@@ -67327,6 +67327,9 @@
 /area/station/tcommsat/computer)
 "cDP" = (
 /obj/structure/sign/poster/ripped,
+/obj/effect/spawner/tape/engineering{
+	dir = 4
+	},
 /turf/simulated/wall,
 /area/station/maintenance/engineering)
 "cDR" = (
@@ -70743,6 +70746,12 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
+"dCf" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 8
+	},
+/turf/simulated/wall,
+/area/station/construction)
 "dCu" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/two,
@@ -71988,6 +71997,12 @@
 	icon_state = "whitered"
 	},
 /area/station/medical/reception)
+"eTq" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 5
+	},
+/turf/simulated/wall,
+/area/station/maintenance/engineering)
 "eTw" = (
 /obj/machinery/light/smart{
 	dir = 1
@@ -72934,6 +72949,12 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /turf/simulated/floor,
 /area/station/engineering/atmos)
+"fRN" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 8
+	},
+/turf/simulated/wall,
+/area/station/maintenance/engineering)
 "fRW" = (
 /obj/structure/object_wall/pod{
 	dir = 1;
@@ -74261,6 +74282,15 @@
 	icon_state = "neutralcorner"
 	},
 /area/station/hallway/secondary/entry)
+"heg" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 6
+	},
+/obj/effect/spawner/tape/engineering{
+	dir = 1
+	},
+/turf/simulated/wall,
+/area/station/maintenance/engineering)
 "hga" = (
 /obj/machinery/computer/security/telescreen{
 	desc = "Used for watching the Engineering Department.";
@@ -75010,6 +75040,12 @@
 	},
 /turf/simulated/floor/grid_floor,
 /area/station/maintenance/chapel)
+"hPG" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 2
+	},
+/turf/simulated/wall,
+/area/station/maintenance/engineering)
 "hPU" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'KEEP CLEAR OF DOCKING AREA'.";
@@ -78048,6 +78084,12 @@
 /obj/structure/closet/firecloset/full,
 /turf/simulated/floor/smoothtile/dark,
 /area/station/ai_monitored/eva)
+"kCT" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 1
+	},
+/turf/simulated/wall,
+/area/station/construction)
 "kCZ" = (
 /turf/simulated/shuttle/floor/cargo{
 	icon_state = "2,6"
@@ -82265,6 +82307,10 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/station/civilian/chapel/mass_driver)
+"oRi" = (
+/obj/effect/spawner/tape/engineering,
+/turf/simulated/wall,
+/area/station/construction)
 "oRm" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
@@ -82947,6 +82993,12 @@
 	icon_state = "dark"
 	},
 /area/station/civilian/hydroponics)
+"pFj" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 9
+	},
+/turf/simulated/wall,
+/area/station/maintenance/engineering)
 "pGd" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -84592,6 +84644,12 @@
 	icon_state = "whitegreen"
 	},
 /area/station/medical/virology)
+"roG" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 1
+	},
+/turf/simulated/wall,
+/area/station/construction/assembly_line)
 "rpb" = (
 /obj/structure/stool,
 /turf/simulated/floor{
@@ -84820,6 +84878,12 @@
 	icon_state = "white"
 	},
 /area/station/medical/hallway)
+"rAR" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 10
+	},
+/turf/simulated/wall,
+/area/station/maintenance/engineering)
 "rBb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -86043,6 +86107,12 @@
 	icon_state = "freezerfloor"
 	},
 /area/station/medical/virology)
+"sFS" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 1
+	},
+/turf/simulated/wall,
+/area/station/maintenance/engineering)
 "sGb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -87693,6 +87763,10 @@
 	},
 /turf/simulated/floor,
 /area/station/civilian/locker)
+"uOX" = (
+/obj/effect/spawner/tape/engineering,
+/turf/simulated/wall,
+/area/station/construction/assembly_line)
 "uPw" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Showers"
@@ -89362,6 +89436,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/cargo/qm)
+"xQa" = (
+/obj/effect/spawner/tape/engineering{
+	dir = 4
+	},
+/turf/simulated/wall,
+/area/station/construction)
 "xQr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -113410,10 +113490,10 @@ aah
 aah
 bIZ
 ciJ
-bIZ
+hPG
 bXY
 cJC
-bIZ
+heg
 bXY
 bXY
 bIZ
@@ -113929,11 +114009,11 @@ cGH
 cIj
 bRo
 bzr
-bIZ
-bIZ
+pFj
+hPG
 dyF
-bIZ
-bIZ
+sFS
+eTq
 bIZ
 bIZ
 aSL
@@ -114695,13 +114775,13 @@ cJX
 bIZ
 bSt
 bIZ
-bIZ
+fRN
 bIZ
 bIZ
 jir
 jir
 aPx
-bIZ
+rAR
 bIZ
 bIZ
 cJX
@@ -117011,7 +117091,7 @@ ckc
 rgb
 cmg
 cJl
-chV
+xQa
 bJc
 uns
 crH
@@ -117525,7 +117605,7 @@ cmA
 cgM
 agt
 cmg
-chV
+dCf
 bJc
 cJa
 crH
@@ -117769,9 +117849,9 @@ bLW
 bLW
 bVo
 bVo
-bVo
+uOX
 chc
-bVo
+roG
 bVo
 bVo
 bVo
@@ -119064,9 +119144,9 @@ fxg
 cJV
 chV
 chV
-chV
+oRi
 jal
-chV
+kCT
 chV
 bJc
 bQl
@@ -119569,11 +119649,11 @@ bLW
 bVo
 bVo
 bVo
-bVo
+uOX
 cag
 bTv
 bUX
-bVo
+roG
 bIZ
 bIZ
 cdi
