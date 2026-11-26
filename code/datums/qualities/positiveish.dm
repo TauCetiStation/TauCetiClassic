@@ -372,14 +372,21 @@
 	jobs_required = list("Cargo Technician")
 
 /datum/quality/positiveish/psc/add_effect(mob/living/carbon/human/H)
-	H.equip_or_collect(new /obj/item/clothing/suit/armor/vest(H), SLOT_WEAR_SUIT)
-	if(is_species(H, TAJARAN))
-		H.equip_or_collect(new /obj/item/device/flash(H), SLOT_IN_BACKPACK)
-	else
-		H.equip_or_collect(new /obj/item/weapon/gun/projectile/automatic/pistol/wjpp(H), SLOT_S_STORE)
-		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
-		H.equip_or_collect(new /obj/item/ammo_box/magazine/wjpp/rubber(H), SLOT_IN_BACKPACK)
-	H.equip_or_collect(new /obj/item/weapon/paper/psc(H), SLOT_IN_BACKPACK)
+	H.equipOutfit(/datum/outfit/job/cargo_psc)
+
+	var/obj/item/weapon/card/id/ID = H.wear_id
+	if(!istype(ID))
+		return
+	ID.assignment = JOB_CARGO_PSC
+	ID.rank = ID.assignment
+	ID.assign(ID.registered_name)
+
+	var/obj/item/device/pda/PDA = H.belt
+	if(istype(PDA))
+		PDA.ownjob = ID.assignment
+		PDA.ownrank = ID.assignment
+
+	data_core.manifest_modify(ID.registered_name, ID.assignment)
 
 
 /datum/quality/positiveish/selfdefense

@@ -49,6 +49,9 @@ SUBSYSTEM_DEF(ticker)
 	var/force_end = FALSE // set TRUE to forse round end and show credits
 
 	var/end_timer_id
+	var/edict_persistence_wait_deadline
+	var/edict_persistence_delay_announced = FALSE
+	var/edict_persistence_timeout_announced = FALSE
 
 /datum/controller/subsystem/ticker/PreInit()
 	login_music = pick(\
@@ -186,6 +189,18 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, "<span class='info bold'>Рестарт задержан из-за голосования.</span>")
 			vote_delay_announced = TRUE
 		delayed = TRUE
+
+	if(SSedicts && SSedicts.round_end_in_progress)
+		if(!edict_persistence_wait_deadline)
+			edict_persistence_wait_deadline = world.time + EDICT_ROUND_END_GRACE_PERIOD
+		if(world.time < edict_persistence_wait_deadline)
+			if(!edict_persistence_delay_announced)
+				to_chat(world, "<span class='info bold'>Рестарт задержан до сохранения указов.</span>")
+				edict_persistence_delay_announced = TRUE
+			delayed = TRUE
+		else if(!edict_persistence_timeout_announced)
+			warning("Timed out waiting for round-end edict persistence. Rebooting anyway.")
+			edict_persistence_timeout_announced = TRUE
 
 	if(delayed)
 		end_timer_id = addtimer(CALLBACK(src, PROC_REF(try_to_end)), 5 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
@@ -548,6 +563,8 @@ SUBSYSTEM_DEF(ticker)
 	if(config.ooc_round_autotoggle)
 		to_chat(world, "<span class='notice bold'>OOC-канал включен для всех!</span>")
 		ooc_allowed = TRUE
+
+	SEND_SIGNAL(src, COMSIG_TICKER_DECLARE_COMPLETION)
 
 	var/station_evacuated
 	if(SSshuttle.location > 0)

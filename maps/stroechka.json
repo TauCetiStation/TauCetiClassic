@@ -10,6 +10,7 @@
     "space_empty_levels": 1,
     "load_junkyard": 0,
     "minetype": null,
+    "blocked_edicts": ["cargo_guard"],
     "traits":[{
         "Linkage": null,
         "Environment Type": "Snow",
