@@ -103,13 +103,14 @@
 	else
 		STOP_PROCESSING(SSobj, src)
 	status = value
+/obj/item/weapon/melee/baton/pickup(mob/user)
+	. = ..()
+	add_hiddenprint(user)
 
 /obj/item/weapon/melee/baton/equipped(mob/living/user, slot)
 	. = ..()
 	if(!istype(user))
 		return
-	add_fingerprint(user)
-	add_hiddenprint(user)
 	if(slot == SLOT_L_HAND || slot == SLOT_R_HAND)
 		set_status(user.a_intent, status)
 		RegisterSignal(user, COMSIG_LIVING_INTENT_CHANGE, PROC_REF(attempt_change_work), override = TRUE)
