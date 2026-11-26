@@ -1876,7 +1876,7 @@
 		return
 
 	if(check_pierce_protection(target_zone = BP_CHEST))
-		to_chat(user, "<span class='warning'>Нужно раскрыть торс [CASE(src, GENITIVE_CASE)], чтобы провести сердечно-лёгочную реанимацию!.</span>")
+		to_chat(user, "<span class='warning'>Нужно раскрыть грудь [CASE(src, GENITIVE_CASE)], чтобы провести сердечно-лёгочную реанимацию!.</span>")
 		return
 
 	if(user.is_busy(src))
