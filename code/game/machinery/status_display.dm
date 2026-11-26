@@ -366,16 +366,16 @@
 
 	ad_item_name = lot.name
 
-	var/atom/L = locate(lot.lot_item_ref)
-	var/atom/A = L.contents[1]
+	var/atom/package = locate(lot.lot_item_ref)
+	var/atom/lot_item = package.contents[1]
 
 	var/price = lot.get_discounted_price() + lot.get_delivery_cost()
 	price = sanitize("[price]", max_length = 5, trim = TRUE)
 	price = {"<div style="font-size:[FONT_SIZE];color:#ebebeb;line-height:[LINE_HEIGHT];font-family:'[FONT_STYLE]';text-align:right;" valign="bottom"> [price]$</div>"}
 	ad_background.maptext = price
 
-	ad_item.icon = A.icon
-	ad_item.icon_state = A.icon_state
+	ad_item.icon = lot_item.icon
+	ad_item.icon_state = lot_item.icon_state
 	ad_item.alpha = 255
 	ad_item.pixel_y = 32
 	ad_item.add_filter("monitor", 1, alpha_mask_filter(y = -32, icon = icon('icons/obj/status_display.dmi', "ad_item_mask")))
