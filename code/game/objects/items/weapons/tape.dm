@@ -1,125 +1,104 @@
 //Define all tape types in policetape.dm
 /obj/item/taperoll
 	name = "tape roll"
+	cases = list("рулон оградительной ленты", "рулона оградительной ленты", "рулону оградительной ленты", "рулон оградительной ленты", "рулоном оградительной ленты", "рулоне оградительной ленты")
 	icon = 'icons/obj/tape.dmi'
 	icon_state = "rollstart"
 	w_class = SIZE_TINY
 	var/turf/start
-	var/turf/end
-	var/tape_type = /obj/item/tape
-	var/icon_base
-
-/obj/item/tape
-	name = "tape"
-	icon = 'icons/obj/tape.dmi'
-	anchored = TRUE
-	density = TRUE
+	var/obj/effect/ebeam/tape/tape_type = /obj/effect/ebeam/tape
 	var/icon_base
 
 /obj/item/taperoll/police
 	name = "police tape"
-	desc = "A roll of police tape used to block off crime scenes from the public."
+	desc = "Рулон полицейской оградительной ленты для оцепления мест преступления."
 	icon_state = "police_start"
-	tape_type = /obj/item/tape/police
+	tape_type = /obj/effect/ebeam/tape/police
 	icon_base = "police"
 
-/obj/item/tape/police
+/obj/effect/ebeam/tape/police
 	name = "police tape"
-	desc = "A length of police tape. Do not cross."
+	desc = "Полицейская оградительная лента. Не пересекать."
+	icon_state = "policetape"
 	req_one_access = list(access_security, access_forensics_lockers)
-	icon_base = "police"
+
+	destroy_particle = /particles/package_wrap/policetape
 
 /obj/item/taperoll/engineering
 	name = "engineering tape"
-	desc = "A roll of engineering tape used to block off working areas from the public."
+	desc = "Рулон инженерной оградительной ленты для оцепления мест проведения работ."
 	icon_state = "engineering_start"
-	tape_type = /obj/item/tape/engineering
+	tape_type = /obj/effect/ebeam/tape/engineering
 	icon_base = "engineering"
 
-/obj/item/tape/engineering
+/obj/effect/ebeam/tape/engineering
 	name = "engineering tape"
-	desc = "A length of engineering tape. Better not cross it."
+	desc = "Инженерная оградительная лента. Не пересекать."
+	icon_state = "engineeringtape"
 	req_one_access = list(access_engine,access_atmospherics)
-	icon_base = "engineering"
+
+	destroy_particle = /particles/package_wrap/engitape
 
 /obj/item/taperoll/science
 	name = "science tape"
-	desc = "A roll of science tape used to block off things scientists dont want you to touch."
+	desc = "Рулон белой оградительной ленты для оцепления опасных мест."
 	icon_state = "science_start"
-	tape_type = /obj/item/tape/science
+	tape_type = /obj/effect/ebeam/tape/science
 	icon_base = "science"
 
-/obj/item/tape/science
+/obj/effect/ebeam/tape/science
 	name = "science tape"
-	desc = "A snow-white science tape. Should you cross it?"
+	desc = "Белая оградительная лента. Не пересекать."
+	icon_state = "sciencetape"
 	req_one_access = list(access_research)
-	icon_base = "science"
+
+	destroy_particle = /particles/package_wrap/scitape
 
 /obj/item/taperoll/attack_self(mob/user)
-	if(icon_state == "[icon_base]_start")
-		start = get_turf(src)
-		to_chat(usr, "<span class='notice'>You place the first end of the [src].</span>")
-		icon_state = "[icon_base]_stop"
-	else
-		icon_state = "[icon_base]_start"
-		end = get_turf(src)
-		if(start.y != end.y && start.x != end.x || start.z != end.z)
-			to_chat(usr, "<span class='notice'>[src] can only be laid horizontally or vertically.</span>")
-			return
+	if(!start)
+		return ..()
 
-		var/turf/cur = start
-		var/dir
-		if (start.x == end.x)
-			var/d = end.y-start.y
-			if(d) d = d/abs(d)
-			end = get_turf(locate(end.x,end.y+d,end.z))
-			dir = "v"
-		else
-			var/d = end.x-start.x
-			if(d) d = d/abs(d)
-			end = get_turf(locate(end.x+d,end.y,end.z))
-			dir = "h"
-
-		var/can_place = 1
-		while (cur!=end && can_place)
-			if(cur.density == 1)
-				can_place = 0
-			else if (isspaceturf(cur))
-				can_place = 0
-			else
-				for(var/obj/O in cur)
-					if(!istype(O, /obj/item/tape) && O.density)
-						can_place = 0
-						break
-			cur = get_step_towards(cur,end)
-		if (!can_place)
-			to_chat(usr, "<span class='notice'>You can't run \the [src] through that!</span>")
-			return
-
-		cur = start
-		var/tapetest = 0
-		while (cur!=end)
-			for(var/obj/item/tape/Ptest in cur)
-				if(Ptest.icon_state == "[Ptest.icon_base]_[dir]")
-					tapetest = 1
-			if(tapetest != 1)
-				var/obj/item/tape/P = new tape_type(cur)
-				P.icon_state = "[P.icon_base]_[dir]"
-			cur = get_step_towards(cur,end)
-		to_chat(usr, "<span class='notice'>You finish placing the [src].</span>")
+	start = null
+	icon_state = "[icon_base]_start"
+	to_chat(user, "<span class='notice'>Вы стягиваете [CASE(src, ACCUSATIVE_CASE)].</span>")
 
 /obj/item/taperoll/afterattack(atom/target, mob/user, proximity, params)
 	if(!proximity)
 		return
-	if(istype(target, /obj/machinery/door/airlock))
-		var/turf/T = get_turf(target)
-		var/obj/item/tape/P = new tape_type(T.x,T.y,T.z)
-		P.loc = locate(T.x,T.y,T.z)
-		P.icon_state = "[icon_base]_door"
-		P.layer = 3.2
-		to_chat(user, "<span class='notice'>You finish placing the [src].</span>")
 
-/obj/item/tape/CanPass(atom/movable/mover, turf/target, height=0)
+	var/turf/T = get_turf(target)
+
+	if(start)
+		if(get_dist(start, T) > 5)
+			to_chat(user, "<span class='warning'>Слишком большое расстояние!</span>")
+			return
+
+		create_beam(user, start, T)
+		return
+
+	to_chat(user, "<span class='notice'>Вы начинаете натягивать [CASE(src, ACCUSATIVE_CASE)].</span>")
+	icon_state = "[icon_base]_stop"
+	start = T
+
+/obj/item/taperoll/proc/create_beam(mob/user, turf/From, turf/To)
+	var/datum/beam/beam = From.Beam(To, tape_type::icon_state, tape_type::icon, time=INFINITY, maxdistance=10, beam_type=tape_type, loose_factor = 0.7, dense_beam = TRUE)
+
+	if(!beam)
+		return
+
+	var/obj/effect/ebeam/tape/tape = pick(beam.elements)
+	user.visible_message("<span class='notice'>[user] натягивает [CASE(tape, ACCUSATIVE_CASE)].</span>")
+
+	start = null
+	icon_state = "[icon_base]_start"
+
+
+/obj/effect/ebeam/tape
+	cases = list("оградительная лента", "оградительной ленты", "оградительной ленте", "оградительную ленту", "оградительной лентой", "оградительной ленте")
+	mouse_opacity = MOUSE_OPACITY_ICON
+	layer = INFRONT_MOB_LAYER
+
+/obj/effect/ebeam/tape/CanPass(atom/movable/mover, turf/target, height=0)
 	if(!density)
 		return TRUE
 	if(allowed(mover))
@@ -129,36 +108,47 @@
 	else
 		return FALSE
 
-/obj/item/tape/attackby(obj/item/I, mob/user, params)
+/obj/effect/ebeam/tape/attackby(obj/item/I, mob/user, params)
 	. = ..()
 	breaktape(I, user, FALSE)
 	user.SetNextMove(CLICK_CD_INTERACT)
 
-/obj/item/tape/attack_hand(mob/user)
+/obj/effect/ebeam/tape/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if (user.a_intent == INTENT_HELP && allowed(user))
-		user.visible_message("<span class='notice'>[user] lifts [src], allowing passage.</span>")
-		density = FALSE
-		VARSET_IN(src, density, TRUE, 20 SECONDS)
+		if(!density)
+			return
+
+		user.visible_message("<span class='notice'>[user] приподнимает [CASE(src, ACCUSATIVE_CASE)], позволяя пройти.</span>")
+		set_passage()
 	else
 		breaktape(null, user, FALSE)
 
-/obj/item/tape/attack_paw(mob/user)
+/obj/effect/ebeam/tape/proc/set_passage()
+	owner.loose_factor = -1
+	owner.dense_beam = FALSE
+	VARSET_IN(owner, loose_factor, 0.7, 4 SECONDS)
+	VARSET_IN(owner, dense_beam, TRUE, 4 SECONDS)
+	addtimer(CALLBACK(owner, TYPE_PROC_REF(/datum/beam, recalculate), TRUE), 5 SECONDS)
+
+	owner.recalculate(force_redraw = TRUE)
+
+/obj/effect/ebeam/tape/attack_paw(mob/user)
 	breaktape(null, user, FALSE)
 
-/obj/item/tape/attack_alien(mob/user)
+/obj/effect/ebeam/tape/attack_alien(mob/user)
 	breaktape(W = null, user = user, forced = FALSE)
 
-/obj/item/tape/attack_animal(mob/living/simple_animal/M)
+/obj/effect/ebeam/tape/attack_animal(mob/living/simple_animal/M)
 	breaktape(W = null, user = M, forced = FALSE)
 
-/obj/item/tape/blob_act()
+/obj/effect/ebeam/tape/blob_act()
 	breaktape(W = null, user = null, forced = TRUE)
 
-/obj/item/tape/ex_act()
+/obj/effect/ebeam/tape/ex_act()
 	breaktape(W = null, user = null, forced = TRUE)
 
-/obj/item/tape/Bumped(atom/movable/AM)
+/obj/effect/ebeam/tape/Bumped(atom/movable/AM)
 	if(istype(AM, /obj/mecha))
 		breaktape(W = null, user = null, forced = TRUE)
 	else if(isliving(AM))
@@ -166,32 +156,63 @@
 		if(L.a_intent == INTENT_HARM)
 			breaktape(W = null, user = L, forced = FALSE)
 
-/obj/item/tape/proc/breaktape(obj/item/weapon/W, mob/user, forced = FALSE)
+/obj/effect/ebeam/tape/proc/breaktape(obj/item/weapon/W, mob/user, forced = FALSE)
 	if((user && user.a_intent == INTENT_HELP) && (W && !W.can_puncture() && allowed(user)) && !forced)
-		to_chat(user, "<span class='warning'>You can't break the [src] with that!</span>")
+		to_chat(user, "<span class='warning'>Нельзя порвать [CASE(src, ACCUSATIVE_CASE)] этим!</span>")
 		return
+
 	if(user)
-		user.visible_message("<span class='notice'>[user] breaks the [src]!</span>")
+		user.visible_message("<span class='notice'>[user] рвёт [CASE(src, ACCUSATIVE_CASE)]!</span>")
 
-	var/dir[2]
-	var/icon_dir = icon_state
-	if(icon_dir == "[src.icon_base]_h")
-		dir[1] = EAST
-		dir[2] = WEST
-	if(icon_dir == "[src.icon_base]_v")
-		dir[1] = NORTH
-		dir[2] = SOUTH
 
-	for(var/i = 1 to 2)
-		var/N = 0
-		var/turf/cur = get_step(src,dir[i])
-		while(N != 1)
-			N = 1
-			for (var/obj/item/tape/P in cur)
-				if(P.icon_state == icon_dir)
-					N = 0
-					qdel(P)
-			cur = get_step(cur,dir[i])
+	owner.End()
 
-	qdel(src)
-	return
+
+
+/obj/effect/spawner/tape
+	name = "police tape spawner"
+	icon = 'icons/obj/tape.dmi'
+	icon_state = "tapespawn_pol"
+
+	layer = TALL_STRUCTURE
+
+	var/range = 5
+	var/obj/effect/ebeam/tape_type = /obj/effect/ebeam/tape/police
+	var/dense_tape = TRUE
+
+/obj/effect/spawner/tape/atom_init()
+	..()
+
+	var/turf/L = get_turf(src)
+
+	for(var/turf/T in getline(L, get_ranged_target_turf(src, dir, range)))
+		if(T == L)
+			continue
+
+		for(var/obj/effect/spawner/tape/tape in T.contents)
+			if(!tape)
+				continue
+			if(tape.dir != global.reverse_dir[dir])
+				continue
+
+			spawn_tape(L, T)
+			qdel(tape)
+
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/spawner/tape/proc/spawn_tape(turf/L, turf/T)
+	L.Beam(T, tape_type::icon_state, time=INFINITY, maxdistance=10, beam_type=tape_type, loose_factor = 0.7, dense_beam = dense_tape)
+
+/obj/effect/spawner/tape/engineering
+	name = "engineering tape spawner"
+	icon = 'icons/obj/tape.dmi'
+	icon_state = "tapespawn_eng"
+
+	tape_type = /obj/effect/ebeam/tape/engineering
+
+/obj/effect/spawner/tape/science
+	name = "science tape spawner"
+	icon = 'icons/obj/tape.dmi'
+	icon_state = "tapespawn_sci"
+
+	tape_type = /obj/effect/ebeam/tape/science

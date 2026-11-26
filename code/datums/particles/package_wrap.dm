@@ -22,3 +22,15 @@
 
 	gravity = list(0, -0.2, 0)
 	friction = 0.3
+
+/particles/package_wrap/policetape
+	count = 1
+	color = "#bfbf00"
+
+/particles/package_wrap/engitape
+	count = 1
+	color = "#eaa913"
+
+/particles/package_wrap/scitape
+	count = 1
+	color = "ababab"

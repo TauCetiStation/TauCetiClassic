@@ -324,8 +324,8 @@
 					continue
 				if(istype(A, /obj/structure/closet) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/machinery/door/window))
 					A.attack_animal(src)
-				if(istype(A, /obj/item/tape))
-					var/obj/item/tape/Tp = A
+				if(istype(A, /obj/effect/ebeam/tape))
+					var/obj/effect/ebeam/tape/Tp = A
 					Tp.breaktape(null, src, TRUE)
 
 /mob/living/simple_animal/hostile/proc/EscapeConfinement()
