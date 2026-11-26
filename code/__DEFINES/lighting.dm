@@ -23,6 +23,20 @@
 
 #define LIGHT_RANGE_FIRE 3 //How many tiles standard fires glow.
 
+#define INIT_EMISSIVE_BLOCKER(source) \
+	if(source.blocks_emissive && !source.emissive_blocker) { \
+		source.appearance_flags |= KEEP_TOGETHER; \
+		if(!source.render_target) { \
+			source.render_target = "emissive_blocker_[REF(source)]"; \
+		} \
+		source.emissive_blocker = new; \
+		source.emissive_blocker.render_source = source.render_target; \
+		source.vis_contents += source.emissive_blocker; \
+	}
+
+#define IS_EMISSIVE_RENDER_PLANE(P) ((P) == EMISSIVE_MASK_PLANE || (P) == EMISSIVE_COLOR_PLANE || (P) == EMISSIVE_VISIBILITY_PLANE)
+#define EMISSIVE_LIGHTING_ENABLED(C) (!C.prefs || C.prefs.emissive_lighting)
+
 #define LIGHTING_PLANE_ALPHA_VISIBLE 255
 #define LIGHTING_PLANE_ALPHA_NV_TRAIT 245
 #define LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE 192

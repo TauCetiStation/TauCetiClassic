@@ -73,6 +73,7 @@
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER
 			set_light(light_range_on, light_power_on)
+	update_emissive()
 
 /obj/machinery/computer/telescience/power_change()
 	..()

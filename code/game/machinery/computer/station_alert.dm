@@ -122,3 +122,4 @@
 			icon_state = "atmos_alert_2"
 		else
 			icon_state = "atmos_alert_0"
+	update_emissive()

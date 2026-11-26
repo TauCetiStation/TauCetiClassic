@@ -585,6 +585,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["randomslot"]        >> randomslot
 	S["parallax"]          >> parallax
 	S["ambientocclusion"]  >> ambientocclusion
+	S["emissive_lighting"] >> emissive_lighting
 	S["glowlevel"]         >> glowlevel
 	S["lampsexposure"]     >> lampsexposure
 	S["lampsglare"]        >> lampsglare
@@ -647,6 +648,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	window_scale		= sanitize_integer(window_scale, 0, 1, initial(window_scale))
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, PARALLAX_HIGH)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
+	emissive_lighting = sanitize_integer(emissive_lighting, 0, 1, initial(emissive_lighting))
 	glowlevel		= sanitize_integer(glowlevel, GLOW_HIGH, GLOW_DISABLE, initial(glowlevel))
 	eye_blur_effect = sanitize_integer(eye_blur_effect, 0, 1, initial(eye_blur_effect))
 	lampsexposure	= sanitize_integer(lampsexposure, 0, 1, initial(lampsexposure))
@@ -714,6 +716,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["randomslot"]        << randomslot
 	S["parallax"]          << parallax
 	S["ambientocclusion"]  << ambientocclusion
+	S["emissive_lighting"] << emissive_lighting
 	S["glowlevel"]         << glowlevel
 	S["eye_blur_effect"]   << eye_blur_effect
 	S["lampsexposure"]     << lampsexposure
