@@ -103,6 +103,7 @@
 
 		if(applied_damage && (P.damage_type == BRUTE))
 			var/hit_dir = get_dir(P, src)
+
 			var/travel_x = round(sin(dir2angle(hit_dir)) * (24 + impact_force * 4))
 			var/travel_y = round(cos(dir2angle(hit_dir)) * (24 + impact_force * 4))
 
