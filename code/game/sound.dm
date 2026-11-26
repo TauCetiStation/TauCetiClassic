@@ -459,7 +459,7 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 				"}
 			else
 				dat +={" <tr>
-						<td>No media server avalible</td>
+						<td colspan="2">No media server available</td>
 				</tr>
 				"}
 		dat += {"
