@@ -31,6 +31,8 @@ var/global/list/slime_colors = list(
 	adulttype = /mob/living/carbon/slime/adult/purple
 	coretype = /obj/item/slime_extract/purple
 
+	jump_height = 24
+
 /mob/living/carbon/slime/adult/purple
 	icon_state = "purple adult slime"
 	colour = "purple"
@@ -41,6 +43,8 @@ var/global/list/slime_colors = list(
 	mutationfour = /mob/living/carbon/slime/green
 	adulttype = /mob/living/carbon/slime/adult/purple
 	coretype = /obj/item/slime_extract/purple
+
+	jump_height = 18
 
 /mob/living/carbon/slime/metal
 	colour = "metal"
@@ -53,6 +57,8 @@ var/global/list/slime_colors = list(
 	adulttype = /mob/living/carbon/slime/adult/metal
 	coretype = /obj/item/slime_extract/metal
 
+	jump_height = 12
+
 /mob/living/carbon/slime/adult/metal
 	icon_state = "metal adult slime"
 	colour = "metal"
@@ -63,6 +69,8 @@ var/global/list/slime_colors = list(
 	mutationfour = /mob/living/carbon/slime/gold
 	adulttype = /mob/living/carbon/slime/adult/metal
 	coretype = /obj/item/slime_extract/metal
+
+	jump_height = 6
 
 /mob/living/carbon/slime/orange
 	colour = "orange"
@@ -334,6 +342,10 @@ var/global/list/slime_colors = list(
 	adulttype = /mob/living/carbon/slime/adult/oil
 	coretype = /obj/item/slime_extract/oil
 
+/mob/living/carbon/slime/oil/handle_slime_step()
+	..()
+	new /obj/effect/decal/cleanable/blood/oil(src.loc)
+
 /mob/living/carbon/slime/adult/oil
 	icon_state = "oil adult slime"
 	colour = "oil"
@@ -344,6 +356,10 @@ var/global/list/slime_colors = list(
 	mutationfour = /mob/living/carbon/slime/oil
 	adulttype = /mob/living/carbon/slime/adult/oil
 	coretype = /obj/item/slime_extract/oil
+
+/mob/living/carbon/slime/adult/oil/handle_slime_step()
+	..()
+	new /obj/effect/decal/cleanable/blood/oil(src.loc)
 
 
 /mob/living/carbon/slime/black
@@ -401,6 +417,13 @@ var/global/list/slime_colors = list(
 	adulttype = /mob/living/carbon/slime/adult/bluespace
 	coretype = /obj/item/slime_extract/bluespace
 
+/mob/living/carbon/slime/bluespace/handle_slime_step()
+	var/matrix/M = matrix()
+	M.Scale(0.25, 0.25)
+
+	animate(src, time = 2, alpha = 0, transform = M, easing = BOUNCE_EASING|EASE_IN)
+	animate(time = 3, alpha = 255, transform = null, easing = BOUNCE_EASING|EASE_OUT)
+
 /mob/living/carbon/slime/adult/bluespace
 	icon_state = "bluespace adult slime"
 	colour = "bluespace"
@@ -411,6 +434,13 @@ var/global/list/slime_colors = list(
 	mutationfour = /mob/living/carbon/slime/bluespace
 	adulttype = /mob/living/carbon/slime/adult/bluespace
 	coretype = /obj/item/slime_extract/bluespace
+
+/mob/living/carbon/slime/adult/bluespace/handle_slime_step()
+	var/matrix/M = matrix()
+	M.Scale(0.25, 0.25)
+
+	animate(src, time = 2, alpha = 0, transform = M, easing = BOUNCE_EASING|EASE_IN)
+	animate(time = 3, alpha = 255, transform = null, easing = BOUNCE_EASING|EASE_OUT)
 
 /mob/living/carbon/slime/cerulean
 	icon_state = "cerulean baby slime"

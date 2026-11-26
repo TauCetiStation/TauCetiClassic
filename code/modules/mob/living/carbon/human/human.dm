@@ -273,7 +273,7 @@
 		apply_damage(fire_damge * rand(50, 100) * 0.01, BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
 		apply_damage(brute_damge * rand(50, 100) * 0.01, BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
 		var/BP_bomb_protection = run_armor_check(BP, BOMB)
-		if(!prob(BP_bomb_protection) && EXPLODE_DEVASTATE)
+		if(!prob(BP_bomb_protection) && severity <= EXPLODE_HEAVY)
 			if(BP)
 				if(prob(50) && !BP.is_broken())
 					BP.fracture()
@@ -641,6 +641,21 @@
 /mob/living/carbon/human/proc/get_idcard()
 	if(wear_id)
 		return wear_id.GetID()
+
+/mob/living/carbon/human/proc/get_pda_or_null()
+	if(istype(wear_id, /obj/item/device/pda))
+		return wear_id
+
+	if(istype(belt, /obj/item/device/pda))
+		return belt
+
+	if(istype(r_store, /obj/item/device/pda))
+		return r_store
+
+	if(istype(l_store, /obj/item/device/pda))
+		return l_store
+
+	return null
 
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
