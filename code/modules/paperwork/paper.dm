@@ -584,6 +584,9 @@
 	else
 		return ..()
 
+/obj/item/weapon/paper/try_wrap_up(wrap_type, wrap_icon_state = "deliveryenvelope")
+	. = ..()
+
 /*
  * Premade paper
  */

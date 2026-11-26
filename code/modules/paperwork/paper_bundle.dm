@@ -225,3 +225,6 @@
 		desc += "\nThere is a photo attached to it."
 	add_overlay(image('icons/obj/bureaucracy.dmi', "clip"))
 	return
+
+/obj/item/weapon/paper_bundle/try_wrap_up(wrap_type, wrap_icon_state = "deliveryenvelope")
+	. = ..()

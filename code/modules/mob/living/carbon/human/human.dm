@@ -273,7 +273,7 @@
 		apply_damage(fire_damge * rand(50, 100) * 0.01, BURN, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
 		apply_damage(brute_damge * rand(50, 100) * 0.01, BRUTE, BP, run_armor_check(BP, BOMB), used_weapon = weapon_message)
 		var/BP_bomb_protection = run_armor_check(BP, BOMB)
-		if(!prob(BP_bomb_protection) && EXPLODE_DEVASTATE)
+		if(!prob(BP_bomb_protection) && severity <= EXPLODE_HEAVY)
 			if(BP)
 				if(prob(50) && !BP.is_broken())
 					BP.fracture()
@@ -2316,17 +2316,14 @@
 		return
 	return md5(dna.uni_identity)
 
-/mob/living/carbon/human/try_wrap_up(wrap_type)
-	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
-	P.icon_state = "deliveryhuman"
-
-	P.add_texture(wrap_type)
+/mob/living/carbon/human/try_wrap_up(wrap_type, wrap_icon_state = "deliveryhuman")
+	var/obj/structure/bigDelivery/P = ..()
+	if(!P)
+		return
 
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = P
-
-	forceMove(P)
 
 	return P
 
