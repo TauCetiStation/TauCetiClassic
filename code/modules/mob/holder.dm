@@ -48,6 +48,7 @@
 	var/obj/item/weapon/holder/H = new holder_type(loc)
 	forceMove(H)
 	H.name = src.name
+	H.w_class = w_class
 	H.attack_hand(grabber)
 
 	to_chat(grabber, "You scoop up [src].")
@@ -101,12 +102,24 @@
 	icon_state = "cat"
 	flags = HEAR_PASS_SAY
 
+/obj/item/weapon/holder/attack_self(mob/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		var/mob/living/simple_animal/edible_animal = locate() in contents
+		if(edible_animal && edible_animal.try_eat(L, user, src))
+			return TRUE
+	return ..()
+
+/obj/item/weapon/holder/attack(mob/living/M, mob/user, def_zone, silent = FALSE)
+	var/mob/living/simple_animal/edible_animal = locate() in contents
+	if(edible_animal && edible_animal.try_eat(M, user, src, silent))
+		return TRUE
+	return ..()
+
 /obj/item/weapon/holder/mouse
 	name = "mouse"
 	desc = "It's a small rodent."
 	icon_state = "mouse_gray"
-	w_class = SIZE_MINUSCULE
-	flags = HEAR_PASS_SAY
 
 /obj/item/weapon/holder/mouse/gray
 	icon_state = "mouse_gray"
