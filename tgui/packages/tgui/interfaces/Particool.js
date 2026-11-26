@@ -229,6 +229,29 @@ const ParticleTextEntry = (props, context) => {
   );
 };
 
+const ParticleListEntry = (props, context) => {
+  const { value, name } = props;
+  const { act } = useBackend(context);
+
+  let valArr = value ? Object.keys(value).map((key) => value[key]) : [];
+
+  return (
+    <Input
+      value={valArr.join(',')}
+      width="250px"
+      onInput={(e, val) =>
+        act('modify_particle_value', {
+          new_data: {
+            name: name,
+            value: val,
+            type: 'list',
+          },
+        })
+      }
+    />
+  );
+};
+
 const ParticleNumListEntry = (props, context) => {
   const { value, name } = props;
   const { act } = useBackend(context);
@@ -245,6 +268,29 @@ const ParticleNumListEntry = (props, context) => {
             name: name,
             value: val,
             type: 'numList',
+          },
+        })
+      }
+    />
+  );
+};
+
+const ParticleGradientListEntry = (props, context) => {
+  const { value, name } = props;
+  const { act } = useBackend(context);
+
+  let valArr = value ? Object.keys(value).map((key) => value[key]) : [];
+
+  return (
+    <Input
+      value={valArr.join(',')}
+      width="250px"
+      onInput={(e, val) =>
+        act('modify_particle_value', {
+          new_data: {
+            name: name,
+            value: val,
+            type: 'gradientList',
           },
         })
       }
@@ -297,13 +343,13 @@ const particleEntryMap = {
   bound1: 'numlist',
   bound2: 'numlist',
   gravity: 'numlist',
-  gradient: 'string',
+  gradient: 'gradientList',
   transform: 'matrix',
   lifespan: 'generator',
   fade: 'generator',
   fadein: 'generator',
   icon: 'icon',
-  icon_state: 'string',
+  icon_state: 'list',
   color: 'color',
   color_change: 'generator',
   position: 'generator',
@@ -323,7 +369,9 @@ const ParticleDataEntry = (props, context) => {
     int: <ParticleIntegerEntry {...props} />,
     float: <ParticleFloatEntry {...props} />,
     string: <ParticleTextEntry {...props} />,
+    list: <ParticleListEntry {...props} />,
     numlist: <ParticleNumListEntry {...props} />,
+    gradientList: <ParticleGradientListEntry {...props} />,
     color: <ParticleColorEntry {...props} />,
     icon: <ParticleIconEntry {...props} />,
     generator: <ParticleGeneratorEntry {...props} />,

@@ -172,14 +172,15 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 	blend_mode = BLEND_ADD
 
-	icon = 'icons/effects/fire.dmi'
-	icon_state = "1"
+	icon = 'icons/effects/32x32.dmi'
+	icon_state = "blank"
 	light_color = LIGHT_COLOR_FIRE
 	layer = OBJ_LAYER
 	plane = LIGHTING_LAMPS_PLANE
 	flags = ABSTRACT
 
 	var/firelevel = 1 //Calculated by gas_mixture.calculate_firelevel()
+	var/particle_fire_key = null
 
 /obj/fire/process()
 	. = TRUE
@@ -194,13 +195,10 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	var/datum/gas_mixture/air_contents = my_tile.return_air()
 
 	if(firelevel > 6)
-		icon_state = "3"
 		set_light(7, 3)
 	else if(firelevel > 2.5)
-		icon_state = "2"
 		set_light(5, 2)
 	else
-		icon_state = "1"
 		set_light(3, 1)
 
 	for(var/mob/living/L in loc)
@@ -238,8 +236,8 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 			else
 				enemy_tile.adjacent_fire_act(loc, air_contents, air_contents.temperature, air_contents.volume)
 
-	animate(src, color = fire_color(air_contents.temperature), 5)
-	set_light(l_color = color)
+	handle_particles(air_contents.temperature)
+	set_light(l_color = fire_color(air_contents.temperature))
 
 /obj/fire/atom_init(mapload, fl)
 	. = ..()
@@ -250,11 +248,54 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	set_dir(pick(cardinal))
 
 	var/datum/gas_mixture/air_contents = loc.return_air()
-	color = fire_color(air_contents.temperature)
-	set_light(3, 1, color)
+	set_light(3, 1, fire_color(air_contents.temperature))
 
 	firelevel = fl
 	SSair.active_hotspots.Add(src)
+
+
+	handle_particles(air_contents.temperature)
+
+/obj/fire/proc/delete_particles()
+	remove_shared_particles(/particles/turf_fire/stage_0, delete_on_empty = FALSE)
+	remove_shared_particles(/particles/turf_fire, delete_on_empty = FALSE)
+	remove_shared_particles(/particles/turf_fire/stage_2, delete_on_empty = FALSE)
+	remove_shared_particles(/particles/turf_fire/stage_3, delete_on_empty = FALSE)
+	remove_shared_particles(/particles/turf_smoke, delete_on_empty = FALSE)
+
+	particle_fire_key = null
+
+/obj/fire/proc/change_particle(new_particle_fire_key)
+	if(has_shared_particles(new_particle_fire_key))
+		return
+
+	if(particle_fire_key)
+		remove_shared_particles(particle_fire_key, delete_on_empty = FALSE)
+	particle_fire_key = new_particle_fire_key
+	add_shared_particles(particle_fire_key, pool_size = 5)
+
+/obj/fire/proc/add_smoke()
+	if(has_shared_particles(/particles/turf_smoke))
+		return
+
+	var/obj/effect/abstract/shared_particle_holder/Holder = add_shared_particles(/particles/turf_smoke, pool_size = 5)
+	Holder.vis_flags &= ~VIS_INHERIT_PLANE
+	Holder.plane = ABOVE_LIGHTING_PLANE
+
+/obj/fire/proc/handle_particles(env_temperature)
+	switch(env_temperature)
+		if(0 to 600)
+			change_particle(/particles/turf_fire/stage_0)
+			add_smoke()
+		if(601 to 1200)
+			change_particle(/particles/turf_fire)
+			add_smoke()
+		if(1201 to 2500)
+			change_particle(/particles/turf_fire/stage_2)
+			remove_shared_particles(/particles/turf_smoke, delete_on_empty = FALSE)
+		else
+			change_particle(/particles/turf_fire/stage_3)
+			remove_shared_particles(/particles/turf_smoke, delete_on_empty = FALSE)
 
 /obj/fire/proc/fire_color(env_temperature)
 	var/temperature = max(4000 * sqrt(firelevel / vsc.fire_firelevel_multiplier), env_temperature)
@@ -273,6 +314,8 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 		T.fire = null
 		loc = null
 	SSair.active_hotspots.Remove(src)
+
+	delete_particles()
 
 
 /turf/simulated/var/fire_protection = 0 //Protects newly extinguished tiles from being overrun again.

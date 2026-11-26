@@ -59,6 +59,17 @@ var/global/list/shared_particles = list()
 	global.shared_particles[particle_key][SHARED_PARTICLE_USER_NUM_INDEX] += 1
 	return particle_holder
 
+/atom/movable/proc/has_shared_particles(particle_type, custom_key = null)
+	var/particle_key = custom_key || "[particle_type]"
+	if (!global.shared_particles[particle_key])
+		return FALSE
+
+	var/list/type_holders = global.shared_particles[particle_key][SHARED_PARTICLE_HOLDER_INDEX]
+	for (var/obj/effect/abstract/shared_particle_holder/particle_holder as anything in type_holders)
+		if (particle_holder in vis_contents)
+			return TRUE
+	return FALSE
+
 /* Removes shared particles from object's vis_contents and disposes of it if nothing uses that type/key of particle
  * particle_key can be either a type (if no custom_key was passed) or said custom_key
  */

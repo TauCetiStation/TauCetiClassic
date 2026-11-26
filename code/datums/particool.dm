@@ -49,6 +49,12 @@ var/global/list/master_particle_info = list()
 		for(var/i = 1; i <= length(.); ++i)
 			.[i] = text2num(.[i])
 
+/datum/particle_editor/proc/stringToGradient(str)
+	var/static/regex/regex = regex(@"(?<!\\),")
+	. = splittext(str, regex)
+	for(var/i in 1 to (length(.) - 1) step 2)
+		.[i] = text2num(.[i])
+
 /datum/particle_editor/proc/stringToMatrix(str)
 	return ListToMatrix(stringToList(str))
 
@@ -98,6 +104,7 @@ var/global/list/master_particle_info = list()
 		if("color") return L["value"]
 		if("list") return stringToList(L["value"])
 		if("numList") return stringToList(L["value"],TRUE)
+		if("gradientList") return stringToGradient(L["value"])
 		if("matrix") return ListToMatrix(L["value"])
 		if("generator") return generateGenerator(L["value"]) // This value should be a new list, if it isn't then we will explode
 
