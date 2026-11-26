@@ -58,7 +58,7 @@ var/global/BSACooldown = 0
 		body += "<A href='byond://?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>"
 
 	if(isnewplayer(M))
-		body += " <B>Hasn't Entered Game</B> "
+		body += " <B>Hasn't Entered Game</B> - <A href='byond://?src=\ref[src];force_observe=\ref[M]'>Force Observe</A>"
 	else
 		body += " - <A href='byond://?src=\ref[src];revive=\ref[M]'>Heal</A>"
 
