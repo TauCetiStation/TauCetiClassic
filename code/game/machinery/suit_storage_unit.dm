@@ -779,10 +779,8 @@
 
 /obj/machinery/suit_storage_unit/captain
 	name = "Captain Suit Storage Unit"
-	suit_type = /obj/item/clothing/suit/armor/captain
-	helmet_type = /obj/item/clothing/head/helmet/space/capspace
+	suit_type = /obj/item/clothing/suit/space/rig/captain
 	mask_type = /obj/item/clothing/mask/breath/gas/coloured
-	boot_type = /obj/item/clothing/shoes/magboots
 	tank_type = /obj/item/weapon/tank/jetpack/oxygen
 
 	req_access = list(access_captain)
