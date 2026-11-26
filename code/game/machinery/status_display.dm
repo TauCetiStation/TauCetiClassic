@@ -201,7 +201,7 @@
 		if(usr.incapacitated())
 			return
 
-		var/obj/item/device/pda/PDA = astype(H, /mob/living/carbon/human)?.get_pda_or_null()
+		var/obj/item/device/pda/PDA = astype(usr, /mob/living/carbon/human)?.get_pda_or_null()
 		if(!PDA)
 			return
 
