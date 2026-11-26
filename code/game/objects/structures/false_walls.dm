@@ -101,7 +101,7 @@
 		else
 			icon_state = "fwall_open"
 
-/obj/structure/falsewall/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/falsewall/attackby(obj/item/I, mob/user)
 	if(opening)
 		to_chat(user, "<span class='warning'>Вы должны подождать, пока дверь не закончит движение.</span>")
 		return
@@ -112,26 +112,26 @@
 		if(T.density)
 			to_chat(user, "<span class='warning'>Стена заблокирована!</span>")
 			return
-		else if(isscrewing(W))
+		else if(I.get_quality(QUALITY_SCREWING))
 			user.visible_message("[user] tightens some screws on the wall.", "Вы затягиваете винты на стене.")
 			T.ChangeTurf(walltype)
 			qdel(src)
 			return
 
-		else if(iswelding(W))
-			var/obj/item/weapon/weldingtool/WT = W
+		else if(I.get_quality(QUALITY_WELDING))
+			var/obj/item/weapon/weldingtool/WT = I
 			if( WT.isOn() )
 				T.ChangeTurf(walltype)
 				if(walltype != /turf/simulated/wall/mineral/phoron)//Stupid shit keeps me from pushing the attackby() to phoron walls -Sieve
 					T = get_turf(src)
-					T.attackby(W, user)
+					T.attackby(I, user)
 				qdel(src)
 				return
 
 		// only base and reinforced types can be painted
-		else if(istype(W, /obj/item/weapon/airlock_painter) && can_be_painted)
+		else if(istype(I, /obj/item/weapon/airlock_painter) && can_be_painted)
 
-			var/obj/item/weapon/airlock_painter/A = W
+			var/obj/item/weapon/airlock_painter/A = I
 			if(!A.can_use(user, 1))
 				return
 			var/new_color = tgui_input_list(user, "Выберите цвет", "Цвет", WALLS_COLORS)
@@ -142,30 +142,30 @@
 			change_color(new_color)
 			return
 
-	else if(istype(W, /obj/item/weapon/gun/energy/laser/cutter))
+	else if(istype(I, /obj/item/weapon/gun/energy/laser/cutter))
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(walltype)
 		if(walltype != /turf/simulated/wall/mineral/phoron)
 			T = get_turf(src)
-			T.attackby(W, user)
+			T.attackby(I, user)
 		qdel(src)
 		return
 
 	//DRILLING
-	else if(istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+	else if(istype(I, /obj/item/weapon/pickaxe/drill/diamond_drill))
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(walltype)
 		T = get_turf(src)
-		T.attackby(W, user)
+		T.attackby(I, user)
 		qdel(src)
 		return
 
-	else if( istype(W, /obj/item/weapon/melee/energy/blade) )
+	else if(istype(I, /obj/item/weapon/melee/energy/blade) )
 		var/turf/T = get_turf(src)
 		T.ChangeTurf(walltype)
 		if(walltype != /turf/simulated/wall/mineral/phoron)
 			T = get_turf(src)
-			T.attackby(W, user)
+			T.attackby(I, user)
 		qdel(src)
 		return
 
@@ -200,8 +200,8 @@
 		qdel(src)
 
 // todo:
-// probably we should make /obj/structure/falsewall 
-// and /turf/simulated/wall as meta-types not used in the game, and move 
+// probably we should make /obj/structure/falsewall
+// and /turf/simulated/wall as meta-types not used in the game, and move
 // real walls and falsewalls to subtypes
 /obj/structure/falsewall/yellow
 	icon = 'icons/turf/walls/has_false_walls/wall_yellow.dmi'

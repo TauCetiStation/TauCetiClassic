@@ -138,8 +138,8 @@
 		return 1
 
 
-/obj/machinery/singularity_beacon/attackby(obj/item/weapon/W, mob/user)
-	if(isscrewing(W))
+/obj/machinery/singularity_beacon/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_SCREWING))
 		if(active)
 			to_chat(user, "<span class='warning'>You need to deactivate the beacon first!</span>")
 			return

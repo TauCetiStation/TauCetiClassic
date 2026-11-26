@@ -35,18 +35,18 @@
 		qdel(src)
 	return
 
-/obj/effect/decal/mecha_wreckage/attackby(obj/item/weapon/W, mob/user)
+/obj/effect/decal/mecha_wreckage/attackby(obj/item/I, mob/user)
 	var/salvage_with = ""
-	if(iswelding(W))
-		var/obj/item/weapon/weldingtool/WT = W
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		if (WT.use(3,user))
 			salvage_with = "welder"
 		else
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
-	if(iscutter(W))
+	if(I.get_quality(QUALITY_CUTTING))
 		salvage_with = "wirecutter"
-	if(isprying(W))
+	if(I.get_quality(QUALITY_PRYING))
 		salvage_with = "crowbar"
 	if(!salvage_with)
 		..()

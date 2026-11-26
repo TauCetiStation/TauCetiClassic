@@ -54,11 +54,11 @@
 					C.tracker_update(angle)
 
 
-/obj/machinery/power/tracker/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/power/tracker/attackby(obj/item/I, mob/user)
 
-	if(isprying(W))
+	if(I.get_quality(QUALITY_PRYING))
 		if(user.is_busy()) return
-		if(W.use_tool(src, user, 50, volume = 50, quality = QUALITY_PRYING))
+		if(I.use_tool(src, user, 50, volume = 50, quality = QUALITY_PRYING))
 			playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
 			user.visible_message("<span class='notice'>[user] takes the glass off the tracker.</span>")
 			deconstruct(TRUE)

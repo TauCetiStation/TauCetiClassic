@@ -1,0 +1,75 @@
+/datum/surgery_step/cutery
+	name = "Cauterize"
+	allowed_qualities = list(
+		QUALITY_SURGERY_CAUTER
+		)
+
+	min_duration = 6 SECONDS
+	max_duration = 8 SECONDS
+
+/datum/surgery_step/cutery/can_use(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/I)
+	if(!..())
+		return FALSE
+	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
+
+	switch(target_zone)
+		if(O_MOUTH)
+			var/obj/item/organ/external/head/head = bodypart
+			if(head.ps_status > BP_DEFAULT_OS)
+				return TRUE
+		if(O_EYES)
+			var/obj/item/organ/internal/eyes/eyes = bodypart.bodypart_organs[O_EYES]
+			if(eyes.surgery_stage > BP_DEFAULT_OS)
+				return TRUE
+		else
+			if(bodypart.open > BP_DEFAULT_OS && bodypart.controller.bodypart_type != BODYPART_ROBOTIC)
+				return TRUE
+	return FALSE
+
+/datum/surgery_step/cutery/begin_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/I)
+	. = ..()
+	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
+	switch(target_zone)
+		if(O_MOUTH)
+			var/obj/item/organ/external/head/head = bodypart
+			if(head.ps_status > BP_DEFAULT_OS)
+				msg = "<span class='notice'>[user] begin to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
+				self_msg = "<span class='notice'>You start to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
+				user.visible_message(msg, self_msg)
+
+		if(O_EYES)
+			var/obj/item/organ/internal/eyes/eyes = bodypart.bodypart_organs[O_EYES]
+			if(eyes.surgery_stage > BP_DEFAULT_OS)
+				msg = "<span class='notice'>[user] begin to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
+				self_msg = "<span class='notice'>You start to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
+				user.visible_message(msg, self_msg)
+
+		else
+			if(bodypart.open > BP_DEFAULT_OS && bodypart.controller.bodypart_type != BODYPART_ROBOTIC)
+				msg = "<span class='notice'>[user] begin to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
+				self_msg = "<span class='notice'>You start to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
+				user.visible_message(msg, self_msg)
+
+
+/datum/surgery_step/cutery/end_step(mob/living/user, mob/living/carbon/human/surgery_victim, target_zone, obj/item/I)
+	var/obj/item/organ/external/bodypart = surgery_victim.get_bodypart(target_zone)
+	msg = "<span class='notice'>[user] finish to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
+	self_msg = "<span class='notice'>You finish to cauterize the incision on [surgery_victim]'s [bodypart.name] with \the [I].</span>"
+	cp_msg = "Your [bodypart.name] is begin burned!"
+
+	switch(target_zone)
+		if(O_MOUTH)
+			var/obj/item/organ/external/head/head = bodypart
+			head.ps_status = BP_DEFAULT_OS
+		if(O_EYES)
+			var/obj/item/organ/internal/eyes/eyes = bodypart.bodypart_organs[O_EYES]
+			eyes.surgery_stage = BP_DEFAULT_OS
+		else
+			if(bodypart.cavity)
+				bodypart.cavity = FALSE
+			bodypart.open = BP_DEFAULT_OS
+
+	bodypart.status &= ~ORGAN_BLEEDING
+
+	user.visible_message(msg, self_msg)
+	surgery_victim.custom_pain(cp_msg, 1)

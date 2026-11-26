@@ -61,8 +61,8 @@
 					qdel(src)
 
 
-/obj/machinery/power/terminal/attackby(obj/item/W, mob/living/user)
-	if(iscutter(W))
+/obj/machinery/power/terminal/attackby(obj/item/I, mob/living/user)
+	if(I.get_quality(QUALITY_CUTTING))
 		dismantle(user)
 		return
 

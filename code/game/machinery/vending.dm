@@ -185,37 +185,37 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 	load += total
 	return total
 
-/obj/machinery/vending/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/vending/attackby(obj/item/I, mob/user)
 	if(panel_open)
-		if(default_unfasten_wrench(user, W, time = 60))
+		if(default_unfasten_wrench(user, I, time = 60))
 			return
 
-		if(isprying(W))
-			default_deconstruction_crowbar(W)
+		if(I.get_quality(QUALITY_PRYING))
+			default_deconstruction_crowbar(I)
 			return
 
-		if(istype(W, /obj/item/device/lens) && W.type != camera.lens)
+		if(istype(I, /obj/item/device/lens) && I.type != camera.lens)
 			var/obj/item/device/lens/CameraLens = camera.lens
 			CameraLens.forceMove(get_turf(src))
-			user.drop_from_inventory(W, camera)
+			user.drop_from_inventory(I, camera)
 			if(!user.get_active_hand())
 				user.put_in_hands(CameraLens)
-			camera.lens = W
+			camera.lens = I
 			return
 
-		if(!seller_account_number && (istype(W, /obj/item/device/pda) && W.GetID()))
-			var/obj/item/weapon/card/Card = W.GetID()
+		if(!seller_account_number && (istype(I, /obj/item/device/pda) && I.GetID()))
+			var/obj/item/weapon/card/Card = I.GetID()
 			seller_account_number = Card.associated_account_number
 			to_chat(user, "<span class='notice'>You connect your account to the [src]</span>")
 			return
 
-		if(!seller_account_number && istype(W, /obj/item/weapon/card))
-			var/obj/item/weapon/card/Card = W
+		if(!seller_account_number && istype(I, /obj/item/weapon/card))
+			var/obj/item/weapon/card/Card = I
 			seller_account_number = Card.associated_account_number
 			to_chat(user, "<span class='notice'>You connect your account to the [src]</span>")
 			return
 
-	if(isscrewing(W) && anchored)
+	if(I.get_quality(QUALITY_SCREWING) && anchored)
 		src.panel_open = !src.panel_open
 		to_chat(user, "You [src.panel_open ? "open" : "close"] the maintenance panel.")
 		cut_overlays()
@@ -224,24 +224,24 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		updateUsrDialog()
 
 		return
-	else if(is_wire_tool(W) && panel_open && wires.interact(user))
+	else if(is_wire_tool(I) && panel_open && wires.interact(user))
 		return
 
-	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
-		user.drop_from_inventory(W, src)
-		coin = W
-		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
+	else if(istype(I, /obj/item/weapon/coin) && premium.len > 0)
+		user.drop_from_inventory(I, src)
+		coin = I
+		to_chat(user, "<span class='notice'>You insert the [I] into the [src]</span>")
 		return
 
-	else if(iswrenching(W))	//unwrenching vendomats
+	else if(I.get_quality(QUALITY_WRENCHING))	//unwrenching vendomats
 		var/turf/T = user.loc
 		if(user.is_busy(src))
 			return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
-		if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
-			if(!istype(src, /obj/machinery/vending) || !user || !W || !T)
+		if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
+			if(!istype(src, /obj/machinery/vending) || !user || !I || !T)
 				return
-			if(user.loc == T && user.get_active_hand() == W)
+			if(user.loc == T && user.get_active_hand() == I)
 				anchored = !anchored
 				to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 				if (!(src.anchored & powered()))
@@ -254,20 +254,20 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 					set_light(light_range_on, light_power_on)
 				wrenched_change()
 
-	else if(currently_vending && istype(W, /obj/item/device/pda) && W.GetID())
-		var/obj/item/weapon/card/I = W.GetID()
-		scan_card(I)
+	else if(currently_vending && istype(I, /obj/item/device/pda) && I.GetID())
+		var/obj/item/weapon/card/ID = I.GetID()
+		scan_card(ID)
 
-	else if(currently_vending && istype(W, /obj/item/weapon/card))
-		var/obj/item/weapon/card/I = W
-		scan_card(I)
+	else if(currently_vending && istype(I, /obj/item/weapon/card))
+		var/obj/item/weapon/card/ID = I
+		scan_card(ID)
 
-	else if(istype(W, refill_canister) && refill_canister != null)
+	else if(istype(I, refill_canister) && refill_canister != null)
 		if(stat & (BROKEN|NOPOWER))
 			to_chat(user, "<span class='notice'>It does nothing.</span>")
 		else if(panel_open)
 			//if the panel is open we attempt to refill the machine
-			var/obj/item/weapon/vending_refill/canister = W
+			var/obj/item/weapon/vending_refill/canister = I
 			if(canister.charges == 0)
 				to_chat(user, "<span class='notice'>This [canister.name] is empty!</span>")
 			else
@@ -280,10 +280,10 @@ ADD_TO_GLOBAL_LIST(/obj/machinery/vending, vending_machines)
 		else
 			to_chat(user, "<span class='notice'>You should probably unscrew the service panel first.</span>")
 
-	else if (istype(W, /obj/item/weapon/ewallet))
-		user.drop_from_inventory(W, src)
-		ewallet = W
-		to_chat(user, "<span class='notice'>You insert the [W] into the [src]</span>")
+	else if (istype(I, /obj/item/weapon/ewallet))
+		user.drop_from_inventory(I, src)
+		ewallet = I
+		to_chat(user, "<span class='notice'>You insert the [I] into the [src]</span>")
 
 	else
 		..()

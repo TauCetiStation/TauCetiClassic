@@ -48,9 +48,9 @@
 		D.loc = null
 	return ..()
 
-/obj/machinery/shield_gen/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/C = W
+/obj/machinery/shield_gen/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/C = I
 		if((access_captain in C.access) || (access_security in C.access) || (access_engine in C.access))
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
@@ -58,7 +58,7 @@
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 
-	else if(iswrenching(W))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		src.anchored = !src.anchored
 		visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored?"bolted to the floor":"unbolted from the floor"] by [user].</span>")
 

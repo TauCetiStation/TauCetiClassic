@@ -118,12 +118,14 @@
 	name = "cyborg pickaxe"
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick_hand"
-	toolspeed = 0.6
 	desc = "A smaller, more precise version of the pickaxe (30 centimetre excavation depth)."
 	excavation_amount = 15
 	usesound = 'sound/items/Crowbar.ogg'
 	drill_verb = "clearing"
 	w_class = SIZE_SMALL
+	qualities = list(
+		QUALITY_ROCK_DRILL = 150
+	)
 
 /obj/item/weapon/pickaxe/cyb/attack_self(mob/user)
 	var/ampr = input(user,"Excavation depth?","Set excavation depth","") as num

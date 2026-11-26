@@ -105,7 +105,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 	if(..())
 		return
 
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(broken)
 			to_chat(user, "<span class='notice'>You start fixing \the [src].</span>")
 			if(I.use_tool(src, user, 60, volume = 100, quality = QUALITY_WRENCHING))
@@ -115,7 +115,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 			default_unfasten_wrench(user, I)
 		return
 
-	if(isprying(I))
+	if(I.get_quality(QUALITY_PRYING))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You start to [cistern_open ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
 		playsound(src, 'sound/effects/stonedoor_openclose.ogg', VOL_EFFECTS_MASTER)
@@ -431,7 +431,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
 	if(I.type == /obj/item/device/analyzer) // istype?
 		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
-	else if(iswrenching(I))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>")
 		if(I.use_tool(src, user, 50, volume = 100, quality = QUALITY_WRENCHING))
@@ -599,7 +599,7 @@ ADD_TO_GLOBAL_LIST(/obj/structure/toilet, toilet_list)
 				var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
 				var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
 				var/no_legs = FALSE
-				if((!l_foot || (l_foot && (l_foot.is_stump))) && (!r_foot || (r_foot && (r_foot.is_stump))))
+				if(((!l_foot || (l_foot && isstump(l_foot)))) && (!r_foot || (r_foot && isstump(r_foot))))
 					no_legs = TRUE
 				if(!no_legs)
 					H.feet_blood_DNA = null

@@ -89,8 +89,8 @@
 
 	return pick(approved_types)
 
-/obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
-	if(iscutter(W))
+/obj/structure/sign/poster/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_CUTTING))
 		playsound(src, 'sound/items/Wirecutter.ogg', VOL_EFFECTS_MASTER)
 		if(ruined)
 			to_chat(user, "<span class='notice'>You remove the remnants of the poster.</span>")

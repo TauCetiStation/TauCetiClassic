@@ -84,31 +84,31 @@
 	UnregisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL)
 	..()
 
-/obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)
+/obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/I, mob/user, params)
 	. = ..()
-	if(ispulsing(O))
-		var/obj/item/device/multitool/M = O
-		if(M.buffer && istype(M.buffer,/obj/machinery/monkey_recycler))
+	if(I.get_quality(QUALITY_PULSING))
+		var/obj/item/device/multitool/MT = I
+		if(MT.buffer && istype(MT.buffer,/obj/machinery/monkey_recycler))
 			if(!connected_recycler)
-				connected_recycler = M.buffer
+				connected_recycler = MT.buffer
 				connected_recycler.connected_consoles += src
-				to_chat(user, "<span class='notice'>You upload the data from the [O.name]'s buffer.</span>")
-			else if(connected_recycler == M.buffer)
+				to_chat(user, "<span class='notice'>You upload the data from the [I.name]'s buffer.</span>")
+			else if(connected_recycler == MT.buffer)
 				to_chat(user, "<span class='warning'>This machine is already linked to this console</span>")
 				return
 			else
 				connected_recycler.connected_consoles -= src
-				connected_recycler = M.buffer
+				connected_recycler = MT.buffer
 				connected_recycler.connected_consoles += src
-				to_chat(user, "<span class='notice'>You upload the data from the [O.name]'s buffer.</span>")
+				to_chat(user, "<span class='notice'>You upload the data from the [I.name]'s buffer.</span>")
 
-	else if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/monkeycube) && user.drop_item())
+	else if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/monkeycube) && user.drop_item())
 		monkeys++
-		to_chat(user, "<span class='notice'>You feed [O] to [src]. It now has [monkeys] monkey cubes stored.</span>")
-		qdel(O)
+		to_chat(user, "<span class='notice'>You feed [I] to [src]. It now has [monkeys] monkey cubes stored.</span>")
+		qdel(I)
 		return
-	else if(istype(O, /obj/item/weapon/storage/bag))
-		var/obj/item/weapon/storage/P = O
+	else if(istype(I, /obj/item/weapon/storage/bag))
+		var/obj/item/weapon/storage/P = I
 		var/loaded = FALSE
 		for(var/obj/G in P.contents)
 			if(istype(G, /obj/item/weapon/reagent_containers/food/snacks/monkeycube))
@@ -116,7 +116,7 @@
 				monkeys++
 				qdel(G)
 		if(loaded)
-			to_chat(user, "<span class='notice'>You fill [src] with the monkey cubes stored in [O]. [src] now has [monkeys] monkey cubes stored.</span>")
+			to_chat(user, "<span class='notice'>You fill [src] with the monkey cubes stored in [I]. [src] now has [monkeys] monkey cubes stored.</span>")
 
 
 

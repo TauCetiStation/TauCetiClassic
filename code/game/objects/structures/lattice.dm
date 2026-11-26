@@ -39,14 +39,14 @@
 	if(severity <= EXPLODE_HEAVY)
 		qdel(src)
 
-/obj/structure/lattice/attackby(obj/item/C, mob/user)
+/obj/structure/lattice/attackby(obj/item/I, mob/user)
 
-	if(istype(C, /obj/item/stack/tile/plasteel) || istype(C, /obj/item/stack/rods))
+	if(istype(I, /obj/item/stack/tile/plasteel) || istype(I, /obj/item/stack/rods))
 		var/turf/T = get_turf(src)
-		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead
+		T.attackby(I, user) //BubbleWrap - hand this off to the underlying turf instead
 		return
-	if (iswelding(C))
-		var/obj/item/weapon/weldingtool/WT = C
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			to_chat(user, "<span class='notice'>Slicing lattice joints ...</span>")
 			deconstruct(TRUE)

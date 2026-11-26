@@ -8,10 +8,10 @@
 	var/rad_cooef = 40
 	var/rad_range = 1
 
-/obj/machinery/power/port_gen/riteg/attackby(obj/item/O, mob/user, params)
+/obj/machinery/power/port_gen/riteg/attackby(obj/item/I, mob/user, params)
 	if(!active)
 
-		if(iswrenching(O))
+		if(I.get_quality(QUALITY_WRENCHING))
 
 			if(!anchored && !isinspace())
 				connect_to_network()

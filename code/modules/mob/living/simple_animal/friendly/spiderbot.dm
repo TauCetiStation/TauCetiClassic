@@ -41,10 +41,10 @@
 	w_class = SIZE_MINUSCULE
 	speak_emote = list("гудит","жужит","пищит")
 
-/mob/living/simple_animal/spiderbot/attackby(obj/item/O, mob/user)
+/mob/living/simple_animal/spiderbot/attackby(obj/item/I, mob/user)
 
-	if(isMMI(O))
-		var/obj/item/device/mmi/B = O
+	if(isMMI(I))
+		var/obj/item/device/mmi/B = I
 		if(src.mmi) //There's already a brain in it.
 			to_chat(user, "<span class='warning'>There's already a brain in [src]!</span>")
 			return
@@ -59,28 +59,28 @@
 						ghost_can_reenter = 1
 						break
 			if(!ghost_can_reenter)
-				to_chat(user, "<span class='notice'>[O] is completely unresponsive; there's no point.</span>")
+				to_chat(user, "<span class='notice'>[I] is completely unresponsive; there's no point.</span>")
 				return
 
 		if(B.brainmob.stat == DEAD)
-			to_chat(user, "<span class='warning'>[O] is dead. Sticking it into the frame would sort of defeat the purpose.</span>")
+			to_chat(user, "<span class='warning'>[I] is dead. Sticking it into the frame would sort of defeat the purpose.</span>")
 			return
 
 		if(jobban_isbanned(B.brainmob, "Cyborg"))
-			to_chat(user, "<span class='warning'>[O] does not seem to fit.</span>")
+			to_chat(user, "<span class='warning'>[I] does not seem to fit.</span>")
 			return
 
-		to_chat(user, "<span class='notice'>You install [O] in [src]!</span>")
+		to_chat(user, "<span class='notice'>You install [I] in [src]!</span>")
 
-		user.drop_from_inventory(O, src)
-		src.mmi = O
-		transfer_personality(O)
+		user.drop_from_inventory(I, src)
+		src.mmi = I
+		transfer_personality(I)
 
 		update_icon()
 		return 1
 
-	if (iswelding(O))
-		var/obj/item/weapon/weldingtool/WT = O
+	if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (WT.use(0))
 			if(health < maxHealth)
@@ -94,17 +94,17 @@
 		else
 			to_chat(user, "Need more welding fuel!")
 			return
-	else if(istype(O, /obj/item/weapon/card/id)||istype(O, /obj/item/device/pda))
+	else if(istype(I, /obj/item/weapon/card/id)||istype(I, /obj/item/device/pda))
 		if (!mmi)
 			to_chat(user, "<span class='warning'>There's no reason to swipe your ID - the spiderbot has no brain to remove.</span>")
 			return 0
 
 		var/obj/item/weapon/card/id/id_card
 
-		if(istype(O, /obj/item/weapon/card/id))
-			id_card = O
+		if(istype(I, /obj/item/weapon/card/id))
+			id_card = I
 		else
-			var/obj/item/device/pda/pda = O
+			var/obj/item/device/pda/pda = I
 			id_card = pda.id
 
 		if(access_robotics in id_card.access)
@@ -122,15 +122,15 @@
 
 	else
 		user.SetNextMove(CLICK_CD_MELEE)
-		if(O.force)
-			var/damage = O.force
-			if (O.damtype == HALLOSS)
+		if(I.force)
+			var/damage = I.force
+			if (I.damtype == HALLOSS)
 				damage = 0
 			adjustBruteLoss(damage)
-			visible_message("<span class='warning'><b>[src] has been attacked with the [O] by [user].</b></span>")
+			visible_message("<span class='warning'><b>[src] has been attacked with the [I] by [user].</b></span>")
 		else
 			to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
-			visible_message("<span class='warning'>[user] gently taps [src] with the [O].</span>")
+			visible_message("<span class='warning'>[user] gently taps [src] with the [I].</span>")
 
 /mob/living/simple_animal/spiderbot/transfer_personality(obj/item/device/mmi/M)
 

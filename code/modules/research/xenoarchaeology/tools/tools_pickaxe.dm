@@ -7,96 +7,112 @@
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick_brush"
 	item_state = "syringe_0"
-	toolspeed = 0.4
 	desc = "Thick metallic wires for clearing away dust and loose scree (1 centimetre excavation depth)."
 	excavation_amount = 0.5
 	usesound = 'sound/weapons/thudswoosh.ogg'
 	drill_verb = "brushing"
 	w_class = SIZE_TINY
+	qualities = list(
+		QUALITY_ROCK_DRILL = 225
+	)
 
 /obj/item/weapon/pickaxe/one_pick
 	name = "1/6 pick"
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick1"
 	item_state = "syringe_0"
-	toolspeed = 0.4
 	desc = "A miniature excavation tool for precise digging (2 centimetre excavation depth)."
 	excavation_amount = 1
 	usesound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
 	w_class = SIZE_TINY
+	qualities = list(
+		QUALITY_ROCK_DRILL = 225
+	)
 
 /obj/item/weapon/pickaxe/two_pick
 	name = "1/3 pick"
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick2"
 	item_state = "syringe_0"
-	toolspeed = 0.4
 	desc = "A miniature excavation tool for precise digging (4 centimetre excavation depth)."
 	excavation_amount = 2
 	usesound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
 	w_class = SIZE_TINY
+	qualities = list(
+		QUALITY_ROCK_DRILL = 225
+	)
 
 /obj/item/weapon/pickaxe/three_pick
 	name = "1/2 pick"
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick3"
 	item_state = "syringe_0"
-	toolspeed = 0.4
 	desc = "A miniature excavation tool for precise digging (6 centimetre excavation depth)."
 	excavation_amount = 3
 	usesound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
 	w_class = SIZE_TINY
+	qualities = list(
+		QUALITY_ROCK_DRILL = 225
+	)
 
 /obj/item/weapon/pickaxe/four_pick
 	name = "2/3 pick"
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick4"
 	item_state = "syringe_0"
-	toolspeed = 0.4
 	desc = "A miniature excavation tool for precise digging (8 centimetre excavation depth)."
 	excavation_amount = 4
 	usesound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
 	w_class = SIZE_TINY
+	qualities = list(
+		QUALITY_ROCK_DRILL = 225
+	)
 
 /obj/item/weapon/pickaxe/five_pick
 	name = "5/6 pick"
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick5"
 	item_state = "syringe_0"
-	toolspeed = 0.4
 	desc = "A miniature excavation tool for precise digging (10 centimetre excavation depth)."
 	excavation_amount = 5
 	usesound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
 	w_class = SIZE_TINY
+	qualities = list(
+		QUALITY_ROCK_DRILL = 225
+	)
 
 /obj/item/weapon/pickaxe/six_pick
 	name = "1/1 pick"
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick6"
 	item_state = "syringe_0"
-	toolspeed = 0.4
 	desc = "A miniature excavation tool for precise digging (12 centimetre excavation depth)."
 	excavation_amount = 6
 	usesound = 'sound/items/Screwdriver.ogg'
 	drill_verb = "delicately picking"
 	w_class = SIZE_TINY
+	qualities = list(
+		QUALITY_ROCK_DRILL = 225
+	)
 
 /obj/item/weapon/pickaxe/hand
 	name = "hand pickaxe"
 	icon = 'icons/obj/xenoarchaeology/tools.dmi'
 	icon_state = "pick_hand"
 	item_state = "syringe_0"
-	toolspeed = 0.6
 	desc = "A smaller, more precise version of the pickaxe (30 centimetre excavation depth)."
 	excavation_amount = 15
 	usesound = 'sound/items/Crowbar.ogg'
 	drill_verb = "clearing"
 	w_class = SIZE_SMALL
+	qualities = list(
+		QUALITY_ROCK_DRILL = 175
+	)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Pack for holding pickaxes

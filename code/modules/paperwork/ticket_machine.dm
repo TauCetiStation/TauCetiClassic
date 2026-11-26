@@ -49,13 +49,13 @@ var/global/ticket_machine_number = 0
 	..()
 	update_icon()
 
-/obj/machinery/ticket_machine/attackby(obj/item/O, mob/user)
-	if(hatch_open && istype(O, /obj/item/weapon/folder) && !folder)
-		user.drop_from_inventory(O, src)
-		folder = O
+/obj/machinery/ticket_machine/attackby(obj/item/I, mob/user)
+	if(hatch_open && istype(I, /obj/item/weapon/folder) && !folder)
+		user.drop_from_inventory(I, src)
+		folder = I
 		update_forms()
-	else if(isscrewing(O))
-		if(O.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, quality = QUALITY_SCREWING))
+	else if(I.get_quality(QUALITY_SCREWING))
+		if(I.use_tool(src, user, SKILL_TASK_VERY_EASY, volume = 50, quality = QUALITY_SCREWING))
 			hatch_open = !hatch_open
 			update_icon()
 			update_forms()

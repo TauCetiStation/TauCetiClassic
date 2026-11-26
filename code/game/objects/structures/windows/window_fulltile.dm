@@ -55,8 +55,8 @@
 
 	regenerate_smooth_icon()
 
-/obj/structure/window/fulltile/attackby(obj/item/W, mob/user)
-	if(isprying(W) && !(resistance_flags & DECONSTRUCT_IMMUNE)) // bad use of resistance_flags? we need some flag to prevent deconstructs
+/obj/structure/window/fulltile/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_PRYING) && !(resistance_flags & DECONSTRUCT_IMMUNE)) // bad use of resistance_flags? we need some flag to prevent deconstructs
 		if(!handle_fumbling(user, src, SKILL_TASK_EASY, list(/datum/skill/construction = SKILL_LEVEL_TRAINED), message_self = "<span class='notice'>You fumble around, figuring out how to pry the glass out of the frame.</span>"))
 			return
 
@@ -64,7 +64,7 @@
 							"<span class='warning'>You start removing the glass from the [src]!</span>", \
 							"<span class='warning'>You hear screwing.</span>")
 
-		if(W.use_tool(src, user, 40, quality = QUALITY_PRYING))
+		if(I.use_tool(src, user, 40, quality = QUALITY_PRYING))
 			to_chat(user, "<span class='notice'>You have removed the glass from the frame.</span>")
 			deconstruct(TRUE)
 
@@ -195,8 +195,8 @@
 	else
 		set_opacity(1)
 
-/obj/structure/window/fulltile/polarized/attackby(obj/item/W as obj, mob/user as mob)
-	if(ispulsing(W)) // todo: maybe need something for access unlocking. For now we assume that this access == access to multitool
+/obj/structure/window/fulltile/polarized/attackby(obj/item/I as obj, mob/user as mob)
+	if(I.get_quality(QUALITY_PULSING)) // todo: maybe need something for access unlocking. For now we assume that this access == access to multitool
 		var/t = sanitize(input(user, "Enter the ID for the window.", src.name, null), MAX_NAME_LEN)
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")
@@ -283,8 +283,8 @@
 	else
 		set_opacity(1)
 
-/obj/structure/window/fulltile/reinforced/polarized/attackby(obj/item/W as obj, mob/user as mob)
-	if(ispulsing(W)) // todo: maybe need something for access unlocking. For now we assume that this access == access to multitool
+/obj/structure/window/fulltile/reinforced/polarized/attackby(obj/item/I as obj, mob/user as mob)
+	if(I.get_quality(QUALITY_PULSING)) // todo: maybe need something for access unlocking. For now we assume that this access == access to multitool
 		var/t = sanitize(input(user, "Enter the ID for the window.", src.name, null), MAX_NAME_LEN)
 		src.id = t
 		to_chat(user, "<span class='notice'>The new ID of \the [src] is [id]</span>")

@@ -112,8 +112,8 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/components/binary/circulator/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
+/obj/machinery/atmospherics/components/binary/circulator/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		anchored = !anchored
 		user.visible_message(
@@ -157,12 +157,12 @@
 		if(gen)
 			gen.reconnect()
 
-	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), W))
+	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		set_power_use(NO_POWER_USE)
 		update_icon()
 		return
 
-	if(default_deconstruction_crowbar(W))
+	if(default_deconstruction_crowbar(I))
 		return
 
 	else

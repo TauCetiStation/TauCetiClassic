@@ -26,8 +26,8 @@
 
 	return
 
-/obj/machinery/pdapainter/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/device/pda))
+/obj/machinery/pdapainter/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/device/pda))
 		if(storedpda)
 			to_chat(user, "There is already a PDA inside.")
 			return
@@ -39,7 +39,7 @@
 				P.add_fingerprint(usr)
 				update_icon()
 	else
-		if(iswrenching(O))
+		if(I.get_quality(QUALITY_WRENCHING))
 			playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")

@@ -11,8 +11,8 @@
 	to_chat(user, "<span class='notice'>You need a crowbar to pry this open!</span>")
 	return
 
-/obj/structure/largecrate/attackby(obj/item/weapon/W, mob/user)
-	if(isprying(W))
+/obj/structure/largecrate/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_PRYING))
 		new /obj/item/stack/sheet/wood(src)
 		var/turf/T = get_turf(src)
 		for(var/atom/movable/M in contents)

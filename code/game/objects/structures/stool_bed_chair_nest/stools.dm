@@ -31,13 +31,13 @@
 	if(has_buckled_mobs())
 		unbuckle_mob()
 
-/obj/structure/stool/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W) && !(flags & NODECONSTRUCT))
+/obj/structure/stool/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING) && !(flags & NODECONSTRUCT))
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		deconstruct(TRUE)
 		return
-	else if(istype(W, /obj/item/weapon/melee/energy/blade))
-		var/obj/item/weapon/melee/energy/blade/B = W
+	else if(istype(I, /obj/item/weapon/melee/energy/blade))
+		var/obj/item/weapon/melee/energy/blade/B = I
 		if(B.active)
 			user.do_attack_animation(src)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
@@ -49,8 +49,8 @@
 			deconstruct(TRUE)
 			return
 
-	else if(istype(W, /obj/item/weapon/sledgehammer))
-		var/obj/item/weapon/sledgehammer/S = W
+	else if(istype(I, /obj/item/weapon/sledgehammer))
+		var/obj/item/weapon/sledgehammer/S = I
 		if(HAS_TRAIT(S, TRAIT_DOUBLE_WIELDED) && !(flags & NODECONSTRUCT))
 			playsound(user, 'sound/items/sledgehammer_hit.ogg', VOL_EFFECTS_MASTER)
 			shake_camera(user, 1, 1)

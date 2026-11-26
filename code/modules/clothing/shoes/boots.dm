@@ -29,7 +29,7 @@
 	if(knife)
 		return ..()
 
-	if((iscutter(I) > 0) && I.w_class <= SIZE_TINY)
+	if((I.get_quality(QUALITY_CUTTING) > 0) && I.w_class <= SIZE_TINY)
 		user.drop_from_inventory(I, src)
 		playsound(user, 'sound/items/lighter.ogg', VOL_EFFECTS_MASTER, 25)
 		to_chat(user, "<span class='notice'>You slide [I] into [src].</span>")

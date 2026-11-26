@@ -33,48 +33,48 @@
 
 	return ..()
 
-/obj/structure/windowsill/attackby(obj/item/W, mob/user)
+/obj/structure/windowsill/attackby(obj/item/I, mob/user)
 	var/obj/structure/grille/grille_in_loc = locate() in loc
 
-	if(!grille_in_loc && istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = W
+	if(!grille_in_loc && istype(I, /obj/item/stack/rods))
+		var/obj/item/stack/rods/R = I
 		R.try_to_build_grille(user, loc)
 		return
 
-	else if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
+	else if(istype(I, /obj/item/stack/sheet/glass) || istype(I, /obj/item/stack/sheet/rglass))
 		if(grille_in_loc && !grille_in_loc.anchored) // grille optional, but if we have one - should be secured
 			to_chat(user, "<span class='warning'>You need to secure [grille_in_loc] first!</span>")
 			return
 
 		var/type
 
-		if(istype(W, /obj/item/stack/sheet/glass/phoronglass))
+		if(istype(I, /obj/item/stack/sheet/glass/phoronglass))
 			type = /obj/structure/window/fulltile/phoron
-		else if(istype(W, /obj/item/stack/sheet/glass/phoronrglass))
+		else if(istype(I, /obj/item/stack/sheet/glass/phoronrglass))
 			type = /obj/structure/window/fulltile/reinforced/phoron
-		else if(istype(W, /obj/item/stack/sheet/glass))
+		else if(istype(I, /obj/item/stack/sheet/glass))
 			type = /obj/structure/window/fulltile
-		else if(istype(W, /obj/item/stack/sheet/rglass))
+		else if(istype(I, /obj/item/stack/sheet/rglass))
 			type = /obj/structure/window/fulltile/reinforced
 
 		if(!type) // should not happen
 			return
 
-		if(!W.use_tool(src, user, 20, 2))
+		if(!I.use_tool(src, user, 20, 2))
 			return
 
 		new type(loc, !!grille_in_loc)
 		QDEL_NULL(grille_in_loc)
 		qdel(src)
 
-	else if(iswrenching(W))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		if(grille_in_loc)
 			to_chat(user, "<span class='warning'>You need to remove [grille_in_loc] first!</span>")
 			return
 
 		to_chat(user, "<span class='notice'>You begin disassembling \the [src].</span>")
 
-		if(W.use_tool(src, user, 20, quality = QUALITY_WRENCHING))
+		if(I.use_tool(src, user, 20, quality = QUALITY_WRENCHING))
 			deconstruct(TRUE)
 
 		return

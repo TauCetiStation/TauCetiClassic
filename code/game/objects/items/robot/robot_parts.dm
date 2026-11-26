@@ -118,7 +118,7 @@
 		qdel(src)
 		return
 
-	else if(iswrenching(I))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		if(contents.len)
 			to_chat(user, "<span class='info'>You disassemble robot frame to parts!</span>")
 			var/turf/T = get_turf(src)
@@ -280,7 +280,7 @@
 		cell = I
 		to_chat(user, "<span class='info'>You insert the cell!</span>")
 
-	else if(iscoil(I))
+	else if(istype(I, /obj/item/stack/cable_coil))
 		if(wires)
 			to_chat(user, "<span class='info'>You have already inserted wire!</span>")
 			return
@@ -292,7 +292,7 @@
 		wires = 1.0
 		to_chat(user, "<span class='info'>You insert the wire!</span>")
 
-	else if(isprying(I))
+	else if(I.get_quality(QUALITY_PRYING))
 		if(!cell)
 			to_chat(user, "<span class='warning'>No cell installed!</span>")
 			return
@@ -301,7 +301,7 @@
 		cell.forceMove(get_turf(src))
 		cell = null
 
-	else if(iscutter(I))
+	else if(I.get_quality(QUALITY_CUTTING))
 		if(!wires)
 			to_chat(user, "<span class='warning'>No wires installed!</span>")
 			return
@@ -328,7 +328,7 @@
 			else
 				flash1 = I
 
-	else if(isprying(I))
+	else if(I.get_quality(QUALITY_PRYING))
 		if(flash1 || flash2)
 			to_chat(user, "<span class='info'>You remove the flash from the eye socket!</span>")
 			if(flash2)

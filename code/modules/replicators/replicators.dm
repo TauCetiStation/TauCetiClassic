@@ -558,7 +558,7 @@ ADD_TO_GLOBAL_LIST(/mob/living/simple_animal/hostile/replicator, alive_replicato
 	QDEL_IN(animation, 15)
 
 /mob/living/simple_animal/hostile/replicator/attackby(obj/item/I, mob/user, params)
-	if(stat == DEAD && isscrewing(I))
+	if(stat == DEAD && I.get_quality(QUALITY_SCREWING))
 		visible_message("<span class='notice'>[user] starts disassembling [src] with [I].</span>")
 		if(!user.is_busy() && do_skilled(user, src, SKILL_TASK_TOUGH, list(/datum/skill/research = SKILL_LEVEL_TRAINED, /datum/skill/engineering = SKILL_LEVEL_TRAINED), -0.2))
 			var/datum/faction/replicators/FR = get_or_create_replicators_faction()

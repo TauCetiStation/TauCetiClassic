@@ -33,17 +33,17 @@
 			possible_gen.owned_capacitor = src
 			break
 
-/obj/machinery/shield_capacitor/attackby(obj/item/W, mob/user)
+/obj/machinery/shield_capacitor/attackby(obj/item/I, mob/user)
 
-	if(istype(W, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/id/C = W
-		if((access_captain in C.access) || (access_security in C.access) || (access_engine in C.access))
+	if(istype(I, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/ID = I
+		if((access_captain in ID.access) || (access_security in ID.access) || (access_engine in ID.access))
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			updateDialog()
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
-	else if(iswrenching(W))
+	else if(I.get_quality(QUALITY_WRENCHING))
 		src.anchored = !src.anchored
 		visible_message("<span class='notice'>[bicon(src)] [src] has been [anchored ? "bolted to the floor" : "unbolted from the floor"] by [user].</span>")
 

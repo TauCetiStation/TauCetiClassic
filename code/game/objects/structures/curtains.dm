@@ -62,7 +62,7 @@
 			deconstruct(TRUE)
 			return
 
-	if(iswrenching(I))
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(user.is_busy())
 			return
 		if(anchored)

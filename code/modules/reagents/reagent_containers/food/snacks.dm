@@ -1571,7 +1571,7 @@
 
 		if (!BP.hidden && prob(60)) //set it snuggly
 			BP.hidden = surprise
-			BP.cavity = 0
+			BP.cavity = FALSE
 		else 		//someone is having a bad day
 			BP.embed(surprise)
 			BP.take_damage(30, 0, DAM_SHARP|DAM_EDGE, "Animal escaping the ribcage")
@@ -2016,12 +2016,12 @@
 	if (!storage.handle_mousedrop(usr, over_object))
 		..()
 
-/obj/item/weapon/reagent_containers/food/snacks/proc/try_slice(obj/item/weapon/W, mob/user)
+/obj/item/weapon/reagent_containers/food/snacks/proc/try_slice(obj/item/I, mob/user)
 	user.SetNextMove(CLICK_CD_ACTION)
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return FALSE
 	var/inaccurate = FALSE
-	if(!iscutter(W))
+	if(!I.get_quality(QUALITY_CUTTING))
 		inaccurate = TRUE
 
 	if ( \
@@ -2033,10 +2033,10 @@
 		to_chat(user, "<span class='rose'>You cannot slice [src] here! You need a table or at least a tray to do it.</span>")
 		return FALSE
 	var/slices_lost = 0
-	if(W.sharp)
+	if(I.sharp)
 		if(inaccurate)
 			slices_lost = rand(1, min(1, round(slices_num * 0.5)))
-			if(istype(W, /obj/item/weapon/melee/energy/sword))
+			if(istype(I, /obj/item/weapon/melee/energy/sword))
 				playsound(user, 'sound/items/esword_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
 			else
 				playsound(user, 'sound/items/shard_cutting.ogg', VOL_EFFECTS_MASTER, null, FALSE)
@@ -2046,7 +2046,7 @@
 			if(!inaccurate)
 				user.visible_message("<span class='info'>[user] slices \the [src]!</span>", "<span class='notice'>You slice \the [src]!</span>")
 			else
-				user.visible_message("<span class='info'>[user] inaccurately slices \the [src] with [W]!</span>", "<span class='notice'>You inaccurately slice \the [src] with your [W]!</span>")
+				user.visible_message("<span class='info'>[user] inaccurately slices \the [src] with [I]!</span>", "<span class='notice'>You inaccurately slice \the [src] with your [I]!</span>")
 			var/reagents_per_slice = reagents.total_volume/slices_num
 			for(var/i=1 to (slices_num-slices_lost))
 				var/obj/slice = new slice_path (src.loc)

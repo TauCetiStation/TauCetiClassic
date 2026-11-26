@@ -160,8 +160,8 @@
 		beingAttacked(W, user)
 
 
-/obj/machinery/bot/secbot/proc/beingAttacked(obj/item/weapon/W, mob/user)
-	if(!isscrewing(W) && W.force && !target)
+/obj/machinery/bot/secbot/proc/beingAttacked(obj/item/I, mob/user)
+	if(!I.get_quality(QUALITY_SCREWING) && I.force && !target)
 		target = user
 		mode = SECBOT_HUNT
 
@@ -630,7 +630,7 @@
 //Secbot Construction
 
 /obj/item/weapon/secbot_assembly/attackby(obj/item/I, mob/user, params)
-	if(iswelding(I) && !build_step)
+	if(I.get_quality(QUALITY_WELDING) && !build_step)
 		var/obj/item/weapon/weldingtool/WT = I
 		if(WT.use(0, user))
 			build_step++

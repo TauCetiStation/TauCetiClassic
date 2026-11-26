@@ -186,8 +186,8 @@
 		update_icon()
 	add_avail(lastgen)
 
-/obj/machinery/power/generator/attackby(obj/item/weapon/W, mob/user)
-	if(iswrenching(W))
+/obj/machinery/power/generator/attackby(obj/item/I, mob/user)
+	if(I.get_quality(QUALITY_WRENCHING))
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.</span>")
 		lastgenlev = 0
@@ -196,12 +196,12 @@
 	else
 		..()
 
-	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), W))
+	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		set_power_use(NO_POWER_USE)
 		update_icon()
 		return
 
-	if(default_deconstruction_crowbar(W))
+	if(default_deconstruction_crowbar(I))
 		return
 
 /obj/machinery/power/generator/interact(mob/user)

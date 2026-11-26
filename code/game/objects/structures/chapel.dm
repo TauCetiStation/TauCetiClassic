@@ -293,7 +293,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 	return ..()
 
 /obj/structure/big_bell/attackby(obj/item/I, mob/user)
-	if(iswrenching(I) && !user.is_busy(src) && I.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
+	if(I.get_quality(QUALITY_WRENCHING) && !user.is_busy(src) && I.use_tool(src, user, 40, volume = 50, quality = QUALITY_WRENCHING))
 		anchored = !anchored
 		visible_message("<span class='warning'>[src] has been [anchored ? "secured to the floor" : "unsecured from the floor"] by [user].</span>")
 		playsound(src, 'sound/items/Deconstruct.ogg', VOL_EFFECTS_MASTER)
@@ -510,8 +510,8 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 		return FALSE
 	return ..()
 
-/obj/structure/stool/bed/chair/lectern/attackby(obj/item/weapon/W, mob/user, params)
-	if(iswrenching(W))
+/obj/structure/stool/bed/chair/lectern/attackby(obj/item/I, mob/user, params)
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(flipped)
 			to_chat(user, "<span class='notice'>You need to flip [src] back upright.</span>")
 			return
@@ -522,7 +522,7 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 		to_chat(user, "<span class='notice'>You have [anchored ? "secured" : "unsecured"] [src].</span>")
 		return
 
-	if(isprying(W))
+	if(I.get_quality(QUALITY_PRYING))
 		if(anchored)
 			to_chat(user, "<span class='notice'>You need to unsecure [src] first.</span>")
 			return
@@ -531,13 +531,13 @@ ADD_TO_GLOBAL_LIST(/obj/effect/effect/bell, bells)
 			return
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		to_chat(user, "<span class='notice'>You are disassembling [src].</span>")
-		for(var/obj/item/I as anything in src)
-			I.forceMove(loc)
+		for(var/obj/item/something as anything in src)
+			something.forceMove(loc)
 		new material(loc)
 		qdel(src)
 		return
 
-	if(anchored && book.attackby(W, user, params))
+	if(anchored && book.attackby(I, user, params))
 		return
 
 	return ..()

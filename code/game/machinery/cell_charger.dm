@@ -49,11 +49,11 @@
 		if(charging)
 			to_chat(user, "Current charge: [charging.charge]")
 
-/obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/cell_charger/attackby(obj/item/I, mob/user)
 	if(stat & BROKEN)
 		return
 
-	if(istype(W, /obj/item/weapon/stock_parts/cell) && anchored)
+	if(istype(I, /obj/item/weapon/stock_parts/cell) && anchored)
 		if(charging)
 			to_chat(user, "<span class='warning'>There is already a cell in the charger.</span>")
 			return
@@ -68,15 +68,15 @@
 			to_chat(user, "<span class='warning'>The [name] blinks red as you try to insert the cell!</span>")
 			return
 
-		user.drop_from_inventory(W, src)
+		user.drop_from_inventory(I, src)
 		add_fingerprint(user)
-		charging = W
+		charging = I
 		user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
 		chargelevel = -1
 		update_icon()
 		return
 
-	if(iswrenching(W))
+	if(I.get_quality(QUALITY_WRENCHING))
 		if(charging)
 			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
 			return
@@ -85,17 +85,17 @@
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		return
 
-	if(isscrewing(W))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(charging)
 			to_chat(user, "<span class='warning'>Remove the cell first!</span>")
 			return
-		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), W))
+		if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 			return
 
-	if(default_deconstruction_crowbar(W))
+	if(default_deconstruction_crowbar(I))
 		return
 
-	if(exchange_parts(user, W))
+	if(exchange_parts(user, I))
 		return
 
 /obj/machinery/cell_charger/attack_hand(mob/user)

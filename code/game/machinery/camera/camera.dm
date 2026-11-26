@@ -141,12 +141,12 @@
 		playsound(src, 'sound/weapons/slash.ogg', VOL_EFFECTS_MASTER)
 		toggle_cam(FALSE, user)
 
-/obj/machinery/camera/attackby(obj/item/weapon/W, mob/living/user)
-	var/msg = "<span class='notice'>You attach [W] into the assembly inner circuits.</span>"
+/obj/machinery/camera/attackby(obj/item/I, mob/living/user)
+	var/msg = "<span class='notice'>You attach [I] into the assembly inner circuits.</span>"
 	var/msg2 = "<span class='notice'>The camera already has that upgrade!</span>"
 
 	// DECONSTRUCTION
-	if(isscrewing(W))
+	if(I.get_quality(QUALITY_SCREWING))
 		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
 		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
 		panel_open = !panel_open
@@ -154,47 +154,47 @@
 		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 
-	else if(is_wire_tool(W) && panel_open)
+	else if(is_wire_tool(I) && panel_open)
 		wires.interact(user)
 
-	else if(iswelding(W) && wires.is_deconstructable())
-		if(weld(W, user))
+	else if(I.get_quality(QUALITY_WELDING) && wires.is_deconstructable())
+		if(weld(I, user))
 			deconstruct(TRUE)
-	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
+	else if(istype(I, /obj/item/device/analyzer) && panel_open) //XRay
 		if(!isXRay())
 			upgradeXRay()
-			qdel(W)
+			qdel(I)
 			to_chat(user, "[msg]")
 		else
 			to_chat(user, "[msg2]")
 
-	else if(istype(W, /obj/item/stack/sheet/mineral/phoron) && panel_open)
+	else if(istype(I, /obj/item/stack/sheet/mineral/phoron) && panel_open)
 		if(!isEmpProof())
 			upgradeEmpProof()
 			to_chat(user, "[msg]")
-			qdel(W)
+			qdel(I)
 		else
 			to_chat(user, "[msg2]")
-	else if(istype(W, /obj/item/device/assembly/prox_sensor) && panel_open)
+	else if(istype(I, /obj/item/device/assembly/prox_sensor) && panel_open)
 		if(!isMotion())
 			upgradeMotion()
 			to_chat(user, "[msg]")
-			qdel(W)
+			qdel(I)
 		else
 			to_chat(user, "[msg2]")
 
-	else if(istype(W, /obj/item/stack/sheet/glass) && panel_open)
-		var/obj/item/stack/sheet/glass/G = W
+	else if(istype(I, /obj/item/stack/sheet/glass) && panel_open)
+		var/obj/item/stack/sheet/glass/G = I
 		remove_paint_state()
 		to_chat(user, "<span class='notice'>You fixed [src] lens.</span>")
 		G.use(1)
 	// OTHER
-	else if(istype(W, /obj/item/weapon/paper))
+	else if(istype(I, /obj/item/weapon/paper))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(show_paper_cooldown > world.time)
 			return
 		show_paper_cooldown = world.time + 5 SECONDS
-		var/obj/item/weapon/paper/P = W
+		var/obj/item/weapon/paper/P = I
 		if(P.crumpled)
 			to_chat(usr, "Paper too crumpled for anything.")
 			return
@@ -215,7 +215,7 @@
 				to_chat(L, "You can see [user] holding \the [P] to the camera you're watching...")
 				P.show_content(L)
 
-	else if (istype(W, /obj/item/device/camera_bug))
+	else if (istype(I, /obj/item/device/camera_bug))
 		if(!can_use())
 			to_chat(user, "<span class='notice'>Camera non-functional</span>")
 			return
@@ -225,10 +225,10 @@
 			src.bug = null
 		else
 			to_chat(user, "<span class='notice'>Camera bugged.</span>")
-			src.bug = W
+			src.bug = I
 			src.bug.bugged_cameras[src.c_tag] = src
-	else if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/dualsaber))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
-		if(W.force > 3)
+	else if(istype(I, /obj/item/weapon/melee/energy) || istype(I, /obj/item/weapon/pen/edagger) || istype(I, /obj/item/weapon/dualsaber))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
+		if(I.force > 3)
 			user.do_attack_animation(src)
 			disconnect_viewers()
 			var/datum/effect/effect/system/spark_spread/spark_system = new()
@@ -236,7 +236,7 @@
 			spark_system.start()
 			playsound(src, 'sound/weapons/blade1.ogg', VOL_EFFECTS_MASTER)
 			playsound(src, pick(SOUNDIN_SPARKS), VOL_EFFECTS_MASTER)
-			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
+			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [I]!</span>")
 			deconstruct()
 	else
 		..()

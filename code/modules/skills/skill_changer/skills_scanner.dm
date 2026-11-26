@@ -31,32 +31,32 @@
 	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 	RefreshParts()
 
-/obj/machinery/optable/skill_scanner/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/skill_cartridge))
+/obj/machinery/optable/skill_scanner/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/skill_cartridge))
 		if(!console)
 			to_chat(user, "<span class='notice'>You need to link [src] to the CMF Modifier Access Console first.</span>")
 			return FALSE
 		if(!cartridge)
-			user.drop_from_inventory(W, src)
-			cartridge = W
-			to_chat(user, "<span class='notice'>You insert [W].</span>")
+			user.drop_from_inventory(I, src)
+			cartridge = I
+			to_chat(user, "<span class='notice'>You insert [I].</span>")
 		else
 			to_chat(user, "<span class='notice'>There is already [cartridge] inserted.</span>")
 
 		return FALSE
 	if(victim)
 		return
-	if(default_deconstruction_screwdriver(user, "table_skill_open", initial(icon_state), W))
+	if(default_deconstruction_screwdriver(user, "table_skill_open", initial(icon_state), I))
 		update_icon()
 		return
-	if(exchange_parts(user, W))
+	if(exchange_parts(user, I))
 		return
 	if(panel_open)
-		if(ispulsing(W))
-			var/obj/item/device/multitool/M = W
-			M.buffer = src
-			to_chat(user, "<span class='notice'>You save the data in the [W.name]'s buffer.</span>")
-	default_deconstruction_crowbar(W)
+		if(I.get_quality(QUALITY_PULSING))
+			var/obj/item/device/multitool/MT = I
+			MT.buffer = src
+			to_chat(user, "<span class='notice'>You save the data in the [I.name]'s buffer.</span>")
+	default_deconstruction_crowbar(I)
 
 /obj/machinery/optable/skill_scanner/proc/eject_cartridge()
 	if(cartridge && !cartridge.unpacked)

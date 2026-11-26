@@ -81,20 +81,20 @@
 		return 0
 	return 1
 
-/obj/vehicle/attackby(obj/item/weapon/W, mob/user)
-	if(istagger(W))
+/obj/vehicle/attackby(obj/item/I, mob/user)
+	if(istagger(I))
 		return
-	else if(isscrewing(W))
+	else if(I.get_quality(QUALITY_SCREWING))
 		open = !open
 		playsound(src, 'sound/items/Screwdriver.ogg', VOL_EFFECTS_MASTER)
 		if(on && open)
 			turn_off()
 		update_icon()
 		to_chat(user, "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>")
-	else if(iswelding(W))
-		var/obj/item/weapon/weldingtool/T = W
+	else if(I.get_quality(QUALITY_WELDING))
+		var/obj/item/weapon/weldingtool/WT = I
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(T.isOn())
+		if(WT.isOn())
 			if(get_integrity() < max_integrity)
 				if(open)
 					repair_damage(20)

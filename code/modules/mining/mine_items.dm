@@ -171,7 +171,6 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "pickaxe"
 	w_class = SIZE_NORMAL
 	m_amt = 3750 //one sheet, but where can you make them?
-	toolspeed = 1 //moving the delay to an item var so R&D can make improved picks. --NEO
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("hit", "pierced", "sliced", "attacked")
 	usesound = 'sound/items/pickaxe.ogg'
@@ -181,31 +180,41 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 	var/excavation_amount = 100
 
+	qualities = list(
+		QUALITY_ROCK_DRILL = 100 //moving the delay to an item var so R&D can make improved picks. --NEO
+	)
+
 /obj/item/weapon/pickaxe/silver
 	name = "silver pickaxe"
 	icon_state = "spickaxe"
 	item_state = "spickaxe"
-	toolspeed = 0.7
 	origin_tech = "materials=3"
 	desc = "This makes no metallurgic sense."
+	qualities = list(
+		QUALITY_ROCK_DRILL = 125
+	)
 
 /obj/item/weapon/pickaxe/gold
 	name = "golden pickaxe"
 	icon_state = "gpickaxe"
 	item_state = "gpickaxe"
-	toolspeed = 0.2 // hi MiNeCrAfT golden pickaxe
 	mineral_multiply_coefficient = 0.6 // for speed balance
 	origin_tech = "materials=4"
 	desc = "This makes no metallurgic sense."
+	qualities = list(
+		QUALITY_ROCK_DRILL = 400 // hi MiNeCrAfT golden pickaxe
+	)
 
 /obj/item/weapon/pickaxe/diamond
 	name = "diamond pickaxe"
 	icon_state = "dpickaxe"
 	item_state = "dpickaxe"
-	toolspeed = 0.25
 	mineral_multiply_coefficient = 1.3
 	origin_tech = "materials=6;engineering=4"
 	desc = "A pickaxe with a diamond pick head, this is just like minecraft."
+	qualities = list(
+		QUALITY_ROCK_DRILL = 350
+	)
 
 /*****************************Sledgehammer********************************/
 /obj/item/weapon/sledgehammer
@@ -269,7 +278,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	usesound = 'sound/effects/shovel_digging.ogg'
 	// Better than a rod, worse than a crowbar.
 	qualities = list(
-		QUALITY_PRYING = 0.75
+		QUALITY_PRYING = 75
 	)
 
 /obj/item/weapon/shovel/experimental
@@ -279,10 +288,9 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	item_state = "expshovel"
 	item_state_world = "expshovel_world"
 	force = 10.0
-	toolspeed = 0.1
 	origin_tech = "materials=2;engineering=3"
 	qualities = list(
-		QUALITY_PRYING = 0.1
+		QUALITY_PRYING = 200
 	)
 
 /obj/item/weapon/shovel/spade
@@ -332,13 +340,15 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	usesound = 'sound/items/drill.ogg'
 	hitsound = list('sound/items/drill_hit.ogg')
 	drill_verb = "drill"
-	toolspeed = 0.55
 	mineral_multiply_coefficient = 1.0
 	var/drill_cost = 35
 	var/state = 0
 	var/obj/item/weapon/stock_parts/cell/power_supply
 	var/cell_type = /obj/item/weapon/stock_parts/cell/high
 	var/effectively_mode = FALSE
+	qualities = list(
+		QUALITY_ROCK_DRILL = 200
+	)
 
 /obj/item/weapon/pickaxe/drill/atom_init()
 	. = ..()
@@ -359,7 +369,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	return
 
 /obj/item/weapon/pickaxe/drill/attackby(obj/item/I, mob/user, params)
-	if(isscrewing(I))
+	if(I.get_quality(QUALITY_SCREWING))
 		if(state==0)
 			state = 1
 			to_chat(user, "<span class='notice'>You open maintenance panel.</span>")
@@ -410,11 +420,11 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 
 /obj/item/weapon/pickaxe/drill/proc/update_mode_stats()
 	if(effectively_mode)
-		toolspeed *= 1.25 // slow down drilling speed
+		qualities[QUALITY_ROCK_DRILL] /= 1.25 // slow down drilling speed
 		drill_cost *= 2
 		mineral_multiply_coefficient += 0.25
 	else
-		toolspeed = initial(toolspeed)
+		qualities[QUALITY_ROCK_DRILL] = initial(qualities[QUALITY_ROCK_DRILL])
 		drill_cost = initial(drill_cost)
 		mineral_multiply_coefficient -= 0.25
 
@@ -422,11 +432,13 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "sonic jackhammer"
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
-	toolspeed = 0.8 // Drills 3 tiles in front of user
 	mineral_multiply_coefficient = 0.8
 	origin_tech = "materials=3;powerstorage=2;engineering=2"
 	desc = "Cracks rocks with sonic blasts, perfect for killing cave lizards."
 	drill_verb = "hammering"
+	qualities = list(
+		QUALITY_ROCK_DRILL = 150 // Drills 3 tiles in front of user
+	)
 
 /obj/item/weapon/pickaxe/drill/jackhammer/attackby(obj/item/I, mob/user, params)
 	return
@@ -435,21 +447,23 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	name = "diamond mining drill"
 	icon_state = "diamond_drill"
 	item_state = "d_drill"
-	toolspeed = 0.3 // Digs through walls, girders, and can dig up sand
 	mineral_multiply_coefficient = 1.2
 	origin_tech = "materials=6;powerstorage=4;engineering=5"
 	desc = "Yours is the drill that will pierce the heavens!"
 	drill_verb = "drilling"
-
+	qualities = list(
+		QUALITY_ROCK_DRILL = 300 // Digs through walls, girders, and can dig up sand
+	)
 
 /obj/item/weapon/pickaxe/drill/borgdrill
 	name = "cyborg mining drill"
 	icon_state = "diamond_drill"
 	item_state = "jackhammer"
-	toolspeed = 0.4
 	mineral_multiply_coefficient = 1.2
-	desc = ""
 	drill_verb = "drilling"
+	qualities = list(
+		QUALITY_ROCK_DRILL = 200
+	)
 
 /obj/item/weapon/pickaxe/drill/borgdrill/attackby(obj/item/I, mob/user, params)
 	return
@@ -587,7 +601,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 		playsound(src, 'sound/items/insert_key.ogg', VOL_EFFECTS_MASTER)
 		qdel(I)
 
-	else if(isscrewing(I))
+	else if(I.get_quality(QUALITY_SCREWING))
 		if(!length(installed_upgrades))
 			to_chat(user, "<span class='warning'>Нет улучшений для извлечения!</span>")
 			return
@@ -1082,7 +1096,7 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	pixel_y = -32
 
 /obj/item/device/gps/computer/attackby(obj/item/I, mob/user, params)
-	if(iswrenching(I) && !(flags & NODECONSTRUCT))
+	if(I.get_quality(QUALITY_WRENCHING) && !(flags & NODECONSTRUCT))
 		if(user.is_busy(src))
 			return
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
@@ -1126,9 +1140,9 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	ispowered = 1
 	return
 
-/obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
-	if(isitem(O))
-		if(O.flags & NODROP || !O.canremove)
+/obj/machinery/smartfridge/survival_pod/accept_check(obj/item/I)
+	if(isitem(I))
+		if(I.flags & NODROP || !I.canremove)
 			return 0
 		return 1
 	return 0
@@ -1163,28 +1177,28 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	forbidden_tools += typecacheof(/obj/item/weapon/wrench)
 	forbidden_tools += typecacheof(/obj/item/weapon/wirecutters)
 
-/obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
-	if(is_type_in_typecache(O,forbidden_tools))
-		if(iswrenching(O))
+/obj/machinery/smartfridge/survival_pod/attackby(obj/item/I, mob/user)
+	if(is_type_in_typecache(I,forbidden_tools))
+		if(I.get_quality(QUALITY_WRENCHING))
 			if(user.is_busy(src))
 				return
 			to_chat(user, "<span class='notice'>You start to disassemble the storage unit...</span>")
-			if(O.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
+			if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 				qdel(src)
 			return
-		if(accept_check(O))
+		if(accept_check(I))
 			if(contents.len >= max_n_of_items)
 				to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 				return 1
 			else
-				user.remove_from_mob(O)
-				O.loc = src
-				if(item_quants[O.name])
-					item_quants[O.name]++
+				user.remove_from_mob(I)
+				I.loc = src
+				if(item_quants[I.name])
+					item_quants[I.name]++
 				else
-					item_quants[O.name] = 1
-				user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].</span>", \
-									 "<span class='notice'>You add \the [O] to \the [src].</span>")
+					item_quants[I.name] = 1
+				user.visible_message("<span class='notice'>[user] has added \the [I] to \the [src].</span>", \
+									 "<span class='notice'>You add \the [I] to \the [src].</span>")
 				nanomanager.update_uis(src)
 				return
 
@@ -1199,14 +1213,14 @@ var/global/mining_shuttle_location = 0 // 0 = station 13, 1 = mining station
 	anchored = TRUE
 	density = TRUE
 
-/obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
-	if(iswrenching(W) && !(flags&NODECONSTRUCT))
+/obj/structure/fans/attackby(obj/item/I, mob/user, params)
+	if(I.get_quality(QUALITY_WRENCHING) && !(flags & NODECONSTRUCT))
 		if(user.is_busy(src))
 			return
 		playsound(src, 'sound/items/Ratchet.ogg', VOL_EFFECTS_MASTER)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
-		if(W.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
+		if(I.use_tool(src, user, 20, volume = 50, quality = QUALITY_WRENCHING))
 			if(src.name == "environmental regulation system")
 				new /obj/item/weapon/tank/air(src.loc)
 			qdel(src)

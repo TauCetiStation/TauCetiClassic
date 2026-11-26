@@ -281,7 +281,7 @@ ADD_TO_GLOBAL_LIST(/obj/item/mine/replicator, replicator_mines)
 	qdel(src)
 
 /obj/item/mine/replicator/try_disarm(obj/item/I, mob/user)
-	if((I && !ispulsing(I)))
+	if((I && !I.get_quality(QUALITY_PULSING)))
 		return
 
 	being_disarmed = TRUE
