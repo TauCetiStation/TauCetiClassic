@@ -198,27 +198,10 @@
 
 	if(href_list["pda_onlineshop"])
 
-		if(!usr)
-			return
-
-		if(!ishuman(usr))
-			return
-
-		if(issilicon(usr))
-			return
-
-		if(isobserver(usr))
-			return
-
 		if(usr.incapacitated())
 			return
 
-		if(!usr.client)
-			return
-
-		var/mob/living/carbon/human/H = usr
-
-		var/obj/item/device/pda/PDA = H.get_pda_or_null()
+		var/obj/item/device/pda/PDA = astype(H, /mob/living/carbon/human)?.get_pda_or_null()
 		if(!PDA)
 			return
 
