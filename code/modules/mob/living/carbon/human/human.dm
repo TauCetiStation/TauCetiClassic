@@ -1872,11 +1872,11 @@
 		return
 
 	if(stat == DEAD && world.time - timeofdeath >= DEFIB_TIME_LIMIT)
-		to_chat(user, "<span class='notice'>It seems [src] is far too gone to be reanimated... Your efforts are futile.</span>")
+		to_chat(user, "<span class='notice'>Похоже, [CASE(src, NOMINATIVE_CASE)] уже не может быть [ANYMORPH(src, "реанимирован", "реанимирована", "реанимировано", "реанимированы")]... Реанимация бесполезна.</span>")
 		return
 
 	if(check_pierce_protection(target_zone = BP_CHEST))
-		to_chat(user, "<span class='warning'>You have to open up [src]'s chest to perform CPR!.</span>")
+		to_chat(user, "<span class='warning'>Нужно раскрыть грудь [CASE(src, GENITIVE_CASE)], чтобы провести сердечно-лёгочную реанимацию!.</span>")
 		return
 
 	if(user.is_busy(src))
@@ -1898,50 +1898,53 @@
 
 	if(Heart.heart_status == HEART_FAILURE)
 		if(do_mob(user, src, 4 SECONDS))
-			visible_message("<span class='danger'>[user] is trying perform a heart massage on [src]!</span>")
+			visible_message("<span class='danger'>[user] пытается провести сердечно-лёгочную реанимацию у [CASE(src, GENITIVE_CASE)]!</span>")
 
 			massages_done_right = 0
 
 			if((health > config.health_threshold_dead) || (!suiciding))
 				INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon/human, return_to_body_dialog))
 				Heart.heart_fibrillate()
-				to_chat(user, "<span class='notice'>You feel an irregular heartbeat coming form [src]'s body. It is in need of defibrillation you assume!</span>")
+				to_chat(user, "<span class='notice'>Вы чувствуете неровный пульс у [CASE(src, GENITIVE_CASE)]. Похоже, нужно провести дефибрилляцию!</span>")
 			else
-				to_chat(user, "<span class='warning'>[src]'s body seems to be too weak, you do not feel a heart beat.</span>")
+				to_chat(user, "<span class='warning'>Тело [CASE(src, GENITIVE_CASE)] слишком слабо, вы не чувствуете пульса.</span>")
 
-			last_massage = world.time
+			last_massage = world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR
 		return
 
-	visible_message("<span class='danger'>[user] is trying perform CPR on [src]!</span>")
+	visible_message("<span class='danger'>[user] проводит СЛР у [CASE(src, GENITIVE_CASE)]!</span>")
 
 	if(massages_done_right > needed_massages)
 		if(health < config.health_threshold_dead)
-			to_chat(user, "<span class='warning'>[src]'s heart did not start to beat!</span>")
+			to_chat(user, "<span class='warning'>[C_CASE(Heart, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)] не забилось!</span>")
 		else
-			to_chat(user, "<span class='warning'>[src]'s heart starts to beat!</span>")
+			to_chat(user, "<span class='warning'>[C_CASE(Heart, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)] начало биться!</span>")
 			reanimate_body()
 			stat = UNCONSCIOUS
 			massages_done_right = 0
 			Heart.heart_normalize()
 
 	else if(massages_done_right < -2)
-		to_chat(user, "<span class='warning'>[src]'s heart stopped!</span>")
+		to_chat(user, "<span class='warning'>[C_CASE(Heart, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)] остановилось!</span>")
 		Heart.damage += 2
 		massages_done_right = 0
 		Heart.heart_stop()
 
 	else if(Heart.damage < 50)
+		user.waddle(rand(-15, 15), rand(1, 3))
+		do_squish_animation()
 		if(last_massage > world.time - MASSAGE_RHYTM_RIGHT - MASSAGE_ALLOWED_ERROR && last_massage < world.time - MASSAGE_RHYTM_RIGHT + MASSAGE_ALLOWED_ERROR)
 			massages_done_right++
-			to_chat(user, "<span class='notice'>You've hit right to the [src]'s heart beat!</span>")
+			to_chat(user, "<span class='notice'>Вы попали в такт [CASE(Heart, GENITIVE_CASE)] [CASE(src, GENITIVE_CASE)]!</span>")
 		else
-			massages_done_right--
-			to_chat(user, "<span class='warning'>You've skipped a beat.</span>")
-			if ((BP.body_zone == BP_CHEST && op_stage.ribcage != 2) || BP.open < 2)
+			to_chat(user, "<span class='warning'>Вы пропустили такт [CASE(Heart, GENITIVE_CASE)] [CASE(src, GENITIVE_CASE)].</span>")
+			if((BP.body_zone == BP_CHEST && op_stage.ribcage != 2) || BP.open < 2)
 				apply_damage(fail_damage, BRUTE, BP.body_zone)
 
+			massages_done_right--
+
 	else
-		to_chat(user, "<span class='warning'>It seems [src]'s [Heart] is too squishy... It doesn't beat at all!</span>")
+		to_chat(user, "<span class='warning'>Похоже, [CASE(Heart, NOMINATIVE_CASE)] [CASE(src, GENITIVE_CASE)] слишком слабо... Оно не будет биться!</span>")
 
 	last_massage = world.time
 
