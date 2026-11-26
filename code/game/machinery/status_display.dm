@@ -359,7 +359,7 @@
 
 /obj/machinery/status_display/proc/show_ad_2()
 	var/datum/shop_lot/lot = SScargoshop.get_advertisement_lot()
-	if(!lot)
+	if(!lot || (mode != 7))
 		vis_contents -= ad_background
 		chiptune_player.playing = FALSE
 		return
