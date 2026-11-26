@@ -443,20 +443,25 @@ voluminosity = if FALSE, removes the difference between left and right ear.
 
 		if(category == "Jukebox")
 			var/list/L = config.media_base_urls
-			dat += {"
-				<tr>
-					<td>Media server <span title="[mediaserver_hint]">(?)</span>:</td>
-					<td>
-						<select id="media_server" onChange="changeMediaServer()">
-					"}
-			for(var/i = 1; i <= L.len; i++)
-				dat += "<option value=\"[i]\" [media_server == config.media_base_urls[i] ? "selected" : ""]>[config.media_base_urls[i]]</option>"
-			dat += {"
-						</select>
-					</td>
+			if(length(L))
+				dat += {"
+					<tr>
+						<td>Media server <span title="[mediaserver_hint]">(?)</span>:</td>
+						<td>
+							<select id="media_server" onChange="changeMediaServer()">
+						"}
+				for(var/i = 1; i <= L.len; i++)
+					dat += "<option value=\"[i]\" [media_server == config.media_base_urls[i] ? "selected" : ""]>[config.media_base_urls[i]]</option>"
+				dat += {"
+							</select>
+						</td>
+					</tr>
+				"}
+			else
+				dat +={" <tr>
+						<td colspan="2">No media server available</td>
 				</tr>
-			"}
-
+				"}
 		dat += {"
 			</table>
 		"}
