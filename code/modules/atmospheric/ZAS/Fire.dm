@@ -257,10 +257,10 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	handle_particles(air_contents.temperature)
 
 /obj/fire/proc/delete_particles()
-	remove_shared_particles(/particles/turf_fire/cold, delete_on_empty = FALSE)
+	remove_shared_particles(/particles/turf_fire/stage_0, delete_on_empty = FALSE)
 	remove_shared_particles(/particles/turf_fire, delete_on_empty = FALSE)
-	remove_shared_particles(/particles/turf_fire/hot, delete_on_empty = FALSE)
-	remove_shared_particles(/particles/turf_fire/phoron, delete_on_empty = FALSE)
+	remove_shared_particles(/particles/turf_fire/stage_2, delete_on_empty = FALSE)
+	remove_shared_particles(/particles/turf_fire/stage_3, delete_on_empty = FALSE)
 	remove_shared_particles(/particles/turf_smoke, delete_on_empty = FALSE)
 
 	particle_fire_key = null
@@ -272,29 +272,29 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	if(particle_fire_key)
 		remove_shared_particles(particle_fire_key, delete_on_empty = FALSE)
 	particle_fire_key = new_particle_fire_key
-	add_shared_particles(particle_fire_key, pool_size = 3)
+	add_shared_particles(particle_fire_key, pool_size = 5)
 
 /obj/fire/proc/add_smoke()
 	if(has_shared_particles(/particles/turf_smoke))
 		return
 
-	var/obj/effect/abstract/shared_particle_holder/Holder = add_shared_particles(/particles/turf_smoke, pool_size = 3)
+	var/obj/effect/abstract/shared_particle_holder/Holder = add_shared_particles(/particles/turf_smoke, pool_size = 5)
 	Holder.vis_flags &= ~VIS_INHERIT_PLANE
 	Holder.plane = ABOVE_LIGHTING_PLANE
 
 /obj/fire/proc/handle_particles(env_temperature)
 	switch(env_temperature)
 		if(0 to 600)
-			change_particle(/particles/turf_fire/cold)
+			change_particle(/particles/turf_fire/stage_0)
 			add_smoke()
 		if(601 to 1200)
 			change_particle(/particles/turf_fire)
 			add_smoke()
 		if(1201 to 2500)
-			change_particle(/particles/turf_fire/hot)
+			change_particle(/particles/turf_fire/stage_2)
 			remove_shared_particles(/particles/turf_smoke, delete_on_empty = FALSE)
 		else
-			change_particle(/particles/turf_fire/phoron)
+			change_particle(/particles/turf_fire/stage_3)
 			remove_shared_particles(/particles/turf_smoke, delete_on_empty = FALSE)
 
 /obj/fire/proc/fire_color(env_temperature)
