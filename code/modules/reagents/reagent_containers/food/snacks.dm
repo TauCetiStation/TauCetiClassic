@@ -2377,6 +2377,9 @@
 	filling_color = "#baa14c"
 	bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/sliceable/pizza/try_wrap_up(wrap_type, wrap_icon_state = "deliverypizzaround")
+	. = ..()
+
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice
 	filling_color = "#baa14c"
 	bitesize = 2
@@ -2589,16 +2592,8 @@
 		return
 	return ..()
 
-/obj/item/pizzabox/try_wrap_up(wrap_type)
-	var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(loc))	//Aaannd wrap it up!
-	P.w_class = w_class
-	P.icon_state = "deliverypizza[length(boxes)]"
-
-	P.add_texture(wrap_type)
-
-	forceMove(P)
-
-	return P
+/obj/item/pizzabox/try_wrap_up(wrap_type, wrap_icon_state = null)
+	. = ..(wrap_type, wrap_icon_state = "deliverypizza[length(boxes)]")
 
 /obj/item/pizzabox/margherita/atom_init()
 	. = ..()

@@ -210,6 +210,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/watertank, watertank_list)
 	. = ..()
 	reagents.add_reagent("water", 1000)
 
+/obj/structure/reagent_dispensers/watertank/try_wrap_up(wrap_type, wrap_icon_state = "deliverystructure")
+	. = ..()
+
 /obj/structure/reagent_dispensers/aqueous_foam_tank
 	name = "AFFF tank"
 	desc = "A tank containing Aqueous Film Forming Foam(AFFF)."
@@ -218,6 +221,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/watertank, watertank_list)
 /obj/structure/reagent_dispensers/aqueous_foam_tank/atom_init()
 	. = ..()
 	reagents.add_reagent("aqueous_foam", 1000)
+
+/obj/structure/reagent_dispensers/aqueous_foam_tank/try_wrap_up(wrap_type, wrap_icon_state = "deliverystructure")
+	. = ..()
 
 
 ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
@@ -230,6 +236,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 /obj/structure/reagent_dispensers/fueltank/atom_init()
 	. = ..()
 	reagents.add_reagent("fuel",300)
+
+/obj/structure/reagent_dispensers/fueltank/try_wrap_up(wrap_type, wrap_icon_state = "deliverystructure")
+	. = ..()
 
 /obj/structure/reagent_dispensers/peppertank
 	name = "Pepper Spray Refiller"
@@ -324,6 +333,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 	explosion(src.loc,0,3,5,7)
 	qdel(src)
 
+/obj/structure/reagent_dispensers/beerkeg/try_wrap_up(wrap_type, wrap_icon_state = "deliverystructure")
+	. = ..()
+
 /obj/structure/reagent_dispensers/virusfood
 	name = "Virus Food Dispenser"
 	desc = "A dispenser of virus food."
@@ -358,6 +370,9 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 	. = ..()
 	reagents.add_reagent("kvass",1000)
 
+/obj/structure/reagent_dispensers/kvasstank/try_wrap_up(wrap_type, wrap_icon_state = "deliverystructure")
+	. = ..()
+
 /obj/structure/reagent_dispensers/cleaner
 	name = "Space Cleaner Dispenser"
 	desc = "A dispenser of cleaner."
@@ -387,3 +402,5 @@ ADD_TO_GLOBAL_LIST(/obj/structure/reagent_dispensers/fueltank, fueltank_list)
 	reagents.add_reagent("condensedcapsaicin", 200)
 	reagents.add_reagent("stoxin", 200)
 
+/obj/structure/reagent_dispensers/hazard/try_wrap_up(wrap_type, wrap_icon_state = "deliverystructure")
+	. = ..()

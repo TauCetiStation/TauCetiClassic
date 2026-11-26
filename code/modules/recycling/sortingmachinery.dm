@@ -258,8 +258,12 @@
 				return
 
 			src.amount -= 3
+	else if(O.try_wrap_up(package_wrap_type))
+		src.amount -= 2
+
 	else
 		to_chat(user, "<span class='notice'>The object you are trying to wrap is unsuitable for the sorting machinery!</span>")
+
 	if (src.amount <= 0)
 		new /obj/item/weapon/c_tube( src.loc )
 		qdel(src)

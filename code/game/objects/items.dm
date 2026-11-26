@@ -1098,15 +1098,14 @@
 	var/mob/living/carbon/human/H = user
 	SEND_SIGNAL(H, COMSIG_CLICK_CTRL_SHIFT, src)
 
-/obj/item/try_wrap_up(wrap_type)
+/obj/item/try_wrap_up(wrap_type, wrap_icon_state = null)
 	var/size = round(w_class)
 	if(size < SIZE_MINUSCULE || size > SIZE_BIG)
 		return null
 
 	var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(loc))	//Aaannd wrap it up!
 	P.w_class = w_class
-	P.icon_state = "deliverycrate[size]"
-
+	P.icon_state = wrap_icon_state ? wrap_icon_state : "deliverycrate[size]"
 	P.add_texture(wrap_type)
 
 	forceMove(P)
