@@ -12487,6 +12487,9 @@
 /obj/item/weapon/book/manual/wiki/barman_recipes{
 	pixel_y = 10
 	},
+/obj/item/device/menu_chef{
+	pixel_y = 6
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -14017,6 +14020,10 @@
 	pixel_x = -5
 	},
 /obj/structure/table/woodentable/fancy/black,
+/obj/item/device/cardpay/menu_customer{
+	pixel_y = 8;
+	pixel_x = 16
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
@@ -17472,14 +17479,21 @@
 /area/station/maintenance/atmos)
 "aEr" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/paper_bin,
+/obj/item/weapon/paper_bin{
+	pixel_x = 7;
+	pixel_y = 8
+	},
 /obj/item/weapon/pen/blue{
-	pixel_x = 2;
-	pixel_y = 6
+	pixel_x = 7;
+	pixel_y = 13
 	},
 /obj/machinery/status_display{
 	layer = 4;
 	pixel_y = 32
+	},
+/obj/item/device/cardpay/menu_customer{
+	pixel_y = 8;
+	pixel_x = -8
 	},
 /turf/simulated/floor{
 	dir = 4;
@@ -42638,6 +42652,9 @@
 	pixel_x = -5;
 	pixel_y = 5
 	},
+/obj/item/device/cardpay/menu_customer{
+	pixel_y = 8
+	},
 /turf/simulated/floor/wood,
 /area/station/civilian/bar)
 "bxh" = (
@@ -45938,6 +45955,10 @@
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 32
 	},
+/obj/item/device/cardpay/menu_customer{
+	pixel_y = 8;
+	pixel_x = 6
+	},
 /turf/simulated/floor/carpet,
 /area/station/civilian/bar)
 "bDe" = (
@@ -46958,6 +46979,10 @@
 /obj/structure/table/woodentable/fancy/black,
 /obj/item/trash/candle/red,
 /obj/item/station_map/box,
+/obj/item/device/cardpay/menu_customer{
+	pixel_y = 8;
+	pixel_x = -6
+	},
 /turf/simulated/floor{
 	icon_state = "vaultfull"
 	},
