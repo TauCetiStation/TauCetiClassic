@@ -117,7 +117,8 @@
 	if(mode != 7)
 		vis_contents -= ad_background
 		vis_contents -= ad_item
-		chiptune_player.playing = FALSE
+		if(chiptune_player)
+			chiptune_player.playing = FALSE
 
 	if(overlays.len && !friendc || mode == 4)
 		cut_overlays()
