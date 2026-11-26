@@ -52,7 +52,7 @@ var/global/const/AIRLOCK_WIRE_UNRES_SIDE    = 4096
 		return
 	if(action == "buffer")
 		var/obj/item/I = usr.get_active_hand()
-		if(ispulsing(I))
+		if(I && ispulsing(I))
 			var/obj/item/device/multitool/M = I
 			if(holder in M.doors_buffer)
 				to_chat(usr, "<span class='warning'>This <i>door</i> is already in the buffer!</span>")
@@ -64,6 +64,7 @@ var/global/const/AIRLOCK_WIRE_UNRES_SIDE    = 4096
 			. = TRUE
 		else
 			to_chat(usr, "<span class='warning'>You need a multitool!</span>")
+
 	if(.)
 		holder.add_fingerprint(usr)
 
