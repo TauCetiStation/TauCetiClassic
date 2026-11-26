@@ -44,7 +44,6 @@
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access = list(25)
-	refill_canister = /obj/item/weapon/vending_refill/boozeomat
 	private = TRUE
 
 /obj/machinery/vending/coffee
@@ -72,7 +71,6 @@
 		/obj/item/weapon/reagent_containers/food/drinks/tea = 15,
 		/obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 15,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/coffee
 	private = FALSE
 
 /obj/machinery/vending/snack
@@ -112,7 +110,6 @@
 		/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 20,
 		/obj/item/weapon/storage/food/normal/honkers = 15,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/snack
 	private = FALSE
 
 /obj/random/vending/snack
@@ -167,7 +164,6 @@
 		/obj/item/weapon/reagent_containers/food/snacks/chinese/lunarice = 50,
 		/obj/item/weapon/kitchen/utensil/fork/sticks = 1,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/chinese
 	private = FALSE
 
 /obj/machinery/vending/cola
@@ -203,7 +199,6 @@
 		/obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea = 3,
 		/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice = 3,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/cola
 	private = FALSE
 
 /obj/random/vending/cola
@@ -299,7 +294,6 @@
 	contraband = list(
 		/obj/item/weapon/reagent_containers/food/snacks/fishfingers = 2,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/junkfood
 	private = FALSE
 
 /obj/machinery/vending/donut
@@ -332,7 +326,6 @@
 	premium = list(
 		/obj/item/weapon/storage/fancy/donut_box = 3,
 	)
-	refill_canister = /obj/item/weapon/vending_refill/donut
 	private = FALSE
 
 /obj/machinery/vending/sustenance
