@@ -376,7 +376,7 @@
 
 /datum/role/proc/GetMemory(datum/mind/M, admin_edit = FALSE)
 	var/text = ""
-	if (faction)
+	if (faction && !faction.hide_from_memories)
 		text += "<br>[faction.GetFactionHeader()]"
 
 	if (admin_edit)

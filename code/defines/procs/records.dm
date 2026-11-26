@@ -16,6 +16,7 @@
 	G.fields["citizenship"]	= "Unknown"
 	G.fields["faction"]		= "Unknown"
 	G.fields["religion"]	= "Unknown"
+	G.fields["relatives"]   = FALSE
 	G.fields["photo_f"] = new /icon()
 	G.fields["photo_s"] = new /icon()
 	PDA_Manifest.Cut()

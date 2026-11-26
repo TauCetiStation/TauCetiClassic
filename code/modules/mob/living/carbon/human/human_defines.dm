@@ -64,6 +64,7 @@
 	var/personal_faction = /datum/preferences::faction
 	var/religion = /datum/preferences::religion
 	var/vox_rank = /datum/preferences::vox_rank
+	var/relatives = FALSE
 	var/r_belly = /datum/preferences::r_belly
 	var/g_belly = /datum/preferences::g_belly
 	var/b_belly = /datum/preferences::b_belly

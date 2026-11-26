@@ -167,6 +167,7 @@
 	if(species == VOX)
 		. += 						"<br>Rank: <a href='byond://?src=\ref[user];preference=vox_rank;task=input'>[vox_rank]</a>"
 	. += 						"<br>"
+	. +=						"<br>Relatives: <a href='byond://?src=\ref[user];preference=relatives;task=input'>[relatives ? "Семейный" : "Бессемейный"]</a>"
 
 	if(jobban_isbanned(user, "Records"))
 		. += 					"<br><b>You are banned from using character records.</b><br>"
@@ -598,6 +599,9 @@
 					if(!choice)
 						return
 					vox_rank = choice
+
+				if("relatives")
+					relatives = !relatives
 
 				if("flavor_text")
 					var/msg = sanitize(input(usr,"Set the flavor text in your 'examine' verb.","Flavor Text", input_default(flavor_text)) as message)

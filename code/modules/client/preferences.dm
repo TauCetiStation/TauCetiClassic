@@ -136,6 +136,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	var/religion = "None"               //Religious association.
 	var/nanotrasen_relation = "Neutral"
 	var/vox_rank = "Larva"              //Vox ranks
+	var/relatives = FALSE
 
 	//Job preferences 2.0 - indexed by job title , no key or value implies never
 	var/list/job_preferences = list()
@@ -480,6 +481,7 @@ var/global/list/datum/preferences/preferences_datums = list()
 	character.personal_faction = faction
 	character.religion = religion
 	character.vox_rank = vox_rank
+	character.relatives = relatives
 
 	// Destroy/cyborgize bodyparts & organs
 

@@ -314,6 +314,7 @@ using /obj/effect/datacore/proc/manifest_inject( )
 		G.fields["religion"]	= H.religion
 		G.fields["photo_f"]		= photo_front
 		G.fields["photo_s"]		= photo_side
+		G.fields["relatives"]   = H.relatives
 		if(H.gen_record && !jobban_isbanned(H, "Records"))
 			G.fields["notes"] = H.gen_record
 		else
