@@ -61,6 +61,9 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
+/obj/item/weapon/spacecash/try_wrap_up(wrap_type, wrap_icon_state = "deliveryenvelope")
+	. = ..()
+
 /obj/item/weapon/spacecash/c1
 	name = "1 credit chip"
 	icon_state = "spacecash"
@@ -176,6 +179,9 @@
 
 /obj/item/weapon/ewallet/proc/remove_money(amount, source_name, purpose)
 	charge_to_account(account_number, source_name, purpose, "E-Transaction", -amount)
+
+/obj/item/weapon/ewallet/try_wrap_up(wrap_type, wrap_icon_state = "deliveryenvelope")
+	. = ..()
 
 /proc/get_stocks_string(list/stocks)
 	. = ""

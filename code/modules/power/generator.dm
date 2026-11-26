@@ -258,6 +258,11 @@
 	updateDialog()
 
 
+/obj/machinery/power/generator/AltClick(mob/user)
+	if(!user || !Adjacent(user))
+		return
+	rotate_clock()
+
 /obj/machinery/power/generator/verb/rotate_clock()
 	set category = "Object"
 	set name = "Rotate Generator (Clockwise)"

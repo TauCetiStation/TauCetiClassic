@@ -107,6 +107,9 @@
 		update_icon()
 	return
 
+/obj/item/weapon/folder/try_wrap_up(wrap_type, wrap_icon_state = "deliveryenvelope")
+	. = ..()
+
 /obj/item/folder_holder
 	name = "folder holder"
 	desc = "Папка всех папок."
@@ -116,6 +119,9 @@
 
 /obj/item/folder_holder/atom_init(mapload)
 	. = ..()
+
+	AddComponent(/datum/component/wrench_to_table)
+
 	if(mapload)
 		var/atom/A = get_turf(src)
 		for(var/obj/item/weapon/folder/Folder in A.contents)

@@ -363,6 +363,13 @@
 		newgas.temperature = target_temp
 	return newgas
 
+/obj/structure/closet/crate/freezer/open()
+	. = ..()
+	if(.)
+		var/datum/gas_mixture/environment = loc.return_air()
+		if(environment.return_pressure())
+			new /obj/effect/abstract/particle_holder(get_turf(src), /particles/mist/freezer, PARTICLE_FADEOUT|PARTICLE_FLICK)
+
 /obj/structure/closet/crate/freezer/rations //Fpr use in the escape shuttle
 	desc = "A crate of emergency rations."
 	name = "Emergency Rations"
@@ -624,14 +631,8 @@
 	icon_opened = "mailcrateopen"
 	icon_closed = "mailcrate"
 
-/obj/structure/closet/crate/try_wrap_up(wrap_type)
-	var/obj/structure/bigDelivery/P = new /obj/structure/bigDelivery(get_turf(loc))
-	P.icon_state = "deliverycrate"
-	P.add_texture(wrap_type)
-
-	forceMove(P)
-
-	return P
+/obj/structure/closet/crate/try_wrap_up(wrap_type, wrap_icon_state = "deliverycrate")
+	. = ..()
 
 /obj/structure/closet/crate/spawn_infill_particle(min_x = -12, min_y = -9, max_x = 12, max_y = 0)
 	. = ..()

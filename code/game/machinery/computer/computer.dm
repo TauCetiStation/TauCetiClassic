@@ -190,6 +190,9 @@
 			user.visible_message("<span class='notice'>[user] turns \the [src] [dir_choise].</span>", "<span class='notice'>You turn \the [src] [dir_choise].</span>")
 			set_dir(text2dir(dir_choise))
 
+/obj/machinery/computer/AltClick(mob/user)
+	rotate()
+
 /obj/machinery/computer/verb/rotate()
 	set category = "Object"
 	set name = "Rotate"

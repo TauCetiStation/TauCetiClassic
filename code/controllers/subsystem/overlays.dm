@@ -153,6 +153,11 @@ SUBSYSTEM_DEF(overlays)
 			cut_overlays()
 		return
 
+	if(length(other.add_overlays) || length(other.remove_overlays))
+		COMPILE_OVERLAYS(other)
+		UNSETEMPTY(other.add_overlays)
+		UNSETEMPTY(other.remove_overlays)
+
 	var/list/cached_other = other.overlays.Copy()
 	if(cached_other)
 		if(cut_old || !length(overlays))

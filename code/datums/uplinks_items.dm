@@ -334,6 +334,13 @@
 	if(HAS_ROUND_ASPECT(ROUND_ASPECT_MECHAS))
 		cost = 2
 
+/datum/uplink_item/dangerous/frag
+	name = "M69 Fragmentation Grenade"
+	desc = "Fragmentation grenade designed to kill personnel."
+	item = /obj/item/weapon/grenade/frag
+	cost = 2
+	uplink_types = list(UPLINK_TYPE_NUCLEAR)
+
 /datum/uplink_item/dangerous/syndicate_minibomb
 	name = "Syndicate Minibomb"
 	desc = "The Minibomb is a grenade with a five-second fuse."
